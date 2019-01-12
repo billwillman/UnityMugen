@@ -67,9 +67,8 @@ public class GlobalConfigMgr : MonoSingleton<GlobalConfigMgr> {
 		}
 	}
 
-	protected override void Awake()
+	void Start()
 	{
-		base.Awake ();
 		if (m_DefaultLoaderPlayers != null) {
 			for (int i = 0; i < m_DefaultLoaderPlayers.Count; ++i) {
 				var defaultPlayer = m_DefaultLoaderPlayers [i];
