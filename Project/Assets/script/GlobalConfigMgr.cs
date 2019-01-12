@@ -20,6 +20,19 @@ public class GlobalConfigMgr : MonoSingleton<GlobalConfigMgr> {
 	// 默认加载的PlayerName, 可用于测试
 	public List<DefaultLoaderPlayer> m_DefaultLoaderPlayers = null;
 
+	public GlobalPlayer LoadPlayer(DefaultLoaderPlayer loaderPlayer, out GlobalPlayerLoaderResult result)
+	{
+		if (loaderPlayer == null) {
+			result = GlobalPlayerLoaderResult.ParamError;
+			return null;
+		}
+		string playerName = loaderPlayer.PlayerName;
+		if (string.IsNullOrEmpty (playerName))
+			playerName = loaderPlayer.gameObject.name;
+		
+		return LoadPlayer (playerName, out result, loaderPlayer.CnsName);
+	}
+
 	public GlobalPlayer LoadPlayer(string playerName, out GlobalPlayerLoaderResult result, string cnsName = "")
 	{
 		result = GlobalPlayerLoaderResult.Ok;
@@ -67,21 +80,40 @@ public class GlobalConfigMgr : MonoSingleton<GlobalConfigMgr> {
 		}
 	}
 
+	private void AttachPals(DefaultLoaderPlayer loaderPlayer, GlobalPlayer player)
+	{
+		if (player == null || player.PlayerCfg == null || player.PlayerCfg.Files == null)
+			loaderPlayer.PalNameList = null;
+		else {
+			var files = player.PlayerCfg.Files;
+			string name = Path.GetFileNameWithoutExtension(files.pal1);
+			loaderPlayer.AddPalName (name);
+			name = Path.GetFileNameWithoutExtension(files.pal2);
+			loaderPlayer.AddPalName (name);
+			name = Path.GetFileNameWithoutExtension(files.pal3);
+			loaderPlayer.AddPalName (name);
+			name = Path.GetFileNameWithoutExtension(files.pal4);
+			loaderPlayer.AddPalName (name);
+			name = Path.GetFileNameWithoutExtension(files.pal5);
+			loaderPlayer.AddPalName (name);
+			name = Path.GetFileNameWithoutExtension(files.pal6);
+			loaderPlayer.AddPalName (name);
+		}
+	}
+
 	void Start()
 	{
 		if (m_DefaultLoaderPlayers != null) {
 			for (int i = 0; i < m_DefaultLoaderPlayers.Count; ++i) {
 				var defaultPlayer = m_DefaultLoaderPlayers [i];
-				if (defaultPlayer != null && !string.IsNullOrEmpty(defaultPlayer.PlayerName)) {
+				if (defaultPlayer != null) {
 					GlobalPlayerLoaderResult result;
-					string cnsName = defaultPlayer.CnsName;
-					if (!string.IsNullOrEmpty (cnsName))
-						cnsName = cnsName.Trim ();
-					var player = LoadPlayer (defaultPlayer.PlayerName, out result, cnsName);
+					var player = LoadPlayer (defaultPlayer, out result);
 					#if UNITY_EDITOR
 					defaultPlayer.LoadResult = result;
 					AttachAnim (defaultPlayer, player);
 					AddCnsList (defaultPlayer, player);
+					AttachPals (defaultPlayer, player);
 					#endif
 					player.CreatePlayerDisplay ();
 				}

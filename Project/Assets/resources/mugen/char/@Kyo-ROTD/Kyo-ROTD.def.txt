@@ -1,0 +1,36 @@
+;============================================================================
+;ëêì„ ãû
+;From "The King of Fighters" + "Rgae of the Dragons"
+;============================================================================
+; Player information
+[Info]
+name = "Kyo"        
+displayname = "Kyo" 
+versiondate = 2003,8,18,2002   
+mugenversion = 2001,04,14  
+author = "RYO 2005"      
+pal.defaults = 0
+
+; Files for the player
+[Files]
+cmd      = Kyo-ROTD.cmd  
+cns      = Kyo-ROTD-P.cns   
+st       = Kyo-ROTD-N.cns   
+st2      = Kyo-ROTD-S.cns 
+st3      = Kyo-ROTD-H.cns 
+st4      = Kyo-ROTD-C.cns 
+stcommon = common.cns
+sprite   = Kyo-ROTD.sff   
+anim     = Kyo-ROTD.air  
+sound    = Kyo-ROTD.snd  
+pal1     = pal/pal1.act
+pal2     = pal/pal2.act
+pal3     = pal/pal3.act
+pal4     = pal/pal4.act
+pal5     = pal/pal5.act
+pal6     = pal/pal6.act
+
+; Arcade mode
+;[Arcade]
+;intro.storyboard = intro.def
+;ending.storyboard = ending.def

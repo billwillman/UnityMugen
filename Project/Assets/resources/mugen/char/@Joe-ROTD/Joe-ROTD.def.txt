@@ -1,0 +1,36 @@
+;============================================================================
+;ÉWÉáÅ[ÅEìå
+;From "The King of Fighters" + "Rgae of the Dragons"
+;============================================================================
+; Player information
+[Info]
+name = "Joe"        
+displayname = "Joe" 
+versiondate = 2003,8,18,2002   
+mugenversion = 2001,04,14  
+author = "RYO 2005"      
+pal.defaults = 0
+
+; Files for the player
+[Files]
+cmd      = Joe-ROTD.cmd  
+cns      = Joe-ROTD-P.cns   
+st       = Joe-ROTD-N.cns   
+st2      = Joe-ROTD-S.cns 
+st3      = Joe-ROTD-H.cns 
+st4      = Joe-ROTD-C.cns 
+stcommon = common.cns
+sprite   = Joe-ROTD.sff   
+anim     = Joe-ROTD.air  
+sound    = Joe-ROTD.snd  
+pal1     = pal/pal1.act
+pal2     = pal/pal2.act
+pal3     = pal/pal3.act
+pal4     = pal/pal4.act
+pal5     = pal/pal5.act
+pal6     = pal/pal6.act
+
+; Arcade mode
+;[Arcade]
+;intro.storyboard = intro.def
+;ending.storyboard = ending.def
