@@ -1,0 +1,909 @@
+[Info]
+name = """ 
+versiondate = 02,14,2016
+
+[Camera]
+startx = -350
+starty = 0
+boundleft = -1420
+boundright = 370
+tension = 200
+boundhigh = -200
+boundlow = 0
+
+tensionhigh = 130
+tensionlow = 130
+
+verticalfollow = .8
+floortension = 80
+
+overdrawhigh = 50
+overdrawlow = 50
+cuthigh = 0
+cutlow = 0
+zoomout =  0.43
+zoomin =  0.48
+
+	
+[PlayerInfo]
+p1startx = -900
+p1starty = 0 
+p1facing = 1
+
+;--- Player 2 ---
+p2startx = 0
+p2starty = 0
+p2facing = -1
+
+;--- Player 3 ---
+p3startx = -400
+p3starty = 0
+p3facing = 1
+
+;--- Player 4 ---
+p4startx = 200
+p4starty = 0
+p4facing = -1
+
+;--- Common ---
+leftbound  = -4000
+rightbound =  3000
+
+[Scaling]
+ ;No need to change these values
+topz     = 0       ;Top z-coordinate for scaling
+botz     = 50      ;Bottom z-coordinate for scaling
+topscale = 1       ;Scale to use at top
+botscale = 1.2     ;Scale to use at bottom
+
+[Bound]
+screenleft = 60   ;Dist from left of screen that player can move to
+screenright = 60 ;Right edge
+
+[StageInfo]
+zoffset = 610
+autoturn = 1
+resetBG = 0
+localcoord = 1280, 720
+xscale = 2.45
+yscale = 2.45
+mugenversion = 1.1
+
+
+[Shadow]
+color = 255,255,255
+yscale = .1
+
+;--------------------------------------------------------
+[Music]
+bgmusic = sound/nangua.mp3
+bgmvolume = 255
+
+;========================================================
+; Main background definition
+[BGdef]
+spr = nangua.sff
+debugbg = 0
+
+;----------
+
+
+[BG Far];夜空
+type  = normal
+spriteno = 1, 5
+start = -780,-110
+delta = 0.8, .8
+mask = 1
+tile = 0, 1
+tilespacing = 0, 1
+zoomdelta = .75
+
+[BG Far]
+type  = anim
+start = -780,-110
+actionno = 7
+delta = 0.7, 0.7
+
+[BG Far]
+type  = anim
+start = -230,-180
+actionno = 17
+delta = 0.7, 0.7
+
+[BG Far]
+type  = anim
+start = 550,-200
+actionno = 17
+delta = .7, .7
+
+
+[BG Far]
+type  = anim
+start = 580,-140
+actionno = 17
+delta = 0.7, .7
+
+[BG Far]
+type  = anim
+start = -340,-100
+actionno = 17
+delta = .7, .7
+
+[BG Far]
+type  = anim
+start = -780,-110
+actionno = 17
+delta = 0.7, .7
+
+[BG Far]
+type  = anim
+start = -820,-170
+actionno = 17
+delta = 0.7, .7
+
+[BG Far]
+type  = anim
+start = -350,-118
+actionno = 17
+delta = 0.7, .7
+
+[BG Far]
+type  = anim
+start = -359,-137
+actionno = 17
+delta = 0.7, .7
+
+
+[BG Far]
+type  = anim
+start = -290,-130
+actionno = 17
+delta = 0.7, .7
+
+
+
+[BG Far]
+type  = anim
+start = 570,-220
+actionno = 18
+delta = 0.7, .7
+
+
+[BG Far]
+type  = anim
+start = -800,-190
+actionno = 19
+delta = 0.7, .7
+
+[BG Far]
+type  = anim
+start = -330,-250
+actionno = 19
+delta = 0.7, .7
+
+
+
+[BG 幽灵2]
+type = anim
+actionno = 12
+start = -210,-190
+mask = 1
+sin.y = 10,600
+sin.x = 20,600
+[BG 恶灵]
+type = anim
+actionno = 2
+start = -420,-180
+mask = 1
+trans = addAlpha
+Alpha = 120,256
+
+[BG 黑鬼]
+type = anim
+actionno = 11
+start = -410,-150
+mask = 1
+sin.x = 25,7000,6
+sin.y = 8,7000,6
+zoomdelta = .99
+
+[BG Princess Peach];飞怪
+type = anim
+start = -500,-200
+layerno = 0
+actionno = 3
+velocity = 3, 0
+sin.y = 300,600,60
+tilespacing = 1500, 0
+tile = 1, 0
+
+[BG Princess Peach];飞怪
+type = anim
+start = -200,100
+layerno = 0
+actionno = 3
+velocity = 3, 0
+sin.y = 200,500,60
+tilespacing = 1500, 0
+tile = 1, 0
+
+[BG Princess Peach];飞怪
+type = anim
+start = 500,-100
+layerno = 0
+actionno = 4
+velocity = -3, 0
+sin.y = 200,700,60
+tilespacing = 1500, 0
+tile = 1, 0
+
+
+[BG Far];云雾
+type  = normal
+spriteno = 14, 0
+start = -300,-10
+delta = 0.8, .8
+velocity = .3, 0
+tilespacing = 0, 0
+tile = 1, 0
+trans = addAlpha
+Alpha = 80,456
+zoomdelta = .95
+
+
+
+
+
+
+[BG 主场景]
+type = anim
+actionno = 1
+start = -250,-180
+tile = 1, 0
+mask = 1
+tilespacing = 0, 0
+
+
+[BG 霸主2]
+type = anim
+actionno = 16
+start = -1250,-218
+sin.y = 15,500,60
+trans = addAlpha
+Alpha = 110,60
+sin.x = -15,500,60
+
+[BG 霸主]
+type = anim
+actionno = 13
+start = 20,-118
+mask = 1
+trans = addAlpha
+Alpha = 80,130
+
+[BG 树精霸主]
+type = anim
+actionno = 20
+start = -350,-75
+mask = 1
+trans = addAlpha
+Alpha = 130,80
+
+
+
+[BG 鬼手]
+type = anim
+actionno = 5
+start = 498,71
+mask = 1
+
+[BG 火鬼手]
+type = anim
+actionno = 8
+start = -680,80
+mask = 1
+
+[BG 火鬼手]
+type = anim
+actionno = 8
+start = 555,71
+mask = 1
+
+[BG 火鬼手]
+type = anim
+actionno = 15
+start = -250,190
+mask = 1
+layerno = 1
+
+[BG 火鬼手]
+type = anim
+actionno = 14
+start = -610,210
+mask = 1
+layerno = 1
+
+
+[BG 火鬼手]
+type = anim
+actionno = 14
+start = 100,170
+mask = 1
+layerno = 1
+
+
+[BG Princess Peach];蝙
+type = anim
+start = -500,-100
+layerno = 0
+actionno = 9
+sin.y = 40,700,60
+id = 1
+
+[BGCtrlDef Peregrinator]
+;每600帧数重置整个运动过程
+looptime = 1500
+ctrlID = 1
+
+;在动画帧数为0时，设置速度为往右1像素点每秒
+[BGCtrl Walk Right]
+type = VelSet
+time = 0
+x = 1.5
+
+[BGCtrl Turn to the Right]
+type = Anim
+time = 0
+value = 9
+
+;在动画帧数为400时，设置速度为往左1像素点每秒
+[BGCtrl Walk Left]
+type = VelSet
+time = 750
+x =-1.5
+
+[BGCtrl Turn to the Left]
+type = Anim
+time = 750
+value = 10
+
+
+[BG Princess Peach];蝙
+type = anim
+start = -270,-100
+layerno = 0
+actionno = 9
+sin.y = 120,700,60
+id = 2
+
+[BGCtrlDef Peregrinator]
+;每600帧数重置整个运动过程
+looptime = 1200
+ctrlID = 2
+
+;在动画帧数为0时，设置速度为往右1像素点每秒
+[BGCtrl Walk Right]
+type = VelSet
+time = 0
+x = 1.8
+
+[BGCtrl Turn to the Right]
+type = Anim
+time = 0
+value = 9
+
+;在动画帧数为400时，设置速度为往左1像素点每秒
+[BGCtrl Walk Left]
+type = VelSet
+time = 600
+x =-1.8
+
+[BGCtrl Turn to the Left]
+type = Anim
+time = 600
+value = 10
+
+
+[BG Princess Peach];蝙
+type = anim
+start = -170,-230
+layerno = 0
+actionno = 9
+sin.y = 60,700,60
+id = 3
+
+[BGCtrlDef Peregrinator]
+;每600帧数重置整个运动过程
+looptime = 900
+ctrlID = 3
+
+;在动画帧数为0时，设置速度为往右1像素点每秒
+[BGCtrl Walk Right]
+type = VelSet
+time = 0
+x = 1.9
+
+[BGCtrl Turn to the Right]
+type = Anim
+time = 0
+value = 9
+
+;在动画帧数为400时，设置速度为往左1像素点每秒
+[BGCtrl Walk Left]
+type = VelSet
+time = 450
+x =-1.9
+
+[BGCtrl Turn to the Left]
+type = Anim
+time = 450
+value = 10
+
+
+
+
+[BG Far];云雾
+type  = normal
+spriteno = 6, 0
+start = -300,165
+delta = 0.8, .8
+mask = 1
+velocity = .5, 0
+tilespacing = 0, 0
+tile = 1, 0
+trans = addAlpha
+Alpha = 80,456
+layerno = 1
+mask = 1
+
+[BG 幽灵]
+type = anim
+actionno = 6
+start = -860,-20
+mask = 1
+trans = addAlpha
+Alpha = 120,120
+
+
+
+
+[BG Tile]
+type  = normal
+spriteno = 2,0
+start = -200, 105
+delta = 1.2, 1
+mask = 1
+tile = 1, 0
+layerno = 1
+
+
+
+
+[Begin Action 1];主场景
+0,1,0,0,200
+0,1,0,0,5
+0,0,0,0,16
+0,2,0,0,117
+0,1,0,0,80
+0,0,0,0,15
+0,2,0,0,116
+0,1,0,0,7
+0,0,0,0,18
+0,2,0,0,119
+0,1,0,0,10
+0,0,0,0,20
+0,2,0,0,130
+0,1,0,0,100
+0,1,0,0,50
+0,0,0,0,16
+0,2,0,0,117
+0,1,0,0,80
+0,0,0,0,15
+0,2,0,0,11
+0,1,0,0,70
+0,0,0,0,18
+0,2,0,0,119
+0,1,0,0,10
+0,0,0,0,20
+0,2,0,0,130
+0,1,0,0,100
+0,1,0,0,50
+0,0,0,0,16
+0,2,0,0,117
+0,1,0,0,8
+0,0,0,0,15
+0,2,0,0,116
+0,1,0,0,7
+0,0,0,0,18
+0,5,0,0,10
+0,4,0,0,20
+0,3,0,0,130
+0,5,0,0,10
+0,4,0,0,20
+0,3,0,0,130
+0,5,0,0,10
+0,4,0,0,20
+0,3,0,0,130
+0,5,0,0,10
+0,4,0,0,20
+0,3,0,0,130
+0,5,0,0,10
+0,4,0,0,20
+0,3,0,0,130
+0,5,0,0,10
+0,4,0,0,20
+0,3,0,0,130
+0,5,0,0,10
+0,4,0,0,20
+0,3,0,0,130
+0,5,0,0,10
+0,4,0,0,20
+0,3,0,0,130
+LoopStart
+0,7,0,0,10
+0,6,0,0,20
+0,8,0,0,130
+0,7,0,0,10
+0,6,0,0,20
+0,8,0,0,13
+0,7,0,0,10
+0,7,0,0,20
+0,8,0,0,130
+0,7,0,0,500
+0,7,0,0,20
+0,8,0,0,13
+0,8,0,0,10
+0,6,0,0,20
+0,8,0,0,30
+0,7,0,0,10
+0,8,0,0,20
+0,8,0,0,13
+0,7,0,0,10
+0,6,0,0,20
+0,6,0,0,130
+0,6,0,0,20
+0,8,0,0,130
+0,7,0,0,10
+0,6,0,0,20
+0,8,0,0,130
+0,7,0,0,10
+0,6,0,0,20
+0,8,0,0,30
+
+
+
+[Begin Action 2];恶灵
+3,0,0,0,8
+3,1,0,0,9
+3,2,0,0,8
+3,3,0,0,9
+3,4,0,0,8
+3,5,0,0,8
+
+[Begin Action 3];飞头怪
+5,0,0,0,2
+5,1,0,0,2
+5,2,0,0,2
+5,3,0,0,2
+5,4,0,0,2
+5,5,0,0,2
+
+[Begin Action 4];飞头怪
+5,0,0,0,2,H
+5,1,0,0,2,H
+5,2,0,0,2,H
+5,3,0,0,2,H
+5,4,0,0,2,H
+5,5,0,0,2,H
+
+[Begin Action 5];鬼手
+4,0,0,0,8
+4,1,0,0,5
+4,2,0,0,8
+4,3,0,0,6
+4,4,0,0,8
+
+[Begin Action 6];幽灵
+7,0,0,0,5
+7,1,0,0,5
+7,2,0,0,5
+7,3,0,0,5
+7,4,0,0,5
+7,5,0,0,5
+7,6,0,0,5
+7,7,0,0,5
+7,15,0,0,5
+7,16,0,0,5
+7,17,0,0,5
+7,18,0,0,5
+7,19,0,0,5
+7,20,0,0,5
+7,21,0,0,5
+7,22,0,0,5
+7,23,0,0,5
+7,24,0,0,5
+7,24,0,0,5
+7,23,0,0,5
+7,22,0,0,5
+7,21,0,0,5
+7,20,0,0,5
+7,19,0,0,5
+7,18,0,0,5
+7,17,0,0,5
+7,16,0,0,5
+7,15,0,0,5
+7,7,0,0,3
+7,6,0,0,3
+7,5,0,0,3
+7,4,0,0,3
+7,3,0,0,3
+7,2,0,0,3
+7,1,0,0,3
+7,24,0,0,600
+
+[Begin Action 7];夜空
+
+1,0,0,0,2000
+1,1,0,0,2000
+1,2,0,0,1000
+1,3,0,0,1000
+1,4,0,0,-1
+
+[Begin Action 8];鬼灵
+8,14,0,0,800
+8,0,0,0,3
+8,1,0,0,3
+8,2,0,0,3
+8,3,0,0,8
+8,4,0,0,8
+8,5,0,0,8
+8,6,0,0,8
+8,7,0,0,8
+8,8,0,0,5
+8,9,0,0,5
+8,10,0,0,5
+8,11,0,0,5
+8,12,0,0,5
+8,13,0,0,5
+
+
+
+[Begin Action 9];蝙
+
+9,0,0,0,8
+9,1,0,0,8
+9,2,0,0,8
+9,3,0,0,8
+9,4,0,0,8
+
+[Begin Action 10];蝙
+9,0,0,0,8,h
+9,1,0,0,8,h
+9,2,0,0,8,h
+9,3,0,0,8,h
+9,4,0,0,8,h
+
+[Begin Action 11];鬼黑
+
+10,0,0,0,18
+10,1,0,0,18
+10,2,0,0,8
+10,3,0,0,18
+10,4,0,0,18
+10,5,0,0,8
+10,6,0,0,18
+10,7,0,0,8
+10,8,0,0,8
+10,9,0,0,18
+10,10,0,0,8
+10,11,0,0,8
+
+[Begin Action 12];恶灵2
+
+11,0,0,0,18
+11,1,0,0,18
+11,2,0,0,18
+11,3,0,0,18
+11,4,0,0,18
+11,5,0,0,18
+11,6,0,0,18
+11,7,0,0,18
+
+[Begin Action 13];恶灵霸主
+
+12,0,0,0,12,,AS110D256
+12,1,0,0,12,,AS110D256
+12,2,0,0,12,,AS110D256
+12,3,0,0,12,,AS110D256
+12,4,0,0,12,,AS110D256
+12,5,0,0,12,,AS110D256
+12,6,0,0,12,,AS110D256
+12,7,0,0,12,,AS110D256
+12,8,0,0,12,,AS110D256
+12,9,0,0,12,,AS110D256
+12,10,0,0,12,,AS110D256
+12,11,0,0,12,,AS110D256
+12,12,0,0,12,,AS110D256
+12,13,0,0,12,,AS110D256
+12,14,0,0,12,,AS110D256
+12,15,0,0,12,,AS110D256
+12,16,0,0,12,,AS110D256
+12,17,0,0,12,,AS110D256
+12,18,0,0,12,,AS110D256
+12,19,0,0,12,,AS110D256
+12,20,0,0,12,,AS110D256
+12,21,0,0,12,,AS110D256
+12,22,0,0,12,,AS110D256
+
+[Begin Action 14];鬼手
+8,14,0,0,1200
+8,0,0,0,8
+8,1,0,0,8
+8,2,0,0,8
+8,3,0,0,8
+8,4,0,0,8
+8,5,0,0,8
+8,6,0,0,8
+8,7,0,0,8
+8,8,0,0,5
+8,9,0,0,5
+8,10,0,0,5
+8,11,0,0,5
+8,12,0,0,5
+8,13,0,0,5
+
+
+[Begin Action 15];鬼手
+8,14,0,0,600
+8,0,0,0,8
+8,1,0,0,8
+8,2,0,0,8
+8,3,0,0,8
+8,4,0,0,8
+8,5,0,0,8
+8,6,0,0,40
+8,7,0,0,20
+8,8,0,0,6
+8,9,0,0,6
+8,10,0,0,6
+8,11,0,0,6
+8,12,0,0,6
+8,13,0,0,6
+
+
+[Begin Action 16];霸主
+13,0,0,0,12
+13,1,0,0,12
+13,2,0,0,12
+13,3,0,0,12
+
+[Begin Action 17];星
+15,4,0,0,3000
+LoopStart
+15,0,0,0,40
+15,1,0,0,50
+
+[Begin Action 18];星
+19,4,0,0,2500
+LoopStart
+19,0,0,0,40
+19,1,0,0,50
+
+
+
+[Begin Action 19];星
+18,4,0,0,3200
+LoopStart
+18,0,0,0,6
+18,1,0,0,500
+
+[Begin Action 20];霸主
+20,0,0,0,12
+20,1,0,0,12
+20,2,0,0,12
+20,3,0,0,12
+20,4,0,0,12
+20,5,0,0,12
+20,6,0,0,12
+20,7,0,0,12
+20,8,0,0,12
+20,9,0,0,12
+20,10,0,0,12
+20,11,0,0,12
+20,12,0,0,12
+20,13,0,0,12
+20,14,0,0,12
+20,15,0,0,12
+20,16,0,0,12
+20,17,0,0,12
+20,18,0,0,12
+20,19,0,0,12
+20,20,0,0,12
+20,21,0,0,12
+20,22,0,0,12
+20,15,0,0,12
+20,16,0,0,12
+20,17,0,0,12
+20,18,0,0,12
+20,19,0,0,12
+20,20,0,0,12
+20,21,0,0,12
+20,22,0,0,12
+20,15,0,0,12
+20,16,0,0,12
+20,17,0,0,12
+20,18,0,0,12
+20,19,0,0,12
+20,20,0,0,12
+20,21,0,0,12
+20,22,0,0,12
+20,15,0,0,12
+20,16,0,0,12
+20,17,0,0,12
+20,18,0,0,12
+20,19,0,0,12
+20,20,0,0,12
+20,21,0,0,12
+20,22,0,0,12
+20,15,0,0,12
+20,16,0,0,12
+20,17,0,0,12
+20,18,0,0,12
+20,19,0,0,12
+20,20,0,0,12
+20,21,0,0,12
+20,22,0,0,12
+20,15,0,0,12
+20,16,0,0,12
+20,17,0,0,12
+20,18,0,0,12
+20,19,0,0,12
+20,20,0,0,12
+20,21,0,0,12
+20,22,0,0,12
+20,15,0,0,12
+20,16,0,0,12
+20,17,0,0,12
+20,18,0,0,12
+20,19,0,0,12
+20,20,0,0,12
+20,21,0,0,12
+20,22,0,0,12
+20,15,0,0,12
+20,16,0,0,12
+20,17,0,0,12
+20,18,0,0,12
+20,19,0,0,12
+20,20,0,0,12
+20,21,0,0,12
+20,22,0,0,12
+20,15,0,0,12
+20,16,0,0,12
+20,17,0,0,12
+20,18,0,0,12
+20,19,0,0,12
+20,20,0,0,12
+20,21,0,0,12
+20,22,0,0,12
+20,15,0,0,12
+20,16,0,0,12
+20,17,0,0,12
+20,18,0,0,12
+20,19,0,0,12
+20,20,0,0,12
+20,21,0,0,12
+20,22,0,0,12
+
+
+
+
+
+
+
+
+
+
+
+
+
+
