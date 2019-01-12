@@ -129,4 +129,13 @@ public class GlobalPlayer
 			return null;
 		return player;
 	}
+
+	// 创建角色显示
+	public GameObject CreatePlayerDisplay()
+	{
+		if (m_PlayerConfig == null || !m_PlayerConfig.IsVaild || m_AirConfig == null || !m_AirConfig.IsVaild)
+			return null;
+		GameObject obj = new GameObject (m_PlayerName);
+		return obj;
+	}
 }

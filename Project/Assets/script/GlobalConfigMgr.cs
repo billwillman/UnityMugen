@@ -83,6 +83,7 @@ public class GlobalConfigMgr : MonoSingleton<GlobalConfigMgr> {
 					AttachAnim (defaultPlayer, player);
 					AddCnsList (defaultPlayer, player);
 					#endif
+					player.CreatePlayerDisplay ();
 				}
 			}
 		}
