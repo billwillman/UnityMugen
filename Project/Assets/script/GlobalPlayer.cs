@@ -135,7 +135,7 @@ public class GlobalPlayer
 	{
 		if (m_PlayerConfig == null || !m_PlayerConfig.IsVaild || m_AirConfig == null || !m_AirConfig.IsVaild)
 			return null;
-		GameObject obj = new GameObject (m_PlayerName);
+		GameObject obj = new GameObject (m_PlayerName, typeof(PlayerDisplay));
 		return obj;
 	}
 }
