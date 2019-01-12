@@ -1,0 +1,23 @@
+﻿<Properties StartupItem="Assembly-CSharp.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/script/DefaultLoader.cs">
+    <Files>
+      <File FileName="Assets/script/AppConfig.cs" Line="14" Column="1" />
+      <File FileName="Assets/script/Util/MonoSingleton.cs" Line="5" Column="1" />
+      <File FileName="Assets/script/Mugen/CNSConfig.cs" Line="20" Column="3" />
+      <File FileName="Assets/script/Mugen/IMugenLoader.cs" Line="6" Column="38" />
+      <File FileName="Assets/script/Mugen/SffConfig.cs" Line="148" Column="2" />
+      <File FileName="Assets/script/Mugen/PlayerConfig.cs" Line="100" Column="25" />
+      <File FileName="Assets/script/Mugen/ConfigReader.cs" Line="290" Column="10" />
+      <File FileName="Assets/script/GlobalConfigMgr.cs" Line="4" Column="34" />
+      <File FileName="Assets/script/GlobalPlayer.cs" Line="78" Column="21" />
+      <File FileName="Assets/script/Mugen/AirConfig.cs" Line="218" Column="121" />
+      <File FileName="Assets/script/DefaultLoaderPlayer.cs" Line="5" Column="51" />
+      <File FileName="Assets/script/DefaultLoader.cs" Line="11" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

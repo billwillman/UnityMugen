@@ -1,0 +1,14 @@
+/Users/yizeng/Mugen/Project/Temp/bin/Debug/UnityEngine.dll
+/Users/yizeng/Mugen/Project/Temp/bin/Debug/UnityEditor.dll
+/Users/yizeng/Mugen/Project/Temp/bin/Debug/UnityEngine.UI.dll
+/Users/yizeng/Mugen/Project/Temp/bin/Debug/UnityEngine.Networking.dll
+/Users/yizeng/Mugen/Project/Temp/bin/Debug/ICSharpCode.SharpZipLib.dll
+/Users/yizeng/Mugen/Project/Temp/bin/Debug/Mono.Cecil.dll
+/Users/yizeng/Mugen/Project/Temp/bin/Debug/Unity.SerializationLogic.dll
+/Users/yizeng/Mugen/Project/Temp/bin/Debug/Unity.DataContract.dll
+/Users/yizeng/Mugen/Project/Temp/bin/Debug/ICSharpCode.NRefactory.dll
+/Users/yizeng/Mugen/Project/Temp/bin/Debug/Unity.UNetWeaver.dll
+/Users/yizeng/Mugen/Project/Temp/bin/Debug/Unity.UNetWeaver.dll.mdb
+/Users/yizeng/Mugen/Project/Temp/bin/Debug/Unity.CecilTools.dll
+/Users/yizeng/Mugen/Project/Temp/bin/Debug/Mono.Cecil.Pdb.dll
+/Users/yizeng/Mugen/Project/Temp/bin/Debug/Mono.Cecil.Mdb.dll
