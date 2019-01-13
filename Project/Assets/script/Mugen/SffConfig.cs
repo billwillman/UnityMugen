@@ -324,14 +324,15 @@ namespace Mugen
 			return LoadActToSff(bytes);
 		}
 
-		public bool LoadChar(string charName, bool isLoadNormalPallet = true)
+		public bool LoadChar(string charName, string customSpriteName = "", bool isLoadNormalPallet = true)
 		{
 			if (isLoadNormalPallet)
 			{
 				ChangeNormalPallet(charName, charName);
 			}
-
-			string fileName = string.Format("{0}{1}/{2}.sff.bytes", AppConfig.GetInstance().PlayerRootDir, charName, charName);
+			if (string.IsNullOrEmpty (customSpriteName))
+				customSpriteName = charName;
+			string fileName = string.Format("{0}{1}/{2}.sff.bytes", AppConfig.GetInstance().PlayerRootDir, charName, customSpriteName);
 			byte[] bytes = AppConfig.GetInstance().Loader.LoadBytes(fileName);
 			return Load(bytes);
 		}

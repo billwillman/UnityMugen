@@ -2,6 +2,12 @@
 using Mugen;
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+
+public enum SpriteType
+{
+	Default = 0,
+}
 
 public class GlobalPlayer
 {
@@ -9,6 +15,9 @@ public class GlobalPlayer
 	private PlayerConfig m_PlayerConfig = null;
 	private AirConfig m_AirConfig = null;
 	private CNSConfig m_CNSConfig = null;
+	// SpriteType
+	private Dictionary<int, Texture2D> m_TexMap = new Dictionary<int, Texture2D> ();
+
 
 	public string PlayerName {
 		get {
