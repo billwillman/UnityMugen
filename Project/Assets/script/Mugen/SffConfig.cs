@@ -319,7 +319,7 @@ namespace Mugen
 			mNormalPallet = null;
 			if (string.IsNullOrEmpty(playerName) || string.IsNullOrEmpty(name))
 				return false;
-			string fileName = string.Format("{0}{1}/{2}.act.bytes", AppConfig.GetInstance().PlayerRootDir, playerName, name);
+			string fileName = string.Format("{0}@{1}/{2}.act.bytes", AppConfig.GetInstance().PlayerRootDir, playerName, name);
 			byte[] bytes = AppConfig.GetInstance().Loader.LoadBytes(fileName);
 			return LoadActToSff(bytes);
 		}
