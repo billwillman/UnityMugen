@@ -305,7 +305,18 @@ namespace Mugen
 										value = string.Empty;
 								}
 								isFound = true;
-								prop.SetValue(obj, value, null);
+								if (prop.PropertyType != value.GetType ()) {
+									if (prop.PropertyType == typeof(Int32)) {
+										int iv = int.Parse (value);
+										prop.SetValue (obj, iv, null);
+									} else if (prop.PropertyType == typeof(float)) {
+										float fv = float.Parse (value);
+										prop.SetValue (obj, fv, null);
+									}
+									else
+										prop.SetValue(obj, value, null);
+								} else
+									prop.SetValue(obj, value, null);
 								break;
 							}
 						}

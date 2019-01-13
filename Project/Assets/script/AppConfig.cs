@@ -8,6 +8,7 @@ public class AppConfig : MonoSingleton<AppConfig> {
 	public int ResolutionWidth = 1280;
 	public int ResolutionHeight = 720;
 	public string PlayerRootDir = "resources/mugen/char/";
+	public string SceneRootDir = "resources/mugen/scene/";
 
 	public IMugenLoader Loader = null;
 }

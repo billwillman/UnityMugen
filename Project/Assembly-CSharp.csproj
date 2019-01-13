@@ -212,6 +212,7 @@
      <Compile Include="Assets\script\Mugen\IMugenLoader.cs" />
      <Compile Include="Assets\script\Mugen\PlayerConfig.cs" />
      <Compile Include="Assets\script\Mugen\PlayerState.cs" />
+     <Compile Include="Assets\script\Mugen\SceneConfig.cs" />
      <Compile Include="Assets\script\Mugen\SffConfig.cs" />
      <Compile Include="Assets\script\Res\AssetCache.cs" />
      <Compile Include="Assets\script\Res\AssetLoader.cs" />
@@ -234,6 +235,7 @@
      <Compile Include="Assets\script\Res\XmlParser\XMLNode.cs" />
      <Compile Include="Assets\script\Res\XmlParser\XMLNodeList.cs" />
      <Compile Include="Assets\script\Res\XmlParser\XMLParser.cs" />
+     <Compile Include="Assets\script\StageMgr.cs" />
      <Compile Include="Assets\script\Util\CachedMonoBehaviour.cs" />
      <Compile Include="Assets\script\Util\CustomThread.cs" />
      <Compile Include="Assets\script\Util\DisposeObject.cs" />
