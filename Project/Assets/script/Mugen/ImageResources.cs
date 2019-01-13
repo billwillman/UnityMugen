@@ -70,6 +70,14 @@ namespace Mugen
 			}
 		}
 
+		public ImageLibrary ParentLib
+		{
+			get
+			{
+				return mParentLib;
+			}
+		}
+
 		private ImageLibrary mParentLib = null;
 		private Texture2D mLocalPalletTex = null;
 	}
