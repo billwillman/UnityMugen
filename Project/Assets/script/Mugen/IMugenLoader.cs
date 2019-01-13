@@ -4,5 +4,6 @@
 	{
 		string LoadText(string fileName);
 		byte[] LoadBytes (string fileName);
+		void DestroyObject(UnityEngine.Object obj);
 	}
 }

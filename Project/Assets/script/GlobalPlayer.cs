@@ -15,9 +15,14 @@ public class GlobalPlayer
 	private PlayerConfig m_PlayerConfig = null;
 	private AirConfig m_AirConfig = null;
 	private CNSConfig m_CNSConfig = null;
-	// SpriteType
-	private Dictionary<int, Texture2D> m_TexMap = new Dictionary<int, Texture2D> ();
 
+	public AirConfig AirCfg
+	{
+		get
+		{ 
+			return m_AirConfig;
+		}
+	}
 
 	public string PlayerName {
 		get {

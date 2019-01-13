@@ -2,10 +2,27 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Mugen;
 
+[RequireComponent(typeof(PlayerImageRes))]
 public class DefaultLoaderPlayer : MonoBehaviour {
 	public string PlayerName = string.Empty;
 	public string CnsName = string.Empty;
+
+	public string GetPlayerName()
+	{
+		string playerName = this.PlayerName;
+		if (string.IsNullOrEmpty (playerName))
+			playerName = gameObject.name;
+		return playerName;
+	}
+
+	public GlobalPlayer GetGlobalPayer()
+	{
+		GlobalPlayerLoaderResult result;
+		var ret = GlobalConfigMgr.GetInstance ().LoadPlayer (this, out result);
+		return ret;
+	}
 
 
 	public GlobalPlayerLoaderResult LoadResult = GlobalPlayerLoaderResult.None;

@@ -210,10 +210,12 @@
      <Compile Include="Assets\script\Mugen\CNSConfig.cs" />
      <Compile Include="Assets\script\Mugen\ConfigReader.cs" />
      <Compile Include="Assets\script\Mugen\IMugenLoader.cs" />
+     <Compile Include="Assets\script\Mugen\ImageResources.cs" />
      <Compile Include="Assets\script\Mugen\PlayerConfig.cs" />
      <Compile Include="Assets\script\Mugen\PlayerState.cs" />
      <Compile Include="Assets\script\Mugen\SceneConfig.cs" />
      <Compile Include="Assets\script\Mugen\SffConfig.cs" />
+     <Compile Include="Assets\script\PlayerImageRes.cs" />
      <Compile Include="Assets\script\Res\AssetCache.cs" />
      <Compile Include="Assets\script\Res\AssetLoader.cs" />
      <Compile Include="Assets\script\Res\AsyncOptionMgr.cs" />

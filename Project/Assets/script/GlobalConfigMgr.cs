@@ -26,10 +26,7 @@ public class GlobalConfigMgr : MonoSingleton<GlobalConfigMgr> {
 			result = GlobalPlayerLoaderResult.ParamError;
 			return null;
 		}
-		string playerName = loaderPlayer.PlayerName;
-		if (string.IsNullOrEmpty (playerName))
-			playerName = loaderPlayer.gameObject.name;
-		
+		string playerName = loaderPlayer.GetPlayerName();
 		return LoadPlayer (playerName, out result, loaderPlayer.CnsName);
 	}
 

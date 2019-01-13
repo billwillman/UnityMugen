@@ -19,4 +19,9 @@ public class DefaultLoader : MonoBehaviour, IMugenLoader {
 	{
 		return ResourceMgr.Instance.LoadBytes (fileName);
 	}
+
+	public void DestroyObject(UnityEngine.Object obj)
+	{
+		ResourceMgr.Instance.DestroyObject (obj);
+	}
 }
