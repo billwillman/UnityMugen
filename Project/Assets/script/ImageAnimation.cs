@@ -41,6 +41,13 @@ public class ImageAnimation : MonoBehaviour {
         {
             m_IsLoop = isLoop;
             m_State = state;
+
+			CacheAnimation.Stop ();
+			if(isLoop)
+				CacheAnimation.wrapMode = WrapMode.Loop;
+			else
+				CacheAnimation.wrapMode = WrapMode.Once;
+			CacheAnimation.Play();
         }
         return ret;
     }
@@ -250,6 +257,28 @@ public class ImageAnimation : MonoBehaviour {
         return UpdateFrame(CurFrame + 1);
     }
 
+	public bool PrevFrame()
+	{
+		return UpdateFrame(m_CurFrame - 1);
+	}
+
+	public void EndFrame()
+	{
+		if ((m_FrameList == null) || (m_FrameList.Count <= 0))
+			return;
+
+		DoEndFrame();
+		if (IsLoop || m_LoopStart >= 0)
+		{
+			int loopStart = m_LoopStart; 
+			if (loopStart < 0)
+				loopStart = 0;
+			if (UpdateFrame (loopStart)) {
+				// 移动Animation
+			}
+		}
+	}
+
     public void Stop()
     {
         if (m_FrameList == null || m_FrameList.Count <= 0)
@@ -385,6 +414,7 @@ public class ImageAnimation : MonoBehaviour {
     // 当前帧
     private static float _cImageAnimationScale = 0.03f;
     private int m_CurFrame = -1;
+	private int m_LoopStart = -1;
     private Animation m_Animation = null;
     private AnimationClip m_Clip = null;
     private GameObject m_GameObj = null;

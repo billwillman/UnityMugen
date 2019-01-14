@@ -70,6 +70,9 @@ public class PlayerDisplayEditor : Editor {
                 m_SelectedMap[m_LastDisplay.GetInstanceID()] = m_StateSelected;
             }
         }
+
+		int curFrame = m_LastDisplay.ImageCurrentFrame;
+		EditorGUILayout.LabelField ("动画当前帧", curFrame.ToString ());
     }
 
 	public override void OnInspectorGUI ()

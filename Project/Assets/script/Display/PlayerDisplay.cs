@@ -99,6 +99,16 @@ public class PlayerDisplay : BaseResLoader {
             m_LoaderPlayer = null;
     }
 
+	public int ImageCurrentFrame
+	{
+		get {
+			ImageAnimation ani = this.ImageAni;
+			if (ani == null)
+				return -1;
+			return ani.CurFrame;
+		}
+	}
+
     public ImageAnimation ImageAni
     {
         get
