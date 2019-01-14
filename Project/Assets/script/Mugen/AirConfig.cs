@@ -21,18 +21,22 @@ namespace Mugen
 		public int Tick;
 		public ActionFlip Flip;
         public bool IsLoopStart;
-        public Rect[] localClsnArr;
-        public Rect[] defaultClsnArr;
+        // 防御盒
+        public Rect[] localClsn2Arr;
+        public Rect[] defaultClsn2Arr;
+        public Rect[] localCls1Arr;
 	}
 
 	public class BeginAction
 	{
 		private static readonly string _cClsn2Default = "Clsn2Default:";
         private static readonly string _cClsn2 = "Clsn2:";
+        private static readonly string _cClsn1 = "Clsn1:";
 
         private static readonly string _cClsn2DKeyName = "Clsn2";
+        private static readonly string _cClsn1DKeyName = "Clsn1";
 
-        private bool ReadClsn2(out Rect[] clsn2DArr, ConfigSection section, ref int aniStartIdx, string clsnName)
+        private bool ReadClsn(out Rect[] clsn2DArr, ConfigSection section, ref int aniStartIdx, string clsnName, string clsnKeyName)
         {
             clsn2DArr = null;
             if (string.IsNullOrEmpty(clsnName))
@@ -65,10 +69,10 @@ namespace Mugen
                         {
                             if (!string.IsNullOrEmpty(key) && !string.IsNullOrEmpty(value))
                             {
-                                int idx = key.IndexOf(_cClsn2DKeyName, StringComparison.CurrentCultureIgnoreCase);
+                                int idx = key.IndexOf(clsnKeyName, StringComparison.CurrentCultureIgnoreCase);
                                 if (idx >= 0)
                                 {
-                                    key = key.Substring(idx + _cClsn2DKeyName.Length);
+                                    key = key.Substring(idx + clsnKeyName.Length);
                                     int startIdx = key.IndexOf("[");
                                     int endIdx = key.IndexOf("]");
                                     if (startIdx >= 0 && endIdx >= 0 && endIdx > startIdx + 1)
@@ -131,11 +135,12 @@ namespace Mugen
                 int aniStartIdx = 0;
                 Rect[] clsn2DefaultArr = null;
 
-                ReadClsn2(out clsn2DefaultArr, section, ref aniStartIdx, _cClsn2Default);
+                ReadClsn(out clsn2DefaultArr, section, ref aniStartIdx, _cClsn2Default, _cClsn2DKeyName);
 
                 
                 string str = section.GetContent(aniStartIdx);
-                Rect[] frameClsn = null;
+                Rect[] frameClsn2 = null;
+                Rect[] frameClsn1 = null;
 				if (!string.IsNullOrEmpty(str))
 				{
 					List<string> arr = new List<string>();
@@ -163,7 +168,7 @@ namespace Mugen
                         if (line.StartsWith(_cClsn2Default))
                         {
                             aniStartIdx = i;
-                            if (ReadClsn2(out clsn2DefaultArr, section, ref aniStartIdx, _cClsn2Default))
+                            if (ReadClsn(out clsn2DefaultArr, section, ref aniStartIdx, _cClsn2Default, _cClsn2DKeyName))
                                 i = aniStartIdx;
                             else
                                 ++i;
@@ -173,7 +178,17 @@ namespace Mugen
                         if (line.StartsWith(_cClsn2))
                         {
                             aniStartIdx = i;
-                            if (ReadClsn2(out frameClsn, section, ref aniStartIdx, _cClsn2))
+                            if (ReadClsn(out frameClsn2, section, ref aniStartIdx, _cClsn2, _cClsn2DKeyName))
+                                i = aniStartIdx;
+                            else
+                                ++i;
+                            continue;
+                        }
+
+                        if (line.StartsWith(_cClsn1))
+                        {
+                            aniStartIdx = i;
+                            if (ReadClsn(out frameClsn1, section, ref aniStartIdx, _cClsn1, _cClsn1DKeyName))
                                 i = aniStartIdx;
                             else
                                 ++i;
@@ -208,13 +223,18 @@ namespace Mugen
 								frame.Flip = flipMode;
                                 if (aniStartIdx > 0 && clsn2DefaultArr != null)
                                 {
-                                    frame.defaultClsnArr = clsn2DefaultArr;
+                                    frame.defaultClsn2Arr = clsn2DefaultArr;
                                     clsn2DefaultArr = null;
                                 }
-                                if (frameClsn != null)
+                                if (frameClsn2 != null)
                                 {
-                                    frame.localClsnArr = frameClsn;
-                                    frameClsn = null;
+                                    frame.localClsn2Arr = frameClsn2;
+                                    frameClsn2 = null;
+                                }
+                                if (frameClsn1 != null)
+                                {
+                                    frame.localCls1Arr = frameClsn1;
+                                    frameClsn1 = null;
                                 }
                                 if (isLoopStart)
                                 {
@@ -352,6 +372,11 @@ namespace Mugen
 				ret = null;
 			return ret;
 		}
+
+        public Dictionary<PlayerState, BeginAction>.Enumerator GetStateIter()
+        {
+            return mBeginActionMap.GetEnumerator();
+        }
 
 		private string mPlayerName = string.Empty;
 		private static readonly string _cBeginAction = "Begin Action";

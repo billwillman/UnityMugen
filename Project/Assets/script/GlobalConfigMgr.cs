@@ -20,6 +20,14 @@ public class GlobalConfigMgr : MonoSingleton<GlobalConfigMgr> {
 	// 默认加载的PlayerName, 可用于测试
 	public List<DefaultLoaderPlayer> m_DefaultLoaderPlayers = null;
 
+    public bool HasLoadPlayer(DefaultLoaderPlayer loaderPlayer)
+    {
+        if (loaderPlayer == null)
+            return false;
+        string playerName = loaderPlayer.GetPlayerName();
+        return m_PlayerDict.ContainsKey(playerName);
+    }
+
 	public GlobalPlayer LoadPlayer(DefaultLoaderPlayer loaderPlayer, out GlobalPlayerLoaderResult result)
 	{
 		if (loaderPlayer == null) {
@@ -27,10 +35,11 @@ public class GlobalConfigMgr : MonoSingleton<GlobalConfigMgr> {
 			return null;
 		}
 		string playerName = loaderPlayer.GetPlayerName();
-		return LoadPlayer (playerName, out result, loaderPlayer.CnsName);
+		GlobalPlayer ret = LoadPlayer (playerName, out result, loaderPlayer.CnsName);
+        return ret;
 	}
 
-	public GlobalPlayer LoadPlayer(string playerName, out GlobalPlayerLoaderResult result, string cnsName = "")
+	private GlobalPlayer LoadPlayer(string playerName, out GlobalPlayerLoaderResult result, string cnsName = "")
 	{
 		result = GlobalPlayerLoaderResult.Ok;
 		GlobalPlayer player;
@@ -112,7 +121,7 @@ public class GlobalConfigMgr : MonoSingleton<GlobalConfigMgr> {
 					AddCnsList (defaultPlayer, player);
 					AttachPals (defaultPlayer, player);
 					#endif
-					player.CreatePlayerDisplay ();
+					player.CreatePlayerDisplay (defaultPlayer);
 				}
 			}
 		}

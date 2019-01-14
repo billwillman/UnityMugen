@@ -8,6 +8,17 @@ using Mugen;
 public class DefaultLoaderPlayer : MonoBehaviour {
 	public string PlayerName = string.Empty;
 	public string CnsName = string.Empty;
+    private PlayerImageRes m_ImageLibrary = null;
+
+    public PlayerImageRes ImageRes
+    {
+        get
+        {
+            if (m_ImageLibrary == null)
+                m_ImageLibrary = GetComponent<PlayerImageRes>();
+            return m_ImageLibrary;
+        }
+    }
 
 	public string GetPlayerName()
 	{
@@ -19,6 +30,8 @@ public class DefaultLoaderPlayer : MonoBehaviour {
 
 	public GlobalPlayer GetGlobalPayer()
 	{
+        if (!GlobalConfigMgr.GetInstance().HasLoadPlayer(this))
+            return null;
 		GlobalPlayerLoaderResult result;
 		var ret = GlobalConfigMgr.GetInstance ().LoadPlayer (this, out result);
 		return ret;

@@ -21,6 +21,14 @@ public class PlayerImageRes : MonoBehaviour {
 		}
 	}
 
+    public ImageLibrary ImgLib
+    {
+        get
+        {
+            return m_ImgLib;
+        }
+    }
+
 	void OnDestroy()
 	{
 		Clear ();
