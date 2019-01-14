@@ -29,7 +29,12 @@ public class ImageAnimation : MonoBehaviour {
             return false;
         var imgLib = imgRes.ImgLib;
         if (imgLib == null)
-            return false;
+        {
+            imgRes.Init();
+            imgLib = imgRes.ImgLib;
+            if (imgLib == null)
+                return false;
+        }
         m_FrameList = imgLib.GetAnimationNodeList(state);
         bool ret = DoInitAnimation();
         if (ret)

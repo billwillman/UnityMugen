@@ -332,7 +332,7 @@ namespace Mugen
 			}
 			if (string.IsNullOrEmpty (customSpriteName))
 				customSpriteName = charName;
-			string fileName = string.Format("{0}{1}/{2}.sff.bytes", AppConfig.GetInstance().PlayerRootDir, charName, customSpriteName);
+			string fileName = string.Format("{0}@{1}/{2}.sff.bytes", AppConfig.GetInstance().PlayerRootDir, charName, customSpriteName);
 			byte[] bytes = AppConfig.GetInstance().Loader.LoadBytes(fileName);
 			return Load(bytes);
 		}

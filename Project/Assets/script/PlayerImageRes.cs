@@ -41,6 +41,7 @@ public class PlayerImageRes : MonoBehaviour {
 		m_ImgLib = new ImageLibrary (Is32BitPallet);
 		DefaultLoaderPlayer loadPlayer = GetComponent<DefaultLoaderPlayer> ();
 		var player = loadPlayer.GetGlobalPayer ();
-		LoadOk = m_ImgLib.LoadChar (loadPlayer.GetPlayerName (), player.AirCfg, player.PlayerCfg.Files.sprite); 
+        string spriteName = System.IO.Path.GetFileNameWithoutExtension(player.PlayerCfg.Files.sprite);
+        LoadOk = m_ImgLib.LoadChar(loadPlayer.GetPlayerName(), player.AirCfg, spriteName); 
 	}
 }

@@ -54,7 +54,9 @@ public class PlayerDisplayEditor : Editor {
         int newSelected = EditorGUILayout.Popup("角色动作", m_StateSelected, m_VaildStateNameList);
         if (m_StateSelected != newSelected)
         {
-            m_StateSelected = newSelected;
+            var state = m_VaildStateList[newSelected];
+            if (m_LastDisplay.PlayAni(state, true))
+                m_StateSelected = newSelected;
         }
     }
 
