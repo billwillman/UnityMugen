@@ -130,6 +130,7 @@
      <Compile Include="Assets\NGUI\Scripts\Editor\UIWidgetContainerEditor.cs" />
      <Compile Include="Assets\NGUI\Scripts\Editor\UIWidgetInspector.cs" />
      <Compile Include="Assets\NGUI\Scripts\Editor\UIWrapContentEditor.cs" />
+     <Compile Include="Assets\script\Editor\PlayerDisplayEditor.cs" />
      <Compile Include="Assets\script\Res\Editor\ABLinkFile.cs" />
      <Compile Include="Assets\script\Res\Editor\BuildPkg.cs" />
      <Compile Include="Assets\script\Res\Editor\ResourceMgrMonitorEditor.cs" />

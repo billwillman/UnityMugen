@@ -9,6 +9,7 @@ public class AppConfig : MonoSingleton<AppConfig> {
 	public int ResolutionHeight = 720;
 	public string PlayerRootDir = "resources/mugen/char/";
 	public string SceneRootDir = "resources/mugen/scene/";
+	public string PalleetMatFileName = "resources/mugen/@mat/palleetmaterial.mat";
 
 	public IMugenLoader Loader = null;
 

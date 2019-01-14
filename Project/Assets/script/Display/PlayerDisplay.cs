@@ -3,9 +3,11 @@ using System.Collections;
 using Mugen;
 
 [RequireComponent(typeof(ImageAnimation))]
-public class PlayerDisplay : MonoBehaviour {
+[RequireComponent(typeof(SpriteRenderer))]
+public class PlayerDisplay : BaseResLoader {
 
     private DefaultLoaderPlayer m_LoaderPlayer = null;
+	private Material m_OrgSpMat = null;
 
     public DefaultLoaderPlayer LoaderPlayer
     {
@@ -28,6 +30,24 @@ public class PlayerDisplay : MonoBehaviour {
             return ret;
         }
     }
+
+	void InitSpriteRender()
+	{
+		var sp = this.SpriteRender;
+		if (sp != null) {
+			LoadMaterial(ref m_OrgSpMat, AppConfig.GetInstance ().PalleetMatFileName);
+			if (m_OrgSpMat != null) {
+				Material mat = GameObject.Instantiate (m_OrgSpMat);
+				AddOrSetInstanceMaterialMap (sp.GetInstanceID (), mat);
+				sp.sharedMaterial = mat;
+			}
+		}
+	}
+
+	void Awake()
+	{
+		InitSpriteRender ();
+	}
 
     public void Init(DefaultLoaderPlayer loaderPlayer)
     {
@@ -89,5 +109,15 @@ public class PlayerDisplay : MonoBehaviour {
         }
     }
 
+	public SpriteRenderer SpriteRender
+	{
+		get {
+			if (m_SpriteRender == null)
+				m_SpriteRender = GetComponent<SpriteRenderer> ();
+			return m_SpriteRender;
+		}
+	}
+
     private ImageAnimation m_ImgAni = null;
+	private SpriteRenderer m_SpriteRender = null;
 }
