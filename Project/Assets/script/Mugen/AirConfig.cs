@@ -20,52 +20,166 @@ namespace Mugen
 		public int Index;
 		public int Tick;
 		public ActionFlip Flip;
+        public bool IsLoopStart;
+        public Rect[] localClsnArr;
+        public Rect[] defaultClsnArr;
 	}
 
 	public class BeginAction
 	{
 		private static readonly string _cClsn2Default = "Clsn2Default:";
+        private static readonly string _cClsn2 = "Clsn2:";
+
+        private static readonly string _cClsn2DKeyName = "Clsn2";
+
+        private bool ReadClsn2(out Rect[] clsn2DArr, ConfigSection section, ref int aniStartIdx, string clsnName)
+        {
+            clsn2DArr = null;
+            if (string.IsNullOrEmpty(clsnName))
+                return false;
+            string str = section.GetContent(aniStartIdx);
+            if (string.IsNullOrEmpty(str))
+            {
+                clsn2DArr = null;
+                return false;
+            }
+
+            bool ret = false;
+            if (str.StartsWith(clsnName))
+            {
+                string defClsStr = str.Substring(clsnName.Length).Trim();
+                int defClsCnt;
+                if (!int.TryParse(defClsStr, out defClsCnt))
+                {
+                    clsn2DArr = null;
+                    return false;
+                }
+                if (defClsCnt > 0)
+                {
+                    clsn2DArr = new Rect[defClsCnt];
+                    for (int i = aniStartIdx + 1; i <= aniStartIdx + defClsCnt; ++i)
+                    {
+                        string key;
+                        string value;
+                        if (section.GetKeyValue(i, out key, out value))
+                        {
+                            if (!string.IsNullOrEmpty(key) && !string.IsNullOrEmpty(value))
+                            {
+                                int idx = key.IndexOf(_cClsn2DKeyName, StringComparison.CurrentCultureIgnoreCase);
+                                if (idx >= 0)
+                                {
+                                    key = key.Substring(idx + _cClsn2DKeyName.Length);
+                                    int startIdx = key.IndexOf("[");
+                                    int endIdx = key.IndexOf("]");
+                                    if (startIdx >= 0 && endIdx >= 0 && endIdx > startIdx + 1)
+                                    {
+                                        string idxStr = key.Substring(startIdx + 1, endIdx - startIdx - 1);
+                                        if (!string.IsNullOrEmpty(idxStr))
+                                        {
+                                            idxStr = idxStr.Trim();
+                                            if (!string.IsNullOrEmpty(idxStr))
+                                            {
+                                                int index = int.Parse(idxStr);
+                                                if (index >= 0 && index < clsn2DArr.Length)
+                                                {
+                                                    string[] values = value.Split(ConfigSection._cContentArrSplit, StringSplitOptions.RemoveEmptyEntries);
+                                                    if (values != null && values.Length > 0)
+                                                    {
+                                                        Rect r = new Rect();
+                                                        if (values.Length >= 4)
+                                                        {
+                                                            string v = values[0].Trim();
+                                                            int left = int.Parse(v);
+                                                            v = values[1].Trim();
+                                                            int top = int.Parse(v);
+                                                            v = values[2].Trim();
+                                                            int right = int.Parse(v);
+                                                            v = values[3].Trim();
+                                                            int bottom = int.Parse(v);
+                                                            r.min = new Vector2(left, top);
+                                                            r.max = new Vector2(right, bottom);
+                                                        }
+                                                        clsn2DArr[index] = r;
+                                                        ret = true;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+                    aniStartIdx += defClsCnt + 1;
+                }
+            }
+
+            if (!ret)
+            {
+                clsn2DArr = null;
+            }
+
+            return ret;
+        }
 
 		public BeginAction(PlayerState state, ConfigSection section)
 		{
 			this.State = state;
 			if (section != null)
 			{
-				string str = section.GetContent(0);
-				Rect[] clsn2DefaultArr = null;
+                int aniStartIdx = 0;
+                Rect[] clsn2DefaultArr = null;
+
+                ReadClsn2(out clsn2DefaultArr, section, ref aniStartIdx, _cClsn2Default);
+
+                
+                string str = section.GetContent(aniStartIdx);
+                Rect[] frameClsn = null;
 				if (!string.IsNullOrEmpty(str))
 				{
-					int aniStartIdx = 0;
-					if (str.StartsWith(_cClsn2Default))
-					{
-						string defClsStr = str.Substring(_cClsn2Default.Length).Trim();
-						int defClsCnt;
-						if (!int.TryParse(defClsStr, out defClsCnt))
-							return;
-
-						// default clsn2
-						if (defClsCnt > 0)
-						{
-							clsn2DefaultArr = new Rect[defClsCnt];
-							for (int i = 1; i <= defClsCnt; ++i)
-							{
-								string key;
-								string value;
-								if (section.GetKeyValue(i, out key, out value))
-								{
-									// 未完
-
-								}
-							}
-						}
-
-						aniStartIdx = defClsCnt + 1;
-					}
-
 					List<string> arr = new List<string>();
-					for (int i = aniStartIdx; i < section.ContentListCount; ++i)
+                    bool isLoopStart = false;
+                    int i = aniStartIdx;
+                    while (i < section.ContentListCount)
 					{
 						arr.Clear();
+
+                        string line = section.GetContent(i);
+                        if (string.IsNullOrEmpty(line))
+                        {
+                            ++i;
+                            continue;
+                        }
+
+                        if (line.StartsWith("Loopstart", StringComparison.CurrentCultureIgnoreCase))
+                        {
+                            isLoopStart = true;
+                            ++i;
+                            continue;
+                        }
+
+                        // 说明需要设置默认clsDefault
+                        if (line.StartsWith(_cClsn2Default))
+                        {
+                            aniStartIdx = i;
+                            if (ReadClsn2(out clsn2DefaultArr, section, ref aniStartIdx, _cClsn2Default))
+                                i = aniStartIdx;
+                            else
+                                ++i;
+                            continue;
+                        }
+
+                        if (line.StartsWith(_cClsn2))
+                        {
+                            aniStartIdx = i;
+                            if (ReadClsn2(out frameClsn, section, ref aniStartIdx, _cClsn2))
+                                i = aniStartIdx;
+                            else
+                                ++i;
+                            continue;
+                        }
+
 						if (section.GetArray(i, arr))
 						{
 							if (arr.Count >= 5)
@@ -92,9 +206,25 @@ namespace Mugen
 								frame.Index = ImageIndex;
 								frame.Tick = Tick;
 								frame.Flip = flipMode;
+                                if (aniStartIdx > 0 && clsn2DefaultArr != null)
+                                {
+                                    frame.defaultClsnArr = clsn2DefaultArr;
+                                    clsn2DefaultArr = null;
+                                }
+                                if (frameClsn != null)
+                                {
+                                    frame.localClsnArr = frameClsn;
+                                    frameClsn = null;
+                                }
+                                if (isLoopStart)
+                                {
+                                    frame.IsLoopStart = isLoopStart;
+                                    isLoopStart = false;
+                                }
 								ActionFrameList.Add(frame);
 							}
 						}
+                        ++i;
 					}
 				}
 			}

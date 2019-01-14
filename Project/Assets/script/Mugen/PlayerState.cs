@@ -159,4 +159,22 @@ namespace Mugen
 		// not used
 		psPlayerStateCount 
 	}
+
+    public static class PlayerStateEnumValues
+    {
+        private static Array m_Values = null;
+        public static Array GetValues()
+        {
+            if (m_Values == null)
+            {
+                m_Values = System.Enum.GetValues(typeof(PlayerState));
+            }
+            return m_Values;
+        }
+
+        public static Array GetEnums(this PlayerState state)
+        {
+            return PlayerStateEnumValues.GetValues();
+        }
+    }
 }

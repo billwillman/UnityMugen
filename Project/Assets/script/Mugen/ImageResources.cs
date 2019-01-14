@@ -169,8 +169,12 @@ namespace Mugen
 			if (string.IsNullOrEmpty(charName) || airCfg == null || !airCfg.IsVaild)
 				return false;
 			
-			for (PlayerState action = 0; action < PlayerState.psPlayerStateCount; ++action)
-			{
+			//for (PlayerState action = 0; action < PlayerState.psPlayerStateCount; ++action)
+            foreach (PlayerState action in PlayerStateEnumValues.GetValues())
+            {
+                if (action == PlayerState.psPlayerStateCount)
+                    continue;
+
 				BeginAction beginAction = airCfg.GetBeginAction(action);
 				if (beginAction == null || beginAction.ActionFrameListCount <= 0)
 					continue;
@@ -223,8 +227,12 @@ namespace Mugen
 				return false;
 			}
 
-			for (PlayerState group = 0; group < PlayerState.psPlayerStateCount; ++group)
-			{
+			//for (PlayerState group = 0; group < PlayerState.psPlayerStateCount; ++group)
+            foreach (PlayerState group in PlayerStateEnumValues.GetValues())
+            {
+                if (group == PlayerState.psPlayerStateCount)
+                    continue;
+
 				int image = 0;
 				SFFSUBHEADER h;
 				if (!sf.GetSubHeader((int)group, image, out h))

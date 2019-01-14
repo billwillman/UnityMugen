@@ -17,7 +17,7 @@ namespace Mugen
 	public class ConfigSection
 	{
 		private static readonly string[] _cContentSplit = {"\n"};
-		private static readonly string[] _cContentArrSplit = {","};
+		public static readonly string[] _cContentArrSplit = {","};
 		private static readonly string _cConfigName = "ConfigName";
 		public ConfigSection(string tile, string content)
 		{
