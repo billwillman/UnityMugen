@@ -52,6 +52,29 @@ public class ImageAnimation : MonoBehaviour {
         return ret;
     }
 
+	public List<ImageFrame> GetImageFrameList()
+	{
+		PlayerDisplay displayer = GetComponent<PlayerDisplay>();
+		if (displayer == null)
+			return null;
+		var loaderPlayer = displayer.LoaderPlayer;
+		if (loaderPlayer == null)
+			return null;
+		var imgRes = loaderPlayer.ImageRes;
+		if (imgRes == null)
+			return null;
+		var imgLib = imgRes.ImgLib;
+		if (imgLib == null)
+		{
+			imgRes.Init();
+			imgLib = imgRes.ImgLib;
+			if (imgLib == null)
+				return null;
+		}
+
+		return imgLib.GetImageFrameList(this.m_State);
+	}
+
     private bool DoInitAnimation()
     {
         if (m_FrameList == null || m_FrameList.Count <= 0)

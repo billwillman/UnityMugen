@@ -128,6 +128,62 @@ public class PlayerDisplay : BaseResLoader {
 		}
 	}
 
+	void UpdateRenderer(ImageFrame frame, ActionFlip flip)
+	{
+		SpriteRenderer r = this.SpriteRender;
+		if (r == null)
+			return;
+
+		r.sprite = frame.Data;
+		if (r.sprite != null)
+		{
+			Transform trans = r.transform;
+			Quaternion quat = trans.localRotation;
+			switch(flip)
+			{
+			case ActionFlip.afH:
+				quat.eulerAngles += new Vector3(0, 180, 0);
+				break;
+			case ActionFlip.afV:
+				quat.eulerAngles += new Vector3(180, 0, 0);
+				break;
+			case ActionFlip.afHV:
+				quat.eulerAngles += new Vector3(180, 180, 0);
+				break;
+			default:
+				quat.eulerAngles = Vector3.zero;
+				break;
+			}
+
+			trans.localRotation = quat;
+		}
+
+		Material mat = r.sharedMaterial;
+		if (mat != null) {
+			//mat.SetTexture ("_PalletTex", frame.PalletTexture);
+			mat.SetTexture ("_MainTex", frame.Data.texture);
+		}
+	}
+
+	void OnImageAnimationFrame(ImageAnimation target)
+	{
+		if (target == null)
+			return;
+		SpriteRenderer r = this.SpriteRender;
+		if (r == null)
+			return;
+		var frameList = target.GetImageFrameList ();
+		if (frameList == null || frameList.Count <= 0)
+			return;
+		var aniNode = target.CurAniNode;
+		if (aniNode.frameIndex < 0 || aniNode.frameIndex >= frameList.Count)
+			return;
+		var frame = frameList[aniNode.frameIndex];
+		if (frame == null)
+			return;
+		UpdateRenderer(frame, aniNode.flipTag);
+	}
+
     private ImageAnimation m_ImgAni = null;
 	private SpriteRenderer m_SpriteRender = null;
 }
