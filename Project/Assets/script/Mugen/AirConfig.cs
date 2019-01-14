@@ -230,46 +230,6 @@ namespace Mugen
 			}
 		}
 
-		// def
-		protected List<Rect> Clsn2List
-		{
-			get
-			{
-				if (mClsn2List == null)
-					mClsn2List = new List<Rect>();
-				return mClsn2List;
-			}
-		}
-
-		// attack
-		protected List<Rect> Clsn1Rect
-		{
-			get
-			{
-				if (mClsn1List == null)
-					mClsn1List = new List<Rect>();
-				return mClsn1List;
-			}
-		}
-
-		// def
-		public bool HasClsn2
-		{
-			get
-			{
-				return (mClsn2List != null) && (mClsn2List.Count > 0);
-			}
-		}
-
-		// attack
-		public bool HasClsn1
-		{
-			get
-			{
-				return (mClsn1List != null) && (mClsn1List.Count > 0);
-			}
-		}
-
 		public PlayerState State
 		{
 			get;
@@ -306,11 +266,6 @@ namespace Mugen
 				return mActionFrameList;
 			}
 		}
-
-		// attack
-		private List<Rect> mClsn1List = null;
-		// def
-		private List<Rect> mClsn2List = null;
 
 		private List<ActionFrame> mActionFrameList = null;
 	}
