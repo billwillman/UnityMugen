@@ -356,6 +356,11 @@ public class ImageAnimation : MonoBehaviour {
         m_IsLoop = false;
     }
 
+    void OnApplicationQuit()
+    {
+        Clear();
+    }
+
     void OnDestroy()
     {
         if (!AppConfig.IsAppQuit)

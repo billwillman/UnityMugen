@@ -12,18 +12,20 @@ public class PlayerImageRes : MonoBehaviour {
 
 	public bool LoadOk = false;
 
-	public void Clear()
-	{
-        if (!AppConfig.IsAppQuit)
+    void OnApplicationQuit()
+    {
+        Clear();
+    }
+
+    public void Clear()
+    {
+        LoadOk = false;
+        if (m_ImgLib != null)
         {
-            LoadOk = false;
-            if (m_ImgLib != null)
-            {
-                m_ImgLib.Dispose();
-                m_ImgLib = null;
-            }
+            m_ImgLib.Dispose();
+            m_ImgLib = null;
         }
-	}
+    }
 
     public ImageLibrary ImgLib
     {
@@ -35,7 +37,8 @@ public class PlayerImageRes : MonoBehaviour {
 
 	void OnDestroy()
 	{
-		Clear ();
+        if (!AppConfig.IsAppQuit)
+		    Clear ();
 	}
 
 	public void Init()
