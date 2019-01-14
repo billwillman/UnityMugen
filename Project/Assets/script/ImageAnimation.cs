@@ -358,7 +358,10 @@ public class ImageAnimation : MonoBehaviour {
 
     void OnDestroy()
     {
-        Clear();
+        if (!AppConfig.IsAppQuit)
+        {
+            Clear();
+        }
     }
 
     private void ResetAnimation()

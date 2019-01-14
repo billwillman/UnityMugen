@@ -14,11 +14,15 @@ public class PlayerImageRes : MonoBehaviour {
 
 	public void Clear()
 	{
-		LoadOk = false;
-		if (m_ImgLib != null) {
-			m_ImgLib.Dispose ();
-			m_ImgLib = null;
-		}
+        if (!AppConfig.IsAppQuit)
+        {
+            LoadOk = false;
+            if (m_ImgLib != null)
+            {
+                m_ImgLib.Dispose();
+                m_ImgLib = null;
+            }
+        }
 	}
 
     public ImageLibrary ImgLib

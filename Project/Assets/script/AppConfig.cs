@@ -11,4 +11,11 @@ public class AppConfig : MonoSingleton<AppConfig> {
 	public string SceneRootDir = "resources/mugen/scene/";
 
 	public IMugenLoader Loader = null;
+
+    public static bool IsAppQuit = false;
+
+    void OnApplicationQuit()
+    {
+        IsAppQuit = true;
+    }
 }

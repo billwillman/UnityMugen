@@ -10,6 +10,7 @@ public class PlayerDisplayEditor : Editor {
     private string[] m_VaildStateNameList = null;
     private PlayerDisplay m_LastDisplay = null;
     private int m_StateSelected = -1;
+    private static Dictionary<int, int> m_SelectedMap = new Dictionary<int, int>();
 
     private void InitPlayerDisplay()
     {
@@ -44,6 +45,14 @@ public class PlayerDisplayEditor : Editor {
                     m_VaildStateNameList[i] = state.ToString();
                 }
             }
+
+            int selIdx;
+            if (m_SelectedMap.TryGetValue(m_LastDisplay.GetInstanceID(), out selIdx))
+            {
+                var state = m_VaildStateList[selIdx];
+                if (m_LastDisplay.PlayAni(state, true))
+                    m_StateSelected = selIdx;
+            }
         }
     }
 
@@ -56,7 +65,10 @@ public class PlayerDisplayEditor : Editor {
         {
             var state = m_VaildStateList[newSelected];
             if (m_LastDisplay.PlayAni(state, true))
+            {
                 m_StateSelected = newSelected;
+                m_SelectedMap[m_LastDisplay.GetInstanceID()] = m_StateSelected;
+            }
         }
     }
 
@@ -74,6 +86,10 @@ public class PlayerDisplayEditor : Editor {
 
             DrawPlayerDisplay();
 
+        } else
+        {
+            if (m_SelectedMap.Count > 0)
+                m_SelectedMap.Clear();
         }
 
     }
