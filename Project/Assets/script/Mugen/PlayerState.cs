@@ -157,7 +157,7 @@ namespace Mugen
 		psFlyDown1 = 5061,
 
 		// not used
-		psPlayerStateCount 
+		//psPlayerStateCount 
 	}
 
     public static class PlayerStateEnumValues

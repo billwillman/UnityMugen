@@ -339,7 +339,7 @@ namespace Mugen
 				{
 					string stateStr = tile.Substring(_cBeginAction.Length).Trim();
 					int state;
-					if (int.TryParse(stateStr, out state) && (state >= 0) && (state < (int)PlayerState.psPlayerStateCount))
+					if (int.TryParse(stateStr, out state) && (state >= 0) /*&& (state < (int)PlayerState.psPlayerStateCount)*/)
 					{
 						PlayerState playerState = (PlayerState)state;
 						BeginAction action = new BeginAction(playerState, section);

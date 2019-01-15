@@ -216,8 +216,8 @@ namespace Mugen
 
         private void LoadCharState(SffFile sf, PlayerState group, string charName, string customSpriteName)
         {
-            if (group == PlayerState.psPlayerStateCount)
-                return;
+           // if (group == PlayerState.psPlayerStateCount)
+            //    return;
 
             int image = 0;
             SFFSUBHEADER h;
