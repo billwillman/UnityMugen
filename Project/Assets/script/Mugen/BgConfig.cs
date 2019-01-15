@@ -15,20 +15,22 @@ namespace Mugen
         none
     }
 
-    public class BgInfo
-    {
-        public string name = string.Empty;
-        public BgType type = BgType.none;
-        public TransType trans = TransType.none;
-        public Vector2 delta;
-        public int mask = 1;
-        public int layerno = 0;
-    }
-
-    public class BgStaticInfo : BgInfo
-    {
-        public int tile = 0;
-    }
+	public struct BgStaticInfo
+	{
+		public int srpiteno_Group;
+		public int spriteno_Image;
+		public int start_x;
+		public int start_y;
+		public Vector2 delta;
+		public int mask;
+		public Vector2 velocity;
+		public int tile_x;
+		public int tile_y;
+		public int tilespacing_x;
+		public int tilespacing_y;
+		public int zoffset;
+		public int layerno;
+	}
 
     public class BgConfig
     {
