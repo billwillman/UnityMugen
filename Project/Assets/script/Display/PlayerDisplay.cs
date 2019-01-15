@@ -196,6 +196,35 @@ public class PlayerDisplay : BaseResLoader {
 		}
 	}
 
+    private void RefreshCurPallet()
+    {
+        SpriteRenderer r = this.SpriteRender;
+        if (r == null)
+            return;
+        Material m1 = r.sharedMaterial;
+        if (m1 == null)
+            return;
+        var ani = this.ImageAni;
+        if (ani == null)
+            return;
+        ActionFlip flip;
+        var frame = ani.GetCurImageFrame(out flip);
+        if (frame == null)
+            return;
+        var palletTex = frame.LocalPalletTex;
+        if (palletTex == null)
+        {
+            // 取公共的Pallet
+            if (string.IsNullOrEmpty(m_PalletName))
+            {
+                this.PalletName = GetFirstVaildPalletName();
+            }
+            palletTex = GetPalletTexture();
+            // 只能刷新用公用調色版的
+            m1.SetTexture("_PalletTex", palletTex);
+        }
+    }
+
     protected Texture2D GetPalletTexture()
     {
         if (string.IsNullOrEmpty(m_PalletName) || m_LoaderPlayer == null)
@@ -255,7 +284,7 @@ public class PlayerDisplay : BaseResLoader {
     // 调色板名字更换
     private void OnPalletNameChanged()
     {
-
+        RefreshCurPallet();
     }
 
     public string PalletName
