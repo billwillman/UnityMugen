@@ -79,6 +79,9 @@ public class PlayerDisplay : BaseResLoader {
         if (ret)
         {
             RefreshCurFrame(this.ImageAni);
+        } else
+        {
+            UpdateRenderer(null, ActionFlip.afNone);
         }
         return ret;
     }
@@ -133,11 +136,22 @@ public class PlayerDisplay : BaseResLoader {
 		}
 	}
 
-	void UpdateRenderer(ImageFrame frame, ActionFlip flip)
+    void UpdateRenderer(ImageFrame frame, ActionFlip flip)
 	{
 		SpriteRenderer r = this.SpriteRender;
 		if (r == null)
 			return;
+        if (frame == null)
+        {
+            r.sprite = null;
+            Material m1 = r.sharedMaterial;
+            if (m1 != null)
+            {
+                m1.SetTexture("_PalletTex", null);
+                m1.SetTexture("_MainTex", null);
+            }
+            return;
+        }
 
 		r.sprite = frame.Data;
 		if (r.sprite != null)
