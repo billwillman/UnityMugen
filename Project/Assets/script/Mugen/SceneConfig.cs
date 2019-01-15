@@ -76,6 +76,30 @@ namespace Mugen
 		}
 	}
 
+    public class BgDef : IConfigPropertys
+    {
+        public string ConfigName
+        {
+            get
+            {
+                return string.Empty;
+            }
+        }
+
+        public string spr
+        {
+            get;
+            protected set;
+        }
+
+        public int debugbg
+        {
+            get;
+            protected set;
+        }
+
+    }
+
 	public class StagePlayerInfo: IConfigPropertys
 	{
 		public string ConfigName
@@ -186,6 +210,7 @@ namespace Mugen
 		private StagePlayerInfo m_Players = null;
 		private StageScaling m_Scaling = null;
         private AirConfig m_AirConfig = null;
+        private BgDef m_BgDef = null;
 
 		public bool IsVaild
 		{
@@ -262,6 +287,20 @@ namespace Mugen
                 Clear();
                 return false;
             }
+
+            section = reader.GetSection("BGdef");
+            if (section == null)
+            {
+                Clear();
+                return false;
+            }
+            m_BgDef = new BgDef();
+            if (!section.GetPropertysValues(m_BgDef))
+            {
+                Clear();
+                return false;
+            }
+            
 
 			return IsVaild;
 		}
