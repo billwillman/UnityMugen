@@ -7,6 +7,14 @@ using Mugen;
 [RequireComponent(typeof(Animation))]
 public class ImageAnimation : MonoBehaviour {
 
+    public void ResetState()
+    {
+        m_State = PlayerState.psNone;
+        var ani = this.CacheAnimation;
+        if (ani != null && ani.isPlaying)
+            ani.Stop();
+    }
+
     // 播放角色动画
     public bool PlayerPlayerAni(string playerName, PlayerState state, bool isLoop = true)
     {

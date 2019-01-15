@@ -81,6 +81,7 @@ public class PlayerDisplay : BaseResLoader {
             RefreshCurFrame(this.ImageAni);
         } else
         {
+            ani.ResetState();
             UpdateRenderer(null, ActionFlip.afNone);
         }
         return ret;
