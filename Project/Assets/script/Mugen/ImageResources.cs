@@ -346,6 +346,26 @@ namespace Mugen
 			return AddPalletTexture(palletName, fileName, mIs32BitPallet);
 		}
 
+        public Texture2D GetPalletTexture(string playerName, string palletName)
+        {
+            string fileName = GeneratorPalletFileName(playerName, palletName);
+            return GetPalletTexture(palletName, fileName, mIs32BitPallet);
+        }
+
+        private Texture2D GetPalletTexture(string palletName, string fileName, bool is32Bit)
+        {
+            if (string.IsNullOrEmpty(fileName) || string.IsNullOrEmpty(palletName))
+                return null;
+            Texture2D ret;
+            if (mPalletMap.TryGetValue(palletName, out ret) && ret != null)
+                return ret;
+            if (!AddPalletTexture(palletName, fileName, is32Bit))
+                return null;
+            if (!mPalletMap.TryGetValue(palletName, out ret))
+                ret = null;
+            return ret;
+        }
+
 		private bool AddPalletTexture(string palletName, string fileName, bool is32Bit)
 		{
 			if (string.IsNullOrEmpty(fileName) || string.IsNullOrEmpty(palletName))

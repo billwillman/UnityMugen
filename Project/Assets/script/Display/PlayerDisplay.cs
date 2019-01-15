@@ -161,9 +161,57 @@ public class PlayerDisplay : BaseResLoader {
 		Material mat = r.sharedMaterial;
 		if (mat != null) {
 			//mat.SetTexture ("_PalletTex", frame.PalletTexture);
+            var palletTex = frame.LocalPalletTex;
+            if (palletTex == null)
+            {
+                // 取公共的Pallet
+                if (string.IsNullOrEmpty(m_PalletName))
+                {
+                    this.PalletName = GetFirstVaildPalletName();
+                }
+                palletTex = GetPalletTexture();
+            }
+            mat.SetTexture("_PalletTex", palletTex);
 			mat.SetTexture ("_MainTex", frame.Data.texture);
 		}
 	}
+
+    protected Texture2D GetPalletTexture()
+    {
+        if (string.IsNullOrEmpty(m_PalletName) || m_LoaderPlayer == null)
+        {
+            return null;
+        }
+        var imgRes = m_LoaderPlayer.ImageRes;
+        if (imgRes == null)
+            return null;
+        var imglib = imgRes.ImgLib;
+        if (imglib == null)
+            return null;
+        return imglib.GetPalletTexture(this.PlayerName, m_PalletName);
+    }
+
+    // 取第一个有效的PalletName
+    private string GetFirstVaildPalletName()
+    {
+        GlobalPlayer player = this.GPlayer;
+        if (player == null || player.PlayerCfg == null || !player.PlayerCfg.IsVaild
+            || player.PlayerCfg.Files == null)
+            return string.Empty;
+        if (!string.IsNullOrEmpty(player.PlayerCfg.Files.pal1))
+            return System.IO.Path.GetFileNameWithoutExtension(player.PlayerCfg.Files.pal1);
+        if (!string.IsNullOrEmpty(player.PlayerCfg.Files.pal2))
+            return System.IO.Path.GetFileNameWithoutExtension(player.PlayerCfg.Files.pal2);
+        if (!string.IsNullOrEmpty(player.PlayerCfg.Files.pal3))
+            return System.IO.Path.GetFileNameWithoutExtension(player.PlayerCfg.Files.pal3);
+        if (!string.IsNullOrEmpty(player.PlayerCfg.Files.pal4))
+            return System.IO.Path.GetFileNameWithoutExtension(player.PlayerCfg.Files.pal4);
+        if (!string.IsNullOrEmpty(player.PlayerCfg.Files.pal5))
+            return System.IO.Path.GetFileNameWithoutExtension(player.PlayerCfg.Files.pal5);
+        if (!string.IsNullOrEmpty(player.PlayerCfg.Files.pal6))
+            return System.IO.Path.GetFileNameWithoutExtension(player.PlayerCfg.Files.pal6);
+        return string.Empty;
+    }
 
 	void OnImageAnimationFrame(ImageAnimation target)
 	{
@@ -179,6 +227,29 @@ public class PlayerDisplay : BaseResLoader {
 		UpdateRenderer(frame, flip);
 	}
 
+    // 调色板名字更换
+    private void OnPalletNameChanged()
+    {
+
+    }
+
+    public string PalletName
+    {
+        get
+        {
+            return m_PalletName;
+        }
+
+        set
+        {
+            if (string.Compare(m_PalletName, value, true) == 0)
+                return;
+            m_PalletName = value;
+            OnPalletNameChanged();
+        }
+    }
+
     private ImageAnimation m_ImgAni = null;
 	private SpriteRenderer m_SpriteRender = null;
+    private string m_PalletName = string.Empty;
 }
