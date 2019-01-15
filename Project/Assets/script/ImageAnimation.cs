@@ -66,9 +66,20 @@ public class ImageAnimation : MonoBehaviour {
 		return frame;
 	}
 
+    private PlayerDisplay m_CacheDisplayer = null;
+    protected PlayerDisplay CacheDisplayer
+    {
+        get
+        {
+            if (m_CacheDisplayer == null)
+                m_CacheDisplayer = GetComponent<PlayerDisplay>();
+            return m_CacheDisplayer;
+        }
+    }
+
 	public List<ImageFrame> GetImageFrameList()
 	{
-		PlayerDisplay displayer = GetComponent<PlayerDisplay>();
+        PlayerDisplay displayer = this.CacheDisplayer;
 		if (displayer == null)
 			return null;
 		var loaderPlayer = displayer.LoaderPlayer;
