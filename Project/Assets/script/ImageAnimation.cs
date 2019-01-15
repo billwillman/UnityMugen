@@ -52,6 +52,20 @@ public class ImageAnimation : MonoBehaviour {
         return ret;
     }
 
+	public ImageFrame GetCurImageFrame(out ActionFlip flip)
+	{
+		flip = ActionFlip.afNone;
+		var frameList = GetImageFrameList ();
+		if (frameList == null || frameList.Count <= 0)
+			return null;
+		var aniNode = CurAniNode;
+		if (aniNode.frameIndex < 0 || aniNode.frameIndex >= frameList.Count)
+			return null;
+		var frame = frameList[aniNode.frameIndex];
+		flip = aniNode.flipTag;
+		return frame;
+	}
+
 	public List<ImageFrame> GetImageFrameList()
 	{
 		PlayerDisplay displayer = GetComponent<PlayerDisplay>();

@@ -172,16 +172,11 @@ public class PlayerDisplay : BaseResLoader {
 		SpriteRenderer r = this.SpriteRender;
 		if (r == null)
 			return;
-		var frameList = target.GetImageFrameList ();
-		if (frameList == null || frameList.Count <= 0)
-			return;
-		var aniNode = target.CurAniNode;
-		if (aniNode.frameIndex < 0 || aniNode.frameIndex >= frameList.Count)
-			return;
-		var frame = frameList[aniNode.frameIndex];
+		ActionFlip flip;
+		var frame = target.GetCurImageFrame (out flip);
 		if (frame == null)
 			return;
-		UpdateRenderer(frame, aniNode.flipTag);
+		UpdateRenderer(frame, flip);
 	}
 
     private ImageAnimation m_ImgAni = null;
