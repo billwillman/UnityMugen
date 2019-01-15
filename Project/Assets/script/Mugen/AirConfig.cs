@@ -127,6 +127,22 @@ namespace Mugen
             return ret;
         }
 
+		private int GetIntFromStr(string str, int def = 0)
+		{
+			if (string.IsNullOrEmpty (str))
+				return def;
+			str = str.Trim ();
+			if (string.IsNullOrEmpty (str) || str.Length <= 0)
+				return def;
+			if (str [str.Length - 1] == '.') {
+				str = str.Substring (0, str.Length - 1);
+				if (string.IsNullOrEmpty (str) || str.Length <= 0)
+					return def;
+			}
+			int ret = int.Parse (str);
+			return ret;
+		}
+
 		public BeginAction(/*PlayerState state, */ConfigSection section)
 		{
 			//this.State = state;
@@ -199,8 +215,8 @@ namespace Mugen
 						{
 							if (arr.Count >= 5)
 							{
-								int ImageGroup = int.Parse(arr[0].Trim());
-								int ImageIndex = int.Parse(arr[1].Trim());
+								int ImageGroup = GetIntFromStr(arr[0], -1);
+								int ImageIndex = GetIntFromStr(arr[1], -1);
 								int Tick = int.Parse(arr[4].Trim());
 								bool hasFlip = arr.Count >= 6;
 								ActionFlip flipMode = ActionFlip.afNone;
@@ -372,18 +388,42 @@ namespace Mugen
 			if (action == null)
 				return;
             int key = (int)state;
-            if (mBeginActionMap.ContainsKey((int)state))
+			if (mBeginActionMap != null && mBeginActionMap.ContainsKey((int)state))
 			{
                 mBeginActionMap[key] = action;
 			} else
 			{
+				if (mBeginActionMap == null)
+					mBeginActionMap = new Dictionary<int, BeginAction> ();
                 mBeginActionMap.Add(key, action);
+				if (mBeginActionList == null)
+					mBeginActionList = new List<PlayerState> ();
                 mBeginActionList.Add(state);
+			}
+		}
+
+		protected void AddOrSetBeginAction(string state, BeginAction action)
+		{
+			if (action == null || string.IsNullOrEmpty(state))
+				return;
+			if (mStrBeginActionMap != null && mStrBeginActionMap.ContainsKey(state))
+			{
+				mStrBeginActionMap[state] = action;
+			} else
+			{
+				if (mStrBeginActionMap == null)
+					mStrBeginActionMap = new Dictionary<string, BeginAction> ();
+				mStrBeginActionMap.Add(state, action);
+				if (mStrBeginActionList == null)
+					mStrBeginActionList = new List<string> ();
+				mStrBeginActionList.Add(state);
 			}
 		}
 
 		public BeginAction GetBeginAction(PlayerState state)
 		{
+			if (mBeginActionMap == null)
+				return null;
 			BeginAction ret;
 			if (!mBeginActionMap.TryGetValue((int)state, out ret))
 				ret = null;
@@ -392,20 +432,40 @@ namespace Mugen
 
         public int GetStateCount()
         {
-            return mBeginActionList.Count;
+			if (mBeginActionList != null)
+            	return mBeginActionList.Count;
+			if (mStrBeginActionList != null)
+				return mStrBeginActionList.Count;
+			return 0;
         }
 
         public PlayerState GetStateByIndex(int index)
         {
-            if (index < 0 || index >= mBeginActionList.Count)
-                return PlayerState.psNone;
-            return mBeginActionList[index];
+			if (mBeginActionList != null) {
+				if (index >= 0 && index < mBeginActionList.Count)
+					return mBeginActionList [index];
+				return PlayerState.psNone;
+			}
+				
+			return PlayerState.psNone;
         }
+
+		public string GetStrStateByIndex(int index)
+		{
+			if (mStrBeginActionList != null) {
+				if (index >= 0 && index < mStrBeginActionList.Count)
+					return mStrBeginActionList [index];
+			}
+
+			return string.Empty;
+		}
 
 		private string mPlayerName = string.Empty;
 		private static readonly string _cBeginAction = "Begin Action";
-		private Dictionary<int, BeginAction> mBeginActionMap = new Dictionary<int, BeginAction>();
-        private List<PlayerState> mBeginActionList = new List<PlayerState>();
+		private Dictionary<int, BeginAction> mBeginActionMap = null;
+		private List<PlayerState> mBeginActionList = null;
+		private Dictionary<string, BeginAction> mStrBeginActionMap = null;
+		private List<string> mStrBeginActionList = null;
         private bool mIsVaild = false;
 	}
 }
