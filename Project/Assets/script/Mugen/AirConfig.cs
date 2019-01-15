@@ -127,7 +127,7 @@ namespace Mugen
             return ret;
         }
 
-		public BeginAction(PlayerState state, ConfigSection section)
+		public BeginAction(/*PlayerState state, */ConfigSection section)
 		{
 			//this.State = state;
 			if (section != null)
@@ -339,7 +339,7 @@ namespace Mugen
                     if (int.TryParse(stateStr, out state) && (state >= 0) /*&& (state < (int)PlayerState.psPlayerStateCount)*/)
                     {
                         PlayerState playerState = (PlayerState)state;
-                        BeginAction action = new BeginAction(playerState, section);
+                        BeginAction action = new BeginAction(/*playerState,*/ section);
                         AddOrSetBeginAction(playerState, action);
                     }
                 }

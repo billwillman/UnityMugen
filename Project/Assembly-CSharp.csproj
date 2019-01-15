@@ -208,6 +208,7 @@
      <Compile Include="Assets\script\GlobalPlayer.cs" />
      <Compile Include="Assets\script\ImageAnimation.cs" />
      <Compile Include="Assets\script\Mugen\AirConfig.cs" />
+     <Compile Include="Assets\script\Mugen\BgConfig.cs" />
      <Compile Include="Assets\script\Mugen\CNSConfig.cs" />
      <Compile Include="Assets\script\Mugen\ConfigReader.cs" />
      <Compile Include="Assets\script\Mugen\IMugenLoader.cs" />
