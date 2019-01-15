@@ -111,7 +111,7 @@ namespace Mugen
 		public List<ImageFrame> GetImageFrameList(PlayerState state)
 		{
 			List<ImageFrame> ret;
-			if (!mGroupImageMap.TryGetValue(state, out ret))
+			if (!mGroupImageMap.TryGetValue((int)state, out ret))
 				return null;
 			return ret;
 		}
@@ -129,7 +129,7 @@ namespace Mugen
 		public List<ImageAnimateNode> GetAnimationNodeList(PlayerState state)
 		{
 			List<ImageAnimateNode> ret;
-			if (!mStateAniMap.TryGetValue(state, out ret))
+			if (!mStateAniMap.TryGetValue((int)state, out ret))
 				return null;
 			return ret;
 		}
@@ -141,7 +141,7 @@ namespace Mugen
 			for (int i = 0; i <= 2; ++i)
 			{
 				PlayerState state = (PlayerState)((int)targetState + i * step);
-				if (mStateAniMap.ContainsKey(state))
+				if (mStateAniMap.ContainsKey((int)state))
 				{
 					isFound = true;
 					break;
@@ -155,12 +155,12 @@ namespace Mugen
 			{
 				PlayerState state = (PlayerState)((int)orgState + i * step);
 				List<ImageAnimateNode> list;
-				if (mStateAniMap.TryGetValue(state, out list) && list != null && list.Count > 0)
+				if (mStateAniMap.TryGetValue((int)state, out list) && list != null && list.Count > 0)
 				{
 					List<ImageAnimateNode> newList = new List<ImageAnimateNode>();
 					newList.Add(list[0]);
 					PlayerState newState = (PlayerState)((int)targetState + i * step);
-					mStateAniMap.Add(newState, newList);
+					mStateAniMap.Add((int)newState, newList);
 					break;
 				}
 			}
@@ -186,10 +186,10 @@ namespace Mugen
                     continue;
 
                 List<ImageAnimateNode> aniNodeList;
-                if (!mStateAniMap.TryGetValue(action, out aniNodeList))
+                if (!mStateAniMap.TryGetValue((int)action, out aniNodeList))
                 {
                     aniNodeList = new List<ImageAnimateNode>();
-                    mStateAniMap.Add(action, aniNodeList);
+                    mStateAniMap.Add((int)action, aniNodeList);
                 }
 
                 ActionFlip lastFlip = ActionFlip.afNone;
@@ -342,10 +342,11 @@ namespace Mugen
 			if (frame == null)
 				return false;
 			List<ImageFrame> frameList;
-			if (!mGroupImageMap.TryGetValue(state, out frameList))
+            int key = (int)state;
+            if (!mGroupImageMap.TryGetValue((int)state, out frameList))
 			{
 				frameList = new List<ImageFrame>();
-				mGroupImageMap.Add(state, frameList);
+                mGroupImageMap.Add(key, frameList);
 			}
 
 			frameList.Add(frame);
@@ -411,12 +412,12 @@ namespace Mugen
 			return ret;
 		}
 
-		public Dictionary<PlayerState, List<ImageFrame>>.Enumerator GetGroupMapIter()
+		public Dictionary<int, List<ImageFrame>>.Enumerator GetGroupMapIter()
 		{
 			return mGroupImageMap.GetEnumerator();
 		}
 
-		public Dictionary<PlayerState, List<ImageAnimateNode>>.Enumerator GetAniMapIter()
+		public Dictionary<int, List<ImageAnimateNode>>.Enumerator GetAniMapIter()
 		{
 			return mStateAniMap.GetEnumerator();
 		}
@@ -424,8 +425,8 @@ namespace Mugen
 		// fileName, palletTexture
 		private Dictionary<string, Texture2D> mPalletMap = new Dictionary<string, Texture2D>();
 		// groupNumber, ImageFrame List
-		private Dictionary<PlayerState, List<ImageFrame>> mGroupImageMap = new Dictionary<PlayerState, List<ImageFrame>>();
+		private Dictionary<int, List<ImageFrame>> mGroupImageMap = new Dictionary<int, List<ImageFrame>>();
 		private bool mIs32BitPallet = true;
-		private Dictionary<PlayerState, List<ImageAnimateNode>> mStateAniMap = new Dictionary<PlayerState, List<ImageAnimateNode>>();
+		private Dictionary<int, List<ImageAnimateNode>> mStateAniMap = new Dictionary<int, List<ImageAnimateNode>>();
 	}
 }

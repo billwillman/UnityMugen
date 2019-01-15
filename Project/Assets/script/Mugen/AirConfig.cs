@@ -357,13 +357,13 @@ namespace Mugen
 		{
 			if (action == null)
 				return;
-
-			if (mBeginActionMap.ContainsKey(state))
+            int key = (int)state;
+            if (mBeginActionMap.ContainsKey((int)state))
 			{
-				mBeginActionMap[state] = action;
+                mBeginActionMap[key] = action;
 			} else
 			{
-				mBeginActionMap.Add(state, action);
+                mBeginActionMap.Add(key, action);
                 mBeginActionList.Add(state);
 			}
 		}
@@ -371,17 +371,10 @@ namespace Mugen
 		public BeginAction GetBeginAction(PlayerState state)
 		{
 			BeginAction ret;
-			if (!mBeginActionMap.TryGetValue(state, out ret))
+			if (!mBeginActionMap.TryGetValue((int)state, out ret))
 				ret = null;
 			return ret;
 		}
-
-        /*
-        public Dictionary<PlayerState, BeginAction>.Enumerator GetStateIter()
-        {
-            return mBeginActionMap.GetEnumerator();
-        }
-         */ 
 
         public int GetStateCount()
         {
@@ -397,7 +390,7 @@ namespace Mugen
 
 		private string mPlayerName = string.Empty;
 		private static readonly string _cBeginAction = "Begin Action";
-		private Dictionary<PlayerState, BeginAction> mBeginActionMap = new Dictionary<PlayerState, BeginAction>();
+		private Dictionary<int, BeginAction> mBeginActionMap = new Dictionary<int, BeginAction>();
         private List<PlayerState> mBeginActionList = new List<PlayerState>();
         private bool mIsVaild = false;
 	}
