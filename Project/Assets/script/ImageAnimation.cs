@@ -256,12 +256,37 @@ public class ImageAnimation : MonoBehaviour {
 
     }
 
+    public void StartFrame()
+    {
+        m_LoopStart = -1;
+        m_LoopStartAniTime = -1;
+    }
+
     public bool IsLoop
     {
         get
         {
             return m_IsLoop;
         }
+    }
+
+    private float CalcCurrentAnimationTime()
+    {
+        if (m_FrameList == null || m_FrameList.Count <= 0)
+            return -1;
+        int curFrame = m_CurFrame;
+        if (curFrame < 0)
+            curFrame = 0;
+        else if (curFrame >= m_FrameList.Count)
+            curFrame = m_FrameList.Count - 1;
+        float ret = 0;
+        for (int i = 0; i <= curFrame; ++i)
+        {
+            ImageAnimateNode frame = m_FrameList[i];
+            float evtTime = frame.AniTick * _cImageAnimationScale;
+            ret += evtTime;
+        }
+        return 0;
     }
 
     public bool UpdateFrame(int frameIndex)
@@ -285,7 +310,31 @@ public class ImageAnimation : MonoBehaviour {
         int oldFrame = m_CurFrame;
         m_CurFrame = frameIndex;
         if (oldFrame != m_CurFrame)
+        {
+            if (m_CurFrame >= 0 && m_CurFrame < m_FrameList.Count)
+            {
+                var node = m_FrameList[m_CurFrame];
+                if (node.isLoopStart)
+                {
+                    var aniCtl = this.CacheAnimation;
+                    if (aniCtl != null && aniCtl.isPlaying && aniCtl.clip != null)
+                    {
+                        if (m_LoopStart != m_CurFrame)
+                        {
+                            var info = aniCtl[_cPlayAnimationName];
+                            if (info != null)
+                            {
+                                m_LoopStart = m_CurFrame;
+                                m_LoopStartAniTime = info.time;
+                            }
+
+                        }
+                    }
+                }
+            }
+
             DoChangeFrame();
+        }
         return true;
     }
 
@@ -312,6 +361,16 @@ public class ImageAnimation : MonoBehaviour {
 				loopStart = 0;
 			if (UpdateFrame (loopStart)) {
 				// 移动Animation
+                if (m_LoopStart >= 0 && m_LoopStartAniTime >= 0)
+                {
+                    var aniCtl = this.CacheAnimation;
+                    if (aniCtl != null)
+                    {
+                        var info = aniCtl[_cPlayAnimationName];
+                        if (info != null)
+                            info.time = m_LoopStartAniTime;
+                    }
+                }
 			}
 		}
 	}
@@ -452,6 +511,7 @@ public class ImageAnimation : MonoBehaviour {
     private static float _cImageAnimationScale = 0.03f;
     private int m_CurFrame = -1;
 	private int m_LoopStart = -1;
+    private float m_LoopStartAniTime = -1;
     private Animation m_Animation = null;
     private AnimationClip m_Clip = null;
     private GameObject m_GameObj = null;

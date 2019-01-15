@@ -56,7 +56,7 @@ public class PlayerDisplayEditor : Editor {
                 for (int i = 0; i < m_VaildStateList.Count; ++i)
                 {
                     var state = m_VaildStateList[i];
-                    m_VaildStateNameList[i] = state.ToString();
+                    m_VaildStateNameList[i] = string.Format("{0}({1:D})", state.ToString(), (int)state);
                 }
             }
 

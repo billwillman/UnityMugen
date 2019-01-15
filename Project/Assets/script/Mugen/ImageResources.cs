@@ -87,8 +87,11 @@ namespace Mugen
 		public PlayerState Group;
 		public int frameIndex;
 		public float AniTick;
-		public ActionFlip flipTag; 
-
+		public ActionFlip flipTag;
+        public bool isLoopStart;
+        public Rect[] localClsn2Arr;
+        public Rect[] defaultClsn2Arr;
+        public Rect[] localCls1Arr;
 	}
 
 	public class ImageLibrary: DisposeObject {
@@ -204,7 +207,10 @@ namespace Mugen
                             lastFlip = actFrame.Flip;
                             aniNode.frameIndex = actFrame.Index;
                             aniNode.Group = action;
-
+                            aniNode.isLoopStart = actFrame.IsLoopStart;
+                            aniNode.defaultClsn2Arr = actFrame.defaultClsn2Arr;
+                            aniNode.localCls1Arr = actFrame.localCls1Arr;
+                            aniNode.localClsn2Arr = actFrame.localClsn2Arr;
                             aniNodeList.Add(aniNode);
                         }
                     }
