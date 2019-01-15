@@ -169,13 +169,11 @@ namespace Mugen
 			if (string.IsNullOrEmpty(charName) || airCfg == null || !airCfg.IsVaild)
 				return false;
 			
-			//for (PlayerState action = 0; action < PlayerState.psPlayerStateCount; ++action)
-            foreach (PlayerState action in PlayerStateEnumValues.GetValues())
+            var iter = airCfg.GetStateIter();
+            while (iter.MoveNext())
             {
-                if (action == PlayerState.psPlayerStateCount)
-                    continue;
-
-				BeginAction beginAction = airCfg.GetBeginAction(action);
+                BeginAction beginAction = iter.Current.Value;
+                var action = iter.Current.Key;
 				if (beginAction == null || beginAction.ActionFrameListCount <= 0)
 					continue;
 
@@ -211,9 +209,44 @@ namespace Mugen
 					}
 				}
 			}
+            iter.Dispose();
 
 			return true;
 		}
+
+        private void LoadCharState(SffFile sf, PlayerState group, string charName, string customSpriteName)
+        {
+            if (group == PlayerState.psPlayerStateCount)
+                return;
+
+            int image = 0;
+            SFFSUBHEADER h;
+            if (!sf.GetSubHeader((int)group, image, out h))
+                return;
+            KeyValuePair<PCXHEADER, PCXDATA> d;
+            if (!sf.GetPcxData((uint)group, (uint)image, out d))
+                return;
+            float offX = ((float)(d.Key.x + h.x)) / d.Key.widht;//+ 1.0f;
+            float offY = -((float)(d.Key.y + h.y)) / d.Key.height + 1.0f;
+
+            Texture2D tex = sf.GetIndexTexture((uint)group, (uint)image);
+            while (tex != null)
+            {
+                ImageFrame frame = new ImageFrame(this, tex, offX, offY, charName,
+                    d.Value.GetPalletTexture(mIs32BitPallet));
+
+                AddImageFrame(group, frame);
+
+                ++image;
+                if (!sf.GetSubHeader((int)group, image, out h))
+                    break;
+                if (!sf.GetPcxData((uint)group, (uint)image, out d))
+                    break;
+                offX = ((float)(d.Key.x + h.x)) / d.Key.widht;//+ 1.0f;
+                offY = -((float)(d.Key.y + h.y)) / d.Key.height + 1.0f;
+                tex = sf.GetIndexTexture((uint)group, (uint)image);
+            }
+        }
 
 		public bool LoadChar(string charName, AirConfig airCfg = null, string customSpriteName = "")
 		{
@@ -227,40 +260,21 @@ namespace Mugen
 				return false;
 			}
 
-			//for (PlayerState group = 0; group < PlayerState.psPlayerStateCount; ++group)
-            foreach (PlayerState group in PlayerStateEnumValues.GetValues())
+            if (airCfg == null)
             {
-                if (group == PlayerState.psPlayerStateCount)
-                    continue;
-
-				int image = 0;
-				SFFSUBHEADER h;
-				if (!sf.GetSubHeader((int)group, image, out h))
-					continue;
-				KeyValuePair<PCXHEADER, PCXDATA> d;
-				if (!sf.GetPcxData((uint)group, (uint)image, out d))
-					continue;
-				float offX = ((float)(d.Key.x + h.x))/d.Key.widht ;//+ 1.0f;
-				float offY = -((float)(d.Key.y + h.y))/d.Key.height + 1.0f;
-
-				Texture2D tex = sf.GetIndexTexture((uint)group, (uint)image);
-				while (tex != null)
-				{
-					ImageFrame frame = new ImageFrame(this, tex, offX, offY, charName, 
-						d.Value.GetPalletTexture(mIs32BitPallet));
-
-					AddImageFrame(group, frame);
-
-					++image;
-					if (!sf.GetSubHeader((int)group, image, out h))
-						break;
-					if (!sf.GetPcxData((uint)group, (uint)image, out d))
-						break;
-					offX = ((float)(d.Key.x + h.x))/d.Key.widht ;//+ 1.0f;
-					offY = -((float)(d.Key.y + h.y))/d.Key.height + 1.0f;
-					tex = sf.GetIndexTexture((uint)group, (uint)image);
-				}
-			}
+                foreach (PlayerState group in PlayerStateEnumValues.GetValues())
+                {
+                    LoadCharState(sf, group, charName, customSpriteName);
+                }
+            } else
+            {
+                var iter = airCfg.GetStateIter();
+                while (iter.MoveNext())
+                {
+                    LoadCharState(sf, iter.Current.Key, charName, customSpriteName);
+                }
+                iter.Dispose();
+            }
 
 			if (airCfg != null && !LoadAir (charName, airCfg)) {
 				ClearAll ();
