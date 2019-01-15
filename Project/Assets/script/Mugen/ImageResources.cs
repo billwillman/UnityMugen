@@ -182,7 +182,7 @@ namespace Mugen
                     continue;
 
                 List<ImageFrame> frameList = this.GetImageFrameList(action);
-                if (frameList == null)
+                if (frameList == null || frameList.Count <= 0)
                     continue;
 
                 List<ImageAnimateNode> aniNodeList;
@@ -198,14 +198,17 @@ namespace Mugen
                     ActionFrame actFrame;
                     if (beginAction.GetFrame(frame, out actFrame))
                     {
-                        if (actFrame.Index >= 0 && actFrame.Index < frameList.Count)
+                        if (actFrame.Index >= 0)
                         {
+                            int frameIndex = actFrame.Index;
+                            if (frameIndex >= frameList.Count)
+                                frameIndex = frameList.Count - 1;
                             ImageAnimateNode aniNode = new ImageAnimateNode();
                             aniNode.AniTick = actFrame.Tick;
                             //aniNode.flipTag = actFrame.Flip;
                             aniNode.flipTag = lastFlip;
                             lastFlip = actFrame.Flip;
-                            aniNode.frameIndex = actFrame.Index;
+                            aniNode.frameIndex = frameIndex;
                             aniNode.Group = action;
                             aniNode.isLoopStart = actFrame.IsLoopStart;
                             aniNode.defaultClsn2Arr = actFrame.defaultClsn2Arr;
