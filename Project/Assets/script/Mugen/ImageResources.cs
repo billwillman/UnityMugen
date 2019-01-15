@@ -168,48 +168,48 @@ namespace Mugen
 			mStateAniMap.Clear();
 			if (string.IsNullOrEmpty(charName) || airCfg == null || !airCfg.IsVaild)
 				return false;
-			
-            var iter = airCfg.GetStateIter();
-            while (iter.MoveNext())
+            for (int i = 0; i < airCfg.GetStateCount(); ++i)
             {
-                BeginAction beginAction = iter.Current.Value;
-                var action = iter.Current.Key;
-				if (beginAction == null || beginAction.ActionFrameListCount <= 0)
-					continue;
+                int state = (int)airCfg.GetStateByIndex(i);
+                if (state == (int)PlayerState.psNone)
+                    continue;
+                PlayerState action = (PlayerState)state;
+                BeginAction beginAction = airCfg.GetBeginAction(action);
+                if (beginAction == null || beginAction.ActionFrameListCount <= 0)
+                    continue;
 
-				List<ImageFrame> frameList = this.GetImageFrameList(action);
-				if (frameList == null)
-					continue;
+                List<ImageFrame> frameList = this.GetImageFrameList(action);
+                if (frameList == null)
+                    continue;
 
-				List<ImageAnimateNode> aniNodeList;
-				if (!mStateAniMap.TryGetValue(action, out aniNodeList))
-				{
-					aniNodeList = new List<ImageAnimateNode>();
-					mStateAniMap.Add(action, aniNodeList);
-				}
+                List<ImageAnimateNode> aniNodeList;
+                if (!mStateAniMap.TryGetValue(action, out aniNodeList))
+                {
+                    aniNodeList = new List<ImageAnimateNode>();
+                    mStateAniMap.Add(action, aniNodeList);
+                }
 
-				ActionFlip lastFlip = ActionFlip.afNone;
-				for (int frame = 0; frame < beginAction.ActionFrameListCount; ++frame)
-				{
-					ActionFrame actFrame;
-					if (beginAction.GetFrame(frame, out actFrame))
-					{
-						if (actFrame.Index >= 0 && actFrame.Index < frameList.Count)
-						{
-							ImageAnimateNode aniNode = new ImageAnimateNode();
-							aniNode.AniTick = actFrame.Tick;
-							//aniNode.flipTag = actFrame.Flip;
-							aniNode.flipTag = lastFlip;
-							lastFlip = actFrame.Flip;
-							aniNode.frameIndex = actFrame.Index;
-							aniNode.Group = action;
+                ActionFlip lastFlip = ActionFlip.afNone;
+                for (int frame = 0; frame < beginAction.ActionFrameListCount; ++frame)
+                {
+                    ActionFrame actFrame;
+                    if (beginAction.GetFrame(frame, out actFrame))
+                    {
+                        if (actFrame.Index >= 0 && actFrame.Index < frameList.Count)
+                        {
+                            ImageAnimateNode aniNode = new ImageAnimateNode();
+                            aniNode.AniTick = actFrame.Tick;
+                            //aniNode.flipTag = actFrame.Flip;
+                            aniNode.flipTag = lastFlip;
+                            lastFlip = actFrame.Flip;
+                            aniNode.frameIndex = actFrame.Index;
+                            aniNode.Group = action;
 
-							aniNodeList.Add(aniNode);
-						}
-					}
-				}
-			}
-            iter.Dispose();
+                            aniNodeList.Add(aniNode);
+                        }
+                    }
+                }
+            }
 
 			return true;
 		}
@@ -268,12 +268,11 @@ namespace Mugen
                 }
             } else
             {
-                var iter = airCfg.GetStateIter();
-                while (iter.MoveNext())
+                for (int i = 0; i < airCfg.GetStateCount(); ++i)
                 {
-                    LoadCharState(sf, iter.Current.Key, charName, customSpriteName);
+                    var key = airCfg.GetStateByIndex(i);
+                    LoadCharState(sf, key, charName, customSpriteName);
                 }
-                iter.Dispose();
             }
 
 			if (airCfg != null && !LoadAir (charName, airCfg)) {

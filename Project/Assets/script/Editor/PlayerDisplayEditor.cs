@@ -43,14 +43,13 @@ public class PlayerDisplayEditor : Editor {
         }
         if (player.AirCfg != null && player.AirCfg.IsVaild)
         {
-            var iter = player.AirCfg.GetStateIter();
-            while (iter.MoveNext())
+            for (int i = 0; i < player.AirCfg.GetStateCount(); ++i)
             {
+                var key = player.AirCfg.GetStateByIndex(i);
                 if (m_VaildStateList == null)
                     m_VaildStateList = new List<PlayerState>();
-                m_VaildStateList.Add(iter.Current.Key);
+                m_VaildStateList.Add(key);
             }
-            iter.Dispose();
             if (m_VaildStateList  != null && m_VaildStateList.Count > 0)
             {
                 m_VaildStateNameList = new string[m_VaildStateList.Count];
@@ -92,9 +91,9 @@ public class PlayerDisplayEditor : Editor {
             if (m_StateSelected != newSelected)
             {
                 var state = m_VaildStateList[newSelected];
+                m_StateSelected = newSelected;
                 if (m_LastDisplay.PlayAni(state, true))
                 {
-                    m_StateSelected = newSelected;
                     SelctedItem item;
                     if (!m_SelectedMap.TryGetValue(m_LastDisplay.GetInstanceID(), out item))
                         item = new SelctedItem();
