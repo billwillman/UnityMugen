@@ -299,6 +299,11 @@ namespace Mugen
 			mIsVaild = LoadPlayer(playerName, customName);
 		}
 
+        public AirConfig(ConfigReader reader)
+        {
+            mIsVaild = LoadFromReader(reader);
+        }
+
 		public string PlayerName
 		{
 			get
@@ -315,6 +320,33 @@ namespace Mugen
 			}
 		}
 
+        private bool LoadFromReader(ConfigReader reader)
+        {
+            if (reader == null)
+                return false;
+
+            // load Begin Action
+            for (int i = 0; i < reader.SectionCount; ++i)
+            {
+                ConfigSection section = reader.GetSections(i);
+                if (section == null)
+                    continue;
+                string tile = section.Tile;
+                if (tile.StartsWith(_cBeginAction, StringComparison.CurrentCultureIgnoreCase))
+                {
+                    string stateStr = tile.Substring(_cBeginAction.Length).Trim();
+                    int state;
+                    if (int.TryParse(stateStr, out state) && (state >= 0) /*&& (state < (int)PlayerState.psPlayerStateCount)*/)
+                    {
+                        PlayerState playerState = (PlayerState)state;
+                        BeginAction action = new BeginAction(playerState, section);
+                        AddOrSetBeginAction(playerState, action);
+                    }
+                }
+            }
+            return true;
+        }
+
 		protected bool LoadPlayer(string playerName, string customName = "")
 		{
 			mPlayerName = playerName;
@@ -330,27 +362,9 @@ namespace Mugen
 				return false;
 			reader.LoadString(str);
 
-			// load Begin Action
-			for (int i = 0; i < reader.SectionCount; ++i)
-			{
-				ConfigSection section = reader.GetSections(i);
-				if (section == null)
-					continue;
-				string tile = section.Tile;
-				if (tile.StartsWith(_cBeginAction))
-				{
-					string stateStr = tile.Substring(_cBeginAction.Length).Trim();
-					int state;
-					if (int.TryParse(stateStr, out state) && (state >= 0) /*&& (state < (int)PlayerState.psPlayerStateCount)*/)
-					{
-						PlayerState playerState = (PlayerState)state;
-						BeginAction action = new BeginAction(playerState, section);
-						AddOrSetBeginAction(playerState, action);
-					}
-				}
-			}
+            bool ret = LoadFromReader(reader);
 
-			return true;
+			return ret;
 		}
 
 		protected void AddOrSetBeginAction(PlayerState state, BeginAction action)

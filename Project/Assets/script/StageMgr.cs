@@ -25,6 +25,14 @@ public class StageMgr : MonoSingleton<StageMgr> {
 		LoadOk = m_Config.LoadFromFile (fileName);
 	}
 
+    public void LoadScene(string root)
+    {
+        if (string.IsNullOrEmpty(root))
+            return;
+        string fileName = string.Format("{0}{1}.def.txt", AppConfig.GetInstance().SceneRootDir, root);
+        LoadConfig(fileName);
+    }
+
 	void LoadDefaultScene()
 	{
 		Clear ();
@@ -35,8 +43,7 @@ public class StageMgr : MonoSingleton<StageMgr> {
 			root = string.Format ("@{0}/{0}", DefaultSceneName);
 		else
 			root = string.Format ("{0}/@{1}/{1}", DefaultSceneRoot, DefaultSceneName);
-		string fileName = string.Format ("{0}{1}.def.txt", AppConfig.GetInstance().SceneRootDir, root);
-		LoadConfig (fileName);
+        LoadScene(root);
 	}
 
 	void Start()

@@ -185,6 +185,7 @@ namespace Mugen
 		private StageCamera m_Cam = null;
 		private StagePlayerInfo m_Players = null;
 		private StageScaling m_Scaling = null;
+        private AirConfig m_AirConfig = null;
 
 		public bool IsVaild
 		{
@@ -255,6 +256,13 @@ namespace Mugen
 				return false;
 			}
 
+            m_AirConfig = new AirConfig(reader);
+            if (!m_AirConfig.IsVaild)
+            {
+                Clear();
+                return false;
+            }
+
 			return IsVaild;
 		}
 
@@ -264,6 +272,7 @@ namespace Mugen
 			m_Cam = null;
 			m_Players = null;
 			m_Scaling = null;
+            m_AirConfig = null;
 		}
 	}
 }
