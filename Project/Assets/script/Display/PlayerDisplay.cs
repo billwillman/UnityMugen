@@ -75,7 +75,12 @@ public class PlayerDisplay : BaseResLoader {
         var ani = this.ImageAni;
         if (ani == null)
             return false;
-        return ani.PlayerPlayerAni(playerName, state, isLoop);
+        bool ret = ani.PlayerPlayerAni(playerName, state, isLoop);
+        if (ret)
+        {
+            RefreshCurFrame(this.ImageAni);
+        }
+        return ret;
     }
 
     public string PlayerName
@@ -213,18 +218,23 @@ public class PlayerDisplay : BaseResLoader {
         return string.Empty;
     }
 
+    protected void RefreshCurFrame(ImageAnimation target)
+    {
+        SpriteRenderer r = this.SpriteRender;
+        if (r == null)
+            return;
+        ActionFlip flip;
+        var frame = target.GetCurImageFrame(out flip);
+        if (frame == null)
+            return;
+        UpdateRenderer(frame, flip);
+    }
+
 	void OnImageAnimationFrame(ImageAnimation target)
 	{
 		if (target == null)
 			return;
-		SpriteRenderer r = this.SpriteRender;
-		if (r == null)
-			return;
-		ActionFlip flip;
-		var frame = target.GetCurImageFrame (out flip);
-		if (frame == null)
-			return;
-		UpdateRenderer(frame, flip);
+        RefreshCurFrame(target);
 	}
 
     // 调色板名字更换
