@@ -360,14 +360,19 @@ namespace Mugen
 			return fileName;
 		}
 
-		public bool AddPalletTexture(string playerName, string palletName)
+        /*
+		private bool AddPalletTexture(string playerName, string palletName)
 		{
 			string fileName = GeneratorPalletFileName(playerName, palletName);
 			return AddPalletTexture(palletName, fileName, mIs32BitPallet);
 		}
+         */
 
         public Texture2D GetPalletTexture(string playerName, string palletName)
         {
+            Texture2D ret;
+            if (mPalletMap.TryGetValue(palletName, out ret))
+                return ret;
             string fileName = GeneratorPalletFileName(playerName, palletName);
             return GetPalletTexture(palletName, fileName, mIs32BitPallet);
         }
