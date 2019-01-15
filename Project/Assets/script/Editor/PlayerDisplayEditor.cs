@@ -125,7 +125,10 @@ public class PlayerDisplayEditor : Editor {
 		int curFrame = m_LastDisplay.ImageCurrentFrame;
 		EditorGUILayout.LabelField ("动画当前帧", curFrame.ToString ());
         string palletName = m_LastDisplay.PalletName;
-        EditorGUILayout.LabelField("当前调色板", palletName);
+        string str = palletName;
+        if (string.IsNullOrEmpty(str))
+            str = "(无)";
+        EditorGUILayout.LabelField("当前调色板", str);
         if (!string.IsNullOrEmpty(palletName) && m_PalletSelectd < 0)
         {
             for (int i = 0; i < m_VaildPalletNameList.Length; ++i)
