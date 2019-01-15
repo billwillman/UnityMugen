@@ -18,6 +18,12 @@ namespace Mugen
 			get;
 			protected set;
 		}
+
+		public string author
+		{
+			get;
+			protected set;
+		}
 	}
 
 	public class StageCamera: IConfigPropertys
