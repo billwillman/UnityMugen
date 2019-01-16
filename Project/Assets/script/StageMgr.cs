@@ -14,6 +14,8 @@ public class StageMgr : MonoSingleton<StageMgr> {
 
 	public void Clear()
 	{
+        DestroyScene();
+
 		m_Config = null;
         if (m_ImageRes != null)
         {
@@ -41,6 +43,39 @@ public class StageMgr : MonoSingleton<StageMgr> {
 		LoadOk = m_Config.LoadFromFile (fileName);
 	}
 
+    private void CreateSceneLayer(IBg bg)
+    {
+        if (bg == null)
+            return;
+        GameObject obj = new GameObject(bg.name, typeof(SceneLayerDisplay));
+        var trans = obj.transform;
+        trans.SetParent(this.transform, false);
+        trans.localPosition = Vector3.zero;
+        trans.localScale = Vector3.one;
+        trans.localRotation = Quaternion.identity;
+
+        var dislpay = obj.GetComponent<SceneLayerDisplay>();
+        dislpay.layerno = bg.layerno;
+    }
+
+    // 創建場景
+    private void CreateScene()
+    {
+        SceneImageRes imgRes = this.ImageRes;
+        if (imgRes == null || m_Config == null || !m_Config.IsVaild)
+            return;
+        var bgCfg = m_Config.BgCfg;
+        if (bgCfg == null)
+            return;
+        for (int i = 0; i < bgCfg.BgCount; ++i)
+        {
+            IBg bg = bgCfg.GetBg(i);
+            if (bg == null)
+                continue;
+            CreateSceneLayer(bg);
+        }
+    }
+
     // 进入当前场景
     public bool EnterCurrentScene()
     {
@@ -64,6 +99,10 @@ public class StageMgr : MonoSingleton<StageMgr> {
             fileName = string.Format("{0}{1}/@{2}/{3}.sff.bytes", AppConfig.GetInstance().SceneRootDir, DefaultSceneRoot, DefaultSceneName, name);
         if (!imgRes.LoadScene(fileName, bgCfg))
             return false;
+
+        // 創建場景
+        CreateScene();
+
         return true;
     }
 
@@ -82,6 +121,12 @@ public class StageMgr : MonoSingleton<StageMgr> {
         LoadDefaultScene();
     }
 
+    void DestroyScene()
+    {
+        // 刪除所有場景子節點
+        this.transform.DestroyChildren();
+    }
+
 	void LoadDefaultScene()
 	{
 		Clear ();
@@ -95,7 +140,9 @@ public class StageMgr : MonoSingleton<StageMgr> {
         LoadScene(root);
         // 如果成功則進入場景
         if (LoadOk)
+        {
             EnterCurrentScene();
+        }
 	}
 
 	void Start()

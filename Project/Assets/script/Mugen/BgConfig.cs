@@ -22,7 +22,14 @@ namespace Mugen
         alpha = 1
     }
 
-	public class BgStaticInfo
+    public class IBg
+    {
+        public BgType bgType = BgType.none;
+        public int layerno = -1;
+        public string name;
+    }
+
+    public class BgStaticInfo : IBg
 	{
 		public int srpiteno_Group = -1;
 		public int spriteno_Image = -1;
@@ -36,14 +43,13 @@ namespace Mugen
 		public int tilespacing_x;
 		public int tilespacing_y;
 		public int zoffset;
-		public int layerno = -1;
+		
         public TransType transType;
 	}
 
-    public class BgAniInfo
+    public class BgAniInfo : IBg
     {
         public int actionno = -1;
-        public int layerno = -1;
         public int start_x;
         public int start_y;
         public Vector2 delta;
@@ -53,8 +59,38 @@ namespace Mugen
 
     public class BgConfig
     {
-        private List<BgStaticInfo> m_StaticInfoList = null;
-        private List<BgAniInfo> m_AniInfoList = null;  
+        private List<IBg> m_BgList = null;
+
+        public int BgCount
+        {
+            get
+            {
+                if (m_BgList == null)
+                    return 0;
+                return m_BgList.Count;
+            }
+        }
+
+        public IBg GetBg(int index)
+        {
+            if (m_BgList == null)
+                return null;
+            if (index < 0 || index >= m_BgList.Count)
+                return null;
+            return m_BgList[index];
+        }
+
+        private static int OnBgSort(IBg b1, IBg b2)
+        {
+            return b1.layerno - b2.layerno;
+        }
+
+        public void SortBg()
+        {
+            if (m_BgList == null || m_BgList.Count <= 0)
+                return;
+            m_BgList.Sort(OnBgSort);
+        }
  
         public bool LoadFromReader(ConfigReader reader)
         {
@@ -71,6 +107,7 @@ namespace Mugen
                 if (!section.Tile.StartsWith(_cBG, System.StringComparison.CurrentCultureIgnoreCase))
                     continue;
 
+                string name = section.Tile.Substring(_cBG.Length).Trim();
                 BgStaticInfo staticInfo = null;
                 BgAniInfo aniInfo = null;
                 BgType bgType = BgType.none;
@@ -87,18 +124,20 @@ namespace Mugen
                         {
                             bgType = BgType.normal;
                             staticInfo = new BgStaticInfo();
-                            if (m_StaticInfoList == null)
-                                m_StaticInfoList = new List<BgStaticInfo>();
-                            m_StaticInfoList.Add(staticInfo);
+                            staticInfo.name = name;
+                            if (m_BgList == null)
+                                m_BgList = new List<IBg>();
+                            m_BgList.Add(staticInfo);
                             continue;
                         }
                         else if (string.Compare(value, "anim", true) == 0)
                         {
                             bgType = BgType.anim;
                             aniInfo = new BgAniInfo();
-                            if (m_AniInfoList == null)
-                                m_AniInfoList = new List<BgAniInfo>();
-                            m_AniInfoList.Add(aniInfo);
+                            aniInfo.name = name;
+                            if (m_BgList == null)
+                                m_BgList = new List<IBg>();
+                            m_BgList.Add(aniInfo);
                             continue;
                         }
                     }
@@ -189,6 +228,8 @@ namespace Mugen
                 }
             }
 
+            // 排序
+            SortBg();
             return true;
         }
 
