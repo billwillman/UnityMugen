@@ -341,7 +341,18 @@ namespace Mugen
                 for (int i = 0; i < airCfg.GetStateCount(); ++i)
                 {
                     var key = airCfg.GetStateByIndex(i);
-                    LoadCharState(sf, key, charName);
+                    var value = airCfg.GetBeginAction(key);
+                    if (value != null)
+                    {
+                        for (int j = 0; j < value.ActionFrameListCount; ++j)
+                        {
+                            ActionFrame frame;
+                            if (value.GetFrame(j, out frame))
+                            {
+                                LoadCharState(sf, key, charName, frame.Index, false);
+                            }
+                        }
+                    }
                 }
             }
 
