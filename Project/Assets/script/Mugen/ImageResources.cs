@@ -223,7 +223,7 @@ namespace Mugen
 			return true;
 		}
 
-        private void LoadCharState(SffFile sf, PlayerState group, string charName, string customSpriteName)
+        private void LoadCharState(SffFile sf, PlayerState group, string charName)
         {
            // if (group == PlayerState.psPlayerStateCount)
             //    return;
@@ -266,6 +266,19 @@ namespace Mugen
                 return false;
             /* 处理场景 */
 
+            for (int i = 0; i < config.BgCount; ++i)
+            {
+                var bg = config.GetBg(i);
+                if (bg != null)
+                {
+                    if (bg.bgType == BgType.normal)
+                    {
+                        var staticBg = bg as BgStaticInfo;
+                        PlayerState state = (PlayerState)BgConfig.NewBgState();
+                        LoadCharState(sf, state, bg.name);
+                    }
+                }
+            }
 
             return true;
         }
@@ -286,14 +299,14 @@ namespace Mugen
             {
                 foreach (PlayerState group in PlayerStateEnumValues.GetValues())
                 {
-                    LoadCharState(sf, group, charName, customSpriteName);
+                    LoadCharState(sf, group, charName);
                 }
             } else
             {
                 for (int i = 0; i < airCfg.GetStateCount(); ++i)
                 {
                     var key = airCfg.GetStateByIndex(i);
-                    LoadCharState(sf, key, charName, customSpriteName);
+                    LoadCharState(sf, key, charName);
                 }
             }
 

@@ -9,6 +9,7 @@ public class StageMgr : MonoSingleton<StageMgr> {
 	public string DefaultSceneName = string.Empty;
 	private SceneConfig m_Config = null;
     private SceneImageRes m_ImageRes = null;
+    private string m_LoadedSceneName = string.Empty;
 
 	public bool LoadOk = false;
 
@@ -22,6 +23,7 @@ public class StageMgr : MonoSingleton<StageMgr> {
             m_ImageRes.Clear();
         }
 		LoadOk = false;
+        m_LoadedSceneName = string.Empty;
 	}
 
     public SceneImageRes ImageRes
@@ -56,6 +58,7 @@ public class StageMgr : MonoSingleton<StageMgr> {
 
         var dislpay = obj.GetComponent<SceneLayerDisplay>();
         dislpay.layerno = bg.layerno;
+        dislpay.Init();
     }
 
     // 創建場景
@@ -103,6 +106,8 @@ public class StageMgr : MonoSingleton<StageMgr> {
         // 創建場景
         CreateScene();
 
+        m_LoadedSceneName = this.DefaultSceneName;
+
         return true;
     }
 
@@ -129,6 +134,8 @@ public class StageMgr : MonoSingleton<StageMgr> {
 
 	void LoadDefaultScene()
 	{
+        if (string.Compare(m_LoadedSceneName, DefaultSceneName, true) == 0)
+            return;
 		Clear ();
 		if (string.IsNullOrEmpty (DefaultSceneRoot) || string.IsNullOrEmpty (DefaultSceneName))
 			return;

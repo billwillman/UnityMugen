@@ -61,6 +61,15 @@ namespace Mugen
     {
         private List<IBg> m_BgList = null;
 
+        private static int m_BgState = -2;
+
+        public static int NewBgState()
+        {
+            int ret = m_BgState;
+            --m_BgState;
+            return ret;
+        }
+
         public int BgCount
         {
             get
@@ -125,6 +134,7 @@ namespace Mugen
                             bgType = BgType.normal;
                             staticInfo = new BgStaticInfo();
                             staticInfo.name = name;
+                            staticInfo.bgType = bgType;
                             if (m_BgList == null)
                                 m_BgList = new List<IBg>();
                             m_BgList.Add(staticInfo);
@@ -135,6 +145,7 @@ namespace Mugen
                             bgType = BgType.anim;
                             aniInfo = new BgAniInfo();
                             aniInfo.name = name;
+                            aniInfo.bgType = bgType;
                             if (m_BgList == null)
                                 m_BgList = new List<IBg>();
                             m_BgList.Add(aniInfo);
