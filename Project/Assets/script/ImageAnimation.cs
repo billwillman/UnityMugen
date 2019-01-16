@@ -93,11 +93,18 @@ public class ImageAnimation : MonoBehaviour {
 		if (frameList == null || frameList.Count <= 0)
 			return null;
 		var aniNode = CurAniNode;
-		if (aniNode.frameIndex < 0 || aniNode.frameIndex >= frameList.Count)
+		if (aniNode.frameIndex < 0)
 			return null;
-		var frame = frameList[aniNode.frameIndex];
-		flip = aniNode.flipTag;
-		return frame;
+        for (int i = 0; i < frameList.Count; ++i)
+        {
+            var frame = frameList[i];
+            if (frame != null && frame.Image == aniNode.frameIndex)
+            {
+                flip = aniNode.flipTag;
+                return frame;
+            }
+        }
+		return null;
 	}
 
     private PlayerDisplay m_CacheDisplayer = null;
