@@ -631,7 +631,8 @@ namespace Mugen
 			//eat empty 8bit
 			offset++;
 
-			if ((source[offset++] == 12) && !subHeader.PalletSame && !HasNormalPallet && header.NPlanes <= 1)
+			byte s = source [offset++];
+			if ((s == 12) && !subHeader.PalletSame && !HasNormalPallet && header.NPlanes <= 1)
 			{
 				// load pallet
 				pcxData.pallet = new Color32[256];
