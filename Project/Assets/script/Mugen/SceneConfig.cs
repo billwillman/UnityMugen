@@ -217,12 +217,69 @@ namespace Mugen
 		private StageScaling m_Scaling = null;
         private AirConfig m_AirConfig = null;
         private BgDef m_BgDef = null;
+        private BgConfig m_BgCfg = null;
+
+        public BgConfig BgCfg
+        {
+            get
+            {
+                return m_BgCfg;
+            }
+        }
+
+        public StageInfo Info
+        {
+            get
+            {
+                return m_Info;
+            }
+        }
+
+        public BgDef bgDef
+        {
+            get
+            {
+                return m_BgDef;
+            }
+        }
+
+        public AirConfig AirCfg
+        {
+            get
+            {
+                return m_AirConfig;
+            }
+        }
+
+        public StageScaling Scaling
+        {
+            get
+            {
+                return m_Scaling;
+            }
+        }
+
+        public StagePlayerInfo Players
+        {
+            get
+            {
+                return m_Players;
+            }
+        }
+
+        public StageCamera Camera
+        {
+            get
+            {
+                return m_Cam;
+            }
+        }
 
 		public bool IsVaild
 		{
 			get
 			{
-				return m_Info != null && m_Cam != null && m_Players != null && m_Scaling != null;
+                return m_Info != null && m_Cam != null && m_Players != null && m_Scaling != null && m_AirConfig != null && m_BgDef != null && m_BgCfg != null;
 			}
 		}
 
@@ -242,6 +299,8 @@ namespace Mugen
 				return false;
 			ConfigReader reader = new ConfigReader ();
 			reader.LoadString (str);
+
+            // 1
 			var section = reader.GetSection ("Info");
 			if (section != null) {
 				m_Info = new StageInfo ();
@@ -254,6 +313,7 @@ namespace Mugen
 				return false;
 			}
 
+            // 2
 			section = reader.GetSection ("Camera");
 			if (section == null) {
 				Clear ();
@@ -265,6 +325,7 @@ namespace Mugen
 				return false;
 			}
 
+            // 3
 			section = reader.GetSection ("PlayerInfo");
 			if (section == null) {
 				Clear ();
@@ -276,6 +337,7 @@ namespace Mugen
 				return false;
 			}
 
+            // 4
 			section = reader.GetSection ("Scaling");
 			if (section == null) {
 				Clear ();
@@ -287,6 +349,7 @@ namespace Mugen
 				return false;
 			}
 
+            // 5
             m_AirConfig = new AirConfig(reader);
             if (!m_AirConfig.IsVaild)
             {
@@ -294,6 +357,7 @@ namespace Mugen
                 return false;
             }
 
+            // 6
             section = reader.GetSection("BGdef");
             if (section == null)
             {
@@ -307,6 +371,13 @@ namespace Mugen
                 return false;
             }
             
+            // 7.
+            m_BgCfg = new BgConfig();
+            if (!m_BgCfg.LoadFromReader(reader))
+            {
+                Clear();
+                return false;
+            }
 
 			return IsVaild;
 		}
@@ -318,6 +389,8 @@ namespace Mugen
 			m_Players = null;
 			m_Scaling = null;
             m_AirConfig = null;
+            m_BgDef = null;
+            m_BgCfg = null;
 		}
 	}
 }

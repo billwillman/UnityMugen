@@ -10,6 +10,16 @@ public class DefaultLoaderPlayer : MonoBehaviour {
 	public string CnsName = string.Empty;
     private PlayerImageRes m_ImageLibrary = null;
 
+    // 清理图片资源
+    public void ClearImageRes()
+    { 
+        if (m_ImageLibrary != null)
+        {
+            m_ImageLibrary.Clear();
+        }
+    }
+
+
     public PlayerImageRes ImageRes
     {
         get

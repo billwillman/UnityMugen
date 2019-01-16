@@ -2,19 +2,35 @@
 using System.Collections;
 using Mugen;
 
+[RequireComponent(typeof(SceneImageRes))]
 public class StageMgr : MonoSingleton<StageMgr> {
 
 	public string DefaultSceneRoot= string.Empty;
 	public string DefaultSceneName = string.Empty;
 	private SceneConfig m_Config = null;
+    private SceneImageRes m_ImageRes = null;
 
 	public bool LoadOk = false;
 
-	void Clear()
+	public void Clear()
 	{
 		m_Config = null;
+        if (m_ImageRes != null)
+        {
+            m_ImageRes.Clear();
+        }
 		LoadOk = false;
 	}
+
+    public SceneImageRes ImageRes
+    {
+        get
+        {
+            if (m_ImageRes == null)
+                m_ImageRes = GetComponent<SceneImageRes>();
+            return m_ImageRes;
+        }
+    }
 
 	void LoadConfig(string fileName)
 	{
@@ -25,12 +41,45 @@ public class StageMgr : MonoSingleton<StageMgr> {
 		LoadOk = m_Config.LoadFromFile (fileName);
 	}
 
+    // 进入当前场景
+    public bool EnterCurrentScene()
+    {
+        SceneImageRes imgRes = this.ImageRes;
+        if (imgRes == null || m_Config == null || !m_Config.IsVaild)
+            return false;
+        var bgCfg = m_Config.BgCfg;
+        if (bgCfg == null)
+            return false;
+        var bgDef = m_Config.bgDef;
+        if (bgDef == null || string.IsNullOrEmpty(bgDef.spr))
+            return false;
+        var name = bgDef.spr;
+        name = System.IO.Path.GetFileNameWithoutExtension(name);
+        if (string.IsNullOrEmpty(name))
+            return false;
+        string fileName;
+        if (string.IsNullOrEmpty (DefaultSceneRoot))
+            fileName = string.Format("{0}@{1}/{2}.sff.bytes", AppConfig.GetInstance().SceneRootDir, DefaultSceneName, name);
+        else
+            fileName = string.Format("{0}{1}/@{2}/{3}.sff.bytes", AppConfig.GetInstance().SceneRootDir, DefaultSceneRoot, DefaultSceneName, name);
+        if (!imgRes.LoadScene(fileName, bgCfg))
+            return false;
+        return true;
+    }
+
     public void LoadScene(string root)
     {
         if (string.IsNullOrEmpty(root))
             return;
         string fileName = string.Format("{0}{1}.def.txt", AppConfig.GetInstance().SceneRootDir, root);
         LoadConfig(fileName);
+    }
+
+    public void LoadDefaultScene(string root, string sceneName)
+    {
+        DefaultSceneRoot = root;
+        DefaultSceneName = sceneName;
+        LoadDefaultScene();
     }
 
 	void LoadDefaultScene()
@@ -44,6 +93,9 @@ public class StageMgr : MonoSingleton<StageMgr> {
 		else
 			root = string.Format ("{0}/@{1}/{1}", DefaultSceneRoot, DefaultSceneName);
         LoadScene(root);
+        // 如果成功則進入場景
+        if (LoadOk)
+            EnterCurrentScene();
 	}
 
 	void Start()
