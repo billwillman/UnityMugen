@@ -131,9 +131,15 @@ namespace Mugen
 			List<ImageFrame> frameList = GetImageFrameList(state);
 			if (frameList == null)
 				return null;
-			if (index < 0 || index >= frameList.Count)
+			if (index < 0)
 				return null;
-			return frameList[index];
+            for (int i = 0; i < frameList.Count; ++i)
+            {
+                var frame = frameList[i];
+                if (frame != null && frame.Image == index)
+                    return frame;
+            }
+            return null;
 		}
 
 		public List<ImageAnimateNode> GetAnimationNodeList(PlayerState state)
