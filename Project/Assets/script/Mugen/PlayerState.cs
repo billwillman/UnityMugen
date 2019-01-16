@@ -4,7 +4,7 @@ namespace Mugen
 {
 	public enum PlayerState
 	{
-		psNone = -1,
+		psNone = -9999,
 		// Stand(loop)
 		psStand1 = 0,
 		psStand2 = 1,

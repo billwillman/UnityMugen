@@ -8,10 +8,11 @@ namespace Mugen
 {
 	public class ImageFrame: DisposeObject
 	{
-		public ImageFrame(ImageLibrary parentLib, Texture2D tex, float offsetX, 
+		public ImageFrame(ImageLibrary parentLib, int image, Texture2D tex, float offsetX, 
 			float offsetY, string name, Texture2D localPalletTex = null)
 		{
 			mParentLib = parentLib;
+            m_Image = image;
 			mLocalPalletTex = localPalletTex;
 			SetTexture2D(tex, offsetX, offsetY, name);
 		}
@@ -78,8 +79,17 @@ namespace Mugen
 			}
 		}
 
+        public int Image
+        {
+            get
+            {
+                return m_Image;
+            }
+        }
+
 		private ImageLibrary mParentLib = null;
 		private Texture2D mLocalPalletTex = null;
+        private int m_Image = 0;
 	}
 
 	public struct ImageAnimateNode
@@ -223,38 +233,61 @@ namespace Mugen
 			return true;
 		}
 
-        private void LoadCharState(SffFile sf, PlayerState group, string charName)
+        /// <summary>
+        /// 加載圖片
+        /// </summary>
+        /// <param name="sf">sff文件舉兵</param>
+        /// <param name="group">讀取的動畫Group組</param>
+        /// <param name="charName">名稱</param>
+        /// <param name="startLoadImage">動畫開始的位置</param>
+        /// <param name="isAniLoad">是否是自動連續加載</param>
+        /// <param name="useSaveGroup">是否使用saveGroup參數</param>
+        /// <param name="saveGroup">保存到MAP的Group的KEY</param>
+        private void LoadCharState(SffFile sf, PlayerState group, string charName, int startLoadImage = 0, 
+            bool isAniLoad = true, bool useSaveGroup = false, 
+            PlayerState saveGroup = PlayerState.psNone)
         {
            // if (group == PlayerState.psPlayerStateCount)
             //    return;
 
-            int image = 0;
+            if (!useSaveGroup || saveGroup == PlayerState.psNone)
+                saveGroup = group;
+
             SFFSUBHEADER h;
-            if (!sf.GetSubHeader((int)group, image, out h))
+            if (!sf.GetSubHeader((int)group, startLoadImage, out h))
                 return;
             KeyValuePair<PCXHEADER, PCXDATA> d;
-            if (!sf.GetPcxData((uint)group, (uint)image, out d))
+            if (!sf.GetPcxData((uint)group, (uint)startLoadImage, out d))
                 return;
             float offX = ((float)(d.Key.x + h.x)) / d.Key.widht;//+ 1.0f;
             float offY = -((float)(d.Key.y + h.y)) / d.Key.height + 1.0f;
 
-            Texture2D tex = sf.GetIndexTexture((uint)group, (uint)image);
+            Texture2D tex = sf.GetIndexTexture((uint)group, (uint)startLoadImage);
             while (tex != null)
             {
-                ImageFrame frame = new ImageFrame(this, tex, offX, offY, charName,
+                ImageFrame frame = new ImageFrame(this, startLoadImage, tex, offX, offY, charName,
                     d.Value.GetPalletTexture(mIs32BitPallet));
 
-                AddImageFrame(group, frame);
+                AddImageFrame(saveGroup, frame);
 
-                ++image;
-                if (!sf.GetSubHeader((int)group, image, out h))
+                // 只是單針加載，不是動畫加載
+                if (!isAniLoad)
                     break;
-                if (!sf.GetPcxData((uint)group, (uint)image, out d))
+
+                ++startLoadImage;
+                if (!sf.GetSubHeader((int)group, startLoadImage, out h))
+                    break;
+                if (!sf.GetPcxData((uint)group, (uint)startLoadImage, out d))
                     break;
                 offX = ((float)(d.Key.x + h.x)) / d.Key.widht;//+ 1.0f;
                 offY = -((float)(d.Key.y + h.y)) / d.Key.height + 1.0f;
-                tex = sf.GetIndexTexture((uint)group, (uint)image);
+                tex = sf.GetIndexTexture((uint)group, (uint)startLoadImage);
             }
+        }
+
+        public static PlayerState SceneGroupToSaveGroup(int group)
+        {
+            return (PlayerState)(-(group + 1));
         }
 
         public bool LoadScene(string fileName, BgConfig config)
@@ -274,8 +307,10 @@ namespace Mugen
                     if (bg.bgType == BgType.normal)
                     {
                         var staticBg = bg as BgStaticInfo;
-                        PlayerState state = (PlayerState)BgConfig.NewBgState();
-                        LoadCharState(sf, state, bg.name);
+                        PlayerState saveGroup = SceneGroupToSaveGroup(staticBg.srpiteno_Group);
+                        PlayerState group = (PlayerState)(staticBg.srpiteno_Group);
+                        if (!HasLoadImageFrame(saveGroup, staticBg.spriteno_Image))
+                            LoadCharState(sf, group, bg.name, staticBg.spriteno_Image, false, true, saveGroup);
                     }
                 }
             }
@@ -365,6 +400,27 @@ namespace Mugen
 			iter.Dispose();
 			mGroupImageMap.Clear();
 		}
+
+        protected bool HasLoadImageFrame(PlayerState state, int image)
+        {
+            if (image < 0 || state == PlayerState.psNone)
+                return false;
+            List<ImageFrame> frameList;
+            int key = (int)state;
+            if (!mGroupImageMap.TryGetValue((int)state, out frameList))
+            {
+                return false;
+            }
+            for (int i = 0; i < frameList.Count; ++i)
+            {
+                var frame = frameList[i];
+                if (frame != null && frame.Image == image)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
 
 		protected bool AddImageFrame(PlayerState state, ImageFrame frame)
 		{
