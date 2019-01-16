@@ -324,6 +324,14 @@ namespace Mugen
 			return LoadActToSff(bytes);
 		}
 
+		public bool LoadFromFileName(string fileName)
+		{
+			if (string.IsNullOrEmpty (fileName))
+				return false;
+			byte[] bytes = AppConfig.GetInstance ().Loader.LoadBytes (fileName);
+			return Load(bytes);
+		}
+
 		public bool LoadChar(string charName, string customSpriteName = "", bool isLoadNormalPallet = true)
 		{
 			if (isLoadNormalPallet)
