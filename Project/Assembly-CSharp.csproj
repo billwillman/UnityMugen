@@ -204,6 +204,7 @@
      <Compile Include="Assets\script\DefaultLoader.cs" />
      <Compile Include="Assets\script\DefaultLoaderPlayer.cs" />
      <Compile Include="Assets\script\Display\PlayerDisplay.cs" />
+     <Compile Include="Assets\script\Display\SceneLayerDisplay.cs" />
      <Compile Include="Assets\script\GlobalConfigMgr.cs" />
      <Compile Include="Assets\script\GlobalPlayer.cs" />
      <Compile Include="Assets\script\ImageAnimation.cs" />
@@ -239,6 +240,7 @@
      <Compile Include="Assets\script\Res\XmlParser\XMLNode.cs" />
      <Compile Include="Assets\script\Res\XmlParser\XMLNodeList.cs" />
      <Compile Include="Assets\script\Res\XmlParser\XMLParser.cs" />
+     <Compile Include="Assets\script\SceneImageRes.cs" />
      <Compile Include="Assets\script\StageMgr.cs" />
      <Compile Include="Assets\script\Util\CachedMonoBehaviour.cs" />
      <Compile Include="Assets\script\Util\CustomThread.cs" />

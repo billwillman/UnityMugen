@@ -47,7 +47,7 @@ public class StageMgr : MonoSingleton<StageMgr> {
 
     private void CreateSceneLayer(IBg bg)
     {
-        if (bg == null)
+		if (bg == null || bg.bgType == BgType.none)
             return;
         GameObject obj = new GameObject(bg.name, typeof(SceneLayerDisplay));
         var trans = obj.transform;
@@ -58,7 +58,8 @@ public class StageMgr : MonoSingleton<StageMgr> {
 
         var dislpay = obj.GetComponent<SceneLayerDisplay>();
         dislpay.layerno = bg.layerno;
-        dislpay.Init();
+		if (bg.bgType == BgType.normal)
+			dislpay.InitStatic (bg as BgStaticInfo);
     }
 
     // 創建場景

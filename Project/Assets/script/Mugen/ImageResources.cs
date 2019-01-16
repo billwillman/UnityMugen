@@ -291,6 +291,11 @@ namespace Mugen
             }
         }
 
+		public static PlayerState SceneGroupToSaveGroup(PlayerState group)
+		{
+			return SceneGroupToSaveGroup ((int)group);
+		}
+
         public static PlayerState SceneGroupToSaveGroup(int group)
         {
             return (PlayerState)(-(group + 1));

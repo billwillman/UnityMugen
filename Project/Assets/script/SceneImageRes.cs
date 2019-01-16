@@ -27,6 +27,14 @@ public class SceneImageRes : MonoBehaviour {
         return true;
     }
 
+	public ImageFrame GetImageFrame(PlayerState group, int image)
+	{
+		if (m_ImgLib == null)
+			return null;
+		PlayerState saveGroup = ImageLibrary.SceneGroupToSaveGroup (group);
+		return m_ImgLib.GetImageFrame (saveGroup, image);
+	}
+
     void OnDestroy()
     {
         if (!AppConfig.IsAppQuit)
