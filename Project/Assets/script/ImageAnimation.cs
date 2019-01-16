@@ -15,17 +15,43 @@ public class ImageAnimation : MonoBehaviour {
             ani.Stop();
     }
 
+    // 是否包含這個動作的資源
+    public bool HasStateImage(PlayerState state)
+    {
+        if (state == PlayerState.psNone)
+            return false;
+
+        PlayerDisplay displayer = this.CacheDisplayer;
+        if (displayer == null)
+            return false;
+        var loaderPlayer = displayer.LoaderPlayer;
+        if (loaderPlayer == null)
+            return false;
+        var imgRes = loaderPlayer.ImageRes;
+        if (imgRes == null)
+            return false;
+        var imgLib = imgRes.ImgLib;
+        if (imgLib == null)
+        {
+            imgRes.Init();
+            imgLib = imgRes.ImgLib;
+            if (imgLib == null)
+                return false;
+        }
+        var list = imgLib.GetImageFrameList(state);
+        bool ret = list != null;
+        return ret;
+    }
+
     // 播放角色动画
-    public bool PlayerPlayerAni(string playerName, PlayerState state, bool isLoop = true)
+    public bool PlayerPlayerAni(PlayerState state, bool isLoop = true)
     {
         if (m_State == state)
             return true;
 
         ResetAnimation();
-        if (string.IsNullOrEmpty(playerName))
-            return false;
 
-        PlayerDisplay displayer = GetComponent<PlayerDisplay>();
+        PlayerDisplay displayer = this.CacheDisplayer;
         if (displayer == null)
             return false;
         var loaderPlayer = displayer.LoaderPlayer;

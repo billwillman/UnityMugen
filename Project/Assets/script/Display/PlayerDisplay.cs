@@ -67,6 +67,15 @@ public class PlayerDisplay : BaseResLoader {
         }
     }
 
+    public bool HasStateImage(PlayerState state)
+    {
+        var ani = this.ImageAni;
+        if (ani == null)
+            return false;
+        bool ret = ani.HasStateImage(state);
+        return ret;
+    }
+
     public bool PlayAni(PlayerState state, bool isLoop = true)
     {
         var playerName = this.PlayerName;
@@ -75,7 +84,7 @@ public class PlayerDisplay : BaseResLoader {
         var ani = this.ImageAni;
         if (ani == null)
             return false;
-        bool ret = ani.PlayerPlayerAni(playerName, state, isLoop);
+        bool ret = ani.PlayerPlayerAni(state, isLoop);
         if (ret)
         {
             RefreshCurFrame(this.ImageAni);

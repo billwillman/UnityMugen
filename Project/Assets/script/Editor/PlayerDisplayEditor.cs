@@ -50,7 +50,17 @@ public class PlayerDisplayEditor : Editor {
                     m_VaildStateList = new List<PlayerState>();
                 m_VaildStateList.Add(key);
             }
-            if (m_VaildStateList  != null && m_VaildStateList.Count > 0)
+
+            // 刪除無效狀態
+            for (int i = m_VaildStateList.Count - 1; i >= 0; --i)
+            {
+                var state = m_VaildStateList[i];
+                if (!m_LastDisplay.HasStateImage(state))
+                    m_VaildStateList.RemoveAt(i);
+            }
+            //--------------------------
+
+            if (m_VaildStateList != null && m_VaildStateList.Count > 0)
             {
                 m_VaildStateNameList = new string[m_VaildStateList.Count];
                 for (int i = 0; i < m_VaildStateList.Count; ++i)

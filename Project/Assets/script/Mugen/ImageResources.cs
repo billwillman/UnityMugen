@@ -257,6 +257,19 @@ namespace Mugen
             }
         }
 
+        public bool LoadScene(string fileName, BgConfig config)
+        {
+            if (string.IsNullOrEmpty(fileName) || config == null)
+                return false;
+            SffFile sf = new SffFile();
+            if (!sf.LoadFromFileName(fileName))
+                return false;
+            /* 处理场景 */
+
+
+            return true;
+        }
+
 		public bool LoadChar(string charName, AirConfig airCfg = null, string customSpriteName = "")
 		{
 			ClearAll ();
