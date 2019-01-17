@@ -11,7 +11,7 @@ namespace Mugen
 	public struct SFFHEADER {
 		
 		/// unsigned char[11]
-		[System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.ByValTStr, SizeConst=11)]
+		[System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.ByValTStr, SizeConst=12)]
 		public string signature;
 		
 		/// unsigned char
@@ -692,6 +692,7 @@ namespace Mugen
 					continue;
 				}
 
+                /*
                 // ™z²éindexPrevious
                 if (header.LenghtOfSubheader == 0 && header.IndexOfPrevious != 0)
                 {
@@ -700,6 +701,7 @@ namespace Mugen
                         break;
                     continue;
                 }
+                 * */
 
 				offset += Marshal.SizeOf(header);
 				KeyValuePair<PCXHEADER, PCXDATA> value;
@@ -833,10 +835,15 @@ namespace Mugen
 
 			header = mSubHeaders[index];
 
-			if ((header.LenghtOfSubheader == 0) && (header.IndexOfPrevious > 0) && (header.IndexOfPrevious < mSubHeaders.Count))
-			{
-				header = mSubHeaders[header.IndexOfPrevious - 1];
-			}
+           // while (true)
+            {
+                if ((header.LenghtOfSubheader == 0) && (header.IndexOfPrevious > 0) && (header.IndexOfPrevious < mSubHeaders.Count))
+                {
+                    header = mSubHeaders[header.IndexOfPrevious - 1];
+                }
+              //  else
+               //     break;
+            }
 			return true;
 		}
 
