@@ -373,6 +373,12 @@ namespace Mugen
 			if (string.Compare(header.signature, _cElecbyteSpr, true) != 0)
 				return false;
 
+            if (header.verlo2 > 1)
+            {
+                Debug.LogErrorFormat("sff file not supoort v{0:D}.{1:D}.{2:D}.{3:D}", header.verlo2, header.verlo, header.verhi2, header.verhi);
+                return false;
+            }
+
 			if (!LoadSubFiles(header, bytes))
 				return false;
 		
