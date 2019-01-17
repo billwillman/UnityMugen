@@ -339,15 +339,18 @@ namespace Mugen
 
             // 4
 			section = reader.GetSection ("Scaling");
-			if (section == null) {
-				Clear ();
-				return false;
-			}
-			m_Scaling = new StageScaling ();
-			if (!section.GetPropertysValues (m_Scaling)) {
-				Clear ();
-				return false;
-			}
+            if (section != null)
+            {
+                m_Scaling = new StageScaling();
+                if (!section.GetPropertysValues(m_Scaling))
+                {
+                    Clear();
+                    return false;
+                }
+            } else
+            {
+                m_Scaling = new StageScaling();
+            }
 
             // 5
             m_AirConfig = new AirConfig(reader);

@@ -138,7 +138,7 @@ public class StageMgr : MonoSingleton<StageMgr> {
         if (string.Compare(m_LoadedSceneName, DefaultSceneName, true) == 0)
             return;
 		Clear ();
-		if (string.IsNullOrEmpty (DefaultSceneRoot) || string.IsNullOrEmpty (DefaultSceneName))
+		if (string.IsNullOrEmpty (DefaultSceneName))
 			return;
 		string root;
 		if (string.IsNullOrEmpty (DefaultSceneRoot))
