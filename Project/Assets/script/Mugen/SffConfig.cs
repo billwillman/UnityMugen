@@ -42,8 +42,8 @@ namespace Mugen
 		public byte PaletteType;
 		
 		/// unsigned char[476]
-		[System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.ByValTStr, SizeConst=476)]
-		public string BLANK;
+		//[System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.ByValTStr, SizeConst=476)]
+		//public string BLANK;
 	}
 
 	
@@ -691,6 +691,16 @@ namespace Mugen
 						break;
 					continue;
 				}
+
+                // ™z²éindexPrevious
+                if (header.LenghtOfSubheader == 0 && header.IndexOfPrevious != 0)
+                {
+                    offset = (int)header.NextSubheaderFileOffset;
+                    if (offset == 0 || offset >= source.Length)
+                        break;
+                    continue;
+                }
+
 				offset += Marshal.SizeOf(header);
 				KeyValuePair<PCXHEADER, PCXDATA> value;
 				if (!LoadPcx(offset, header, source, out value))
