@@ -118,7 +118,7 @@ namespace Mugen
 		public string ColorMap;
 		
 		/// unsigned char
-		public byte reserved;
+		public byte reserved1;
 		
 		/// unsigned char
 		public byte NPlanes;
@@ -128,10 +128,13 @@ namespace Mugen
 		
 		/// unsigned char
 		public byte palletInfo;
+
+		public ushort HorzScreenSize;
+		public ushort VertScreenSize;
 		
 		/// unsigned char[58]
-		[System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.ByValTStr, SizeConst=58)]
-		public string Filler;
+		[System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.ByValTStr, SizeConst=54)]
+		public string Reserved2;
 	}
 
 	public struct PCXDATA
