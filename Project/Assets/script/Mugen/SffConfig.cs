@@ -46,6 +46,58 @@ namespace Mugen
 		//public string BLANK;
 	}
 
+    // 2.0 文件头
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential, CharSet = System.Runtime.InteropServices.CharSet.Ansi)]
+    public struct SFFHEADERv2
+    {
+        /// unsigned char[11]
+        [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.ByValTStr, SizeConst = 12)]
+        public string signature;
+
+        /// unsigned char
+        public byte verhi;
+
+        /// unsigned char
+        public byte verlo;
+
+        /// unsigned char
+        public byte verhi2;
+
+        /// unsigned char
+        public byte verlo2;
+
+        public uint reserved1;
+        public uint reserved2;
+
+        // compatVerLoad
+        public byte compatverlo3;
+        public byte compatverlo1;
+        public byte compatverlo2;
+        public byte compatverhi;
+
+        public uint reserved3;
+        public uint reserved4;
+
+        public uint offsetSubFile;
+        public uint totalImage;
+
+        public uint offsetPaletteFile;
+        public uint totalPalette;
+
+        public uint offsetLData;
+        public uint sizeLData;
+
+        public uint offsetTData;
+        public uint sizeTData;
+
+        public uint reserved5;
+        public uint reserved6;
+
+        /// unsigned char[436]
+        [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.ByValTStr, SizeConst=436)]
+        public string comments;
+    }
+
 	
 	[System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential, CharSet=System.Runtime.InteropServices.CharSet.Ansi)]
 	public struct SFFSUBHEADER {
@@ -79,6 +131,42 @@ namespace Mugen
 		[System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.ByValTStr, SizeConst=13)]
 		public string BALNK;
 	}
+
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential, CharSet = System.Runtime.InteropServices.CharSet.Ansi)]
+    public struct SFFSUBHEADERv2
+    {
+        /// short
+        public short GroubNumber;
+        /// short
+        public short ImageNumber;
+
+        public short width;
+        public short height;
+        public short x;
+        public short y;
+
+        public short IndexOfPrevious;
+
+        public byte fmt;
+        public byte coldepth;
+        public uint ltDataOffset;
+        public uint spriteDataLen; //(0: linked)
+        public short palletteIndex;
+
+        //flags
+        //0    unset: literal (use ldata); set: translate (use tdata; decompress on load)
+        //1-15 unused
+        public short flags;
+    }
+
+    public enum SubHeadFmtType
+    {
+        raw = 0,
+        notused = 1,
+        RLE8 = 2,
+        RLE5 = 3,
+        LZ5 = 4
+    }
 
 	[System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential, CharSet=System.Runtime.InteropServices.CharSet.Ansi)]
 	public struct PCXHEADER {
@@ -358,32 +446,90 @@ namespace Mugen
 				mIsVaild = false;
 				return false;
 			}
-			SFFHEADER header = new SFFHEADER();
-			int headerSize = Marshal.SizeOf(header);
-			IntPtr headerBuffer = Marshal.AllocHGlobal(headerSize);
-			try
-			{
-				Marshal.Copy(bytes, 0, headerBuffer, headerSize);
-				header = (SFFHEADER)Marshal.PtrToStructure(headerBuffer, typeof(SFFHEADER));
-			} finally
-			{
-				Marshal.FreeHGlobal(headerBuffer);
-			}
 
-			if (string.Compare(header.signature, _cElecbyteSpr, true) != 0)
-				return false;
-
-            if (header.verlo2 > 1)
+            // 判断是否是v2的文件
+            if (bytes.Length < 16)
             {
-                Debug.LogErrorFormat("sff file not supoort v{0:D}.{1:D}.{2:D}.{3:D}", header.verlo2, header.verlo, header.verhi2, header.verhi);
+                mIsVaild = false;
                 return false;
             }
 
-			if (!LoadSubFiles(header, bytes))
-				return false;
-		
-			if (!LoadPcxs(header, bytes))
-				return false;
+            byte v1 = bytes[15];
+            byte v2;
+            byte v3;
+            byte v4;
+            if (v1 == 2)
+            {
+                SFFHEADERv2 header = new SFFHEADERv2();
+                int headerSize = Marshal.SizeOf(header);
+                IntPtr headerBuffer = Marshal.AllocHGlobal(headerSize);
+                try
+                {
+                    Marshal.Copy(bytes, 0, headerBuffer, headerSize);
+                    header = (SFFHEADERv2)Marshal.PtrToStructure(headerBuffer, typeof(SFFHEADERv2));
+                }
+                finally
+                {
+                    Marshal.FreeHGlobal(headerBuffer);
+                }
+
+                if (string.Compare(header.signature, _cElecbyteSpr, true) != 0)
+                    return false;
+
+                v1 = header.verlo2;
+                v2 = header.verlo;
+                v3 = header.verhi2;
+                v4 = header.verhi;
+
+                if (!LoadSubFilesV2(header, bytes))
+                    return false;
+            }
+            else if (v1 == 1)
+            {
+
+                SFFHEADER header = new SFFHEADER();
+                int headerSize = Marshal.SizeOf(header);
+                IntPtr headerBuffer = Marshal.AllocHGlobal(headerSize);
+                try
+                {
+                    Marshal.Copy(bytes, 0, headerBuffer, headerSize);
+                    header = (SFFHEADER)Marshal.PtrToStructure(headerBuffer, typeof(SFFHEADER));
+                }
+                finally
+                {
+                    Marshal.FreeHGlobal(headerBuffer);
+                }
+
+                if (string.Compare(header.signature, _cElecbyteSpr, true) != 0)
+                    return false;
+
+                v1 = header.verlo2;
+                v2 = header.verlo;
+                v3 = header.verhi2;
+                v4 = header.verhi;
+
+                if (v1 > 1)
+                {
+                    Debug.LogErrorFormat("sff file not supoort v{0:D}.{1:D}.{2:D}.{3:D}", v1, v2, v3, v4);
+                    return false;
+                }
+
+                if (!LoadSubFiles(header, bytes))
+                    return false;
+
+                if (!LoadPcxs(header, bytes))
+                    return false;
+            } else
+            {
+                Debug.LogErrorFormat("sff file not supoort v{0:D}", v1);
+                return false;
+            }
+
+            if (v1 > 1)
+            {
+                Debug.LogErrorFormat("sff file not supoort v{0:D}.{1:D}.{2:D}.{3:D}", v1, v2, v3, v4);
+                return false;
+            }
 
 			mIsVaild = true;
 			return true;
@@ -729,6 +875,15 @@ namespace Mugen
 			return ret;
 		}
 
+        private bool LoadSubFilesV2(SFFHEADERv2 header, byte[] source)
+        {
+            if (header.offsetSubFile == 0)
+                return false;
+            if (!LoadSubFilesV2((int)header.offsetSubFile, source))
+                return false;
+            return true;
+        }
+
 		private bool LoadSubFiles(SFFHEADER header, byte[] source)
 		{
 			if ((header.NumberOfGroups == 0) && (header.NumberOfImage == 0))
@@ -781,6 +936,14 @@ namespace Mugen
 
 			return true;
 		}
+
+        private bool LoadSubFilesV2(int offset, byte[] source)
+        {
+            if (offset < 0)
+                return false;
+            // 未完
+            return true;
+        }
 
 		public bool IsLoadVaild
 		{

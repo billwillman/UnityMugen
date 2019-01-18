@@ -16,7 +16,7 @@ public class ImageAnimation : MonoBehaviour {
     }
 
     // 是否包含這個動作的資源
-    public bool HasStateImage(PlayerState state)
+    public bool HasStateImage(PlayerState state, bool isCheckTex =false)
     {
         if (state == PlayerState.psNone)
             return false;
@@ -39,7 +39,22 @@ public class ImageAnimation : MonoBehaviour {
                 return false;
         }
         var list = imgLib.GetImageFrameList(state);
-        bool ret = list != null;
+        bool ret = list != null && list.Count > 0;
+        if (ret && isCheckTex)
+        {
+            ret = false;
+            for (int i = 0; i < list.Count; ++i)
+            {
+                var frame = list[i];
+                if (frame == null)
+                    continue;
+                if (frame.Data != null)
+                {
+                    ret = true;
+                    break;
+                }
+            }
+        }
         return ret;
     }
 

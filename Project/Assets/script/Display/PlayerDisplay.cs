@@ -67,12 +67,12 @@ public class PlayerDisplay : BaseResLoader {
         }
     }
 
-    public bool HasStateImage(PlayerState state)
+    public bool HasStateImage(PlayerState state, bool isCheckTex = false)
     {
         var ani = this.ImageAni;
         if (ani == null)
             return false;
-        bool ret = ani.HasStateImage(state);
+        bool ret = ani.HasStateImage(state, isCheckTex);
         return ret;
     }
 
