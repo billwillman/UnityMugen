@@ -819,10 +819,8 @@ namespace Mugen
 			return true;
 		}
 
-        private bool LoadPcxs(SFFHEADER sffHeader, byte[] source, PcxCompressType compressType = PcxCompressType.raw)
+        private bool LoadPcxs(SFFHEADER sffHeader, byte[] source)
 		{
-            if (compressType != PcxCompressType.raw || compressType != PcxCompressType.notused)
-                return false;
 			if ((source == null) || (source.Length <= 0))
 				return false;
 			if ((mSubHeaders == null) || (mSubHeaders.Count <= 0))
