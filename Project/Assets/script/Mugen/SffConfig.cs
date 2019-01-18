@@ -1,8 +1,10 @@
 using System;
+using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
+using Utils;
 
 namespace Mugen
 {
@@ -149,8 +151,8 @@ namespace Mugen
 
         public byte fmt;
         public byte coldepth;
-        public uint ltDataOffset;
-        public uint spriteDataLen; //(0: linked)
+        public uint offsetData;
+        public uint subfileLength; //(0: linked)
         public short palletteIndex;
 
         //flags
@@ -159,7 +161,7 @@ namespace Mugen
         public short flags;
     }
 
-    public enum SubHeadFmtType
+    public enum PcxCompressType
     {
         raw = 0,
         notused = 1,
@@ -817,8 +819,10 @@ namespace Mugen
 			return true;
 		}
 
-		private bool LoadPcxs(SFFHEADER sffHeader, byte[] source)
+        private bool LoadPcxs(SFFHEADER sffHeader, byte[] source, PcxCompressType compressType = PcxCompressType.raw)
 		{
+            if (compressType != PcxCompressType.raw || compressType != PcxCompressType.notused)
+                return false;
 			if ((source == null) || (source.Length <= 0))
 				return false;
 			if ((mSubHeaders == null) || (mSubHeaders.Count <= 0))
@@ -879,8 +883,67 @@ namespace Mugen
         {
             if (header.offsetSubFile == 0)
                 return false;
-            if (!LoadSubFilesV2((int)header.offsetSubFile, source))
+            int offset = (int)header.offsetSubFile;
+            if (offset < 0 || offset >= source.Length)
                 return false;
+            int cnt = (int)header.totalImage;
+            if (cnt < 0)
+                return false;
+
+            MemoryStream stream = new MemoryStream(source);
+            try
+            {
+                if (stream.Seek(offset, SeekOrigin.Begin) != offset)
+                    return false;
+                var filePathMgr = FilePathMgr.GetInstance();
+                for (int i = 0; i < cnt; ++i)
+                {
+                    SFFSUBHEADERv2 subHeader = new SFFSUBHEADERv2();
+                    subHeader.GroubNumber = filePathMgr.ReadShort(stream);
+                    subHeader.ImageNumber = filePathMgr.ReadShort(stream);
+                    subHeader.width = filePathMgr.ReadShort(stream);
+                    subHeader.height = filePathMgr.ReadShort(stream);
+                    subHeader.x = filePathMgr.ReadShort(stream);
+                    subHeader.y = filePathMgr.ReadShort(stream);
+                    subHeader.IndexOfPrevious = filePathMgr.ReadShort(stream);
+                    subHeader.fmt = (byte)stream.ReadByte();
+                    subHeader.coldepth = (byte)stream.ReadByte();
+                    subHeader.offsetData = (uint)filePathMgr.ReadInt(stream);
+                    subHeader.subfileLength = (uint)filePathMgr.ReadInt(stream);
+                    subHeader.palletteIndex = filePathMgr.ReadShort(stream);
+                    subHeader.flags = filePathMgr.ReadShort(stream);
+
+                    SubHeadersV2.Add(subHeader);
+                }
+
+                if (mSubHeadersV2 != null)
+                {
+                    for (int i = 0; i < mSubHeadersV2.Count; ++i)
+                    {
+                        var subHeader = mSubHeadersV2[i];
+                        KeyValuePair<uint, uint> key = new KeyValuePair<uint, uint>((uint)subHeader.GroubNumber, (uint)subHeader.ImageNumber);
+                        if (mPcxDataMap.ContainsKey(key))
+                            continue;
+                        // 读取pcx
+                        if (subHeader.subfileLength == 0 && subHeader.IndexOfPrevious != 0)
+                        {
+                            // LINK模式
+                        }
+                        else
+                        {
+                            int off = (int)subHeader.offsetData;
+                            if (off > 0)
+                            {
+                               
+                            }
+                        }
+                    }
+                }
+            } finally
+            {
+                stream.Close();
+                stream.Dispose();
+            }
             return true;
         }
 
@@ -936,14 +999,6 @@ namespace Mugen
 
 			return true;
 		}
-
-        private bool LoadSubFilesV2(int offset, byte[] source)
-        {
-            if (offset < 0)
-                return false;
-            // 未完
-            return true;
-        }
 
 		public bool IsLoadVaild
 		{
@@ -1047,8 +1102,19 @@ namespace Mugen
 			}
 		}
 
+        protected List<SFFSUBHEADERv2> SubHeadersV2
+        {
+            get
+            {
+                if (mSubHeadersV2 == null)
+                    mSubHeadersV2 = new List<SFFSUBHEADERv2>();
+                return mSubHeadersV2;
+            }
+        }
+
 		private bool mIsVaild = false;
 		private List<SFFSUBHEADER> mSubHeaders = null;
+        private List<SFFSUBHEADERv2> mSubHeadersV2 = null;
 		// key = group, image
 		private Dictionary<KeyValuePair<uint, uint>, KeyValuePair<PCXHEADER, PCXDATA>> mPcxDataMap = new Dictionary<KeyValuePair<uint, uint>, KeyValuePair<PCXHEADER, PCXDATA>>();
 	}
