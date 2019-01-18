@@ -313,7 +313,7 @@ namespace Mugen
 				byte[] b = texture.EncodeToPNG();
 				if (b != null)
 				{
-					System.IO.FileStream stream = new System.IO.FileStream(fileName, System.IO.FileMode.CreateNew);
+					System.IO.FileStream stream = new System.IO.FileStream(fileName, System.IO.FileMode.Create);
 					stream.Write(b, 0, b.Length);
 					stream.Close();
 					stream.Dispose();
