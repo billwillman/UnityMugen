@@ -23,12 +23,12 @@ stcommon = common.cns
 sprite   = Joe-ROTD.sff   
 anim     = Joe-ROTD.air  
 sound    = Joe-ROTD.snd  
-pal1     = pal/pal1.act
-pal2     = pal/pal2.act
-pal3     = pal/pal3.act
-pal4     = pal/pal4.act
-pal5     = pal/pal5.act
-pal6     = pal/pal6.act
+pal1     = pal1.act
+pal2     = pal2.act
+pal3     = pal3.act
+pal4     = pal4.act
+pal5     = pal5.act
+pal6     = pal6.act
 
 ; Arcade mode
 ;[Arcade]

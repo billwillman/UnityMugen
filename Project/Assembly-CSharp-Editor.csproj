@@ -45,6 +45,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Editor\ABBuild.cs" />
+     <Compile Include="Assets\Editor\AssetBundleRongYu.cs" />
+     <Compile Include="Assets\Editor\BuildSOMap.cs" />
      <Compile Include="Assets\NGUI\Examples\Scripts\InventorySystem\Editor\InvDatabaseInspector.cs" />
      <Compile Include="Assets\NGUI\Examples\Scripts\InventorySystem\Editor\InvFindItem.cs" />
      <Compile Include="Assets\NGUI\Scripts\Editor\ActiveAnimationEditor.cs" />
@@ -151,19 +154,24 @@
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Text 1.shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Premultiplied Colored (TextureClip).shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored (Packed) (TextureClip).shader" />
+     <None Include="Assets\resources\mugen\char\@DuckHunt\Command.cmd.txt" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored 2.shader" />
      <None Include="Assets\resources\mugen\char\@Billy-ROTD\Billy-ROTD.def.txt" />
+     <None Include="Assets\resources\mugen\char\@Catwalk\Command.cmd.txt" />
      <None Include="Assets\NGUI\Examples\Shaders\Unlit - Masked Colored.shader" />
+     <None Include="Assets\resources\mugen\char\@Catwalk\Anim.air.txt" />
      <None Include="Assets\resources\mugen\char\@Kyo-ROTD\Kyo-ROTD.air.txt" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Premultiplied Colored 3.shader" />
      <None Include="Assets\NGUI\Examples\Atlases\Wooden\Arimo18.txt" />
      <None Include="Assets\resources\mugen\char\@Joe-ROTD\Joe-ROTD.def.txt" />
+     <None Include="Assets\resources\mugen\char\@DuckHunt\Constants.cns.txt" />
      <None Include="Assets\resources\mugen\char\@Billy-ROTD\Billy-ROTD.air.txt" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored (TextureClip).shader" />
      <None Include="Assets\NGUI\Examples\Atlases\SciFi\SciFi Font - Header.txt" />
      <None Include="Assets\resources\mugen\scene\kof97\@KOF97-BaliStage\KOF97-BaliStage.def.txt" />
      <None Include="Assets\resources\mugen\scene\kof97\@KOF97-OrochiUSAStage\KOF97-OrochiUSAStage.def.txt" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Masked 3.shader" />
+     <None Include="Assets\resources\mugen\char\@DuckHunt\States.st.txt" />
      <None Include="Assets\resources\mugen\scene\kof97\@KOF97-OrochiGoenitzStage\KOF97-OrochiGoenitzStage.def.txt" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored 1.shader" />
      <None Include="Assets\NGUI\Examples\Atlases\Fantasy\Fantasy Font - Normal.txt" />
@@ -181,27 +189,37 @@
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Premultiplied Colored.shader" />
      <None Include="Assets\resources\mugen\scene\kof97\@KOF97-OrochiJapanStage\KOF97-OrochiJapanStage.def.txt" />
      <None Include="Assets\resources\mugen\scene\kof97\@KOF97-ChinaStage\KOF97-ChinaStage.def.txt" />
+     <None Include="Assets\resources\mugen\char\@DuckHunt\CONFIG.txt" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored.shader" />
+     <None Include="Assets\resources\mugen\char\@Catwalk\Constants.cns.txt" />
      <None Include="Assets\resources\mugen\scene\kof97\@KOF97-USAStage\KOF97-USAStage.def.txt" />
+     <None Include="Assets\resources\mugen\char\@DuckHunt\DuckHunt.def.txt" />
      <None Include="Assets\resources\mugen\scene\kof97\@KOF97-OrochiKoreaStage\KOF97-OrochiKoreaStage.def.txt" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Text.shader" />
      <None Include="Assets\resources\mugen\scene\kof97\@KOF97-JapanStage\KOF97-JapanStage.def.txt" />
+     <None Include="Assets\resources\mugen\scene\@stage0\stage0.def.txt" />
      <None Include="Assets\resources\mugen\char\@Iori-ROTD\Iori-ROTD.air.txt" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Packed.shader" />
+     <None Include="Assets\resources\mugen\char\@DuckHunt\Anim.air.txt" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Packed 3.shader" />
      <None Include="Assets\resources\mugen\char\@Iori-ROTD\Iori-ROTD.def.txt" />
      <None Include="Assets\resources\mugen\char\@kfm\kfm.cns.txt" />
+     <None Include="Assets\resources\mugen\char\@DuckHunt\Readme.txt" />
      <None Include="Assets\resources\mugen\scene\kof97\@KOF97-OrochiChrisStage\KOF97-OrochiChrisStage.def.txt" />
      <None Include="Assets\resources\mugen\scene\kof97\@KOF97-KoreaStage\KOF97-KoreaStage.def.txt" />
+     <None Include="Assets\resources\mugen\char\@Catwalk\CONFIG.txt" />
      <None Include="Assets\NGUI\Examples\Shaders\Unlit - Additive Colored.shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Masked.shader" />
      <None Include="Assets\NGUI\Examples\Atlases\Refractive\Refractive Font - Header.txt" />
      <None Include="Assets\NGUI\Examples\Shaders\Refractive.shader" />
+     <None Include="Assets\resources\mugen\char\@Catwalk\Readme.txt" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Text (TextureClip).shader" />
      <None Include="Assets\NGUI\Examples\Shaders\Unlit - Depth.shader" />
      <None Include="Assets\NGUI\Examples\Atlases\SciFi\SciFi Font - Normal.txt" />
      <None Include="Assets\resources\mugen\char\@Joe-ROTD\Joe-ROTD.air.txt" />
+     <None Include="Assets\resources\mugen\char\@Catwalk\Catwalk.def.txt" />
      <None Include="Assets\NGUI\Examples\Models\Orc Armor\Orc Armor.shader" />
+     <None Include="Assets\resources\mugen\char\@Catwalk\States.st.txt" />
      <None Include="Assets\resources\mugen\char\@Kyo-ROTD\Kyo-ROTD.def.txt" />
      <None Include="Assets\NGUI\Examples\Resources\Localization.txt" />
      <None Include="Assets\resources\mugen\scene\kof97\@KOF97-OrochiBaliStage\KOF97-OrochiBaliStage.def.txt" />
@@ -230,6 +248,9 @@
  <Reference Include="UnityEditor.TreeEditor">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/TreeEditor/Editor/UnityEditor.TreeEditor.dll</HintPath>
  </Reference>
+ <Reference Include="ICSharpCode.SharpZipLib">
+ <HintPath>/Users/yizeng/Mugen/Project/Assets/Plugins/ICSharpCode.SharpZipLib.dll</HintPath>
+ </Reference>
  <Reference Include="UnityEditor.Graphs">
  <HintPath>/Applications/Unity/Unity.app/Contents/Managed/UnityEditor.Graphs.dll</HintPath>
  </Reference>
@@ -244,9 +265,6 @@
  </Reference>
  <Reference Include="UnityEditor.OSXStandalone.Extensions">
  <HintPath>/Applications/Unity/PlaybackEngines/MacStandaloneSupport/UnityEditor.OSXStandalone.Extensions.dll</HintPath>
- </Reference>
- <Reference Include="ICSharpCode.SharpZipLib">
- <HintPath>/Users/yizeng/Mugen/Project/Assets/Plugins/ICSharpCode.SharpZipLib.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.iOS.Extensions.Xcode">
  <HintPath>/Applications/Unity/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
