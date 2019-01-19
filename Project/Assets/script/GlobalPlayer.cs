@@ -70,7 +70,7 @@ public class GlobalPlayer
 			if (m_PlayerConfig != null && m_PlayerConfig.Files != null)
 			{
 				airName = m_PlayerConfig.Files.anim;
-				airName = System.IO.Path.GetFileNameWithoutExtension(airName);
+				airName = GlobalConfigMgr.GetConfigFileNameNoExt(airName);
 			}
 			m_AirConfig = new AirConfig (playerName, airName);
 			if (!m_AirConfig.IsVaild)
@@ -99,7 +99,7 @@ public class GlobalPlayer
 				else
 				{
 					cnsName = m_PlayerConfig.Files.cns;
-					cnsName = System.IO.Path.GetFileNameWithoutExtension(cnsName);
+					cnsName = GlobalConfigMgr.GetConfigFileNameNoExt(cnsName);
 				}
 			}
 			string fileName = string.Format("{0}@{1}/{2}.cns.txt", AppConfig.GetInstance().PlayerRootDir, playerName, cnsName);

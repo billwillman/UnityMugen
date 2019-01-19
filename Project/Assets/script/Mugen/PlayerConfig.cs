@@ -93,6 +93,36 @@ namespace Mugen
 		{
 			get; protected set;
 		}
+
+		public string pal7
+		{
+			get; protected set;
+		}
+
+		public string pal8
+		{
+			get; protected set;
+		}
+
+		public string pal9
+		{
+			get; protected set;
+		}
+
+		public string pal10
+		{
+			get; protected set;
+		}
+
+		public string pal11
+		{
+			get; protected set;
+		}
+
+		public string pal12
+		{
+			get; protected set;
+		}
 	}
 
 	public class PlayerInfo: IConfigPropertys

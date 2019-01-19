@@ -462,7 +462,7 @@ namespace Mugen
 
 		public string GeneratorPalletFileName(string playerName, string palletName)
 		{
-			palletName = System.IO.Path.GetFileNameWithoutExtension(palletName);
+			palletName = GlobalConfigMgr.GetConfigFileNameNoExt(palletName);
 			string fileName = string.Format("{0}@{1}/{2}.act.bytes", AppConfig.GetInstance().PlayerRootDir, playerName, palletName);
 			return fileName;
 		}

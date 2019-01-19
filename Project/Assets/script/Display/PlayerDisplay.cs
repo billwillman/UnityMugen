@@ -259,17 +259,29 @@ public class PlayerDisplay : BaseResLoader {
             || player.PlayerCfg.Files == null)
             return string.Empty;
         if (!string.IsNullOrEmpty(player.PlayerCfg.Files.pal1))
-            return System.IO.Path.GetFileNameWithoutExtension(player.PlayerCfg.Files.pal1);
+			return GlobalConfigMgr.GetConfigFileNameNoExt(player.PlayerCfg.Files.pal1);
         if (!string.IsNullOrEmpty(player.PlayerCfg.Files.pal2))
-            return System.IO.Path.GetFileNameWithoutExtension(player.PlayerCfg.Files.pal2);
+			return GlobalConfigMgr.GetConfigFileNameNoExt(player.PlayerCfg.Files.pal2);
         if (!string.IsNullOrEmpty(player.PlayerCfg.Files.pal3))
-            return System.IO.Path.GetFileNameWithoutExtension(player.PlayerCfg.Files.pal3);
+			return GlobalConfigMgr.GetConfigFileNameNoExt(player.PlayerCfg.Files.pal3);
         if (!string.IsNullOrEmpty(player.PlayerCfg.Files.pal4))
-            return System.IO.Path.GetFileNameWithoutExtension(player.PlayerCfg.Files.pal4);
+			return GlobalConfigMgr.GetConfigFileNameNoExt(player.PlayerCfg.Files.pal4);
         if (!string.IsNullOrEmpty(player.PlayerCfg.Files.pal5))
-            return System.IO.Path.GetFileNameWithoutExtension(player.PlayerCfg.Files.pal5);
+			return GlobalConfigMgr.GetConfigFileNameNoExt(player.PlayerCfg.Files.pal5);
         if (!string.IsNullOrEmpty(player.PlayerCfg.Files.pal6))
-            return System.IO.Path.GetFileNameWithoutExtension(player.PlayerCfg.Files.pal6);
+			return GlobalConfigMgr.GetConfigFileNameNoExt(player.PlayerCfg.Files.pal6);
+		if (!string.IsNullOrEmpty(player.PlayerCfg.Files.pal7))
+			return GlobalConfigMgr.GetConfigFileNameNoExt(player.PlayerCfg.Files.pal7);
+		if (!string.IsNullOrEmpty(player.PlayerCfg.Files.pal8))
+			return GlobalConfigMgr.GetConfigFileNameNoExt(player.PlayerCfg.Files.pal8);
+		if (!string.IsNullOrEmpty(player.PlayerCfg.Files.pal9))
+			return GlobalConfigMgr.GetConfigFileNameNoExt(player.PlayerCfg.Files.pal9);
+		if (!string.IsNullOrEmpty(player.PlayerCfg.Files.pal10))
+			return GlobalConfigMgr.GetConfigFileNameNoExt(player.PlayerCfg.Files.pal10);
+		if (!string.IsNullOrEmpty(player.PlayerCfg.Files.pal11))
+			return GlobalConfigMgr.GetConfigFileNameNoExt(player.PlayerCfg.Files.pal11);
+		if (!string.IsNullOrEmpty(player.PlayerCfg.Files.pal12))
+			return GlobalConfigMgr.GetConfigFileNameNoExt(player.PlayerCfg.Files.pal12);
         return string.Empty;
     }
 

@@ -93,7 +93,7 @@ public class StageMgr : MonoSingleton<StageMgr> {
         if (bgDef == null || string.IsNullOrEmpty(bgDef.spr))
             return false;
         var name = bgDef.spr;
-        name = System.IO.Path.GetFileNameWithoutExtension(name);
+		name = GlobalConfigMgr.GetConfigFileNameNoExt(name);
         if (string.IsNullOrEmpty(name))
             return false;
         string fileName;

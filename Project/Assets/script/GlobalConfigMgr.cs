@@ -63,15 +63,15 @@ public class GlobalConfigMgr : MonoSingleton<GlobalConfigMgr> {
 			loaderPlayer.CnsNameList = null;
 		} else {
 			var files = player.PlayerCfg.Files;
-			string name = Path.GetFileNameWithoutExtension (files.cns);
+			string name = GetConfigFileNameNoExt (files.cns);
 			loaderPlayer.AddCnsName (name);
-			name = Path.GetFileNameWithoutExtension (files.st);
+			name = GetConfigFileNameNoExt (files.st);
 			loaderPlayer.AddCnsName (name);
-			name = Path.GetFileNameWithoutExtension (files.st2);
+			name = GetConfigFileNameNoExt (files.st2);
 			loaderPlayer.AddCnsName (name);
-			name = Path.GetFileNameWithoutExtension (files.st3);
+			name = GetConfigFileNameNoExt (files.st3);
 			loaderPlayer.AddCnsName (name);
-			name = Path.GetFileNameWithoutExtension (files.st4);
+			name = GetConfigFileNameNoExt (files.st4);
 			loaderPlayer.AddCnsName (name);
 		}
 	}
@@ -82,8 +82,19 @@ public class GlobalConfigMgr : MonoSingleton<GlobalConfigMgr> {
 			loaderPlayer.LoadAnim = string.Empty;
 		} else {
 			var files = player.PlayerCfg.Files;
-			loaderPlayer.LoadAnim = Path.GetFileNameWithoutExtension(files.anim);
+			loaderPlayer.LoadAnim = GetConfigFileNameNoExt(files.anim);
 		}
+	}
+
+	public static string GetConfigFileNameNoExt(string fileName)
+	{
+		if (string.IsNullOrEmpty (fileName))
+			return string.Empty;
+		int idx = fileName.LastIndexOf (".");
+		if (idx < 0)
+			return fileName;
+		string ret = fileName.Substring (0, idx);
+		return ret;
 	}
 
 	private void AttachPals(DefaultLoaderPlayer loaderPlayer, GlobalPlayer player)
@@ -92,17 +103,29 @@ public class GlobalConfigMgr : MonoSingleton<GlobalConfigMgr> {
 			loaderPlayer.PalNameList = null;
 		else {
 			var files = player.PlayerCfg.Files;
-			string name = Path.GetFileNameWithoutExtension(files.pal1);
+			string name = GetConfigFileNameNoExt(files.pal1);
 			loaderPlayer.AddPalName (name);
-			name = Path.GetFileNameWithoutExtension(files.pal2);
+			name = GetConfigFileNameNoExt(files.pal2);
 			loaderPlayer.AddPalName (name);
-			name = Path.GetFileNameWithoutExtension(files.pal3);
+			name = GetConfigFileNameNoExt(files.pal3);
 			loaderPlayer.AddPalName (name);
-			name = Path.GetFileNameWithoutExtension(files.pal4);
+			name = GetConfigFileNameNoExt(files.pal4);
 			loaderPlayer.AddPalName (name);
-			name = Path.GetFileNameWithoutExtension(files.pal5);
+			name = GetConfigFileNameNoExt(files.pal5);
 			loaderPlayer.AddPalName (name);
-			name = Path.GetFileNameWithoutExtension(files.pal6);
+			name = GetConfigFileNameNoExt(files.pal6);
+			loaderPlayer.AddPalName (name);
+			name = GetConfigFileNameNoExt(files.pal7);
+			loaderPlayer.AddPalName (name);
+			name = GetConfigFileNameNoExt(files.pal8);
+			loaderPlayer.AddPalName (name);
+			name = GetConfigFileNameNoExt(files.pal9);
+			loaderPlayer.AddPalName (name);
+			name = GetConfigFileNameNoExt(files.pal10);
+			loaderPlayer.AddPalName (name);
+			name = GetConfigFileNameNoExt(files.pal11);
+			loaderPlayer.AddPalName (name);
+			name = GetConfigFileNameNoExt(files.pal12);
 			loaderPlayer.AddPalName (name);
 		}
 	}
