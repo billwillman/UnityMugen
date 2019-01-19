@@ -229,6 +229,34 @@ namespace Mugen
 
 	[System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential, CharSet=System.Runtime.InteropServices.CharSet.Ansi)]
 	public struct PCXHEADER {
+
+		public static PCXHEADER LoadFromStream(Stream stream)
+		{
+			PCXHEADER header = new PCXHEADER ();
+			if (stream == null) {
+				return header;
+			}
+			var mgr = FilePathMgr.GetInstance ();
+			header.Manufacturer = (byte)stream.ReadByte ();
+			header.Version = (byte)stream.ReadByte ();
+			header.Encoding = (byte)stream.ReadByte ();
+			header.BPP = (byte)stream.ReadByte ();
+			header.x = (ushort)mgr.ReadShort (stream);
+			header.y = (ushort)mgr.ReadShort (stream);
+			header.widht = (ushort)mgr.ReadShort (stream);
+			header.height = (ushort)mgr.ReadShort (stream);
+			header.HRES = (ushort)mgr.ReadShort (stream);
+			header.VRES = (ushort)mgr.ReadShort (stream);
+			header.ColorMap = mgr.ReadString (stream, 48, System.Text.Encoding.ASCII);
+			header.reserved1 = (byte)stream.ReadByte ();
+			header.NPlanes = (byte)stream.ReadByte ();
+			header.bytesPerLine = (byte)stream.ReadByte ();
+			header.palletInfo = (byte)stream.ReadByte ();
+			header.HorzScreenSize = (ushort)mgr.ReadShort (stream);
+			header.VertScreenSize = (ushort)mgr.ReadShort (stream);
+			header.Reserved2 = mgr.ReadString(stream, 54, System.Text.Encoding.ASCII);
+			return header;
+		}
 		
 		/// unsigned char
 		public byte Manufacturer;
@@ -1048,9 +1076,13 @@ namespace Mugen
 		{
 			get
 			{
-				if (mSubHeaders == null)
+				if (mSubHeaders == null && mSubHeadersV2 == null)
 					return 0;
-				return mSubHeaders.Count;
+				if (mSubHeaders != null)
+				 return mSubHeaders.Count;
+				if (mSubHeadersV2 != null)
+					return mSubHeadersV2.Count;
+				return 0;
 			}
 		}
 
@@ -1062,6 +1094,7 @@ namespace Mugen
 				return false;
 			}
 
+			if (mSubHeaders != null)
 			for (int i = 0; i < mSubHeaders.Count; ++i)
 			{
 				SFFSUBHEADER sub = mSubHeaders[i];
@@ -1085,6 +1118,45 @@ namespace Mugen
 			return false;
 		}
 
+		public bool GetSubHeaderV2(int group, int image, out SFFSUBHEADERv2 header)
+		{
+			if ((mSubHeadersV2 == null) || (group < 0) || (image < 0))
+			{
+				header = new SFFSUBHEADERv2();
+				return false;
+			}
+
+			if (mSubHeadersV2 != null)
+				for (int i = 0; i < mSubHeadersV2.Count; ++i)
+				{
+					SFFSUBHEADERv2 sub = mSubHeadersV2[i];
+
+					if ((sub.subfileLength == 0) && (sub.IndexOfPrevious > 0) && (sub.IndexOfPrevious <= mSubHeadersV2.Count))
+					{
+						sub = mSubHeadersV2[sub.IndexOfPrevious - 1];
+					}
+
+					int g = (int)sub.GroubNumber;
+					int img = (int)sub.ImageNumber;
+
+					if ((g == group) && (img == image))
+					{
+						header = sub;
+						return true;
+					}
+				}
+
+			header = new SFFSUBHEADERv2();
+			return false;
+		}
+
+		public bool IsSFFHeaderV2
+		{
+			get {
+				return mSubHeaders == null && mSubHeadersV2 != null;
+			}
+		}
+
 		public bool GetSubHeader(int index, out SFFSUBHEADER header)
 		{
 			if ((mSubHeaders == null) || (index < 0) || (index >= mSubHeaders.Count))
@@ -1104,6 +1176,28 @@ namespace Mugen
               //  else
                //     break;
             }
+			return true;
+		}
+
+		public bool GetSubHeaderV2(int index, out SFFSUBHEADERv2 header)
+		{
+			if ((mSubHeadersV2 == null) || (index < 0) || (index >= mSubHeadersV2.Count))
+			{
+				header = new SFFSUBHEADERv2();
+				return false;
+			}
+
+			header = mSubHeadersV2[index];
+
+			// while (true)
+			{
+				if ((header.subfileLength == 0) && (header.IndexOfPrevious > 0) && (header.IndexOfPrevious < mSubHeadersV2.Count))
+				{
+					header = mSubHeadersV2[header.IndexOfPrevious - 1];
+				}
+				//  else
+				//     break;
+			}
 			return true;
 		}
 
