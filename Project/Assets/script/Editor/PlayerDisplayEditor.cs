@@ -151,6 +151,10 @@ public class PlayerDisplayEditor : Editor {
 			ShowClsn (newShowClsn);
 		}
 
+		if (GUILayout.Button ("动画重置")) {
+			m_LastDisplay.ResetFirstFrame ();
+		}
+
 		int curFrame = m_LastDisplay.ImageCurrentFrame;
 		EditorGUILayout.LabelField ("动画当前帧", curFrame.ToString ());
         string palletName = m_LastDisplay.PalletName;

@@ -78,6 +78,22 @@ public class PlayerDisplay : BaseResLoader {
         return ret;
     }
 
+	public void StopAni()
+	{
+		var ani = this.ImageAni;
+		if (ani == null)
+			return;
+		ani.Stop ();
+	}
+
+	public void ResetFirstFrame()
+	{
+		var ani = this.ImageAni;
+		if (ani == null)
+			return;
+		ani.ResetFirstFrame ();
+	}
+
     public bool PlayAni(PlayerState state, bool isLoop = true)
     {
         var playerName = this.PlayerName;

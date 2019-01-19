@@ -61,8 +61,10 @@ public class ImageAnimation : MonoBehaviour {
     // 播放角色动画
     public bool PlayerPlayerAni(PlayerState state, bool isLoop = true)
     {
-        if (m_State == state)
-            return true;
+		if (m_State == state) {
+			CacheAnimation.Play ();
+			return true;
+		}
 
         ResetAnimation();
 
@@ -170,6 +172,19 @@ public class ImageAnimation : MonoBehaviour {
 
         return true;
     }
+
+	public void ResetFirstFrame()
+	{
+		Animation ctl = this.CacheAnimation;
+		ctl.Stop ();
+		var info = ctl [_cPlayAnimationName];
+		if (info != null) {
+			info.time = 0f;
+		}
+		m_CurFrame = 0;
+		DoChangeFrame();
+		ctl.Play ();
+	}
 
     public ImageAnimateNode CurAniNode
     {
