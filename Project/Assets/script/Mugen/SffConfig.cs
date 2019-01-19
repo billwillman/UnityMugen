@@ -98,6 +98,41 @@ namespace Mugen
         /// unsigned char[436]
         [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.ByValTStr, SizeConst=436)]
         public string comments;
+
+		public static SFFHEADERv2 LoadFromStream(Stream stream)
+		{
+			SFFHEADERv2 ret = new SFFHEADERv2 ();
+			if (stream == null)
+				return ret;
+			var mgr = FilePathMgr.GetInstance ();
+
+			ret.signature = mgr.ReadString (stream, 12, System.Text.Encoding.UTF8);
+			ret.verhi = (byte)stream.ReadByte ();
+			ret.verlo = (byte)stream.ReadByte ();
+			ret.verhi2 = (byte)stream.ReadByte ();
+			ret.verlo2 = (byte)stream.ReadByte ();
+			ret.reserved1 = (uint)mgr.ReadInt (stream);
+			ret.reserved2 = (uint)mgr.ReadInt (stream);
+			ret.compatverlo3 = (byte)stream.ReadByte ();
+			ret.compatverlo1 = (byte)stream.ReadByte ();
+			ret.compatverlo2 = (byte)stream.ReadByte ();
+			ret.compatverhi = (byte)stream.ReadByte ();
+			ret.reserved3 = (uint)mgr.ReadInt (stream);
+			ret.reserved4 = (uint)mgr.ReadInt (stream);
+			ret.offsetSubFile = (uint)mgr.ReadInt (stream);
+			ret.totalImage = (uint)mgr.ReadInt (stream);
+			ret.offsetPaletteFile = (uint)mgr.ReadInt (stream);
+			ret.totalPalette = (uint)mgr.ReadInt (stream);
+			ret.offsetLData = (uint)mgr.ReadInt (stream);
+			ret.sizeLData = (uint)mgr.ReadInt (stream);
+			ret.offsetTData = (uint)mgr.ReadInt (stream);
+			ret.sizeTData = (uint)mgr.ReadInt (stream);
+			ret.reserved5 = (uint)mgr.ReadInt (stream);
+			ret.reserved6 = (uint)mgr.ReadInt (stream);
+			ret.comments = mgr.ReadString (stream, 436, System.Text.Encoding.UTF8);
+
+			return ret;
+		}
     }
 
 	
@@ -159,6 +194,28 @@ namespace Mugen
         //0    unset: literal (use ldata); set: translate (use tdata; decompress on load)
         //1-15 unused
         public short flags;
+
+		public static SFFSUBHEADERv2 LoadFromStream(Stream stream)
+		{
+			SFFSUBHEADERv2 subHeader = new SFFSUBHEADERv2 ();
+			if (stream == null)
+				return subHeader;
+			var filePathMgr = FilePathMgr.GetInstance ();
+			subHeader.GroubNumber = filePathMgr.ReadShort(stream);
+			subHeader.ImageNumber = filePathMgr.ReadShort(stream);
+			subHeader.width = filePathMgr.ReadShort(stream);
+			subHeader.height = filePathMgr.ReadShort(stream);
+			subHeader.x = filePathMgr.ReadShort(stream);
+			subHeader.y = filePathMgr.ReadShort(stream);
+			subHeader.IndexOfPrevious = filePathMgr.ReadShort(stream);
+			subHeader.fmt = (byte)stream.ReadByte();
+			subHeader.coldepth = (byte)stream.ReadByte();
+			subHeader.offsetData = (uint)filePathMgr.ReadInt(stream);
+			subHeader.subfileLength = (uint)filePathMgr.ReadInt(stream);
+			subHeader.palletteIndex = filePathMgr.ReadShort(stream);
+			subHeader.flags = filePathMgr.ReadShort(stream);
+			return subHeader;
+		}
     }
 
     public enum PcxCompressType
@@ -462,6 +519,7 @@ namespace Mugen
             byte v4;
             if (v1 == 2)
             {
+				
                 SFFHEADERv2 header = new SFFHEADERv2();
                 int headerSize = Marshal.SizeOf(header);
                 IntPtr headerBuffer = Marshal.AllocHGlobal(headerSize);
@@ -474,17 +532,26 @@ namespace Mugen
                 {
                     Marshal.FreeHGlobal(headerBuffer);
                 }
+				MemoryStream stream = new MemoryStream (bytes);
+				try
+				{
+				//	SFFHEADERv2 header = SFFHEADERv2.LoadFromStream (stream);
 
-                if (string.Compare(header.signature, _cElecbyteSpr, true) != 0)
-                    return false;
+					int comp = string.Compare(header.signature, _cElecbyteSpr, true);
+					if (comp != 0)
+                    	return false;
 
-                v1 = header.verlo2;
-                v2 = header.verlo;
-                v3 = header.verhi2;
-                v4 = header.verhi;
+                	v1 = header.verlo2;
+                	v2 = header.verlo;
+                	v3 = header.verhi2;
+                	v4 = header.verhi;
 
-                if (!LoadSubFilesV2(header, bytes))
-                    return false;
+					if (!LoadSubFilesV2(header, stream))
+                    	return false;
+				} finally {
+					stream.Close ();
+					stream.Dispose ();
+				}
             }
             else if (v1 == 1)
             {
@@ -877,73 +944,44 @@ namespace Mugen
 			return ret;
 		}
 
-        private bool LoadSubFilesV2(SFFHEADERv2 header, byte[] source)
-        {
-            if (header.offsetSubFile == 0)
-                return false;
-            int offset = (int)header.offsetSubFile;
-            if (offset < 0 || offset >= source.Length)
-                return false;
-            int cnt = (int)header.totalImage;
-            if (cnt < 0)
-                return false;
+		private bool LoadSubFilesV2(SFFHEADERv2 header, Stream stream)
+		{
+			if (stream == null || header.offsetSubFile == 0)
+				return false;
+			int offset = (int)header.offsetSubFile;
+			if (offset < 0 || offset >= stream.Length)
+				return false;
+			int cnt = (int)header.totalImage;
+			if (cnt < 0)
+				return false;
 
-            MemoryStream stream = new MemoryStream(source);
-            try
-            {
-                if (stream.Seek(offset, SeekOrigin.Begin) != offset)
-                    return false;
-                var filePathMgr = FilePathMgr.GetInstance();
-                for (int i = 0; i < cnt; ++i)
-                {
-                    SFFSUBHEADERv2 subHeader = new SFFSUBHEADERv2();
-                    subHeader.GroubNumber = filePathMgr.ReadShort(stream);
-                    subHeader.ImageNumber = filePathMgr.ReadShort(stream);
-                    subHeader.width = filePathMgr.ReadShort(stream);
-                    subHeader.height = filePathMgr.ReadShort(stream);
-                    subHeader.x = filePathMgr.ReadShort(stream);
-                    subHeader.y = filePathMgr.ReadShort(stream);
-                    subHeader.IndexOfPrevious = filePathMgr.ReadShort(stream);
-                    subHeader.fmt = (byte)stream.ReadByte();
-                    subHeader.coldepth = (byte)stream.ReadByte();
-                    subHeader.offsetData = (uint)filePathMgr.ReadInt(stream);
-                    subHeader.subfileLength = (uint)filePathMgr.ReadInt(stream);
-                    subHeader.palletteIndex = filePathMgr.ReadShort(stream);
-                    subHeader.flags = filePathMgr.ReadShort(stream);
+			if (stream.Seek (offset, SeekOrigin.Begin) != offset)
+				return false;
+			var filePathMgr = FilePathMgr.GetInstance ();
+			for (int i = 0; i < cnt; ++i) {
+				SFFSUBHEADERv2 subHeader = SFFSUBHEADERv2.LoadFromStream (stream);
+				SubHeadersV2.Add (subHeader);
+			}
 
-                    SubHeadersV2.Add(subHeader);
-                }
-
-                if (mSubHeadersV2 != null)
-                {
-                    for (int i = 0; i < mSubHeadersV2.Count; ++i)
-                    {
-                        var subHeader = mSubHeadersV2[i];
-                        KeyValuePair<uint, uint> key = new KeyValuePair<uint, uint>((uint)subHeader.GroubNumber, (uint)subHeader.ImageNumber);
-                        if (mPcxDataMap.ContainsKey(key))
-                            continue;
-                        // 读取pcx
-                        if (subHeader.subfileLength == 0 && subHeader.IndexOfPrevious != 0)
-                        {
-                            // LINK模式
-                        }
-                        else
-                        {
-                            int off = (int)subHeader.offsetData;
-                            if (off > 0)
-                            {
+			if (mSubHeadersV2 != null) {
+				for (int i = 0; i < mSubHeadersV2.Count; ++i) {
+					var subHeader = mSubHeadersV2 [i];
+					KeyValuePair<uint, uint> key = new KeyValuePair<uint, uint> ((uint)subHeader.GroubNumber, (uint)subHeader.ImageNumber);
+					if (mPcxDataMap.ContainsKey (key))
+						continue;
+					// 读取pcx
+					if (subHeader.subfileLength == 0 && subHeader.IndexOfPrevious != 0) {
+						// LINK模式
+					} else {
+						int off = (int)subHeader.offsetData;
+						if (off > 0) {
                                
-                            }
-                        }
-                    }
-                }
-            } finally
-            {
-                stream.Close();
-                stream.Dispose();
-            }
-            return true;
-        }
+						}
+					}
+				}
+			}
+			return true;
+		}
 
 		private bool LoadSubFiles(SFFHEADER header, byte[] source)
 		{
