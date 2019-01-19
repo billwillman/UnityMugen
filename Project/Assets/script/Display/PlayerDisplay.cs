@@ -8,6 +8,8 @@ public class PlayerDisplay : BaseResLoader {
 
     private DefaultLoaderPlayer m_LoaderPlayer = null;
 	private Material m_OrgSpMat = null;
+	private Transform m_UsedClsnRoot = null;
+	private Transform m_NotUseClsnRoot = null;
 
     public DefaultLoaderPlayer LoaderPlayer
     {

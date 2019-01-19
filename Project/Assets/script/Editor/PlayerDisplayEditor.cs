@@ -6,13 +6,15 @@ using Mugen;
 
 public struct SelctedItem
 {
-    public SelctedItem(int stateIdx = -1, int palIdx = -1)
+	public SelctedItem(int stateIdx = -1, int palIdx = -1, bool clsn = false)
     {
         stateIndex = stateIdx;
         palletIndex = palIdx;
+		showClsn = clsn;
     }
     public int stateIndex ;
     public int palletIndex;
+	public bool showClsn;
 }
 
 [CustomEditor(typeof(PlayerDisplay))]
@@ -23,6 +25,7 @@ public class PlayerDisplayEditor : Editor {
     private PlayerDisplay m_LastDisplay = null;
     private int m_StateSelected = -1;
     private int m_PalletSelectd = -1;
+	private bool m_ShowClsn = false;
     private static Dictionary<int, SelctedItem> m_SelectedMap = new Dictionary<int, SelctedItem>();
 
     private void InitPlayerDisplay()
@@ -32,6 +35,7 @@ public class PlayerDisplayEditor : Editor {
         m_VaildPalletNameList = null;
         m_StateSelected = -1;
         m_PalletSelectd = -1;
+		m_ShowClsn = false;
         if (m_LastDisplay == null)
             return;
         var player = m_LastDisplay.GPlayer;
@@ -89,6 +93,11 @@ public class PlayerDisplayEditor : Editor {
                 m_PalletSelectd = selItem.palletIndex;
             }
         }
+
+		SelctedItem selItem1;
+		if (m_SelectedMap.TryGetValue (m_LastDisplay.GetInstanceID (), out selItem1)) {
+			m_ShowClsn = selItem1.showClsn;
+		}
     }
 
     private void DrawPlayerDisplay()
@@ -131,6 +140,17 @@ public class PlayerDisplayEditor : Editor {
             }
         }
 
+		bool newShowClsn = EditorGUILayout.Toggle ("显示包围盒", m_ShowClsn);
+		if (m_ShowClsn != newShowClsn) {
+			m_ShowClsn = newShowClsn;
+			SelctedItem item;
+			if (!m_SelectedMap.TryGetValue(m_LastDisplay.GetInstanceID(), out item))
+				item = new SelctedItem();
+			item.showClsn = newShowClsn;
+			m_SelectedMap[m_LastDisplay.GetInstanceID()] = item;
+			ShowClsn (newShowClsn);
+		}
+
 		int curFrame = m_LastDisplay.ImageCurrentFrame;
 		EditorGUILayout.LabelField ("动画当前帧", curFrame.ToString ());
         string palletName = m_LastDisplay.PalletName;
@@ -150,6 +170,14 @@ public class PlayerDisplayEditor : Editor {
             }
         }
     }
+
+	void ShowClsn(bool isShow)
+	{
+		var target = this.target as PlayerDisplay;
+		if (target == null)
+			return;
+		
+	}
 
 	public override void OnInspectorGUI ()
     {
