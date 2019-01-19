@@ -806,6 +806,8 @@ namespace Mugen
 			return ret;
 		}
 
+
+
 		private bool LoadPcx(int offset, SFFSUBHEADER subHeader, byte[] source, out KeyValuePair<PCXHEADER, PCXDATA> dataPair)
 		{
 			if ((offset < 0) || (offset >= source.Length))
@@ -1001,14 +1003,32 @@ namespace Mugen
 					if (subHeader.subfileLength == 0 && subHeader.IndexOfPrevious != 0) {
 						// LINKÄ£Ê½
 					} else {
+						if (subHeader.subfileLength == 0)
+							continue;
 						int off = (int)subHeader.offsetData;
 						if (off > 0) {
-                               
+							stream.Seek (off, SeekOrigin.Begin);
+
+							byte[] buffer = new byte[subHeader.subfileLength];
+							stream.Read (buffer, 0, buffer.Length);
+							buffer = DeCompressBuffer (buffer, (PcxCompressType)subHeader.fmt);
 						}
 					}
 				}
 			}
 			return true;
+		}
+
+		private byte[] DeCompressBuffer(byte[] buffer, PcxCompressType compressType)
+		{
+			if (buffer == null || buffer.Length <= 0)
+				return buffer;
+			if (compressType == PcxCompressType.notused || compressType == PcxCompressType.raw)
+				return buffer;
+
+			// Î´Íê
+			
+			return buffer;
 		}
 
 		private bool LoadSubFiles(SFFHEADER header, byte[] source)
