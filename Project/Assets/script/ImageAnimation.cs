@@ -295,6 +295,9 @@ public class ImageAnimation : MonoBehaviour {
                 aniEvt.time = sumTime;
                 evtList.Add(aniEvt);
             }
+
+			if (!ctl.enabled)
+				ctl.enabled = true;
         }
         else
         {
@@ -311,6 +314,8 @@ public class ImageAnimation : MonoBehaviour {
             evt.time = Time.fixedDeltaTime;
             //	evt.time = _cLimitFrameDeltaTime;
             evtList.Add(evt);
+			if (ctl.enabled)
+				ctl.enabled = false;
         }
 #if UNITY_EDITOR
         if (Application.isPlaying)
