@@ -22,6 +22,7 @@ public class GlobalConfigMgr : MonoSingleton<GlobalConfigMgr> {
 	private GameObject m_ClsnSpritePoolRoot = null;
 	private GameObject m_ClsnColliderPoolRoot = null;
 	private BaseResLoader m_Loader = null;
+	private Texture m_ClsnTex = null;
 
 	protected SpriteRenderer GetClsnSpriteFromPool(string name)
 	{
@@ -70,7 +71,7 @@ public class GlobalConfigMgr : MonoSingleton<GlobalConfigMgr> {
 	/// <param name="offsetX">像素偏移X</param>
 	/// <param name="offsetY">像素偏移Y</param>
 	/// <param name="isClsn2">If set to <c>true</c> 防御盒，否则攻击盒</param>
-	public SpriteRenderer CreateClsnSprite(string name, Transform parent, float x, float y, float w, float h, float offsetX, float offsetY, bool isClsn2 = true)
+	public SpriteRenderer CreateClsnSprite(string name, Transform parent, float x, float y, float w, float h, bool isClsn2 = true)
 	{
 		SpriteRenderer r = GetClsnSpriteFromPool (name);
 		if (r == null)
@@ -78,17 +79,24 @@ public class GlobalConfigMgr : MonoSingleton<GlobalConfigMgr> {
 		var trans = r.transform;
 		if (trans.parent != parent) {
 			trans.SetParent (parent, false);
-			trans.localPosition = Vector3.zero;
-			trans.localRotation = Quaternion.identity;
-			trans.localScale = Vector3.one;
 		}
 
-		trans.SetParent (parent, false);
-		trans.localPosition = Vector3.zero;
+		if (m_ClsnTex == null) {
+			m_Loader.LoadTexture (ref m_ClsnTex, "resources/mugen/@clsn/clsn.png");
+		}
+		Texture2D tex = m_ClsnTex as Texture2D;
+		if (tex != null) {
+			r.sprite = Sprite.Create (tex, new Rect (0, 0, 
+				tex.width, tex.height), new Vector2 (0.5f, 0.5f), 100f);
+			trans.localScale = new Vector3(w / (float)tex.width, h/(float)tex.height, 1f);
+		} else
+			trans.localScale = Vector3.zero;
+
+		Vector2 pos = new Vector2 ((x + w/2f)/100f, -(y + h/2f)/100f);
+		trans.localPosition = pos;
 		trans.localRotation = Quaternion.identity;
-		trans.localScale = Vector3.one;
-		r.sprite = Sprite.Create(null, new Rect(x/100f, y/100f, 
-			w/100f, h/100f), new Vector2(offsetX, offsetY), 100f);
+
+
 		if (!r.gameObject.activeSelf)
 			r.gameObject.SetActive (true);
 		return r;

@@ -254,7 +254,7 @@ public class PlayerDisplay : BaseResLoader {
 				m_ClsnSpriteRoot.localRotation = Quaternion.identity;
 				m_ClsnSpriteRoot.localScale = Vector3.one;
 			}
-			mgr.CreateClsnSprite ("clsn2", m_ClsnSpriteRoot, s.min.x, s.min.y, s.width, s.height, 0.5f, 0.5f);
+			mgr.CreateClsnSprite ("clsn2", m_ClsnSpriteRoot, s.min.x, s.min.y, s.width, s.height);
 		}
 	}
 
