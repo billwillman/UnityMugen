@@ -9,11 +9,12 @@ namespace Mugen
 	public class ImageFrame: DisposeObject
 	{
 		public ImageFrame(ImageLibrary parentLib, int image, Texture2D tex, float offsetX, 
-			float offsetY, string name, Texture2D localPalletTex = null)
+			float offsetY, string name, KeyValuePair<short, short> palletLink, Texture2D localPalletTex = null)
 		{
 			mParentLib = parentLib;
             m_Image = image;
 			mLocalPalletTex = localPalletTex;
+			mLoaclPalletTexLink = palletLink;
 			SetTexture2D(tex, offsetX, offsetY, name);
 		}
 
@@ -67,7 +68,27 @@ namespace Mugen
 		{
 			get
 			{
-				return mLocalPalletTex;
+				if (mLocalPalletTex != null)
+					return mLocalPalletTex;
+				if (IsVaildPalletLink) {
+					if (mParentLib != null) {
+						var state = (PlayerState)mLoaclPalletTexLink.Key;
+						int index = mLoaclPalletTexLink.Value;
+						var frame = mParentLib.GetImageFrame (state, index);
+						if (frame != null) {
+							return frame.LocalPalletTex;
+						}
+					}
+				}
+				return null;
+			}
+		}
+
+		protected bool IsVaildPalletLink
+		{
+			get
+			{
+				return mLoaclPalletTexLink.Key >= 0 & mLoaclPalletTexLink.Value >= 0;
 			}
 		}
 
@@ -89,6 +110,7 @@ namespace Mugen
 
 		private ImageLibrary mParentLib = null;
 		private Texture2D mLocalPalletTex = null;
+		private KeyValuePair<short, short> mLoaclPalletTexLink = new KeyValuePair<short, short>(-1, -1);
         private int m_Image = 0;
 	}
 
@@ -271,8 +293,13 @@ namespace Mugen
             Texture2D tex = sf.GetIndexTexture((uint)group, (uint)startLoadImage);
             while (tex != null)
             {
+				KeyValuePair<short, short> palletLink;
+				if (d.Value.IsVaildPalletLink)
+					palletLink = d.Value.palletLink;
+				else
+					palletLink = new KeyValuePair<short, short> (-1, -1);
                 ImageFrame frame = new ImageFrame(this, startLoadImage, tex, offX, offY, charName,
-                    d.Value.GetPalletTexture(mIs32BitPallet));
+					palletLink, d.Value.GetPalletTexture(mIs32BitPallet));
 
                 AddImageFrame(saveGroup, frame);
 

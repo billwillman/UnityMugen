@@ -320,6 +320,14 @@ namespace Mugen
 		{
 			return SffFile.GeneratorPalletTexture(pallet, is32Bit);
 		}
+		public KeyValuePair<short, short> palletLink;
+		public bool IsVaildPalletLink
+		{
+			get
+			{
+				return palletLink.Key >= 0 && palletLink.Value >= 0;
+			}
+		}
 	}
 
 	
@@ -807,7 +815,7 @@ namespace Mugen
 		}
 
 
-
+		private KeyValuePair<short, short> m_currentLink = new KeyValuePair<short, short> (-1, -1);
 		private bool LoadPcx(int offset, SFFSUBHEADER subHeader, byte[] source, out KeyValuePair<PCXHEADER, PCXDATA> dataPair)
 		{
 			if ((offset < 0) || (offset >= source.Length))
@@ -887,29 +895,28 @@ namespace Mugen
 
 			byte s = source [offset++];
 			if ((s == 12) && !subHeader.PalletSame && !HasNormalPallet && header.NPlanes <= 1)
-			//if (!subHeader.PalletSame && !HasNormalPallet)
-			{
+ {			//if (!subHeader.PalletSame && !HasNormalPallet)
 				// load pallet
 				pcxData.pallet = new Color32[256];
-				for (int i = 0; i < 256; ++i)
-				{
-					byte r = source[offset++];
-					byte g = source[offset++];
-					byte b = source[offset++];
+				for (int i = 0; i < 256; ++i) {
+					byte r = source [offset++];
+					byte g = source [offset++];
+					byte b = source [offset++];
 					byte a;
 					if (i == 0)
 						a = 0;
-					else
-					{
+					else {
 
-						if ((r == pcxData.pallet[i - 1].r) && (g == pcxData.pallet[i - 1].g) && (b == pcxData.pallet[i - 1].b))
+						if ((r == pcxData.pallet [i - 1].r) && (g == pcxData.pallet [i - 1].g) && (b == pcxData.pallet [i - 1].b))
 							a = 0;
 						else
 							a = 0xFF;
 					}
-					pcxData.pallet[i] = new Color32(r, g, b, a);
+					pcxData.pallet [i] = new Color32 (r, g, b, a);
 				}
-			}
+				m_currentLink = new KeyValuePair<short, short>(subHeader.GroubNumber, subHeader.ImageNumber);
+			} else
+				pcxData.palletLink = m_currentLink;
 
 			dataPair = new KeyValuePair<PCXHEADER, PCXDATA>(header, pcxData);
 
