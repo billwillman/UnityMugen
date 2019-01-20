@@ -55,6 +55,10 @@ namespace Mugen
 					AppConfig.GetInstance().Loader.DestroyObject(tex);
 				}
 			}
+			if (mLocalPalletTex != null) {
+				AppConfig.GetInstance().Loader.DestroyObject(mLocalPalletTex);
+				mLocalPalletTex = null;
+			}
 		}
 
 		protected override void OnFree(bool isManual)
