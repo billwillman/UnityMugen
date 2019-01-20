@@ -232,9 +232,11 @@ public class PlayerDisplay : BaseResLoader {
 		DestroyAllClsn ();
 		if (m_ShowClsnDebug) {
 			if (imageAni != null) {
-				CreateClsn2 (m_DefaultClsn2);
 				var aniNode = imageAni.CurAniNode;
-				CreateClsn2 (aniNode.localClsn2Arr);
+				if (aniNode.localClsn2Arr != null)
+					CreateClsn2 (aniNode.localClsn2Arr);
+				else
+					CreateClsn2 (m_DefaultClsn2);
 			}
 		}
 	}
