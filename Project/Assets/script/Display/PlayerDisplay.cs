@@ -8,8 +8,8 @@ public class PlayerDisplay : BaseResLoader {
 
     private DefaultLoaderPlayer m_LoaderPlayer = null;
 	private Material m_OrgSpMat = null;
-	private Transform m_UsedClsnRoot = null;
-	private Transform m_NotUseClsnRoot = null;
+	private Transform m_ClsnSpriteRoot = null;
+	private Rect[] m_DefaultClsn2 = null;
 
     public DefaultLoaderPlayer LoaderPlayer
     {
@@ -109,7 +109,7 @@ public class PlayerDisplay : BaseResLoader {
         } else
         {
             ani.ResetState();
-            UpdateRenderer(null, ActionFlip.afNone);
+			UpdateRenderer(null, ActionFlip.afNone, this.ImageAni);
         }
         return ret;
     }
@@ -126,11 +126,12 @@ public class PlayerDisplay : BaseResLoader {
 
     public void Clear(bool isResetLoaderPlayer = true)
     {
+		DestroyAllClsn ();
         if (m_ImgAni != null)
         {
             m_ImgAni.Clear();
         }
-
+			
         if (isResetLoaderPlayer)
             m_LoaderPlayer = null;
     }
@@ -164,7 +165,7 @@ public class PlayerDisplay : BaseResLoader {
 		}
 	}
 
-    void UpdateRenderer(ImageFrame frame, ActionFlip flip)
+	void UpdateRenderer(ImageFrame frame, ActionFlip flip, ImageAnimation imageAni)
 	{
 		SpriteRenderer r = this.SpriteRender;
 		if (r == null)
@@ -221,6 +222,62 @@ public class PlayerDisplay : BaseResLoader {
             mat.SetTexture("_PalletTex", palletTex);
 			mat.SetTexture ("_MainTex", frame.Data.texture);
 		}
+			
+		if (imageAni != null) {
+			var aniNode = imageAni.CurAniNode;
+			if (aniNode.defaultClsn2Arr != null)
+				m_DefaultClsn2 = aniNode.defaultClsn2Arr;
+		}
+
+		DestroyAllClsn ();
+		if (m_ShowClsnDebug) {
+			if (imageAni != null) {
+				CreateClsn2 (m_DefaultClsn2);
+				var aniNode = imageAni.CurAniNode;
+				CreateClsn2 (aniNode.localClsn2Arr);
+			}
+		}
+	}
+
+	private void CreateClsn2(Rect[] r)
+	{
+		if (r == null || r.Length <= 0)
+			return;
+		var mgr = GlobalConfigMgr.GetInstance ();
+		for (int i = 0; i < r.Length; ++i) {
+			Rect s = r [i];
+			if (m_ClsnSpriteRoot == null) {
+				GameObject obj = new GameObject ("clsn2");
+				m_ClsnSpriteRoot = obj.transform;
+				m_ClsnSpriteRoot.SetParent (this.CachedTransform, false);
+				m_ClsnSpriteRoot.localPosition = Vector3.zero;
+				m_ClsnSpriteRoot.localRotation = Quaternion.identity;
+				m_ClsnSpriteRoot.localScale = Vector3.one;
+			}
+			mgr.CreateClsnSprite ("clsn2", m_ClsnSpriteRoot, s.min.x, s.min.y, s.width, s.height, 0.5f, 0.5f);
+		}
+	}
+
+	public void DestroyAllClsn()
+	{
+		m_DefaultClsn2 = null;
+		if (m_ClsnSpriteRoot != null && m_ClsnSpriteRoot.childCount > 0) {
+			for (int i = m_ClsnSpriteRoot.childCount - 1; i >= 0; --i) {
+				var trans = m_ClsnSpriteRoot.GetChild (i);
+				if (trans == null)
+					continue;
+				var sp = trans.GetComponent<SpriteRenderer> ();
+				if (sp == null)
+					continue;
+				GlobalConfigMgr.GetInstance ().DestroyClsn (sp);
+			}
+		}
+	}
+
+	void OnDestroy()
+	{
+		if (!AppConfig.IsAppQuit)
+			DestroyAllClsn ();
 	}
 
     private void RefreshCurPallet()
@@ -310,7 +367,7 @@ public class PlayerDisplay : BaseResLoader {
         var frame = target.GetCurImageFrame(out flip);
         if (frame == null)
             return;
-        UpdateRenderer(frame, flip);
+		UpdateRenderer(frame, flip, target);
     }
 
 	void OnImageAnimationFrame(ImageAnimation target)
@@ -342,7 +399,19 @@ public class PlayerDisplay : BaseResLoader {
         }
     }
 
+	public void ShowClsn(bool isShow)
+	{
+		if (m_ShowClsnDebug == isShow)
+			return;
+		m_ShowClsnDebug = isShow;
+		OnShowClsnDebugChanged ();
+	}
+
+	private void OnShowClsnDebugChanged()
+	{}
+
     private ImageAnimation m_ImgAni = null;
 	private SpriteRenderer m_SpriteRender = null;
     private string m_PalletName = string.Empty;
+	private bool m_ShowClsnDebug = false;
 }

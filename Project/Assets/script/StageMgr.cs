@@ -68,7 +68,7 @@ public class StageMgr : MonoSingleton<StageMgr> {
         SceneImageRes imgRes = this.ImageRes;
         if (imgRes == null || m_Config == null || !m_Config.IsVaild)
             return;
-        var bgCfg = m_Config.BgCfg;
+		var bgCfg = m_Config.BgCfg;
         if (bgCfg == null)
             return;
         for (int i = 0; i < bgCfg.BgCount; ++i)

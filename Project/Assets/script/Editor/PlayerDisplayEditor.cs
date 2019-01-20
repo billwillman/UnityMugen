@@ -180,7 +180,7 @@ public class PlayerDisplayEditor : Editor {
 		var target = this.target as PlayerDisplay;
 		if (target == null)
 			return;
-		
+		target.ShowClsn (isShow);
 	}
 
 	public override void OnInspectorGUI ()
