@@ -126,6 +126,7 @@ public class PlayerDisplay : BaseResLoader {
 
     public void Clear(bool isResetLoaderPlayer = true)
     {
+		m_DefaultClsn2 = null;
 		DestroyAllClsn ();
         if (m_ImgAni != null)
         {
@@ -262,7 +263,6 @@ public class PlayerDisplay : BaseResLoader {
 
 	public void DestroyAllClsn()
 	{
-		m_DefaultClsn2 = null;
 		if (m_ClsnSpriteRoot != null && m_ClsnSpriteRoot.childCount > 0) {
 			for (int i = m_ClsnSpriteRoot.childCount - 1; i >= 0; --i) {
 				var trans = m_ClsnSpriteRoot.GetChild (i);
@@ -278,8 +278,10 @@ public class PlayerDisplay : BaseResLoader {
 
 	void OnDestroy()
 	{
-		if (!AppConfig.IsAppQuit)
+		if (!AppConfig.IsAppQuit) {
+			m_DefaultClsn2 = null;
 			DestroyAllClsn ();
+		}
 	}
 
     private void RefreshCurPallet()
