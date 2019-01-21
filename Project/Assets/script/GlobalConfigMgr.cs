@@ -91,10 +91,21 @@ public class GlobalConfigMgr : MonoSingleton<GlobalConfigMgr> {
 			trans.localScale = new Vector3(w / (float)tex.width, h/(float)tex.height, 1f);
 		} else
 			trans.localScale = Vector3.zero;
+        if (r.sharedMaterial == null || string.IsNullOrEmpty(r.sharedMaterial.name) || 
+            r.sharedMaterial.name.IndexOf("clsn", StringComparison.CurrentCultureIgnoreCase) < 0)
+            m_Loader.LoadMaterial(r, "resources/mugen/@clsn/clsn.mat");
 
 		Vector2 pos = new Vector2 ((x + w/2f)/100f, -(y + h/2f)/100f);
 		trans.localPosition = pos;
 		trans.localRotation = Quaternion.identity;
+
+        if (isClsn2)
+        {
+            r.color = new Color(0, 0, 1f, 0.2f);
+        } else
+        {
+            r.color = new Color(1f, 0, 0, 0.2f);
+        }
 
 
 		if (!r.gameObject.activeSelf)
