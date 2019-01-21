@@ -11,6 +11,10 @@ public class SceneLayerDisplay : BaseResLoader {
     private SpriteRenderer m_SpriteRender = null;
     private ImageAnimation m_Anim = null;
 	private Material m_OrgSpMat = null;
+    private int m_Group = (int)PlayerState.psNone;
+    private int m_Image = -1;
+    private bool m_IsPalletNull = true;
+    private bool m_IsInited = false;
 
     public SpriteRenderer SpriteRender
     {
@@ -62,6 +66,7 @@ public class SceneLayerDisplay : BaseResLoader {
 			if (m1 != null) {
 				m1.SetTexture ("_PalletTex", null);
 				m1.SetTexture ("_MainTex", null);
+                m_IsPalletNull = true;
 			}
 			return;
 		}
@@ -99,12 +104,52 @@ public class SceneLayerDisplay : BaseResLoader {
                 string sceneFileName = StageMgr.GetInstance().LoadedSceneFileName;
                 // 再尝试额外加载一个文件
                 if (frame.LoadSceneExtLocalPalletTex(sceneFileName, group))
+                {
                     palletTex = frame.LocalPalletTex;
+                    int saveGroup = (int)ImageLibrary.SceneGroupToSaveGroup(group);
+                    StageMgr.GetInstance().SetLastPalletLink(saveGroup, frame.Image);
+                } else
+                {
+                    StageMgr.GetInstance().LinkImageFramePalletLastLink(frame);
+                    palletTex = frame.LocalPalletTex;
+                }
             }
 			mat.SetTexture("_PalletTex", palletTex);
 			mat.SetTexture ("_MainTex", frame.Data.texture);
+            m_IsPalletNull = palletTex == null;
 		}
 	}
+
+    void RefreshPallet()
+    {
+        SpriteRenderer r = this.SpriteRender;
+        if (r == null)
+            return;
+        Material mat = r.sharedMaterial;
+        if (mat == null)
+            return;
+
+        var imageRes = StageMgr.GetInstance().ImageRes;
+        if (imageRes != null && imageRes.LoadOk)
+        {
+            var frame = imageRes.GetImageFrame((PlayerState)m_Group, m_Image);
+            if (frame != null)
+            {
+                StageMgr.GetInstance().LinkImageFramePalletLastLink(frame);
+                var palletTex = frame.LocalPalletTex;
+                mat.SetTexture("_PalletTex", palletTex);
+                m_IsPalletNull = palletTex == null;
+            }
+        }
+    }
+
+    void Update()
+    {
+        if (m_IsInited && m_IsPalletNull)
+        {
+            RefreshPallet();
+        }
+    }
 
 	public void InitStatic(BgStaticInfo bgInfo)
     {
@@ -117,6 +162,9 @@ public class SceneLayerDisplay : BaseResLoader {
         {
 			var frame = imageRes.GetImageFrame ((PlayerState)bgInfo.srpiteno_Group, bgInfo.spriteno_Image);
             UpdateImageFrame(bgInfo.srpiteno_Group, frame);
+            m_Group = bgInfo.srpiteno_Group;
+            m_Image = bgInfo.spriteno_Image;
+            m_IsInited = true;
         }
     }
 }

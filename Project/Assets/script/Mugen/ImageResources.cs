@@ -80,7 +80,9 @@ namespace Mugen
             tex = mParentLib.GetScenePalletTexture(fileName);
             bool ret = tex != null;
             if (ret)
+            {
                 mLocalPalletTex = tex;
+            }
             return ret;
         }
 
@@ -104,11 +106,16 @@ namespace Mugen
 			}
 		}
 
-		protected bool IsVaildPalletLink
+        public void _SetLocalPalletLink(int linkGroup, int linkImage)
+        {
+            mLoaclPalletTexLink = new KeyValuePair<short, short>((short)linkGroup, (short)linkImage);
+        }
+
+		public bool IsVaildPalletLink
 		{
 			get
 			{
-				return mLoaclPalletTexLink.Key >= 0 & mLoaclPalletTexLink.Value >= 0;
+				return mLoaclPalletTexLink.Key != (int)PlayerState.psNone & mLoaclPalletTexLink.Value >= 0;
 			}
 		}
 

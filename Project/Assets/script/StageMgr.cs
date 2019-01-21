@@ -11,8 +11,23 @@ public class StageMgr : MonoSingleton<StageMgr> {
     private SceneImageRes m_ImageRes = null;
     private string m_LoadedSceneName = string.Empty;
     private string m_LoadedSceneFileName = string.Empty;
+    private int m_LastPalletGroupLink = -1;
+    private int m_LastpalletImageLink = -1;
 
 	public bool LoadOk = false;
+
+    public void SetLastPalletLink(int palletGroupLink, int palletImageLink)
+    {
+        m_LastPalletGroupLink = palletGroupLink;
+        m_LastpalletImageLink = palletImageLink;
+    }
+
+    public void LinkImageFramePalletLastLink(ImageFrame frame)
+    {
+        if (frame == null)
+            return;
+        frame._SetLocalPalletLink(m_LastPalletGroupLink, m_LastpalletImageLink);
+    }
 
     public string LoadedSceneFileName
     {
@@ -34,6 +49,8 @@ public class StageMgr : MonoSingleton<StageMgr> {
 		LoadOk = false;
         m_LoadedSceneName = string.Empty;
         m_LoadedSceneFileName = string.Empty;
+        m_LastPalletGroupLink = -1;
+        m_LastpalletImageLink = -1;
 	}
 
     public SceneImageRes ImageRes
