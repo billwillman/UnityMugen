@@ -68,6 +68,22 @@ namespace Mugen
 			Data = null;
 		}
 
+        public bool LoadSceneExtLocalPalletTex(string sceneFileName, int group)
+        {
+            Texture2D tex = this.LocalPalletTex;
+            if (tex != null)
+                return true;
+            if (string.IsNullOrEmpty(sceneFileName) || group < 0 || m_Image < 0 || mParentLib == null)
+                return false;
+            string fileName = GlobalConfigMgr.GetConfigFileNameNoExt(sceneFileName);
+            fileName = string.Format("{0}_{1:D}-{2:D}.act.bytes", fileName, group, m_Image);
+            tex = mParentLib.GetScenePalletTexture(fileName);
+            bool ret = tex != null;
+            if (ret)
+                mLocalPalletTex = tex;
+            return ret;
+        }
+
 		public Texture2D LocalPalletTex
 		{
 			get
@@ -513,6 +529,14 @@ namespace Mugen
                 return ret;
             string fileName = GeneratorPalletFileName(playerName, palletName);
             return GetPalletTexture(palletName, fileName, mIs32BitPallet);
+        }
+
+        public Texture2D GetScenePalletTexture(string fileName)
+        {
+            Texture2D ret;
+            if (mPalletMap.TryGetValue(fileName, out ret))
+                return ret;
+            return GetPalletTexture(fileName, fileName, mIs32BitPallet);
         }
 
         private Texture2D GetPalletTexture(string palletName, string fileName, bool is32Bit)

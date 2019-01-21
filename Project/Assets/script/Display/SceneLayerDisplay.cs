@@ -50,7 +50,7 @@ public class SceneLayerDisplay : BaseResLoader {
 		InitSpriteRender ();
 	}
 
-	private void UpdateImageFrame(ImageFrame frame)
+	private void UpdateImageFrame(int group, ImageFrame frame)
 	{
 		SpriteRenderer r = this.SpriteRender;
 		if (r == null)
@@ -94,6 +94,13 @@ public class SceneLayerDisplay : BaseResLoader {
 		Material mat = r.sharedMaterial;
 		if (mat != null) {
 			var palletTex = frame.LocalPalletTex;
+            if (palletTex == null)
+            {
+                string sceneFileName = StageMgr.GetInstance().LoadedSceneFileName;
+                // 再尝试额外加载一个文件
+                if (frame.LoadSceneExtLocalPalletTex(sceneFileName, group))
+                    palletTex = frame.LocalPalletTex;
+            }
 			mat.SetTexture("_PalletTex", palletTex);
 			mat.SetTexture ("_MainTex", frame.Data.texture);
 		}
@@ -109,7 +116,7 @@ public class SceneLayerDisplay : BaseResLoader {
         if (imageRes != null && imageRes.LoadOk)
         {
 			var frame = imageRes.GetImageFrame ((PlayerState)bgInfo.srpiteno_Group, bgInfo.spriteno_Image);
-			UpdateImageFrame (frame);
+            UpdateImageFrame(bgInfo.srpiteno_Group, frame);
         }
     }
 }

@@ -10,8 +10,17 @@ public class StageMgr : MonoSingleton<StageMgr> {
 	private SceneConfig m_Config = null;
     private SceneImageRes m_ImageRes = null;
     private string m_LoadedSceneName = string.Empty;
+    private string m_LoadedSceneFileName = string.Empty;
 
 	public bool LoadOk = false;
+
+    public string LoadedSceneFileName
+    {
+        get
+        {
+            return m_LoadedSceneFileName;
+        }
+    }
 
 	public void Clear()
 	{
@@ -24,6 +33,7 @@ public class StageMgr : MonoSingleton<StageMgr> {
         }
 		LoadOk = false;
         m_LoadedSceneName = string.Empty;
+        m_LoadedSceneFileName = string.Empty;
 	}
 
     public SceneImageRes ImageRes
@@ -96,18 +106,26 @@ public class StageMgr : MonoSingleton<StageMgr> {
 		name = GlobalConfigMgr.GetConfigFileNameNoExt(name);
         if (string.IsNullOrEmpty(name))
             return false;
-        string fileName;
-        if (string.IsNullOrEmpty (DefaultSceneRoot))
-            fileName = string.Format("{0}@{1}/{2}.sff.bytes", AppConfig.GetInstance().SceneRootDir, DefaultSceneName, name);
+        string sceneRoot;
+        if (string.IsNullOrEmpty(DefaultSceneRoot))
+        {
+            sceneRoot = string.Format("{0}@{1}/{2}", AppConfig.GetInstance().SceneRootDir, DefaultSceneName, name);
+            
+        }
         else
-            fileName = string.Format("{0}{1}/@{2}/{3}.sff.bytes", AppConfig.GetInstance().SceneRootDir, DefaultSceneRoot, DefaultSceneName, name);
+        {
+            sceneRoot = string.Format("{0}{1}/@{2}/{3}", AppConfig.GetInstance().SceneRootDir, DefaultSceneRoot, DefaultSceneName, name);
+        }
+        string fileName = string.Format("{0}.sff.bytes", sceneRoot);
         if (!imgRes.LoadScene(fileName, bgCfg))
             return false;
 
+        m_LoadedSceneName = this.DefaultSceneName;
+        m_LoadedSceneFileName = sceneRoot;
         // 創建場景
         CreateScene();
 
-        m_LoadedSceneName = this.DefaultSceneName;
+        
 
         return true;
     }
