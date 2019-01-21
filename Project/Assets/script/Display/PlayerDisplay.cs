@@ -235,29 +235,36 @@ public class PlayerDisplay : BaseResLoader {
 			if (imageAni != null) {
 				var aniNode = imageAni.CurAniNode;
 				if (aniNode.localClsn2Arr != null)
-					CreateClsn2 (aniNode.localClsn2Arr);
+					CreateClsn (aniNode.localClsn2Arr, true);
 				else
-					CreateClsn2 (m_DefaultClsn2);
+					CreateClsn (m_DefaultClsn2, true);
+
+				CreateClsn (aniNode.localCls1Arr, false);
 			}
 		}
 	}
 
-	private void CreateClsn2(Rect[] r)
+	private void CreateClsn(Rect[] r, bool isCls2)
 	{
 		if (r == null || r.Length <= 0)
 			return;
+		string name;
+		if (isCls2)
+			name = "clsn2";
+		else
+			name = "clsn1";
 		var mgr = GlobalConfigMgr.GetInstance ();
 		for (int i = 0; i < r.Length; ++i) {
 			Rect s = r [i];
 			if (m_ClsnSpriteRoot == null) {
-				GameObject obj = new GameObject ("clsn2");
+				GameObject obj = new GameObject (name);
 				m_ClsnSpriteRoot = obj.transform;
 				m_ClsnSpriteRoot.SetParent (this.CachedTransform, false);
 				m_ClsnSpriteRoot.localPosition = Vector3.zero;
 				m_ClsnSpriteRoot.localRotation = Quaternion.identity;
 				m_ClsnSpriteRoot.localScale = Vector3.one;
 			}
-			mgr.CreateClsnSprite ("clsn2", m_ClsnSpriteRoot, s.min.x, s.min.y, s.width, s.height);
+			mgr.CreateClsnSprite (name, m_ClsnSpriteRoot, s.min.x, s.min.y, s.width, s.height, isCls2);
 		}
 	}
 
