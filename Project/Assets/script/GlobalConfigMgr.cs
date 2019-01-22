@@ -272,5 +272,8 @@ public class GlobalConfigMgr : MonoSingleton<GlobalConfigMgr> {
 		m_ClsnColliderPoolRoot = new GameObject ("Pool_ColliderClsn");
 		m_ClsnColliderPoolRoot.transform.SetParent (this.transform, false);
 		m_ClsnColliderPoolRoot.SetActive (false);
+
+        // 注冊所有狀態
+        PlayerStateCtl.RegisterPlayerStates();
 	}
 }

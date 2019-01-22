@@ -8,6 +8,8 @@ using Mugen;
 public class DefaultLoaderPlayer : MonoBehaviour {
 	public string PlayerName = string.Empty;
 	public string CnsName = string.Empty;
+    public InputPlayerType PlayerType = InputPlayerType.none;
+
     private PlayerImageRes m_ImageLibrary = null;
 
     // 清理图片资源
@@ -52,6 +54,11 @@ public class DefaultLoaderPlayer : MonoBehaviour {
 	public List<string> CnsNameList = null;
 	public List<string> PalNameList = null;
 	public string LoadAnim = string.Empty;
+
+    public void _OnLoadCns()
+    {
+        
+    }
 
 	public void AddCnsName(string name)
 	{

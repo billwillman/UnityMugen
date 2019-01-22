@@ -4,12 +4,14 @@ using Mugen;
 
 [RequireComponent(typeof(ImageAnimation))]
 [RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(PlayerStateMgr))]
 public class PlayerDisplay : BaseResLoader {
 
     private DefaultLoaderPlayer m_LoaderPlayer = null;
 	private Material m_OrgSpMat = null;
 	private Transform m_ClsnSpriteRoot = null;
 	private Rect[] m_DefaultClsn2 = null;
+    private PlayerStateMgr m_StateMgr = null;
 
     public DefaultLoaderPlayer LoaderPlayer
     {
@@ -17,6 +19,13 @@ public class PlayerDisplay : BaseResLoader {
         {
             return m_LoaderPlayer;
         }
+    }
+
+    public bool ChangeState(PlayerState state)
+    {
+        if (m_StateMgr == null)
+            return false;
+        return m_StateMgr.ChangeState(state);
     }
 
     public GlobalPlayer GPlayer
@@ -56,6 +65,7 @@ public class PlayerDisplay : BaseResLoader {
         if (m_LoaderPlayer != null)
             Clear();
         m_LoaderPlayer = loaderPlayer;
+        PlayerControls.GetInstance().SwitchPlayer(loaderPlayer.PlayerType, this);
     }
 
     public PlayerState AnimationState

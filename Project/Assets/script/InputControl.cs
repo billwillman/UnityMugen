@@ -149,6 +149,10 @@ public class InputControl: MonoBehaviour
 		if (type == InputPlayerType.none)
 			return;
 
+        PlayerDisplay display = GetPlayer(type);
+        if (display == null)
+            return;
+
 		int key = (int)type;
 		List<InputValue> list;
 		if (!m_KeyMsgMap.TryGetValue (key, out list) || list.Count <= 0)
