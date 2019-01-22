@@ -21,17 +21,16 @@ public enum InputPlayerType
 public enum InputControlType
 {
     none = 0,
-    up = 0x2,
-    left = 0x4,
-    right = 0x8,
-    jump = 0x10,
-    down = 0x20,
-	attack1 = 0x40,
-	attack2 = 0x80,
-	attack3 = 0x100,
-	attack4 = 0x200,
-	attack5 = 0x400,
-	attack6 = 0x800,
+    left = 0x1,
+    right = 0x2,
+    jump = 0x4,
+    down = 0x8,
+	attack1 = 0x10,
+	attack2 = 0x20,
+	attack3 = 0x40,
+	attack4 = 0x80,
+	attack5 = 0x100,
+	attack6 = 0x200,
 }
 
 public enum InputStateType
@@ -49,9 +48,12 @@ public struct InputValue
 public class InputControl: MonoBehaviour
 {
     private IInputListener m_Listener;
-	private Dictionary<int, int> m_KeyControlMap = new Dictionary<int, int>();
+    private Dictionary<int, int> m_KeyControlMap = new Dictionary<int, int>();
 	private Dictionary<int, List<InputValue>> m_KeyMsgMap = new Dictionary<int, List<InputValue>>();
-   
+    private Dictionary<int, int> m_RuntimePlayerKeyValueMap = new Dictionary<int, int>();
+
+    public bool m_ShowInput = false;
+
     void Awake()
     {
         RegisterDefaultKeyControls();
@@ -61,7 +63,7 @@ public class InputControl: MonoBehaviour
     {
 		int press = checkPress ? 1 : 0;
 		int combine = canCombine ? 1 : 0;
-		int ret = (((int)player) << 24) | (keyCode & 0x000000ff) | ((press) << 16) | ((combine) << 8);
+		int ret = (((int)player) << 24) | (keyCode & 0xFFFF) | ((press) << 16) | ((combine) << 17);
         return ret;
     }
 
@@ -70,19 +72,25 @@ public class InputControl: MonoBehaviour
 		return GetPlayerNoAndInputValue((byte)player, (int)keyCode, checkPress, canCombine);
     }
 
+    private InputControlType GetControlType(int value)
+    {
+        InputControlType ret = (InputControlType)(value & 0xFFFF);
+        return ret;
+    }
+
 	private bool GetKeyCanCombine(int value)
 	{
-		return ((value >> 8) & 0xff) != 0;
+		return ((value >> 17) & 0x1) != 0;
 	}
+
+    private bool GetKeyCanPress(int value)
+    {
+        return ((value >> 16) & 0x1) != 0;
+    }
 
 	private InputPlayerType GetPlayerType(int value)
 	{
 		return (InputPlayerType)((value >> 24) & 0xff);
-	}
-
-	private InputControlType GetControlType(int value)
-	{
-		return (InputControlType)((value >> 16) & 0xff);
 	}
 
 	private PlayerDisplay GetPlayer(int value)
@@ -128,7 +136,7 @@ public class InputControl: MonoBehaviour
 
 	private void SendPlayerKeyControl(InputPlayerType type, int value)
 	{
-		if (type == InputPlayerType.none)
+        if (type == InputPlayerType.none || value == 0)
 			return;
 		
 		int key = (int)type;
@@ -143,6 +151,46 @@ public class InputControl: MonoBehaviour
 		input.tick = UnityEngine.Time.unscaledTime;
 		list.Add (input);
 	}
+
+    private string GetInputControlTypeStr(int value)
+    {
+        System.Text.StringBuilder builder = new System.Text.StringBuilder();
+        if ((value & (int)InputControlType.left) != 0)
+            builder.Append('←');
+        else
+        if ((value & (int)InputControlType.right) != 0)
+            builder.Append('→');
+
+        if ((value & (int)InputControlType.jump) != 0)
+            builder.Append('↑');
+        else
+            if ((value & (int)InputControlType.down) != 0)
+                builder.Append('↓');
+        return builder.ToString();
+    }
+
+    void OnGUI()
+    {
+        if (!m_ShowInput)
+            return;
+
+        Rect inputLabelRect = new Rect(10f, 10f, 100f, 200f);
+        GUILayout.BeginArea(inputLabelRect);
+        GUILayout.BeginHorizontal();
+
+        var iter = m_RuntimePlayerKeyValueMap.GetEnumerator();
+        while (iter.MoveNext())
+        {
+            int ctlType = iter.Current.Value;
+            string s = GetInputControlTypeStr(ctlType);
+            s = string.Format("[{0:D}]:{1}", iter.Current.Key, s);
+            GUILayout.Label(s);
+        }
+        iter.Dispose();
+
+        GUILayout.EndHorizontal();
+        GUILayout.EndArea();
+    }
 
 	private void CheckInputValueTime(InputPlayerType type, float removeTime = 0.5f)
 	{
@@ -166,13 +214,59 @@ public class InputControl: MonoBehaviour
 
 	}
 
+    private int PreProcessInputValue(int value)
+    {
+        if (value == 0)
+            return value;
+
+        // 特殊处理同时按下不显示的
+        int v1 = (value & (int)InputControlType.jump);
+        int v2 = (value & (int)InputControlType.down);
+        if ((v1 != 0) && (v2 != 0))
+        {
+            int updown = (int)InputControlType.jump | (int)InputControlType.down;
+            value = value & (~updown);
+        }
+
+        v1 = (value & (int)InputControlType.left);
+        v2 = (value & (int)InputControlType.right);
+        if ((v1 != 0) && (v2 != 0))
+        {
+            int leftright = (int)InputControlType.left | (int)InputControlType.right;
+            value = value & (~leftright);
+        }
+        return value;
+    }
+
 	void CheckInputs(InputPlayerType playerType)
     {
 		var player = GetPlayer (playerType);
 		if (player == null || !player.CanInputKey())
 			return;
-		var iter = m_KeyControlMap.GetEnumerator();
-		int value = 0;
+
+        int value = 0;
+        // 判断Press
+        var iter = m_KeyControlMap.GetEnumerator();
+        while (iter.MoveNext())
+        {
+            if (GetPlayerType (iter.Current.Value) == playerType)
+            {
+                KeyCode key = (KeyCode)iter.Current.Key;
+                if (Input.GetKey(key))
+                {
+                    if (GetKeyCanPress(iter.Current.Value))
+                    {
+                        int v = (int)GetControlType(iter.Current.Value);
+                        value |= v;
+                    }
+                }
+            }
+        }
+        iter.Dispose();
+        
+        // 按下优先级高于Press
+		iter = m_KeyControlMap.GetEnumerator();
+		
         while (iter.MoveNext())
         {
 			if (GetPlayerType (iter.Current.Value) == playerType) {
@@ -190,6 +284,10 @@ public class InputControl: MonoBehaviour
         }
         iter.Dispose();
 
+        value = PreProcessInputValue(value);
+
+        // 发送给操作给角色，每个按键先发送给角色， 招式通过其他再判断
+        m_RuntimePlayerKeyValueMap[(int)playerType] = value;
 		if (value != 0)
 			SendPlayerKeyControl (playerType, value);
     }
