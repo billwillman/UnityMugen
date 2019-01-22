@@ -69,6 +69,11 @@ public class PlayerDisplay : BaseResLoader {
         }
     }
 
+	public bool CanInputKey()
+	{
+		return true;
+	}
+
     public bool HasStateImage(PlayerState state, bool isCheckTex = false)
     {
         var ani = this.ImageAni;
