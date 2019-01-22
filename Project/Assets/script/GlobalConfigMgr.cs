@@ -42,7 +42,7 @@ public class GlobalConfigMgr : MonoSingleton<GlobalConfigMgr> {
 		return r;
 	}
 
-	protected BoxCollider2D GetClsnColliderFromPool(string name)
+	protected Clsn GetClsnColliderFromPool(string name)
 	{
 		if (m_ClsnColliderPoolRoot == null)
 			return null;
@@ -52,13 +52,34 @@ public class GlobalConfigMgr : MonoSingleton<GlobalConfigMgr> {
 			child.gameObject.SetActive (false);
 			child.SetParent (null, false);
 			child.name = name;
-			BoxCollider2D ret = child.GetComponent<BoxCollider2D> ();
+            Clsn ret = child.GetComponent<Clsn>();
 			return ret;
 		}
-		GameObject gameObj = new GameObject(name, typeof(BoxCollider2D));
-		BoxCollider2D r = gameObj.GetComponent<BoxCollider2D> ();
+        GameObject gameObj = new GameObject(name, typeof(Clsn));
+        Clsn r = gameObj.GetComponent<Clsn>();
 		return r;
 	}
+
+    public Clsn CreateClsnBox(string name, Transform parent, float x, float y, float w, float h, bool isClsn2 = true)
+    {
+        Clsn r = GetClsnColliderFromPool(name);
+        if (r == null)
+            return r;
+
+        var trans = r.transform;
+        if (trans.parent != parent)
+        {
+            trans.SetParent(parent, false);
+        }
+
+        ClsnType tt = isClsn2 ? ClsnType.def: ClsnType.attack;
+        r.Init(tt, x, y, w, h);
+
+        if (!r.gameObject.activeSelf)
+            r.gameObject.SetActive(true);
+
+        return r;
+    }
 
 	/// <summary>
 	/// 创建包围盒查看
@@ -125,6 +146,16 @@ public class GlobalConfigMgr : MonoSingleton<GlobalConfigMgr> {
 		r.sprite = null;
 		r.transform.SetParent (m_ClsnSpritePoolRoot.transform, false);
 	}
+
+    public void DestroyBoxCollider(Clsn box)
+    {
+        if (box == null)
+            return;
+        if (box.transform.parent == m_ClsnColliderPoolRoot.transform)
+            return;
+
+        box.transform.SetParent(m_ClsnColliderPoolRoot.transform, false);
+    }
 
 	// 默认加载的PlayerName, 可用于测试
 	public List<DefaultLoaderPlayer> m_DefaultLoaderPlayers = null;

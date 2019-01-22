@@ -10,6 +10,7 @@ public class PlayerDisplay : BaseResLoader {
     private DefaultLoaderPlayer m_LoaderPlayer = null;
 	private Material m_OrgSpMat = null;
 	private Transform m_ClsnSpriteRoot = null;
+    private Transform m_ClsnBoxRoot = null;
 	private Rect[] m_DefaultClsn2 = null;
     private PlayerStateMgr m_StateMgr = null;
 
@@ -246,20 +247,19 @@ public class PlayerDisplay : BaseResLoader {
 		}
 
 		DestroyAllClsn ();
-		if (m_ShowClsnDebug) {
-			if (imageAni != null) {
-				var aniNode = imageAni.CurAniNode;
-				if (aniNode.localClsn2Arr != null)
-					CreateClsn (aniNode.localClsn2Arr, true);
-				else
-					CreateClsn (m_DefaultClsn2, true);
+        if (imageAni != null)
+        {
+            var aniNode = imageAni.CurAniNode;
+            if (aniNode.localClsn2Arr != null)
+                CreateClsn(aniNode.localClsn2Arr, true, m_ShowClsnDebug);
+            else
+                CreateClsn(m_DefaultClsn2, true, m_ShowClsnDebug);
 
-				CreateClsn (aniNode.localCls1Arr, false);
-			}
-		}
+            CreateClsn(aniNode.localCls1Arr, false, m_ShowClsnDebug);
+        }
 	}
 
-	private void CreateClsn(Rect[] r, bool isCls2)
+	private void CreateClsn(Rect[] r, bool isCls2, bool showSprite)
 	{
 		if (r == null || r.Length <= 0)
 			return;
@@ -271,15 +271,30 @@ public class PlayerDisplay : BaseResLoader {
 		var mgr = GlobalConfigMgr.GetInstance ();
 		for (int i = 0; i < r.Length; ++i) {
 			Rect s = r [i];
-			if (m_ClsnSpriteRoot == null) {
-				GameObject obj = new GameObject (name);
-				m_ClsnSpriteRoot = obj.transform;
-				m_ClsnSpriteRoot.SetParent (this.CachedTransform, false);
-				m_ClsnSpriteRoot.localPosition = Vector3.zero;
-				m_ClsnSpriteRoot.localRotation = Quaternion.identity;
-				m_ClsnSpriteRoot.localScale = Vector3.one;
-			}
-			mgr.CreateClsnSprite (name, m_ClsnSpriteRoot, s.min.x, s.min.y, s.width, s.height, isCls2);
+            if (showSprite)
+            {
+                if (m_ClsnSpriteRoot == null)
+                {
+                    GameObject obj = new GameObject("clsn");
+                    m_ClsnSpriteRoot = obj.transform;
+                    m_ClsnSpriteRoot.SetParent(this.CachedTransform, false);
+                    m_ClsnSpriteRoot.localPosition = Vector3.zero;
+                    m_ClsnSpriteRoot.localRotation = Quaternion.identity;
+                    m_ClsnSpriteRoot.localScale = Vector3.one;
+                }
+                mgr.CreateClsnSprite(name, m_ClsnSpriteRoot, s.min.x, s.min.y, s.width, s.height, isCls2);
+            }
+
+            if (m_ClsnBoxRoot == null)
+            {
+                GameObject obj = new GameObject("box");
+                m_ClsnBoxRoot = obj.transform;
+                m_ClsnBoxRoot.SetParent(this.CachedTransform, false);
+                m_ClsnBoxRoot.localPosition = Vector3.zero;
+                m_ClsnBoxRoot.localRotation = Quaternion.identity;
+                m_ClsnBoxRoot.localScale = Vector3.one;
+            }
+            mgr.CreateClsnBox(name, m_ClsnBoxRoot, s.min.x, s.min.y, s.width, s.height, isCls2);
 		}
 	}
 
@@ -296,6 +311,20 @@ public class PlayerDisplay : BaseResLoader {
 				GlobalConfigMgr.GetInstance ().DestroyClsn (sp);
 			}
 		}
+
+        if (m_ClsnBoxRoot != null && m_ClsnBoxRoot.childCount > 0)
+        {
+            for (int i = m_ClsnBoxRoot.childCount - 1; i >= 0; --i)
+            {
+                var trans = m_ClsnBoxRoot.GetChild(i);
+                if (trans == null)
+                    continue;
+                var box = trans.GetComponent<Clsn>();
+                if (box == null)
+                    continue;
+                GlobalConfigMgr.GetInstance().DestroyBoxCollider(box);
+            }
+        }
 	}
 
 	void OnDestroy()

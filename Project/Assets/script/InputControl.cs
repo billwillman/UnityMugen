@@ -127,6 +127,11 @@ public class InputControl: MonoBehaviour
 		m_KeyControlMap[(int)KeyCode.J] = GetPlayerNoAndInputValue(InputPlayerType._1p, InputControlType.attack4, false, false);
 		m_KeyControlMap[(int)KeyCode.K] = GetPlayerNoAndInputValue(InputPlayerType._1p, InputControlType.attack5, false, false);
 		m_KeyControlMap[(int)KeyCode.L] = GetPlayerNoAndInputValue(InputPlayerType._1p, InputControlType.attack6, false, false);
+
+        m_KeyControlMap[(int)KeyCode.UpArrow] = GetPlayerNoAndInputValue(InputPlayerType._2p, InputControlType.jump, true, true);
+        m_KeyControlMap[(int)KeyCode.LeftArrow] = GetPlayerNoAndInputValue(InputPlayerType._2p, InputControlType.left, true, true);
+        m_KeyControlMap[(int)KeyCode.RightArrow] = GetPlayerNoAndInputValue(InputPlayerType._2p, InputControlType.right, true, true);
+        m_KeyControlMap[(int)KeyCode.DownArrow] = GetPlayerNoAndInputValue(InputPlayerType._2p, InputControlType.down, true, true);
     }
     
     public void AttachListener(IInputListener listener)
@@ -148,7 +153,7 @@ public class InputControl: MonoBehaviour
 
 		InputValue input = new InputValue();
 		input.keyCodeValue = value;
-		input.tick = UnityEngine.Time.unscaledTime;
+		input.tick = Time.realtimeSinceStartup;
 		list.Add (input);
 	}
 
@@ -174,10 +179,10 @@ public class InputControl: MonoBehaviour
         if (!m_ShowInput)
             return;
 
-        Rect inputLabelRect = new Rect(10f, 10f, 100f, 200f);
+        Rect inputLabelRect = new Rect(10f, 10f, 200f, 800f);
         GUILayout.BeginArea(inputLabelRect);
-        GUILayout.BeginHorizontal();
-
+        GUILayout.BeginVertical();
+        GUILayout.Label("【Player Control】");
         var iter = m_RuntimePlayerKeyValueMap.GetEnumerator();
         while (iter.MoveNext())
         {
@@ -188,7 +193,9 @@ public class InputControl: MonoBehaviour
         }
         iter.Dispose();
 
-        GUILayout.EndHorizontal();
+        GUILayout.Label("【Player Wugong】");
+
+        GUILayout.EndVertical();
         GUILayout.EndArea();
     }
 
@@ -292,16 +299,38 @@ public class InputControl: MonoBehaviour
 			SendPlayerKeyControl (playerType, value);
     }
 
+    private float m_CheckInputTime = 0f;
+
     void Update()
     {
-		CheckInputs (InputPlayerType._1p);
-		CheckInputs (InputPlayerType._2p);
-		CheckInputs (InputPlayerType._3p);
-		CheckInputs (InputPlayerType._4p);
+        float time = Time.realtimeSinceStartup;
+        if (time - m_CheckInputTime >= _cCheckInputDeltaTime)
+        {
+            m_CheckInputTime = time;
 
-		CheckInputValueTime (InputPlayerType._1p);
-		CheckInputValueTime (InputPlayerType._2p);
-		CheckInputValueTime (InputPlayerType._3p);
-		CheckInputValueTime (InputPlayerType._4p);
+            CheckInputs(InputPlayerType._1p);
+            CheckInputs(InputPlayerType._2p);
+            CheckInputs(InputPlayerType._3p);
+            CheckInputs(InputPlayerType._4p);
+        }
+
+        CheckInputValueTime(InputPlayerType._1p, _cInputRemoveTime);
+        CheckInputValueTime(InputPlayerType._2p, _cInputRemoveTime);
+        CheckInputValueTime(InputPlayerType._3p, _cInputRemoveTime);
+        CheckInputValueTime(InputPlayerType._4p, _cInputRemoveTime);
+
+        CheckWuGong(InputPlayerType._1p, _cWuGongCheckTime);
+        CheckWuGong(InputPlayerType._2p, _cWuGongCheckTime);
+        CheckWuGong(InputPlayerType._3p, _cWuGongCheckTime);
+        CheckWuGong(InputPlayerType._4p, _cWuGongCheckTime);
     }
+
+    void CheckWuGong(InputPlayerType player, float checkTime)
+    {
+
+    }
+
+    private static readonly float _cCheckInputDeltaTime = 0.01f;
+    private static readonly float _cInputRemoveTime = 0.3f;
+    private static readonly float _cWuGongCheckTime = 0.1f;
 }
