@@ -15,6 +15,7 @@ public enum GlobalPlayerLoaderResult
 	None = 1,
 }
 
+[RequireComponent(typeof(PlayerStateCtl))]
 public class GlobalConfigMgr : MonoSingleton<GlobalConfigMgr> {
 	private Dictionary<string, GlobalPlayer> m_PlayerDict = new Dictionary<string, GlobalPlayer>();
 	private List<SpriteRenderer> m_ClsnSpritePool = new List<SpriteRenderer>();
@@ -23,6 +24,16 @@ public class GlobalConfigMgr : MonoSingleton<GlobalConfigMgr> {
 	private GameObject m_ClsnColliderPoolRoot = null;
 	private BaseResLoader m_Loader = null;
 	private Texture m_ClsnTex = null;
+	private PlayerStateCtl m_PlayerStateCtl = null;
+
+	protected PlayerStateCtl PlyStateCtl
+	{
+		get {
+			if (m_PlayerStateCtl == null)
+				m_PlayerStateCtl = GetComponent<PlayerStateCtl> ();
+			return m_PlayerStateCtl;
+		}
+	}
 
 	protected SpriteRenderer GetClsnSpriteFromPool(string name)
 	{
@@ -284,7 +295,7 @@ public class GlobalConfigMgr : MonoSingleton<GlobalConfigMgr> {
 					AddCnsList (defaultPlayer, player);
 					AttachPals (defaultPlayer, player);
 					#endif
-					player.CreatePlayerDisplay (defaultPlayer);
+					player.CreatePlayerDisplay (defaultPlayer, defaultPlayer.PlayerType);
 				}
 			}
 		}
@@ -304,7 +315,14 @@ public class GlobalConfigMgr : MonoSingleton<GlobalConfigMgr> {
 		m_ClsnColliderPoolRoot.transform.SetParent (this.transform, false);
 		m_ClsnColliderPoolRoot.SetActive (false);
 
-        // 注冊所有狀態
-        PlayerStateCtl.RegisterPlayerStates();
+		RegisterDefaultStates ();
+	}
+
+	private void RegisterDefaultStates()
+	{
+		var ctl = this.PlyStateCtl;
+		if (ctl == null)
+			return;
+		ctl.RegisterDefaultPlayerStates ();
 	}
 }

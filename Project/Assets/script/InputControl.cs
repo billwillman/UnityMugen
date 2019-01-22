@@ -25,11 +25,11 @@ public enum InputControlType
     right = 0x2,
     jump = 0x4,
     down = 0x8,
-	attack1 = 0x10,
-	attack2 = 0x20,
-	attack3 = 0x40,
-	attack4 = 0x80,
-	attack5 = 0x100,
+	attack1 = 0x10, // x
+	attack2 = 0x20, // y
+	attack3 = 0x40, // d
+	attack4 = 0x80, // s
+	attack5 = 0x100, 
 	attack6 = 0x200,
 }
 
@@ -188,6 +188,19 @@ public class InputControl: MonoBehaviour
         else
             if ((value & (int)InputControlType.down) != 0)
                 builder.Append('↓');
+
+		if ((value & (int)InputControlType.attack1) != 0)
+			builder.Append("X");
+
+		if ((value & (int)InputControlType.attack2) != 0)
+			builder.Append("Y");
+
+		if ((value & (int)InputControlType.attack3) != 0)
+			builder.Append("D");
+
+		if ((value & (int)InputControlType.attack4) != 0)
+			builder.Append("S");
+
         return builder.ToString();
     }
 
@@ -217,6 +230,15 @@ public class InputControl: MonoBehaviour
 
         return builder.ToString();
     }
+
+	public int GetPlayerRunKeyValue(InputPlayerType type)
+	{
+		int key = (int)type;
+		int ret;
+		if (!m_RuntimePlayerKeyValueMap.TryGetValue (key, out ret))
+			ret = 0;
+		return ret;
+	}
 
     void OnGUI()
     {

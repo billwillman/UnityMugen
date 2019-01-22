@@ -13,6 +13,15 @@ public class PlayerDisplay : BaseResLoader {
     private Transform m_ClsnBoxRoot = null;
 	private Rect[] m_DefaultClsn2 = null;
     private PlayerStateMgr m_StateMgr = null;
+	private InputPlayerType m_PlayerType = InputPlayerType.none;
+
+
+	public InputPlayerType PlyType
+	{
+		get {
+			return m_PlayerType;
+		}
+	}
 
     public DefaultLoaderPlayer LoaderPlayer
     {
@@ -22,11 +31,21 @@ public class PlayerDisplay : BaseResLoader {
         }
     }
 
+	public PlayerStateMgr StateMgr
+	{
+		get {
+			if (m_StateMgr == null)
+				m_StateMgr = GetComponent<PlayerStateMgr> ();
+			return m_StateMgr;
+		}
+	}
+
     public bool ChangeState(PlayerState state)
     {
-        if (m_StateMgr == null)
+		var mgr = this.StateMgr;
+		if (mgr == null)
             return false;
-        return m_StateMgr.ChangeState(state);
+		return mgr.ChangeState(state);
     }
 
     public GlobalPlayer GPlayer
@@ -61,12 +80,13 @@ public class PlayerDisplay : BaseResLoader {
 		InitSpriteRender ();
 	}
 
-    public void Init(DefaultLoaderPlayer loaderPlayer)
+	public void Init(DefaultLoaderPlayer loaderPlayer, InputPlayerType playerType)
     {
         if (m_LoaderPlayer != null)
             Clear();
         m_LoaderPlayer = loaderPlayer;
-        PlayerControls.GetInstance().SwitchPlayer(loaderPlayer.PlayerType, this);
+		m_PlayerType = playerType;
+		PlayerControls.GetInstance().SwitchPlayer(playerType, this);
     }
 
     public PlayerState AnimationState
@@ -433,6 +453,14 @@ public class PlayerDisplay : BaseResLoader {
 		if (target == null)
 			return;
         RefreshCurFrame(target);
+	}
+
+	void OnImageAnimationEndFrame(ImageAnimation target)
+	{
+		var mgr = this.StateMgr;
+		if (mgr != null) {
+			mgr.CurStateOnAnimateEndFrame ();
+		}
 	}
 
     // 调色板名字更换

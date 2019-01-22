@@ -145,13 +145,13 @@ public class GlobalPlayer
 	}
 
 	// 创建角色显示
-	public GameObject CreatePlayerDisplay(DefaultLoaderPlayer loaderPlayer)
+	public GameObject CreatePlayerDisplay(DefaultLoaderPlayer loaderPlayer, InputPlayerType playerType)
 	{
 		if (m_PlayerConfig == null || !m_PlayerConfig.IsVaild || m_AirConfig == null || !m_AirConfig.IsVaild)
 			return null;
 		GameObject obj = new GameObject (m_PlayerName, typeof(PlayerDisplay));
         PlayerDisplay displayer = obj.GetComponent<PlayerDisplay>();
-        displayer.Init(loaderPlayer);
+		displayer.Init(loaderPlayer, playerType);
 		return obj;
 	}
 }

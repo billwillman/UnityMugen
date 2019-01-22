@@ -173,6 +173,9 @@ public class PlayerDisplayEditor : Editor {
                 }
             }
         }
+
+		int playerType = (int)m_LastDisplay.PlyType;
+		EditorGUILayout.LabelField("角色控制", playerType.ToString());
     }
 
 	void ShowClsn(bool isShow)

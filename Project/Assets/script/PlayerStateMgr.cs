@@ -3,8 +3,10 @@ using System.Collections;
 using Utils;
 using Mugen;
 
+[RequireComponent(typeof(PlayerDisplay))]
 public class PlayerStateMgr : MonoBehaviour {
     private StateMgr<PlayerState, PlayerStateMgr> m_StateMgr = null;
+	private PlayerDisplay m_PlayerDisplay = null;
 
     void Awake()
     {
@@ -17,5 +19,39 @@ public class PlayerStateMgr : MonoBehaviour {
             return false;
         return m_StateMgr.ChangeState(state);
     }
-	
+
+	public PlayerDisplay PlyDisplay
+	{
+		get {
+			if (m_PlayerDisplay == null)
+				m_PlayerDisplay = GetComponent<PlayerDisplay> ();
+			return m_PlayerDisplay;
+		}
+	}
+
+	public PlayerState CurState
+	{
+		get
+		{
+			if (m_StateMgr == null)
+				return PlayerState.psNone;
+			return m_StateMgr.CurrStateKey;
+		}
+	}
+
+	public void CurStateOnAnimateEndFrame()
+	{
+		if (m_StateMgr == null)
+			return;
+		var state = m_StateMgr.CurrState as BasePlayerState;
+		if (state == null)
+			return;
+		state.OnAnimateEndFrame (this);
+	}
+
+	void LateUpdate()
+	{
+		if (m_StateMgr != null)
+			m_StateMgr.Process (this);
+	}
 }
