@@ -26,11 +26,23 @@ public enum InputControlType
     right = 0x8,
     jump = 0x10,
     down = 0x20,
+	attack1 = 0x40,
+	attack2 = 0x80,
+	attack3 = 0x100,
+	attack4 = 0x200,
+	attack5 = 0x400,
+	attack6 = 0x800,
 }
 
 public enum InputStateType
 {
     none = 0
+}
+
+public struct InputValue
+{
+	public int keyCodeValue;
+	public float tick;
 }
 		
 
@@ -38,7 +50,7 @@ public class InputControl: MonoBehaviour
 {
     private IInputListener m_Listener;
 	private Dictionary<int, int> m_KeyControlMap = new Dictionary<int, int>();
-	private Dictionary<int, List<int>> m_KeyMsgMap = new Dictionary<int, List<int>> ();
+	private Dictionary<int, List<InputValue>> m_KeyMsgMap = new Dictionary<int, List<InputValue>>();
    
     void Awake()
     {
@@ -100,6 +112,13 @@ public class InputControl: MonoBehaviour
 		m_KeyControlMap[(int)KeyCode.A] = GetPlayerNoAndInputValue(InputPlayerType._1p, InputControlType.left, true, true);
 		m_KeyControlMap[(int)KeyCode.D] = GetPlayerNoAndInputValue(InputPlayerType._1p, InputControlType.right, true, true);
 		m_KeyControlMap[(int)KeyCode.S] = GetPlayerNoAndInputValue(InputPlayerType._1p, InputControlType.down, true, true);
+
+		m_KeyControlMap[(int)KeyCode.U] = GetPlayerNoAndInputValue(InputPlayerType._1p, InputControlType.attack1, false, false);
+		m_KeyControlMap[(int)KeyCode.I] = GetPlayerNoAndInputValue(InputPlayerType._1p, InputControlType.attack2, false, false);
+		m_KeyControlMap[(int)KeyCode.O] = GetPlayerNoAndInputValue(InputPlayerType._1p, InputControlType.attack3, false, false);
+		m_KeyControlMap[(int)KeyCode.J] = GetPlayerNoAndInputValue(InputPlayerType._1p, InputControlType.attack4, false, false);
+		m_KeyControlMap[(int)KeyCode.K] = GetPlayerNoAndInputValue(InputPlayerType._1p, InputControlType.attack5, false, false);
+		m_KeyControlMap[(int)KeyCode.L] = GetPlayerNoAndInputValue(InputPlayerType._1p, InputControlType.attack6, false, false);
     }
     
     public void AttachListener(IInputListener listener)
@@ -109,6 +128,38 @@ public class InputControl: MonoBehaviour
 
 	private void SendPlayerKeyControl(InputPlayerType type, int value)
 	{
+		if (type == InputPlayerType.none)
+			return;
+		
+		int key = (int)type;
+		List<InputValue> list;
+		if (!m_KeyMsgMap.TryGetValue (key, out list)) {
+			list = new List<InputValue> ();
+			m_KeyMsgMap [key] = list;
+		}
+
+		InputValue input = new InputValue();
+		input.keyCodeValue = value;
+		input.tick = UnityEngine.Time.unscaledTime;
+		list.Add (input);
+	}
+
+	private void CheckInputValueTime(InputPlayerType type, float removeTime = 0.5f)
+	{
+		if (type == InputPlayerType.none)
+			return;
+
+		int key = (int)type;
+		List<InputValue> list;
+		if (!m_KeyMsgMap.TryGetValue (key, out list) || list.Count <= 0)
+			return;
+		while (list.Count > 0) {
+			var input = list [0];
+			if (UnityEngine.Time.unscaledTime - input.tick < 0.5f)
+				break;
+			list.RemoveAt (0);
+		}
+
 	}
 
 	void CheckInputs(InputPlayerType playerType)
@@ -145,5 +196,10 @@ public class InputControl: MonoBehaviour
 		CheckInputs (InputPlayerType._2p);
 		CheckInputs (InputPlayerType._3p);
 		CheckInputs (InputPlayerType._4p);
+
+		CheckInputValueTime (InputPlayerType._1p);
+		CheckInputValueTime (InputPlayerType._2p);
+		CheckInputValueTime (InputPlayerType._3p);
+		CheckInputValueTime (InputPlayerType._4p);
     }
 }
