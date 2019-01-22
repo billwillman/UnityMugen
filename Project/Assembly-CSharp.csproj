@@ -208,6 +208,7 @@
      <Compile Include="Assets\script\GlobalConfigMgr.cs" />
      <Compile Include="Assets\script\GlobalPlayer.cs" />
      <Compile Include="Assets\script\ImageAnimation.cs" />
+     <Compile Include="Assets\script\InputControl.cs" />
      <Compile Include="Assets\script\Mugen\AirConfig.cs" />
      <Compile Include="Assets\script\Mugen\BgConfig.cs" />
      <Compile Include="Assets\script\Mugen\CNSConfig.cs" />
@@ -218,6 +219,7 @@
      <Compile Include="Assets\script\Mugen\PlayerState.cs" />
      <Compile Include="Assets\script\Mugen\SceneConfig.cs" />
      <Compile Include="Assets\script\Mugen\SffConfig.cs" />
+     <Compile Include="Assets\script\PlayerControls.cs" />
      <Compile Include="Assets\script\PlayerImageRes.cs" />
      <Compile Include="Assets\script\Res\AssetCache.cs" />
      <Compile Include="Assets\script\Res\AssetLoader.cs" />
