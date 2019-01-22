@@ -38,6 +38,7 @@ public class InputControl: MonoBehaviour
 {
     private IInputListener m_Listener;
 	private Dictionary<int, int> m_KeyControlMap = new Dictionary<int, int>();
+	private Dictionary<int, List<int>> m_KeyMsgMap = new Dictionary<int, List<int>> ();
    
     void Awake()
     {
