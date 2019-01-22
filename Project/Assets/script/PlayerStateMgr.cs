@@ -17,6 +17,9 @@ public class PlayerStateMgr : MonoBehaviour {
     {
         if (m_StateMgr == null)
             return false;
+		var display = this.PlyDisplay;
+		if (display.PlyType == InputPlayerType.none)
+			return false;
         return m_StateMgr.ChangeState(state);
     }
 

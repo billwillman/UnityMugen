@@ -92,7 +92,13 @@ public class PlayerStateCtl: MonoBehaviour, IBasePlayerStateListener
 			player.PlayAni (plyState);
 			break;
 		case PlayerState.psDown1:
-			player.PlayAni (PlayerState.psDown1);
+			player.PlayAni (PlayerState.psDown1, false);
+			break;
+		case PlayerState.psBackWalk1:
+			player.PlayAni (PlayerState.psBackWalk1);
+			break;
+		case PlayerState.psForwardWalk1:
+			player.PlayAni (PlayerState.psForwardWalk1);
 			break;
 		}
 	}
@@ -108,11 +114,16 @@ public class PlayerStateCtl: MonoBehaviour, IBasePlayerStateListener
 
 		int runValue = PlayerControls.GetInstance ().InputCtl.GetPlayerRunKeyValue (player.PlyType);
 
-	//	if (runValue == 0)
-	//		target.ChangeState (PlayerState.psStand1);
+		if (runValue == 0)
+			target.ChangeState (PlayerState.psStand1);
 
-		//if ((runValue & (int)InputControlType.down) != 0)
-		//	target.ChangeState (PlayerState.psDown1);
+		if ((runValue & (int)InputControlType.down) != 0)
+			target.ChangeState (PlayerState.psDown1);
+		else if (runValue == (int)InputControlType.left) {
+			target.ChangeState (PlayerState.psBackWalk1);
+		} else if (runValue == (int)InputControlType.right) {
+			target.ChangeState (PlayerState.psForwardWalk1);
+		}
 	}
 
 	public virtual void OnAnimateEndFrame (PlayerStateMgr target)
@@ -124,5 +135,7 @@ public class PlayerStateCtl: MonoBehaviour, IBasePlayerStateListener
     {
 		StateMgr<PlayerState, PlayerStateMgr>.Register(PlayerState.psStand1, new BasePlayerState(this));
 		StateMgr<PlayerState, PlayerStateMgr>.Register(PlayerState.psDown1, new BasePlayerState(this)); 
+		StateMgr<PlayerState, PlayerStateMgr>.Register(PlayerState.psBackWalk1, new BasePlayerState(this)); 
+		StateMgr<PlayerState, PlayerStateMgr>.Register(PlayerState.psForwardWalk1, new BasePlayerState(this)); 
     }
 }
