@@ -151,6 +151,23 @@ public class InputControl: MonoBehaviour
 			m_KeyMsgMap [key] = list;
 		}
 
+        if (list.Count > 0)
+        {
+            var item = list[list.Count - 1];
+            if (item.keyCodeValue == value)
+            {
+                item.tick = Time.realtimeSinceStartup;
+                return;
+            }
+
+            int v = (item.keyCodeValue & value);
+            if (v != 0)
+            {
+                value = value & (~v);
+            }
+            if (value == 0)
+                return;
+        }
 		InputValue input = new InputValue();
 		input.keyCodeValue = value;
 		input.tick = Time.realtimeSinceStartup;
@@ -174,6 +191,33 @@ public class InputControl: MonoBehaviour
         return builder.ToString();
     }
 
+    private string GetPlayerWuGongStr(List<InputValue> values)
+    {
+        if (values == null || values.Count <= 0)
+            return string.Empty;
+        System.Text.StringBuilder builder = new System.Text.StringBuilder();
+
+        for (int i = 0; i < values.Count; ++i)
+        {
+            var v = values[i];
+            var value = v.keyCodeValue;
+            if ((value & (int)InputControlType.left) != 0)
+                builder.Append('←');
+            else
+                if ((value & (int)InputControlType.right) != 0)
+                    builder.Append('→');
+
+            if ((value & (int)InputControlType.jump) != 0)
+                builder.Append('↑');
+            else
+                if ((value & (int)InputControlType.down) != 0)
+                    builder.Append('↓');
+
+        }
+
+        return builder.ToString();
+    }
+
     void OnGUI()
     {
         if (!m_ShowInput)
@@ -194,6 +238,19 @@ public class InputControl: MonoBehaviour
         iter.Dispose();
 
         GUILayout.Label("【Player Wugong】");
+
+        if (m_KeyMsgMap != null)
+        {
+            var it = m_KeyMsgMap.GetEnumerator();
+            while (it.MoveNext())
+            {
+                int playerType = it.Current.Key;
+                string s = GetPlayerWuGongStr(it.Current.Value);
+                s = string.Format("[{0:D}]:{1}", playerType, s);
+                GUILayout.Label(s);
+            }
+            it.Dispose();
+        }
 
         GUILayout.EndVertical();
         GUILayout.EndArea();
@@ -245,18 +302,19 @@ public class InputControl: MonoBehaviour
         return value;
     }
 
-	void CheckInputs(InputPlayerType playerType)
+    void CheckInputs(InputPlayerType playerType, bool checkPress)
     {
-		var player = GetPlayer (playerType);
-		if (player == null || !player.CanInputKey())
-			return;
+        var player = GetPlayer(playerType);
+        if (player == null || !player.CanInputKey())
+            return;
 
         int value = 0;
+        int v1 = 0;
         // 判断Press
         var iter = m_KeyControlMap.GetEnumerator();
         while (iter.MoveNext())
         {
-            if (GetPlayerType (iter.Current.Value) == playerType)
+            if (GetPlayerType(iter.Current.Value) == playerType)
             {
                 KeyCode key = (KeyCode)iter.Current.Key;
                 if (Input.GetKey(key))
@@ -264,55 +322,68 @@ public class InputControl: MonoBehaviour
                     if (GetKeyCanPress(iter.Current.Value))
                     {
                         int v = (int)GetControlType(iter.Current.Value);
+                        v1 |= v;
                         value |= v;
                     }
                 }
             }
         }
         iter.Dispose();
-        
+
         // 按下优先级高于Press
-		iter = m_KeyControlMap.GetEnumerator();
-		
-        while (iter.MoveNext())
+        var it = m_KeyControlMap.GetEnumerator();
+
+        while (it.MoveNext())
         {
-			if (GetPlayerType (iter.Current.Value) == playerType) {
-				KeyCode key = (KeyCode)iter.Current.Key;
-				if (Input.GetKeyDown (key)) {
-					int v = (int)GetControlType (iter.Current.Value);
-					if (GetKeyCanCombine (iter.Current.Value))
-						value |= v;
-					else {
-						value = v;
-						break;
-					}
-				}
-			}
+            if (GetPlayerType(it.Current.Value) == playerType)
+            {
+                KeyCode key = (KeyCode)it.Current.Key;
+                if (Input.GetKeyDown(key))
+                {
+                    int v = (int)GetControlType(it.Current.Value);
+                    if (GetKeyCanCombine(it.Current.Value))
+                        value |= v;
+                    else
+                    {
+                        value = v;
+                        v1 = 0;
+                        break;
+                    }
+                }
+            }
         }
-        iter.Dispose();
+        it.Dispose();
 
         value = PreProcessInputValue(value);
 
         // 发送给操作给角色，每个按键先发送给角色， 招式通过其他再判断
         m_RuntimePlayerKeyValueMap[(int)playerType] = value;
-		if (value != 0)
-			SendPlayerKeyControl (playerType, value);
+        if (value != 0)
+        {
+            if (checkPress)
+                SendPlayerKeyControl(playerType, value);
+            else
+            {
+                int v = value & (~v1);
+                if (v != 0)
+                    SendPlayerKeyControl(playerType, v);
+            }
+        }
     }
 
-    private float m_CheckInputTime = 0f;
+    private float m_CheckInputPressTime = 0f;
 
     void Update()
     {
         float time = Time.realtimeSinceStartup;
-        if (time - m_CheckInputTime >= _cCheckInputDeltaTime)
-        {
-            m_CheckInputTime = time;
-
-            CheckInputs(InputPlayerType._1p);
-            CheckInputs(InputPlayerType._2p);
-            CheckInputs(InputPlayerType._3p);
-            CheckInputs(InputPlayerType._4p);
-        }
+        float delta = time - m_CheckInputPressTime;
+        bool isCheckPress = delta >= _cCheckInputPressDeltaTime;
+        if (isCheckPress)
+            m_CheckInputPressTime = time;
+        CheckInputs(InputPlayerType._1p, isCheckPress);
+        CheckInputs(InputPlayerType._2p, isCheckPress);
+        CheckInputs(InputPlayerType._3p, isCheckPress);
+        CheckInputs(InputPlayerType._4p, isCheckPress);
 
         CheckInputValueTime(InputPlayerType._1p, _cInputRemoveTime);
         CheckInputValueTime(InputPlayerType._2p, _cInputRemoveTime);
@@ -330,7 +401,7 @@ public class InputControl: MonoBehaviour
 
     }
 
-    private static readonly float _cCheckInputDeltaTime = 0.01f;
-    private static readonly float _cInputRemoveTime = 0.3f;
+    private static readonly float _cCheckInputPressDeltaTime = 0.05f;
+    private static readonly float _cInputRemoveTime = 0.5f;
     private static readonly float _cWuGongCheckTime = 0.1f;
 }

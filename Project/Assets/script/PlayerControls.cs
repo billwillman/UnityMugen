@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using Mugen;
 
 [RequireComponent(typeof(InputControl))]
 public class PlayerControls: MonoSingleton<PlayerControls>
@@ -37,6 +38,11 @@ public class PlayerControls: MonoSingleton<PlayerControls>
             case InputPlayerType._4p:
                 m_4P = display;
                 break;
+        }
+
+        if (display != null && display.AnimationState == PlayerState.psNone)
+        {
+            display.ChangeState(PlayerState.psStand1);
         }
     }
 }
