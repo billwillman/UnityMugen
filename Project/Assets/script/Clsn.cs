@@ -14,6 +14,7 @@ public class Clsn : MonoBehaviour {
     private BoxCollider2D m_Box;
     private ClsnType m_Type = ClsnType.none;
     private float m_CreateTimer = 0f;
+    private InputPlayerType m_PlayerType = InputPlayerType.none;
 
     public float CreateTimer
     { 
@@ -44,9 +45,10 @@ public class Clsn : MonoBehaviour {
         }
     }
 
-    public void Init(ClsnType type, float x, float y, float w, float h)
+    public void Init(InputPlayerType playerType, ClsnType type, float x, float y, float w, float h)
     {
         m_Type = type;
+        m_PlayerType = playerType;
         m_CreateTimer = Time.realtimeSinceStartup;
         BoxCollider2D box = this.Box;
         float rw = w / 100f;

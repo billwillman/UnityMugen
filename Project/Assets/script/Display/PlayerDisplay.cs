@@ -285,16 +285,19 @@ public class PlayerDisplay : BaseResLoader {
                 mgr.CreateClsnSprite(name, m_ClsnSpriteRoot, s.min.x, s.min.y, s.width, s.height, isCls2);
             }
 
-            if (m_ClsnBoxRoot == null)
+            if (m_LoaderPlayer != null)
             {
-                GameObject obj = new GameObject("box");
-                m_ClsnBoxRoot = obj.transform;
-                m_ClsnBoxRoot.SetParent(this.CachedTransform, false);
-                m_ClsnBoxRoot.localPosition = Vector3.zero;
-                m_ClsnBoxRoot.localRotation = Quaternion.identity;
-                m_ClsnBoxRoot.localScale = Vector3.one;
+                if (m_ClsnBoxRoot == null)
+                {
+                    GameObject obj = new GameObject("box");
+                    m_ClsnBoxRoot = obj.transform;
+                    m_ClsnBoxRoot.SetParent(this.CachedTransform, false);
+                    m_ClsnBoxRoot.localPosition = Vector3.zero;
+                    m_ClsnBoxRoot.localRotation = Quaternion.identity;
+                    m_ClsnBoxRoot.localScale = Vector3.one;
+                }
+                mgr.CreateClsnBox(m_LoaderPlayer.PlayerType, name, m_ClsnBoxRoot, s.min.x, s.min.y, s.width, s.height, isCls2);
             }
-            mgr.CreateClsnBox(name, m_ClsnBoxRoot, s.min.x, s.min.y, s.width, s.height, isCls2);
 		}
 	}
 

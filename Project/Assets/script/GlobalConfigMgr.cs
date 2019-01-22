@@ -60,7 +60,7 @@ public class GlobalConfigMgr : MonoSingleton<GlobalConfigMgr> {
 		return r;
 	}
 
-    public Clsn CreateClsnBox(string name, Transform parent, float x, float y, float w, float h, bool isClsn2 = true)
+    public Clsn CreateClsnBox(InputPlayerType playerType, string name, Transform parent, float x, float y, float w, float h, bool isClsn2 = true)
     {
         Clsn r = GetClsnColliderFromPool(name);
         if (r == null)
@@ -73,7 +73,7 @@ public class GlobalConfigMgr : MonoSingleton<GlobalConfigMgr> {
         }
 
         ClsnType tt = isClsn2 ? ClsnType.def: ClsnType.attack;
-        r.Init(tt, x, y, w, h);
+        r.Init(playerType, tt, x, y, w, h);
 
         if (!r.gameObject.activeSelf)
             r.gameObject.SetActive(true);
