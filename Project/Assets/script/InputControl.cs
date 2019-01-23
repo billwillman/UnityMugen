@@ -237,7 +237,18 @@ public class InputControl: MonoBehaviour
             else
                 if ((value & (int)InputControlType.down) != 0)
                     builder.Append('↓');
+			
+			if ((value & (int)InputControlType.attack1) != 0)
+				builder.Append("X");
 
+			if ((value & (int)InputControlType.attack2) != 0)
+				builder.Append("Y");
+
+			if ((value & (int)InputControlType.attack3) != 0)
+				builder.Append("D");
+
+			if ((value & (int)InputControlType.attack4) != 0)
+				builder.Append("S");
         }
 
         return builder.ToString();
@@ -344,8 +355,11 @@ public class InputControl: MonoBehaviour
     void CheckInputs(InputPlayerType playerType, bool checkPress)
     {
         var player = GetPlayer(playerType);
-        if (player == null || !player.CanInputKey())
-            return;
+		if (player == null || !player.CanInputKey ()) {
+			if (m_RuntimePlayerKeyValueMap.ContainsKey((int)playerType))
+				m_RuntimePlayerKeyValueMap[(int)playerType] = 0;
+			return;
+		}
 
         int value = 0;
         int v1 = 0;
@@ -356,7 +370,7 @@ public class InputControl: MonoBehaviour
             if (GetPlayerType(iter.Current.Value) == playerType)
             {
                 KeyCode key = (KeyCode)iter.Current.Key;
-                if (Input.GetKey(key))
+				if (Input.GetKey(key) && !Input.GetKeyUp(key))
                 {
                     if (GetKeyCanPress(iter.Current.Value))
                     {
@@ -377,7 +391,7 @@ public class InputControl: MonoBehaviour
             if (GetPlayerType(it.Current.Value) == playerType)
             {
                 KeyCode key = (KeyCode)it.Current.Key;
-                if (Input.GetKeyDown(key))
+				if (Input.GetKeyDown(key) && !Input.GetKeyUp(key))
                 {
                     int v = (int)GetControlType(it.Current.Value);
 					if (GetKeyCanCombine (it.Current.Value)) {
@@ -416,18 +430,26 @@ public class InputControl: MonoBehaviour
     }
 
     private float m_CheckInputPressTime = 0f;
+	private float m_CheckInputTime = 0f;
 
     void Update()
     {
         float time = Time.realtimeSinceStartup;
-        float delta = time - m_CheckInputPressTime;
-        bool isCheckPress = delta >= _cCheckInputPressDeltaTime;
-        if (isCheckPress)
-            m_CheckInputPressTime = time;
-        CheckInputs(InputPlayerType._1p, isCheckPress);
-        CheckInputs(InputPlayerType._2p, isCheckPress);
-        CheckInputs(InputPlayerType._3p, isCheckPress);
-        CheckInputs(InputPlayerType._4p, isCheckPress);
+
+		float delta = time - m_CheckInputTime;
+		bool isCheckInput = delta >= _cCheckInputDeltaTime;
+		if (isCheckInput) {
+			m_CheckInputTime = time;
+			delta = time - m_CheckInputPressTime;
+			bool isCheckPress = delta >= _cCheckInputPressDeltaTime;
+			if (isCheckPress)
+				m_CheckInputPressTime = time;
+			CheckInputs (InputPlayerType._1p, isCheckPress);
+			CheckInputs (InputPlayerType._2p, isCheckPress);
+			CheckInputs (InputPlayerType._3p, isCheckPress);
+			CheckInputs (InputPlayerType._4p, isCheckPress);
+
+		}
 
         CheckInputValueTime(InputPlayerType._1p, _cInputRemoveTime);
         CheckInputValueTime(InputPlayerType._2p, _cInputRemoveTime);
@@ -446,6 +468,7 @@ public class InputControl: MonoBehaviour
     }
 
     private static readonly float _cCheckInputPressDeltaTime = 0.05f;
+	private static readonly float _cCheckInputDeltaTime = 0.02f;
     private static readonly float _cInputRemoveTime = 0.5f;
     private static readonly float _cWuGongCheckTime = 0.1f;
 }

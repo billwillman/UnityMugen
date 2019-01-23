@@ -127,7 +127,7 @@ public class PlayerStateCtl: MonoBehaviour, IBasePlayerStateListener
 
 		int runValue = PlayerControls.GetInstance ().InputCtl.GetPlayerRunKeyValue (player.PlyType);
 
-		if (runValue == 0)
+		if (runValue == 0 && target.CurState != (PlayerState)200)
 			target.ChangeState (PlayerState.psStand1);
 
 		if ((runValue & (int)InputControlType.down) != 0)
@@ -172,7 +172,19 @@ public class PlayerStateCtl: MonoBehaviour, IBasePlayerStateListener
 	}
 
 	public virtual void OnAnimateEndFrame (PlayerStateMgr target)
-	{}
+	{
+		var player = target.PlyDisplay;
+		if (player == null)
+			return;
+
+		var plyType = player.PlyType;
+		if (plyType == InputPlayerType.none)
+			return;
+
+		if (target.CurState == (PlayerState)200) {
+			target.ChangeState (PlayerState.psStand1);
+		}
+	}
 
 
     // 注冊角色狀態
