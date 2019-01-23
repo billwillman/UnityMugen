@@ -157,11 +157,11 @@ public class PlayerStateCtl: MonoBehaviour, IBasePlayerStateListener
 				var i2 = inputList [inputList.Count - 1];
 				if (i1.keyCodeValue == i2.keyCodeValue && i1.keyCodeValue == (int)InputControlType.right) {
 					float delta = i2.downTick - i1.downTick;
-					if (delta >= 0.16f && delta <= 0.22f) {
+					//if (delta >= 0.16f && delta <= 0.22f) {
 						target.ChangeState (PlayerState.psForwardRun1);
 						return;
 
-					}
+					//}
 				}
 			}
 			if (target.CurState != PlayerState.psForwardRun1)

@@ -52,9 +52,6 @@ public class InputControl: MonoBehaviour
     private Dictionary<int, int> m_KeyControlMap = new Dictionary<int, int>();
 	private Dictionary<int, List<InputValue>> m_KeyMsgMap = new Dictionary<int, List<InputValue>>();
     private Dictionary<int, int> m_RuntimePlayerKeyValueMap = new Dictionary<int, int>();
-	private int m_AttackMask = (int)InputControlType.attack1 | (int)InputControlType.attack2 | 
-		(int)InputControlType.attack3 | (int)InputControlType.attack4 | (int)InputControlType.attack5 |
-		(int)InputControlType.attack6;
 	private int m_CtlMask = (int)InputControlType.left | (int)InputControlType.right | (int)InputControlType.jump | (int)InputControlType.down;
 
     public bool m_ShowInput = false;
@@ -520,7 +517,7 @@ public class InputControl: MonoBehaviour
     }
 
     private static readonly float _cCheckInputPressDeltaTime = 0.05f;
-	private static readonly float _cCheckInputDeltaTime = 0.02f;
+	private static readonly float _cCheckInputDeltaTime = 0.00f;
     private static readonly float _cInputRemoveTime = 0.5f;
     private static readonly float _cWuGongCheckTime = 0.1f;
 }
