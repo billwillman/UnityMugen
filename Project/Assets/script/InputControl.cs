@@ -410,6 +410,29 @@ public class InputControl: MonoBehaviour
         }
         it.Dispose();
 
+		int v3 = 0;
+		it = m_KeyControlMap.GetEnumerator();
+		while (it.MoveNext())
+		{
+			if (GetPlayerType(it.Current.Value) == playerType)
+			{
+				KeyCode key = (KeyCode)it.Current.Key;
+				if (Input.GetKeyUp(key))
+				{
+					int v = (int)GetControlType(it.Current.Value);
+					v3 |= v;
+				}
+			}
+		}
+		it.Dispose();
+
+		if (v3 != 0) {
+			v3 = ~v3;
+			value = value & v3;
+			v1 = v1 & v3;
+			v2 = v2 & v3;
+		}
+
 		bool hasDown = (value & v2) != 0;
 		value = PreProcessInputValue(value, hasDown);
 

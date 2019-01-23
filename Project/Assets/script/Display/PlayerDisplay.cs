@@ -102,6 +102,11 @@ public class PlayerDisplay : BaseResLoader {
 
 	public bool CanInputKey()
 	{
+		var stateMgr = this.StateMgr;
+		if (stateMgr == null)
+			return false;
+		if (stateMgr.CurState == (PlayerState)200)
+			return false;
 		return true;
 	}
 
