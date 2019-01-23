@@ -200,7 +200,8 @@ public class PlayerStateCtl: MonoBehaviour, IBasePlayerStateListener
 			else
 				target.ChangeState ((PlayerState)320);
 		} else if (runValue == (int)InputControlType.attack5) {
-			
+			if (IsDownPress (target))
+				target.ChangeState ((PlayerState)420);
 		}
 	}
 
