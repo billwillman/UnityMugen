@@ -100,6 +100,15 @@ public class PlayerStateCtl: MonoBehaviour, IBasePlayerStateListener
 		case PlayerState.psForwardWalk1:
 			player.PlayAni (PlayerState.psForwardWalk1);
 			break;
+		case PlayerState.psForwardRun1:
+			player.PlayAni (PlayerState.psForwardRun1);
+			break;
+		case PlayerState.psBackStep1:
+			player.PlayAni (PlayerState.psBackStep1, false);
+			break;
+		case (PlayerState)200:
+			player.PlayAni ((PlayerState)200, false);
+			break;
 		}
 	}
 	public virtual void Exit(PlayerStateMgr target)
@@ -112,6 +121,10 @@ public class PlayerStateCtl: MonoBehaviour, IBasePlayerStateListener
 		if (player == null)
 			return;
 
+		var plyType = player.PlyType;
+		if (plyType == InputPlayerType.none)
+			return;
+
 		int runValue = PlayerControls.GetInstance ().InputCtl.GetPlayerRunKeyValue (player.PlyType);
 
 		if (runValue == 0)
@@ -120,9 +133,41 @@ public class PlayerStateCtl: MonoBehaviour, IBasePlayerStateListener
 		if ((runValue & (int)InputControlType.down) != 0)
 			target.ChangeState (PlayerState.psDown1);
 		else if (runValue == (int)InputControlType.left) {
-			target.ChangeState (PlayerState.psBackWalk1);
+			var inputList = PlayerControls.GetInstance ().InputCtl.GetInputList (plyType);
+			if (inputList != null && inputList.Count >= 2) {
+				var i1 = inputList [inputList.Count - 2];
+				var i2 = inputList [inputList.Count - 1];
+
+				if (i1.keyCodeValue == i2.keyCodeValue && i1.keyCodeValue == (int)InputControlType.left) {
+					float delta = i2.downTick - i1.downTick;
+					if (delta >= 0.16f && delta <= 0.22f) {
+						target.ChangeState (PlayerState.psBackStep1);
+						//	Debug.LogError (delta.ToString ());
+						return;
+					}
+
+				}
+			}
+			if (target.CurState != PlayerState.psBackStep1)
+				target.ChangeState (PlayerState.psBackWalk1);
 		} else if (runValue == (int)InputControlType.right) {
-			target.ChangeState (PlayerState.psForwardWalk1);
+			var inputList = PlayerControls.GetInstance ().InputCtl.GetInputList (plyType);
+			if (inputList != null && inputList.Count >= 2) {
+				var i1 = inputList [inputList.Count - 2];
+				var i2 = inputList [inputList.Count - 1];
+				if (i1.keyCodeValue == i2.keyCodeValue && i1.keyCodeValue == (int)InputControlType.right) {
+					float delta = i2.downTick - i1.downTick;
+					if (delta >= 0.16f && delta <= 0.22f) {
+						target.ChangeState (PlayerState.psForwardRun1);
+						return;
+
+					}
+				}
+			}
+			if (target.CurState != PlayerState.psForwardRun1)
+				target.ChangeState (PlayerState.psForwardWalk1);
+		} else if (runValue == (int)InputControlType.attack1) {
+			target.ChangeState ((PlayerState)200);
 		}
 	}
 
@@ -137,5 +182,8 @@ public class PlayerStateCtl: MonoBehaviour, IBasePlayerStateListener
 		StateMgr<PlayerState, PlayerStateMgr>.Register(PlayerState.psDown1, new BasePlayerState(this)); 
 		StateMgr<PlayerState, PlayerStateMgr>.Register(PlayerState.psBackWalk1, new BasePlayerState(this)); 
 		StateMgr<PlayerState, PlayerStateMgr>.Register(PlayerState.psForwardWalk1, new BasePlayerState(this)); 
+		StateMgr<PlayerState, PlayerStateMgr>.Register(PlayerState.psForwardRun1, new BasePlayerState(this));
+		StateMgr<PlayerState, PlayerStateMgr>.Register(PlayerState.psBackStep1, new BasePlayerState(this));
+		StateMgr<PlayerState, PlayerStateMgr>.Register((PlayerState)200, new BasePlayerState(this));
     }
 }

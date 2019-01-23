@@ -42,6 +42,7 @@ public struct InputValue
 {
 	public int keyCodeValue;
 	public float tick;
+	public float downTick;
 }
 		
 
@@ -139,7 +140,17 @@ public class InputControl: MonoBehaviour
         m_Listener = listener;
     }
 
-	private void SendPlayerKeyControl(InputPlayerType type, int value)
+	public List<InputValue> GetInputList(InputPlayerType type)
+	{
+		int key = (int)type;
+		List<InputValue> list;
+		if (!m_KeyMsgMap.TryGetValue (key, out list)) {
+			list = null;
+		}
+		return list;
+	}
+
+	private void SendPlayerKeyControl(InputPlayerType type, int value, bool hasDown)
 	{
         if (type == InputPlayerType.none || value == 0)
 			return;
@@ -151,26 +162,27 @@ public class InputControl: MonoBehaviour
 			m_KeyMsgMap [key] = list;
 		}
 
-        if (list.Count > 0)
-        {
-            var item = list[list.Count - 1];
-            if (item.keyCodeValue == value)
-            {
-                item.tick = Time.realtimeSinceStartup;
-                return;
-            }
+		if (!hasDown) {
+			if (list.Count > 0) {
+				var item = list [list.Count - 1];
+				if (item.keyCodeValue == value && !hasDown) {
+					item.tick = Time.realtimeSinceStartup;
+					return;
+				}
 
-            int v = (item.keyCodeValue & value);
-            if (v != 0)
-            {
-                value = value & (~v);
-            }
-            if (value == 0)
-                return;
-        }
+				int v = (item.keyCodeValue & value);
+				if (v != 0) {
+					value = value & (~v);
+				}
+				if (value == 0)
+					return;
+			}
+		}
 		InputValue input = new InputValue();
 		input.keyCodeValue = value;
 		input.tick = Time.realtimeSinceStartup;
+		if (hasDown)
+			input.downTick = input.tick;
 		list.Add (input);
 	}
 
@@ -300,7 +312,7 @@ public class InputControl: MonoBehaviour
 
 	}
 
-    private int PreProcessInputValue(int value)
+	private int PreProcessInputValue(int value, bool isHasDown)
     {
         if (value == 0)
             return value;
@@ -321,6 +333,11 @@ public class InputControl: MonoBehaviour
             int leftright = (int)InputControlType.left | (int)InputControlType.right;
             value = value & (~leftright);
         }
+
+		if (isHasDown) {
+			
+		}
+
         return value;
     }
 
@@ -354,7 +371,7 @@ public class InputControl: MonoBehaviour
 
         // 按下优先级高于Press
         var it = m_KeyControlMap.GetEnumerator();
-
+		int v2 = 0;
         while (it.MoveNext())
         {
             if (GetPlayerType(it.Current.Value) == playerType)
@@ -363,11 +380,14 @@ public class InputControl: MonoBehaviour
                 if (Input.GetKeyDown(key))
                 {
                     int v = (int)GetControlType(it.Current.Value);
-                    if (GetKeyCanCombine(it.Current.Value))
-                        value |= v;
+					if (GetKeyCanCombine (it.Current.Value)) {
+						value |= v;
+						v2 |= v;
+					}
                     else
                     {
                         value = v;
+						v2 = v;
                         v1 = 0;
                         break;
                     }
@@ -376,19 +396,21 @@ public class InputControl: MonoBehaviour
         }
         it.Dispose();
 
-        value = PreProcessInputValue(value);
+		bool hasDown = (value & v2) != 0;
+		value = PreProcessInputValue(value, hasDown);
 
         // 发送给操作给角色，每个按键先发送给角色， 招式通过其他再判断
         m_RuntimePlayerKeyValueMap[(int)playerType] = value;
         if (value != 0)
         {
             if (checkPress)
-                SendPlayerKeyControl(playerType, value);
+				SendPlayerKeyControl(playerType, value, hasDown);
             else
             {
-                int v = value & (~v1);
+               // int v = value & (~v1);
+				int v = v2;
                 if (v != 0)
-                    SendPlayerKeyControl(playerType, v);
+					SendPlayerKeyControl(playerType, v, hasDown);
             }
         }
     }
