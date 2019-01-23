@@ -52,8 +52,22 @@ public class InputControl: MonoBehaviour
     private Dictionary<int, int> m_KeyControlMap = new Dictionary<int, int>();
 	private Dictionary<int, List<InputValue>> m_KeyMsgMap = new Dictionary<int, List<InputValue>>();
     private Dictionary<int, int> m_RuntimePlayerKeyValueMap = new Dictionary<int, int>();
+	private int m_AttackMask = (int)InputControlType.attack1 | (int)InputControlType.attack2 | 
+		(int)InputControlType.attack3 | (int)InputControlType.attack4 | (int)InputControlType.attack5 |
+		(int)InputControlType.attack6;
+	private int m_CtlMask = (int)InputControlType.left | (int)InputControlType.right | (int)InputControlType.jump | (int)InputControlType.down;
 
     public bool m_ShowInput = false;
+
+	public void ClearKeys(InputPlayerType type)
+	{
+		if (type == InputPlayerType.none)
+			return;
+		
+		List<InputValue> list;
+		if (m_KeyMsgMap.TryGetValue ((int)type, out list))
+			list.Clear ();
+	}
 
     void Awake()
     {
@@ -386,29 +400,44 @@ public class InputControl: MonoBehaviour
         // 按下优先级高于Press
         var it = m_KeyControlMap.GetEnumerator();
 		int v2 = 0;
+		bool isNoCombine = false;
         while (it.MoveNext())
         {
-            if (GetPlayerType(it.Current.Value) == playerType)
+			var plyType = GetPlayerType (it.Current.Value);
+			if (plyType == playerType)
             {
                 KeyCode key = (KeyCode)it.Current.Key;
 				if (Input.GetKeyDown(key) && !Input.GetKeyUp(key))
                 {
                     int v = (int)GetControlType(it.Current.Value);
+					/*
 					if (GetKeyCanCombine (it.Current.Value)) {
 						value |= v;
 						v2 |= v;
 					}
                     else
                     {
-                        value = v;
+						v = v & (~m_CtlMask);
+						value = v;
 						v2 = v;
                         v1 = 0;
-                        break;
-                    }
+                    }*/
+					
+					value |= v;
+					v2 |= v;
+					if (!GetKeyCanCombine (it.Current.Value)) {
+						isNoCombine = true;
+					}
                 }
             }
         }
         it.Dispose();
+
+		if (isNoCombine) {
+			value = value & (~m_CtlMask);
+			v1 = 0;
+			v2 = v2 & (~m_CtlMask);
+		}
 
 		int v3 = 0;
 		it = m_KeyControlMap.GetEnumerator();
