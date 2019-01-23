@@ -363,6 +363,31 @@ public class InputControl: MonoBehaviour
         return value;
     }
 
+	public bool GetKeyPress(InputPlayerType playerType, int ctlype)
+	{
+		return GetKeyPress (playerType, (InputControlType)ctlype);
+	}
+
+	public bool GetKeyPress(InputPlayerType playerType, InputControlType ctlype)
+	{
+		if (playerType == InputPlayerType.none || ctlype == InputControlType.none)
+			return false;
+		var iter = m_KeyControlMap.GetEnumerator ();
+		while (iter.MoveNext ()) {
+			if (GetPlayerType(iter.Current.Value) == playerType)
+			{
+				if (GetControlType(iter.Current.Value) == ctlype)
+				{
+					KeyCode key = (KeyCode)iter.Current.Key;
+					return Input.GetKey (key);
+				}
+			}
+		}
+		iter.Dispose ();
+		return false;
+	}
+
+
     void CheckInputs(InputPlayerType playerType, bool checkPress)
     {
         var player = GetPlayer(playerType);

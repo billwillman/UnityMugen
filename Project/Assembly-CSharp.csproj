@@ -201,6 +201,7 @@
      <Compile Include="Assets\script\AutoUpdate\HttpPicResponse.cs" />
      <Compile Include="Assets\script\AutoUpdate\ThreadMsgList.cs" />
      <Compile Include="Assets\script\AutoUpdate\ZipTools.cs" />
+     <Compile Include="Assets\script\Clsn.cs" />
      <Compile Include="Assets\script\DefaultLoader.cs" />
      <Compile Include="Assets\script\DefaultLoaderPlayer.cs" />
      <Compile Include="Assets\script\Display\PlayerDisplay.cs" />
@@ -221,6 +222,8 @@
      <Compile Include="Assets\script\Mugen\SffConfig.cs" />
      <Compile Include="Assets\script\PlayerControls.cs" />
      <Compile Include="Assets\script\PlayerImageRes.cs" />
+     <Compile Include="Assets\script\PlayerStateCtl.cs" />
+     <Compile Include="Assets\script\PlayerStateMgr.cs" />
      <Compile Include="Assets\script\Res\AssetCache.cs" />
      <Compile Include="Assets\script\Res\AssetLoader.cs" />
      <Compile Include="Assets\script\Res\AsyncOptionMgr.cs" />

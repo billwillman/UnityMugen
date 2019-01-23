@@ -112,6 +112,21 @@ public class PlayerStateCtl: MonoBehaviour, IBasePlayerStateListener
 		case (PlayerState)200:
 			player.PlayAni ((PlayerState)200, false);
 			break;
+		case (PlayerState)320:
+			player.PlayAni ((PlayerState)320, false);
+			break;
+		case (PlayerState)400:
+			player.PlayAni ((PlayerState)400, false);
+			break;
+		case (PlayerState)410:
+			player.PlayAni ((PlayerState)410, false);
+			break;
+		case (PlayerState)420:
+			player.PlayAni ((PlayerState)410, false);
+			break;
+		case (PlayerState)430:
+			player.PlayAni ((PlayerState)430, false);
+			break;
 		}
 	}
 	public virtual void Exit(PlayerStateMgr target)
@@ -170,10 +185,35 @@ public class PlayerStateCtl: MonoBehaviour, IBasePlayerStateListener
 			if (target.CurState != PlayerState.psForwardRun1)
 				target.ChangeState (PlayerState.psForwardWalk1);
 		} else if (runValue == (int)InputControlType.attack1) {
-			target.ChangeState ((PlayerState)210);
-		}else if (runValue == (int)InputControlType.attack2) {
-			target.ChangeState ((PlayerState)200);
+			if (IsDownPress(target))
+				target.ChangeState ((PlayerState)410);
+			else
+				target.ChangeState ((PlayerState)210);
+		} else if (runValue == (int)InputControlType.attack2) {
+			if (IsDownPress(target))
+				target.ChangeState ((PlayerState)400);
+			else
+				target.ChangeState ((PlayerState)200);
+		} else if (runValue == (int)InputControlType.attack4) {
+			if (IsDownPress (target))
+				target.ChangeState ((PlayerState)430);
+			else
+				target.ChangeState ((PlayerState)320);
+		} else if (runValue == (int)InputControlType.attack5) {
+			
 		}
+	}
+
+	private bool IsDownPress(PlayerStateMgr target)
+	{
+		var player = target.PlyDisplay;
+		if (player == null)
+			return false;
+
+		var plyType = player.PlyType;
+		if (plyType == InputPlayerType.none)
+			return false;
+		return PlayerControls.GetInstance ().InputCtl.GetKeyPress (player.PlyType, InputControlType.down);
 	}
 
 	public virtual void Process(PlayerStateMgr target)
@@ -186,10 +226,8 @@ public class PlayerStateCtl: MonoBehaviour, IBasePlayerStateListener
 		if (plyType == InputPlayerType.none)
 			return;
 
-		int curstate = (int)target.CurState;
-		if (curstate == 210 || curstate == 200) {
+		if (IsAttackState (target))
 			return;
-		}
 
 		CheckNoAttackProcess (target);
 	}
@@ -204,11 +242,19 @@ public class PlayerStateCtl: MonoBehaviour, IBasePlayerStateListener
 		if (plyType == InputPlayerType.none)
 			return;
 
-		var curstate = target.CurState;
-		if (curstate == (PlayerState)210 || curstate == (PlayerState)200) {
+		if (IsAttackState(target)) {
 			//CheckNoAttackProcess (target);
-			target.ChangeState(PlayerState.psStand1);
+			if (IsDownPress(target))
+				target.ChangeState(PlayerState.psDown1);
+			else
+				target.ChangeState(PlayerState.psStand1);
 		}
+	}
+
+	private bool IsAttackState(PlayerStateMgr target)
+	{
+		int curstate = (int)target.CurState;
+		return (curstate == 210 || curstate == 200 || curstate == 320 || curstate == 400 || curstate == 410 ||curstate == 420 || curstate == 430);
 	}
 
 
@@ -223,5 +269,10 @@ public class PlayerStateCtl: MonoBehaviour, IBasePlayerStateListener
 		StateMgr<PlayerState, PlayerStateMgr>.Register(PlayerState.psBackStep1, new BasePlayerState(this));
 		StateMgr<PlayerState, PlayerStateMgr>.Register((PlayerState)210, new BasePlayerState(this));
 		StateMgr<PlayerState, PlayerStateMgr>.Register((PlayerState)200, new BasePlayerState(this));
+		StateMgr<PlayerState, PlayerStateMgr>.Register((PlayerState)320, new BasePlayerState(this));
+		StateMgr<PlayerState, PlayerStateMgr>.Register((PlayerState)400, new BasePlayerState(this));
+		StateMgr<PlayerState, PlayerStateMgr>.Register((PlayerState)410, new BasePlayerState(this));
+		StateMgr<PlayerState, PlayerStateMgr>.Register((PlayerState)420, new BasePlayerState(this));
+		StateMgr<PlayerState, PlayerStateMgr>.Register((PlayerState)430, new BasePlayerState(this));
     }
 }
