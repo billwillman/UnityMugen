@@ -106,6 +106,9 @@ public class PlayerStateCtl: MonoBehaviour, IBasePlayerStateListener
 		case PlayerState.psBackStep1:
 			player.PlayAni (PlayerState.psBackStep1, false);
 			break;
+		case (PlayerState)210:
+			player.PlayAni ((PlayerState)210, false);
+			break;
 		case (PlayerState)200:
 			player.PlayAni ((PlayerState)200, false);
 			break;
@@ -115,7 +118,7 @@ public class PlayerStateCtl: MonoBehaviour, IBasePlayerStateListener
 	{
 	}
 
-	public virtual void Process(PlayerStateMgr target)
+	private void CheckNoAttackProcess(PlayerStateMgr target)
 	{
 		var player = target.PlyDisplay;
 		if (player == null)
@@ -127,7 +130,7 @@ public class PlayerStateCtl: MonoBehaviour, IBasePlayerStateListener
 
 		int runValue = PlayerControls.GetInstance ().InputCtl.GetPlayerRunKeyValue (player.PlyType);
 
-		if (runValue == 0 && target.CurState != (PlayerState)200)
+		if (runValue == 0)
 			target.ChangeState (PlayerState.psStand1);
 
 		if ((runValue & (int)InputControlType.down) != 0)
@@ -167,8 +170,28 @@ public class PlayerStateCtl: MonoBehaviour, IBasePlayerStateListener
 			if (target.CurState != PlayerState.psForwardRun1)
 				target.ChangeState (PlayerState.psForwardWalk1);
 		} else if (runValue == (int)InputControlType.attack1) {
+			target.ChangeState ((PlayerState)210);
+		}else if (runValue == (int)InputControlType.attack2) {
 			target.ChangeState ((PlayerState)200);
 		}
+	}
+
+	public virtual void Process(PlayerStateMgr target)
+	{
+		var player = target.PlyDisplay;
+		if (player == null)
+			return;
+
+		var plyType = player.PlyType;
+		if (plyType == InputPlayerType.none)
+			return;
+
+		int curstate = (int)target.CurState;
+		if (curstate == 210 || curstate == 200) {
+			return;
+		}
+
+		CheckNoAttackProcess (target);
 	}
 
 	public virtual void OnAnimateEndFrame (PlayerStateMgr target)
@@ -181,8 +204,10 @@ public class PlayerStateCtl: MonoBehaviour, IBasePlayerStateListener
 		if (plyType == InputPlayerType.none)
 			return;
 
-		if (target.CurState == (PlayerState)200) {
-			target.ChangeState (PlayerState.psStand1);
+		var curstate = target.CurState;
+		if (curstate == (PlayerState)210 || curstate == (PlayerState)200) {
+			//CheckNoAttackProcess (target);
+			target.ChangeState(PlayerState.psStand1);
 		}
 	}
 
@@ -196,6 +221,7 @@ public class PlayerStateCtl: MonoBehaviour, IBasePlayerStateListener
 		StateMgr<PlayerState, PlayerStateMgr>.Register(PlayerState.psForwardWalk1, new BasePlayerState(this)); 
 		StateMgr<PlayerState, PlayerStateMgr>.Register(PlayerState.psForwardRun1, new BasePlayerState(this));
 		StateMgr<PlayerState, PlayerStateMgr>.Register(PlayerState.psBackStep1, new BasePlayerState(this));
+		StateMgr<PlayerState, PlayerStateMgr>.Register((PlayerState)210, new BasePlayerState(this));
 		StateMgr<PlayerState, PlayerStateMgr>.Register((PlayerState)200, new BasePlayerState(this));
     }
 }
