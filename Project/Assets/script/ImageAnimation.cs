@@ -62,7 +62,10 @@ public class ImageAnimation : MonoBehaviour {
     public bool PlayerPlayerAni(PlayerState state, bool isLoop = true)
     {
 		if (m_State == state) {
-			CacheAnimation.Play ();
+            if (CacheAnimation.enabled && !CacheAnimation.isPlaying)
+            {
+                CacheAnimation.Play();
+            }
 			return true;
 		}
 
