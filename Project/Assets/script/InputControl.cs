@@ -268,6 +268,29 @@ public class InputControl: MonoBehaviour
         return builder.ToString();
     }
 
+    // 是否有允许按下的按键按下
+    public bool IsVaildCanPressKeyPress(InputPlayerType playerType)
+    {
+        if (playerType == InputPlayerType.none)
+            return false;
+        var iter = m_KeyControlMap.GetEnumerator();
+        while (iter.MoveNext())
+        {
+            if (GetPlayerType(iter.Current.Value) == playerType)
+            {
+                if (GetKeyCanPress(iter.Current.Value))
+                {
+                    KeyCode key = (KeyCode)iter.Current.Key;
+                    bool ret = Input.GetKey(key);
+                    if (ret)
+                        return ret;
+                }
+            }
+        }
+        iter.Dispose();
+        return false;
+    }
+
 	public int GetPlayerRunKeyValue(InputPlayerType type)
 	{
 		int key = (int)type;
@@ -543,12 +566,11 @@ public class InputControl: MonoBehaviour
 			delta = time - m_CheckInputPressTime;
 			bool isCheckPress = delta >= _cCheckInputPressDeltaTime;
 			if (isCheckPress)
-				m_CheckInputPressTime = time;
+                m_CheckInputPressTime = time;
             CheckInputs(InputPlayerType._1p, isCheckPress, time);
             CheckInputs(InputPlayerType._2p, isCheckPress, time);
             CheckInputs(InputPlayerType._3p, isCheckPress, time);
             CheckInputs(InputPlayerType._4p, isCheckPress, time);
-
 		}
 
         CheckInputValueTime(InputPlayerType._1p, _cInputRemoveTime);

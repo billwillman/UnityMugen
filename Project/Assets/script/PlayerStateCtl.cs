@@ -145,7 +145,7 @@ public class PlayerStateCtl: MonoBehaviour, IBasePlayerStateListener
 
 		int runValue = PlayerControls.GetInstance ().InputCtl.GetPlayerRunKeyValue (player.PlyType);
 
-		if (runValue == 0)
+        if (runValue == 0 && !PlayerControls.GetInstance().InputCtl.IsVaildCanPressKeyPress(plyType))
 			target.ChangeState (PlayerState.psStand1);
 
 		if ((runValue & (int)InputControlType.down) != 0)
