@@ -144,6 +144,7 @@ namespace Mugen
 	public struct ImageAnimateNode
 	{
 		public PlayerState Group;
+        public int frameGroup;
 		public int frameIndex;
 		public float AniTick;
 		public ActionFlip flipTag;
@@ -272,6 +273,7 @@ namespace Mugen
                             aniNode.flipTag = lastFlip;
                             lastFlip = actFrame.Flip;
                             aniNode.frameIndex = frameIndex;
+                            aniNode.frameGroup = actFrame.Group;
                             aniNode.Group = action;
                             aniNode.isLoopStart = actFrame.IsLoopStart;
                             aniNode.defaultClsn2Arr = actFrame.defaultClsn2Arr;

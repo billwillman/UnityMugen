@@ -27,6 +27,7 @@ public class PlayerDisplayEditor : Editor {
     private int m_PalletSelectd = -1;
 	private bool m_ShowClsn = false;
     private static Dictionary<int, SelctedItem> m_SelectedMap = new Dictionary<int, SelctedItem>();
+    private float m_AniSelect = -1f;
 
     private void InitPlayerDisplay()
     {
@@ -35,6 +36,7 @@ public class PlayerDisplayEditor : Editor {
         m_VaildPalletNameList = null;
         m_StateSelected = -1;
         m_PalletSelectd = -1;
+        m_AniSelect = -1f;
 		m_ShowClsn = false;
         if (m_LastDisplay == null)
             return;
@@ -98,6 +100,8 @@ public class PlayerDisplayEditor : Editor {
 		if (m_SelectedMap.TryGetValue (m_LastDisplay.GetInstanceID (), out selItem1)) {
 			m_ShowClsn = selItem1.showClsn;
 		}
+
+        m_AniSelect = m_LastDisplay.ImageAni.CurFrame;
     }
 
     private void DrawPlayerDisplay()
@@ -153,10 +157,45 @@ public class PlayerDisplayEditor : Editor {
 
 		if (GUILayout.Button ("动画重置")) {
 			m_LastDisplay.ResetFirstFrame ();
+            m_AniSelect = 0f;
 		}
 
+        var imgAni = m_LastDisplay.ImageAni;
+        if (imgAni != null)
+        {
+            int aniCount = imgAni.AniNodeCount;
+            if (aniCount > 0)
+            {
+                var ani = imgAni.CacheAnimation;
+                if (ani != null)
+                {
+                    float c = GUILayout.HorizontalSlider(m_AniSelect, -1, aniCount);
+                    if (Mathf.Abs(c - m_AniSelect) > float.Epsilon)
+                    {
+                        m_AniSelect = c;
+                        int cc = (int)c;
+                        if (cc != imgAni.CurFrame)
+                        {
+                            imgAni.SetManualFrame(cc);
+                        }
+                    }
+                }
+            }
+        }
+
 		int curFrame = m_LastDisplay.ImageCurrentFrame;
-		EditorGUILayout.LabelField ("动画当前帧", curFrame.ToString ());
+        string s;
+        if (imgAni == null)
+            s = "(无)";
+        else
+        {
+            var aniNode = imgAni.CurAniNode;
+            if (aniNode.frameIndex < 0)
+                s = curFrame.ToString();
+            else
+                s = string.Format("{0:D}({1:D}:{2:D})", curFrame, aniNode.frameGroup, aniNode.frameIndex);
+        }
+		EditorGUILayout.LabelField ("动画当前帧", s);
         string palletName = m_LastDisplay.PalletName;
         string str = palletName;
         if (string.IsNullOrEmpty(str))

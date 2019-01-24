@@ -202,6 +202,16 @@ public class ImageAnimation : MonoBehaviour {
 		ctl.Play ();
 	}
 
+    public int AniNodeCount
+    {
+        get
+        {
+            if (m_FrameList != null)
+                return m_FrameList.Count;
+            return 0;
+        }
+    }
+
     public ImageAnimateNode CurAniNode
     {
         get
@@ -511,6 +521,43 @@ public class ImageAnimation : MonoBehaviour {
                 m_Animation = GetComponent<Animation>();
             return m_Animation;
         }
+    }
+
+    public bool SetManualFrame(int frame)
+    {
+        if (this.AniNodeCount <= 0)
+            return false;
+
+        var ani = this.CacheAnimation;
+        if (ani != null && ani.enabled)
+        {
+            ani.enabled = false;
+        }
+
+        if (frame == CurFrame)
+            return true;
+
+        if (frame < 0)
+            frame = 0;
+        else if (frame >= AniNodeCount)
+        {
+            frame = AniNodeCount - 1;
+        }
+
+        bool ret = UpdateFrame(frame);
+        if (ret)
+        {
+            if (ani != null)
+            {
+                var clip = ani[_cPlayAnimationName];
+                if (clip != null)
+                {
+                    float time = CalcCurrentAnimationTime();
+                    clip.time = time;
+                }
+            }
+        }
+        return ret;
     }
 
     public int CurFrame

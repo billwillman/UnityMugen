@@ -1,0 +1,175 @@
+[Command]
+name = "Cross Gigantes"
+command = ~D, DF, F, D, DF, F, a+b
+time = 25
+
+
+[State -1]
+type = ChangeState
+value = 3600
+triggerall = var(10)=0
+triggerall = !var(17)
+triggerall = NumProj = 0
+triggerall= Command = "Cross Gigantes"
+trigger1 = var(30)=2 && var(47)=0 && fvar(0) > 0
+triggerall = !StateType = A && var(40)=-1
+ignorehitpause = 1
+
+
+;---------------------------------------------------------------------
+[Statedef 3600]
+type = S
+movetype = A
+physics = S
+anim = 3600
+ctrl = 0
+velset = 0, 0
+poweradd = IfElse(var(30)=2,0,IfElse(var(30)=1,-1000,-3000))
+juggle = IfElse((PrevStateNo=[1000,2999]),0,8+(P2StateType = A)*8)
+
+[State 3000,VarSet]
+type = VarSet
+trigger1 = Time = 0 && fvar(0) >0 && var(30) != 2
+fvar(0) = .1
+
+[State 10000, VarSet(23)]
+type = VarSet
+trigger1 = Time = 0 && var(30) = 2
+var(49) = 1
+
+[State 3000, Super]
+type = Helper
+trigger1 = AnimElem = 5,=0
+persistent = 0
+id = 2500
+name = "EXCEED"
+pos = 15,-65
+postype = P1
+stateno = IfElse(var(30)=2,2500,2000)
+helpertype = normal
+supermove = 1
+ownpal = 0
+bindtime = -1
+persistent = 0
+pausemovetime = 99999
+supermovetime = 99999
+
+[State 3000, SuperPause]
+type = Pause
+trigger1 = AnimElem = 5,=0
+time = 30
+movetime = 30
+
+[State 182, 2]
+type = PlaySnd
+trigger1 = AnimElem = 1,=1
+value = 0,24
+channel = 0
+
+[State 182, 2]
+type = PlaySnd
+trigger1 = AnimElem = 10,=1
+value = 0,32
+channel = 0
+
+[State 182, 2]
+type = PlaySnd
+trigger1 = AnimElem = 10,=20
+value = 0,33
+channel = 0
+
+[State 3000, NotHitBy]
+type = NotHitBy
+trigger1 = AnimElem = 11,< 0
+value = SCA
+
+;[State 1020,EnvShake]
+;type = EnvShake
+;trigger1 = AnimElem = 10
+;time = 110
+;freq = 30
+;ampl = -8
+;phase = 90
+
+[State -2,2]
+type = VarSet
+trigger1 = Time = 0
+var(16) = 0
+
+[State 1000, 0]
+type = Helper
+trigger1 = AnimElem = 10,=1
+helpertype = normal
+name = "Screw_CROSS1"
+ID = 3600
+stateno = 3015
+pos = -40,0
+postype = p1
+facing = -1
+keyctrl = 0
+ownpal = 1
+supermovetime = 0
+pausemovetime = 0
+
+[State 1000, 0]
+type = Helper
+trigger1 = AnimElem = 10,=1
+helpertype = normal
+name = "Screw_CROSS2"
+ID = 3600
+stateno = 3015
+pos = 50,0
+postype = p1
+facing = 1
+keyctrl = 0
+ownpal = 1
+supermovetime = 0
+pausemovetime = 0
+
+[State 6000, 1]
+type = Explod
+trigger1 = AnimElem = 5,>28
+trigger1 = NumHelper(2500)!
+anim = IfElse(Var(30)=1,2295,2296)
+id = 2295
+bindtime = -1
+postype = left
+scale = 1.06,1.08
+supermove = 1
+removetime = -1
+persistent = 0
+pausemovetime = 99999999999999
+supermovetime = 99999999999999
+sprpriority = -2
+ownpal = 1
+ignorehitpause = 1
+
+[State -2,2]
+type = VarSet
+trigger1 = Time = 0
+var(19) = 0
+
+[State -2,2]
+type = VarSet
+trigger1 = AnimElem = 10,=1
+var(19) = 25
+
+[State -2,2]
+type = Varadd
+trigger1 = Var(19) >  0
+var(19) = -1
+ignorehitpause = 1
+
+[State 3005, Pause]
+type = Pause
+triggerall = RoundState = 2
+triggerall = gametime%2 = 1
+trigger1 = Var(19) > 0
+time = 1
+ignorehitpause = 1
+
+[State 1100,ChangeState]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
