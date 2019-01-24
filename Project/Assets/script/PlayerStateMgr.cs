@@ -20,6 +20,8 @@ public class PlayerStateMgr : MonoBehaviour {
 		var display = this.PlyDisplay;
 		if (display.PlyType == InputPlayerType.none)
 			return false;
+        if (m_StateMgr.CurrStateKey == state)
+            return false;
         return m_StateMgr.ChangeState(state);
     }
 

@@ -121,6 +121,13 @@ public class ImageAnimation : MonoBehaviour {
                 return frame;
             }
         }
+
+        if (frameList.Count == 1)
+        {
+            var frame = frameList[0];
+            flip = aniNode.flipTag;
+            return frame;
+        }
 		return null;
 	}
 

@@ -266,8 +266,6 @@ namespace Mugen
                         if (actFrame.Index >= 0)
                         {
                             int frameIndex = actFrame.Index;
-                            if (frameIndex >= frameList.Count)
-                                frameIndex = frameList.Count - 1;
                             ImageAnimateNode aniNode = new ImageAnimateNode();
                             aniNode.AniTick = actFrame.Tick;
                             //aniNode.flipTag = actFrame.Flip;

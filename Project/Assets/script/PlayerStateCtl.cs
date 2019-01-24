@@ -207,15 +207,22 @@ public class PlayerStateCtl: MonoBehaviour, IBasePlayerStateListener
 
 	private bool IsDownPress(PlayerStateMgr target)
 	{
-		var player = target.PlyDisplay;
+        return IsPress(target, InputControlType.down);
+	}
+
+    private bool IsPress(PlayerStateMgr target, InputControlType ctlType)
+    {
+        if (target == null || ctlType == InputControlType.none)
+            return false;
+        var player = target.PlyDisplay;
 		if (player == null)
 			return false;
 
 		var plyType = player.PlyType;
 		if (plyType == InputPlayerType.none)
 			return false;
-		return PlayerControls.GetInstance ().InputCtl.GetKeyPress (player.PlyType, InputControlType.down);
-	}
+        return PlayerControls.GetInstance().InputCtl.GetKeyPress(player.PlyType, ctlType);
+    }
 
 	public virtual void Process(PlayerStateMgr target)
 	{
@@ -247,7 +254,11 @@ public class PlayerStateCtl: MonoBehaviour, IBasePlayerStateListener
 			//CheckNoAttackProcess (target);
 			if (IsDownPress(target))
 				target.ChangeState(PlayerState.psDown1);
-			else
+			else if (IsPress(target, InputControlType.left))
+                target.ChangeState(PlayerState.psForwardWalk1);
+            else if (IsPress(target, InputControlType.right))
+                target.ChangeState(PlayerState.psBackWalk1);
+            else
 				target.ChangeState(PlayerState.psStand1);
 		}
 	}
@@ -258,22 +269,32 @@ public class PlayerStateCtl: MonoBehaviour, IBasePlayerStateListener
 		return (curstate == 210 || curstate == 200 || curstate == 320 || curstate == 400 || curstate == 410 ||curstate == 420 || curstate == 430);
 	}
 
+    private void RegisterState(PlayerState state)
+    {
+        StateMgr<PlayerState, PlayerStateMgr>.Register(state, new BasePlayerState(this));
+    }
+
+    private void RegisterState(int state)
+    {
+        RegisterState((PlayerState)state);
+    }
+
 
     // 注冊角色狀態
     public void RegisterDefaultPlayerStates()
     {
-		StateMgr<PlayerState, PlayerStateMgr>.Register(PlayerState.psStand1, new BasePlayerState(this));
-		StateMgr<PlayerState, PlayerStateMgr>.Register(PlayerState.psDown1, new BasePlayerState(this)); 
-		StateMgr<PlayerState, PlayerStateMgr>.Register(PlayerState.psBackWalk1, new BasePlayerState(this)); 
-		StateMgr<PlayerState, PlayerStateMgr>.Register(PlayerState.psForwardWalk1, new BasePlayerState(this)); 
-		StateMgr<PlayerState, PlayerStateMgr>.Register(PlayerState.psForwardRun1, new BasePlayerState(this));
-		StateMgr<PlayerState, PlayerStateMgr>.Register(PlayerState.psBackStep1, new BasePlayerState(this));
-		StateMgr<PlayerState, PlayerStateMgr>.Register((PlayerState)210, new BasePlayerState(this));
-		StateMgr<PlayerState, PlayerStateMgr>.Register((PlayerState)200, new BasePlayerState(this));
-		StateMgr<PlayerState, PlayerStateMgr>.Register((PlayerState)320, new BasePlayerState(this));
-		StateMgr<PlayerState, PlayerStateMgr>.Register((PlayerState)400, new BasePlayerState(this));
-		StateMgr<PlayerState, PlayerStateMgr>.Register((PlayerState)410, new BasePlayerState(this));
-		StateMgr<PlayerState, PlayerStateMgr>.Register((PlayerState)420, new BasePlayerState(this));
-		StateMgr<PlayerState, PlayerStateMgr>.Register((PlayerState)430, new BasePlayerState(this));
+        RegisterState(PlayerState.psStand1);
+        RegisterState(PlayerState.psDown1);
+        RegisterState(PlayerState.psBackWalk1);
+        RegisterState(PlayerState.psForwardWalk1);
+        RegisterState(PlayerState.psForwardRun1);
+        RegisterState(PlayerState.psBackStep1);
+        RegisterState(210);
+        RegisterState(200);
+        RegisterState(320);
+        RegisterState(400);
+        RegisterState(410);
+        RegisterState(420);
+        RegisterState(430);
     }
 }
