@@ -1,0 +1,37 @@
+; Definition file for Kung Fu Man
+; Contains all the filenames needed for the character
+
+; Player information
+[Info]
+name ="Shiranui Mai"
+displayname ="Mai"
+versiondate =11,27,2011
+mugenversion =04,14,2002
+author ="P-tan"
+localcoord = 360
+pal.defaults=1,2,3,4,5
+;pal.defaults = 6,3,4,2      ;Default palettes in order of preference
+
+; Files for the player
+[Files]
+cmd     =Mai.cmd
+cns     =Mai.cns
+st      =Mai.cns
+stcommon =common1.cns
+sprite  =Mai.sff
+anim    =Mai.air
+sound   =Mai.snd
+st1=Mai2.cns
+st2=MaiEX.cns
+st3=helper.cns
+st4=helper.cns
+pal1=Mai_00.act
+;pal1    = Mai_01.act
+;pal2    = Mai_03.act
+;pal3    = Mai_05.act
+;pal4    = Mai_00.act
+;pal5    = Mai_02.act
+;pal6    = Mai_04.act
+[Arcade]
+intro.storyboard=
+ending.storyboard=

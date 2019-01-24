@@ -1,0 +1,1833 @@
+;-| Button Remapping |-----------------------------------------------------
+; This section lets you remap the player's buttons (to easily change the
+; button configuration). The format is:
+;   old_button = new_button
+; If new_button is left blank, the button cannot be pressed.
+
+[Remap]
+x = x
+y = y
+z = z
+a = a
+b = b
+c = c
+s = s
+
+;俺スティック用ボタン配置
+;[Remap]
+;x = a
+;y = y
+;z = b
+;a = x
+;b = z
+;c = c
+;s = s
+
+;-| Default Values |-------------------------------------------------------
+[Defaults]
+; Default value for the "time" parameter of a Command. Minimum 1.
+command.time = 15
+
+; Default value for the "buffer.time" parameter of a Command. Minimum 1,
+; maximum 30.
+command.buffer.time = 1
+
+;------------------------------------------------------------------------------
+;AI用コマンド
+
+[Command]
+name = "CPU1"
+command = U, D, F
+time = 1
+
+[Command]
+name = "CPU2"
+command = U, B, F
+time = 1
+
+[Command]
+name = "CPU3"
+command = U, D, D
+time = 1
+
+[Command]
+name = "CPU4"
+command = F, B, U
+time = 1
+
+[Command]
+name = "CPU5"
+command = U, F, U, B
+time = 1
+
+[Command]
+name = "CPU6"
+command = U, D, B
+time = 1
+
+[Command]
+name = "CPU7"
+command = F, F, B
+time = 1
+
+[Command]
+name = "CPU8"
+command = U, D, U
+time = 1
+
+[Command]
+name = "CPU9"
+command = F, B, B
+time = 1
+
+[Command]
+name = "CPU10"
+command = F, F, B, B
+time = 1
+
+[Command]
+name = "CPU11"
+command = U, U, F
+time = 1
+
+[Command]
+name = "CPU12"
+command = U, B, B
+time = 1
+
+[Command]
+name = "CPU13"
+command = U, B, F, F
+time = 1
+
+[Command]
+name = "CPU14"
+command = U, F, B, U
+time = 1
+
+[Command]
+name = "CPU15"
+command = U, B, F, U
+time = 1
+
+[Command]
+name = "CPU16"
+command = U, B, B, B
+time = 1
+
+[Command]
+name = "CPU17"
+command = U, D, B, F
+time = 1
+
+[Command]
+name = "CPU18"
+command = U, D, B, D
+time = 1
+
+[Command]
+name = "CPU19"
+command = U, D, F, U
+time = 1
+
+[Command]
+name = "CPU20"
+command = U, D, U, B
+time = 1
+
+[Command]
+name = "CPU21"
+command = U, D, F, F
+time = 1
+
+[Command]
+name = "CPU22"
+command = F, F, F, F
+time = 1
+
+[Command]
+name = "CPU23"
+command = U, U, U, D
+time = 1
+
+[Command]
+name = "CPU24"
+command = B, B, B
+time = 1
+
+[Command]
+name = "CPU25"
+command = D, D, D, D
+time = 1
+
+[Command]
+name = "CPU26"
+command = D, D, D
+time = 1
+
+[Command]
+name = "CPU27"
+command = F, F, F
+time = 1
+
+[Command]
+name = "CPU28"
+command = U, U, U
+time = 1
+
+[Command]
+name = "CPU29"
+command = U, U, B, B
+time = 1
+
+[Command]
+name = "CPU30"
+command = D, D, F, F
+time = 1
+
+[Command]
+name = "CPU31"
+command = U, D, F, U, D
+time = 1
+
+[Command]
+name = "CPU32"
+command = U, B, F, U, D
+time = 1
+
+[Command]
+name = "CPU33"
+command = U, D, D, U, D
+time = 1
+
+[Command]
+name = "CPU34"
+command = F, B, U, U, D
+time = 1
+
+[Command]
+name = "CPU35"
+command = U, F, U, B, U, D
+time = 1
+
+[Command]
+name = "CPU36"
+command = U, D, B, U, D
+time = 1
+
+[Command]
+name = "CPU37"
+command = F, F, B, U, D
+time = 1
+
+[Command]
+name = "CPU38"
+command = U, D, U, U, D
+time = 1
+
+[Command]
+name = "CPU39"
+command = F, B, B, U, D
+time = 1
+
+[Command]
+name = "CPU40"
+command = F, F, B, B, U, D
+time = 1
+
+[Command]
+name = "CPU41"
+command = U, U, F, U, D
+time = 1
+
+[Command]
+name = "CPU42"
+command = U, B, B, U, D
+time = 1
+
+[Command]
+name = "CPU43"
+command = U, B, F, F, U, D
+time = 1
+
+[Command]
+name = "CPU44"
+command = U, F, B, U, U, D
+time = 1
+
+[Command]
+name = "CPU45"
+command = U, B, F, U, U, D
+time = 1
+
+[Command]
+name = "CPU46"
+command = U, B, B, B, U, D
+time = 1
+
+[Command]
+name = "CPU47"
+command = U, D, B, F, U, D
+time = 1
+
+[Command]
+name = "CPU48"
+command = U, D, B, D, U, D
+time = 1
+
+[Command]
+name = "CPU49"
+command = U, D, F, U, U, D
+time = 1
+
+[Command]
+name = "CPU50"
+command = U, D, U, B, U, D
+time = 1
+
+
+;-| Super Motions |--------------------------------------------------------
+
+
+;-| Special Motions |------------------------------------------------------
+
+[Command]
+name = "NEO MAX"
+command = ~D,DB,B, c
+time = 20
+
+
+[Command]
+name = "超忍蜂EX"
+command = ~D,F,B, a+b
+time = 20
+
+
+[Command]
+name = "超忍蜂"
+command = ~D,F,B, a
+time = 20
+
+[Command]
+name = "超忍蜂"
+command = ~D,F,B, b
+time = 20
+
+
+
+[Command]
+name = "ムササビ"
+command = ~20$D,$U, x
+
+[Command]
+name = "ムササビ"
+command = ~20$D,$U, y
+
+
+[Command]
+name = "忍蜂EX"
+command = ~D,B,F, a+b
+
+[Command]
+name = "忍蜂"
+command = ~D,B,F, a
+
+[Command]
+name = "忍蜂"
+command = ~D,B,F, b
+
+
+[Command]
+name = "龍炎舞EX"
+command = ~D, DB, B, x+y
+
+[Command]
+name = "龍炎舞"
+command = ~D, DB, B, x
+
+[Command]
+name = "龍炎舞"
+command = ~D, DB, B, y
+
+
+[Command]
+name = "花蝶扇EX"
+command = ~D, DF, F, x+y
+
+[Command]
+name = "花蝶扇"
+command = ~D, DF, F, x
+
+[Command]
+name = "花蝶扇"
+command = ~D, DF, F, y
+
+
+[Command]
+name = "緊急回避前"
+command = x+a
+time = 1
+
+[Command]
+name = "緊急回避前"
+command = z
+time = 1
+
+[Command]
+name = "緊急回避後"
+command = /$B,x+a
+time = 1
+
+[Command]
+name = "緊急回避後"
+command = /$B,z
+time = 1
+
+;-| Double Tap |-----------------------------------------------------------
+[Command]
+name = "FF"     ;Required (do not remove)
+command = F, F
+time = 10
+
+[Command]
+name = "BB"     ;Required (do not remove)
+command = B, B
+time = 10
+
+;-| 2/3 Button Combination |-----------------------------------------------
+[Command]
+name = "recovery";Required (do not remove)
+command = x+y
+time = 1
+
+[Command]
+name = "ふっ飛ばし"
+command = c
+time = 1
+
+[Command]
+name = "ふっ飛ばし"
+command = y+b
+time = 1
+
+[Command]
+name = "MAX"
+command = y+a
+time = 1
+
+[Command]
+name = "おしっぱなしx"
+command = /$x
+time = 1
+
+[Command]
+name = "おしっぱなしy"
+command = /$y
+time = 1
+
+[Command]
+name = "おしっぱなしa"
+command = /$a
+time = 1
+
+[Command]
+name = "おしっぱなしb"
+command = /$b
+time = 1
+
+[Command]
+name = "おしっぱなしz"
+command = /$z
+time = 1
+
+[Command]
+name = "おしっぱなしc"
+command = /$c
+time = 1
+
+;-| Dir + Button |---------------------------------------------------------
+[Command]
+name = "down_a"
+command = /$D,a
+time = 1
+
+[Command]
+name = "down_b"
+command = /$D,b
+time = 1
+
+;-| Single Button |---------------------------------------------------------
+[Command]
+name = "a"
+command = a
+time = 1
+
+[Command]
+name = "b"
+command = b
+time = 1
+
+[Command]
+name = "c"
+command = c
+time = 1
+
+[Command]
+name = "x"
+command = x
+time = 1
+
+[Command]
+name = "y"
+command = y
+time = 1
+
+[Command]
+name = "z"
+command = z
+time = 1
+
+[Command]
+name = "start"
+command = s
+time = 1
+
+;-| Hold Dir |--------------------------------------------------------------
+[Command]
+name = "holdfwd";Required (do not remove)
+command = /$F
+time = 1
+
+[Command]
+name = "holdback";Required (do not remove)
+command = /$B
+time = 1
+
+[Command]
+name = "holdup" ;Required (do not remove)
+command = /$U
+time = 1
+
+[Command]
+name = "holddown";Required (do not remove)
+command = /$D
+time = 1
+
+
+;-| Releese Button |---------------------------------------------------------
+[Command]
+name = "~a"
+command = ~a
+time = 1
+
+[Command]
+name = "~b"
+command = ~b
+time = 1
+
+
+; Don't remove the following line. It's required by the CMD standard.
+[Statedef -1]
+
+;===========================================================================
+;ＡＩフラグ
+;===========================================================================
+
+;AI
+[State -1, AI]
+type = VarSet
+triggerall = var(59) <= 0
+triggerall = RoundState = 2
+triggerall = ctrl || movetype != I
+trigger1  = command = "CPU1"
+trigger2  = command = "CPU2"
+trigger3  = command = "CPU3"
+trigger4  = command = "CPU4"
+trigger5  = command = "CPU5"
+trigger6  = command = "CPU6"
+trigger7  = command = "CPU7"
+trigger8  = command = "CPU8"
+trigger9  = command = "CPU9"
+trigger10  = command = "CPU10"
+trigger11  = command = "CPU11"
+trigger12  = command = "CPU12"
+trigger13  = command = "CPU13"
+trigger14  = command = "CPU14"
+trigger15  = command = "CPU15"
+trigger16  = command = "CPU16"
+trigger17  = command = "CPU17"
+trigger18  = command = "CPU18"
+trigger19  = command = "CPU19"
+trigger20  = command = "CPU20"
+trigger21  = command = "CPU21"
+trigger22  = command = "CPU22"
+trigger23  = command = "CPU23"
+trigger24  = command = "CPU24"
+trigger25  = command = "CPU25"
+trigger26  = command = "CPU26"
+trigger27  = command = "CPU27"
+trigger28  = command = "CPU28"
+trigger29  = command = "CPU29"
+trigger30  = command = "CPU30"
+trigger31  = command = "CPU31"
+trigger32  = command = "CPU32"
+trigger33  = command = "CPU33"
+trigger34  = command = "CPU34"
+trigger35  = command = "CPU35"
+trigger36  = command = "CPU36"
+trigger37  = command = "CPU37"
+trigger38  = command = "CPU38"
+trigger39  = command = "CPU39"
+trigger40  = command = "CPU40"
+trigger41  = command = "CPU41"
+trigger42  = command = "CPU42"
+trigger43  = command = "CPU43"
+trigger44  = command = "CPU44"
+trigger45  = command = "CPU45"
+trigger46  = command = "CPU46"
+trigger47  = command = "CPU47"
+trigger48  = command = "CPU48"
+trigger49  = command = "CPU49"
+trigger50  = command = "CPU50"
+;trigger51  = !isHelper ;一番左の“ ; ”をはずすと常時ＡＩ起動
+var(59) = 0 ;AI Level
+         ;↑の数字を変える事で、AIの強さが変わります。
+         ;[0:No AI]  [1:VS player level]  [2:VS AI level]
+         ;対Ｐ操作レベル…超反応:無し（対空はする）　ヒット確認：ミスあり　ぶっぱ:あり
+         ;対ＡＩレベル……超反応:低確率であり　　　　ヒット確認：完璧　　　ぶっぱ:ライフに余裕がある時にだけあり
+
+
+;---------------------------------------------------------------------------
+;---------------------------------------------------------------------------
+;===========================================================================
+;ＡＩ動作
+;===========================================================================
+;---------------------------------------------------------------------------
+;---------------------------------------------------------------------------
+
+;ＡＩ製作用デバック
+[State -3]
+type = DisplayToClipboard
+trigger1 = 1
+text = " \n BDX:%d, DX:%d, V7:%d V5:%d V1:%d"
+params = floor(P2BodyDist X), floor(P2Dist X), var(7), floor(fvar(5)), var(1)
+
+
+;トリガーEnemyNearの判別切り替え用
+[State -3, AI]
+Type = VarSet
+Trigger1 = NumEnemy = 1
+Trigger2 = NumEnemy = 2
+Trigger2 = Enemynear,Life > 0
+var(53) = 0
+IgnoreHitPause = 1
+SuperMoveTime = 9999
+PauseMoveTime = 9999
+
+;トリガーEnemyNearの判別切り替え用
+[State -3, AI]
+Type = VarSet
+Trigger1 = NumEnemy > 1
+Trigger1 = Enemynear,Life = 0
+var(53) = 1            ;simul戦用にEnemyNearの切り替えをさせる処理です
+                        ;EnemyNear(Var(53))と記述することで自動判別します
+IgnoreHitPause = 1
+SuperMoveTime = 9999
+PauseMoveTime = 9999
+
+;────────────────────────────────────────
+; 壁端検出ヘルパー(乱入者氏式)
+;────────────────────────────────────────
+[State -3, Center]
+Type = Helper
+Trigger1 = !NumHelper(8900+id) && !IsHelper && RoundState < 3 && alive
+HelperType = Normal
+Name = "Center"
+ID = 8900+id
+pos = 160,524288
+PosType = left
+facing = 1
+StateNo = 8900
+KeyCtrl = 1
+Ownpal = 0
+supermovetime=524288
+pausemovetime=524288
+persistent = 0
+IgnoreHitPause = 1
+
+[State -3]
+type=changestate
+trigger1= ishelper
+trigger1= ishelper(8900+root,id) && stateno != 8900
+value=8900
+
+[State -3]
+type=changestate
+trigger1= ishelper
+trigger1= (ishelper(8905+root,id)||ishelper(8906+root,id)) && stateno !=8905
+value=8905
+
+[State -3]
+type = AssertSpecial
+trigger1 = var(59) > 0
+flag = noairguard
+
+[State -3]
+type = AssertSpecial
+trigger1 = NumEnemy <= 1 && var(59) > 0
+trigger1 = Enemy(var(53)),P2Dist X < 0
+flag = nostandguard
+flag2 = nocrouchguard
+
+;────────────────────────────────────────
+; 対飛び道具ヘルパー(厨忍氏式)
+;────────────────────────────────────────
+[State -3]
+Type = HelPer
+Trigger1 = !NumHelper(20000)
+HelPerType = normal
+Name = "bullet"
+StateNo = 20000
+ID = 20000
+OwnPal = 1
+pos = 5, 0
+postype = p1
+PauseMoveTime = 99999999
+SuperMoveTime = 99999999
+IgnoreHitPause = 1
+
+;--------------------------------------------------------------------------
+;その他ＡＩ殺し対策
+
+;立ち下段対策（自己流なので、これで良いのかは知らん）
+[State -1]
+type = varset
+triggerall = var(47) = 0
+trigger1 = !EnemyNear(Var(53)),HitDefAttr = SC, NT,ST,HT
+trigger1 = statetype = S && EnemyNear(Var(53)),statetype = S
+trigger1 = movetype = H && EnemyNear(Var(53)),movetype = A
+trigger1 = (prevstateno = [120,159]) && stateno != [120,159]
+var(47) = EnemyNear(Var(53)),stateno
+
+;空中下段対策（自己流なので、これで良いのかは知らん）
+[State -1]
+type = varset
+triggerall = var(47) = 0
+triggerall = EnemyNear(Var(53)),movetype = A && EnemyNear(Var(53)),statetype = A
+Trigger1 = EnemyNear(Var(53)),Name="millia"
+Trigger1 = EnemyNear(Var(53)),StateNo=1500
+Trigger2 = EnemyNear(Var(53)),Name="cvscammy"
+Trigger2 = EnemyNear(Var(53)),StateNo=1100
+var(47) = EnemyNear(Var(53)),stateno
+
+[State -1];リセット
+type = varset
+triggerall = var(47) != 0
+trigger1 = teammode = turns && roundstate != 2
+var(47) = 0
+
+;立ち下段対策・その２（自己流なので、これで良いのかは知らん）
+[State -1]
+type = varset
+triggerall = var(46) = 0
+triggerall = var(47) != 0 && EnemyNear(Var(53)),stateno != var(47)
+triggerall = EnemyNear(Var(53)),prevstateno != var(47)
+trigger1 = !EnemyNear(Var(53)),HitDefAttr = SC, NT,ST,HT
+trigger1 = statetype = S && EnemyNear(Var(53)),statetype = S
+trigger1 = movetype = H && EnemyNear(Var(53)),movetype = A
+trigger1 = (prevstateno = [120,159]) && stateno != [120,159]
+var(46) = EnemyNear(Var(53)),stateno
+
+;空中下段対策（自己流なので、これで良いのかは知らん）
+[State -1]
+type = varset
+triggerall = var(46) = 0
+triggerall = var(47) != 0 && EnemyNear(Var(53)),stateno != var(47)
+triggerall = EnemyNear(Var(53)),prevstateno != var(47)
+triggerall = EnemyNear(Var(53)),movetype = A && EnemyNear(Var(53)),statetype = A
+Trigger1 = EnemyNear(Var(53)),Name="millia"
+Trigger1 = EnemyNear(Var(53)),StateNo=1500
+Trigger2 = EnemyNear(Var(53)),Name="cvscammy"
+Trigger2 = EnemyNear(Var(53)),StateNo=1100
+var(46) = EnemyNear(Var(53)),stateno
+
+[State -1];リセット
+type = varset
+triggerall = var(46) != 0
+trigger1 = teammode = turns && roundstate != 2
+var(46) = 0
+
+;敵投げ技判断
+[State -1]
+type = varset
+triggerall = var(48) = 0
+trigger1 = EnemyNear(Var(53)),HitDefAttr = SC, NT,ST,HT
+trigger1 = EnemyNear(Var(53)),stateno = [1000,4999]
+var(48) = EnemyNear(Var(53)),stateno
+
+[State -1];リセット
+type = varset
+triggerall = var(48) != 0
+trigger1 = teammode = turns && roundstate != 2
+var(48) = 0
+
+;敵投げ技判断・その２
+[State -1]
+type = varset
+triggerall = var(45) = 0
+trigger1 = EnemyNear(Var(53)),HitDefAttr = SC, NT,ST,HT
+trigger1 = EnemyNear(Var(53)),stateno = [0,999]
+var(45) = EnemyNear(Var(53)),stateno
+
+[State -1];リセット
+type = varset
+triggerall = var(45) != 0
+trigger1 = teammode = turns && roundstate != 2
+var(45) = 0
+
+;敵がcanrecoverを無視するかどうか
+[State -2];自重する気のない人々
+Type = VarSet
+TriggerAll = var(50) = 0
+Trigger1 = EnemyNear(Var(53)),Name ="Lin" && EnemyNear(Var(53)),AuthorName="ahuron"
+Trigger2 = EnemyNear(Var(53)),Name ="Kim Kaphwan" && EnemyNear(Var(53)),AuthorName="ahuron"
+Trigger3 = EnemyNear(Var(53)),Name ="Chris" && EnemyNear(Var(53)),AuthorName="ahuron"
+Trigger4 = EnemyNear(Var(53)),Name ="Yashiro Nanakase" && EnemyNear(Var(53)),AuthorName="ahuron"
+Trigger5 = EnemyNear(Var(53)),Name ="Shermie" && EnemyNear(Var(53)),AuthorName="ahuron"
+Trigger6 = EnemyNear(Var(53)),Name ="Asura" && EnemyNear(Var(53)),AuthorName="ahuron"
+Trigger7 = EnemyNear(Var(53)),Name ="Yuki" && EnemyNear(Var(53)),AuthorName="ahuron"
+Trigger8 = EnemyNear(Var(53)),Name="anna" && EnemyNear(Var(53)),AuthorName="kayui uma"
+Trigger9 = EnemyNear(Var(53)),Name="henri" && EnemyNear(Var(53)),AuthorName="kayui uma"
+Trigger10= EnemyNear(Var(53)),Name="mora" && EnemyNear(Var(53)),AuthorName="kayui uma"
+Trigger11= EnemyNear(Var(53)),Name="saya" && EnemyNear(Var(53)),AuthorName="kayui uma"
+Trigger12= EnemyNear(Var(53)),Name="Geese Howard" && EnemyNear(Var(53)),AuthorName="Rin & Bat"
+Trigger13= EnemyNear(Var(53)),Name="Nightmare Geese" && EnemyNear(Var(53)),AuthorName="Rin & Bat"
+Trigger14= EnemyNear(Var(53)),Name="White" && EnemyNear(Var(53)),AuthorName="Rin & Bat"
+Trigger15= EnemyNear(Var(53)),Name="Krizalid-" && EnemyNear(Var(53)),AuthorName="Chin-ya"
+Trigger16= EnemyNear(Var(53)),Name="D-yashiro" && EnemyNear(Var(53)),AuthorName="Chin-ya"
+Trigger17= EnemyNear(Var(53)),Name="Reak" && EnemyNear(Var(53)),AuthorName="Chin-ya"
+Trigger18= EnemyNear(Var(53)),Name="Malin" && EnemyNear(Var(53)),AuthorName="Chin-ya"
+Trigger19= EnemyNear(Var(53)),Name="EX_Saishu" && EnemyNear(Var(53)),AuthorName="Chin-ya"
+Trigger20= EnemyNear(Var(53)),Name="Reak" && EnemyNear(Var(53)),AuthorName="Chin-ya"
+Trigger21= EnemyNear(Var(53)),Name="Weakest_R" && EnemyNear(Var(53)),AuthorName="Chin-ya"
+var(50) = 1
+
+[State -2];
+Type = VarSet
+TriggerAll = var(50) = [0,1]
+TriggerAll = Enemy,TeamMode = Single || Enemy,TeamMode = Turns
+TriggerAll = RoundState = 2
+Trigger1 =!EnemyNear(Var(53)),CanRecover
+Trigger1 = EnemyNear(Var(53)),PrevStateNo = 5050
+Trigger1 = EnemyNear(Var(53)),MoveType != H
+var(50) = 2
+
+[State -2]
+Type = VarSet
+TriggerAll = var(50) != 0
+TriggerAll = Enemy,TeamMode = Turns
+Trigger1 = RoundState != 2
+var(50) = 0
+
+
+;ＡＩ技強弱リセット
+[State -2]
+Type = null ;VarSet
+TriggerAll = var(58) >= 1
+Trigger1 = var(59) <= 0
+var(58) = 0
+
+
+[State -1];敵滞空時間
+type = varadd
+triggerall = roundstate = 2
+trigger1 = EnemyNear(Var(53)),statetype = A
+var(56) = 1
+
+[State -1];敵滞空時間リセット
+type = varset
+triggerall = var(56) != 0
+trigger1 = roundstate != 2
+trigger2 = EnemyNear(Var(53)),statetype != A
+var(56) = 0
+
+
+;敵タッグ時、離れてる方の敵の位置判断
+[State -1]
+type = varset
+trigger1 = EnemyNear(Var(53)),numpartner
+var(38) = ifelse(facing = 1,floor(EnemyNear(1),Pos X - Pos X),-floor(EnemyNear(1),Pos X - Pos X))
+
+
+;一勝フラグ
+[State -1]
+type = varset
+triggerall = var(49) = 0
+trigger1 = teammode = single || teammode = simul
+trigger1 = win
+var(49) = 1
+
+[State -1];リセット
+type = varset
+triggerall = var(49) != 0
+trigger1 = teammode = turns
+var(49) = 0
+
+;----------------------------------------------------------------
+;カウンター
+
+;ジャンプ（投げ回避）
+[state -1, jump]
+type = ChangeState
+value = ifelse(BackEdgeBodyDist > 50 && random <= 700 && EnemyNear(Var(53)),Vel X <= 0,105,62)
+triggerall = Var(59) >= 1 && numenemy
+triggerall = roundstate = 2 && statetype != A
+triggerall = ctrl || stateno = 1 || (stateno = [15,16]) || (stateno = [21,22]) || (stateno = [100,101]) || (movetype != H && stateno = [120,149])
+triggerall = p2bodydist X <= 160
+triggerall = random <= 250
+trigger1 = EnemyNear(Var(53)),HitDefAttr = SC, NT,ST,HT && random <= 700
+trigger2 = EnemyNear(Var(53)),stateno = var(48)
+trigger2 = var(48) >= 1000 && EnemyNear(Var(53)),time <= 15
+trigger3 = EnemyNear(Var(53)),stateno = var(45)
+trigger3 = (var(45) = [1,999]) && EnemyNear(Var(53)),time <= 15
+
+;----------------------------------------------------------------
+
+
+;----------------------------------------------------------------
+
+
+;---------------------------------------------------------------------------
+;---------------------------------------------------------------------------
+;===========================================================================
+;プレイヤー操作
+;===========================================================================
+;---------------------------------------------------------------------------
+
+;===========================================================================
+;---------------------------------------------------------------------------
+;---------------------------------------------------------------------------
+
+;===========================================================================
+;---------------------------------------------------------------------------
+
+;---------------------------------------------------------------------------
+
+;---------------------------------------------------------------------------
+;不知火流・くの一の舞
+[State ERROR]
+type = ChangeState
+value = 3500
+triggerall = var(59) <= 0
+triggerall = command = "NEO MAX" || fvar(6) = 3500
+triggerall = power >= 3000 || (var(29) >= 0 && var(20) > 0 && power >= 2000)
+triggerall = var(20) > 0 || var(19) >= 0
+trigger1 = ctrl
+trigger2 = stateno = 200 && movecontact = [1,5]
+trigger3 = stateno = 215 && movecontact = [1,5]
+trigger4 = stateno = 245 && movecontact = [1,5]
+trigger5 = stateno = 400 && movecontact = [1,5]
+trigger6 = stateno = 410 && movecontact = [1,5]
+trigger7 = stateno = 440 && movecontact = [1,5]
+trigger8 = stateno = 290 && movecontact = [1,5]
+
+trigger9 = stateno = 290 && (animelem = 9,> 0 && animelem = 12,<0)
+trigger10= stateno = 410 && (animelem = 4,> 0 && animelem = 8,<0)
+trigger11= stateno = 440 && (animelem = 4,> 0 && animelem = 7,<0)
+
+trigger12= stateno = 610 && movecontact = [1,5]
+trigger13= stateno = 630 && movecontact = [1,5]
+trigger14= stateno = 640 && movecontact = [1,5]
+trigger15= stateno = 690 && movecontact = [1,5]
+
+trigger16= stateno = 1000 && (animelem = 8,>=2 && animelem = 11,<0)
+trigger17= stateno = 1100 && movecontact = [1,5]
+trigger18= stateno = 1200 && movecontact = [1,5]
+trigger19= stateno = 1300 && movecontact = [1,5]
+trigger20= stateno = 2000 && (animelem = 8,>=2 && animelem = 11,<0)
+trigger21= stateno = 2100 && movecontact = [1,5]
+trigger22= stateno = 2200 && movecontact = [1,5]
+trigger23= stateno = 2300 && movecontact = [1,5]
+
+trigger24= stateno = 3000 && (movecontact = [1,5]) && var(20) > 0
+trigger25= stateno = 3050 && (movecontact = [1,5]) && var(20) > 0
+trigger26= stateno = 3100 && (movecontact = [1,5]) && var(20) > 0
+trigger27= stateno = 3150 && (movecontact = [1,5]) && var(20) > 0
+
+trigger28= stateno = 210 && var(20) > 0 && movecontact = [1,5]
+trigger29= stateno = 230 && var(20) > 0 && movecontact = [1,5]
+trigger30= stateno = 240 && var(20) > 0 && movecontact = [1,5]
+trigger31= stateno = 430 && var(20) > 0 && movecontact = [1,5]
+
+;---------------------------------------------------------------------------
+;EX空中超必殺忍蜂・スーパーキャンセル
+[State Scramble Dash]
+type = ChangeState
+value = 3150
+triggerall = var(59) <= 0
+triggerall = power >= 2000
+triggerall = command = "超忍蜂EX" || fvar(6) = 3050
+triggerall = statetype = A
+triggerall = var(20) > 0 || var(19) >= 500
+trigger1 = stateno = 1200 && movecontact = [1,5]
+trigger2 = stateno = 1300 && movecontact = [1,5]
+trigger3 = stateno = 2200 && movecontact = [1,5]
+trigger4 = stateno = 2300 && movecontact = [1,5]
+
+;---------------------------------------------------------------------------
+;EX空中　超必殺忍蜂
+[State Scramble Dash]
+type = ChangeState
+value = 3150
+triggerall = var(59) <= 0
+triggerall = power >= 2000
+triggerall = command = "超忍蜂EX" || fvar(6) = 3050
+triggerall = statetype = A
+trigger1 = ctrl
+trigger2 = stateno = 610 && movecontact = [1,5]
+trigger3 = stateno = 630 && movecontact = [1,5]
+trigger4 = stateno = 640 && movecontact = [1,5]
+trigger5 = stateno = 690 && movecontact = [1,5]
+
+;---------------------------------------------------------------------------
+;空中超必殺忍蜂・スーパーキャンセル
+[State Scramble Dash]
+type = ChangeState
+value = 3100
+triggerall = var(59) <= 0
+triggerall = power >= 1000
+triggerall = command = "超忍蜂" || fvar(6) = 3000
+triggerall = statetype = A
+triggerall = var(20) > 0 || var(19) >= 500
+trigger1 = stateno = 1200 && movecontact = [1,5]
+trigger2 = stateno = 1300 && movecontact = [1,5]
+trigger3 = stateno = 2200 && movecontact = [1,5]
+trigger4 = stateno = 2300 && movecontact = [1,5]
+
+;---------------------------------------------------------------------------
+;空中　超必殺忍蜂
+[State Scramble Dash]
+type = ChangeState
+value = 3100
+triggerall = var(59) <= 0
+triggerall = power >= 1000
+triggerall = command = "超忍蜂" || fvar(6) = 3000
+triggerall = statetype = A
+trigger1 = ctrl
+trigger2 = stateno = 610 && movecontact = [1,5]
+trigger3 = stateno = 630 && movecontact = [1,5]
+trigger4 = stateno = 640 && movecontact = [1,5]
+trigger5 = stateno = 690 && movecontact = [1,5]
+
+;---------------------------------------------------------------------------
+;EX超必殺忍蜂・スーパーキャンセル
+[State Scramble Dash]
+type = ChangeState
+value = 3050
+triggerall = var(59) <= 0
+triggerall = power >= 2000
+triggerall = command = "超忍蜂EX" || fvar(6) = 3050
+triggerall = statetype != A
+triggerall = var(20) > 0 || var(19) >= 500
+trigger1 = stateno = 1000 && (animelem = 8,>=2 && animelem = 11,<0)
+trigger2 = stateno = 1100 && movecontact = [1,5]
+trigger3 = stateno = 1200 && movecontact = [1,5]
+trigger4 = stateno = 2000 && (animelem = 8,>=2 && animelem = 11,<0)
+trigger5 = stateno = 2100 && movecontact = [1,5]
+trigger6 = stateno = 2200 && movecontact = [1,5]
+
+;---------------------------------------------------------------------------
+;EX超必殺忍蜂
+[State Scramble Dash]
+type = ChangeState
+value = 3050
+triggerall = var(59) <= 0
+triggerall = power >= 2000
+triggerall = command = "超忍蜂EX" || fvar(6) = 3050
+triggerall = statetype != A
+trigger1 = ctrl
+trigger2 = stateno = 200 && movecontact = [1,5]
+trigger3 = stateno = 215 && movecontact = [1,5]
+trigger4 = stateno = 245 && movecontact = [1,5]
+trigger5 = stateno = 400 && movecontact = [1,5]
+trigger6 = stateno = 410 && movecontact = [1,5]
+trigger7 = stateno = 440 && movecontact = [1,5]
+trigger8 = stateno = 290 && movecontact = [1,5]
+
+trigger9 = stateno = 290 && (animelem = 9,> 0 && animelem = 12,<0)
+trigger10= stateno = 410 && (animelem = 4,> 0 && animelem = 8,<0)
+trigger11= stateno = 440 && (animelem = 4,> 0 && animelem = 7,<0)
+
+trigger12= stateno = 210 && var(20) > 0 && movecontact = [1,5]
+trigger13= stateno = 230 && var(20) > 0 && movecontact = [1,5]
+trigger14= stateno = 240 && var(20) > 0 && movecontact = [1,5]
+trigger15= stateno = 430 && var(20) > 0 && movecontact = [1,5]
+
+;---------------------------------------------------------------------------
+;超必殺忍蜂・スーパーキャンセル
+[State Scramble Dash]
+type = ChangeState
+value = 3000
+triggerall = var(59) <= 0
+triggerall = power >= 1000
+triggerall = command = "超忍蜂" || fvar(6) = 3000
+triggerall = statetype != A
+triggerall = var(20) > 0 || var(19) >= 500
+trigger1 = stateno = 1000 && (animelem = 8,>=2 && animelem = 11,<0)
+trigger2 = stateno = 1100 && movecontact = [1,5]
+trigger3 = stateno = 1200 && movecontact = [1,5]
+trigger4 = stateno = 2000 && (animelem = 8,>=2 && animelem = 11,<0)
+trigger5 = stateno = 2100 && movecontact = [1,5]
+trigger6 = stateno = 2200 && movecontact = [1,5]
+
+;---------------------------------------------------------------------------
+;超必殺忍蜂
+[State Scramble Dash]
+type = ChangeState
+value = 3000
+triggerall = var(59) <= 0
+triggerall = power >= 1000
+triggerall = command = "超忍蜂" || fvar(6) = 3000
+triggerall = statetype != A
+trigger1 = ctrl
+trigger2 = stateno = 200 && movecontact = [1,5]
+trigger3 = stateno = 215 && movecontact = [1,5]
+trigger4 = stateno = 245 && movecontact = [1,5]
+trigger5 = stateno = 400 && movecontact = [1,5]
+trigger6 = stateno = 410 && movecontact = [1,5]
+trigger7 = stateno = 440 && movecontact = [1,5]
+trigger8 = stateno = 290 && movecontact = [1,5]
+
+trigger9 = stateno = 290 && (animelem = 9,> 0 && animelem = 12,<0)
+trigger10= stateno = 410 && (animelem = 4,> 0 && animelem = 8,<0)
+trigger11= stateno = 440 && (animelem = 4,> 0 && animelem = 7,<0)
+
+trigger12= stateno = 210 && var(20) > 0 && movecontact = [1,5]
+trigger13= stateno = 230 && var(20) > 0 && movecontact = [1,5]
+trigger14= stateno = 240 && var(20) > 0 && movecontact = [1,5]
+trigger15= stateno = 430 && var(20) > 0 && movecontact = [1,5]
+
+;---------------------------------------------------------------------------
+;ムササビの舞(地上版)
+[State Scramble Dash]
+type = ChangeState
+value = 1400
+triggerall = var(59) <= 0
+triggerall = command = "ムササビ" || fvar(6) = 1400
+triggerall = statetype != A
+trigger1 = ctrl || stateno = 40
+trigger2 = stateno = 200 && movecontact = [1,5]
+trigger3 = stateno = 215 && movecontact = [1,5]
+trigger4 = stateno = 245 && movecontact = [1,5]
+trigger5 = stateno = 400 && movecontact = [1,5]
+trigger6 = stateno = 410 && movecontact = [1,5]
+trigger7 = stateno = 440 && movecontact = [1,5]
+trigger8 = stateno = 290 && movecontact = [1,5]
+
+trigger9 = stateno = 290 && (animelem = 9,> 0 && animelem = 12,<0)
+trigger10= stateno = 410 && (animelem = 4,> 0 && animelem = 8,<0)
+trigger11= stateno = 440 && (animelem = 4,> 0 && animelem = 7,<0)
+
+trigger12= stateno = 210 && var(20) > 0 && movecontact = [1,5]
+trigger13= stateno = 230 && var(20) > 0 && movecontact = [1,5]
+trigger14= stateno = 240 && var(20) > 0 && movecontact = [1,5]
+trigger15= stateno = 430 && var(20) > 0 && movecontact = [1,5]
+
+;---------------------------------------------------------------------------
+;EXムササビの舞・ドライブキャンセル
+[State Scramble Dash]
+type = ChangeState
+value = 2300
+triggerall = var(59) <= 0
+triggerall = power >= 1000
+triggerall = command = "龍炎舞EX" || fvar(6) = 2100
+triggerall = var(20) > 0 || var(19) >= 500
+triggerall = statetype = A
+trigger1 = stateno = 1200
+trigger1 = (movehit = [1,5]) || (var(20) > 0 && movecontact = [1,5])
+trigger2 = stateno = 2200
+trigger2 = (movehit = [1,5]) || (var(20) > 0 && movecontact = [1,5])
+
+trigger3 = stateno = 1300
+trigger3 = (movehit = [1,5]) || (var(20) > 0 && movecontact = [1,5])
+
+;---------------------------------------------------------------------------
+;EXムササビの舞
+[State Scramble Dash]
+type = ChangeState
+value = 2300
+triggerall = var(59) <= 0
+triggerall = power >= 1000
+triggerall = command = "龍炎舞EX" || fvar(6) = 2100
+triggerall = statetype = A
+trigger1 = ctrl
+trigger2 = stateno = 610 && movecontact = [1,5]
+trigger3 = stateno = 630 && movecontact = [1,5]
+trigger4 = stateno = 640 && movecontact = [1,5]
+trigger5 = stateno = 690 && movecontact = [1,5]
+
+;---------------------------------------------------------------------------
+;ムササビの舞・ドライブキャンセル
+[State Scramble Dash]
+type = ChangeState
+value = 1300
+triggerall = var(59) <= 0
+triggerall = command = "龍炎舞" || fvar(6) = 1100
+triggerall = statetype = A
+triggerall = var(20) > 0 || var(19) >= 500
+trigger1 = stateno = 1200
+trigger1 = (movehit = [1,5]) || (var(20) > 0 && movecontact = [1,5])
+trigger2 = stateno = 2200
+trigger2 = (movehit = [1,5]) || (var(20) > 0 && movecontact = [1,5])
+
+;---------------------------------------------------------------------------
+;ムササビの舞
+[State Scramble Dash]
+type = ChangeState
+value = 1300
+triggerall = var(59) <= 0
+triggerall = command = "龍炎舞" || fvar(6) = 1100
+triggerall = statetype = A
+trigger1 = ctrl
+trigger2 = stateno = 610 && movecontact = [1,5]
+trigger3 = stateno = 630 && movecontact = [1,5]
+trigger4 = stateno = 640 && movecontact = [1,5]
+trigger5 = stateno = 690 && movecontact = [1,5]
+
+;---------------------------------------------------------------------------
+;EX必殺忍蜂・ドライブキャンセル
+[State Scramble Dash]
+type = ChangeState
+value = 2200
+triggerall = var(59) <= 0
+triggerall = power >= 1000
+triggerall = command = "忍蜂EX" || fvar(6) = 2200
+triggerall = statetype != A
+triggerall = var(20) > 0 || var(19) >= 500
+trigger1 = stateno = 1100
+trigger1 = (movehit = [1,5]) || (var(20) > 0 && movecontact = [1,5])
+trigger2 = stateno = 2100
+trigger2 = (movehit = [1,5]) || (var(20) > 0 && movecontact = [1,5])
+
+trigger3 = stateno = 1200
+trigger3 = (movehit = [1,5]) || (var(20) > 0 && movecontact = [1,5])
+
+;---------------------------------------------------------------------------
+;EX忍蜂
+[State Scramble Dash]
+type = ChangeState
+value = 2200
+triggerall = var(59) <= 0
+triggerall = power >= 1000
+triggerall = command = "忍蜂EX" || fvar(6) = 2200
+triggerall = statetype != A
+trigger1 = ctrl
+trigger2 = stateno = 200 && movecontact = [1,5]
+trigger3 = stateno = 215 && movecontact = [1,5]
+trigger4 = stateno = 245 && movecontact = [1,5]
+trigger5 = stateno = 400 && movecontact = [1,5]
+trigger6 = stateno = 410 && movecontact = [1,5]
+trigger7 = stateno = 440 && movecontact = [1,5]
+trigger8 = stateno = 290 && movecontact = [1,5]
+
+trigger9 = stateno = 290 && (animelem = 9,> 0 && animelem = 12,<0)
+trigger10= stateno = 410 && (animelem = 4,> 0 && animelem = 8,<0)
+trigger11= stateno = 440 && (animelem = 4,> 0 && animelem = 7,<0)
+
+trigger12= stateno = 210 && var(20) > 0 && movecontact = [1,5]
+trigger13= stateno = 230 && var(20) > 0 && movecontact = [1,5]
+trigger14= stateno = 240 && var(20) > 0 && movecontact = [1,5]
+trigger15= stateno = 430 && var(20) > 0 && movecontact = [1,5]
+
+;---------------------------------------------------------------------------
+;必殺忍蜂・ドライブキャンセル
+[State Scramble Dash]
+type = ChangeState
+value = 1200
+triggerall = var(59) <= 0
+triggerall = command = "忍蜂" || fvar(6) = 1200
+triggerall = statetype != A
+triggerall = var(20) > 0 || var(19) >= 500
+trigger1 = stateno = 1100
+trigger1 = (movehit = [1,5]) || (var(20) > 0 && movecontact = [1,5])
+trigger2 = stateno = 2100
+trigger2 = (movehit = [1,5]) || (var(20) > 0 && movecontact = [1,5])
+
+;---------------------------------------------------------------------------
+;必殺忍蜂
+[State Scramble Dash]
+type = ChangeState
+value = 1200
+triggerall = var(59) <= 0
+triggerall = command = "忍蜂" || fvar(6) = 1200
+triggerall = statetype != A
+trigger1 = ctrl
+trigger2 = stateno = 200 && movecontact = [1,5]
+trigger3 = stateno = 215 && movecontact = [1,5]
+trigger4 = stateno = 245 && movecontact = [1,5]
+trigger5 = stateno = 400 && movecontact = [1,5]
+trigger6 = stateno = 410 && movecontact = [1,5]
+trigger7 = stateno = 440 && movecontact = [1,5]
+trigger8 = stateno = 290 && movecontact = [1,5]
+
+trigger9 = stateno = 290 && (animelem = 9,> 0 && animelem = 12,<0)
+trigger10= stateno = 410 && (animelem = 4,> 0 && animelem = 8,<0)
+trigger11= stateno = 440 && (animelem = 4,> 0 && animelem = 7,<0)
+
+trigger12= stateno = 210 && var(20) > 0 && movecontact = [1,5]
+trigger13= stateno = 230 && var(20) > 0 && movecontact = [1,5]
+trigger14= stateno = 240 && var(20) > 0 && movecontact = [1,5]
+trigger15= stateno = 430 && var(20) > 0 && movecontact = [1,5]
+
+;---------------------------------------------------------------------------
+;EX龍炎舞・ドライブキャンセル
+[State Scramble Dash]
+type = ChangeState
+value = 2100
+triggerall = var(59) <= 0
+triggerall = power >= 1000
+triggerall = command = "龍炎舞EX" || fvar(6) = 2100
+triggerall = statetype != A
+triggerall = var(20) > 0 || var(19) >= 500
+trigger1 = stateno = 1200
+trigger1 = (movehit = [1,5]) || (var(20) > 0 && movecontact = [1,5])
+trigger2 = stateno = 2200
+trigger2 = (movehit = [1,5]) || (var(20) > 0 && movecontact = [1,5])
+
+trigger3 = stateno = 1100
+trigger3 = (movehit = [1,5]) || (var(20) > 0 && movecontact = [1,5])
+
+;---------------------------------------------------------------------------
+;EX龍炎舞
+[State Scramble Dash]
+type = ChangeState
+value = 2100
+triggerall = var(59) <= 0
+triggerall = power >= 1000
+triggerall = command = "龍炎舞EX" || fvar(6) = 2100
+triggerall = statetype != A
+trigger1 = ctrl
+trigger2 = stateno = 200 && movecontact = [1,5]
+trigger3 = stateno = 215 && movecontact = [1,5]
+trigger4 = stateno = 245 && movecontact = [1,5]
+trigger5 = stateno = 400 && movecontact = [1,5]
+trigger6 = stateno = 410 && movecontact = [1,5]
+trigger7 = stateno = 440 && movecontact = [1,5]
+trigger8 = stateno = 290 && movecontact = [1,5]
+
+trigger9 = stateno = 290 && (animelem = 9,> 0 && animelem = 12,<0)
+trigger10= stateno = 410 && (animelem = 4,> 0 && animelem = 8,<0)
+trigger11= stateno = 440 && (animelem = 4,> 0 && animelem = 7,<0)
+
+trigger12= stateno = 210 && var(20) > 0 && movecontact = [1,5]
+trigger13= stateno = 230 && var(20) > 0 && movecontact = [1,5]
+trigger14= stateno = 240 && var(20) > 0 && movecontact = [1,5]
+trigger15= stateno = 430 && var(20) > 0 && movecontact = [1,5]
+
+;---------------------------------------------------------------------------
+;龍炎舞・ドライブキャンセル
+[State Scramble Dash]
+type = ChangeState
+value = 1100
+triggerall = var(59) <= 0
+triggerall = command = "龍炎舞" || fvar(6) = 1100
+triggerall = statetype != A
+triggerall = var(20) > 0 || var(19) >= 500
+trigger1 = stateno = 1200
+trigger1 = (movehit = [1,5]) || (var(20) > 0 && movecontact = [1,5])
+trigger2 = stateno = 2200
+trigger2 = (movehit = [1,5]) || (var(20) > 0 && movecontact = [1,5])
+
+;---------------------------------------------------------------------------
+;龍炎舞
+[State Scramble Dash]
+type = ChangeState
+value = 1100
+triggerall = var(59) <= 0
+triggerall = command = "龍炎舞" || fvar(6) = 1100
+triggerall = statetype != A
+trigger1 = ctrl
+trigger2 = stateno = 200 && movecontact = [1,5]
+trigger3 = stateno = 215 && movecontact = [1,5]
+trigger4 = stateno = 245 && movecontact = [1,5]
+trigger5 = stateno = 400 && movecontact = [1,5]
+trigger6 = stateno = 410 && movecontact = [1,5]
+trigger7 = stateno = 440 && movecontact = [1,5]
+trigger8 = stateno = 290 && movecontact = [1,5]
+
+trigger9 = stateno = 290 && (animelem = 9,> 0 && animelem = 12,<0)
+trigger10= stateno = 410 && (animelem = 4,> 0 && animelem = 8,<0)
+trigger11= stateno = 440 && (animelem = 4,> 0 && animelem = 7,<0)
+
+trigger12= stateno = 210 && var(20) > 0 && movecontact = [1,5]
+trigger13= stateno = 230 && var(20) > 0 && movecontact = [1,5]
+trigger14= stateno = 240 && var(20) > 0 && movecontact = [1,5]
+trigger15= stateno = 430 && var(20) > 0 && movecontact = [1,5]
+
+;---------------------------------------------------------------------------
+;EX花蝶扇・ドライブキャンセル
+[State Scramble Dash]
+type = ChangeState
+value = 2000
+triggerall = var(59) <= 0
+triggerall = power >= 1000
+triggerall = numprojID(1010) = 0 && numprojID(2011) = 0
+triggerall = command = "花蝶扇EX" || fvar(6) = 2000
+triggerall = statetype != A
+triggerall = var(20) > 0 || var(19) >= 500
+trigger1 = stateno = 1100
+trigger1 = (movehit = [1,5]) || (var(20) > 0 && movecontact = [1,5])
+trigger2 = stateno = 1200
+trigger2 = (movehit = [1,5]) || (var(20) > 0 && movecontact = [1,5])
+
+trigger3 = stateno = 2100
+trigger3 = (movehit = [1,5]) || (var(20) > 0 && movecontact = [1,5])
+trigger4 = stateno = 2200
+trigger4 = (movehit = [1,5]) || (var(20) > 0 && movecontact = [1,5])
+
+;---------------------------------------------------------------------------
+;EX花蝶扇
+[State Scramble Dash]
+type = ChangeState
+value = 2000
+triggerall = var(59) <= 0
+triggerall = power >= 1000
+triggerall = numprojID(1010) = 0 && numprojID(2011) = 0
+triggerall = command = "花蝶扇EX" || fvar(6) = 2000
+triggerall = statetype != A
+trigger1 = ctrl
+trigger2 = stateno = 200 && movecontact = [1,5]
+trigger3 = stateno = 215 && movecontact = [1,5]
+trigger4 = stateno = 245 && movecontact = [1,5]
+trigger5 = stateno = 400 && movecontact = [1,5]
+trigger6 = stateno = 410 && movecontact = [1,5]
+trigger7 = stateno = 440 && movecontact = [1,5]
+trigger8 = stateno = 290 && movecontact = [1,5]
+
+trigger9 = stateno = 290 && (animelem = 9,> 0 && animelem = 12,<0)
+trigger10= stateno = 410 && (animelem = 4,> 0 && animelem = 8,<0)
+trigger11= stateno = 440 && (animelem = 4,> 0 && animelem = 7,<0)
+
+trigger12= stateno = 210 && var(20) > 0 && movecontact = [1,5]
+trigger13= stateno = 230 && var(20) > 0 && movecontact = [1,5]
+trigger14= stateno = 240 && var(20) > 0 && movecontact = [1,5]
+trigger15= stateno = 430 && var(20) > 0 && movecontact = [1,5]
+
+;---------------------------------------------------------------------------
+;花蝶扇・ドライブキャンセル
+[State Scramble Dash]
+type = ChangeState
+value = 1000
+triggerall = var(59) <= 0
+triggerall = numprojID(1010) = 0 && numprojID(2011) = 0
+triggerall = command = "花蝶扇" || fvar(6) = 1000
+triggerall = statetype != A
+triggerall = var(20) > 0 || var(19) >= 500
+trigger1 = stateno = 1100
+trigger1 = (movehit = [1,5]) || (var(20) > 0 && movecontact = [1,5])
+trigger2 = stateno = 1200
+trigger2 = (movehit = [1,5]) || (var(20) > 0 && movecontact = [1,5])
+
+trigger3 = stateno = 2100
+trigger3 = (movehit = [1,5]) || (var(20) > 0 && movecontact = [1,5])
+trigger4 = stateno = 2200
+trigger4 = (movehit = [1,5]) || (var(20) > 0 && movecontact = [1,5])
+
+;---------------------------------------------------------------------------
+;花蝶扇
+[State Scramble Dash]
+type = ChangeState
+value = 1000
+triggerall = var(59) <= 0
+triggerall = numprojID(1010) = 0 && numprojID(2011) = 0
+triggerall = command = "花蝶扇" || fvar(6) = 1000
+triggerall = statetype != A
+trigger1 = ctrl
+trigger2 = stateno = 200 && movecontact = [1,5]
+trigger3 = stateno = 215 && movecontact = [1,5]
+trigger4 = stateno = 245 && movecontact = [1,5]
+trigger5 = stateno = 400 && movecontact = [1,5]
+trigger6 = stateno = 410 && movecontact = [1,5]
+trigger7 = stateno = 440 && movecontact = [1,5]
+trigger8 = stateno = 290 && movecontact = [1,5]
+
+trigger9 = stateno = 290 && (animelem = 9,> 0 && animelem = 12,<0)
+trigger10= stateno = 410 && (animelem = 4,> 0 && animelem = 8,<0)
+trigger11= stateno = 440 && (animelem = 4,> 0 && animelem = 7,<0)
+
+trigger12= stateno = 210 && var(20) > 0 && movecontact = [1,5]
+trigger13= stateno = 230 && var(20) > 0 && movecontact = [1,5]
+trigger14= stateno = 240 && var(20) > 0 && movecontact = [1,5]
+trigger15= stateno = 430 && var(20) > 0 && movecontact = [1,5]
+
+;===========================================================================
+;---------------------------------------------------------------------------
+;---------------------------------------------------------------------------
+;---------------------------------------------------------------------------
+;ガードキャンセルふっ飛ばし攻撃
+[State -1, 290]
+type = ChangeState
+value = 295
+triggerall = var(59) <= 0
+triggerall = command = "ふっ飛ばし"
+triggerall = power >= 1000
+trigger1 = stateno = 150
+trigger2 = stateno = 151
+
+;---------------------------------------------------------------------------
+;ふっ飛ばし攻撃
+[State -1, 290]
+type = ChangeState
+value = 290
+triggerall = var(59) <= 0
+triggerall = command = "ふっ飛ばし"
+triggerall = statetype != A
+trigger1 = ctrl
+
+;---------------------------------------------------------------------------
+;空中ふっ飛ばし攻撃
+[State -1, Jump Strong Kick]
+type = ChangeState
+value = 690
+triggerall = var(59) <= 0
+triggerall = command = "ふっ飛ばし"
+trigger1 = statetype = A
+trigger1 = stateno != 106
+trigger1 = ctrl
+
+;---------------------------------------------------------------------------
+;ハイパードライブモード発動
+[State -1, Jump Strong Kick]
+type = ChangeState
+value = 900
+triggerall = var(59) <= 0
+triggerall = command = "MAX"
+triggerall = statetype != A
+triggerall = power >= 1000
+trigger1 = var(20) = 0 && var(19) >= 1000
+trigger1 = ctrl
+
+;---------------------------------------------------------------------------
+;クイックハイパーモード発動
+[State -1, Jump Strong Kick]
+type = ChangeState
+value = 901
+triggerall = var(59) <= 0
+triggerall = command = "MAX"
+triggerall = statetype != A
+trigger1 = var(20) = 0 && var(19) >= 1000
+trigger1 = stateno = [200,499]
+trigger1 = movecontact
+
+;===========================================================================
+;---------------------------------------------------------------------------
+;緊急回避後
+[State -1, Taunt]
+type = ChangeState
+value = 701
+triggerall = var(59) <= 0
+triggerall = command = "緊急回避後"
+trigger1 = statetype != A
+trigger1 = ctrl
+;---------------------------------------------------------------------------
+;ガードキャンセル緊急回避後
+[State -1, 701]
+type = ChangeState
+value = 701
+triggerall = var(59) <= 0
+triggerall = command = "緊急回避後"
+triggerall = power >= 1000
+trigger1 = stateno = 150
+trigger2 = stateno = 151
+;---------------------------------------------------------------------------
+;緊急回避前
+[State -1, Taunt]
+type = ChangeState
+value = 700
+triggerall = var(59) <= 0
+triggerall = command = "緊急回避前"
+trigger1 = statetype != A
+trigger1 = ctrl
+;---------------------------------------------------------------------------
+;ガードキャンセル緊急回避前
+[State -1, 700]
+type = ChangeState
+value = 700
+triggerall = var(59) <= 0
+triggerall = command = "緊急回避前"
+triggerall = power >= 1000
+trigger1 = stateno = 150
+trigger2 = stateno = 151
+
+;---------------------------------------------------------------------------
+;ダウン回避
+[State -1, Taunt]
+type = ChangeState
+value = 702
+triggerall = var(59) <= 0
+triggerall = command = "緊急回避前"
+triggerall = alive && canrecover
+trigger1 = stateno = 5050
+trigger1 = pos y >=0
+trigger1 = vel y > 0
+;---------------------------------------------------------------------------
+;Run Fwd
+;ダッシュ
+[State -1, Run Fwd]
+type = ChangeState
+value = 100
+triggerall = var(59) <= 0
+trigger1 = command = "FF"
+trigger1 = statetype = S
+trigger1 = ctrl
+
+;---------------------------------------------------------------------------
+;Run Back
+;後退ダッシュ
+[State -1, Run Back]
+type = ChangeState
+value = 105
+triggerall = var(59) <= 0
+trigger1 = command = "BB"
+trigger1 = statetype = S
+trigger1 = ctrl
+
+;---------------------------------------------------------------------------
+;風車崩し
+[State -1, Kung Fu Throw]
+type = ChangeState
+value = 800
+triggerall = var(59) <= 0
+triggerall = command = "y"
+triggerall = command = "holdfwd" || command = "holdback"
+triggerall = command != "holddown"
+triggerall = statetype != A
+triggerall = ctrl
+triggerall = stateno != 100
+trigger1 = ((P2dist X = [1,320]) && (P2bodydist X = [-5,5]))
+trigger1 = p2statetype != A
+trigger1 = p2movetype != H
+
+;---------------------------------------------------------------------------
+;風車崩し
+[State -1, Kung Fu Throw]
+type = ChangeState
+value = 820
+triggerall = var(59) <= 0
+triggerall = command = "b"
+triggerall = command = "holdfwd" || command = "holdback"
+triggerall = command != "holddown"
+triggerall = statetype != A
+triggerall = ctrl
+triggerall = stateno != 100
+trigger1 = ((P2dist X = [1,320]) && (P2bodydist X = [-5,5]))
+trigger1 = p2statetype != A
+trigger1 = p2movetype != H
+
+;---------------------------------------------------------------------------
+;夢桜
+[State -1, Kung Fu Throw]
+type = ChangeState
+value = 850
+triggerall = var(59) <= 0
+triggerall = command = "y"
+triggerall = command = "holdfwd" || command = "holdback"
+triggerall = statetype = A
+triggerall = ctrl
+trigger1 = p2bodydist X < 5
+trigger1 = p2statetype = A
+
+;===========================================================================
+;---------------------------------------------------------------------------
+;立ち弱パンチ
+[State -1, Stand Light Punch]
+type = ChangeState
+value = 200
+triggerall = var(59) <= 0
+triggerall = command = "x"
+triggerall = command != "holddown"
+triggerall = statetype != A
+trigger1 = ctrl
+trigger2 = stateno = 200 && (animelem=3,>0 && animelem=6,<0)
+trigger3 = stateno = 400 && (animelem=3,>0 && animelem=6,<0)
+trigger4 = stateno = 430 && (animelem=3,>0 && animelem=6,<0)
+
+
+;---------------------------------------------------------------------------
+;遠距離立ち強パンチ
+[State -1, Stand Strong Punch]
+type = ChangeState
+value = 210
+triggerall = var(59) <= 0
+triggerall = command = "y"
+triggerall = command != "holddown"
+triggerall = !((P2dist X = [-50,50]) || (P2bodydist X = [-10,10]))
+triggerall = statetype != A
+trigger1 = ctrl
+
+;---------------------------------------------------------------------------
+;近距離立ち強パンチ
+[State -1, Stand Strong Punch]
+type = ChangeState
+value = 215
+triggerall = var(59) <= 0
+triggerall = command = "y"
+triggerall = command != "holddown"
+triggerall = ((P2dist X = [-50,50]) || (P2bodydist X = [-10,10]))
+triggerall = statetype != A
+trigger1 = ctrl
+
+;---------------------------------------------------------------------------
+;立ち弱キック
+[State -1, Stand Light Kick]
+type = ChangeState
+value = 230
+triggerall = var(59) <= 0
+triggerall = command = "a"
+triggerall = command != "holddown"
+triggerall = statetype != A
+trigger1 = ctrl
+
+;コンビネーションLK,HK
+[State -1, Standing Strong Kick]
+type = ChangeState
+value = 240
+triggerall = var(59) <= 0
+triggerall = command = "b"
+triggerall = command != "holddown"
+triggerall = statetype != A
+trigger1 = stateno = 230 && movecontact && var(29) >= 1
+
+;---------------------------------------------------------------------------
+;遠距離立ち強キック1
+[State -1, Standing Strong Kick]
+type = ChangeState
+value = 240
+triggerall = var(59) <= 0
+triggerall = command = "b"
+triggerall = command != "holddown"
+triggerall = !((P2dist X = [-50,50]) || (P2bodydist X = [-10,10]))
+triggerall = statetype != A
+trigger1 = ctrl
+
+;---------------------------------------------------------------------------
+;近距離立ち強キック
+[State -1, Standing Strong Kick]
+type = ChangeState
+value = 245
+triggerall = var(59) <= 0
+triggerall = command = "b"
+triggerall = command != "holddown"
+triggerall = ((P2dist X = [-50,50]) || (P2bodydist X = [-10,10]))
+triggerall = statetype != A
+trigger1 = ctrl
+
+;---------------------------------------------------------------------------
+;挑発
+[State -1, Taunt]
+type = ChangeState
+value = 199
+triggerall = var(59) <= 0
+triggerall = command = "start"
+trigger1 = statetype != A
+trigger1 = ctrl
+
+;---------------------------------------------------------------------------
+;しゃがみ弱パンチ
+[State -1, Crouching Light Punch]
+type = ChangeState
+value = 400
+triggerall = var(59) <= 0
+triggerall = command = "x"
+triggerall = command = "holddown"
+triggerall = statetype != A
+trigger1 = ctrl
+trigger2 = stateno = 200 && (animelem=3,>0 && animelem=6,<0)
+trigger3 = stateno = 400 && (animelem=3,>0 && animelem=6,<0)
+trigger4 = stateno = 430 && (animelem=3,>0 && animelem=6,<0)
+
+;---------------------------------------------------------------------------
+;しゃがみ強パンチ
+[State -1, Crouching Strong Punch]
+type = ChangeState
+value = 410
+triggerall = var(59) <= 0
+triggerall = command = "y"
+triggerall = command = "holddown"
+triggerall = statetype != A
+trigger1 = ctrl
+
+;---------------------------------------------------------------------------
+;しゃがみ弱キック
+[State -1, Crouching Light Kick]
+type = ChangeState
+value = 430
+triggerall = var(59) <= 0
+triggerall = command = "a"
+triggerall = command = "holddown"
+triggerall = statetype != A
+trigger1 = ctrl
+trigger2 = stateno = 200 && (animelem=3,>0 && animelem=6,<0)
+trigger3 = stateno = 400 && (animelem=3,>0 && animelem=6,<0)
+trigger4 = stateno = 430 && (animelem=3,>0 && animelem=6,<0)
+
+;---------------------------------------------------------------------------
+;しゃがみ強キック
+[State -1, Crouching Strong Kick]
+type = ChangeState
+value = 440
+triggerall = var(59) <= 0
+triggerall = command = "b"
+triggerall = command = "holddown"
+triggerall = statetype != A
+trigger1 = ctrl
+
+;---------------------------------------------------------------------------
+;浮羽
+[State -1, Jump Light Kick]
+type = ChangeState
+value = 650
+triggerall = var(59) <= 0
+triggerall = command = "holddown"
+triggerall = command = "a"
+triggerall = statetype = A
+trigger1 = ctrl
+trigger2 = stateno = 1400 && time >= 13
+
+;---------------------------------------------------------------------------
+;空中弱パンチ
+[State -1, Jump Light Punch]
+type = ChangeState
+value = 600
+triggerall = var(59) <= 0
+triggerall = command = "x"
+trigger1 = statetype = A
+trigger1 = ctrl
+
+;---------------------------------------------------------------------------
+[State -1, Jump Strong Punch]
+type = ChangeState
+value = 610
+triggerall = var(59) <= 0
+triggerall = command = "y"
+trigger1 = statetype = A
+trigger1 = ctrl
+
+;---------------------------------------------------------------------------
+[State -1, Jump Light Kick]
+type = ChangeState
+value = 630
+triggerall = var(59) <= 0
+triggerall = command = "a"
+trigger1 = statetype = A
+trigger1 = ctrl
+
+;---------------------------------------------------------------------------
+;空中強キック
+[State -1, Jump Strong Kick]
+type = ChangeState
+value = 640
+triggerall = var(59) <= 0
+triggerall = command = "b"
+trigger1 = statetype = A
+trigger1 = ctrl

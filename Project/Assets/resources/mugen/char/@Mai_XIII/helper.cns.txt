@@ -1,0 +1,3456 @@
+;\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+;---------------------------------------------------------------------------
+;---------------------------------------------------------------------------
+;ヘルパー
+;---------------------------------------------------------------------------
+;---------------------------------------------------------------------------
+;---------------------------------------------------------------------------
+;[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
+;----------------------------------------------------------------------------
+;(HELPER)ＫＯ勝利演出・待機
+[Statedef 8010]
+type = A
+ctrl = 0
+anim = 8000
+velset = 0,0
+movetype = I
+physics = N
+sprpriority = 7
+
+[state a]
+type = AssertSpecial
+trigger1 = 1
+flag = noshadow
+flag2 = invisible
+;---------------------[移動関係]
+[state a]
+type = bindtoroot
+trigger1 = 1
+pos = 0,0
+
+;---------------------[透過]
+;---------------------[]
+[state a]
+type = changestate
+trigger1 = winko
+value = 8011
+
+
+;----------------------------------------------------------------------------
+;(HELPER)ＫＯ勝利演出・通常
+[Statedef 8011]
+type = A
+ctrl = 0
+anim = 8000
+velset = 0,0
+movetype = I
+physics = N
+sprpriority = 7
+
+[state a]
+type = AssertSpecial
+trigger1 = 1
+flag = noshadow
+flag2 = invisible
+;---------------------[移動関係]
+[state a]
+type = bindtoroot
+trigger1 = 1
+pos = 0,0
+
+;---------------------[効果音]
+[State 200, 1];
+type = PlaySnd
+triggerall = time = 0
+triggerall = stateno != [3000,3999]
+trigger1 = root,movecontact
+value = 400, 12
+
+[State 200, 1];
+type = PlaySnd
+triggerall = time = 0
+trigger1 = root,stateno = [3000,3499]
+trigger1 = root,movecontact = [1,10]
+trigger2 = root,stateno = 3520
+value = 400, 13
+
+[State 200, 1];
+type = PlaySnd
+trigger1 = time = 4
+value = 12, 2
+
+;---------------------[エフェクト]
+[state -2,a];超必フィニッシュ
+type = Explod
+triggerall = time = 0
+trigger1 = root,stateno = [3000,3499]
+trigger1 = root,movecontact = [1,10]
+trigger2 = root,stateno = 3520
+anim = 8100
+id = 8100
+postype = left
+bindtime = -1
+pos = -10,-45
+sprpriority = -10
+removetime = 90
+ownpal = 1
+under = 1
+scale = 0.75,0.75
+
+[state -2,a];超必フィニッシュ
+type = Explod
+triggerall = time = 0
+trigger1 = root,stateno = [3000,3499]
+trigger1 = root,movecontact = [1,10]
+trigger2 = root,stateno = 3520
+anim = 8101
+id = 8101
+postype = left
+bindtime = -1
+pos = -10,-45
+sprpriority = -10
+removetime = 90
+ownpal = 1
+under = 1
+scale = 0.75,0.75
+
+[State 7100, PlaySnd]
+type = VarSet
+triggerall = var(9) = 0
+trigger1 = NumExPlod(8100)
+trigger1 = NumExPlod(8101)
+var(9) = 1
+
+[State 7100, PlaySnd]
+type = VarSet
+triggerall = var(9) = 1
+trigger1 = roundstate <= 2
+var(9) = 0
+
+[state -2,a];超必フィニッシュ終了
+type = Explod
+triggerall = time = 90
+trigger1 = var(9)
+anim = 8110
+id = 8110
+postype = left
+bindtime = -1
+pos = -10,-45
+sprpriority = -10
+;removetime = 180
+ownpal = 1
+under = 1
+scale = 0.75,0.75
+
+[state -2,a];超必フィニッシュ終了
+type = Explod
+triggerall = time = 90
+trigger1 = var(9)
+anim = 8111
+id = 8111
+postype = left
+bindtime = -1
+pos = -10,-45
+sprpriority = -10
+;removetime = 180
+ownpal = 1
+under = 1
+scale = 0.75,0.75
+
+[State a];黒背景
+type = Explod
+triggerall = time = 0
+trigger1 = root,stateno = [3000,3499]
+trigger1 = root,movecontact = [1,10]
+trigger2 = root,stateno = 3520
+anim = 8105
+id = 8105
+sprpriority = -11
+postype = left
+pos = 0,0
+bindtime = -1
+;removetime = -1
+under = 0
+ownpal = 1
+;pausemovetime = 99999
+;supermovetime = 99999
+scale = 999999,999999
+under = 1
+
+[State 3040, 7];超必フィニッシュ
+type = null ;EnvColor
+triggerall = time = 0
+trigger1 = root,stateno = [3000,3499]
+trigger1 = root,movecontact = [1,10]
+trigger2 = root,stateno = 3520
+;persistent = 0
+ignorehitpause = 1
+time = 90
+value = 0,0,0
+under = 1
+
+
+
+[State a];フラッシュ
+type = Explod
+triggerall = root,var(13) = 2
+triggerall = NumExPlod(8100) = 0 && NumExPlod(8101) = 0
+trigger1 = time = 0
+anim = 8015
+id = 8015
+sprpriority = -11
+postype = left
+pos = 0,0
+bindtime = -1
+;removetime = -1
+under = 0
+ownpal = 1
+;pausemovetime = 99999
+;supermovetime = 99999
+scale = 999999,999999
+under = 1
+
+
+;--
+
+[State a];KO
+type = Explod
+;triggerall = !MatchOver
+trigger1 = time = 3
+anim = 8030
+id = 8030
+sprpriority = 15
+postype = left
+pos = 160,120
+vel = 0,0
+bindtime = -1
+under = 0
+ownpal = 1
+pausemovetime = 99999
+supermovetime = 99999
+under = 1
+scale = 1,1
+
+[state a]
+type = ModifyExplod
+trigger1 = 1
+ID = 8030
+scale = fvar(0),fvar(0)
+
+[state a]
+type = varset
+trigger1 = time = 0
+fvar(0) = 0
+
+[state a]
+type = varadd
+trigger1 = time > 2
+trigger1 = time <= 22
+fvar(0) = 0.2
+
+[state a]
+type = removeexplod
+trigger1 = time = 22
+id = 8090
+
+[State a];KO
+type = Explod
+;triggerall = !MatchOver
+trigger1 = time = 11
+anim = 8080
+id = 8080
+sprpriority = 10
+postype = left
+pos = 45,50
+vel = 0,0
+bindtime = -1
+under = 0
+ownpal = 1
+pausemovetime = 99999
+supermovetime = 99999
+under = 1
+scale = 0.5,0.5
+
+[State a];KO
+type = Explod
+;triggerall = !MatchOver
+trigger1 = time = 11
+anim = 8081
+id = 8081
+sprpriority = 10
+postype = left
+pos = 45,50
+vel = 0,0
+bindtime = -1
+under = 0
+ownpal = 1
+pausemovetime = 99999
+supermovetime = 99999
+under = 1
+scale = 0.5,0.5
+
+[State a];KO
+type = Explod
+;triggerall = !MatchOver
+trigger1 = time = 11
+anim = 8082
+id = 8082
+sprpriority = 10
+postype = left
+pos = 45,50
+vel = 0,0
+bindtime = -1
+under = 0
+ownpal = 1
+pausemovetime = 99999
+supermovetime = 99999
+under = 1
+scale = 0.5,0.5
+
+[State a];KO
+type = Explod
+;triggerall = !MatchOver
+trigger1 = time = 11
+anim = 8083
+id = 8083
+sprpriority = 11
+postype = left
+pos = 45,50
+vel = 0,0
+bindtime = -1
+under = 0
+ownpal = 1
+pausemovetime = 99999
+supermovetime = 99999
+under = 1
+scale = 0.5,0.5
+
+[State a];KO
+type = Explod
+;triggerall = !MatchOver
+trigger1 = time = 11
+anim = 8086
+id = 8086
+sprpriority = 12
+postype = left
+pos = 45,50
+vel = 0,0
+bindtime = -1
+under = 0
+ownpal = 1
+pausemovetime = 99999
+supermovetime = 99999
+under = 1
+scale = 0.5,0.5
+
+[State a];KO
+type = Explod
+;triggerall = !MatchOver
+trigger1 = time = 11
+anim = 8087
+id = 8087
+sprpriority = 12
+postype = left
+pos = 45,50
+vel = 0,0
+bindtime = -1
+under = 0
+ownpal = 1
+pausemovetime = 99999
+supermovetime = 99999
+under = 1
+scale = 0.5,0.5
+
+[State a];KO
+type = Explod
+;triggerall = !MatchOver
+trigger1 = time = 11
+anim = 8088
+id = 8088
+sprpriority = 12
+postype = left
+pos = 45,50
+vel = 0,0
+bindtime = -1
+under = 0
+ownpal = 1
+pausemovetime = 99999
+supermovetime = 99999
+under = 1
+scale = 0.5,0.5
+
+[State a];KO
+type = Explod
+;triggerall = !MatchOver
+trigger1 = time = 11
+anim = 8089
+id = 8089
+sprpriority = 12
+postype = left
+pos = 45,50
+vel = 0,0
+bindtime = -1
+under = 0
+ownpal = 1
+pausemovetime = 99999
+supermovetime = 99999
+under = 1
+scale = 0.5,0.5
+
+;--
+
+[State a];KO_K1
+type = Explod
+;triggerall = !MatchOver
+trigger1 = time = 5
+anim = 8084
+id = 8084
+sprpriority = 11
+postype = left
+pos = -155,-150
+vel = 40,40
+bindtime = 0
+under = 0
+ownpal = 1
+pausemovetime = 99999
+supermovetime = 99999
+under = 1
+scale = 0.5,0.5
+
+[State a];KO_O1
+type = Explod
+;triggerall = !MatchOver
+trigger1 = time = 5
+anim = 8085
+id = 8085
+sprpriority = 11
+postype = left
+pos = -155,-150
+vel = 40,40
+bindtime = 0
+under = 0
+ownpal = 1
+pausemovetime = 99999
+supermovetime = 99999
+under = 1
+scale = 0.5,0.5
+
+;--
+
+[State a];KO_K2
+type = Explod
+;triggerall = !MatchOver
+trigger1 = time = 5
+anim = 8084
+id = 8084
+sprpriority = 11
+postype = left
+pos = 245,-150
+vel = -40,40
+bindtime = 0
+under = 0
+ownpal = 1
+pausemovetime = 99999
+supermovetime = 99999
+under = 1
+scale = 0.5,0.5
+
+[State a];KO_O2
+type = Explod
+;triggerall = !MatchOver
+trigger1 = time = 5
+anim = 8085
+id = 8085
+sprpriority = 11
+postype = left
+pos = 245,-150
+vel = -40,40
+bindtime = 0
+under = 0
+ownpal = 1
+pausemovetime = 99999
+supermovetime = 99999
+under = 1
+scale = 0.5,0.5
+
+;--
+
+[State a];KO_K3
+type = Explod
+;triggerall = !MatchOver
+trigger1 = time = 5
+anim = 8084
+id = 8084
+sprpriority = 11
+postype = left
+pos = -155,250
+vel = 40,-40
+bindtime = 0
+under = 0
+ownpal = 1
+pausemovetime = 99999
+supermovetime = 99999
+under = 1
+scale = 0.5,0.5
+
+[State a];KO_O3
+type = Explod
+;triggerall = !MatchOver
+trigger1 = time = 5
+anim = 8085
+id = 8085
+sprpriority = 11
+postype = left
+pos = -155,250
+vel = 40,-40
+bindtime = 0
+under = 0
+ownpal = 1
+pausemovetime = 99999
+supermovetime = 99999
+under = 1
+scale = 0.5,0.5
+
+;--
+
+[State a];KO_K4
+type = Explod
+;triggerall = !MatchOver
+trigger1 = time = 5
+anim = 8084
+id = 8084
+sprpriority = 11
+postype = left
+pos = 245,250
+vel = -40,-40
+bindtime = 0
+under = 0
+ownpal = 1
+pausemovetime = 99999
+supermovetime = 99999
+under = 1
+scale = 0.5,0.5
+
+[State a];KO_K4
+type = Explod
+;triggerall = !MatchOver
+trigger1 = time = 5
+anim = 8085
+id = 8085
+sprpriority = 11
+postype = left
+pos = 245,250
+vel = -40,-40
+bindtime = 0
+under = 0
+ownpal = 1
+pausemovetime = 99999
+supermovetime = 99999
+under = 1
+scale = 0.5,0.5
+
+
+
+
+
+;----------------------------------------------------------------------------
+;(HELPER)炎攻撃ヒット
+[Statedef 7020]
+type = A
+ctrl = 0
+anim = 8000
+velset = 0,0
+movetype = I
+physics = N
+sprpriority = 10
+
+[state a]
+type = AssertSpecial
+trigger1 = 1
+flag = noshadow
+flag2 = invisible
+
+;---------------------[効果音]
+[State 2000, 6];炎
+type = PlaySnd
+trigger1 = time = 0
+value = 1500,2
+
+;---------------------[]
+[State explod];炎
+type = Explod
+trigger1 = 1
+anim = 7020+random%3
+id = 3000
+sprpriority = 10
+postype = p1
+pos = -40 + random%80,-10 - random%90
+bindtime = 1
+supermovetime = 28
+under = 0
+trans = addalpha
+alpha = 256,40
+
+;---------------------[ステート移行]
+[state a]
+type = destroyself
+trigger1 = time = 3
+
+
+;\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+;---------------------------------------------------------------------------
+;---------------------------------------------------------------------------
+;ゲージ関連
+;---------------------------------------------------------------------------
+;---------------------------------------------------------------------------
+;---------------------------------------------------------------------------
+;----------------------------------------------------------------------------
+;(HELPER)ゲージ
+[Statedef 7500]
+type = A
+ctrl = 0
+anim = 8000
+velset = 0,0
+movetype = I
+physics = N
+sprpriority = 10
+
+;---------------------[varセット]
+
+[state a]
+type = varset
+trigger1 = 1
+var(19) = root,var(19)
+
+[state a]
+type = varset
+trigger1 = 1
+var(20) = root,var(20)
+
+;---------------------[パワーゲージ]
+
+[state a]
+type = varadd
+trigger1 = power > var(2)
+var(2) = ifelse(floor((power - var(2)) / 10) < 1,1,floor((power - var(2)) / 10))
+
+[state a]
+type = varadd
+trigger1 = power < var(2)
+var(2) = ifelse(floor((power - var(2)) / 10) > -1,-1,floor((power - var(2)) / 10))
+
+[state a]
+type = varset
+trigger1 = var(2) < 0
+var(2) = 0
+
+[state a]
+type = varadd
+trigger1 = var(19) > var(3)
+var(3) = ifelse(floor((var(19) - var(3)) / 10) < 1,1,floor((var(19) - var(3)) / 10))
+
+[state a]
+type = varadd
+trigger1 = var(19) < var(3)
+var(3) = ifelse(floor((var(19) - var(3)) / 10) > -1,-1,floor((var(19) - var(3)) / 10))
+
+[state a]
+type = varset
+trigger1 = var(2) < 0
+var(3) = 0
+
+;---------------------[透過]
+[state a]
+type = null;Trans
+trigger1 = 1
+trans = addalpha
+alpha = 256, 256
+
+;---------------------[]
+[state -2,a];ゲージ枠a
+type = Explod
+triggerall = RoundState <= 2
+trigger1 = Facing = 1
+trigger1 = numexplod(7501) = 0
+anim = 7501
+id = 7501
+postype = back
+bindtime = -1
+pos = 36,230
+sprpriority = 98
+removetime = -1
+ownpal = 1
+ontop = 1
+
+[state -2,a];ゲージ枠a
+type = Explod
+triggerall = RoundState <= 2
+trigger1 = Facing = -1
+trigger1 = numexplod(7501) = 0
+anim = 7501
+id = 7501
+postype = back
+bindtime = -1
+pos = 36,230
+sprpriority = 98
+removetime = -1
+ownpal = 1
+facing = 1
+ontop = 1
+
+[state a]
+type = removeexplod
+trigger1 = RoundState > 2
+trigger2 = (root,stateno = [3500,3599]) && root,movetype = A
+id = 7501
+
+[state a]
+type = AssertSpecial
+trigger1 = 1
+flag = noshadow
+flag2 = invisible
+
+;---------------------[ゲージ量]
+
+[state -2,a];ゲージ数0
+type = Explod
+triggerall = RoundState <= 2
+trigger1 = Facing = 1
+trigger1 = power >= 0
+trigger1 = power < 1000
+trigger1 = numexplod(7510) = 0
+anim = 7510
+id = 7510
+postype = back
+bindtime = -1
+pos = 38,230 ;17,230
+sprpriority = 99
+removetime = -1
+ownpal = 1
+ontop = 1
+
+[state -2,a];ゲージ数0
+type = Explod
+triggerall = RoundState <= 2
+trigger1 = Facing = -1
+trigger1 = power >= 0
+trigger1 = power < 1000
+trigger1 = numexplod(7510) = 0
+anim = 7510
+id = 7510
+postype = back
+bindtime = -1
+pos = -21,230 ;16,230
+sprpriority = 99
+removetime = -1
+facing = -1
+ownpal = 1
+ontop = 1
+
+[state -2,a];ゲージ数1
+type = Explod
+triggerall = RoundState <= 2
+trigger1 = Facing = 1
+trigger1 = power >= 1000
+trigger1 = power < 2000
+trigger1 = numexplod(7511) = 0
+anim = 7511
+id = 7511
+postype = back
+bindtime = -1
+pos = 38,230 ;17,230
+sprpriority = 99
+removetime = -1
+ownpal = 1
+ontop = 1
+
+[state -2,a];ゲージ数1
+type = Explod
+triggerall = RoundState <= 2
+trigger1 = Facing = -1
+trigger1 = power >= 1000
+trigger1 = power < 2000
+trigger1 = numexplod(7511) = 0
+anim = 7511
+id = 7511
+postype = back
+bindtime = -1
+pos = -21,230 ;16,230
+sprpriority = 99
+removetime = -1
+facing = -1
+ownpal = 1
+ontop = 1
+
+[state -2,a];ゲージ数2
+type = Explod
+triggerall = RoundState <= 2
+trigger1 = Facing = 1
+trigger1 = power >= 2000
+trigger1 = power < 3000
+trigger1 = numexplod(7512) = 0
+anim = 7512
+id = 7512
+postype = back
+bindtime = -1
+pos = 38,230 ;17,230
+sprpriority = 99
+removetime = -1
+ownpal = 1
+ontop = 1
+
+[state -2,a];ゲージ数2
+type = Explod
+triggerall = RoundState <= 2
+trigger1 = Facing = -1
+trigger1 = power >= 2000
+trigger1 = power < 3000
+trigger1 = numexplod(7512) = 0
+anim = 7512
+id = 7512
+postype = back
+bindtime = -1
+pos = -21,230 ;16,230
+sprpriority = 99
+removetime = -1
+facing = -1
+ownpal = 1
+ontop = 1
+
+
+[state -2,a];ゲージ数3
+type = Explod
+triggerall = RoundState <= 2
+trigger1 = Facing = 1
+trigger1 = power >= 3000
+trigger1 = power < 4000
+trigger1 = numexplod(7513) = 0
+anim = 7513
+id = 7513
+postype = back
+bindtime = -1
+pos = 38,230 ;17,230
+sprpriority = 99
+removetime = -1
+ownpal = 1
+ontop = 1
+
+[state -2,a];ゲージ数3
+type = Explod
+triggerall = RoundState <= 2
+trigger1 = Facing = -1
+trigger1 = power >= 3000
+trigger1 = power < 4000
+trigger1 = numexplod(7513) = 0
+anim = 7513
+id = 7513
+postype = back
+bindtime = -1
+pos = -21,230 ;16,230
+sprpriority = 99
+removetime = -1
+facing = -1
+ownpal = 1
+ontop = 1
+
+[state -2,a];ゲージ数4
+type = Explod
+triggerall = RoundState <= 2
+trigger1 = Facing = 1
+trigger1 = power >= 4000
+trigger1 = power < 5000
+trigger1 = numexplod(7514) = 0
+anim = 7514
+id = 7514
+postype = back
+bindtime = -1
+pos = 38,230 ;17,230
+sprpriority = 99
+removetime = -1
+ownpal = 1
+ontop = 1
+
+[state -2,a];ゲージ数4
+type = Explod
+triggerall = RoundState <= 2
+trigger1 = Facing = -1
+trigger1 = power >= 4000
+trigger1 = power < 5000
+trigger1 = numexplod(7514) = 0
+anim = 7514
+id = 7514
+postype = back
+bindtime = -1
+pos = -21,230 ;16,230
+sprpriority = 99
+removetime = -1
+facing = -1
+ownpal = 1
+ontop = 1
+
+[state -2,a];ゲージ数5
+type = Explod
+triggerall = RoundState <= 2
+trigger1 = Facing = 1
+trigger1 = power >= 5000
+trigger1 = power < 6000
+trigger1 = numexplod(7515) = 0
+anim = 7515
+id = 7515
+postype = back
+bindtime = -1
+pos = 38,230 ;17,230
+sprpriority = 99
+removetime = -1
+ownpal = 1
+ontop = 1
+
+[state -2,a];ゲージ数5
+type = Explod
+triggerall = RoundState <= 2
+trigger1 = Facing = -1
+trigger1 = power >= 5000
+trigger1 = power < 6000
+trigger1 = numexplod(7515) = 0
+anim = 7515
+id = 7515
+postype = back
+bindtime = -1
+pos = -21,230 ;16,230
+sprpriority = 99
+removetime = -1
+facing = -1
+ownpal = 1
+ontop = 1
+
+
+
+[state a];0
+type = removeexplod
+trigger1 = RoundState > 2
+trigger2 = power >= 1000
+trigger3 = (root,stateno = [3500,3599]) && root,movetype = A
+id = 7510
+
+[state a];1
+type = removeexplod
+trigger1 = RoundState > 2
+trigger2 = power >= 2000
+trigger3 = power < 1000
+trigger4 = (root,stateno = [3500,3599]) && root,movetype = A
+id = 7511
+
+[state a];2
+type = removeexplod
+trigger1 = RoundState > 2
+trigger2 = power >= 3000
+trigger3 = power < 2000
+trigger4 = (root,stateno = [3500,3599]) && root,movetype = A
+id = 7512
+
+[state a];3
+type = removeexplod
+trigger1 = RoundState > 2
+trigger2 = power >= 4000
+trigger3 = power < 3000
+trigger4 = (root,stateno = [3500,3599]) && root,movetype = A
+id = 7513
+
+[state a];4
+type = removeexplod
+trigger1 = RoundState > 2
+trigger2 = power >= 5000
+trigger3 = power < 4000
+trigger4 = (root,stateno = [3500,3599]) && root,movetype = A
+id = 7514
+
+[state a];5
+type = removeexplod
+trigger1 = RoundState > 2
+trigger2 = power >= 6000
+trigger3 = power < 5000
+trigger4 = (root,stateno = [3500,3599]) && root,movetype = A
+id = 7515
+
+
+;---------------------------[通常ゲージ]
+
+[state -2,a];ゲージ量
+type = Explod
+triggerall = RoundState <= 2
+trigger1 = Facing = 1
+trigger1 = var(2) < 5000 ;power < 5000
+trigger1 = power >= 1
+trigger1 = numexplod(7520) = 0
+anim = 7520
+id = 7520
+postype = left
+bindtime = -1
+pos = 32,230
+sprpriority = 99
+removetime = -1
+ownpal = 1
+ontop = 1
+
+[state -2,a];ゲージ量
+type = Explod
+triggerall = RoundState <= 2
+trigger1 = Facing = -1
+trigger1 = var(2) < 5000 ;power < 5000
+trigger1 = power >= 1
+trigger1 = numexplod(7520) = 0
+anim = 7521
+id = 7520
+postype = right
+bindtime = -1
+pos = -31,230
+sprpriority = 99
+removetime = -1
+ownpal = 1
+;facing = -1
+ontop = 1
+
+[state a]
+type = removeexplod
+trigger1 = RoundState > 2
+trigger2 = (root,stateno = [3500,3599]) && root,movetype = A
+trigger3 = var(2) <= 0 ;power <= 0
+id = 7520
+
+[state a]
+type = ModifyExplod
+trigger1 = 1
+ID = 7520
+scale = var(2) * 0.001 - floor(var(2)*0.001),1
+;scale = power * 0.001 - floor(power*0.001),1
+
+
+
+[state -2,a];MAX
+type = Explod
+triggerall = RoundState <= 2
+trigger1 = Facing = 1
+trigger1 = var(2) >= 5000 ;power >= 5000
+trigger1 = numexplod(7525) = 0
+anim = 7525
+id = 7525
+postype = left
+bindtime = -1
+pos = 32,230
+sprpriority = 99
+removetime = -1
+ownpal = 1
+ontop = 1
+
+[state -2,a];MAXIMUM
+type = Explod
+triggerall = RoundState <= 2
+trigger1 = Facing = 1
+trigger1 = var(2) >= 5000 ;power >= 5000
+trigger1 = numexplod(7526) = 0
+anim = 7526
+id = 7526
+postype = left
+bindtime = -1
+pos = 32,230
+sprpriority = 100
+removetime = -1
+ownpal = 1
+ontop = 1
+
+[state -2,a];MAX
+type = Explod
+triggerall = RoundState <= 2
+trigger1 = Facing = -1
+trigger1 = var(2) >= 5000 ;power >= 5000
+trigger1 = numexplod(7525) = 0
+anim = 7525
+id = 7525
+postype = right
+bindtime = -1
+pos = -143,230
+sprpriority = 99
+removetime = -1
+ownpal = 1
+;facing = -1
+ontop = 1
+
+[state -2,a];MAXIMUM
+type = Explod
+triggerall = RoundState <= 2
+trigger1 = Facing = -1
+trigger1 = var(2) >= 5000 ;power >= 5000
+trigger1 = numexplod(7526) = 0
+anim = 7526
+id = 7526
+postype = right
+bindtime = -1
+pos = -143,230
+sprpriority = 100
+removetime = -1
+ownpal = 1
+;facing = -1
+ontop = 1
+
+[state a]
+type = removeexplod
+trigger1 = var(2) < 5000 ;power < 5000
+id = 7525
+
+[state a]
+type = removeexplod
+trigger1 = var(2) < 5000 ;power < 5000
+id = 7526
+
+[state a]
+type = removeexplod
+trigger1 = RoundState > 2
+trigger2 = (root,stateno = [3500,3599]) && root,movetype = A
+id = 7525
+
+[state a]
+type = removeexplod
+trigger1 = RoundState > 2
+trigger2 = (root,stateno = [3500,3599]) && root,movetype = A
+id = 7526
+
+;-------------------------------[ドライブゲージ]
+
+[state -2,a];ゲージ量
+type = Explod
+triggerall = RoundState <= 2
+trigger1 = Facing = 1
+trigger1 = var(19) < 500
+trigger1 = var(19) >= 1
+trigger1 = numexplod(7530) = 0
+anim = 7530
+id = 7530
+postype = left
+bindtime = -1
+pos = 32,230
+sprpriority = 99
+removetime = -1
+ownpal = 1
+ontop = 1
+
+[state -2,a];ゲージ量
+type = Explod
+triggerall = RoundState <= 2
+trigger1 = Facing = -1
+trigger1 = var(19) < 500
+trigger1 = var(19) >= 1
+trigger1 = numexplod(7530) = 0
+anim = 7531
+id = 7530
+postype = right
+bindtime = -1
+pos = -31,230
+sprpriority = 99
+removetime = -1
+ownpal = 1
+;facing = -1
+ontop = 1
+
+[state a]
+type = removeexplod
+trigger1 = RoundState > 2
+trigger2 = var(19) >= 500
+trigger3 = (root,stateno = [3500,3599]) && root,movetype = A
+trigger4 = var(19) <= 0
+id = 7530
+
+[state a]
+type = ModifyExplod
+trigger1 = 1
+ID = 7530
+scale = var(3) * 0.002,1
+;scale = var(19) * 0.002,1
+
+;-----
+
+[state -2,a];ゲージ量(半分チャージ)
+type = Explod
+triggerall = RoundState <= 2
+trigger1 = Facing = 1
+trigger1 = var(19) >= 500
+trigger1 = var(19) < 1000
+trigger1 = numexplod(7535) = 0
+anim = 7535
+id = 7535
+postype = left
+bindtime = -1
+pos = 32,230
+sprpriority = 99
+removetime = -1
+ownpal = 1
+ontop = 1
+
+[state -2,a];ゲージ量(半分チャージ)
+type = Explod
+triggerall = RoundState <= 2
+trigger1 = Facing = -1
+trigger1 = var(19) >= 500
+trigger1 = var(19) < 1000
+trigger1 = numexplod(7535) = 0
+anim = 7535
+id = 7535
+postype = right
+bindtime = -1
+pos = -86,230 ;-31,230
+sprpriority = 99
+removetime = -1
+ownpal = 1
+;facing = -1
+ontop = 1
+
+[state a]
+type = removeexplod
+trigger1 = RoundState > 2
+trigger2 = var(19) < 500
+trigger3 = var(19) >= 1000
+trigger4 = (root,stateno = [3500,3599]) && root,movetype = A
+id = 7535
+
+;-----
+
+[state -2,a];ゲージ量
+type = Explod
+triggerall = RoundState <= 2
+trigger1 = Facing = 1
+trigger1 = var(19) >= 500
+trigger1 = var(19) < 1000
+trigger1 = numexplod(7532) = 0
+anim = 7530
+id = 7532
+postype = left
+bindtime = -1
+pos = 88,230 ;32
+sprpriority = 99
+removetime = -1
+ownpal = 1
+ontop = 1
+
+[state -2,a];ゲージ量
+type = Explod
+triggerall = RoundState <= 2
+trigger1 = Facing = -1
+trigger1 = var(19) >= 500
+trigger1 = var(19) < 1000
+trigger1 = numexplod(7532) = 0
+anim = 7531
+id = 7532
+postype = right
+bindtime = -1
+pos = -87,230 ;-31
+sprpriority = 99
+removetime = -1
+ownpal = 1
+;facing = -1
+ontop = 1
+
+[state a]
+type = removeexplod
+trigger1 = RoundState > 2
+trigger2 = var(19) < 500
+trigger3 = var(19) >= 1000
+trigger4 = (root,stateno = [3500,3599]) && root,movetype = A
+id = 7532
+
+[state a]
+type = ModifyExplod
+trigger1 = 1
+ID = 7532
+scale = (var(3) -500) * 0.002,1
+;scale = (var(19) -500) * 0.002,1
+
+;-----
+
+[state -2,a];ゲージ量(満タンチャージ)
+type = Explod
+triggerall = RoundState <= 2
+trigger1 = Facing = 1
+trigger1 = var(19) >= 1000
+trigger1 = numexplod(7536) = 0
+anim = 7536
+id = 7536
+postype = left
+bindtime = -1
+pos = 32,230
+sprpriority = 99
+removetime = -1
+ownpal = 1
+ontop = 1
+
+[state -2,a];ゲージ量(満タンチャージ)
+type = Explod
+triggerall = RoundState <= 2
+trigger1 = Facing = -1
+trigger1 = var(19) >= 1000
+trigger1 = numexplod(7536) = 0
+anim = 7536
+id = 7536
+postype = right
+bindtime = -1
+pos = -143,230
+sprpriority = 99
+removetime = -1
+ownpal = 1
+;facing = -1
+ontop = 1
+
+[state a]
+type = removeexplod
+trigger1 = RoundState > 2
+trigger2 = var(19) < 1000
+trigger3 = (root,stateno = [3500,3599]) && root,movetype = A
+id = 7536
+
+;-------------------------------------[ハイパードライブモード時]
+
+[state -2,a];ゲージ量
+type = Explod
+triggerall = RoundState <= 2
+trigger1 = Facing = 1
+trigger1 = var(20) > 0
+trigger1 = numexplod(7537) = 0
+anim = 7535
+id = 7537
+postype = left
+bindtime = -1
+pos = 32,230
+sprpriority = 99
+removetime = -1
+ownpal = 1
+ontop = 1
+
+[state -2,a];ゲージ量
+type = Explod
+triggerall = RoundState <= 2
+trigger1 = Facing = -1
+trigger1 = var(20) > 0
+trigger1 = numexplod(7537) = 0
+anim = 7537
+id = 7537
+postype = right
+bindtime = -1
+pos = -31,230
+sprpriority = 99
+removetime = -1
+ownpal = 1
+;facing = -1
+ontop = 1
+
+[state a]
+type = removeexplod
+trigger1 = RoundState > 2
+trigger2 = var(20) <= 0
+trigger3 = (root,stateno = [3500,3599]) && root,movetype = A
+id = 7537
+
+[state a]
+type = ModifyExplod
+trigger1 = 1
+ID = 7537
+scale = ifelse(var(20) > 300,1,var(20) * 0.00333),1
+
+[state -2,a];ゲージ量
+type = Explod
+triggerall = RoundState <= 2
+trigger1 = Facing = 1
+trigger1 = var(20) >= 300
+trigger1 = numexplod(7538) = 0
+anim = 7535
+id = 7538
+postype = left
+bindtime = -1
+pos = 88,230 ;32
+sprpriority = 99
+removetime = -1
+ownpal = 1
+ontop = 1
+
+[state -2,a];ゲージ量
+type = Explod
+triggerall = RoundState <= 2
+trigger1 = Facing = -1
+trigger1 = var(20) >= 300
+trigger1 = numexplod(7538) = 0
+anim = 7537
+id = 7538
+postype = right
+bindtime = -1
+pos = -87,230 ;-31
+sprpriority = 99
+removetime = -1
+ownpal = 1
+;facing = -1
+ontop = 1
+
+[state a]
+type = removeexplod
+trigger1 = RoundState > 2
+trigger2 = var(20) < 300
+trigger3 = (root,stateno = [3500,3599]) && root,movetype = A
+id = 7538
+
+[state a]
+type = ModifyExplod
+trigger1 = 1
+ID = 7538
+scale = (var(20)-300) * 0.00333, 1
+
+;---------------------[]
+[state a]
+type = changestate
+trigger1 = RoundState > 2
+trigger1 = winko
+value = 8011
+
+
+;\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+;---------------------------------------------------------------------------
+;---------------------------------------------------------------------------
+;勝利画面
+;---------------------------------------------------------------------------
+;---------------------------------------------------------------------------
+;---------------------------------------------------------------------------
+;[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
+;----------------------------------------------------------------------------
+;(HELPER)勝利画面
+[Statedef 8500]
+type = A
+ctrl = 0
+anim = 8000
+velset = 0,0
+movetype = I
+physics = N
+sprpriority = 7
+
+[state a]
+type = AssertSpecial
+trigger1 = 1
+flag = noshadow
+flag2 = invisible
+rehitpause = 1
+
+[state a]
+type = AssertSpecial
+trigger1 = time >= 34
+flag = NoBarDisplay
+
+;---------------------[変数]
+[state a]
+type = varset
+trigger1 = 1
+v = 5
+value = root,var(9)
+
+;---------------------[移動関係]
+[state a]
+type = bindtoroot
+trigger1 = 1
+pos = 0,0
+
+;---------------------[サウンド]
+[State a];
+type = PlaySnd
+trigger1 = time = 64
+value = 8500, 0
+
+;---------------------[演出]
+[State 181, 4]
+type = AssertSpecial
+trigger1 = time = [0,660]
+flag = roundnotover
+
+[state a]
+type = AssertSpecial
+trigger1 = time >= 32
+flag = nomusic
+
+;---------------------[エフェクト]
+[state a]
+type = varadd
+trigger1 = time <= 32
+v = 1
+value = 8
+
+[state a]
+type = varset
+trigger1 = time = 32
+v = 1
+value = 256
+
+[state a]
+type = varadd
+trigger1 = time >= 32
+trigger1 = time < 96
+v = 1
+value = -8
+
+[state a]
+type = varset
+trigger1 = time = 96
+v = 1
+value = -256
+
+[State a];暗転
+type = AllPalfx
+trigger1 = time <= 96
+time = 1
+add = var(1),var(1),var(1)
+;invertall = 0
+;color = 256
+
+;---------------------[エフェクト]
+
+[State a];黒背景
+type = Explod
+trigger1 = time = 32
+anim = 8014
+id = 8014
+sprpriority = 3
+postype = left
+pos = 0,0
+bindtime = -1
+;removetime = -1
+under = 0
+ownpal = 1
+pausemovetime = 99999
+supermovetime = 99999
+scale = 999999,999999
+ontop = 1
+
+[State a];閃光１
+type = Explod
+trigger1 = time = 96
+anim = 8010
+id = 8010
+sprpriority = 3
+postype = left
+pos = 0,0
+bindtime = -1
+under = 0
+ownpal = 1
+pausemovetime = 99999
+supermovetime = 99999
+scale = 0.5,0.5
+ontop = 1
+
+[State a];閃光１
+type = Explod
+trigger1 = time = 96
+anim = 8011
+id = 8011
+sprpriority = 3
+postype = left
+pos = 0,0
+bindtime = -1
+under = 0
+ownpal = 1
+pausemovetime = 99999
+supermovetime = 99999
+scale = 0.5,0.5
+ontop = 1
+
+[State a];閃光２
+type = Explod
+trigger1 = time = 112
+anim = 8012
+id = 8012
+sprpriority = 3
+postype = left
+pos = 0,0
+bindtime = -1
+under = 0
+ownpal = 1
+pausemovetime = 99999
+supermovetime = 99999
+scale = 0.5,0.5
+ontop = 1
+
+[State a];閃光２
+type = Explod
+trigger1 = time = 112
+anim = 8013
+id = 8013
+sprpriority = 3
+postype = left
+pos = 0,0
+bindtime = -1
+under = 0
+ownpal = 1
+pausemovetime = 99999
+supermovetime = 99999
+scale = 0.5,0.5
+ontop = 1
+
+;---------------------[エフェクト]
+
+[State a];WINNER W
+type = Explod
+trigger1 = time = 120
+anim = 8040
+id = 8040
+sprpriority = 3
+postype = left
+pos = 160,120
+bindtime = -1
+under = 0
+ownpal = 1
+pausemovetime = 99999
+supermovetime = 99999
+;scale = 1,1
+ontop = 1
+
+[state a]
+type = ModifyExplod
+trigger1 = 1
+ID = 8040
+scale = fvar(0),fvar(0)
+
+[state a]
+type = varset
+trigger1 = time = 0
+fvar(0) = 1
+
+[state a]
+type = varadd
+trigger1 = time > 120
+trigger1 = time <= 125
+fvar(0) = -0.15
+
+
+[State a];WINNER I
+type = Explod
+trigger1 = time = 125
+anim = 8041
+id = 8041
+sprpriority = 3
+postype = left
+pos = 160,120
+bindtime = -1
+under = 0
+ownpal = 1
+pausemovetime = 99999
+supermovetime = 99999
+;scale = 1,1
+ontop = 1
+
+[state a]
+type = ModifyExplod
+trigger1 = 1
+ID = 8041
+scale = fvar(1),fvar(1)
+
+[state a]
+type = varset
+trigger1 = time = 0
+fvar(1) = 1
+
+[state a]
+type = varadd
+trigger1 = time > 125
+trigger1 = time <= 130
+fvar(1) = -0.15
+
+
+[State a];WINNER N1
+type = Explod
+trigger1 = time = 130
+anim = 8042
+id = 8042
+sprpriority = 3
+postype = left
+pos = 160,120
+bindtime = -1
+under = 0
+ownpal = 1
+pausemovetime = 99999
+supermovetime = 99999
+;scale = 1,1
+ontop = 1
+
+[state a]
+type = ModifyExplod
+trigger1 = 1
+ID = 8042
+scale = fvar(0),fvar(0)
+
+[state a]
+type = varset
+trigger1 = time = 129
+fvar(0) = 1
+
+[state a]
+type = varadd
+trigger1 = time > 130
+trigger1 = time <= 135
+fvar(0) = -0.15
+
+
+[State a];WINNER N2
+type = Explod
+trigger1 = time = 135
+anim = 8042
+id = 8043
+sprpriority = 3
+postype = left
+pos = 160,120
+bindtime = -1
+under = 0
+ownpal = 1
+pausemovetime = 99999
+supermovetime = 99999
+;scale = 1,1
+ontop = 1
+
+[state a]
+type = ModifyExplod
+trigger1 = 1
+ID = 8043
+scale = fvar(1),fvar(1)
+
+[state a]
+type = varset
+trigger1 = time = 134
+fvar(1) = 1
+
+[state a]
+type = varadd
+trigger1 = time > 135
+trigger1 = time <= 140
+fvar(1) = -0.15
+
+
+[State a];WINNER E
+type = Explod
+trigger1 = time = 140
+anim = 8043
+id = 8044
+sprpriority = 3
+postype = left
+pos = 160,120
+bindtime = -1
+under = 0
+ownpal = 1
+pausemovetime = 99999
+supermovetime = 99999
+;scale = 1,1
+ontop = 1
+
+[state a]
+type = ModifyExplod
+trigger1 = 1
+ID = 8044
+scale = fvar(0),fvar(0)
+
+[state a]
+type = varset
+trigger1 = time = 139
+fvar(0) = 1
+
+[state a]
+type = varadd
+trigger1 = time > 140
+trigger1 = time <= 145
+fvar(0) = -0.15
+
+
+[State a];WINNER R
+type = Explod
+trigger1 = time = 145
+anim = 8044
+id = 8045
+sprpriority = 3
+postype = left
+pos = 160,120
+bindtime = -1
+under = 0
+ownpal = 1
+pausemovetime = 99999
+supermovetime = 99999
+;scale = 1,1
+ontop = 1
+
+[state a]
+type = ModifyExplod
+trigger1 = 1
+ID = 8045
+scale = fvar(1),fvar(1)
+
+[state a]
+type = varset
+trigger1 = time = 144
+fvar(1) = 1
+
+[state a]
+type = varadd
+trigger1 = time > 145
+trigger1 = time <= 150
+fvar(1) = -0.15
+
+
+
+[State a];輪っか
+type = Explod
+trigger1 = time = 120
+anim = 8030
+id = 8030
+sprpriority = 4
+postype = left
+pos = 160,120
+bindtime = -1
+under = 0
+ownpal = 1
+pausemovetime = 99999
+supermovetime = 99999
+;scale = 1,1
+ontop = 1
+
+[state a]
+type = ModifyExplod
+trigger1 = 1
+ID = 8030
+scale = fvar(2),fvar(2)
+
+[state a]
+type = RemoveExplod
+trigger1 = time >= 140
+ID = 8030
+time = 1
+
+[state a]
+type = varset
+trigger1 = time = 0
+fvar(2) = 0
+
+[state a]
+type = varadd
+trigger1 = time > 120
+fvar(2) = 0.05
+
+;---------------------[エフェクト]
+
+[State a];クーラ
+type = Explod
+trigger1 = time = 180
+anim = 8070
+id = 8070
+sprpriority = 3
+postype = left
+pos = 0,10
+bindtime = -1
+under = 0
+ownpal = 1
+pausemovetime = 99999
+supermovetime = 99999
+scale = 0.4,0.4
+ontop = 1
+
+[State a];W
+type = Explod
+trigger1 = time = 180
+anim = 8050
+id = 8050
+sprpriority = 4
+postype = left
+pos = 160,120
+bindtime = -1
+under = 0
+ownpal = 1
+pausemovetime = 99999
+supermovetime = 99999
+scale = 0.8,0.8
+ontop = 1
+
+[State a];I
+type = Explod
+trigger1 = time = 180
+anim = 8051
+id = 8051
+sprpriority = 4
+postype = left
+pos = 160,120
+bindtime = -1
+under = 0
+ownpal = 1
+pausemovetime = 99999
+supermovetime = 99999
+scale = 0.8,0.8
+ontop = 1
+
+[State a];N
+type = Explod
+trigger1 = time = 180
+anim = 8052
+id = 8052
+sprpriority = 4
+postype = left
+pos = 160,120
+bindtime = -1
+under = 0
+ownpal = 1
+pausemovetime = 99999
+supermovetime = 99999
+scale = 0.8,0.8
+ontop = 1
+
+[State a];N
+type = Explod
+trigger1 = time = 180
+anim = 8053
+id = 8053
+sprpriority = 4
+postype = left
+pos = 160,120
+bindtime = -1
+under = 0
+ownpal = 1
+pausemovetime = 99999
+supermovetime = 99999
+scale = 0.8,0.8
+ontop = 1
+
+[State a];E
+type = Explod
+trigger1 = time = 180
+anim = 8054
+id = 8054
+sprpriority = 4
+postype = left
+pos = 160,120
+bindtime = -1
+under = 0
+ownpal = 1
+pausemovetime = 99999
+supermovetime = 99999
+scale = 0.8,0.8
+ontop = 1
+
+[State a];N
+type = Explod
+trigger1 = time = 180
+anim = 8055
+id = 8055
+sprpriority = 4
+postype = left
+pos = 160,120
+bindtime = -1
+under = 0
+ownpal = 1
+pausemovetime = 99999
+supermovetime = 99999
+scale = 0.8,0.8
+ontop = 1
+
+;---------------------[エフェクト]
+
+[State a];ブラインド
+type = Explod
+trigger1 = time = 240
+anim = 8031
+id = 8031
+sprpriority = 4
+postype = left
+pos = -40,0
+vel = 0,5
+;bindtime = -1
+under = 0
+ownpal = 1
+pausemovetime = 99999
+supermovetime = 99999
+scale = 0.8,0.8
+ontop = 1
+
+[State a];ブラインド
+type = Explod
+trigger1 = time = 280
+anim = 8032
+id = 8032
+sprpriority = 4
+postype = left
+pos = -40,240
+vel = 0,-5
+;bindtime = -1
+under = 0
+ownpal = 1
+pausemovetime = 99999
+supermovetime = 99999
+scale = 0.8,0.8
+ontop = 1
+
+[State a];枠１
+type = Explod
+trigger1 = time = 240
+anim = 8020
+id = 8020
+sprpriority = 3
+postype = left
+pos = 0,0
+bindtime = -1
+under = 0
+ownpal = 1
+pausemovetime = 99999
+supermovetime = 99999
+scale = 0.5,0.5
+ontop = 1
+
+[State a];枠２
+type = Explod
+trigger1 = time = 280
+anim = 8021
+id = 8021
+sprpriority = 3
+postype = left
+pos = 0,0
+bindtime = -1
+under = 0
+ownpal = 1
+pausemovetime = 99999
+supermovetime = 99999
+scale = 0.5,0.5
+ontop = 1
+
+[State a];WINNER back
+type = Explod
+trigger1 = time = 310
+anim = 8045
+id = 8047
+sprpriority = 3
+postype = left
+pos = 10,40
+bindtime = -1
+under = 0
+ownpal = 1
+pausemovetime = 99999
+supermovetime = 99999
+scale = 0.3,0.3
+ontop = 1
+
+;---------------------[エフェクト]
+
+[State a];通常セリフ
+type = varset
+trigger1 = time = 0
+var(4) = ifelse(Enemynear,name = "Leona XIII",1,random%2)
+
+
+[State a];通常セリフ
+type = Explod
+trigger1 = var(5) != [1,2]
+trigger1 = time = 310
+anim = 8060 + (var(4)*2)
+id = 8060
+sprpriority = 5
+postype = left
+pos = 0,0
+bindtime = -1
+under = 0
+ownpal = 1
+pausemovetime = 99999
+supermovetime = 99999
+scale = 0.5,0.5
+ontop = 1
+
+[State a];通常セリフ
+type = Explod
+trigger1 = var(5) != [1,2]
+trigger1 = time = 310
+anim = 8061 + (var(4)*2)
+id = 8061
+sprpriority = 5
+postype = left
+pos = 0,0
+bindtime = -1
+under = 0
+ownpal = 1
+pausemovetime = 99999
+supermovetime = 99999
+scale = 0.5,0.5
+ontop = 1
+
+
+[State a];特殊セリフ
+type = Explod
+trigger1 = var(5) = [1,2]
+trigger1 = time = 310
+anim = 8062 + (var(5)*2)
+id = 8060
+sprpriority = 5
+postype = left
+pos = 0,0
+bindtime = -1
+under = 0
+ownpal = 1
+pausemovetime = 99999
+supermovetime = 99999
+scale = 0.5,0.5
+ontop = 1
+
+[State a];特殊セリフ
+type = Explod
+trigger1 = var(5) = [1,2]
+trigger1 = time = 310
+anim = 8063 + (var(5)*2)
+id = 8061
+sprpriority = 5
+postype = left
+pos = 0,0
+bindtime = -1
+under = 0
+ownpal = 1
+pausemovetime = 99999
+supermovetime = 99999
+scale = 0.5,0.5
+ontop = 1
+
+;\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+;---------------------------------------------------------------------------
+;---------------------------------------------------------------------------
+;壁端検出ヘルパー1(乱入者式)
+;---------------------------------------------------------------------------
+;---------------------------------------------------------------------------
+;---------------------------------------------------------------------------
+;[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
+;----------------------------------------------------------------------------
+
+[Statedef 8900]
+Type = A
+Ctrl = 0
+Anim = 0
+Velset = 0,0,-50
+Movetype = I
+Physics = N
+Sprpriority = 1
+
+[State -3, Right]
+Type = Helper
+Trigger1 = !NumHelper(8905+root,id)
+HelperType = Normal
+Name = "Right_Edge"
+ID = 8905+root,id
+pos= 160,524288
+PosType = left
+StateNo = 8905
+facing = -1
+KeyCtrl = 1
+Ownpal = 0
+supermovetime=0;524288
+pausemovetime=0;524288
+persistent = 0
+IgnoreHitPause = 1
+
+[State -3, Left]
+Type = Helper
+Trigger1 = !NumHelper(8906+root,id)
+HelperType = Normal
+Name = "Left_Edge"
+ID = 8906+root,id
+pos = 160,524288
+PosType = left
+facing = 1
+StateNo = 8905
+KeyCtrl = 1
+Ownpal = 0
+supermovetime=0;524288
+pausemovetime=0;524288
+persistent = 0
+IgnoreHitPause = 1
+
+[State 8905]
+type = assertspecial
+trigger1 = 1
+flag = invisible
+flag2 = noshadow
+ignorehitpause = 1
+
+[State 8900, PosSet]
+type = posset
+trigger1 = numHelper(8905+root,id) > 0 && numHelper(8906+root,id) > 0
+X = ((Helper(8905+root,ID),Pos X+Helper(8906+root,ID),Pos X)*.5)
+
+[State 8900, Side];端距離算出+保存
+type = null;varset
+trigger1 = numHelper(8905+root,id) > 0 && numHelper(8906+root,id) > 0
+Trigger1 = fvar(4) := Helper(8905+root,ID),Pos X-Helper(8900+root,ID),Pos X || 1
+Trigger1 = fvar(5) := Helper(8906+root,ID),Pos X-Helper(8900+root,ID),Pos X || 1
+
+[State 8900, Side];端距離算出+保存
+type = null;varset
+Trigger1 = fvar(0) := fvar(4)-Helper(8900+root,ID),RootDist X || 1;自分右
+Trigger1 = fvar(1) := Helper(8900+root,ID),RootDist X-fvar(5) || 1;自分左
+Trigger1 = fvar(2) := fvar(4)-Helper(8900+root,ID),P2Dist X || 1;敵右
+Trigger1 = fvar(3) := Helper(8900+root,ID),P2Dist X-fvar(5) || 1;敵左
+
+[State 8900, Test];test
+type = null;posset
+trigger1 = 1
+Y = 0
+
+[State 8900]
+type = ScreenBound
+Trigger1=1
+value=0
+movecamera=0,0
+
+[State 8900]
+type = NotHitBy
+value = SCA
+trigger1 = 1
+
+[State 8900]
+type = PlayerPush
+trigger1 = 1
+value = 0
+
+[State 8900]
+type = SprPriority
+trigger1 = 1
+value = -5
+
+[State 8900]
+type=selfstate
+trigger1=!ishelper
+value=0
+
+[State 8900]
+type = DisplayToClipboard
+Trigger1 = ishelper
+text = "                                    FV0=%d FV1=%d FV2=%d FV3=%d, RDX=%d"
+params = floor(fvar(0)),floor(fvar(1)),floor(fvar(2)),floor(fvar(3)),floor(RootDist X)
+ignorehitpause = 1
+
+;----------------------------------------
+;せっかく常時存在するので、色々varで記憶してもらう。
+
+;相手の最大リーチ記憶
+[State 1]
+type = varset
+triggerall = var(0) < (ceil(root,Pos X - EnemyNear(root,Var(53)),Pos X)*facing*Enemynear(root,Var(53)),facing*ifelse(teamside = 1,1,-1))
+triggerall = (ceil(root,Pos X - EnemyNear(root,Var(53)),Pos X)*facing*Enemynear(root,Var(53)),facing*ifelse(teamside = 1,1,-1)) > 0
+trigger1 = root,movetype = H
+trigger1 = EnemyNear(root,Var(53)),movecontact = 1
+trigger1 = EnemyNear(root,Var(53)),HitDefAttr = SC, NA
+var(0) = ceil(root,Pos X - EnemyNear(root,Var(53)),Pos X)*facing*Enemynear(root,Var(53)),facing*ifelse(teamside = 1,1,-1)
+;この数値は(今まで喰らった打撃攻撃の)最大リーチ(p2dist X)
+
+;----
+
+;相手の打撃ステートナンバー記憶・１
+[State 1]
+type = varset
+triggerall = var(1) = 0
+trigger1 = root,movetype = H
+trigger1 = EnemyNear(root,Var(53)),movecontact = 1
+trigger1 = EnemyNear(root,Var(53)),HitDefAttr = SC, NA
+trigger1 = EnemyNear(root,Var(53)),stateno > 0
+var(1) = EnemyNear(root,Var(53)),stateno
+
+;相手の打撃フレーム記憶・１
+[State 1]
+type = varset
+triggerall = var(2) = 0
+triggerall = var(1) > 0 && EnemyNear(root,Var(53)),stateno = var(1)
+trigger1 = root,movetype = H
+trigger1 = EnemyNear(root,Var(53)),movecontact = 1
+trigger1 = EnemyNear(root,Var(53)),HitDefAttr = SC, NA
+trigger1 = EnemyNear(root,Var(53)),stateno > 0
+var(2) = EnemyNear(root,Var(53)),time
+
+;--
+
+;相手の打撃ステートナンバー記憶・２
+[State 1]
+type = varset
+triggerall = var(3) = 0
+triggerall = var(1) > 0 && EnemyNear(root,Var(53)),stateno != var(1)
+trigger1 = root,movetype = H
+trigger1 = EnemyNear(root,Var(53)),movecontact = 1
+trigger1 = EnemyNear(root,Var(53)),HitDefAttr = SC, NA
+trigger1 = EnemyNear(root,Var(53)),stateno > 0
+var(3) = EnemyNear(root,Var(53)),stateno
+
+;相手の打撃フレーム記憶・２
+[State 1]
+type = varset
+triggerall = var(4) = 0
+triggerall = var(3) > 0 && EnemyNear(root,Var(53)),stateno = var(3)
+trigger1 = root,movetype = H
+trigger1 = EnemyNear(root,Var(53)),movecontact = 1
+trigger1 = EnemyNear(root,Var(53)),HitDefAttr = SC, NA
+trigger1 = EnemyNear(root,Var(53)),stateno > 0
+var(4) = EnemyNear(root,Var(53)),time
+
+;--
+
+;相手の打撃ステートナンバー記憶・３
+[State 1]
+type = varset
+triggerall = var(5) = 0
+triggerall = var(1) > 0 && EnemyNear(root,Var(53)),stateno != var(1)
+triggerall = var(3) > 0 && EnemyNear(root,Var(53)),stateno != var(3)
+trigger1 = root,movetype = H
+trigger1 = EnemyNear(root,Var(53)),movecontact = 1
+trigger1 = EnemyNear(root,Var(53)),HitDefAttr = SC, NA
+trigger1 = EnemyNear(root,Var(53)),stateno > 0
+var(5) = EnemyNear(root,Var(53)),stateno
+
+;相手の打撃フレーム記憶・３
+[State 1]
+type = varset
+triggerall = var(6) = 0
+triggerall = var(5) > 0 && EnemyNear(root,Var(53)),stateno = var(5)
+trigger1 = root,movetype = H
+trigger1 = EnemyNear(root,Var(53)),movecontact = 1
+trigger1 = EnemyNear(root,Var(53)),HitDefAttr = SC, NA
+trigger1 = EnemyNear(root,Var(53)),stateno > 0
+var(6) = EnemyNear(root,Var(53)),time
+
+;--
+
+;相手の打撃ステートナンバー記憶・４
+[State 1]
+type = varset
+triggerall = var(7) = 0
+triggerall = var(1) > 0 && EnemyNear(root,Var(53)),stateno != var(1)
+triggerall = var(3) > 0 && EnemyNear(root,Var(53)),stateno != var(3)
+triggerall = var(5) > 0 && EnemyNear(root,Var(53)),stateno != var(5)
+trigger1 = root,movetype = H
+trigger1 = EnemyNear(root,Var(53)),movecontact = 1
+trigger1 = EnemyNear(root,Var(53)),HitDefAttr = SC, NA
+trigger1 = EnemyNear(root,Var(53)),stateno > 0
+var(7) = EnemyNear(root,Var(53)),stateno
+
+;相手の打撃フレーム記憶・４
+[State 1]
+type = varset
+triggerall = var(8) = 0
+triggerall = var(7) > 0 && EnemyNear(root,Var(53)),stateno = var(7)
+trigger1 = root,movetype = H
+trigger1 = EnemyNear(root,Var(53)),movecontact = 1
+trigger1 = EnemyNear(root,Var(53)),HitDefAttr = SC, NA
+trigger1 = EnemyNear(root,Var(53)),stateno > 0
+var(8) = EnemyNear(root,Var(53)),time
+
+;--
+
+;相手の打撃ステートナンバー記憶・５
+[State 1]
+type = varset
+triggerall = var(9) = 0
+triggerall = var(1) > 0 && EnemyNear(root,Var(53)),stateno != var(1)
+triggerall = var(3) > 0 && EnemyNear(root,Var(53)),stateno != var(3)
+triggerall = var(5) > 0 && EnemyNear(root,Var(53)),stateno != var(5)
+triggerall = var(7) > 0 && EnemyNear(root,Var(53)),stateno != var(7)
+trigger1 = root,movetype = H
+trigger1 = EnemyNear(root,Var(53)),movecontact = 1
+trigger1 = EnemyNear(root,Var(53)),HitDefAttr = SC, NA
+trigger1 = EnemyNear(root,Var(53)),stateno > 0
+var(9) = EnemyNear(root,Var(53)),stateno
+
+;相手の打撃フレーム記憶・５
+[State 1]
+type = varset
+triggerall = var(10) = 0
+triggerall = var(9) > 0 && EnemyNear(root,Var(53)),stateno = var(9)
+trigger1 = root,movetype = H
+trigger1 = EnemyNear(root,Var(53)),movecontact = 1
+trigger1 = EnemyNear(root,Var(53)),HitDefAttr = SC, NA
+trigger1 = EnemyNear(root,Var(53)),stateno > 0
+var(10) = EnemyNear(root,Var(53)),time
+
+;--
+
+;相手の打撃ステートナンバー記憶・６
+[State 1]
+type = varset
+triggerall = var(11) = 0
+triggerall = var(1) > 0 && EnemyNear(root,Var(53)),stateno != var(1)
+triggerall = var(3) > 0 && EnemyNear(root,Var(53)),stateno != var(3)
+triggerall = var(5) > 0 && EnemyNear(root,Var(53)),stateno != var(5)
+triggerall = var(7) > 0 && EnemyNear(root,Var(53)),stateno != var(7)
+triggerall = var(9) > 0 && EnemyNear(root,Var(53)),stateno != var(9)
+trigger1 = root,movetype = H
+trigger1 = EnemyNear(root,Var(53)),movecontact = 1
+trigger1 = EnemyNear(root,Var(53)),HitDefAttr = SC, NA
+trigger1 = EnemyNear(root,Var(53)),stateno > 0
+var(11) = EnemyNear(root,Var(53)),stateno
+
+;相手の打撃フレーム記憶・６
+[State 1]
+type = varset
+triggerall = var(12) = 0
+triggerall = var(11) > 0 && EnemyNear(root,Var(53)),stateno = var(11)
+trigger1 = root,movetype = H
+trigger1 = EnemyNear(root,Var(53)),movecontact = 1
+trigger1 = EnemyNear(root,Var(53)),HitDefAttr = SC, NA
+trigger1 = EnemyNear(root,Var(53)),stateno > 0
+var(12) = EnemyNear(root,Var(53)),time
+
+;--
+
+;相手の打撃ステートナンバー記憶・７
+[State 1]
+type = varset
+triggerall = var(13) = 0
+triggerall = var(1) > 0 && EnemyNear(root,Var(53)),stateno != var(1)
+triggerall = var(3) > 0 && EnemyNear(root,Var(53)),stateno != var(3)
+triggerall = var(5) > 0 && EnemyNear(root,Var(53)),stateno != var(5)
+triggerall = var(7) > 0 && EnemyNear(root,Var(53)),stateno != var(7)
+triggerall = var(9) > 0 && EnemyNear(root,Var(53)),stateno != var(9)
+triggerall = var(11) > 0 && EnemyNear(root,Var(53)),stateno != var(11)
+trigger1 = root,movetype = H
+trigger1 = EnemyNear(root,Var(53)),movecontact = 1
+trigger1 = EnemyNear(root,Var(53)),HitDefAttr = SC, NA
+trigger1 = EnemyNear(root,Var(53)),stateno > 0
+var(13) = EnemyNear(root,Var(53)),stateno
+
+;相手の打撃フレーム記憶・７
+[State 1]
+type = varset
+triggerall = var(14) = 0
+triggerall = var(13) > 0 && EnemyNear(root,Var(53)),stateno = var(13)
+trigger1 = root,movetype = H
+trigger1 = EnemyNear(root,Var(53)),movecontact = 1
+trigger1 = EnemyNear(root,Var(53)),HitDefAttr = SC, NA
+trigger1 = EnemyNear(root,Var(53)),stateno > 0
+var(14) = EnemyNear(root,Var(53)),time
+
+;--
+
+;相手の打撃ステートナンバー記憶・８
+[State 1]
+type = varset
+triggerall = var(15) = 0
+triggerall = var(1) > 0 && EnemyNear(root,Var(53)),stateno != var(1)
+triggerall = var(3) > 0 && EnemyNear(root,Var(53)),stateno != var(3)
+triggerall = var(5) > 0 && EnemyNear(root,Var(53)),stateno != var(5)
+triggerall = var(7) > 0 && EnemyNear(root,Var(53)),stateno != var(7)
+triggerall = var(9) > 0 && EnemyNear(root,Var(53)),stateno != var(9)
+triggerall = var(11) > 0 && EnemyNear(root,Var(53)),stateno != var(11)
+triggerall = var(13) > 0 && EnemyNear(root,Var(53)),stateno != var(13)
+trigger1 = root,movetype = H
+trigger1 = EnemyNear(root,Var(53)),movecontact = 1
+trigger1 = EnemyNear(root,Var(53)),HitDefAttr = SC, NA
+trigger1 = EnemyNear(root,Var(53)),stateno > 0
+var(15) = EnemyNear(root,Var(53)),stateno
+
+;相手の打撃フレーム記憶・８
+[State 1]
+type = varset
+triggerall = var(16) = 0
+triggerall = var(15) > 0 && EnemyNear(root,Var(53)),stateno = var(15)
+trigger1 = root,movetype = H
+trigger1 = EnemyNear(root,Var(53)),movecontact = 1
+trigger1 = EnemyNear(root,Var(53)),HitDefAttr = SC, NA
+trigger1 = EnemyNear(root,Var(53)),stateno > 0
+var(16) = EnemyNear(root,Var(53)),time
+
+;--
+
+;相手の打撃ステートナンバー記憶・９
+[State 1]
+type = varset
+triggerall = var(17) = 0
+triggerall = var(1) > 0 && EnemyNear(root,Var(53)),stateno != var(1)
+triggerall = var(3) > 0 && EnemyNear(root,Var(53)),stateno != var(3)
+triggerall = var(5) > 0 && EnemyNear(root,Var(53)),stateno != var(5)
+triggerall = var(7) > 0 && EnemyNear(root,Var(53)),stateno != var(7)
+triggerall = var(9) > 0 && EnemyNear(root,Var(53)),stateno != var(9)
+triggerall = var(11) > 0 && EnemyNear(root,Var(53)),stateno != var(11)
+triggerall = var(13) > 0 && EnemyNear(root,Var(53)),stateno != var(13)
+triggerall = var(15) > 0 && EnemyNear(root,Var(53)),stateno != var(15)
+trigger1 = root,movetype = H
+trigger1 = EnemyNear(root,Var(53)),movecontact = 1
+trigger1 = EnemyNear(root,Var(53)),HitDefAttr = SC, NA
+trigger1 = EnemyNear(root,Var(53)),stateno > 0
+var(17) = EnemyNear(root,Var(53)),stateno
+
+;相手の打撃フレーム記憶・９
+[State 1]
+type = varset
+triggerall = var(18) = 0
+triggerall = var(17) > 0 && EnemyNear(root,Var(53)),stateno = var(17)
+trigger1 = root,movetype = H
+trigger1 = EnemyNear(root,Var(53)),movecontact = 1
+trigger1 = EnemyNear(root,Var(53)),HitDefAttr = SC, NA
+trigger1 = EnemyNear(root,Var(53)),stateno > 0
+var(18) = EnemyNear(root,Var(53)),time
+
+;--
+
+;相手の打撃ステートナンバー記憶・１０
+[State 1]
+type = varset
+triggerall = var(19) = 0
+triggerall = var(1) > 0 && EnemyNear(root,Var(53)),stateno != var(1)
+triggerall = var(3) > 0 && EnemyNear(root,Var(53)),stateno != var(3)
+triggerall = var(5) > 0 && EnemyNear(root,Var(53)),stateno != var(5)
+triggerall = var(7) > 0 && EnemyNear(root,Var(53)),stateno != var(7)
+triggerall = var(9) > 0 && EnemyNear(root,Var(53)),stateno != var(9)
+triggerall = var(11) > 0 && EnemyNear(root,Var(53)),stateno != var(11)
+triggerall = var(13) > 0 && EnemyNear(root,Var(53)),stateno != var(13)
+triggerall = var(15) > 0 && EnemyNear(root,Var(53)),stateno != var(15)
+triggerall = var(17) > 0 && EnemyNear(root,Var(53)),stateno != var(17)
+trigger1 = root,movetype = H
+trigger1 = EnemyNear(root,Var(53)),movecontact = 1
+trigger1 = EnemyNear(root,Var(53)),HitDefAttr = SC, NA
+trigger1 = EnemyNear(root,Var(53)),stateno > 0
+var(19) = EnemyNear(root,Var(53)),stateno
+
+;相手の打撃フレーム記憶・１０
+[State 1]
+type = varset
+triggerall = var(20) = 0
+triggerall = var(19) > 0 && EnemyNear(root,Var(53)),stateno = var(19)
+trigger1 = root,movetype = H
+trigger1 = EnemyNear(root,Var(53)),movecontact = 1
+trigger1 = EnemyNear(root,Var(53)),HitDefAttr = SC, NA
+trigger1 = EnemyNear(root,Var(53)),stateno > 0
+var(20) = EnemyNear(root,Var(53)),time
+
+;--
+
+;相手の打撃ステートナンバー記憶・１１
+[State 1]
+type = varset
+triggerall = var(21) = 0
+triggerall = var(1) > 0 && EnemyNear(root,Var(53)),stateno != var(1)
+triggerall = var(3) > 0 && EnemyNear(root,Var(53)),stateno != var(3)
+triggerall = var(5) > 0 && EnemyNear(root,Var(53)),stateno != var(5)
+triggerall = var(7) > 0 && EnemyNear(root,Var(53)),stateno != var(7)
+triggerall = var(9) > 0 && EnemyNear(root,Var(53)),stateno != var(9)
+triggerall = var(11) > 0 && EnemyNear(root,Var(53)),stateno != var(11)
+triggerall = var(13) > 0 && EnemyNear(root,Var(53)),stateno != var(13)
+triggerall = var(15) > 0 && EnemyNear(root,Var(53)),stateno != var(15)
+triggerall = var(17) > 0 && EnemyNear(root,Var(53)),stateno != var(17)
+triggerall = var(19) > 0 && EnemyNear(root,Var(53)),stateno != var(19)
+trigger1 = root,movetype = H
+trigger1 = EnemyNear(root,Var(53)),movecontact = 1
+trigger1 = EnemyNear(root,Var(53)),HitDefAttr = SC, NA
+trigger1 = EnemyNear(root,Var(53)),stateno > 0
+var(21) = EnemyNear(root,Var(53)),stateno
+
+;相手の打撃フレーム記憶・１１
+[State 1]
+type = varset
+triggerall = var(22) = 0
+triggerall = var(21) > 0 && EnemyNear(root,Var(53)),stateno = var(21)
+trigger1 = root,movetype = H
+trigger1 = EnemyNear(root,Var(53)),movecontact = 1
+trigger1 = EnemyNear(root,Var(53)),HitDefAttr = SC, NA
+trigger1 = EnemyNear(root,Var(53)),stateno > 0
+var(22) = EnemyNear(root,Var(53)),time
+
+;--
+
+;相手の打撃ステートナンバー記憶・１２
+[State 1]
+type = varset
+triggerall = var(23) = 0
+triggerall = var(1) > 0 && EnemyNear(root,Var(53)),stateno != var(1)
+triggerall = var(3) > 0 && EnemyNear(root,Var(53)),stateno != var(3)
+triggerall = var(5) > 0 && EnemyNear(root,Var(53)),stateno != var(5)
+triggerall = var(7) > 0 && EnemyNear(root,Var(53)),stateno != var(7)
+triggerall = var(9) > 0 && EnemyNear(root,Var(53)),stateno != var(9)
+triggerall = var(11) > 0 && EnemyNear(root,Var(53)),stateno != var(11)
+triggerall = var(13) > 0 && EnemyNear(root,Var(53)),stateno != var(13)
+triggerall = var(15) > 0 && EnemyNear(root,Var(53)),stateno != var(15)
+triggerall = var(17) > 0 && EnemyNear(root,Var(53)),stateno != var(17)
+triggerall = var(19) > 0 && EnemyNear(root,Var(53)),stateno != var(19)
+triggerall = var(21) > 0 && EnemyNear(root,Var(53)),stateno != var(21)
+trigger1 = root,movetype = H
+trigger1 = EnemyNear(root,Var(53)),movecontact = 1
+trigger1 = EnemyNear(root,Var(53)),HitDefAttr = SC, NA
+trigger1 = EnemyNear(root,Var(53)),stateno > 0
+var(23) = EnemyNear(root,Var(53)),stateno
+
+;相手の打撃フレーム記憶・１２
+[State 1]
+type = varset
+triggerall = var(24) = 0
+triggerall = var(23) > 0 && EnemyNear(root,Var(53)),stateno = var(23)
+trigger1 = root,movetype = H
+trigger1 = EnemyNear(root,Var(53)),movecontact = 1
+trigger1 = EnemyNear(root,Var(53)),HitDefAttr = SC, NA
+trigger1 = EnemyNear(root,Var(53)),stateno > 0
+var(24) = EnemyNear(root,Var(53)),time
+
+;--
+
+;相手の打撃ステートナンバー記憶・１３
+[State 1]
+type = varset
+triggerall = var(25) = 0
+triggerall = var(1) > 0 && EnemyNear(root,Var(53)),stateno != var(1)
+triggerall = var(3) > 0 && EnemyNear(root,Var(53)),stateno != var(3)
+triggerall = var(5) > 0 && EnemyNear(root,Var(53)),stateno != var(5)
+triggerall = var(7) > 0 && EnemyNear(root,Var(53)),stateno != var(7)
+triggerall = var(9) > 0 && EnemyNear(root,Var(53)),stateno != var(9)
+triggerall = var(11) > 0 && EnemyNear(root,Var(53)),stateno != var(11)
+triggerall = var(13) > 0 && EnemyNear(root,Var(53)),stateno != var(13)
+triggerall = var(15) > 0 && EnemyNear(root,Var(53)),stateno != var(15)
+triggerall = var(17) > 0 && EnemyNear(root,Var(53)),stateno != var(17)
+triggerall = var(19) > 0 && EnemyNear(root,Var(53)),stateno != var(19)
+triggerall = var(21) > 0 && EnemyNear(root,Var(53)),stateno != var(21)
+triggerall = var(23) > 0 && EnemyNear(root,Var(53)),stateno != var(23)
+trigger1 = root,movetype = H
+trigger1 = EnemyNear(root,Var(53)),movecontact = 1
+trigger1 = EnemyNear(root,Var(53)),HitDefAttr = SC, NA
+trigger1 = EnemyNear(root,Var(53)),stateno > 0
+var(25) = EnemyNear(root,Var(53)),stateno
+
+;相手の打撃フレーム記憶・１３
+[State 1]
+type = varset
+triggerall = var(26) = 0
+triggerall = var(25) > 0 && EnemyNear(root,Var(53)),stateno = var(25)
+trigger1 = root,movetype = H
+trigger1 = EnemyNear(root,Var(53)),movecontact = 1
+trigger1 = EnemyNear(root,Var(53)),HitDefAttr = SC, NA
+trigger1 = EnemyNear(root,Var(53)),stateno > 0
+var(26) = EnemyNear(root,Var(53)),time
+
+;--
+
+;相手の打撃ステートナンバー記憶・１４
+[State 1]
+type = varset
+triggerall = var(27) = 0
+triggerall = var(1) > 0 && EnemyNear(root,Var(53)),stateno != var(1)
+triggerall = var(3) > 0 && EnemyNear(root,Var(53)),stateno != var(3)
+triggerall = var(5) > 0 && EnemyNear(root,Var(53)),stateno != var(5)
+triggerall = var(7) > 0 && EnemyNear(root,Var(53)),stateno != var(7)
+triggerall = var(9) > 0 && EnemyNear(root,Var(53)),stateno != var(9)
+triggerall = var(11) > 0 && EnemyNear(root,Var(53)),stateno != var(11)
+triggerall = var(13) > 0 && EnemyNear(root,Var(53)),stateno != var(13)
+triggerall = var(15) > 0 && EnemyNear(root,Var(53)),stateno != var(15)
+triggerall = var(17) > 0 && EnemyNear(root,Var(53)),stateno != var(17)
+triggerall = var(19) > 0 && EnemyNear(root,Var(53)),stateno != var(19)
+triggerall = var(21) > 0 && EnemyNear(root,Var(53)),stateno != var(21)
+triggerall = var(23) > 0 && EnemyNear(root,Var(53)),stateno != var(23)
+triggerall = var(25) > 0 && EnemyNear(root,Var(53)),stateno != var(25)
+trigger1 = root,movetype = H
+trigger1 = EnemyNear(root,Var(53)),movecontact = 1
+trigger1 = EnemyNear(root,Var(53)),HitDefAttr = SC, NA
+trigger1 = EnemyNear(root,Var(53)),stateno > 0
+var(27) = EnemyNear(root,Var(53)),stateno
+
+;相手の打撃フレーム記憶・１４
+[State 1]
+type = varset
+triggerall = var(28) = 0
+triggerall = var(27) > 0 && EnemyNear(root,Var(53)),stateno = var(27)
+trigger1 = root,movetype = H
+trigger1 = EnemyNear(root,Var(53)),movecontact = 1
+trigger1 = EnemyNear(root,Var(53)),HitDefAttr = SC, NA
+trigger1 = EnemyNear(root,Var(53)),stateno > 0
+var(28) = EnemyNear(root,Var(53)),time
+
+;--
+
+;相手の打撃ステートナンバー記憶・１５
+[State 1]
+type = varset
+triggerall = var(29) = 0
+triggerall = var(1) > 0 && EnemyNear(root,Var(53)),stateno != var(1)
+triggerall = var(3) > 0 && EnemyNear(root,Var(53)),stateno != var(3)
+triggerall = var(5) > 0 && EnemyNear(root,Var(53)),stateno != var(5)
+triggerall = var(7) > 0 && EnemyNear(root,Var(53)),stateno != var(7)
+triggerall = var(9) > 0 && EnemyNear(root,Var(53)),stateno != var(9)
+triggerall = var(11) > 0 && EnemyNear(root,Var(53)),stateno != var(11)
+triggerall = var(13) > 0 && EnemyNear(root,Var(53)),stateno != var(13)
+triggerall = var(15) > 0 && EnemyNear(root,Var(53)),stateno != var(15)
+triggerall = var(17) > 0 && EnemyNear(root,Var(53)),stateno != var(17)
+triggerall = var(19) > 0 && EnemyNear(root,Var(53)),stateno != var(19)
+triggerall = var(21) > 0 && EnemyNear(root,Var(53)),stateno != var(21)
+triggerall = var(23) > 0 && EnemyNear(root,Var(53)),stateno != var(23)
+triggerall = var(25) > 0 && EnemyNear(root,Var(53)),stateno != var(25)
+triggerall = var(27) > 0 && EnemyNear(root,Var(53)),stateno != var(27)
+trigger1 = root,movetype = H
+trigger1 = EnemyNear(root,Var(53)),movecontact = 1
+trigger1 = EnemyNear(root,Var(53)),HitDefAttr = SC, NA
+trigger1 = EnemyNear(root,Var(53)),stateno > 0
+var(29) = EnemyNear(root,Var(53)),stateno
+
+;相手の打撃フレーム記憶・１５
+[State 1]
+type = varset
+triggerall = var(30) = 0
+triggerall = var(29) > 0 && EnemyNear(root,Var(53)),stateno = var(29)
+trigger1 = root,movetype = H
+trigger1 = EnemyNear(root,Var(53)),movecontact = 1
+trigger1 = EnemyNear(root,Var(53)),HitDefAttr = SC, NA
+trigger1 = EnemyNear(root,Var(53)),stateno > 0
+var(30) = EnemyNear(root,Var(53)),time
+
+;チーム戦時・リセット
+[State 1]
+type = VarRangeSet
+trigger1 = EnemyNear(root,Var(53)),teammode = turns && roundstate != 2
+value = 0
+first =0
+last =30
+
+;=====================================================================
+;---------------------------------------------------------------------
+
+;相手の打撃ステートナンバー記憶・１(必殺技)
+[State 1]
+type = varset
+triggerall = var(41) = 0
+trigger1 = root,movetype = H
+trigger1 = EnemyNear(root,Var(53)),movecontact = 1
+trigger1 = EnemyNear(root,Var(53)),HitDefAttr = SC, SA
+trigger1 = EnemyNear(root,Var(53)),stateno > 0
+var(41) = EnemyNear(root,Var(53)),stateno
+
+;相手の打撃フレーム記憶・１(必殺技)
+[State 1]
+type = varset
+triggerall = var(42) = 0
+triggerall = var(41) > 0 && EnemyNear(root,Var(53)),stateno = var(41)
+trigger1 = root,movetype = H
+trigger1 = EnemyNear(root,Var(53)),movecontact = 1
+trigger1 = EnemyNear(root,Var(53)),HitDefAttr = SC, SA
+trigger1 = EnemyNear(root,Var(53)),stateno > 0
+var(42) = EnemyNear(root,Var(53)),time
+
+;--
+
+;相手の打撃ステートナンバー記憶・２(必殺技)
+[State 1]
+type = varset
+triggerall = var(43) = 0
+triggerall = var(41) > 0 && EnemyNear(root,Var(53)),stateno != var(41)
+trigger1 = root,movetype = H
+trigger1 = EnemyNear(root,Var(53)),movecontact = 1
+trigger1 = EnemyNear(root,Var(53)),HitDefAttr = SC, SA
+trigger1 = EnemyNear(root,Var(53)),stateno > 0
+var(43) = EnemyNear(root,Var(53)),stateno
+
+;相手の打撃フレーム記憶・２(必殺技)
+[State 1]
+type = varset
+triggerall = var(44) = 0
+triggerall = var(43) > 0 && EnemyNear(root,Var(53)),stateno = var(43)
+trigger1 = root,movetype = H
+trigger1 = EnemyNear(root,Var(53)),movecontact = 1
+trigger1 = EnemyNear(root,Var(53)),HitDefAttr = SC, SA
+trigger1 = EnemyNear(root,Var(53)),stateno > 0
+var(44) = EnemyNear(root,Var(53)),time
+
+;--
+
+;相手の打撃ステートナンバー記憶・３(必殺技)
+[State 1]
+type = varset
+triggerall = var(45) = 0
+triggerall = var(41) > 0 && EnemyNear(root,Var(53)),stateno != var(41)
+triggerall = var(43) > 0 && EnemyNear(root,Var(53)),stateno != var(43)
+trigger1 = root,movetype = H
+trigger1 = EnemyNear(root,Var(53)),movecontact = 1
+trigger1 = EnemyNear(root,Var(53)),HitDefAttr = SC, SA
+trigger1 = EnemyNear(root,Var(53)),stateno > 0
+var(45) = EnemyNear(root,Var(53)),stateno
+
+;相手の打撃フレーム記憶・３(必殺技)
+[State 1]
+type = varset
+triggerall = var(46) = 0
+triggerall = var(45) > 0 && EnemyNear(root,Var(53)),stateno = var(45)
+trigger1 = root,movetype = H
+trigger1 = EnemyNear(root,Var(53)),movecontact = 1
+trigger1 = EnemyNear(root,Var(53)),HitDefAttr = SC, SA
+trigger1 = EnemyNear(root,Var(53)),stateno > 0
+var(46) = EnemyNear(root,Var(53)),time
+
+;--
+
+;相手の打撃ステートナンバー記憶・４(必殺技)
+[State 1]
+type = varset
+triggerall = var(47) = 0
+triggerall = var(41) > 0 && EnemyNear(root,Var(53)),stateno != var(41)
+triggerall = var(43) > 0 && EnemyNear(root,Var(53)),stateno != var(43)
+triggerall = var(45) > 0 && EnemyNear(root,Var(53)),stateno != var(45)
+trigger1 = root,movetype = H
+trigger1 = EnemyNear(root,Var(53)),movecontact = 1
+trigger1 = EnemyNear(root,Var(53)),HitDefAttr = SC, SA
+trigger1 = EnemyNear(root,Var(53)),stateno > 0
+var(47) = EnemyNear(root,Var(53)),stateno
+
+;相手の打撃フレーム記憶・４(必殺技)
+[State 1]
+type = varset
+triggerall = var(48) = 0
+triggerall = var(47) > 0 && EnemyNear(root,Var(53)),stateno = var(47)
+trigger1 = root,movetype = H
+trigger1 = EnemyNear(root,Var(53)),movecontact = 1
+trigger1 = EnemyNear(root,Var(53)),HitDefAttr = SC, SA
+trigger1 = EnemyNear(root,Var(53)),stateno > 0
+var(48) = EnemyNear(root,Var(53)),time
+
+;--
+
+;相手の打撃ステートナンバー記憶・５(必殺技)
+[State 1]
+type = varset
+triggerall = var(49) = 0
+triggerall = var(41) > 0 && EnemyNear(root,Var(53)),stateno != var(41)
+triggerall = var(43) > 0 && EnemyNear(root,Var(53)),stateno != var(43)
+triggerall = var(45) > 0 && EnemyNear(root,Var(53)),stateno != var(45)
+triggerall = var(47) > 0 && EnemyNear(root,Var(53)),stateno != var(47)
+trigger1 = root,movetype = H
+trigger1 = EnemyNear(root,Var(53)),movecontact = 1
+trigger1 = EnemyNear(root,Var(53)),HitDefAttr = SC, SA
+trigger1 = EnemyNear(root,Var(53)),stateno > 0
+var(49) = EnemyNear(root,Var(53)),stateno
+
+;相手の打撃フレーム記憶・５(必殺技)
+[State 1]
+type = varset
+triggerall = var(50) = 0
+triggerall = var(49) > 0 && EnemyNear(root,Var(53)),stateno = var(49)
+trigger1 = root,movetype = H
+trigger1 = EnemyNear(root,Var(53)),movecontact = 1
+trigger1 = EnemyNear(root,Var(53)),HitDefAttr = SC, SA
+trigger1 = EnemyNear(root,Var(53)),stateno > 0
+var(50) = EnemyNear(root,Var(53)),time
+
+;----
+
+;流石にそろそろ反撃してもいーだろ的な敵フレーム
+[State 1]
+type = varset
+triggerall = var(31) = 0
+triggerall = EnemyNear(root,Var(53)),Vel X <= 0 ;スライディング系の攻撃だとマズイ為
+trigger1 = EnemyNear(root,Var(53)),stateno = var(1) && var(1) > 0
+trigger1 = EnemyNear(root,Var(53)),time > var(2) + 5 && var(2) > 1
+trigger2 = EnemyNear(root,Var(53)),stateno = var(3) && var(3) > 0
+trigger2 = EnemyNear(root,Var(53)),time > var(4) + 5 && var(4) > 1
+trigger3 = EnemyNear(root,Var(53)),stateno = var(5) && var(5) > 0
+trigger3 = EnemyNear(root,Var(53)),time > var(6) + 5 && var(6) > 1
+trigger4 = EnemyNear(root,Var(53)),stateno = var(7) && var(7) > 0
+trigger4 = EnemyNear(root,Var(53)),time > var(8) + 5 && var(8) > 1
+trigger5 = EnemyNear(root,Var(53)),stateno = var(9) && var(9) > 0
+trigger5 = EnemyNear(root,Var(53)),time > var(10) + 5 && var(10) > 1
+trigger6 = EnemyNear(root,Var(53)),stateno = var(11) && var(11) > 0
+trigger6 = EnemyNear(root,Var(53)),time > var(12) + 5 && var(12) > 1
+trigger7 = EnemyNear(root,Var(53)),stateno = var(13) && var(13) > 0
+trigger7 = EnemyNear(root,Var(53)),time > var(14) + 5 && var(14) > 1
+trigger8 = EnemyNear(root,Var(53)),stateno = var(15) && var(15) > 0
+trigger8 = EnemyNear(root,Var(53)),time > var(16) + 5 && var(16) > 1
+trigger9 = EnemyNear(root,Var(53)),stateno = var(17) && var(17) > 0
+trigger9 = EnemyNear(root,Var(53)),time > var(18) + 5 && var(18) > 1
+trigger10 = EnemyNear(root,Var(53)),stateno = var(19) && var(19) > 0
+trigger10 = EnemyNear(root,Var(53)),time > var(20) + 5 && var(20) > 1
+trigger11 = EnemyNear(root,Var(53)),stateno = var(21) && var(21) > 0
+trigger11 = EnemyNear(root,Var(53)),time > var(22) + 5 && var(22) > 1
+trigger12 = EnemyNear(root,Var(53)),stateno = var(23) && var(23) > 0
+trigger12 = EnemyNear(root,Var(53)),time > var(24) + 5 && var(24) > 1
+trigger13 = EnemyNear(root,Var(53)),stateno = var(25) && var(25) > 0
+trigger13 = EnemyNear(root,Var(53)),time > var(26) + 5 && var(26) > 1
+trigger14 = EnemyNear(root,Var(53)),stateno = var(27) && var(27) > 0
+trigger14 = EnemyNear(root,Var(53)),time > var(28) + 5 && var(28) > 1
+trigger15 = EnemyNear(root,Var(53)),stateno = var(29) && var(29) > 0
+trigger15 = EnemyNear(root,Var(53)),time > var(30) + 5 && var(30) > 1
+;こっから必殺技
+trigger16 = EnemyNear(root,Var(53)),stateno = var(41) && var(41) > 0
+trigger16 = EnemyNear(root,Var(53)),time > var(42) + 10 && var(42) > 1
+trigger17 = EnemyNear(root,Var(53)),stateno = var(43) && var(43) > 0
+trigger17 = EnemyNear(root,Var(53)),time > var(44) + 10 && var(44) > 1
+trigger18 = EnemyNear(root,Var(53)),stateno = var(45) && var(45) > 0
+trigger18 = EnemyNear(root,Var(53)),time > var(46) + 10 && var(46) > 1
+trigger19 = EnemyNear(root,Var(53)),stateno = var(47) && var(47) > 0
+trigger19 = EnemyNear(root,Var(53)),time > var(48) + 10 && var(48) > 1
+trigger20 = EnemyNear(root,Var(53)),stateno = var(49) && var(49) > 0
+trigger20 = EnemyNear(root,Var(53)),time > var(50) + 10 && var(50) > 1
+var(31) = 1
+
+;リセット
+[State 1]
+type = varset
+triggerall = var(31) != 0
+trigger1 = roundstate != 2 || statetype = L
+trigger2 = EnemyNear(root,Var(53)),Vel X > 0 || EnemyNear(root,Var(53)),ctrl
+trigger3 = EnemyNear(root,Var(53)),statetype = L || EnemyNear(root,Var(53)),statetype = A
+trigger4 = EnemyNear(root,Var(53)),time = 1 || EnemyNear(root,Var(53)),animtime = 0
+var(31) = 0
+
+;----
+
+;リセット
+[State 1]
+type = varset
+triggerall = var(51) != 0
+trigger1 = 1
+var(51) = 0
+
+;刺しこみしても間に合うだろー的な敵フレーム
+[State 1]
+type = varset
+triggerall = var(51) = 0
+triggerall = EnemyNear(root,Var(53)),Vel X <= 0 ;スライディング系の攻撃だとマズイ為
+trigger1 = EnemyNear(root,Var(53)),stateno = var(1) && var(1) > 0
+trigger1 = EnemyNear(root,Var(53)),time <= var(2) - 5 && var(2) > 5
+trigger2 = EnemyNear(root,Var(53)),stateno = var(3) && var(3) > 0
+trigger2 = EnemyNear(root,Var(53)),time <= var(4) - 5 && var(4) > 5
+trigger3 = EnemyNear(root,Var(53)),stateno = var(5) && var(5) > 0
+trigger3 = EnemyNear(root,Var(53)),time <= var(6) - 5 && var(6) > 5
+trigger4 = EnemyNear(root,Var(53)),stateno = var(7) && var(7) > 0
+trigger4 = EnemyNear(root,Var(53)),time <= var(8) - 5 && var(8) > 5
+trigger5 = EnemyNear(root,Var(53)),stateno = var(9) && var(9) > 0
+trigger5 = EnemyNear(root,Var(53)),time <= var(10) - 5 && var(10) > 5
+trigger6 = EnemyNear(root,Var(53)),stateno = var(11) && var(11) > 0
+trigger6 = EnemyNear(root,Var(53)),time <= var(12) - 5 && var(12) > 5
+trigger7 = EnemyNear(root,Var(53)),stateno = var(13) && var(13) > 0
+trigger7 = EnemyNear(root,Var(53)),time <= var(14) - 5 && var(14) > 5
+trigger8 = EnemyNear(root,Var(53)),stateno = var(15) && var(15) > 0
+trigger8 = EnemyNear(root,Var(53)),time <= var(16) - 5 && var(16) > 5
+trigger9 = EnemyNear(root,Var(53)),stateno = var(17) && var(17) > 0
+trigger9 = EnemyNear(root,Var(53)),time <= var(18) - 5 && var(18) > 5
+trigger10 = EnemyNear(root,Var(53)),stateno = var(19) && var(19) > 0
+trigger10 = EnemyNear(root,Var(53)),time <= var(20) - 5 && var(20) > 5
+trigger11 = EnemyNear(root,Var(53)),stateno = var(21) && var(21) > 0
+trigger11 = EnemyNear(root,Var(53)),time <= var(22) - 5 && var(22) > 5
+trigger12 = EnemyNear(root,Var(53)),stateno = var(23) && var(23) > 0
+trigger12 = EnemyNear(root,Var(53)),time <= var(24) - 5 && var(24) > 5
+trigger13 = EnemyNear(root,Var(53)),stateno = var(25) && var(25) > 0
+trigger13 = EnemyNear(root,Var(53)),time <= var(26) - 5 && var(26) > 5
+trigger14 = EnemyNear(root,Var(53)),stateno = var(27) && var(27) > 0
+trigger14 = EnemyNear(root,Var(53)),time <= var(28) - 5 && var(28) > 5
+trigger15 = EnemyNear(root,Var(53)),stateno = var(29) && var(29) > 0
+trigger15 = EnemyNear(root,Var(53)),time <= var(30) - 5 && var(30) > 5
+var(51) = 1
+
+;----
+
+[State -2 デバッグ用]
+type=null ;displayToClipboard
+trigger1=ishelper
+ignorehitpause=1
+text="                                    V0:%d V1:%d V2:%d V31:%d V51:%d"
+params=var(0),var(1),var(2),var(31),var(51)
+
+[State 8900]
+Type = DestroySelf
+Trigger1 = ishelper && (RoundState > 3 || root,life <= 0 || !root,Alive)
+
+;-------------------------------------------------------------------------------
+;壁端検出ヘルパー2
+[Statedef 8905]
+Type = A
+Ctrl = 0
+Anim = 0
+Velset = -5,0,-50
+Movetype = I
+Physics = N
+Sprpriority = 1
+
+[State 8905]
+type = assertspecial
+trigger1 = 1
+flag = invisible
+flag2 = noshadow
+ignorehitpause = 1
+
+[State 8905]
+type = ScreenBound
+Trigger1=1
+value=0
+movecamera=0,0
+
+[State 8905]
+type = NotHitBy
+value = SCA
+trigger1 = 1
+
+[State 8905]
+type = PlayerPush
+trigger1 = 1
+value = 0
+
+[State 8905]
+type = SprPriority
+trigger1 = 1
+value = -5
+
+[State 8905]
+type=selfstate
+trigger1=!ishelper
+value=0
+
+[state 8905]
+Type = Projectile
+Trigger1 = Time = 0
+ProjID = ifelse(ishelper(8905+root,ID),8905,8906)
+Projanim = 0
+Projremovetime = -1
+Velocity = Floor(Vel X),0
+projhits = 524288
+projmisstime = 524288
+projpriority = 524288
+projsprpriority = -524288
+Projedgebound = 524288
+projstagebound = -const(size.ground.front)
+Offset = 0,524288-320*(root,ID-55)
+supermovetime = 524288
+pausemovetime = 524288
+ignorehitpause = 1
+
+[state 8905]
+type = velset
+Trigger1 = !Root,NumProjID(ifelse(ishelper(8905+root,ID),8905,8906)) && time
+x = 0
+y = 0
+ignorehitpause = 1
+
+[State 8905]
+type = DisplayToClipboard
+Trigger1 = ishelper
+text = "ROOT X=%f P2X=%f V0=%d, POS X=%f"
+params = rootdist X,p2dist X,var(0),Pos X
+ignorehitpause = 1
+
+[State 8905]
+Type = DestroySelf
+Trigger1 = ishelper && (RoundState > 3 || root,life <= 0 || !root,Alive)
+Trigger2 = Vel X = 0 && root,NumProjID(8905) = 0 && root,NumProjID(8906) = 0 && Time
+
+
+;==========================================================================
+;飛び道具対策
+
+;全員共通のループステート１
+[Statedef 20000]
+type=A
+movetype=I
+physics=N
+ctrl=0
+anim=8001
+sprpriority=0
+velset=0,0
+
+[State -2];ループ回数設定
+type=varset
+trigger1=!var(54)
+var(54)=40
+
+;ＩＤ探索ステートへ
+[State -2]
+type=ChangeState
+triggerall=!numhelper(20001);このＦの中でまだＩＤ予測をしていない（失敗していない）
+trigger1=var(56)!=-1||prevstateno=20009;このＦの中でまだＩＤ探索に失敗していない
+trigger1=!playerIDexist(var(3+var(55)));変数が現在使用中ではない
+value=20002
+
+;透明化
+[State -2]
+type=assertspecial
+trigger1=1
+flag=noshadow
+flag2=invisible
+ignorehitpause=1
+
+;無敵化
+[State -2]
+type=Nothitby
+trigger1=1
+value=SCA
+
+;本体と敵との中間に配置
+[State -2]
+type=posset
+trigger1=1
+x=(root,pos x+EnemyNear(root,Var(53)),pos x)/2.0
+
+;本体と同じ向き
+[State -2]
+type=turn
+trigger1=facing!=root,facing
+
+;本体の近くに飛び道具があるなら警戒
+[State 20000]
+type=varset
+trigger1=playerIDExist(var(3+var(55)))
+trigger1=playerID(var(3+var(55))),movetype=A
+trigger1=abs(root,pos y-playerID(var(3+var(55))),pos y)<200
+trigger1=abs(playerID(var(3+var(55))),pos x-root,pos x)<=200
+var(2)=5
+
+
+;ＩＤ用変数の最高値記録
+[State 20000]
+type=varset
+trigger1=var(57)<var(3+var(55))
+var(57)=var(3+var(55))
+
+;ループバック
+[State 20000]
+type=Changestate
+trigger1=!numhelper(20001)	;何か見つかった１
+trigger1=var(56)!=-1	;何か見つかった２
+trigger1=var(55)<var(54)	;ループが指定回数未満
+trigger1=var(55):=var(55)+1||1	;インクリメント（ループカウンタ増加処理）
+value=20000
+
+
+[State -2];カウンタ初期化
+type=VarSet
+trigger1=1
+var(55)=0
+
+;inguarddist系反応判断用
+[State -2]
+type=VarAdd
+trigger1=var(0)>0
+var(0)=-1
+
+;inguarddist系反応判断用
+[State -2]
+type=VarSet
+trigger1=!EnemyNear(root,Var(53)),ctrl&&EnemyNear(root,Var(53)),stateno>=200
+trigger2=inguarddist
+trigger3=root,inguarddist
+var(0)=15
+
+;inguarddist系反応判断用
+[State -2]
+type=VarAdd
+trigger1=var(0)
+var(1)=1
+
+;inguarddist系反応判断用
+[State -2]
+type=Varset
+trigger1=!var(0)
+var(1)=0
+
+
+;飛び道具の裏側対策
+[State -2]
+type=Varadd
+trigger1=var(2)>0
+var(2)=-1
+
+;飛び道具の裏側対策
+[State -2]
+type=varset
+triggerall=root,inguarddist
+trigger1=EnemyNear(root,Var(53)),movetype!=A
+trigger2=P2Dist x>EnemyNear(root,Var(53)),Const(size.attack.dist)
+var(2)=20
+
+
+;飛び道具の裏側対策。一時的に裏側に配置
+[State -2]
+type=posset
+trigger1=1
+x=root,pos x-facing*80
+
+;飛び道具の裏側対策
+[State -2]
+type=varset
+trigger1=inguarddist
+var(2)=5
+
+;コンボ用変数みたいなもの
+[State 20000 対策テスト]
+type=varset
+trigger1=1
+var(59)=0
+
+;終了したらキャラ別対策判断用のステートへ
+[State -2]
+type=ChangeState
+trigger1=1
+value=20009
+
+
+
+
+
+
+;ＩＤ予測ヘルパー用ステート
+[Statedef 20001]
+anim=8001
+ctrl=0
+
+;即消える
+[State 20001]
+type=destroyself
+trigger1=1
+
+
+
+
+
+;ループステート
+[Statedef 20002]
+anim=8001
+ctrl=0
+
+
+;開始値を最高値に合わせる
+[State -2]
+type=varset
+trigger1=prevstateno!=20002;
+var(3+var(55))=var(57)+1
+
+;ループカウンタ増加
+[State -2]
+type=varadd
+var(56)=1
+trigger1=var(56)!=-1
+
+;ループカウンタ初期化
+[State -2]
+type=Varset
+trigger1=prevstateno!=20002
+var(56)=0
+
+;ふるいにかける。１つでも該当するなら次へ
+[State -2]
+type=varadd
+trigger1=!playerIDExist(var(3+var(55)))
+trigger2=playerID(var(3+var(55))),movetype!=A||!(playerID(var(3+var(55))),hitdefattr=SCA,AA,AP,AT)
+trigger2=playerID(var(3+var(55))),time>200-var(55)*10
+trigger3=abs(playerID(var(3+var(55))),Screenpos x)>500
+trigger4=abs(playerID(var(3+var(55))),pos y)>500
+trigger5=teamside=playerID(var(3+var(55))),teamside
+var(3+var(55))=1
+
+[state -2];id確認用。１０回繰り返して当たりがこなかったら、中止して次に備える
+type=Helper
+trigger1=var(56)>10
+trigger1=var(56):=-1
+trigger1=!numhelper(20001)
+helpertype=normal
+name="id_check"
+ID=20001
+pos=0, 0
+postype=right
+facing=1
+stateno=20001
+ownpal=1
+supermovetime=99999
+pausemovetime=99999
+
+;変数の値を今出したばかりのヘルパーのものに
+[State -2]
+type=varset
+trigger1=var(56)=-1
+trigger1=numhelper(20001)
+var(3+var(55))=helper(20001),id
+
+;ループバック
+[State -2]
+type=ChangeState
+value=20002
+triggerall=var(56)!=-1
+trigger1=!playerIDExist(var(3+var(55)))
+trigger2=playerID(var(3+var(55))),movetype!=A||!(playerID(var(3+var(55))),hitdefattr=SCA,AA,AP,AT)
+trigger2=playerID(var(3+var(55))),time>200-var(55)*10
+trigger3=abs(playerID(var(3+var(55))),Screenpos x)>500
+trigger4=abs(playerID(var(3+var(55))),pos y)>500
+trigger5=teamside=playerID(var(3+var(55))),teamside
+
+;終わったら戻る
+[State -2]
+type=ChangeState
+value=20000
+trigger1=1
+
+
+
+;飛び道具対策、キャラ別ステート（アテナ）
+[Statedef 20009]
+anim=8001
+ctrl=0
+
+;１Ｆ経ったらまたＩＤ取得から
+[State 20009]
+type=CHangeState
+trigger1=time>0
+value=20000
+
+;変数の値に該当するヘルパーが存在しないならここでループカウンタ増加させてまた初めから
+[State 20009]
+type=CHangeState
+trigger1=!playerIDExist(var(3+var(55)))
+trigger1=var(55)<var(54)-1
+trigger1=var(55):=var(55)+1
+value=20009
+
+;判断用変数初期化
+[State 20000]
+type=varset
+trigger1=prevstateno!=20009
+var(58)=0
+
+
+[State 20000 地上波動]
+type=varadd
+trigger1=playerIDExist(var(3+var(55)))
+trigger1=!((var(58))%10)
+trigger1=playerID(var(3+var(55))),movetype=A
+trigger1=playerID(var(3+var(55))),pos y+playerID(var(3+var(55))),vel y*10=[-100,60]
+trigger1=abs(playerID(var(3+var(55))),vel x)>1
+trigger1=playerID(var(3+var(55))),facing*(root,pos x-playerID(var(3+var(55))),pos x)>0
+trigger1=playerID(var(3+var(55))),facing*(root,pos x-playerID(var(3+var(55))),pos x)-playerID(var(3+var(55))),vel x*6>70
+trigger1=fvar(0):=playerID(var(3+var(55))),vel x
+var(58)=1
+
+
+[State 20000 地上波動近すぎ]
+type=varadd
+trigger1=!((var(58)/1000)%10)
+trigger1=playerIDExist(var(3+var(55)))
+trigger1=playerID(var(3+var(55))),movetype=A
+trigger1=playerID(var(3+var(55))),pos y+playerID(var(3+var(55))),vel y*10=[-100,60]
+trigger1=abs(playerID(var(3+var(55))),vel x)>1
+trigger1=playerID(var(3+var(55))),facing*(root,pos x-playerID(var(3+var(55))),pos x)-playerID(var(3+var(55))),vel x*6<=70
+var(58)=1000
+
+
+
+[State 20000 空中波動]
+type=varadd
+trigger1=playerIDExist(var(3+var(55)))
+trigger1=!((var(58)/10)%10)
+trigger1=playerID(var(3+var(55))),movetype=A
+trigger1=playerID(var(3+var(55))),pos y+playerID(var(3+var(55))),vel y*20<-80
+trigger1=abs(playerID(var(3+var(55))),vel x)>1
+trigger1=playerID(var(3+var(55))),facing*(root,pos x-playerID(var(3+var(55))),pos x)>-50
+trigger1=fvar(1):=playerID(var(3+var(55))),vel y
+var(58)=10
+
+
+
+[State 20000 空中波動近すぎ]
+type=varadd
+trigger1=playerIDExist(var(3+var(55)))
+trigger1=!((var(58)/10000)%10)
+trigger1=playerID(var(3+var(55))),movetype=A
+trigger1=playerID(var(3+var(55))),pos y+playerID(var(3+var(55))),vel y*10>=-80
+trigger1=abs(playerID(var(3+var(55))),vel x)>1
+trigger1=playerID(var(3+var(55))),facing*(root,pos x-playerID(var(3+var(55))),pos x)>-50
+trigger1=fvar(1):=playerID(var(3+var(55))),vel y
+var(58)=10000
+
+
+[State 20000 近すぎ]
+type=varadd
+trigger1=playerIDExist(var(3+var(55)))
+trigger1=!((var(58)/100000)%10)
+trigger1=playerID(var(3+var(55))),movetype=A
+trigger1=playerID(var(3+var(55))),pos y-root,pos y=[-80,80]
+trigger1=playerID(var(3+var(55))),facing*(root,pos x-playerID(var(3+var(55))),pos x)=[-100,100]
+var(58)=100000
+
+
+
+[State 20000 カウンターシェル対地]
+type=varadd
+trigger1=playerIDExist(var(3+var(55)))
+trigger1=!((var(58)/1000000)%10)
+trigger1=playerID(var(3+var(55))),movetype=A&&(playerID(var(3+var(55))),hitdefattr=SCA,AP||playerID(var(3+var(55))),hitdefattr=SA,AA||(EnemyNear(root,Var(53)),numproj&&!(EnemyNear(root,Var(53)),hitdefattr=SAC)))
+trigger1=playerID(var(3+var(55))),pos y+playerID(var(3+var(55))),vel y * 10 =[-100,60]
+trigger1=abs(playerID(var(3+var(55))),vel x)>1
+trigger1=playerID(var(3+var(55))),facing*(root,pos x-playerID(var(3+var(55))),pos x)-playerID(var(3+var(55))),vel x * 8 > 50
+trigger1=playerID(var(3+var(55))),facing*(root,pos x-playerID(var(3+var(55))),pos x)-playerID(var(3+var(55))),vel x * 11 <= 50
+trigger1=fvar(2):=playerID(var(3+var(55))),vel x||1
+var(58)=1000000
+
+
+[State 20000 飛び込み]
+type=varadd
+trigger1=playerIDExist(var(3+var(55)))
+trigger1=!((var(58)/10000000)%10)
+trigger1=playerID(var(3+var(55))),movetype=A&&(playerID(var(3+var(55))),hitdefattr=SCA,AP||playerID(var(3+var(55))),hitdefattr=SA,AA)
+trigger1=playerID(var(3+var(55))),pos y+playerID(var(3+var(55))),vel y*20 >= -80
+trigger1=abs(playerID(var(3+var(55))),vel y) = [-1,1]
+trigger1=playerID(var(3+var(55))),facing*(root,pos x-playerID(var(3+var(55))),pos x)-playerID(var(3+var(55))),vel x * 16 > 70
+trigger1=playerID(var(3+var(55))),facing*(root,pos x-playerID(var(3+var(55))),pos x)-playerID(var(3+var(55))),vel x * 32 <= 150
+trigger1=fvar(3):=playerID(var(3+var(55))),vel y||1
+var(58)=10000000
+
+
+[State 20000 回り込み]
+type=varadd
+trigger1=playerIDExist(var(3+var(55)))
+trigger1=!((var(58)/100000000)%10)
+trigger1=playerID(var(3+var(55))),movetype=A&&(playerID(var(3+var(55))),hitdefattr=SCA,AP||playerID(var(3+var(55))),hitdefattr=SA,AA)
+trigger1=playerID(var(3+var(55))),pos y+playerID(var(3+var(55))),vel y*10=[-100,60]
+trigger1=abs(playerID(var(3+var(55))),vel x)>1
+trigger1=playerID(var(3+var(55))),facing*(root,pos x-playerID(var(3+var(55))),pos x)-playerID(var(3+var(55))),vel x* 1 > 1
+trigger1=playerID(var(3+var(55))),facing*(root,pos x-playerID(var(3+var(55))),pos x)-playerID(var(3+var(55))),vel x* 23 <= 0
+trigger1=fvar(2):=playerID(var(3+var(55))),vel x||1
+var(58)=100000000
+
+
+[State 20000];設置
+type=varadd
+trigger1=!((var(58)/100)%10)
+trigger1=playerIDExist(var(3+var(55)))
+trigger1=playerID(var(3+var(55))),movetype=A
+trigger1=playerID(var(3+var(55))),pos y>-140
+trigger1=playerID(var(3+var(55))),vel x<3
+trigger1=playerID(var(3+var(55))),time>=40
+trigger1=(root,pos x-playerID(var(3+var(55))),pos x)>80
+var(58)=100
+
+
+;ループカウンタ増加、初めに戻る
+[State 20009]
+type=CHangeState
+trigger1=var(55)<var(54)
+trigger1=var(55):=var(55)+1||1
+value=20009
+
+
+記述例（ヘルパー用ステート）--------------------------------------------------------
+
+;飛び道具対策ヘルパー20000（suparpause,pause無視）
+;var(0):飛び道具対策変数１　相手攻撃判断＆カウントダウン用
+;var(1):飛び道具対策変数２　反応までのカウントアップ用
+;var(2):飛び道具の後ろ側をガードするための変数
+;var(3)~var(53):ヘルパーリダイレクト用
+;var(54):最大ループ回数設定
+;var(55):20000,20009ループカウント用
+;var(56):20002ループカウント用
+;var(57):リダイレクト変数のうち、現在の最高の値
+;var(58):結果から状況判断
+;var(59):対策テスト用
+
+;fvar(0)~fvar(x):ｘ速度など。確率変動に使う
+
+;※var(3+var(55))が、「現在調査中のＩＤ用変数」
+[State -2 デバッグ用]
+type=displayToClipboard
+trigger1=1
+ignorehitpause=1
+text=" var(2)=%d var(4)=%d var(3)=%d var(5)=%d var(6)=%d"
+params=var(2),var(4),var(3),var(5),var(6)
+
+
+[State -2 デバッグ用]
+type=AppendToClipboard
+trigger1=1
+ignorehitpause=1
+text=" \nvar(7)=%d var(59)=%d var(55)=%d var(54)=%d var(58)=%d"
+params=var(7),var(59),var(55),var(54),var(58)
+
+
+[State 20000];カウンタ初期化
+type=varset
+trigger1=1
+var(55)=0
+
+[State 20000];カウンタ初期化
+type=varset
+trigger1=1
+var(56)=0
+
