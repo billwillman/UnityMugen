@@ -99,6 +99,12 @@ public class ImageAnimation : MonoBehaviour {
 			else
 				CacheAnimation.wrapMode = WrapMode.Once;
 			CacheAnimation.Play();
+        } else
+        {
+            m_IsLoop = isLoop;
+            m_State = state;
+
+            DoEndFrame();
         }
         return ret;
     }

@@ -25,6 +25,8 @@ public class PlayerStateMgr : MonoBehaviour {
             return false;
         if (!m_HasFirstChangedStated)
             m_HasFirstChangedStated = true;
+        if (!display.HasStateImage(state, true))
+            return false;
         return m_StateMgr.ChangeState(state);
     }
 
