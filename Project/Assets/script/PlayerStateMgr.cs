@@ -7,6 +7,7 @@ using Mugen;
 public class PlayerStateMgr : MonoBehaviour {
     private StateMgr<PlayerState, PlayerStateMgr> m_StateMgr = null;
 	private PlayerDisplay m_PlayerDisplay = null;
+    private bool m_HasFirstChangedStated = false;
 
     void Awake()
     {
@@ -20,8 +21,10 @@ public class PlayerStateMgr : MonoBehaviour {
 		var display = this.PlyDisplay;
 		if (display.PlyType == InputPlayerType.none)
 			return false;
-        if (m_StateMgr.CurrStateKey == state)
+        if (m_StateMgr.CurrStateKey == state && m_HasFirstChangedStated)
             return false;
+        if (!m_HasFirstChangedStated)
+            m_HasFirstChangedStated = true;
         return m_StateMgr.ChangeState(state);
     }
 
