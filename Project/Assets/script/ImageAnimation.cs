@@ -658,7 +658,7 @@ public class ImageAnimation : MonoBehaviour {
     }
 
     // 当前帧
-    private static float _cImageAnimationScale = 0.03f;
+    private static float _cImageAnimationScale = 0.015f;
     private int m_CurFrame = -1;
 	private int m_LoopStart = -1;
     private float m_LoopStartAniTime = -1;
