@@ -891,6 +891,7 @@ namespace Mugen
 
 			// ≈–∂œ «≤ª «9000£¨1
 			if (subHeader.GroubNumber == 9000 && subHeader.ImageNumber == 1) {
+				pcxData.palletLink = m_currentLink;
 			} else {
 				offset -= 768;
 				//eat empty 8bit
