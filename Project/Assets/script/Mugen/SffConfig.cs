@@ -138,6 +138,24 @@ namespace Mugen
 	
 	[System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential, CharSet=System.Runtime.InteropServices.CharSet.Ansi)]
 	public struct SFFSUBHEADER {
+
+        public static SFFSUBHEADER LoadFromStream(Stream stream)
+        {
+            var mgr = FilePathMgr.GetInstance();
+            SFFSUBHEADER subHeader = new SFFSUBHEADER();
+            
+            subHeader.NextSubheaderFileOffset = (uint)mgr.ReadInt(stream);
+            subHeader.LenghtOfSubheader = (uint)mgr.ReadInt(stream);
+            subHeader.x = mgr.ReadShort(stream);
+            subHeader.y = mgr.ReadShort(stream);
+            subHeader.GroubNumber = mgr.ReadShort(stream);
+            subHeader.ImageNumber = mgr.ReadShort(stream);
+            subHeader.IndexOfPrevious = mgr.ReadShort(stream);
+            subHeader.PalletSame = mgr.ReadBool(stream);
+            subHeader.BALNK = mgr.ReadString(stream, 13, System.Text.Encoding.ASCII);
+
+            return subHeader;
+        }
 		
 		/// unsigned int
 		public uint NextSubheaderFileOffset;
@@ -619,11 +637,21 @@ namespace Mugen
                     return false;
                 }
 
-                if (!LoadSubFiles(header, bytes))
-                    return false;
+              //  MemoryStream stream = new MemoryStream(bytes);
+                try
+                {
+                    if (!LoadSubFiles(header, bytes))
+                        return false;
+                   // if (!LoadSubFiles(header, stream))
+                  //      return false;
 
-                if (!LoadPcxs(header, bytes))
-                    return false;
+                    if (!LoadPcxs(header, bytes))
+                        return false;
+                } finally
+                {
+           //         stream.Close();
+           //         stream.Dispose();
+                }
             } else
             {
                 Debug.LogErrorFormat("sff file not supoort v{0:D}", v1);
@@ -1043,6 +1071,51 @@ namespace Mugen
 			return buffer;
 		}
 
+        /*
+        private bool LoadSubFiles(SFFHEADER header, Stream source)
+        {
+            if (mSubHeaders != null)
+                mSubHeaders.Clear();
+
+            if ((header.NumberOfGroups == 0) && (header.NumberOfImage == 0))
+                return true;
+
+            if ((header.SubHeaderFileOffset == 0))
+                return false;
+            if (source == null || source.Length <= 0)
+                return false;
+
+            long offset = (long)header.SubHeaderFileOffset;
+            if (offset < 0)
+                return false;
+            if (source.Seek(offset, SeekOrigin.Begin) != offset)
+                return false;
+
+            SFFSUBHEADER subHeader = new SFFSUBHEADER();
+            int subHeaderSize = Marshal.SizeOf(subHeader);
+            for (int i = 0; i < header.NumberOfImage; ++i)
+            {
+                if (subHeaderSize + source.Position > source.Length)
+                {
+                    // File is Eof
+                    return true;
+                }
+                subHeader = SFFSUBHEADER.LoadFromStream(source);
+                if (subHeader.LenghtOfSubheader > 0)
+                {
+                    if (subHeader.LenghtOfSubheader >= source.Length)
+                        return true;
+
+                    source.Seek((long)subHeader.LenghtOfSubheader, SeekOrigin.Current);
+                }
+
+                SubHeaders.Add(subHeader);
+            }
+
+            bool ret = mSubHeaders != null && (int)header.NumberOfImage == mSubHeaders.Count;
+            return ret;
+        }*/
+
 		private bool LoadSubFiles(SFFHEADER header, byte[] source)
 		{
 			if ((header.NumberOfGroups == 0) && (header.NumberOfImage == 0))
@@ -1052,7 +1125,8 @@ namespace Mugen
 				return false;
 			if (!LoadSubFiles((int)header.SubHeaderFileOffset, source))
 				return false;
-			return (int)header.NumberOfImage == mSubHeaders.Count;
+			bool ret = (int)header.NumberOfImage == mSubHeaders.Count;
+            return ret;
 		}
 
 		private bool LoadSubFiles(int offset, byte[] source)
