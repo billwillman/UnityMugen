@@ -842,6 +842,50 @@ namespace Mugen
 			return ret;
 		}
 
+        private bool LoadPcx2(int offset, SFFSUBHEADER subHeader, byte[] source, out KeyValuePair<PCXHEADER, PCXDATA> dataPair)
+        {
+            if ((offset < 0) || (offset >= source.Length))
+            {
+                dataPair = new KeyValuePair<PCXHEADER, PCXDATA>();
+                return false;
+            }
+            if (source[offset] != 0x0A)
+            {
+                dataPair = new KeyValuePair<PCXHEADER, PCXDATA>();
+                return false;
+            }
+
+            MemoryStream stream = new MemoryStream(source);
+            try
+            {
+                stream.Seek(offset, SeekOrigin.Begin);
+
+                PCXHEADER header = PCXHEADER.LoadFromStream(stream);
+                for (int i = 0; i < (int)header.height; ++i)
+                {
+                    switch (header.NPlanes)
+                    {
+                        // 24λ
+                        case 3:
+                            break;
+                        // 256ɫ
+                        case 1:
+                            break;
+                        default:
+                            dataPair = new KeyValuePair<PCXHEADER, PCXDATA>();
+                            return false;
+                    }
+                }
+            } finally
+            {
+                stream.Close();
+                stream.Dispose();
+            }
+
+            dataPair = new KeyValuePair<PCXHEADER, PCXDATA>();
+            return true;
+        }
+
 
 		private KeyValuePair<short, short> m_currentLink = new KeyValuePair<short, short> (-1, -1);
 		private bool LoadPcx(int offset, SFFSUBHEADER subHeader, byte[] source, out KeyValuePair<PCXHEADER, PCXDATA> dataPair)
