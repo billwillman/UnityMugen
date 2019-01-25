@@ -889,35 +889,38 @@ namespace Mugen
 			pcxData.data = dst;
 			pcxData.pallet = null;
 
-			offset -= 768;
-			//eat empty 8bit
-			offset++;
+			// ≈–∂œ «≤ª «9000£¨1
+			if (subHeader.GroubNumber == 9000 && subHeader.ImageNumber == 1) {
+			} else {
+				offset -= 768;
+				//eat empty 8bit
+				offset++;
 
-			byte s = source [offset++];
-			if ((s == 12) && !subHeader.PalletSame && !HasNormalPallet && header.NPlanes <= 1) 
-           // if (!subHeader.PalletSame && !HasNormalPallet && header.NPlanes <= 1)
-            {			
-				// load pallet
-				pcxData.pallet = new Color32[256];
-				for (int i = 0; i < 256; ++i) {
-					byte r = source [offset++];
-					byte g = source [offset++];
-					byte b = source [offset++];
-					byte a;
-					if (i == 0)
-						a = 0;
-					else {
-
-						if ((r == pcxData.pallet [i - 1].r) && (g == pcxData.pallet [i - 1].g) && (b == pcxData.pallet [i - 1].b))
+				byte s = source [offset++];
+				if ((s == 12) && !subHeader.PalletSame && !HasNormalPallet && header.NPlanes <= 1) 
+ {           // if (!subHeader.PalletSame && !HasNormalPallet && header.NPlanes <= 1)
+					// load pallet
+					pcxData.pallet = new Color32[256];
+					for (int i = 0; i < 256; ++i) {
+						byte r = source [offset++];
+						byte g = source [offset++];
+						byte b = source [offset++];
+						byte a;
+						if (i == 0)
 							a = 0;
-						else
-							a = 0xFF;
+						else {
+
+							if ((r == pcxData.pallet [i - 1].r) && (g == pcxData.pallet [i - 1].g) && (b == pcxData.pallet [i - 1].b))
+								a = 0;
+							else
+								a = 0xFF;
+						}
+						pcxData.pallet [i] = new Color32 (r, g, b, a);
 					}
-					pcxData.pallet [i] = new Color32 (r, g, b, a);
-				}
-				m_currentLink = new KeyValuePair<short, short>(subHeader.GroubNumber, subHeader.ImageNumber);
-			} else
-				pcxData.palletLink = m_currentLink;
+					m_currentLink = new KeyValuePair<short, short> (subHeader.GroubNumber, subHeader.ImageNumber);
+				} else
+					pcxData.palletLink = m_currentLink;
+			}
 
 			dataPair = new KeyValuePair<PCXHEADER, PCXDATA>(header, pcxData);
 
