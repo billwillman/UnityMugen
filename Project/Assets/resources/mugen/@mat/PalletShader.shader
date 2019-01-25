@@ -4,6 +4,7 @@
 	{
 		_MainTex ("Index Texture", 2D) = "black" {}
 		_PalletTex("Pallet Texture", 2D) = "black" {}
+		_Color("Mix Color", Color) = (1,1,1,1)
 	}
 	SubShader
 	{
@@ -56,13 +57,14 @@
 			sampler2D _MainTex;
 			float4 _MainTex_ST;
 			sampler2D _PalletTex;
+			fixed4 _Color;
 			
 			v2f vert (appdata v)
 			{
 				v2f o;
 				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
 				o.uv = TRANSFORM_TEX(v.uv, _MainTex);
-				o.color = v.color;
+				o.color = v.color * _Color;
 				return o;
 			}
 			
@@ -73,10 +75,11 @@
 				
 				//half2 uv = float2(round(col.a * 255)/255, 0);
 				half2 uv = float2(col.a, 0);
-				col = tex2D(_PalletTex, uv) * i.color;
+				col = tex2D(_PalletTex, uv);
 				float d = col.r + col.g + col.b;
 				if (d == 0)
 					col.a = 1.0f;
+				col *= i.color;
 				
 				return col;
 			}
