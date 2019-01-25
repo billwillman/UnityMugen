@@ -158,7 +158,7 @@ public class PlayerStateCtl: MonoBehaviour, IBasePlayerStateListener
 
 				if (i1.keyCodeValue == i2.keyCodeValue && i1.keyCodeValue == (int)InputControlType.left) {
 					float delta = i2.downTick - i1.downTick;
-					if (delta >= 0.16f && delta <= 0.22f) {
+					if (/*delta >= 0.16f &&*/ delta <= 0.22f) {
 						target.ChangeState (PlayerState.psBackStep1);
 						//	Debug.LogError (delta.ToString ());
 						return;
