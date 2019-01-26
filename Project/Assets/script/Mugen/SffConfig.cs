@@ -872,26 +872,25 @@ namespace Mugen
 					break;
 
 				byte _Data = (byte)stream.ReadByte();
-				if (_Data > 0xC0)
+                if (_Data > 0xC0)
 				{
-					int _Count = _Data - 0xC0;
+                    int _Count = _Data - 0xC0;
 					byte sameData = 0;
 					for (int i = 0; i != _Count; ++i)
 					{
 						if (i == 0) {
 							sameData = (byte)stream.ReadByte ();
 						}
-						int idx = i + _ReadIndex;
-						if (idx >= _LineWidth)
+                        if (_ReadIndex >= _LineWidth)
 							break;
-						lineBuffer[idx] = sameData;
+                        lineBuffer[_ReadIndex] = sameData;
+                        ++_ReadIndex;
 					}
-					_ReadIndex += _Count;
 				}
 				else
 				{
 					lineBuffer[_ReadIndex] = _Data;
-					_ReadIndex++;
+					++_ReadIndex;
 				}
 				if (_ReadIndex >= _LineWidth) break;
 			}
@@ -901,131 +900,145 @@ namespace Mugen
 		{
 			Debug.LogError ("Call function LoadPCXLine24");
 		}
-			
-        private bool LoadPcx2(int offset, SFFSUBHEADER subHeader, byte[] source, out KeyValuePair<PCXHEADER, PCXDATA> dataPair)
+
+        private bool LoadPcx2(int offset, SFFSUBHEADER subHeader, byte[] source, ref Stream stream, out KeyValuePair<PCXHEADER, PCXDATA> dataPair)
         {
             if ((offset < 0) || (offset >= source.Length))
             {
                 dataPair = new KeyValuePair<PCXHEADER, PCXDATA>();
                 return false;
             }
+            /*
             if (source[offset] != 0x0A)
             {
                 dataPair = new KeyValuePair<PCXHEADER, PCXDATA>();
-                return false;
+               // return false;
             }
+            */
 
-            MemoryStream stream = new MemoryStream(source);
+            if (stream == null)
+                stream = new MemoryStream(source);
             try
             {
-				try
-				{
                 stream.Seek(offset, SeekOrigin.Begin);
 
                 PCXHEADER header = PCXHEADER.LoadFromStream(stream);
-				header.widht = (ushort)(header.widht - header.x + 1);
-				header.height = (ushort)(header.height - header.y + 1);
-			//	byte[] ret = new byte[header.widht * header.NPlanes * header.height];
-				byte[] ret = null;
-				byte[] lineBuffer = null;
+
+                if (header.BPP == 0)
+                {
+                    dataPair = new KeyValuePair<PCXHEADER, PCXDATA>();
+                    return true;
+                }
+
+                header.widht = (ushort)(header.widht - header.x + 1);
+                header.height = (ushort)(header.height - header.y + 1);
+                //	byte[] ret = new byte[header.widht * header.NPlanes * header.height];
+                byte[] ret = null;
+                byte[] lineBuffer = null;
                 for (int i = 0; i < (int)header.height; ++i)
                 {
                     switch (header.NPlanes)
                     {
                         // 24位
                         case 3:
-							LoadPCXLine24(header, stream, ref lineBuffer);
+                            LoadPCXLine24(header, stream, ref lineBuffer);
                             break;
                         // 256色
                         case 1:
-							LoadPCXLine8(header, stream, ref lineBuffer);
+                            LoadPCXLine8(header, stream, ref lineBuffer);
                             break;
                         default:
                             dataPair = new KeyValuePair<PCXHEADER, PCXDATA>();
                             return false;
                     }
 
-					if (lineBuffer != null && lineBuffer.Length > 0)
-					{
-						if (ret == null)
-							ret = new byte[header.widht * header.NPlanes * header.height];
-						int copySize = header.NPlanes * header.widht;
-						Buffer.BlockCopy(lineBuffer, 0, ret, i * copySize, copySize);
-					}
+                    if (lineBuffer != null && lineBuffer.Length > 0)
+                    {
+                         int lineSize = header.NPlanes * header.widht;
+                        if (ret == null)
+                        {
+                           // ret = new byte[header.widht * header.NPlanes * header.height];
+                            ret = new byte[lineSize * header.height];
+                        }
+
+                        Buffer.BlockCopy(lineBuffer, 0, ret, i * lineSize, lineSize);
+                    }
                 }
 
-				// H changed
-				int chgSize = header.NPlanes * header.widht;
-				byte[] temp = null;
-				if (lineBuffer != null && lineBuffer.Length >= chgSize)
-					temp = lineBuffer;
-				else
-				{
-					lineBuffer = null;
-					temp = new byte[chgSize];
-				}
-				for (int y = 0; y < (int)header.height/2; ++y)
-				{
-					int x = ((int)header.height - 1 - y);
-					int s = y * chgSize;
-					int d = x * chgSize;
-					Buffer.BlockCopy(ret, d, temp, 0, chgSize);
-					Buffer.BlockCopy(ret, s, ret, d, chgSize);
-					Buffer.BlockCopy(temp, 0, ret, s, chgSize);
-				}
+                // H changed
+                int chgSize = header.NPlanes * header.widht;
+                byte[] temp = null;
+                if (lineBuffer != null && lineBuffer.Length >= chgSize)
+                    temp = lineBuffer;
+                else
+                {
+                    lineBuffer = null;
+                    temp = new byte[chgSize];
+                }
+                for (int y = 0; y < (int)header.height / 2; ++y)
+                {
+                    int x = ((int)header.height - 1 - y);
+                    int s = y * chgSize;
+                    int d = x * chgSize;
+                    Buffer.BlockCopy(ret, d, temp, 0, chgSize);
+                    Buffer.BlockCopy(ret, s, ret, d, chgSize);
+                    Buffer.BlockCopy(temp, 0, ret, s, chgSize);
+                }
 
-				// 读取调色版
-					PCXDATA pcxData = new PCXDATA();
-					pcxData.data = ret;
-					pcxData.pallet = null;
+                // 读取调色版
+                PCXDATA pcxData = new PCXDATA();
+                pcxData.data = ret;
+                pcxData.pallet = null;
 
-					if (header.NPlanes == 1)
-					{
-						// 判断是不是9000，1
-						if (subHeader.GroubNumber == 9000 && subHeader.ImageNumber == 1) {
-							pcxData.palletLink = m_currentLink;
-						} else {
-							if (stream.Position + 256 * 3 <= stream.Length)
-							{
-								pcxData.pallet = new Color32[256];
-								for (int i = 0; i != 256; ++i)
-								{
-									byte r = (byte)stream.ReadByte();
-									byte g = (byte)stream.ReadByte();
-									byte b = (byte)stream.ReadByte();
+                if (!subHeader.PalletSame && !HasNormalPallet && header.NPlanes <= 1)
+                {
+                    // 判断是不是9000，1
+                    if (subHeader.GroubNumber == 9000 && subHeader.ImageNumber == 1)
+                    {
+                        pcxData.palletLink = m_currentLink;
+                    }
+                    else
+                    {
+                        if (stream.Position + 256 * 3 <= stream.Length)
+                        {
+                            pcxData.pallet = new Color32[256];
+                            for (int i = 0; i != 256; ++i)
+                            {
+                                byte r = (byte)stream.ReadByte();
+                                byte g = (byte)stream.ReadByte();
+                                byte b = (byte)stream.ReadByte();
 
-									byte a;
-									if (i == 0)
-										a = 0;
-									else {
-										if ((r == pcxData.pallet [i - 1].r) && (g == pcxData.pallet [i - 1].g) && (b == pcxData.pallet [i - 1].b))
-											a = 0;
-										else
-											a = 0xFF;
-									}
+                                byte a;
+                                if (i == 0)
+                                    a = 0;
+                                else
+                                {
+                                    if ((r == pcxData.pallet[i - 1].r) && (g == pcxData.pallet[i - 1].g) && (b == pcxData.pallet[i - 1].b))
+                                        a = 0;
+                                    else
+                                        a = 0xFF;
+                                }
 
-									pcxData.pallet [i] = new Color32 (r, g, b, a);
-								}
-								m_currentLink = new KeyValuePair<short, short> (subHeader.GroubNumber, subHeader.ImageNumber);
-							}
-						}
-					}
+                                pcxData.pallet[i] = new Color32(r, g, b, a);
+                            }
+                            m_currentLink = new KeyValuePair<short, short>(subHeader.GroubNumber, subHeader.ImageNumber);
+                        }
+                    }
+                }
+                else
+                {
+                    pcxData.palletLink = m_currentLink;
+                }
 
-					dataPair = new KeyValuePair<PCXHEADER, PCXDATA>(header, pcxData);
+                dataPair = new KeyValuePair<PCXHEADER, PCXDATA>(header, pcxData);
 
-				} catch (Exception e)
-				{
-					Debug.LogError(e.Message);
-					dataPair = new KeyValuePair<PCXHEADER, PCXDATA>();
-					return false;
-				}
-            } finally
-            {
-                stream.Close();
-                stream.Dispose();
             }
-
-            dataPair = new KeyValuePair<PCXHEADER, PCXDATA>();
+            catch (Exception e)
+            {
+                Debug.LogError(e.Message);
+                dataPair = new KeyValuePair<PCXHEADER, PCXDATA>();
+                return false;
+            }
             return true;
         }
 
@@ -1182,16 +1195,30 @@ namespace Mugen
 
 				offset += Marshal.SizeOf(header);
 				KeyValuePair<PCXHEADER, PCXDATA> value;
-				#if _USE_NEW_PCX
-				if (!LoadPcx2(offset, header, source, out value))
-				#else
+#if _USE_NEW_PCX
+                Stream stream = null;
+                try
+                {
+                    if (!LoadPcx2(offset, header, source, ref stream, out value))
+#else
 				if (!LoadPcx(offset, header, source, out value))
-				#endif
-				{
-					Debug.LogErrorFormat("LoadPcxs: index = {0} error", i);
-					ret = false;
-					break;
-				}
+#endif
+                    {
+                        Debug.LogErrorFormat("LoadPcxs: index = {0} error", i);
+                        ret = false;
+                        break;
+                    }
+#if _USE_NEW_PCX
+                } finally
+                {
+                    if (stream != null)
+                    {
+                        stream.Close();
+                        stream.Dispose();
+                        stream = null;
+                    }
+                }
+#endif
 
 
 				mPcxDataMap.Add(key, value);
