@@ -110,7 +110,8 @@ public class PlayerDisplayEditor : Editor {
             return;
         if (m_VaildStateList != null && m_VaildStateNameList != null)
         {
-            int newSelected = EditorGUILayout.Popup("手动选择角色动作", m_StateSelected, m_VaildStateNameList);
+            string l0 = string.Format("手动选择角色动作({0:D})", m_VaildStateNameList.Length);
+            int newSelected = EditorGUILayout.Popup(l0, m_StateSelected, m_VaildStateNameList);
             if (m_StateSelected != newSelected)
             {
                 var state = m_VaildStateList[newSelected];
@@ -128,7 +129,8 @@ public class PlayerDisplayEditor : Editor {
 
         if (m_VaildPalletNameList != null)
         {
-            int newSelected = EditorGUILayout.Popup("手动选择调色板", m_PalletSelectd, m_VaildPalletNameList);
+            string l1 = string.Format("手动选择调色板({0:D})", m_VaildPalletNameList.Length);
+            int newSelected = EditorGUILayout.Popup(l1, m_PalletSelectd, m_VaildPalletNameList);
             if (m_PalletSelectd != newSelected)
             {
                 string newPalletName = m_VaildPalletNameList[newSelected];
