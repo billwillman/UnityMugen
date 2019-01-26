@@ -115,16 +115,17 @@ public class ImageAnimation : MonoBehaviour {
 	public ImageFrame GetCurImageFrame(out ActionFlip flip)
 	{
 		flip = ActionFlip.afNone;
-		var frameList = GetImageFrameList ();
+        var aniNode = CurAniNode;
+        if (aniNode.frameGroup < 0 || aniNode.frameIndex < 0)
+            return null;
+		var frameList = GetImageFrameList(aniNode.frameGroup);
 		if (frameList == null || frameList.Count <= 0)
 			return null;
-		var aniNode = CurAniNode;
-		if (aniNode.frameIndex < 0)
-			return null;
+		
         for (int i = 0; i < frameList.Count; ++i)
         {
             var frame = frameList[i];
-            if (frame != null && frame.Image == aniNode.frameIndex && frame.Group == (int)aniNode.frameGroup)
+            if (frame != null && frame.Image == aniNode.frameIndex)
             {
                 flip = aniNode.flipTag;
                 return frame;
@@ -151,7 +152,7 @@ public class ImageAnimation : MonoBehaviour {
         }
     }
 
-	public List<ImageFrame> GetImageFrameList()
+	public List<ImageFrame> GetImageFrameList(int group)
 	{
         PlayerDisplay displayer = this.CacheDisplayer;
 		if (displayer == null)
@@ -171,7 +172,7 @@ public class ImageAnimation : MonoBehaviour {
 				return null;
 		}
 
-		return imgLib.GetImageFrameList(this.m_State);
+        return imgLib.GetImageFrameList((PlayerState)group);
 	}
 
     private bool DoInitAnimation()

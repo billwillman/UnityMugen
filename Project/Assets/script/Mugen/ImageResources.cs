@@ -8,12 +8,11 @@ namespace Mugen
 {
 	public class ImageFrame: DisposeObject
 	{
-		public ImageFrame(ImageLibrary parentLib, int group, int image, Texture2D tex, float offsetX, 
+		public ImageFrame(ImageLibrary parentLib, int image, Texture2D tex, float offsetX, 
 			float offsetY, string name, KeyValuePair<short, short> palletLink, Texture2D localPalletTex = null)
 		{
 			mParentLib = parentLib;
             m_Image = image;
-            m_Group = group;
 			mLocalPalletTex = localPalletTex;
 			mLoaclPalletTexLink = palletLink;
 			SetTexture2D(tex, offsetX, offsetY, name);
@@ -97,7 +96,7 @@ namespace Mugen
 					if (mParentLib != null) {
 						var state = (PlayerState)mLoaclPalletTexLink.Key;
 						int index = mLoaclPalletTexLink.Value;
-						var frame = mParentLib.GetImageFrame (state, Group, index);
+						var frame = mParentLib.GetImageFrame (state, index);
 						if (frame != null) {
 							return frame.LocalPalletTex;
 						}
@@ -136,19 +135,10 @@ namespace Mugen
             }
         }
 
-        public int Group
-        {
-            get
-            {
-                return m_Group;
-            }
-        }
-
 		private ImageLibrary mParentLib = null;
 		private Texture2D mLocalPalletTex = null;
 		private KeyValuePair<short, short> mLoaclPalletTexLink = new KeyValuePair<short, short>(-1, -1);
         private int m_Image = 0;
-        private int m_Group = 0;
 	}
 
 	public struct ImageAnimateNode
@@ -186,7 +176,7 @@ namespace Mugen
 			return ret;
 		}
 
-		public ImageFrame GetImageFrame(PlayerState state, int group, int index)
+		public ImageFrame GetImageFrame(PlayerState state, int index)
 		{
 			List<ImageFrame> frameList = GetImageFrameList(state);
 			if (frameList == null)
@@ -196,7 +186,7 @@ namespace Mugen
             for (int i = 0; i < frameList.Count; ++i)
             {
                 var frame = frameList[i];
-                if (frame != null && frame.Image == index && frame.Group == group)
+                if (frame != null && frame.Image == index)
                     return frame;
             }
             return null;
@@ -335,7 +325,7 @@ namespace Mugen
 					palletLink = d.Value.palletLink;
 				else
 					palletLink = new KeyValuePair<short, short> (-1, -1);
-                ImageFrame frame = new ImageFrame(this, (int)group, startLoadImage, tex, offX, offY, charName,
+                ImageFrame frame = new ImageFrame(this, startLoadImage, tex, offX, offY, charName,
 					palletLink, d.Value.GetPalletTexture(mIs32BitPallet));
 
                 AddImageFrame(saveGroup, frame);
@@ -500,7 +490,7 @@ namespace Mugen
             for (int i = 0; i < frameList.Count; ++i)
             {
                 var frame = frameList[i];
-                if (frame != null && frame.Image == image && frame.Group == group)
+                if (frame != null && frame.Image == image)
                 {
                     return true;
                 }
