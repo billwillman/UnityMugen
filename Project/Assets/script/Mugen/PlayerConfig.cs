@@ -167,8 +167,10 @@ namespace Mugen
 
 			section = reader.GetSection("Info");
 			mPlayerInfo = new PlayerInfo();
-			if (!section.GetPropertysValues(mPlayerInfo))
-				mPlayerInfo = null;
+			if (section != null) {
+				if (!section.GetPropertysValues (mPlayerInfo))
+					mPlayerInfo = null;
+			}
 		}
 
 		public bool HasFilesConfig

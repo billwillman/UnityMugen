@@ -295,7 +295,8 @@ public class GlobalConfigMgr : MonoSingleton<GlobalConfigMgr> {
 					AddCnsList (defaultPlayer, player);
 					AttachPals (defaultPlayer, player);
 					#endif
-					player.CreatePlayerDisplay (defaultPlayer, defaultPlayer.PlayerType);
+					if (player != null)
+						player.CreatePlayerDisplay (defaultPlayer, defaultPlayer.PlayerType);
 				}
 			}
 		}

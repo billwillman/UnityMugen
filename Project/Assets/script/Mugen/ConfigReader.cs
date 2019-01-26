@@ -292,7 +292,7 @@ namespace Mugen
 					for (int j = 0; j < mContentList.Count; ++j)
 					{
 						string s1 = mContentList[j];
-						if ((s1.Length > s.Length + 1) && (s1.StartsWith(s)))
+						if ((s1.Length > s.Length + 1) && (s1.StartsWith(s, StringComparison.CurrentCultureIgnoreCase)))
 						{
 							string right = s1.Substring(s.Length, s1.Length - s.Length).Trim();
 							if (right.StartsWith("="))

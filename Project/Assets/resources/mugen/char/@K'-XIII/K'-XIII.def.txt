@@ -1,0 +1,38 @@
+[Info]
+Name         ="K'"
+DisplayName  ="K'"
+VersionDate  =12,06,2009
+MugenVersion =06,14,2003
+Author       ="ikaruga"
+Pal.Defaults =1
+localcoord = 360
+[Files]
+Cmd      =K'.cmd
+Cns      =K'.cns
+St       =K'.cns
+St0      = K'-N.cns
+StCommon =common1.cns
+Sprite   =K'.sff
+Anim     =K'.air
+Sound    =K'.snd
+pal1=_act/01.act
+pal2=_act/02.act
+pal3=_act/03.act
+pal4=_act/04.act
+pal5=_act/05.act
+pal6=_act/06.act
+pal7=_act/07.act
+pal8=_act/08.act
+pal9=_act/09.act
+pal10=_act/10.act
+pal11=_act/11.act
+pal12=_act/12.act
+st1=K'-S.cns
+st2=K'-H.cns
+st3=K'-2-3.cns
+
+;---カラーパレット---
+
+[Arcade]
+intro.storyboard=
+ending.storyboard=
