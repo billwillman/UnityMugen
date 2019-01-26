@@ -124,7 +124,7 @@ public class ImageAnimation : MonoBehaviour {
         for (int i = 0; i < frameList.Count; ++i)
         {
             var frame = frameList[i];
-            if (frame != null && frame.Image == aniNode.frameIndex)
+            if (frame != null && frame.Image == aniNode.frameIndex && frame.Group == (int)aniNode.frameGroup)
             {
                 flip = aniNode.flipTag;
                 return frame;
