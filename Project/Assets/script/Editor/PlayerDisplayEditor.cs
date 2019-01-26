@@ -131,6 +131,28 @@ public class PlayerDisplayEditor : Editor {
             {
                 if (m_StateSelected >= 0)
                 {
+					if (GUILayout.Button ("上一个动作")) {
+						int newState = m_StateSelected;
+						if (newState - 1 < 0)
+							newState = m_VaildStateNameList.Length - 1;
+						else
+							--newState;
+						var state = m_VaildStateList[newState];
+						if (state != PlayerState.psNone)
+						{
+							if (m_LastDisplay.PlayAni(state, true))
+							{
+								m_StateSelected = newState;
+
+								SelctedItem item;
+								if (!m_SelectedMap.TryGetValue(m_LastDisplay.GetInstanceID(), out item))
+									item = new SelctedItem();
+								item.stateIndex = m_StateSelected;
+								m_SelectedMap[m_LastDisplay.GetInstanceID()] = item;
+							}
+						}
+					}
+
                     if (GUILayout.Button("下一个动作"))
                     {
                         int newState = m_StateSelected;
