@@ -131,6 +131,7 @@ public class PlayerDisplayEditor : Editor {
             {
                 if (m_StateSelected >= 0)
                 {
+					GUILayout.BeginHorizontal ();
 					if (GUILayout.Button ("上一个动作")) {
 						int newState = m_StateSelected;
 						if (newState - 1 < 0)
@@ -175,6 +176,7 @@ public class PlayerDisplayEditor : Editor {
                             }
                         }
                     }
+					GUILayout.EndHorizontal ();
                 }
             }
 
