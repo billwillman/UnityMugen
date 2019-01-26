@@ -211,6 +211,41 @@ public class PlayerDisplayEditor : Editor {
 
                 m_LastDisplay.PalletName = newPalletName;
             }
+
+			if (m_VaildPalletNameList.Length > 0 && m_PalletSelectd >= 0) {
+				GUILayout.BeginHorizontal ();
+				if (GUILayout.Button ("上一个调色版")) {
+					int newIdx = m_PalletSelectd - 1;
+					if (newIdx < 0)
+						newIdx = m_VaildPalletNameList.Length - 1;
+					string ps = m_VaildPalletNameList [newIdx];
+					if (!string.IsNullOrEmpty (ps)) {
+						m_PalletSelectd = newIdx;
+						SelctedItem item;
+						if (!m_SelectedMap.TryGetValue(m_LastDisplay.GetInstanceID(), out item))
+							item = new SelctedItem();
+						item.palletIndex = m_PalletSelectd;
+						m_SelectedMap[m_LastDisplay.GetInstanceID()] = item;
+						m_LastDisplay.PalletName = ps;
+					}
+				}
+				if (GUILayout.Button ("下一个调色版")) {
+					int newIdx = m_PalletSelectd + 1;
+					if (newIdx >= m_VaildPalletNameList.Length)
+						newIdx = 0;
+					string ps = m_VaildPalletNameList [newIdx];
+					if (!string.IsNullOrEmpty (ps)) {
+						m_PalletSelectd = newIdx;
+						SelctedItem item;
+						if (!m_SelectedMap.TryGetValue(m_LastDisplay.GetInstanceID(), out item))
+							item = new SelctedItem();
+						item.palletIndex = m_PalletSelectd;
+						m_SelectedMap[m_LastDisplay.GetInstanceID()] = item;
+						m_LastDisplay.PalletName = ps;
+					}
+				}
+				GUILayout.EndHorizontal ();
+			}
         }
 
 		bool newShowClsn = EditorGUILayout.Toggle ("显示包围盒", m_ShowClsn);
