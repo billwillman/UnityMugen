@@ -705,17 +705,34 @@ namespace Mugen
 
 			int size = 0;
 			int Pos = 0;
-			ret = new byte[header.widht * header.NPlanes * header.height + 1];
+			//ret = new byte[header.widht * header.NPlanes * header.height + 1];
+            ret = new byte[header.widht * header.NPlanes * header.height];
+            bool isEnd = false;
 			for (int y = 0; y < header.height; ++y)
 			{
+                if (isEnd)
+                    break;
+
 				int x = 0;
 				while (x < width)
 				{
-					byte byData = source[offset + Pos++];
+                    int idx = offset + Pos++;
+                    if (idx >= source.Length)
+                    {
+                        isEnd = true;
+                        break;
+                    }
+                    byte byData = source[idx];
 					if ((byData & 0xC0) == 0xC0)
 					{
 						size = byData & 0x3F;
-						byData = source[offset + Pos++];
+                        idx = offset + Pos++;
+                        if (idx >= source.Length)
+                        {
+                            isEnd = true;
+                            break;
+                        }
+                        byData = source[idx];
 					} else
 					{
 						size = 1;
@@ -723,8 +740,13 @@ namespace Mugen
 
 					while (size-- > 0)
 					{
-						if (x <= header.widht)
-							ret[x + (y * header.widht)] = byData;
+                        if (x <= header.widht)
+                        {
+                            idx = x + (y * header.widht * header.NPlanes);
+                            if (idx >= ret.Length)
+                                break;
+                            ret[idx] = byData;
+                        }
 						//this it to Skip blank data on PCX image wich are on the right side
 						// TODO:OK? Skip two bytes
 						if ((x == width) && (width != header.widht))
@@ -742,14 +764,15 @@ namespace Mugen
 
 				// H changed
 				byte[] temp = new byte[header.widht];
+                int lineSize = header.widht * header.NPlanes;
 				for (int y = 0; y < (int)header.height/2; ++y)
 				{
 					int x = ((int)header.height - 1 - y);
-					int s = y * header.widht;
-					int d = x * header.widht;
-					Buffer.BlockCopy(ret, d, temp, 0, header.widht);
-					Buffer.BlockCopy(ret, s, ret, d, header.widht);
-					Buffer.BlockCopy(temp, 0, ret, s, header.widht);
+                    int s = y * lineSize;
+                    int d = x * lineSize;
+                    Buffer.BlockCopy(ret, d, temp, 0, lineSize);
+                    Buffer.BlockCopy(ret, s, ret, d, lineSize);
+                    Buffer.BlockCopy(temp, 0, ret, s, lineSize);
 				}
 			} catch(Exception e)
 			{
