@@ -77,12 +77,23 @@ public class PlayerDisplayEditor : Editor {
             }
 
             SelctedItem selItem;
-            if (m_SelectedMap.TryGetValue(m_LastDisplay.GetInstanceID(), out selItem))
-            {
-                var state = m_VaildStateList[selItem.stateIndex];
-                if (m_LastDisplay.PlayAni(state, true))
-                    m_StateSelected = selItem.stateIndex;
-            }
+			if (m_SelectedMap.TryGetValue (m_LastDisplay.GetInstanceID (), out selItem)) {
+				var state = m_VaildStateList [selItem.stateIndex];
+				if (m_LastDisplay.PlayAni (state, true))
+					m_StateSelected = selItem.stateIndex;
+			} else {
+				var ani1 = m_LastDisplay.ImageAni;
+				if (ani1 != null) {
+					if (ani1.State != PlayerState.psNone) {
+						for (int i = 0; i < m_VaildStateList.Count; ++i) {
+							if (ani1.State == m_VaildStateList [i]) {
+								m_StateSelected = i;
+								break;
+							}
+						}
+					}
+				}
+			}
         }
 
         var loaderPlayer = m_LastDisplay.LoaderPlayer;
