@@ -110,6 +110,7 @@ public class PlayerDisplayEditor : Editor {
             return;
         if (m_VaildStateList != null && m_VaildStateNameList != null)
         {
+            EditorGUILayout.BeginVertical();
             string l0 = string.Format("手动选择角色动作({0:D})", m_VaildStateNameList.Length);
             int newSelected = EditorGUILayout.Popup(l0, m_StateSelected, m_VaildStateNameList);
             if (m_StateSelected != newSelected)
@@ -125,6 +126,37 @@ public class PlayerDisplayEditor : Editor {
                     m_SelectedMap[m_LastDisplay.GetInstanceID()] = item;
                 }
             }
+
+            if (m_VaildStateNameList != null && m_VaildStateNameList.Length > 0)
+            {
+                if (m_StateSelected >= 0)
+                {
+                    if (GUILayout.Button("下一个动作"))
+                    {
+                        int newState = m_StateSelected;
+                        if (newState + 1 >= m_VaildStateNameList.Length)
+                            newState = 0;
+                        else
+                            ++newState;
+                        var state = m_VaildStateList[newState];
+                        if (state != PlayerState.psNone)
+                        {
+                            if (m_LastDisplay.PlayAni(state, true))
+                            {
+                                m_StateSelected = newState;
+
+                                SelctedItem item;
+                                if (!m_SelectedMap.TryGetValue(m_LastDisplay.GetInstanceID(), out item))
+                                    item = new SelctedItem();
+                                item.stateIndex = m_StateSelected;
+                                m_SelectedMap[m_LastDisplay.GetInstanceID()] = item;
+                            }
+                        }
+                    }
+                }
+            }
+
+            EditorGUILayout.EndVertical();
         }
 
         if (m_VaildPalletNameList != null)
