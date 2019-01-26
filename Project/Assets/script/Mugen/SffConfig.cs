@@ -1,3 +1,5 @@
+//#define _USE_NEW_PCX
+
 using System;
 using System.IO;
 using System.Collections;
@@ -334,6 +336,21 @@ namespace Mugen
 	{
 		public byte[] data;
 		public Color32[] pallet;
+
+		public bool Is24Bit
+		{
+			get {
+				return (data == null) && (pallet != null);
+			}
+		}
+
+		public Color32[] Get24BitColorData()
+		{
+			if (!Is24Bit)
+				return null;
+			return pallet;
+		}
+
 		public Texture2D GetPalletTexture(bool is32Bit)
 		{
 			return SffFile.GeneratorPalletTexture(pallet, is32Bit);
@@ -842,6 +859,49 @@ namespace Mugen
 			return ret;
 		}
 
+		private void LoadPCXLine8(PCXHEADER header, Stream stream, ref byte[] lineBuffer)
+		{
+			int _LineWidth = header.bytesPerLine;
+			if (lineBuffer == null || lineBuffer.Length < _LineWidth)
+				lineBuffer = new byte[_LineWidth];
+			int _ReadIndex = 0;
+			while (true)
+			{
+				//判断行扫描结束返回码  
+				if (stream.Position + 1 >= stream.Length)
+					break;
+
+				byte _Data = (byte)stream.ReadByte();
+				if (_Data > 0xC0)
+				{
+					int _Count = _Data - 0xC0;
+					byte sameData = 0;
+					for (int i = 0; i != _Count; ++i)
+					{
+						if (i == 0) {
+							sameData = (byte)stream.ReadByte ();
+						}
+						int idx = i + _ReadIndex;
+						if (idx >= _LineWidth)
+							break;
+						lineBuffer[idx] = sameData;
+					}
+					_ReadIndex += _Count;
+				}
+				else
+				{
+					lineBuffer[_ReadIndex] = _Data;
+					_ReadIndex++;
+				}
+				if (_ReadIndex >= _LineWidth) break;
+			}
+		}
+
+		private void LoadPCXLine24(PCXHEADER header, Stream stream, ref byte[] lineBuffer)
+		{
+			Debug.LogError ("Call function LoadPCXLine24");
+		}
+			
         private bool LoadPcx2(int offset, SFFSUBHEADER subHeader, byte[] source, out KeyValuePair<PCXHEADER, PCXDATA> dataPair)
         {
             if ((offset < 0) || (offset >= source.Length))
@@ -858,24 +918,107 @@ namespace Mugen
             MemoryStream stream = new MemoryStream(source);
             try
             {
+				try
+				{
                 stream.Seek(offset, SeekOrigin.Begin);
 
                 PCXHEADER header = PCXHEADER.LoadFromStream(stream);
+				header.widht = (ushort)(header.widht - header.x + 1);
+				header.height = (ushort)(header.height - header.y + 1);
+			//	byte[] ret = new byte[header.widht * header.NPlanes * header.height];
+				byte[] ret = null;
+				byte[] lineBuffer = null;
                 for (int i = 0; i < (int)header.height; ++i)
                 {
                     switch (header.NPlanes)
                     {
                         // 24位
                         case 3:
+							LoadPCXLine24(header, stream, ref lineBuffer);
                             break;
                         // 256色
                         case 1:
+							LoadPCXLine8(header, stream, ref lineBuffer);
                             break;
                         default:
                             dataPair = new KeyValuePair<PCXHEADER, PCXDATA>();
                             return false;
                     }
+
+					if (lineBuffer != null && lineBuffer.Length > 0)
+					{
+						if (ret == null)
+							ret = new byte[header.widht * header.NPlanes * header.height];
+						int copySize = header.NPlanes * header.widht;
+						Buffer.BlockCopy(lineBuffer, 0, ret, i * copySize, copySize);
+					}
                 }
+
+				// H changed
+				int chgSize = header.NPlanes * header.widht;
+				byte[] temp = null;
+				if (lineBuffer != null && lineBuffer.Length >= chgSize)
+					temp = lineBuffer;
+				else
+				{
+					lineBuffer = null;
+					temp = new byte[chgSize];
+				}
+				for (int y = 0; y < (int)header.height/2; ++y)
+				{
+					int x = ((int)header.height - 1 - y);
+					int s = y * chgSize;
+					int d = x * chgSize;
+					Buffer.BlockCopy(ret, d, temp, 0, chgSize);
+					Buffer.BlockCopy(ret, s, ret, d, chgSize);
+					Buffer.BlockCopy(temp, 0, ret, s, chgSize);
+				}
+
+				// 读取调色版
+					PCXDATA pcxData = new PCXDATA();
+					pcxData.data = ret;
+					pcxData.pallet = null;
+
+					if (header.NPlanes == 1)
+					{
+						// 判断是不是9000，1
+						if (subHeader.GroubNumber == 9000 && subHeader.ImageNumber == 1) {
+							pcxData.palletLink = m_currentLink;
+						} else {
+							if (stream.Position + 256 * 3 <= stream.Length)
+							{
+								pcxData.pallet = new Color32[256];
+								for (int i = 0; i != 256; ++i)
+								{
+									byte r = (byte)stream.ReadByte();
+									byte g = (byte)stream.ReadByte();
+									byte b = (byte)stream.ReadByte();
+
+									byte a;
+									if (i == 0)
+										a = 0;
+									else {
+										if ((r == pcxData.pallet [i - 1].r) && (g == pcxData.pallet [i - 1].g) && (b == pcxData.pallet [i - 1].b))
+											a = 0;
+										else
+											a = 0xFF;
+									}
+
+									pcxData.pallet [i] = new Color32 (r, g, b, a);
+								}
+								m_currentLink = new KeyValuePair<short, short> (subHeader.GroubNumber, subHeader.ImageNumber);
+							}
+						}
+					}
+
+					dataPair = new KeyValuePair<PCXHEADER, PCXDATA>(header, pcxData);
+
+				} catch (Exception e)
+				{
+					Debug.LogError(e.Message);
+					dataPair = new KeyValuePair<PCXHEADER, PCXDATA>();
+					return false;
+				}
             } finally
             {
                 stream.Close();
@@ -982,7 +1125,6 @@ namespace Mugen
 						if (i == 0)
 							a = 0;
 						else {
-
 							if ((r == pcxData.pallet [i - 1].r) && (g == pcxData.pallet [i - 1].g) && (b == pcxData.pallet [i - 1].b))
 								a = 0;
 							else
@@ -1040,7 +1182,11 @@ namespace Mugen
 
 				offset += Marshal.SizeOf(header);
 				KeyValuePair<PCXHEADER, PCXDATA> value;
+				#if _USE_NEW_PCX
+				if (!LoadPcx2(offset, header, source, out value))
+				#else
 				if (!LoadPcx(offset, header, source, out value))
+				#endif
 				{
 					Debug.LogErrorFormat("LoadPcxs: index = {0} error", i);
 					ret = false;
