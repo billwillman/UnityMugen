@@ -79,10 +79,12 @@ namespace Mugen
 			}
 
 			string dd = "Statedef";
+			string ddd = "State";
 			for (int i = 0; i < reader.SectionCount; ++i) {
 				section = reader.GetSections (i);
 				if (section == null || string.IsNullOrEmpty(section.Tile))
 					continue;
+				CNSStateDef parent = null;
 				if (section.Tile.StartsWith (dd, StringComparison.CurrentCultureIgnoreCase)) {
 					string name = section.Tile.Substring (dd.Length);
 					if (string.IsNullOrEmpty (name))
@@ -93,7 +95,17 @@ namespace Mugen
 					CNSStateDef def = new CNSStateDef ();
 					if (def.LoadConfigReader (section)) {
 						AddStateDef (name, def);
+						parent = def;
+					} else {
+						parent = null;
+						continue;
 					}
+				}
+
+				if (section.Tile.StartsWith (ddd, StringComparison.CurrentCultureIgnoreCase)) {
+					if (parent == null)
+						continue;
+					
 				}
 			}
 
