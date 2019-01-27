@@ -22,6 +22,32 @@ public class PlayerControls: MonoSingleton<PlayerControls>
         }
     }
 
+	public PlayerDisplay GetPlayer(int playerType)
+	{
+		return GetPlayer ((InputPlayerType)playerType);
+	}
+
+	public PlayerDisplay GetPlayer(InputPlayerType playerType)
+	{
+		PlayerDisplay ret = null;
+		switch (playerType)
+		{
+		case InputPlayerType._1p:
+			ret = m_1P;
+			break;
+		case InputPlayerType._2p:
+			ret = m_2P;
+			break;
+		case InputPlayerType._3p:
+			ret = m_3P;
+			break;
+		case InputPlayerType._4p:
+			ret = m_4P;
+			break;
+		}
+		return ret;
+	}
+
     public void SwitchPlayer(InputPlayerType playerType, PlayerDisplay display)
     {
         switch (playerType)

@@ -200,14 +200,23 @@ public class InputControl: MonoBehaviour
 		list.Add (input);
 	}
 		
-    private string GetInputControlTypeStr(int value)
+	private string GetInputControlTypeStr(PlayerDisplay player, int value)
     {
+		if (player == null)
+			return string.Empty;
+		
         System.Text.StringBuilder builder = new System.Text.StringBuilder();
-        if ((value & (int)InputControlType.left) != 0)
-            builder.Append('←');
-        else
-        if ((value & (int)InputControlType.right) != 0)
-            builder.Append('→');
+		if ((value & (int)InputControlType.left) != 0) {
+			if (player.IsFlipX)
+				builder.Append ('→');
+			else
+				builder.Append ('←');
+		} else if ((value & (int)InputControlType.right) != 0) {
+			if (player.IsFlipX)
+				builder.Append ('←');
+			else
+				builder.Append ('→');
+		}
 
         if ((value & (int)InputControlType.jump) != 0)
             builder.Append('↑');
@@ -236,9 +245,9 @@ public class InputControl: MonoBehaviour
         return builder.ToString();
     }
 
-    private string GetPlayerWuGongStr(List<InputValue> values)
+	private string GetPlayerWuGongStr(PlayerDisplay player, List<InputValue> values)
     {
-        if (values == null || values.Count <= 0)
+		if (player == null || values == null || values.Count <= 0)
             return string.Empty;
         System.Text.StringBuilder builder = new System.Text.StringBuilder();
 
@@ -246,17 +255,23 @@ public class InputControl: MonoBehaviour
         {
             var v = values[i];
             var value = v.keyCodeValue;
-            if ((value & (int)InputControlType.left) != 0)
-                builder.Append('←');
-            else
-                if ((value & (int)InputControlType.right) != 0)
-                    builder.Append('→');
+			if ((value & (int)InputControlType.left) != 0) {
+				if (player.IsFlipX)
+					builder.Append ('→');
+				else
+					builder.Append ('←');
+			} else if ((value & (int)InputControlType.right) != 0) {
+				if (player.IsFlipX)
+					builder.Append ('→');
+				else
+					builder.Append ('←');
+			}
 
-            if ((value & (int)InputControlType.jump) != 0)
-                builder.Append('↑');
-            else
-                if ((value & (int)InputControlType.down) != 0)
-                    builder.Append('↓');
+			if ((value & (int)InputControlType.jump) != 0) {
+				builder.Append ('↑');
+			} else if ((value & (int)InputControlType.down) != 0) {
+				builder.Append ('↓');
+			}
 			
 			if ((value & (int)InputControlType.attack1) != 0)
 				builder.Append("x");
@@ -325,7 +340,8 @@ public class InputControl: MonoBehaviour
         while (iter.MoveNext())
         {
             int ctlType = iter.Current.Value;
-            string s = GetInputControlTypeStr(ctlType);
+			PlayerDisplay player = PlayerControls.GetInstance ().GetPlayer (iter.Current.Key);
+			string s = GetInputControlTypeStr(player, ctlType);
             s = string.Format("[{0:D}]:{1}", iter.Current.Key, s);
             GUILayout.Label(s);
         }
@@ -339,9 +355,12 @@ public class InputControl: MonoBehaviour
             while (it.MoveNext())
             {
                 int playerType = it.Current.Key;
-                string s = GetPlayerWuGongStr(it.Current.Value);
-                s = string.Format("[{0:D}]:{1}", playerType, s);
-                GUILayout.Label(s);
+				var player = PlayerControls.GetInstance ().GetPlayer (playerType);
+				if (player != null) {
+					string s = GetPlayerWuGongStr (player, it.Current.Value);
+					s = string.Format ("[{0:D}]:{1}", playerType, s);
+					GUILayout.Label (s);
+				}
             }
             it.Dispose();
         }

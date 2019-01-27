@@ -19,6 +19,16 @@ public class PlayerDisplay : BaseResLoader {
 	private SpriteMovement m_Movement = null;
 	private PlayerAttribe m_Attribe = null;
 
+	public bool IsFlipX
+	{
+		get {
+			var sp = this.SpriteRender;
+			if (sp == null)
+				return false;
+			return sp.flipX;
+		}
+	}
+
 	protected SpriteMovement Movement
 	{
 		get
