@@ -159,6 +159,20 @@ namespace Mugen
 			return ret;
 		}
 
+		public static string[] Split(string value)
+		{
+			if (string.IsNullOrEmpty (value))
+				return null;
+			string[] s1 = value.Split(_cContentArrSplit, StringSplitOptions.RemoveEmptyEntries);
+			if (s1 == null || s1.Length <= 0)
+				return null;
+			for (int i = 0; i < s1.Length; ++i) {
+				string s = s1 [i].Trim ();
+				s1 [i] = s;
+			}
+			return s1;
+		}
+
 		public bool GetArray(int index, List<float> arr)
 		{
 			if (arr == null)

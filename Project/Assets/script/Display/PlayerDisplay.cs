@@ -6,6 +6,7 @@ using Mugen;
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(PlayerStateMgr))]
 [RequireComponent(typeof(SpriteMovement))]
+[RequireComponent(typeof(PlayerAttribe))]
 public class PlayerDisplay : BaseResLoader {
 
     private DefaultLoaderPlayer m_LoaderPlayer = null;
@@ -16,6 +17,7 @@ public class PlayerDisplay : BaseResLoader {
     private PlayerStateMgr m_StateMgr = null;
 	private InputPlayerType m_PlayerType = InputPlayerType.none;
 	private SpriteMovement m_Movement = null;
+	private PlayerAttribe m_Attribe = null;
 
 	protected SpriteMovement Movement
 	{
@@ -24,6 +26,16 @@ public class PlayerDisplay : BaseResLoader {
 			if (m_Movement == null)
 				m_Movement = GetComponent<SpriteMovement> ();
 			return m_Movement;
+		}
+	}
+
+	public PlayerAttribe Attribe
+	{
+		get
+		{
+			if (m_Attribe == null)
+				m_Attribe = GetComponent<PlayerAttribe> ();
+			return m_Attribe;
 		}
 	}
 

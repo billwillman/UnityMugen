@@ -28,12 +28,16 @@ namespace Mugen
 			reader.LoadString(str);
 
 			ConfigSection section = reader.GetSection("Velocity");
-			if (!LoadVelocity(section))
-				return false;
+			if (section != null) {
+				if (!LoadVelocity (section))
+					return false;
+			}
 
 			section = reader.GetSection("Size");
-			if (!LoadSize(section))
-				return false;
+			if (section != null) {
+				if (!LoadSize (section))
+					return false;
+			}
 
 			return true;
 		}
