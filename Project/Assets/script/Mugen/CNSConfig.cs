@@ -7,7 +7,7 @@ namespace Mugen
 {
 	public class CNSConfig
 	{
-		public static readonly float _cPerUnit = 0.8f;
+		//public static readonly float _cPerUnit = 0.8f;
 
 		public bool LoadPlayer(string playerName)
 		{
@@ -130,10 +130,10 @@ namespace Mugen
 			YScale = 1.0f;
 		}
 
-		public float ForwardWalkSpeed;
-		public float BackWalkSpeed;
-		public Vector2 ForwardRunSpeed;
-		public Vector2 BackRunSpeed;
+		public float ForwardWalkSpeed = 1.0f;
+		public float BackWalkSpeed = 1.0f;
+		public Vector2 ForwardRunSpeed = Vector2.one;
+		public Vector2 BackRunSpeed = Vector2.one;
 		public float XScale = 1.0f;
 		public float YScale = 1.0f;
 
