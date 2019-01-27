@@ -7,12 +7,15 @@ using Mugen;
 
 public enum GlobalPlayerLoaderResult
 {
-	CNSConfigError = -4,
-	AirConfigError = -3,
-	PlayerConfigError = -2,
-	ParamError = -1,
-	Ok = 0,
-	None = 1,
+	CmdConfigError = -0x10,
+	CNSConfigError = -0x8,
+	AirConfigError = -0x4,
+	PlayerConfigError = -0x2,
+	ParamError = -0x1,
+	None = 0x0,
+	Ok = 0x1,
+
+	CNSAndCmdError = (int)CmdConfigError | (int)CNSConfigError
 }
 
 [RequireComponent(typeof(PlayerStateCtl))]
@@ -83,7 +86,7 @@ public class GlobalConfigMgr : MonoSingleton<GlobalConfigMgr> {
             trans.SetParent(parent, false);
         }
 
-        ClsnType tt = isClsn2 ? ClsnType.def: ClsnType.attack;
+		ClsnType tt = isClsn2 ? ClsnType.def: ClsnType.attack;
         r.Init(playerType, tt, x, y, w, h);
 
         if (!r.gameObject.activeSelf)

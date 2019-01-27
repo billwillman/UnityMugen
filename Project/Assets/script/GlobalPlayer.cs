@@ -15,6 +15,14 @@ public class GlobalPlayer
 	private PlayerConfig m_PlayerConfig = null;
 	private AirConfig m_AirConfig = null;
 	private CNSConfig m_CNSConfig = null;
+	private CmdConfig m_CmdConfig = null;
+
+	public CmdConfig CmdCfg
+	{
+		get {
+			return m_CmdConfig;
+		}
+	}
 
 	public AirConfig AirCfg
 	{
@@ -88,6 +96,33 @@ public class GlobalPlayer
 			return false;
 		}
 
+		//---------------------------- 加载Cmd
+		try
+		{
+			if (m_PlayerConfig != null && m_PlayerConfig.Files != null)
+			{
+				string cmdName = m_PlayerConfig.Files.cmd;
+				if (string.IsNullOrEmpty(cmdName))
+				{
+					cmdName = playerName;
+				} else
+				{
+					cmdName = GlobalConfigMgr.GetConfigFileNameNoExt(cmdName);
+				}
+				string fileName = string.Format("{0}@{1}/{2}.cmd.txt", AppConfig.GetInstance().PlayerRootDir, playerName, cmdName);
+				m_CmdConfig = new CmdConfig();
+				if (!m_CmdConfig.LoadFromFile(fileName))
+				{
+					result = GlobalPlayerLoaderResult.CmdConfigError;
+				}
+			}
+		} catch (Exception e) {
+			#if DEBUG
+			Debug.LogError(e.ToString());
+			#endif
+			result = GlobalPlayerLoaderResult.CmdConfigError;
+		}
+
 
 		//--------------------------- 最后加载cns
 		try
@@ -107,7 +142,7 @@ public class GlobalPlayer
 			if (!m_CNSConfig.LoadFromFile(fileName))
 			{
 				//Clear();
-				result = GlobalPlayerLoaderResult.CNSConfigError;
+				result = (GlobalPlayerLoaderResult)((int)result | (int)GlobalPlayerLoaderResult.CNSConfigError);
 				//return false;
 			}
 		} catch (Exception e) {
@@ -129,6 +164,7 @@ public class GlobalPlayer
 		m_AirConfig = null;
 		m_PlayerConfig = null;
 		m_CNSConfig = null;
+		m_CmdConfig = null;
 	}
 
 	public static GlobalPlayer CreatePlayer(string playerName, out GlobalPlayerLoaderResult result, string cnsName = "")
