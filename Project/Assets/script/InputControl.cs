@@ -295,6 +295,45 @@ public class InputControl: MonoBehaviour
         return builder.ToString();
     }
 
+	public static List<InputControlType> ChangeMugenKeyCodeToKeyCodeValue(IList<string> keyList)
+	{
+		if (keyList == null || keyList.Count <= 0)
+			return null;
+		List<InputControlType> ret = new List<InputControlType> (); 
+			
+		for (int i = 0; i < keyList.Count; ++i) {
+			string key = keyList [i];
+			if (string.IsNullOrEmpty (key))
+				continue;
+			InputControlType value = InputControlType.none;
+			if (string.Compare (key, "B") == 0) {
+				// 后
+				value = InputControlType.left;
+			} else if (string.Compare (key, "DB") == 0) {
+				value = (InputControlType)((int)InputControlType.left | (int)InputControlType.down);
+			} else if (string.Compare (key, "D") == 0) {
+				value = InputControlType.down;
+			} else if (string.Compare (key, "DF") == 0) {
+				value = (InputControlType)((int)InputControlType.right | (int)InputControlType.down);
+			} else if (string.Compare (key, "F") == 0) {
+				value = InputControlType.right;
+			} else if (string.Compare (key, "UF") == 0) {
+				value = (InputControlType)((int)InputControlType.right | (int)InputControlType.jump);
+			} else if (string.Compare (key, "U") == 0) {
+				value = InputControlType.jump;
+			} else if (string.Compare (key, "UB") == 0) {
+				value = (InputControlType)((int)InputControlType.left | (int)InputControlType.jump);
+			}
+
+			if (value == InputControlType.none)
+				continue;
+
+			ret.Add(value);
+		}
+
+		return ret;
+	}
+
     // 是否有允许按下的按键按下
     public bool IsVaildCanPressKeyPress(InputPlayerType playerType)
     {
