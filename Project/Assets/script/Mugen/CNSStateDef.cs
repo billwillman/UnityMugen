@@ -47,6 +47,11 @@ namespace Mugen
 		private static readonly int _cNoVaildCtrl = -1;
 		private static readonly int _cNoVaildAnim = -1;
 
+		internal int id {
+			get;
+			set;
+		}
+
 		private void ResetVars()
 		{
 			m_Type = Cns_Type.none;

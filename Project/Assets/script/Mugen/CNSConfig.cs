@@ -8,6 +8,45 @@ namespace Mugen
 	public class CNSConfig
 	{
 		//public static readonly float _cPerUnit = 0.8f;
+		private Dictionary<int, CNSStateDef> m_StateDefMap = null;
+		private Dictionary<string, int> m_StateNameIdMap = null;
+		private int m_GlobalId = -1;
+
+		private int NewGlobalId()
+		{
+			return ++m_GlobalId;
+		}
+
+		private void AddStateDef(string name, CNSStateDef def)
+		{
+			if (string.IsNullOrEmpty (name) || def == null)
+				return;
+
+			def.id = NewGlobalId ();
+
+			if (m_StateNameIdMap == null)
+				m_StateNameIdMap = new Dictionary<string, int> ();
+			m_StateNameIdMap [name] = def.id;
+
+			if (m_StateDefMap == null)
+				m_StateDefMap = new Dictionary<int, CNSStateDef> ();
+			m_StateDefMap [def.id] = def;
+
+		}
+
+		public CNSStateDef GetStateDef(string name)
+		{
+			if (string.IsNullOrEmpty (name) || m_StateNameIdMap == null || m_StateDefMap == null)
+				return null;
+			
+			int id;
+			if (!m_StateNameIdMap.TryGetValue (name, out id))
+				return null;
+			CNSStateDef ret;
+			if (!m_StateDefMap.TryGetValue (id, out ret))
+				return null;
+			return ret;
+		}
 
 		public bool LoadPlayer(string playerName)
 		{
