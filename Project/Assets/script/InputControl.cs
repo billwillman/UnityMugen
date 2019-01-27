@@ -262,9 +262,9 @@ public class InputControl: MonoBehaviour
 					builder.Append ('←');
 			} else if ((value & (int)InputControlType.right) != 0) {
 				if (player.IsFlipX)
-					builder.Append ('→');
-				else
 					builder.Append ('←');
+				else
+					builder.Append ('→');
 			}
 
 			if ((value & (int)InputControlType.jump) != 0) {
