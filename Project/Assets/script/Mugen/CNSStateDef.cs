@@ -36,8 +36,8 @@ namespace Mugen
 		private Cns_PhysicsType m_PhysicsType = Cns_PhysicsType.none;
 
 		private int m_Juggle;
-		private int m_Velset_x;
-		private int m_Velset_y;
+		private float m_Velset_x;
+		private float m_Velset_y;
 		private int m_Ctrl; 			// 设定可控与否,没有则，不改变
 		private int m_Anim; 			// 改变动作，不写则不改变
 		private int m_PowerAdd;
@@ -109,11 +109,13 @@ namespace Mugen
 					} else if (string.Compare (key, "velset", true) == 0) {
 						string[] vs1 = ConfigSection.Split (value);
 						if (vs1 != null && vs1.Length >= 2) {
-							m_Velset_x = int.Parse (vs1 [0]);
-							m_Velset_y = int.Parse (vs1 [1]);
+							m_Velset_x = float.Parse (vs1 [0]);
+							m_Velset_y = float.Parse (vs1 [1]);
 						}
 					} else if (string.Compare (key, "ctrl", true) == 0) {
 						m_Ctrl = int.Parse (value);
+					} else if (string.Compare (key, "anim", true) == 0) {
+						m_Anim = int.Parse (value);
 					}
 
 				}

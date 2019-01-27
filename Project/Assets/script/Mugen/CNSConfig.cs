@@ -78,6 +78,25 @@ namespace Mugen
 					return false;
 			}
 
+			string dd = "Statedef";
+			for (int i = 0; i < reader.SectionCount; ++i) {
+				section = reader.GetSections (i);
+				if (section == null || string.IsNullOrEmpty(section.Tile))
+					continue;
+				if (section.Tile.StartsWith (dd, StringComparison.CurrentCultureIgnoreCase)) {
+					string name = section.Tile.Substring (dd.Length);
+					if (string.IsNullOrEmpty (name))
+						continue;
+					name = name.Trim ();
+					if (string.IsNullOrEmpty (name))
+						continue;
+					CNSStateDef def = new CNSStateDef ();
+					if (def.LoadConfigReader (section)) {
+						AddStateDef (name, def);
+					}
+				}
+			}
+
 			return true;
 		}
 
