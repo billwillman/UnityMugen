@@ -133,6 +133,18 @@ public class PlayerStateCtl: MonoBehaviour, IBasePlayerStateListener
 	{
 	}
 
+	private InputControlType CompareLeftOrRight(PlayerStateMgr target, InputControlType ctlType)
+	{
+		if (target.PlyDisplay.IsFlipX) {
+			if (ctlType == InputControlType.left)
+				return InputControlType.right;
+			else if (ctlType == InputControlType.right)
+				return InputControlType.left;
+		}
+
+		return ctlType;
+	}
+
 	private void CheckNoAttackProcess(PlayerStateMgr target)
 	{
 		var player = target.PlyDisplay;
@@ -150,13 +162,13 @@ public class PlayerStateCtl: MonoBehaviour, IBasePlayerStateListener
 
 		if ((runValue & (int)InputControlType.down) != 0)
 			target.ChangeState (PlayerState.psDown1);
-		else if (runValue == (int)InputControlType.left) {
+		else if (runValue == (int)CompareLeftOrRight(target, InputControlType.left)) {
 			var inputList = PlayerControls.GetInstance ().InputCtl.GetInputList (plyType);
 			if (inputList != null && inputList.Count >= 2) {
 				var i1 = inputList [inputList.Count - 2];
 				var i2 = inputList [inputList.Count - 1];
 
-				if (i1.keyCodeValue == i2.keyCodeValue && i1.keyCodeValue == (int)InputControlType.left) {
+				if (i1.keyCodeValue == i2.keyCodeValue && i1.keyCodeValue == (int)CompareLeftOrRight(target, InputControlType.left)) {
 					float delta = i2.downTick - i1.downTick;
 					if (/*delta >= 0.16f &&*/ delta <= 0.22f) {
 						target.ChangeState (PlayerState.psBackStep1);
@@ -168,12 +180,12 @@ public class PlayerStateCtl: MonoBehaviour, IBasePlayerStateListener
 			}
 			if (target.CurState != PlayerState.psBackStep1)
 				target.ChangeState (PlayerState.psBackWalk1);
-		} else if (runValue == (int)InputControlType.right) {
+		} else if (runValue == (int)CompareLeftOrRight(target, InputControlType.right)) {
 			var inputList = PlayerControls.GetInstance ().InputCtl.GetInputList (plyType);
 			if (inputList != null && inputList.Count >= 2) {
 				var i1 = inputList [inputList.Count - 2];
 				var i2 = inputList [inputList.Count - 1];
-				if (i1.keyCodeValue == i2.keyCodeValue && i1.keyCodeValue == (int)InputControlType.right) {
+				if (i1.keyCodeValue == i2.keyCodeValue && i1.keyCodeValue == (int)CompareLeftOrRight(target, InputControlType.right)) {
 					float delta = i2.downTick - i1.downTick;
 					if (delta >= 0.16f && delta <= 0.22f) {
 						target.ChangeState (PlayerState.psForwardRun1);
@@ -254,9 +266,9 @@ public class PlayerStateCtl: MonoBehaviour, IBasePlayerStateListener
 			//CheckNoAttackProcess (target);
 			if (IsDownPress(target))
 				target.ChangeState(PlayerState.psDown1);
-			else if (IsPress(target, InputControlType.left))
+			else if (IsPress(target, CompareLeftOrRight(target, InputControlType.left)))
                 target.ChangeState(PlayerState.psForwardWalk1);
-            else if (IsPress(target, InputControlType.right))
+			else if (IsPress(target, CompareLeftOrRight(target, InputControlType.right)))
                 target.ChangeState(PlayerState.psBackWalk1);
             else
 				target.ChangeState(PlayerState.psStand1);
