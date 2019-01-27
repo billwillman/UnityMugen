@@ -5,6 +5,7 @@ using Mugen;
 [RequireComponent(typeof(ImageAnimation))]
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(PlayerStateMgr))]
+[RequireComponent(typeof(SpriteMovement))]
 public class PlayerDisplay : BaseResLoader {
 
     private DefaultLoaderPlayer m_LoaderPlayer = null;
@@ -14,6 +15,17 @@ public class PlayerDisplay : BaseResLoader {
 	private Rect[] m_DefaultClsn2 = null;
     private PlayerStateMgr m_StateMgr = null;
 	private InputPlayerType m_PlayerType = InputPlayerType.none;
+	private SpriteMovement m_Movement = null;
+
+	protected SpriteMovement Movement
+	{
+		get
+		{
+			if (m_Movement == null)
+				m_Movement = GetComponent<SpriteMovement> ();
+			return m_Movement;
+		}
+	}
 
 
 	public InputPlayerType PlyType
