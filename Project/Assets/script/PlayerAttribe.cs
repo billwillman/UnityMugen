@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Mugen;
 
 public class PlayerAttribe : MonoBehaviour {
 	// 生命值
@@ -26,9 +27,12 @@ public class PlayerAttribe : MonoBehaviour {
 	public int IntPersistIndex = 60;
 	public int FloatPersistIndex = 40;
 
-	public void Init()
+	public bool Init(CNSConfig config)
 	{
 		ResetDatas ();
+		if (config == null)
+			return false;
+		
 		if (IntPersistIndex <= 0) {
 			m_IntVars = null;
 		} else {
@@ -44,6 +48,8 @@ public class PlayerAttribe : MonoBehaviour {
 				m_FloatVars = new float[FloatPersistIndex];
 			}
 		}
+
+		return true;
 	}
 
 	public void Clear()
