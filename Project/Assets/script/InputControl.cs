@@ -199,7 +199,7 @@ public class InputControl: MonoBehaviour
         }
 		list.Add (input);
 	}
-
+		
     private string GetInputControlTypeStr(int value)
     {
         System.Text.StringBuilder builder = new System.Text.StringBuilder();
@@ -216,16 +216,22 @@ public class InputControl: MonoBehaviour
                 builder.Append('↓');
 
 		if ((value & (int)InputControlType.attack1) != 0)
-			builder.Append("X");
+			builder.Append("x");
 
 		if ((value & (int)InputControlType.attack2) != 0)
-			builder.Append("Y");
+			builder.Append("y");
 
 		if ((value & (int)InputControlType.attack3) != 0)
-			builder.Append("D");
+			builder.Append("z");
 
 		if ((value & (int)InputControlType.attack4) != 0)
-			builder.Append("S");
+			builder.Append("a");
+
+		if ((value & (int)InputControlType.attack5) != 0)
+			builder.Append("b");
+
+		if ((value & (int)InputControlType.attack6) != 0)
+			builder.Append("c");
 
         return builder.ToString();
     }
@@ -253,16 +259,22 @@ public class InputControl: MonoBehaviour
                     builder.Append('↓');
 			
 			if ((value & (int)InputControlType.attack1) != 0)
-				builder.Append("X");
+				builder.Append("x");
 
 			if ((value & (int)InputControlType.attack2) != 0)
-				builder.Append("Y");
+				builder.Append("y");
 
 			if ((value & (int)InputControlType.attack3) != 0)
-				builder.Append("D");
+				builder.Append("z");
 
 			if ((value & (int)InputControlType.attack4) != 0)
-				builder.Append("S");
+				builder.Append("a");
+			
+			if ((value & (int)InputControlType.attack5) != 0)
+				builder.Append("b");
+
+			if ((value & (int)InputControlType.attack6) != 0)
+				builder.Append("c");
         }
 
         return builder.ToString();
