@@ -139,6 +139,13 @@ namespace Mugen
         {
             get; protected set;
         }
+
+
+        public bool IsDefaultPal
+        {
+            get;
+            set;
+        }
 	}
 
 	public class PlayerInfo: IConfigPropertys
@@ -282,6 +289,8 @@ namespace Mugen
                                         mPlayerFiles.pal11 = vals[10];
                                     if (vals.Length >= 12)
                                         mPlayerFiles.pal12 = vals[11];
+
+                                    mPlayerFiles.IsDefaultPal = true;
                                 }
                             }
                         }
