@@ -45,12 +45,21 @@ namespace Mugen
 
 		private static readonly int _cNoVaildVelset = -9999;
 		private static readonly int _cNoVaildCtrl = -1;
-		private static readonly int _cNoVaildAnim = -1;
+		private static readonly int _cNoVaildAnim = (int)PlayerState.psNone;
 
 		internal int id {
 			get;
 			set;
 		}
+
+        public PlayerState Anim
+        {
+            get
+            {
+                PlayerState ret = (PlayerState)m_Anim;
+                return ret;
+            }
+        }
 
 		private void ResetVars()
 		{

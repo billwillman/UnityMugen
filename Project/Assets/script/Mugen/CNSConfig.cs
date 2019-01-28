@@ -10,9 +10,9 @@ namespace Mugen
 		//public static readonly float _cPerUnit = 0.8f;
 		private Dictionary<int, CNSStateDef> m_StateDefMap = null;
 		private Dictionary<string, int> m_StateNameIdMap = null;
-		private int m_GlobalId = -1;
+		private static int m_GlobalId = -1;
 
-		private int NewGlobalId()
+		private static int NewGlobalId()
 		{
 			return ++m_GlobalId;
 		}

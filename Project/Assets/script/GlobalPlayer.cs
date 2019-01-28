@@ -24,6 +24,14 @@ public class GlobalPlayer
 		}
 	}
 
+    public CNSConfig CnsCfg
+    {
+        get
+        {
+            return m_CNSConfig;
+        }
+    }
+
 	public AirConfig AirCfg
 	{
 		get

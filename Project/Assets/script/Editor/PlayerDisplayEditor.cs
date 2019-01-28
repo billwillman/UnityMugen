@@ -398,6 +398,10 @@ public class PlayerDisplayEditor : Editor {
                     item = new SelctedItem();
                 item.commandIndex = newCmdIdx;
                 m_SelectedMap[m_LastDisplay.GetInstanceID()] = item;
+
+                // 执行命令
+                string cmdName = m_CommandList[m_CommandSel].name;
+                m_LastDisplay.RunCmd(cmdName);
             }
         }
     }

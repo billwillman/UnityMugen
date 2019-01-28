@@ -100,6 +100,16 @@ namespace Mugen
         private int m_Command__Buffer__Time = 1;
         private Dictionary<string, Cmd_Command> m_CommandMap = null;
 
+        public Cmd_Command GetCommand(string name)
+        {
+            if (string.IsNullOrEmpty(name) || m_CommandMap == null)
+                return null;
+            Cmd_Command ret;
+            if (!m_CommandMap.TryGetValue(name, out ret))
+                ret = null;
+            return ret;
+        }
+
         public Cmd_Command[] GetCommandArray()
         {
             if (m_CommandMap == null)

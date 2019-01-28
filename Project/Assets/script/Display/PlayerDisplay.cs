@@ -189,6 +189,27 @@ public class PlayerDisplay : BaseResLoader {
         return ret;
     }
 
+    public bool RunCmd(string cmdName)
+    {
+        if (string.IsNullOrEmpty(cmdName))
+            return false;
+        GlobalPlayer ply = this.GPlayer;
+        if (ply == null || ply.CmdCfg == null)
+            return false;
+        Cmd_Command cmd = ply.CmdCfg.GetCommand(cmdName);
+        if (cmd == null)
+            return false;
+
+        CNSConfig cnsCfg = ply.CnsCfg;
+        if (cnsCfg == null)
+            return false;
+        CNSStateDef stateDef = cnsCfg.GetStateDef(cmdName);
+        if (stateDef == null)
+            return false;
+
+        return true;
+    }
+
     public string PlayerName
     {
         get
