@@ -5,6 +5,39 @@ using System.Linq;
 
 namespace Mugen
 {
+
+	public enum AI_Type
+	{
+		none,
+		VarSet,
+		ChangeState
+	}
+
+	public class AI_Command
+	{
+		public string name {
+			get;
+			set;
+		}
+
+		public AI_Type type
+		{
+			get;
+			set;
+		}
+
+		public string value {
+			get;
+			set;
+		}
+
+		public string command
+		{
+			get;
+			set;
+		}
+	}
+
     // 用户按键映射
     public class Cmd_Remap: IConfigPropertys
     {
@@ -88,6 +121,11 @@ namespace Mugen
             get;
             set;
         }
+
+		public string aiName {
+			get;
+			set;
+		}
     }
 
 
@@ -99,6 +137,7 @@ namespace Mugen
         // 默认指令蓄力的时间(>=1 and <= 30)
         private int m_Command__Buffer__Time = 1;
         private Dictionary<string, Cmd_Command> m_CommandMap = null;
+		private Dictionary<string, AI_Command> m_AICmdMap = null;
 
         public Cmd_Command GetCommand(string name)
         {
@@ -109,6 +148,16 @@ namespace Mugen
                 ret = null;
             return ret;
         }
+
+		public AI_Command GetAICommand(string name)
+		{
+			if (string.IsNullOrEmpty (name) || m_AICmdMap == null)
+				return null;
+			AI_Command cmd;
+			if (!m_AICmdMap.TryGetValue (name, out cmd))
+				cmd = null;
+			return cmd;
+		}
 
         public Cmd_Command[] GetCommandArray()
         {
@@ -215,40 +264,85 @@ namespace Mugen
                 section = reader.GetSections(i);
                 if (section == null)
                     continue;
-                if (string.Compare(section.Tile, "Command", true) == 0)
-                {
-                    Cmd_Command cmd = null;
-                    for (int j = 0; j < section.ContentListCount; ++j)
-                    {
-                        string key, value;
-                        if (section.GetKeyValue(j, out key, out value))
-                        {
-                            if (string.Compare(key, "name", true) == 0)
-                            {
-                                if (cmd == null)
-                                    cmd = new Cmd_Command();
-                                cmd.name = value;
-                            } else if (string.Compare(key, "time", true) == 0)
-                            {
-                                if (cmd == null)
-                                    cmd = new Cmd_Command();
-                                cmd.time = int.Parse(value);
-                            } else if (string.Compare(key, "buffer.time", true) == 0)
-                            {
-                                if (cmd == null)
-                                    cmd = new Cmd_Command();
-                                cmd.buffer__time = int.Parse(value);
-                            } else if (string.Compare(key, "command", true) == 0)
-                            {
-                                if (cmd == null)
-                                    cmd = new Cmd_Command();
-                                 cmd.keyCommands = ConfigSection.Split(value);
-                            }
-                        }
-                    }
-                    if (cmd != null && !string.IsNullOrEmpty(cmd.name))
-                        AddCommand(cmd);
-                }
+				if (string.Compare (section.Tile, "Command", true) == 0) {
+					Cmd_Command cmd = null;
+					for (int j = 0; j < section.ContentListCount; ++j) {
+						string key, value;
+						if (section.GetKeyValue (j, out key, out value)) {
+							if (string.Compare (key, "name", true) == 0) {
+								if (cmd == null)
+									cmd = new Cmd_Command ();
+								cmd.name = value;
+							} else if (string.Compare (key, "time", true) == 0) {
+								if (cmd == null)
+									cmd = new Cmd_Command ();
+								cmd.time = int.Parse (value);
+							} else if (string.Compare (key, "buffer.time", true) == 0) {
+								if (cmd == null)
+									cmd = new Cmd_Command ();
+								cmd.buffer__time = int.Parse (value);
+							} else if (string.Compare (key, "command", true) == 0) {
+								if (cmd == null)
+									cmd = new Cmd_Command ();
+								cmd.keyCommands = ConfigSection.Split (value);
+							}
+						}
+					}
+					if (cmd != null && !string.IsNullOrEmpty (cmd.name))
+						AddCommand (cmd);
+				} else if (section.Tile.StartsWith ("State -1", StringComparison.CurrentCultureIgnoreCase)) {
+					
+					string[] names = ConfigSection.Split (section.Tile);
+					if (names == null || names.Length < 2)
+						continue;
+					
+					string aiName = names [1];
+					AI_Type aiType = AI_Type.none;
+					AI_Command aiCmd = null;
+
+					for (int j = 0; j < section.ContentListCount; ++j) {
+						string key, value;
+						if (section.GetKeyValue (j, out key, out value)) {
+							if (string.Compare (key, "type", true) == 0) {
+								if (string.Compare (value, "ChangeState", true) == 0) {
+									aiType = AI_Type.ChangeState;
+									if (aiCmd == null) {
+										aiCmd = new AI_Command ();
+										aiCmd.type = aiType;
+										aiCmd.name = aiName;
+									}
+								}
+							} else {
+								if (aiCmd == null)
+									continue;
+								if (string.Compare (key, "value", true) == 0) {
+									aiCmd.value = value;
+								} else if (string.Compare (key, "triggerall", true) == 0) {
+									if (value.StartsWith ("command", StringComparison.CurrentCultureIgnoreCase)) {
+										int idx = value.IndexOf ("=");
+										if (idx >= 0) {
+											aiCmd.command = value.Substring (idx + 1, value.Length - idx - 1).Trim ();
+											if (!string.IsNullOrEmpty (aiCmd.command)) {
+												Cmd_Command cmdCmd = GetCommand (aiCmd.command);
+												if (cmdCmd != null) {
+													cmdCmd.aiName = aiCmd.name;
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+
+
+					if (aiCmd == null || aiCmd.type == AI_Type.none)
+						continue;
+					if (m_AICmdMap == null)
+						m_AICmdMap = new Dictionary<string, AI_Command> ();
+					m_AICmdMap [aiCmd.name] = aiCmd;
+
+				}
             }
 
             return true;

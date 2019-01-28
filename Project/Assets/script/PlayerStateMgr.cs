@@ -24,7 +24,7 @@ public class PlayerStateMgr : MonoBehaviour {
 		}
 	}
 
-    public bool ChangeState(PlayerState state)
+	public bool ChangeState(PlayerState state, bool isCns  = false)
     {
         if (m_StateMgr == null)
             return false;
@@ -35,8 +35,10 @@ public class PlayerStateMgr : MonoBehaviour {
             return false;
         if (!m_HasFirstChangedStated)
             m_HasFirstChangedStated = true;
-        if (!display.HasStateImage(state, true))
-            return false;
+		if (!isCns) {
+			if (!display.HasStateImage (state, true))
+				return false;
+		}
         return m_StateMgr.ChangeState(state);
     }
 

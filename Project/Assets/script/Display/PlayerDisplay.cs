@@ -19,7 +19,7 @@ public class PlayerDisplay : BaseResLoader {
 	private SpriteMovement m_Movement = null;
 	private PlayerAttribe m_Attribe = null;
 
-	public bool PlayCnsAnimate(int stateDefId)
+	public bool PlayCnsAnimate(int stateDefId, bool isLoop = true)
 	{
 		var player = this.GPlayer;
 		if (player == null)
@@ -30,7 +30,7 @@ public class PlayerDisplay : BaseResLoader {
 		if (def == null || def.Anim == PlayerState.psNone)
 			return false;
 
-		return PlayAni (def.Anim);
+		return PlayAni (def.Anim, isLoop);
 	}
 
 	public bool HasCnsFiles
@@ -101,12 +101,12 @@ public class PlayerDisplay : BaseResLoader {
 		}
 	}
 
-    public bool ChangeState(PlayerState state)
+	public bool ChangeState(PlayerState state, bool isCns = false)
     {
 		var mgr = this.StateMgr;
 		if (mgr == null)
             return false;
-		return mgr.ChangeState(state);
+		return mgr.ChangeState(state, isCns);
     }
 
     public GlobalPlayer GPlayer
@@ -227,13 +227,17 @@ public class PlayerDisplay : BaseResLoader {
         if (cmd == null)
             return false;
 
+		AI_Command aiCmd = ply.CmdCfg.GetAICommand (cmd.aiName);
+		if (aiCmd == null)
+			return false;
+
         CNSConfig cnsCfg = ply.CnsCfg;
         if (cnsCfg == null)
             return false;
         int id;
-		if (!cnsCfg.GetCNSStateId(cmdName, out id))
+		if (!cnsCfg.GetCNSStateId(aiCmd.value, out id))
             return false;
-        return ChangeState((PlayerState)id);
+        return ChangeState((PlayerState)id, true);
     }
 
     public string PlayerName
