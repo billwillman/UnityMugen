@@ -19,6 +19,7 @@ public enum GlobalPlayerLoaderResult
 }
 
 [RequireComponent(typeof(PlayerStateCtl))]
+[RequireComponent(typeof(CnsPlayerStateCtl))]
 public class GlobalConfigMgr : MonoSingleton<GlobalConfigMgr> {
 	private Dictionary<string, GlobalPlayer> m_PlayerDict = new Dictionary<string, GlobalPlayer>();
 	private List<SpriteRenderer> m_ClsnSpritePool = new List<SpriteRenderer>();
@@ -28,6 +29,16 @@ public class GlobalConfigMgr : MonoSingleton<GlobalConfigMgr> {
 	private BaseResLoader m_Loader = null;
 	private Texture m_ClsnTex = null;
 	private PlayerStateCtl m_PlayerStateCtl = null;
+	private CnsPlayerStateCtl m_CnsPlayerStateCtl = null;
+
+	protected CnsPlayerStateCtl CnsPlyStateCtl
+	{
+		get {
+			if (m_CnsPlayerStateCtl == null)
+				m_CnsPlayerStateCtl = GetComponent<CnsPlayerStateCtl> ();
+			return m_CnsPlayerStateCtl;
+		}
+	}
 
 	protected PlayerStateCtl PlyStateCtl
 	{
@@ -190,6 +201,8 @@ public class GlobalConfigMgr : MonoSingleton<GlobalConfigMgr> {
 		}
 		string playerName = loaderPlayer.GetPlayerName();
 		GlobalPlayer ret = LoadPlayer (playerName, out result, loaderPlayer.CnsName);
+		if (ret != null) {
+		}
         return ret;
 	}
 
@@ -320,6 +333,14 @@ public class GlobalConfigMgr : MonoSingleton<GlobalConfigMgr> {
 		m_ClsnColliderPoolRoot.SetActive (false);
 
 		RegisterDefaultStates ();
+		RegisterStateMgrListener ();
+	}
+
+	private void RegisterStateMgrListener()
+	{
+		var ctl = this.CnsPlyStateCtl;
+		if (ctl != null)
+			ctl.Init ();
 	}
 
 	private void RegisterDefaultStates()

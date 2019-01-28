@@ -44,6 +44,13 @@ namespace Mugen
             return true;
         }
 
+		public bool HasStateDef
+		{
+			get {
+				return m_StateNameIdMap != null && m_StateNameIdMap.Count > 0 && m_StateDefMap != null && m_StateDefMap.Count > 0;
+			}
+		}
+
 		public CNSStateDef GetStateDef(string name)
 		{
 			if (string.IsNullOrEmpty (name) || m_StateNameIdMap == null || m_StateDefMap == null)

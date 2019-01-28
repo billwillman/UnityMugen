@@ -14,6 +14,16 @@ public class PlayerStateMgr : MonoBehaviour {
         m_StateMgr = new StateMgr<PlayerState, PlayerStateMgr>(this);
     }
 
+	public bool CanUseCnsCtl
+	{
+		get {
+			var player = this.PlyDisplay;
+			if (player == null)
+				return false;
+			return player.HasCnsFiles;
+		}
+	}
+
     public bool ChangeState(PlayerState state)
     {
         if (m_StateMgr == null)
@@ -53,10 +63,19 @@ public class PlayerStateMgr : MonoBehaviour {
 	{
 		if (m_StateMgr == null)
 			return;
-		var state = m_StateMgr.CurrState as BasePlayerState;
-		if (state == null)
-			return;
-		state.OnAnimateEndFrame (this);
+
+		bool isDone = false;
+		var listener = m_StateMgr.Listener as CnsPlayerStateCtl;
+		if (listener != null) {
+			listener.OnAnimateEndFrame (this, ref isDone);
+		}
+
+		if (!isDone) {
+			var state = m_StateMgr.CurrState as BasePlayerState;
+			if (state == null)
+				return;
+			state.OnAnimateEndFrame (this);
+		}
 	}
 
 	void LateUpdate()

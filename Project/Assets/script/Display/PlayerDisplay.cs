@@ -19,6 +19,19 @@ public class PlayerDisplay : BaseResLoader {
 	private SpriteMovement m_Movement = null;
 	private PlayerAttribe m_Attribe = null;
 
+	public bool HasCnsFiles
+	{
+		get
+		{
+			var player = this.GPlayer;
+			if (player == null)
+				return false;
+			if (player.CnsCfg == null)
+				return false;
+			return player.CnsCfg.HasStateDef;
+		}
+	}
+
 	public bool IsFlipX
 	{
 		get {
@@ -189,7 +202,7 @@ public class PlayerDisplay : BaseResLoader {
         return ret;
     }
 
-    public bool RunCmd(string cmdName)
+	public bool RunCmd(string cmdName)
     {
         if (string.IsNullOrEmpty(cmdName))
             return false;

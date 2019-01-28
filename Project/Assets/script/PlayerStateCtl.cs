@@ -70,8 +70,6 @@ public class BasePlayerState: IState<PlayerState, PlayerStateMgr>
 
 public class PlayerStateCtl: MonoBehaviour, IBasePlayerStateListener
 {
-
-    public bool UseDefaultCtl = true;
     
 	public virtual bool CanEnter(PlayerStateMgr target)
 	{
