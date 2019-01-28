@@ -34,6 +34,16 @@ namespace Mugen
 
 		}
 
+        public bool GetCNSStateId(string name, out int id)
+        {
+            id = -1;
+            if (string.IsNullOrEmpty(name) || m_StateNameIdMap == null || m_StateDefMap == null)
+                return false;
+            if (!m_StateNameIdMap.TryGetValue(name, out id))
+                return false;
+            return true;
+        }
+
 		public CNSStateDef GetStateDef(string name)
 		{
 			if (string.IsNullOrEmpty (name) || m_StateNameIdMap == null || m_StateDefMap == null)

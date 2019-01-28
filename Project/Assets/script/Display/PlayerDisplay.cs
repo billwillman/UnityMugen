@@ -203,11 +203,13 @@ public class PlayerDisplay : BaseResLoader {
         CNSConfig cnsCfg = ply.CnsCfg;
         if (cnsCfg == null)
             return false;
-        CNSStateDef stateDef = cnsCfg.GetStateDef(cmdName);
-        if (stateDef == null)
+        int id;
+        if (!cnsCfg.GetCNSStateId(name, out id))
             return false;
-
-        return true;
+        var stateMgr = this.StateMgr;
+        if (stateMgr == null)
+            return false;
+        return stateMgr.ChangeState((PlayerState)id);
     }
 
     public string PlayerName
