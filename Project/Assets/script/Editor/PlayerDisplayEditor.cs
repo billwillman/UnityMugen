@@ -350,4 +350,113 @@ public class PlayerDisplayEditor : Editor {
         }
 
     }
+
+    [MenuItem("Assets/Mugen/Mugen资源转Unity资源", true)]
+    [MenuItem("Assets/Mugen/Unity资源转Mugen资源", true)]
+    public static bool IsProcessMugenFilesToUnityResFiles()
+    {
+        return Selection.activeGameObject == null && Selection.activeObject != null ;
+    }
+
+    // 选中文件夹处理
+    [MenuItem("Assets/Mugen/Mugen资源转Unity资源")]
+    public static void ProcessMugenFilesToUnityResFiles()
+    {
+        var selObj = Selection.activeObject;
+        if (selObj != null)
+        {
+            string path = AssetDatabase.GetAssetPath(selObj);
+            if (string.IsNullOrEmpty(path))
+                return;
+            string[] files = System.IO.Directory.GetFiles(path, "*.*", System.IO.SearchOption.AllDirectories);
+            if (files != null && files.Length > 0)
+            {
+                for (int i = 0; i < files.Length; ++i)
+                {
+                    string srcPath = files[i];
+                    if (string.IsNullOrEmpty(srcPath))
+                        continue;
+                    string ext = System.IO.Path.GetExtension(srcPath);
+                    if (string.IsNullOrEmpty(ext))
+                        continue;
+                    string chgExt = string.Empty;
+                    if (string.Compare(ext, ".def", true) == 0)
+                        chgExt = ".def.txt";
+                    else if (string.Compare(ext, ".sff", true) == 0)
+                        chgExt = ".sff.bytes";
+                    else if (string.Compare(ext, ".snd", true) == 0)
+                        chgExt = ".snd.bytes";
+                    else if (string.Compare(ext, ".air", true) == 0)
+                        chgExt = ".air.txt";
+                    else if (string.Compare(ext, ".act", true) == 0)
+                        chgExt = ".act.bytes";
+                    else if (string.Compare(ext, ".ai", true) == 0)
+                        chgExt = ".ai.bytes";
+                    else if (string.Compare(ext, ".cmd", true) == 0)
+                        chgExt = ".cmd.txt";
+                    else if (string.Compare(ext, ".cns", true) == 0)
+                        chgExt = ".cns.txt";
+                    if (string.IsNullOrEmpty(chgExt))
+                        continue;
+                    string dstPath = System.IO.Path.ChangeExtension(srcPath, chgExt);
+                  //  FileUtil.ReplaceFile(srcPath, dstPath);
+                    System.IO.File.Move(srcPath, dstPath);
+                }
+
+                AssetDatabase.Refresh();
+            }
+        }
+    }
+
+    [MenuItem("Assets/Mugen/Unity资源转Mugen资源")]
+    // 选中文件夹处理
+    public static void ProcessUnityResFilesToMugenFiles()
+    {
+        var selObj = Selection.activeObject;
+        if (selObj != null)
+        {
+            string path = AssetDatabase.GetAssetPath(selObj);
+            if (string.IsNullOrEmpty(path))
+                return;
+
+            string[] files = System.IO.Directory.GetFiles(path, "*.*", System.IO.SearchOption.AllDirectories);
+            if (files != null && files.Length > 0)
+            {
+                for (int i = 0; i < files.Length; ++i)
+                {
+                    string srcPath = files[i];
+                    if (string.IsNullOrEmpty(srcPath))
+                        continue;
+                    string ext = System.IO.Path.GetExtension(srcPath);
+                    if (string.IsNullOrEmpty(ext))
+                        continue;
+                    string chgExt = string.Empty;
+                    if (string.Compare(ext, ".def.txt", true) == 0)
+                        chgExt = ".def";
+                    else if (string.Compare(ext, ".sff.bytes", true) == 0)
+                        chgExt = ".sff";
+                    else if (string.Compare(ext, ".snd.bytes", true) == 0)
+                        chgExt = ".snd";
+                    else if (string.Compare(ext, ".air.txt", true) == 0)
+                        chgExt = ".air";
+                    else if (string.Compare(ext, ".act.bytes", true) == 0)
+                        chgExt = ".act";
+                    else if (string.Compare(ext, ".ai.bytes", true) == 0)
+                        chgExt = ".ai";
+                    else if (string.Compare(ext, ".cmd.txt", true) == 0)
+                        chgExt = ".cmd";
+                    else if (string.Compare(ext, ".cns.txt", true) == 0)
+                        chgExt = ".cns";
+
+                    if (string.IsNullOrEmpty(chgExt))
+                        continue;
+                    string dstPath = System.IO.Path.ChangeExtension(srcPath, chgExt);
+                    System.IO.File.Move(srcPath, dstPath);
+                }
+
+                AssetDatabase.Refresh();
+            }
+
+        }
+    }
 }
