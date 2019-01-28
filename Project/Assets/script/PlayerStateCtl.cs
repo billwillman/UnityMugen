@@ -70,6 +70,8 @@ public class BasePlayerState: IState<PlayerState, PlayerStateMgr>
 
 public class PlayerStateCtl: MonoBehaviour, IBasePlayerStateListener
 {
+
+    public bool UseDefaultCtl = true;
     
 	public virtual bool CanEnter(PlayerStateMgr target)
 	{
@@ -81,53 +83,59 @@ public class PlayerStateCtl: MonoBehaviour, IBasePlayerStateListener
 		return true;
 	}
 
+    private void DefaultEnter(PlayerStateMgr target)
+    {
+        var player = target.PlyDisplay;
+        if (player == null)
+            return;
+        var plyState = target.CurState;
+        switch (plyState)
+        {
+            case PlayerState.psStand1:
+                player.PlayAni(plyState);
+                break;
+            case PlayerState.psDown1:
+                player.PlayAni(PlayerState.psDown1, false);
+                break;
+            case PlayerState.psBackWalk1:
+                player.PlayAni(PlayerState.psBackWalk1);
+                break;
+            case PlayerState.psForwardWalk1:
+                player.PlayAni(PlayerState.psForwardWalk1);
+                break;
+            case PlayerState.psForwardRun1:
+                player.PlayAni(PlayerState.psForwardRun1);
+                break;
+            case PlayerState.psBackStep1:
+                player.PlayAni(PlayerState.psBackStep1, false);
+                break;
+            case (PlayerState)210:
+                player.PlayAni((PlayerState)210, false);
+                break;
+            case (PlayerState)200:
+                player.PlayAni((PlayerState)200, false);
+                break;
+            case (PlayerState)320:
+                player.PlayAni((PlayerState)320, false);
+                break;
+            case (PlayerState)400:
+                player.PlayAni((PlayerState)400, false);
+                break;
+            case (PlayerState)410:
+                player.PlayAni((PlayerState)410, false);
+                break;
+            case (PlayerState)420:
+                player.PlayAni((PlayerState)410, false);
+                break;
+            case (PlayerState)430:
+                player.PlayAni((PlayerState)430, false);
+                break;
+        }
+    }
+
 	public virtual void Enter(PlayerStateMgr target)
 	{
-		var player = target.PlyDisplay;
-		if (player == null)
-			return;
-		var plyState = target.CurState;
-		switch (plyState) {
-		case PlayerState.psStand1:
-			player.PlayAni (plyState);
-			break;
-		case PlayerState.psDown1:
-			player.PlayAni (PlayerState.psDown1, false);
-			break;
-		case PlayerState.psBackWalk1:
-			player.PlayAni (PlayerState.psBackWalk1);
-			break;
-		case PlayerState.psForwardWalk1:
-			player.PlayAni (PlayerState.psForwardWalk1);
-			break;
-		case PlayerState.psForwardRun1:
-			player.PlayAni (PlayerState.psForwardRun1);
-			break;
-		case PlayerState.psBackStep1:
-			player.PlayAni (PlayerState.psBackStep1, false);
-			break;
-		case (PlayerState)210:
-			player.PlayAni ((PlayerState)210, false);
-			break;
-		case (PlayerState)200:
-			player.PlayAni ((PlayerState)200, false);
-			break;
-		case (PlayerState)320:
-			player.PlayAni ((PlayerState)320, false);
-			break;
-		case (PlayerState)400:
-			player.PlayAni ((PlayerState)400, false);
-			break;
-		case (PlayerState)410:
-			player.PlayAni ((PlayerState)410, false);
-			break;
-		case (PlayerState)420:
-			player.PlayAni ((PlayerState)410, false);
-			break;
-		case (PlayerState)430:
-			player.PlayAni ((PlayerState)430, false);
-			break;
-		}
+        DefaultEnter(target);
 	}
 	public virtual void Exit(PlayerStateMgr target)
 	{
