@@ -206,10 +206,7 @@ public class PlayerDisplay : BaseResLoader {
         int id;
         if (!cnsCfg.GetCNSStateId(name, out id))
             return false;
-        var stateMgr = this.StateMgr;
-        if (stateMgr == null)
-            return false;
-        return stateMgr.ChangeState((PlayerState)id);
+        return ChangeState((PlayerState)id);
     }
 
     public string PlayerName
