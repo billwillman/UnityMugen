@@ -123,6 +123,11 @@ namespace Mugen
 		{
 			get; protected set;
 		}
+
+        public string ai
+        {
+            get; protected set;
+        }
 	}
 
 	public class PlayerInfo: IConfigPropertys

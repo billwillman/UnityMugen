@@ -323,17 +323,29 @@ public class InputControl: MonoBehaviour
 				value = InputControlType.jump;
 			} else if (string.Compare (key, "UB") == 0) {
 				value = (InputControlType)((int)InputControlType.left | (int)InputControlType.jump);
-			} else if (string.Compare (key, "a")) {
+            }
+            else if (string.Compare(key, "a") == 0)
+            {
 				value = InputControlType.attack1;
-			} else if (string.Compare (key, "b")) {
+            }
+            else if (string.Compare(key, "b") == 0)
+            {
 				value = InputControlType.attack2;
-			} else if (string.Compare (key, "c")) {
+            }
+            else if (string.Compare(key, "c") == 0)
+            {
 				value = InputControlType.attack3;
-			} else if (string.Compare (key, "x")) {
+            }
+            else if (string.Compare(key, "x") == 0)
+            {
 				value = InputControlType.attack4;
-			} else if (string.Compare (key, "y")) {
+            }
+            else if (string.Compare(key, "y") == 0)
+            {
 				value = InputControlType.attack5;
-			} else if (string.Compare (key, "z")) {
+            }
+            else if (string.Compare(key, "z") == 0)
+            {
 				value = InputControlType.attack6;
 			}
 
