@@ -34,6 +34,10 @@ public class CnsPlayerStateCtl : MonoBehaviour, IStateMgrListener<PlayerState, P
 		var player = target.PlyDisplay;
 		if (player == null)
 			return;
+
+		if (player.PlayCnsAnimate ((int)id))
+			return;
+
 		var plyState = target.CurState;
 		switch (plyState) {
 		case PlayerState.psStand1:

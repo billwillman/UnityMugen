@@ -19,6 +19,20 @@ public class PlayerDisplay : BaseResLoader {
 	private SpriteMovement m_Movement = null;
 	private PlayerAttribe m_Attribe = null;
 
+	public bool PlayCnsAnimate(int stateDefId)
+	{
+		var player = this.GPlayer;
+		if (player == null)
+			return false;
+		if (player.CnsCfg == null || !player.CnsCfg.HasStateDef)
+			return false;
+		var def = player.CnsCfg.GetStateDef (stateDefId);
+		if (def == null || def.Anim == PlayerState.psNone)
+			return false;
+
+		return PlayAni (def.Anim);
+	}
+
 	public bool HasCnsFiles
 	{
 		get
@@ -217,7 +231,7 @@ public class PlayerDisplay : BaseResLoader {
         if (cnsCfg == null)
             return false;
         int id;
-        if (!cnsCfg.GetCNSStateId(name, out id))
+		if (!cnsCfg.GetCNSStateId(cmdName, out id))
             return false;
         return ChangeState((PlayerState)id);
     }

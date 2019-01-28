@@ -65,6 +65,16 @@ namespace Mugen
 			return ret;
 		}
 
+		public CNSStateDef GetStateDef(int id)
+		{
+			if (m_StateNameIdMap == null || m_StateDefMap == null)
+				return null;
+			CNSStateDef ret;
+			if (!m_StateDefMap.TryGetValue (id, out ret))
+				return null;
+			return ret;
+		}
+
 		public bool LoadPlayer(string playerName)
 		{
 			Reset();
