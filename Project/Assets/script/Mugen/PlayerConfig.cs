@@ -66,63 +66,74 @@ namespace Mugen
 
 		public string pal1
 		{
-			get; protected set;
+			get; set;
 		}
 
 		public string pal2
 		{
-			get; protected set;
+			get; set;
 		}
 
 		public string pal3
 		{
-			get; protected set;
+			get; set;
 		}
 
 		public string pal4
 		{
-			get; protected set;
+			get; set;
 		}
 
 		public string pal5
 		{
-			get; protected set;
+			get; set;
 		}
 
 		public string pal6
 		{
-			get; protected set;
+			get; set;
 		}
 
 		public string pal7
 		{
-			get; protected set;
+			get; set;
 		}
 
 		public string pal8
 		{
-			get; protected set;
+			get; set;
 		}
 
 		public string pal9
 		{
-			get; protected set;
+			get; set;
 		}
 
 		public string pal10
 		{
-			get; protected set;
+			get; set;
 		}
 
 		public string pal11
 		{
-			get; protected set;
+			get; set;
 		}
 
 		public string pal12
 		{
-			get; protected set;
+			get; set;
 		}
+
+        public bool HasPal
+        {
+            get
+            {
+                return (!string.IsNullOrEmpty(pal1)) || (!string.IsNullOrEmpty(pal2)) || (!string.IsNullOrEmpty(pal3))
+                    || (!string.IsNullOrEmpty(pal4)) || (!string.IsNullOrEmpty(pal5)) || (!string.IsNullOrEmpty(pal6))
+                    || (!string.IsNullOrEmpty(pal7)) || (!string.IsNullOrEmpty(pal8)) || (!string.IsNullOrEmpty(pal9))
+                    || (!string.IsNullOrEmpty(pal10)) || (!string.IsNullOrEmpty(pal11)) || (!string.IsNullOrEmpty(pal12));
+            }
+        }
 
         public string ai
         {
@@ -239,6 +250,38 @@ namespace Mugen
                                 {
                                     mPlayerInfo.designWidth = int.Parse(vals[0]);
                                     mPlayerInfo.designHeight = int.Parse(vals[1]);
+                                }
+                            } else if (string.Compare(key, "pal.defaults", true) == 0)
+                            {
+                                if (mPlayerFiles.HasPal)
+                                    continue;
+                                string[] vals = ConfigSection.Split(value);
+                                if (vals != null && vals.Length > 0)
+                                {
+                                    if (vals.Length >= 1)
+                                        mPlayerFiles.pal1 = vals[0];
+                                    if (vals.Length >= 2)
+                                        mPlayerFiles.pal2 = vals[1];
+                                    if (vals.Length >= 3)
+                                        mPlayerFiles.pal3 = vals[2];
+                                    if (vals.Length >= 4)
+                                        mPlayerFiles.pal4 = vals[3];
+                                    if (vals.Length >= 5)
+                                        mPlayerFiles.pal5 = vals[4];
+                                    if (vals.Length >= 6)
+                                        mPlayerFiles.pal6 = vals[5];
+                                    if (vals.Length >= 7)
+                                        mPlayerFiles.pal7 = vals[6];
+                                    if (vals.Length >= 8)
+                                        mPlayerFiles.pal8 = vals[7];
+                                    if (vals.Length >= 9)
+                                        mPlayerFiles.pal9 = vals[8];
+                                    if (vals.Length >= 10)
+                                        mPlayerFiles.pal10 = vals[9];
+                                    if (vals.Length >= 11)
+                                        mPlayerFiles.pal11 = vals[10];
+                                    if (vals.Length >= 12)
+                                        mPlayerFiles.pal12 = vals[11];
                                 }
                             }
                         }
