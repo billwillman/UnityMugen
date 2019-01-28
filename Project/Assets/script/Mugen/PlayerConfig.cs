@@ -143,6 +143,9 @@ namespace Mugen
 		public string name {get; protected set;}
 		public string displayname {get; protected set;}
 
+        // 角色设计分辨率
+        public int designWidth { get; set; }
+        public int designHeight { get; set; }
 	}
 
     public class PalletKeyMap: IConfigPropertys
@@ -222,6 +225,25 @@ namespace Mugen
 			if (section != null) {
 				if (!section.GetPropertysValues (mPlayerInfo))
 					mPlayerInfo = null;
+                else
+                {
+                    for (int i = 0; i < section.ContentListCount; ++i)
+                    {
+                        string key, value;
+                        if (section.GetKeyValue(i, out key, out value))
+                        {
+                            if (string.Compare(key, "localcoord", true) == 0)
+                            {
+                                string[] vals = ConfigSection.Split(value);
+                                if (vals != null && vals.Length >= 2)
+                                {
+                                    mPlayerInfo.designWidth = int.Parse(vals[0]);
+                                    mPlayerInfo.designHeight = int.Parse(vals[1]);
+                                }
+                            }
+                        }
+                    }
+                }
 			}
             section = reader.GetSection("Palette Keymap");
             mKeyMap = new PalletKeyMap();
