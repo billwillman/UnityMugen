@@ -145,6 +145,53 @@ namespace Mugen
 
 	}
 
+    public class PalletKeyMap: IConfigPropertys
+    {
+        public string ConfigName
+        {
+            get
+            {
+                return string.Empty;
+            }
+        }
+
+        public int x
+        {
+            get;
+            protected set;
+        }
+
+        public int y
+        {
+            get;
+            protected set;
+        }
+
+        public int z
+        {
+            get;
+            protected set;
+        }
+
+        public int a
+        {
+            get;
+            protected set;
+        }
+
+        public int b
+        {
+            get;
+            protected set;
+        }
+
+        public int c
+        {
+            get;
+            protected set;
+        }
+    }
+
 	public class PlayerConfig
 	{
 		public void LoadPlayer(string playerName)
@@ -176,6 +223,13 @@ namespace Mugen
 				if (!section.GetPropertysValues (mPlayerInfo))
 					mPlayerInfo = null;
 			}
+            section = reader.GetSection("Palette Keymap");
+            mKeyMap = new PalletKeyMap();
+            if (section != null)
+            {
+                if (!section.GetPropertysValues(mKeyMap))
+                    mKeyMap = null;
+            }
 		}
 
 		public bool HasFilesConfig
@@ -210,7 +264,16 @@ namespace Mugen
 			}
 		}
 
+        public PalletKeyMap KeyMap
+        {
+            get
+            {
+                return mKeyMap;
+            }
+        }
+
 		private PlayerFiles mPlayerFiles = null;
 		private PlayerInfo mPlayerInfo = null;
+        private PalletKeyMap mKeyMap = null;
 	}
 }
