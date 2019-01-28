@@ -6,15 +6,17 @@ using Mugen;
 
 public struct SelctedItem
 {
-	public SelctedItem(int stateIdx = -1, int palIdx = -1, bool clsn = false)
+	public SelctedItem(int stateIdx = -1, int palIdx = -1, bool clsn = false, int commandIdx = -1)
     {
         stateIndex = stateIdx;
         palletIndex = palIdx;
 		showClsn = clsn;
+        commandIndex = commandIdx;
     }
     public int stateIndex ;
     public int palletIndex;
 	public bool showClsn;
+    public int commandIndex;
 }
 
 [CustomEditor(typeof(PlayerDisplay))]
@@ -22,12 +24,15 @@ public class PlayerDisplayEditor : Editor {
     private List<PlayerState> m_VaildStateList = null;
     private string[] m_VaildPalletNameList = null;
     private string[] m_VaildStateNameList = null;
+    private Cmd_Command[] m_CommandList = null;
+    private string[] m_CommandNameList = null;
     private PlayerDisplay m_LastDisplay = null;
     private int m_StateSelected = -1;
     private int m_PalletSelectd = -1;
 	private bool m_ShowClsn = false;
     private static Dictionary<int, SelctedItem> m_SelectedMap = new Dictionary<int, SelctedItem>();
     private float m_AniSelect = -1f;
+    private int m_CommandSel = -1;
 
     private void InitPlayerDisplay()
     {
@@ -38,6 +43,9 @@ public class PlayerDisplayEditor : Editor {
         m_PalletSelectd = -1;
         m_AniSelect = -1f;
 		m_ShowClsn = false;
+        m_CommandList = null;
+        m_CommandNameList = null;
+        m_CommandSel = -1;
         if (m_LastDisplay == null)
             return;
         var player = m_LastDisplay.GPlayer;
@@ -113,6 +121,25 @@ public class PlayerDisplayEditor : Editor {
 		}
 
         m_AniSelect = m_LastDisplay.ImageAni.CurFrame;
+
+        if (player.CmdCfg != null)
+        {
+            m_CommandList = player.CmdCfg.GetCommandArray();
+            SelctedItem selItem;
+            if (m_SelectedMap.TryGetValue(m_LastDisplay.GetInstanceID(), out selItem))
+            {
+                m_CommandSel = selItem.commandIndex;
+            }
+
+            if (m_CommandList != null && m_CommandList.Length > 0)
+            {
+                m_CommandNameList = new string[m_CommandList.Length];
+                for (int i = 0; i < m_CommandList.Length; ++i)
+                {
+                    m_CommandNameList[i] = m_CommandList[i].name;
+                }
+            }
+        }
     }
 
     private void DrawPlayerDisplay()
@@ -319,6 +346,27 @@ public class PlayerDisplayEditor : Editor {
 
 		int playerType = (int)m_LastDisplay.PlyType;
 		EditorGUILayout.LabelField("角色控制", playerType.ToString());
+
+        // 显示命令
+        if (m_CommandList != null && m_CommandList.Length > 0 && m_CommandNameList != null && m_CommandNameList.Length > 0)
+        {
+            EditorGUILayout.Space();
+
+            EditorGUILayout.LabelField("【操作命令】");
+            //GUILayout.BeginArea(new Rect(0, Screen, Screen.width, 400));
+            int newCmdIdx = GUILayout.SelectionGrid(m_CommandSel, m_CommandNameList, 1);
+           // GUILayout.EndArea();
+            if (m_CommandSel != newCmdIdx)
+            {
+                m_CommandSel = newCmdIdx;
+
+                SelctedItem item;
+                if (!m_SelectedMap.TryGetValue(m_LastDisplay.GetInstanceID(), out item))
+                    item = new SelctedItem();
+                item.commandIndex = newCmdIdx;
+                m_SelectedMap[m_LastDisplay.GetInstanceID()] = item;
+            }
+        }
     }
 
 	void ShowClsn(bool isShow)
