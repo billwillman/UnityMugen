@@ -25,13 +25,13 @@ public class PlayerDisplayEditor : Editor {
     private string[] m_VaildPalletNameList = null;
     private string[] m_VaildStateNameList = null;
     private Cmd_Command[] m_CommandList = null;
-    private string[] m_CommandNameList = null;
+   // private string[] m_CommandNameList = null;
     private PlayerDisplay m_LastDisplay = null;
     private int m_StateSelected = -1;
     private int m_PalletSelectd = -1;
 	private bool m_ShowClsn = false;
     private static Dictionary<int, SelctedItem> m_SelectedMap = new Dictionary<int, SelctedItem>();
-    private float m_AniSelect = -1f;
+    private int m_AniSelect = -1;
     private int m_CommandSel = -1;
 
     private void InitPlayerDisplay()
@@ -41,10 +41,10 @@ public class PlayerDisplayEditor : Editor {
         m_VaildPalletNameList = null;
         m_StateSelected = -1;
         m_PalletSelectd = -1;
-        m_AniSelect = -1f;
+        m_AniSelect = -1;
 		m_ShowClsn = false;
         m_CommandList = null;
-        m_CommandNameList = null;
+       // m_CommandNameList = null;
         m_CommandSel = -1;
         if (m_LastDisplay == null)
             return;
@@ -131,6 +131,7 @@ public class PlayerDisplayEditor : Editor {
                 m_CommandSel = selItem.commandIndex;
             }
 
+            /*
             if (m_CommandList != null && m_CommandList.Length > 0)
             {
                 m_CommandNameList = new string[m_CommandList.Length];
@@ -139,6 +140,7 @@ public class PlayerDisplayEditor : Editor {
                     m_CommandNameList[i] = m_CommandList[i].name;
                 }
             }
+             * */
         }
     }
 
@@ -288,7 +290,7 @@ public class PlayerDisplayEditor : Editor {
 
 		if (GUILayout.Button ("动画重置")) {
 			m_LastDisplay.ResetFirstFrame ();
-            m_AniSelect = 0f;
+            m_AniSelect = 0;
 		}
 
         var imgAni = m_LastDisplay.ImageAni;
@@ -300,8 +302,9 @@ public class PlayerDisplayEditor : Editor {
                 var ani = imgAni.CacheAnimation;
                 if (ani != null)
                 {
-                    float c = GUILayout.HorizontalSlider(m_AniSelect, -1, aniCount);
-                    if (Mathf.Abs(c - m_AniSelect) > float.Epsilon)
+                  //  float c = GUILayout.HorizontalSlider(m_AniSelect, -1, aniCount);
+                    int c = EditorGUILayout.IntSlider(m_AniSelect, 0, aniCount);
+                    if (m_AniSelect != c)
                     {
                         m_AniSelect = c;
                         int cc = (int)c;
@@ -348,14 +351,44 @@ public class PlayerDisplayEditor : Editor {
 		EditorGUILayout.LabelField("角色控制", playerType.ToString());
 
         // 显示命令
-        if (m_CommandList != null && m_CommandList.Length > 0 && m_CommandNameList != null && m_CommandNameList.Length > 0)
+        if (m_CommandList != null && m_CommandList.Length > 0 /*&& m_CommandNameList != null && m_CommandNameList.Length > 0*/)
         {
             EditorGUILayout.Space();
-
             EditorGUILayout.LabelField("【操作命令】");
             //GUILayout.BeginArea(new Rect(0, Screen, Screen.width, 400));
-            int newCmdIdx = GUILayout.SelectionGrid(m_CommandSel, m_CommandNameList, 1);
-           // GUILayout.EndArea();
+            int newCmdIdx = m_CommandSel;
+
+            int idx = 0;
+            bool isVV = false;
+            for (int i = 0; i < m_CommandList.Length; ++i)
+            {
+                var cmd = m_CommandList[i];
+                if (cmd == null)
+                    continue;
+                
+                if (idx % 2 == 0)
+                {
+                    EditorGUILayout.BeginHorizontal();
+                    isVV = true;
+                }
+                if (GUILayout.Button(cmd.name))
+                {
+                    newCmdIdx = i;
+                }
+
+                if (idx % 2 == 1)
+                {
+                    EditorGUILayout.EndHorizontal();
+                    isVV = false;
+                }
+
+                ++idx;
+            }
+
+            if (isVV)
+                EditorGUILayout.EndHorizontal();
+
+            // GUILayout.EndArea();
             if (m_CommandSel != newCmdIdx)
             {
                 m_CommandSel = newCmdIdx;
