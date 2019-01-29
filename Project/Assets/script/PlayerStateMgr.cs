@@ -8,7 +8,7 @@ public class PlayerStateMgr : MonoBehaviour {
     private StateMgr<PlayerState, PlayerStateMgr> m_StateMgr = null;
 	private PlayerDisplay m_PlayerDisplay = null;
     private bool m_HasFirstChangedStated = false;
-
+    private bool m_IsCnsState = false;
     void Awake()
     {
         m_StateMgr = new StateMgr<PlayerState, PlayerStateMgr>(this);
@@ -48,7 +48,9 @@ public class PlayerStateMgr : MonoBehaviour {
             if (!display.HasBeginActionSrpiteData((PlayerState)def.Anim))
 				return false;
 		}
-        return m_StateMgr.ChangeState(state, isCns);
+
+        m_IsCnsState = isCns;
+        return m_StateMgr.ChangeState(state, m_IsCnsState);
     }
 
 	public PlayerDisplay PlyDisplay
@@ -92,6 +94,6 @@ public class PlayerStateMgr : MonoBehaviour {
 	void LateUpdate()
 	{
 		if (m_StateMgr != null)
-			m_StateMgr.Process (this);
+            m_StateMgr.Process(this, m_IsCnsState);
 	}
 }

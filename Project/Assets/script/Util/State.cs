@@ -45,9 +45,9 @@ namespace Utils
             m_Target = target;
         }
 
-        public virtual void Process(V target) {
+        public virtual void Process(V target, bool useListener = false) {
 
-			if (m_Listener != null)
+            if (useListener && m_Listener != null)
 			{
 				bool isDone = false;
 				m_Listener.Process (target, m_CurrKey, ref isDone);
