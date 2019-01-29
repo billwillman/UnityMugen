@@ -220,7 +220,7 @@ namespace Mugen
 			if (string.IsNullOrEmpty(playerName))
 				return;
 			string fileName = string.Format("{0}@{1}/{2}.def.txt", AppConfig.GetInstance().PlayerRootDir, playerName, playerName);
-			fileName = fileName.ToLower();
+			//fileName = fileName.ToLower();
 			string str = AppConfig.GetInstance().Loader.LoadText(fileName);
 			LoadString(str);
 		}
