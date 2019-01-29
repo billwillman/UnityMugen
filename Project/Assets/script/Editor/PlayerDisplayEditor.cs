@@ -70,7 +70,10 @@ public class PlayerDisplayEditor : Editor {
             {
                 var state = m_VaildStateList[i];
                 if (!m_LastDisplay.HasBeginActionSrpiteData(state, true))
+                {
+                   // Debug.LogErrorFormat("BeginAction {0:D} is not vaild~!", (int)state);
                     m_VaildStateList.RemoveAt(i);
+                }
             }
             //--------------------------
 
@@ -376,7 +379,7 @@ public class PlayerDisplayEditor : Editor {
                     newCmdIdx = i;
                 }
 
-                if (idx % 2 == 1)
+                if (idx % 2 == 1 && isVV)
                 {
                     EditorGUILayout.EndHorizontal();
                     isVV = false;

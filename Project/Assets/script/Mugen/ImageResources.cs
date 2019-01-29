@@ -245,7 +245,12 @@ namespace Mugen
                 PlayerState action = (PlayerState)state;
                 BeginAction beginAction = airCfg.GetBeginAction(action);
                 if (beginAction == null || beginAction.ActionFrameListCount <= 0)
+                {
+#if DEBUG
+                    Debug.LogErrorFormat("beginAction :{0:D} Failed~!", state);
+#endif
                     continue;
+                }
 
                 /*
                 List<ImageFrame> frameList = this.GetImageFrameList(action);
