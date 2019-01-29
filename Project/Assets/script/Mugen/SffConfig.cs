@@ -1450,10 +1450,15 @@ namespace Mugen
                 if (g != group || img != image)
                     continue;
 
-				if ((sub.LenghtOfSubheader == 0) && (sub.IndexOfPrevious > 0) && (sub.IndexOfPrevious <= mSubHeaders.Count))
-				{
-					sub = mSubHeaders[sub.IndexOfPrevious - 1];
-				}
+                while (true)
+                {
+                    if ((sub.LenghtOfSubheader == 0) && (sub.IndexOfPrevious > 0) && (sub.IndexOfPrevious <= mSubHeaders.Count))
+                    {
+                        sub = mSubHeaders[sub.IndexOfPrevious - 1];
+                    }
+                    else
+                        break;
+                } 
 
                 header = sub;
                 return true;
@@ -1476,19 +1481,23 @@ namespace Mugen
 				{
 					SFFSUBHEADERv2 sub = mSubHeadersV2[i];
 
-					if ((sub.subfileLength == 0) && (sub.IndexOfPrevious > 0) && (sub.IndexOfPrevious <= mSubHeadersV2.Count))
-					{
-						sub = mSubHeadersV2[sub.IndexOfPrevious - 1];
-					}
+                    int g = (int)sub.GroubNumber;
+                    int img = (int)sub.ImageNumber;
+                    if (g != group || img != image)
+                        continue;
 
-					int g = (int)sub.GroubNumber;
-					int img = (int)sub.ImageNumber;
+                    while (true)
+                    {
+                        if ((sub.subfileLength == 0) && (sub.IndexOfPrevious > 0) && (sub.IndexOfPrevious <= mSubHeadersV2.Count))
+                        {
+                            sub = mSubHeadersV2[sub.IndexOfPrevious - 1];
+                        }
+                        else
+                            break;
+                    }
 
-					if ((g == group) && (img == image))
-					{
-						header = sub;
-						return true;
-					}
+                    header = sub;
+                    return true;
 				}
 
 			header = new SFFSUBHEADERv2();
@@ -1512,14 +1521,14 @@ namespace Mugen
 
 			header = mSubHeaders[index];
 
-           // while (true)
+            while (true)
             {
                 if ((header.LenghtOfSubheader == 0) && (header.IndexOfPrevious > 0) && (header.IndexOfPrevious < mSubHeaders.Count))
                 {
                     header = mSubHeaders[header.IndexOfPrevious - 1];
                 }
-              //  else
-               //     break;
+                else
+                    break;
             }
 			return true;
 		}
@@ -1534,14 +1543,14 @@ namespace Mugen
 
 			header = mSubHeadersV2[index];
 
-			// while (true)
+			 while (true)
 			{
 				if ((header.subfileLength == 0) && (header.IndexOfPrevious > 0) && (header.IndexOfPrevious < mSubHeadersV2.Count))
 				{
 					header = mSubHeadersV2[header.IndexOfPrevious - 1];
 				}
-				//  else
-				//     break;
+				  else
+				     break;
 			}
 			return true;
 		}
