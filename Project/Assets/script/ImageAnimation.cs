@@ -15,10 +15,9 @@ public class ImageAnimation : MonoBehaviour {
             ani.Stop();
     }
 
-    // 是否包含這個動作的資源
-    public bool HasStateImage(PlayerState state, bool isCheckTex =false)
+    public bool HasImage(PlayerState group, int index)
     {
-        if (state == PlayerState.psNone)
+        if (group == PlayerState.psNone)
             return false;
 
         PlayerDisplay displayer = this.CacheDisplayer;
@@ -38,7 +37,51 @@ public class ImageAnimation : MonoBehaviour {
             if (imgLib == null)
                 return false;
         }
-        var list = imgLib.GetImageFrameList(state);
+        var list = imgLib.GetImageFrameList(group);
+        if (list == null || list.Count <= 0)
+            return false;
+        for (int i = 0; i < list.Count; ++i)
+        {
+            var frame = list[i];
+            if (frame == null || frame.Image != index)
+                continue;
+            if (frame.Data != null)
+                return true;
+        }
+
+        return false;
+    }
+
+    public bool HasImage(int group, int index)
+    {
+        return HasImage((PlayerState)group, index);
+    }
+
+
+    // 是否包含這個動作的資源
+    public bool HasStateImage(PlayerState group, bool isCheckTex =false)
+    {
+        if (group == PlayerState.psNone)
+            return false;
+
+        PlayerDisplay displayer = this.CacheDisplayer;
+        if (displayer == null)
+            return false;
+        var loaderPlayer = displayer.LoaderPlayer;
+        if (loaderPlayer == null)
+            return false;
+        var imgRes = loaderPlayer.ImageRes;
+        if (imgRes == null)
+            return false;
+        var imgLib = imgRes.ImgLib;
+        if (imgLib == null)
+        {
+            imgRes.Init();
+            imgLib = imgRes.ImgLib;
+            if (imgLib == null)
+                return false;
+        }
+        var list = imgLib.GetImageFrameList(group);
         bool ret = list != null && list.Count > 0;
         if (ret && isCheckTex)
         {

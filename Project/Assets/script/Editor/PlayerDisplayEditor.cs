@@ -69,7 +69,7 @@ public class PlayerDisplayEditor : Editor {
             for (int i = m_VaildStateList.Count - 1; i >= 0; --i)
             {
                 var state = m_VaildStateList[i];
-                if (!m_LastDisplay.HasStateImage(state, true))
+                if (!m_LastDisplay.HasBeginActionSrpiteData(state, true))
                     m_VaildStateList.RemoveAt(i);
             }
             //--------------------------

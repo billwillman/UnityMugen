@@ -171,13 +171,33 @@ public class PlayerDisplay : BaseResLoader {
 		return true;
 	}
 
-    public bool HasStateImage(PlayerState state, bool isCheckTex = false)
+    public bool HasBeginActionSrpiteData(PlayerState state, bool isCheckTex = false)
     {
+        if (state == PlayerState.psNone)
+            return false;
+        var player = this.GPlayer;
+        if (player == null || player.AirCfg == null || !player.AirCfg.IsVaild)
+            return false;
         var ani = this.ImageAni;
         if (ani == null)
             return false;
-        bool ret = ani.HasStateImage(state, isCheckTex);
-        return ret;
+
+        var beginAction = player.AirCfg.GetBeginAction(state);
+        if (beginAction == null)
+            return false;
+        if (!isCheckTex)
+            return true;
+        for (int i = 0; i < beginAction.ActionFrameListCount; ++i)
+        {
+            ActionFrame frame;
+            if (beginAction.GetFrame(i, out frame))
+            {
+                if (ani.HasImage(frame.Group, frame.Index))
+                    return true;
+            }
+        }
+
+        return false;
     }
 
 	public void StopAni()

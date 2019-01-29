@@ -36,7 +36,7 @@ public class PlayerStateMgr : MonoBehaviour {
         if (!m_HasFirstChangedStated)
             m_HasFirstChangedStated = true;
 		if (!isCns) {
-			if (!display.HasStateImage (state, true))
+            if (!display.HasBeginActionSrpiteData(state, true))
 				return false;
 		} else {
 			var player = display.GPlayer;
@@ -45,7 +45,7 @@ public class PlayerStateMgr : MonoBehaviour {
 			var def = player.CnsCfg.GetStateDef ((int)state);
 			if (def == null)
 				return false;
-			if (!display.HasStateImage((PlayerState)def.Anim))
+            if (!display.HasBeginActionSrpiteData((PlayerState)def.Anim))
 				return false;
 		}
         return m_StateMgr.ChangeState(state);
