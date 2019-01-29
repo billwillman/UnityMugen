@@ -38,6 +38,15 @@ public class PlayerStateMgr : MonoBehaviour {
 		if (!isCns) {
 			if (!display.HasStateImage (state, true))
 				return false;
+		} else {
+			var player = display.GPlayer;
+			if (player == null || player.CnsCfg == null || !player.CnsCfg.HasStateDef)
+				return false;
+			var def = player.CnsCfg.GetStateDef ((int)state);
+			if (def == null)
+				return false;
+			if (!display.HasStateImage((PlayerState)def.Anim))
+				return false;
 		}
         return m_StateMgr.ChangeState(state);
     }
