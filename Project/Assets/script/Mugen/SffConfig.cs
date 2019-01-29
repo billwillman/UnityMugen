@@ -1445,19 +1445,18 @@ namespace Mugen
 			{
 				SFFSUBHEADER sub = mSubHeaders[i];
 
+                int g = (int)sub.GroubNumber;
+                int img = (int)sub.ImageNumber;
+                if (g != group || img != image)
+                    continue;
+
 				if ((sub.LenghtOfSubheader == 0) && (sub.IndexOfPrevious > 0) && (sub.IndexOfPrevious <= mSubHeaders.Count))
 				{
 					sub = mSubHeaders[sub.IndexOfPrevious - 1];
 				}
 
-				int g = (int)sub.GroubNumber;
-				int img = (int)sub.ImageNumber;
-
-				if ((g == group) && (img == image))
-				{
-					header = sub;
-					return true;
-				}
+                header = sub;
+                return true;
 			}
 
 			header = new SFFSUBHEADER();

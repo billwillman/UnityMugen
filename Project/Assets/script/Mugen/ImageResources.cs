@@ -320,12 +320,12 @@ namespace Mugen
             if (!sf.GetSubHeader(g, startLoadImage, out h))
                 return;
             KeyValuePair<PCXHEADER, PCXDATA> d;
-            if (!sf.GetPcxData((uint)group, (uint)startLoadImage, out d))
+            if (!sf.GetPcxData((uint)h.GroubNumber, (uint)h.ImageNumber, out d))
                 return;
             float offX = ((float)(d.Key.x + h.x)) / d.Key.widht;//+ 1.0f;
             float offY = -((float)(d.Key.y + h.y)) / d.Key.height + 1.0f;
 
-            Texture2D tex = sf.GetIndexTexture((uint)group, (uint)startLoadImage);
+            Texture2D tex = sf.GetIndexTexture((uint)h.GroubNumber, (uint)h.ImageNumber);
             while (tex != null)
             {
 				KeyValuePair<short, short> palletLink;
@@ -343,13 +343,14 @@ namespace Mugen
                     break;
 
                 ++startLoadImage;
-                if (!sf.GetSubHeader((int)group, startLoadImage, out h))
+                g = (int)group;
+                if (!sf.GetSubHeader(g, startLoadImage, out h))
                     break;
-                if (!sf.GetPcxData((uint)group, (uint)startLoadImage, out d))
+                if (!sf.GetPcxData((uint)h.GroubNumber, (uint)h.ImageNumber, out d))
                     break;
                 offX = ((float)(d.Key.x + h.x)) / d.Key.widht;//+ 1.0f;
                 offY = -((float)(d.Key.y + h.y)) / d.Key.height + 1.0f;
-                tex = sf.GetIndexTexture((uint)group, (uint)startLoadImage);
+                tex = sf.GetIndexTexture((uint)h.GroubNumber, (uint)h.ImageNumber);
             }
         }
 
