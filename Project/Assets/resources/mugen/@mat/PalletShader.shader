@@ -37,6 +37,8 @@
 			#pragma fragment frag
 			// make fog work
 			#pragma multi_compile_fog
+
+			#pragma multi_compile _RGB_A _NO_RGB_A
 			
 			#include "UnityCG.cginc"
 
@@ -77,10 +79,12 @@
 				half2 uv = float2(col.a, 0);
 				col = tex2D(_PalletTex, uv);
 				///*
-				float d = col.r + col.g + col.b + col.a;
-				if (d <= 0.0001)
+				#ifdef _RGB_A
+				float d = col.r + col.g + col.b;
+				if (d < 0.0001)
 					//col.a = 0;
 					col.a = 1.0f;
+				#endif
 				//*/
 				col *= i.color;
 				
