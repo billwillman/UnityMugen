@@ -316,7 +316,8 @@ namespace Mugen
                 saveGroup = group;
 
             SFFSUBHEADER h;
-            if (!sf.GetSubHeader((int)group, startLoadImage, out h))
+            int g = (int)group;
+            if (!sf.GetSubHeader(g, startLoadImage, out h))
                 return;
             KeyValuePair<PCXHEADER, PCXDATA> d;
             if (!sf.GetPcxData((uint)group, (uint)startLoadImage, out d))
