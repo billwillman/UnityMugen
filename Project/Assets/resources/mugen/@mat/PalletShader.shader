@@ -76,12 +76,12 @@
 				//half2 uv = float2(round(col.a * 255)/255, 0);
 				half2 uv = float2(col.a, 0);
 				col = tex2D(_PalletTex, uv);
-				/*
-				float d = col.r + col.g + col.b;
-				if (d == 0)
+				///*
+				float d = col.r + col.g + col.b + col.a;
+				if (d <= 0.0001)
 					//col.a = 0;
 					col.a = 1.0f;
-				*/
+				//*/
 				col *= i.color;
 				
 				return col;
