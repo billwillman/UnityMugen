@@ -57,7 +57,7 @@ public class ImageAnimation : MonoBehaviour {
         return HasImage((PlayerState)group, index);
     }
 
-
+    /*
     // 是否包含這個動作的資源
     public bool HasStateImage(PlayerState group, bool isCheckTex =false)
     {
@@ -100,6 +100,7 @@ public class ImageAnimation : MonoBehaviour {
         }
         return ret;
     }
+    */
 
     // 播放角色动画
     public bool PlayerPlayerAni(PlayerState state, bool isLoop = true)
@@ -132,6 +133,8 @@ public class ImageAnimation : MonoBehaviour {
             if (imgLib == null)
                 return false;
         }
+
+
         m_FrameList = imgLib.GetAnimationNodeList(state);
         bool ret = DoInitAnimation();
         if (ret)

@@ -48,7 +48,7 @@ public class PlayerStateMgr : MonoBehaviour {
             if (!display.HasBeginActionSrpiteData((PlayerState)def.Anim))
 				return false;
 		}
-        return m_StateMgr.ChangeState(state);
+        return m_StateMgr.ChangeState(state, isCns);
     }
 
 	public PlayerDisplay PlyDisplay

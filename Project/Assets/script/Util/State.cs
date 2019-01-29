@@ -60,12 +60,12 @@ namespace Utils
                 state.Process(target);
         }
 
-        public virtual bool ChangeState(U id) {
+        public virtual bool ChangeState(U id, bool useListener = false) {
             if (m_Target == null)
                 return false;
 
 			bool isDone = false;
-			if (m_Listener != null)
+            if (useListener && m_Listener != null)
 			{
 				bool r = m_Listener.CanExit (m_Target, this.m_CurrKey, ref isDone);
 				if (isDone && !r)
@@ -82,7 +82,8 @@ namespace Utils
 			}
 
 			isDone = false;
-			if (m_Listener != null) {
+            if (useListener && m_Listener != null)
+            {
 				bool r = m_Listener.CanEnter (m_Target, this.m_CurrKey, id, ref isDone);
 				if (isDone && !r)
 					return false;

@@ -247,9 +247,11 @@ namespace Mugen
                 if (beginAction == null || beginAction.ActionFrameListCount <= 0)
                     continue;
 
+                /*
                 List<ImageFrame> frameList = this.GetImageFrameList(action);
                 if (frameList == null || frameList.Count <= 0)
                     continue;
+                 */
 
                 List<ImageAnimateNode> aniNodeList;
                 if (!mStateAniMap.TryGetValue((int)action, out aniNodeList))
