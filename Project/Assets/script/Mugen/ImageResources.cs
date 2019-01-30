@@ -436,7 +436,7 @@ namespace Mugen
                             ActionFrame frame;
                             if (value.GetFrame(j, out frame))
                             {
-                                LoadCharState(sf, key, charName, frame.Index);
+                                LoadCharState(sf, (PlayerState)frame.Group, charName, frame.Index);
                             }
                         }
                     }
