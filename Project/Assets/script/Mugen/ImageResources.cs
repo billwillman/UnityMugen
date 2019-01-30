@@ -306,19 +306,19 @@ namespace Mugen
         /// <param name="useSaveGroup">是否使用saveGroup參數</param>
         /// <param name="saveGroup">保存到MAP的Group的KEY</param>
         private void LoadCharState(SffFile sf, PlayerState group, string charName, int startLoadImage = 0, 
-            bool isAniLoad = true, bool useSaveGroup = false, 
-            PlayerState saveGroup = PlayerState.psNone)
+            bool isAniLoad = true)
         {
            // if (group == PlayerState.psPlayerStateCount)
             //    return;
-
-            if (!useSaveGroup || saveGroup == PlayerState.psNone)
-                saveGroup = group;
 
             SFFSUBHEADER h;
             int g = (int)group;
             if (!sf.GetSubHeader(g, startLoadImage, out h))
                 return;
+
+            if (this.HasLoadImageFrame(PlayerState.psNone, h.GroubNumber, h.ImageNumber))
+                return;
+
             KeyValuePair<PCXHEADER, PCXDATA> d;
             if (!sf.GetPcxData((uint)h.GroubNumber, (uint)h.ImageNumber, out d))
                 return;
@@ -333,10 +333,10 @@ namespace Mugen
 					palletLink = d.Value.palletLink;
 				else
 					palletLink = new KeyValuePair<short, short> (-1, -1);
-                ImageFrame frame = new ImageFrame(this, startLoadImage, tex, offX, offY, charName,
+                ImageFrame frame = new ImageFrame(this, h.ImageNumber, tex, offX, offY, charName,
 					palletLink, d.Value.GetPalletTexture(mIs32BitPallet));
 
-                AddImageFrame(saveGroup, frame);
+                AddImageFrame((PlayerState)h.GroubNumber, frame);
 
                 // 只是單針加載，不是動畫加載
                 if (!isAniLoad)
@@ -383,8 +383,8 @@ namespace Mugen
                         var staticBg = bg as BgStaticInfo;
                         PlayerState saveGroup = SceneGroupToSaveGroup(staticBg.srpiteno_Group);
                         PlayerState group = (PlayerState)(staticBg.srpiteno_Group);
-                        if (!HasLoadImageFrame(saveGroup, staticBg.srpiteno_Group, staticBg.spriteno_Image))
-                            LoadCharState(sf, group, bg.name, staticBg.spriteno_Image, false, true, saveGroup);
+                     //   if (!HasLoadImageFrame(saveGroup, staticBg.srpiteno_Group, staticBg.spriteno_Image))
+                     //       LoadCharState(sf, group, bg.name, staticBg.spriteno_Image, false, true, saveGroup);
                     }
                 }
             }
