@@ -106,7 +106,10 @@ public class PlayerDisplay : BaseResLoader {
 		var mgr = this.StateMgr;
 		if (mgr == null)
             return false;
-		return mgr.ChangeState(state, isCns);
+		bool ret = mgr.ChangeState(state, isCns);
+        if (!isCns)
+            SetAutoCnsState();
+        return ret;
     }
 
     public void SetAutoCnsState()
