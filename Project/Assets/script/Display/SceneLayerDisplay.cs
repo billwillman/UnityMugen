@@ -106,8 +106,9 @@ public class SceneLayerDisplay : BaseResLoader {
                 if (frame.LoadSceneExtLocalPalletTex(sceneFileName, group))
                 {
                     palletTex = frame.LocalPalletTex;
-                    int saveGroup = (int)ImageLibrary.SceneGroupToSaveGroup(group);
-                    StageMgr.GetInstance().SetLastPalletLink(saveGroup, frame.Image);
+                   // int saveGroup = (int)ImageLibrary.SceneGroupToSaveGroup(group);
+                  //  StageMgr.GetInstance().SetLastPalletLink(saveGroup, frame.Image);
+                    StageMgr.GetInstance().SetLastPalletLink(group, frame.Image);
                 } else
                 {
                     StageMgr.GetInstance().LinkImageFramePalletLastLink(frame);

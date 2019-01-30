@@ -31,8 +31,9 @@ public class SceneImageRes : MonoBehaviour {
 	{
 		if (m_ImgLib == null)
 			return null;
-		PlayerState saveGroup = ImageLibrary.SceneGroupToSaveGroup (group);
-		return m_ImgLib.GetImageFrame (saveGroup, image);
+		//PlayerState saveGroup = ImageLibrary.SceneGroupToSaveGroup (group);
+		//return m_ImgLib.GetImageFrame (saveGroup, image);
+        return m_ImgLib.GetImageFrame(group, image);
 	}
 
     void OnDestroy()

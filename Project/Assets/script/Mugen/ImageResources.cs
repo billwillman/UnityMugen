@@ -354,15 +354,18 @@ namespace Mugen
             }
         }
 
+        /*
 		public static PlayerState SceneGroupToSaveGroup(PlayerState group)
 		{
 			return SceneGroupToSaveGroup ((int)group);
 		}
 
+
         public static PlayerState SceneGroupToSaveGroup(int group)
         {
             return (PlayerState)(-(group + 1));
         }
+         */
 
         public bool LoadScene(string fileName, BgConfig config)
         {
@@ -381,10 +384,12 @@ namespace Mugen
                     if (bg.bgType == BgType.normal)
                     {
                         var staticBg = bg as BgStaticInfo;
-                        PlayerState saveGroup = SceneGroupToSaveGroup(staticBg.srpiteno_Group);
+                       // PlayerState saveGroup = SceneGroupToSaveGroup(staticBg.srpiteno_Group);
                         PlayerState group = (PlayerState)(staticBg.srpiteno_Group);
                      //   if (!HasLoadImageFrame(saveGroup, staticBg.srpiteno_Group, staticBg.spriteno_Image))
                      //       LoadCharState(sf, group, bg.name, staticBg.spriteno_Image, false, true, saveGroup);
+                        if (!HasLoadImageFrame(group, staticBg.srpiteno_Group, staticBg.spriteno_Image))
+                            LoadCharState(sf, group, bg.name, staticBg.spriteno_Image, false);
                     }
                 }
             }
