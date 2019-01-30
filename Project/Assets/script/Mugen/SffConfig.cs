@@ -1452,9 +1452,9 @@ namespace Mugen
 
                 while (true)
                 {
-                    if ((sub.LenghtOfSubheader == 0) && (sub.IndexOfPrevious > 0) && (sub.IndexOfPrevious <= mSubHeaders.Count))
+                    if ((sub.LenghtOfSubheader == 0) && (sub.IndexOfPrevious >= 0) && (sub.IndexOfPrevious < mSubHeaders.Count))
                     {
-                        sub = mSubHeaders[sub.IndexOfPrevious - 1];
+                        sub = mSubHeaders[sub.IndexOfPrevious];
                     }
                     else
                         break;
