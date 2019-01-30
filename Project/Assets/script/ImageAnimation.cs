@@ -37,17 +37,10 @@ public class ImageAnimation : MonoBehaviour {
             if (imgLib == null)
                 return false;
         }
-        var list = imgLib.GetImageFrameList(group);
-        if (list == null || list.Count <= 0)
-            return false;
-        for (int i = 0; i < list.Count; ++i)
-        {
-            var frame = list[i];
-            if (frame == null || frame.Image != index)
-                continue;
-            if (frame.Data != null)
-                return true;
-        }
+
+        var frame = imgLib.GetImageFrame(group, index);
+        if (frame != null && frame.Data != null)
+            return true;
 
         return false;
     }
@@ -164,27 +157,11 @@ public class ImageAnimation : MonoBehaviour {
         var aniNode = CurAniNode;
         if (aniNode.frameGroup < 0 || aniNode.frameIndex < 0)
             return null;
-		var frameList = GetImageFrameList(aniNode.frameGroup);
-		if (frameList == null || frameList.Count <= 0)
-			return null;
-		
-        for (int i = 0; i < frameList.Count; ++i)
-        {
-            var frame = frameList[i];
-            if (frame != null && frame.Image == aniNode.frameIndex)
-            {
-                flip = aniNode.flipTag;
-                return frame;
-            }
-        }
 
-        if (frameList.Count == 1)
-        {
-            var frame = frameList[0];
+        var frame = GetImageFrame(aniNode.frameGroup, aniNode.frameIndex);
+        if (frame != null)
             flip = aniNode.flipTag;
-            return frame;
-        }
-		return null;
+        return frame;
 	}
 
     private PlayerDisplay m_CacheDisplayer = null;
@@ -198,28 +175,28 @@ public class ImageAnimation : MonoBehaviour {
         }
     }
 
-	public List<ImageFrame> GetImageFrameList(int group)
-	{
+    public ImageFrame GetImageFrame(int group, int image)
+    {
         PlayerDisplay displayer = this.CacheDisplayer;
-		if (displayer == null)
-			return null;
-		var loaderPlayer = displayer.LoaderPlayer;
-		if (loaderPlayer == null)
-			return null;
-		var imgRes = loaderPlayer.ImageRes;
-		if (imgRes == null)
-			return null;
-		var imgLib = imgRes.ImgLib;
-		if (imgLib == null)
-		{
-			imgRes.Init();
-			imgLib = imgRes.ImgLib;
-			if (imgLib == null)
-				return null;
-		}
+        if (displayer == null)
+            return null;
+        var loaderPlayer = displayer.LoaderPlayer;
+        if (loaderPlayer == null)
+            return null;
+        var imgRes = loaderPlayer.ImageRes;
+        if (imgRes == null)
+            return null;
+        var imgLib = imgRes.ImgLib;
+        if (imgLib == null)
+        {
+            imgRes.Init();
+            imgLib = imgRes.ImgLib;
+            if (imgLib == null)
+                return null;
+        }
 
-        return imgLib.GetImageFrameList((PlayerState)group);
-	}
+        return imgLib.GetImageFrame((PlayerState)group, image);
+    }
 
     private bool DoInitAnimation()
     {

@@ -31,9 +31,7 @@ namespace Mugen
 				if (Data.texture == tex)
 					return;
 
-				DestroyTexture();
-				AppConfig.GetInstance().Loader.DestroyObject(Data);
-				Data = null;
+                DestroyRes();
 			}
 			if (tex == null)
 				return;
@@ -61,11 +59,16 @@ namespace Mugen
 			}
 		}
 
+        private void DestroyRes()
+        {
+            DestroyTexture();
+            AppConfig.GetInstance().Loader.DestroyObject(Data);
+            Data = null;
+        }
+
 		protected override void OnFree(bool isManual)
 		{
-			DestroyTexture();
-			AppConfig.GetInstance().Loader.DestroyObject(Data);
-			Data = null;
+            DestroyRes();
 		}
 
         public bool LoadSceneExtLocalPalletTex(string sceneFileName, int group)
@@ -168,17 +171,26 @@ namespace Mugen
 			}
 		}
 
-		public List<ImageFrame> GetImageFrameList(PlayerState state)
+		private List<ImageFrame> GetImageFrameList(PlayerState state)
 		{
 			List<ImageFrame> ret;
-			if (!mGroupImageMap.TryGetValue((int)state, out ret))
-				return null;
+            if (!mGroupImageMap.TryGetValue((int)state, out ret))
+                return null;
 			return ret;
 		}
 
 		public ImageFrame GetImageFrame(PlayerState state, int index)
 		{
-			List<ImageFrame> frameList = GetImageFrameList(state);
+
+            KeyValuePair<int, int> key = new KeyValuePair<int, int>((int)state, index);
+            KeyValuePair<int, int> value;
+            if (mGroupImageLinkMap.TryGetValue(key, out value))
+            {
+                state = (PlayerState)value.Key;
+                index = value.Value;
+            }
+
+            List<ImageFrame> frameList = GetImageFrameList(state);
 			if (frameList == null)
 				return null;
 			if (index < 0)
@@ -305,18 +317,27 @@ namespace Mugen
         /// <param name="isAniLoad">是否是自動連續加載</param>
         /// <param name="useSaveGroup">是否使用saveGroup參數</param>
         /// <param name="saveGroup">保存到MAP的Group的KEY</param>
-        private void LoadCharState(SffFile sf, PlayerState group, string charName, int startLoadImage = 0, 
-            bool isAniLoad = true)
+        private void LoadCharState(SffFile sf, PlayerState group, string charName, int startLoadImage = 0)
         {
            // if (group == PlayerState.psPlayerStateCount)
             //    return;
 
-            SFFSUBHEADER h;
             int g = (int)group;
+            if (HasLoadImageFrame(g, startLoadImage))
+                return;
+
+            SFFSUBHEADER h;
             if (!sf.GetSubHeader(g, startLoadImage, out h))
                 return;
 
-            if (this.HasLoadImageFrame(PlayerState.psNone, h.GroubNumber, h.ImageNumber))
+            if (g != h.GroubNumber || startLoadImage != h.ImageNumber)
+            {
+                KeyValuePair<int, int> key = new KeyValuePair<int, int>(g, startLoadImage);
+                KeyValuePair<int, int> value = new KeyValuePair<int, int>(h.GroubNumber, h.ImageNumber);
+                mGroupImageLinkMap[key] = value;
+            }
+
+            if (this.HasLoadImageFrame(h.GroubNumber, h.ImageNumber))
                 return;
 
             KeyValuePair<PCXHEADER, PCXDATA> d;
@@ -326,31 +347,18 @@ namespace Mugen
             float offY = -((float)(d.Key.y + h.y)) / d.Key.height + 1.0f;
 
             Texture2D tex = sf.GetIndexTexture((uint)h.GroubNumber, (uint)h.ImageNumber);
-            while (tex != null)
+
+            if (tex != null)
             {
-				KeyValuePair<short, short> palletLink;
-				if (d.Value.IsVaildPalletLink)
-					palletLink = d.Value.palletLink;
-				else
-					palletLink = new KeyValuePair<short, short> (-1, -1);
+                KeyValuePair<short, short> palletLink;
+                if (d.Value.IsVaildPalletLink)
+                    palletLink = d.Value.palletLink;
+                else
+                    palletLink = new KeyValuePair<short, short>(-1, -1);
                 ImageFrame frame = new ImageFrame(this, h.ImageNumber, tex, offX, offY, charName,
-					palletLink, d.Value.GetPalletTexture(mIs32BitPallet));
+                    palletLink, d.Value.GetPalletTexture(mIs32BitPallet));
 
                 AddImageFrame((PlayerState)h.GroubNumber, frame);
-
-                // 只是單針加載，不是動畫加載
-                if (!isAniLoad)
-                    break;
-
-                ++startLoadImage;
-                g = (int)group;
-                if (!sf.GetSubHeader(g, startLoadImage, out h))
-                    break;
-                if (!sf.GetPcxData((uint)h.GroubNumber, (uint)h.ImageNumber, out d))
-                    break;
-                offX = ((float)(d.Key.x + h.x)) / d.Key.widht;//+ 1.0f;
-                offY = -((float)(d.Key.y + h.y)) / d.Key.height + 1.0f;
-                tex = sf.GetIndexTexture((uint)h.GroubNumber, (uint)h.ImageNumber);
             }
         }
 
@@ -388,8 +396,8 @@ namespace Mugen
                         PlayerState group = (PlayerState)(staticBg.srpiteno_Group);
                      //   if (!HasLoadImageFrame(saveGroup, staticBg.srpiteno_Group, staticBg.spriteno_Image))
                      //       LoadCharState(sf, group, bg.name, staticBg.spriteno_Image, false, true, saveGroup);
-                        if (!HasLoadImageFrame(group, staticBg.srpiteno_Group, staticBg.spriteno_Image))
-                            LoadCharState(sf, group, bg.name, staticBg.spriteno_Image, false);
+                        if (!HasLoadImageFrame(staticBg.srpiteno_Group, staticBg.spriteno_Image))
+                            LoadCharState(sf, group, bg.name, staticBg.spriteno_Image);
                     }
                 }
             }
@@ -428,7 +436,7 @@ namespace Mugen
                             ActionFrame frame;
                             if (value.GetFrame(j, out frame))
                             {
-                                LoadCharState(sf, key, charName, frame.Index, false);
+                                LoadCharState(sf, key, charName, frame.Index);
                             }
                         }
                     }
@@ -489,17 +497,26 @@ namespace Mugen
 			}
 			iter.Dispose();
 			mGroupImageMap.Clear();
+            mGroupImageLinkMap.Clear();
 		}
 
-        protected bool HasLoadImageFrame(PlayerState saveState, int group, int image)
+        protected bool HasLoadImageFrame(int group, int image)
         {
-            if (image < 0 || saveState == PlayerState.psNone)
+            if (image < 0)
                 return false;
             List<ImageFrame> frameList;
-            int key = (int)saveState;
-            if (!mGroupImageMap.TryGetValue((int)saveState, out frameList))
+            if (!mGroupImageMap.TryGetValue(group, out frameList))
             {
-                return false;
+                var key = new KeyValuePair<int, int>(group, image);
+                KeyValuePair<int, int> value;
+                if (mGroupImageLinkMap.TryGetValue(key, out value))
+                {
+                    group = value.Key;
+                    image = value.Value;
+                    if (!mGroupImageMap.TryGetValue(group, out frameList))
+                        return false;
+                } else
+                    return false;
             }
             for (int i = 0; i < frameList.Count; ++i)
             {
@@ -600,20 +617,12 @@ namespace Mugen
 			return ret;
 		}
 
-		public Dictionary<int, List<ImageFrame>>.Enumerator GetGroupMapIter()
-		{
-			return mGroupImageMap.GetEnumerator();
-		}
-
-		public Dictionary<int, List<ImageAnimateNode>>.Enumerator GetAniMapIter()
-		{
-			return mStateAniMap.GetEnumerator();
-		}
-
 		// fileName, palletTexture
 		private Dictionary<string, Texture2D> mPalletMap = new Dictionary<string, Texture2D>();
 		// groupNumber, ImageFrame List
 		private Dictionary<int, List<ImageFrame>> mGroupImageMap = new Dictionary<int, List<ImageFrame>>();
+        private Dictionary<KeyValuePair<int, int>, KeyValuePair<int, int>> mGroupImageLinkMap = new Dictionary<KeyValuePair<int, int>, KeyValuePair<int, int>>();
+
 		private bool mIs32BitPallet = true;
 		private Dictionary<int, List<ImageAnimateNode>> mStateAniMap = new Dictionary<int, List<ImageAnimateNode>>();
 	}
