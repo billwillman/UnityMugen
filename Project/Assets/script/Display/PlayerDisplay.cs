@@ -152,14 +152,14 @@ public class PlayerDisplay : BaseResLoader {
 		if (sp != null && sp.sharedMaterial != null) {
 			var mat = sp.sharedMaterial;
 			if (Shader_RGB_Zero_Alpha_One) {
-				if (mat.IsKeywordEnabled ("_RGB_A"))
+				if (!mat.IsKeywordEnabled ("_RGB_A"))
 					mat.EnableKeyword ("_RGB_A");
 				if (mat.IsKeywordEnabled ("_NO_RGB_A"))
 					mat.DisableKeyword ("_NO_RGB_A");
 			} else {
 				if (mat.IsKeywordEnabled ("_RGB_A"))
 					mat.DisableKeyword ("_RGB_A");
-				if (mat.IsKeywordEnabled ("_NO_RGB_A"))
+				if (!mat.IsKeywordEnabled ("_NO_RGB_A"))
 					mat.EnableKeyword ("_NO_RGB_A");
 			}
 		}
