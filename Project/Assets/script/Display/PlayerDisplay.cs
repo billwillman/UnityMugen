@@ -109,6 +109,22 @@ public class PlayerDisplay : BaseResLoader {
 		return mgr.ChangeState(state, isCns);
     }
 
+    public void SetAutoCnsState()
+    {
+        var mgr = this.StateMgr;
+        if (mgr == null)
+            return;
+        mgr.SetCnsState(mgr.CanUseCnsCtl);
+    }
+
+    public void SetCnsState(bool isUseCns)
+    {
+        var mgr = this.StateMgr;
+        if (mgr == null)
+            return;
+        mgr.SetCnsState(isUseCns);
+    }
+
     public GlobalPlayer GPlayer
     {
         get

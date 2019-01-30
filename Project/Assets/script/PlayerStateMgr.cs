@@ -9,6 +9,11 @@ public class PlayerStateMgr : MonoBehaviour {
 	private PlayerDisplay m_PlayerDisplay = null;
     private bool m_HasFirstChangedStated = false;
     private bool m_IsCnsState = false;
+
+    public void SetCnsState(bool isUseCns)
+    {
+        m_IsCnsState = isUseCns;
+    }
     void Awake()
     {
         m_StateMgr = new StateMgr<PlayerState, PlayerStateMgr>(this);

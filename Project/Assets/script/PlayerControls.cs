@@ -69,6 +69,7 @@ public class PlayerControls: MonoSingleton<PlayerControls>
         if (display != null && display.AnimationState == PlayerState.psNone)
         {
             display.ChangeState(PlayerState.psStand1);
+            display.SetAutoCnsState();
         }
     }
 }
