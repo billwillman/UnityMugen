@@ -9,6 +9,7 @@ public class DefaultLoaderPlayer : MonoBehaviour {
 	public string PlayerName = string.Empty;
 	public string CnsName = string.Empty;
     public InputPlayerType PlayerType = InputPlayerType.none;
+	public bool Shader_RGB_Zero_Alpha_One = true;
 
     private PlayerImageRes m_ImageLibrary = null;
 

@@ -141,12 +141,29 @@ public class PlayerDisplay : BaseResLoader {
 		InitSpriteRender ();
 	}
 
-	public void Init(DefaultLoaderPlayer loaderPlayer, InputPlayerType playerType)
+	public void Init(DefaultLoaderPlayer loaderPlayer, InputPlayerType playerType, bool Shader_RGB_Zero_Alpha_One = true)
     {
         if (m_LoaderPlayer != null)
             Clear();
         m_LoaderPlayer = loaderPlayer;
 		m_PlayerType = playerType;
+
+		var sp = this.SpriteRender;
+		if (sp != null && sp.sharedMaterial != null) {
+			var mat = sp.sharedMaterial;
+			if (Shader_RGB_Zero_Alpha_One) {
+				if (mat.IsKeywordEnabled ("_RGB_A"))
+					mat.EnableKeyword ("_RGB_A");
+				if (mat.IsKeywordEnabled ("_NO_RGB_A"))
+					mat.DisableKeyword ("_NO_RGB_A");
+			} else {
+				if (mat.IsKeywordEnabled ("_RGB_A"))
+					mat.DisableKeyword ("_RGB_A");
+				if (mat.IsKeywordEnabled ("_NO_RGB_A"))
+					mat.EnableKeyword ("_NO_RGB_A");
+			}
+		}
+
 		PlayerControls.GetInstance().SwitchPlayer(playerType, this);
     }
 

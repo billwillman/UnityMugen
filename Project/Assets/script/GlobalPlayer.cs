@@ -189,13 +189,13 @@ public class GlobalPlayer
 	}
 
 	// 创建角色显示
-	public GameObject CreatePlayerDisplay(DefaultLoaderPlayer loaderPlayer, InputPlayerType playerType)
+	public GameObject CreatePlayerDisplay(DefaultLoaderPlayer loaderPlayer, InputPlayerType playerType, bool Shader_RGB_Zero_Alpha_One = true)
 	{
 		if (m_PlayerConfig == null || !m_PlayerConfig.IsVaild || m_AirConfig == null || !m_AirConfig.IsVaild)
 			return null;
 		GameObject obj = new GameObject (m_PlayerName, typeof(PlayerDisplay));
         PlayerDisplay displayer = obj.GetComponent<PlayerDisplay>();
-		displayer.Init(loaderPlayer, playerType);
+		displayer.Init(loaderPlayer, playerType, Shader_RGB_Zero_Alpha_One);
 		return obj;
 	}
 }

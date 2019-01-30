@@ -312,7 +312,7 @@ public class GlobalConfigMgr : MonoSingleton<GlobalConfigMgr> {
 					AttachPals (defaultPlayer, player);
 					#endif
 					if (player != null)
-						player.CreatePlayerDisplay (defaultPlayer, defaultPlayer.PlayerType);
+						player.CreatePlayerDisplay (defaultPlayer, defaultPlayer.PlayerType, defaultPlayer.Shader_RGB_Zero_Alpha_One);
 				}
 			}
 		}

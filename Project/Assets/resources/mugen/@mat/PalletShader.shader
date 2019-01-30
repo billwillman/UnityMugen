@@ -36,7 +36,7 @@
 			#pragma vertex vert
 			#pragma fragment frag
 			// make fog work
-			#pragma multi_compile_fog
+			//#pragma multi_compile_fog
 
 			#pragma multi_compile _RGB_A _NO_RGB_A
 			
