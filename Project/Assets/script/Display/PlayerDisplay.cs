@@ -124,8 +124,6 @@ public class PlayerDisplay : BaseResLoader {
 
 	public bool ChangeState(PlayerState state, bool isCns = false)
     {
-		m_DefaultClsn2 = null;
-		//DestroyAllClsn ();
 		var mgr = this.StateMgr;
 		if (mgr == null)
             return false;
@@ -284,6 +282,7 @@ public class PlayerDisplay : BaseResLoader {
         if (ani == null)
             return false;
         bool ret = ani.PlayerPlayerAni(state, isLoop);
+		m_DefaultClsn2 = null;
         if (ret)
         {
             RefreshCurFrame(this.ImageAni);
