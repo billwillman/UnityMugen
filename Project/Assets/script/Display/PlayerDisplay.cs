@@ -18,6 +18,8 @@ public class PlayerDisplay : BaseResLoader {
 	private InputPlayerType m_PlayerType = InputPlayerType.none;
 	private SpriteMovement m_Movement = null;
 	private PlayerAttribe m_Attribe = null;
+    // 是否是2P另外对着的
+    private bool m_IsFlipX = false;
 
     public Vector2 m_OffsetPos = Vector2.zero;
 
@@ -51,11 +53,28 @@ public class PlayerDisplay : BaseResLoader {
 	public bool IsFlipX
 	{
 		get {
-			var sp = this.SpriteRender;
-			if (sp == null)
-				return false;
-			return sp.flipX;
+            return m_IsFlipX;
 		}
+
+        set
+        {
+            if (m_IsFlipX != value)
+            {
+                m_IsFlipX = value;
+                var trans = this.CachedTransform;
+                if (m_IsFlipX)
+                {
+                    Quaternion quat = new Quaternion();
+                    quat.eulerAngles = new Vector3(0, 180, 0);
+                    trans.localRotation = quat;
+                }
+                else
+                {
+                    Quaternion quat = Quaternion.identity;
+                    trans.localRotation = quat;
+                }
+            }
+        }
 	}
 
 	protected SpriteMovement Movement
@@ -380,7 +399,8 @@ public class PlayerDisplay : BaseResLoader {
 		r.sprite = frame.Data;
 		if (r.sprite != null)
 		{
-			Transform trans = r.transform;
+            Transform trans = r.transform;
+            /*
 			Quaternion quat = trans.localRotation;
 			switch(flip)
 			{
@@ -399,6 +419,26 @@ public class PlayerDisplay : BaseResLoader {
 			}
 
 			trans.localRotation = quat;
+            */
+
+            switch (flip)
+            {
+                case ActionFlip.afH:
+                    r.flipX = true;
+                    break;
+                case ActionFlip.afV:
+                    r.flipY = true;
+                    break;
+                case ActionFlip.afHV:
+                    r.flipX = true;
+                    r.flipY = true;
+                    break;
+                default:
+                    r.flipX = false;
+                    r.flipY = false;
+                    break;
+            }
+
             trans.localPosition = frame.OffsetPos + m_OffsetPos;
 		}
 

@@ -302,8 +302,8 @@ namespace Mugen
                             int frameIndex = actFrame.Index;
                             ImageAnimateNode aniNode = new ImageAnimateNode();
                             aniNode.AniTick = actFrame.Tick;
-                            //aniNode.flipTag = actFrame.Flip;
-                            aniNode.flipTag = lastFlip;
+                            aniNode.flipTag = actFrame.Flip;
+                            //aniNode.flipTag = lastFlip;
                             lastFlip = actFrame.Flip;
                             aniNode.frameIndex = frameIndex;
                             aniNode.frameGroup = actFrame.Group;
