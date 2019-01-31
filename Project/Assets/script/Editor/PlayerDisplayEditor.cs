@@ -33,6 +33,7 @@ public class PlayerDisplayEditor : Editor {
     private static Dictionary<int, SelctedItem> m_SelectedMap = new Dictionary<int, SelctedItem>();
     private int m_AniSelect = -1;
     private int m_CommandSel = -1;
+    private bool m_IsFlipX = false;
 
     private void InitPlayerDisplay()
     {
@@ -46,6 +47,7 @@ public class PlayerDisplayEditor : Editor {
         m_CommandList = null;
        // m_CommandNameList = null;
         m_CommandSel = -1;
+        m_IsFlipX = false;
         if (m_LastDisplay == null)
             return;
         var player = m_LastDisplay.GPlayer;
@@ -124,6 +126,7 @@ public class PlayerDisplayEditor : Editor {
 		}
 
         m_AniSelect = m_LastDisplay.ImageAni.CurFrame;
+        m_IsFlipX = m_LastDisplay.IsFlipX;
 
         if (player.CmdCfg != null)
         {
@@ -151,6 +154,14 @@ public class PlayerDisplayEditor : Editor {
     {
         if (m_LastDisplay == null)
             return;
+
+        bool isFlip = EditorGUILayout.Toggle("角色翻转", m_IsFlipX);
+        if (isFlip != m_IsFlipX)
+        {
+            m_IsFlipX = isFlip;
+            m_LastDisplay.IsFlipX = m_IsFlipX;
+        }
+
         if (m_VaildStateList != null && m_VaildStateNameList != null)
         {
             EditorGUILayout.BeginVertical();
