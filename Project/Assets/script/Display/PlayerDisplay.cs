@@ -441,7 +441,7 @@ public class PlayerDisplay : BaseResLoader {
             if (IsFlipX)
                 frameOffset.x = -frameOffset.x;
             trans.localPosition = frameOffset + m_OffsetPos;
-            UpdateClsnRootOffsetPos(frameOffset);
+            UpdateClsnRootOffsetPos(frame.OffsetPos);
 		}
 
 		Material mat = r.sharedMaterial;
