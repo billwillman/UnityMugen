@@ -520,26 +520,50 @@ public class PlayerDisplayEditor : Editor {
                     if (string.IsNullOrEmpty(ext))
                         continue;
                     string chgExt = string.Empty;
-                    if (ext.IndexOf(".def.txt", System.StringComparison.CurrentCultureIgnoreCase) >= 0)
-                        chgExt = ext.Replace(".def.txt", ".def");
-                    else if (ext.IndexOf(".sff.bytes", System.StringComparison.CurrentCultureIgnoreCase) >= 0)
-                        chgExt = ext.Replace(".sff.bytes", ".sff");
-                    else if (ext.IndexOf(".snd.bytes", System.StringComparison.CurrentCultureIgnoreCase) >= 0)
-                        chgExt = ext.Replace(".snd.bytes", ".snd");
-                    else if (ext.IndexOf(".air.txt", System.StringComparison.CurrentCultureIgnoreCase) >= 0)
-                        chgExt = ext.Replace(".air.txt", ".air");
-                    else if (ext.IndexOf(".act.bytes", System.StringComparison.CurrentCultureIgnoreCase) >= 0)
-                        chgExt = ext.Replace(".act.bytes", ".act");
-                    else if (ext.IndexOf(".ai.bytes", System.StringComparison.CurrentCultureIgnoreCase) >= 0)
-                        chgExt = ext.Replace(".ai.bytes", ".ai");
-                    else if (ext.IndexOf(".cmd.txt", System.StringComparison.CurrentCultureIgnoreCase) >= 0)
-                        chgExt = ext.Replace(".cmd.txt", ".cmd");
-                    else if (ext.IndexOf(".cns.txt", System.StringComparison.CurrentCultureIgnoreCase) >= 0)
-                        chgExt = ext.Replace(".cns.txt", ".cns");
+                    if (srcPath.IndexOf(".def.txt", System.StringComparison.CurrentCultureIgnoreCase) >= 0)
+                    {
+                        chgExt = ".def";
+                        ext = ".def.txt";
+                    }
+                    else if (srcPath.IndexOf(".sff.bytes", System.StringComparison.CurrentCultureIgnoreCase) >= 0)
+                    {
+                        chgExt = ".sff";
+                        ext = ".sff.bytes";
+                    }
+                    else if (srcPath.IndexOf(".snd.bytes", System.StringComparison.CurrentCultureIgnoreCase) >= 0)
+                    {
+                        chgExt = ".snd";
+                        ext = ".snd.bytes";
+                    }
+                    else if (srcPath.IndexOf(".air.txt", System.StringComparison.CurrentCultureIgnoreCase) >= 0)
+                    {
+                        chgExt = ".air";
+                        ext = ".air.txt";
+                    }
+                    else if (srcPath.IndexOf(".act.bytes", System.StringComparison.CurrentCultureIgnoreCase) >= 0)
+                    {
+                        chgExt = ".act";
+                        ext = ".act.bytes";
+                    }
+                    else if (srcPath.IndexOf(".ai.bytes", System.StringComparison.CurrentCultureIgnoreCase) >= 0)
+                    {
+                        chgExt = ".ai";
+                        ext = ".ai.bytes";
+                    }
+                    else if (srcPath.IndexOf(".cmd.txt", System.StringComparison.CurrentCultureIgnoreCase) >= 0)
+                    {
+                        chgExt = ".cmd";
+                        ext = ".cmd.txt";
+                    }
+                    else if (srcPath.IndexOf(".cns.txt", System.StringComparison.CurrentCultureIgnoreCase) >= 0)
+                    {
+                        chgExt = ".cns";
+                        ext = ".cns.txt";
+                    }
 
                     if (string.IsNullOrEmpty(chgExt))
                         continue;
-                    string dstPath = System.IO.Path.ChangeExtension(srcPath, chgExt);
+                    string dstPath = srcPath.Replace(ext, chgExt);
                     System.IO.File.Move(srcPath, dstPath);
                 }
 
