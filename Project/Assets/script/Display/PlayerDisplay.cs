@@ -113,7 +113,7 @@ public class PlayerDisplay : BaseResLoader {
         }
     }
 
-	public PlayerStateMgr StateMgr
+	protected PlayerStateMgr StateMgr
 	{
 		get {
 			if (m_StateMgr == null)
@@ -124,6 +124,8 @@ public class PlayerDisplay : BaseResLoader {
 
 	public bool ChangeState(PlayerState state, bool isCns = false)
     {
+		m_DefaultClsn2 = null;
+		//DestroyAllClsn ();
 		var mgr = this.StateMgr;
 		if (mgr == null)
             return false;
