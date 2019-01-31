@@ -1,0 +1,45 @@
+;=====================================================================
+;  DEF File For "King"                                  Made By M.M.R.
+;                                       Ver. 1.0           2003.May.05
+;=====================================================================
+;-----------------------------
+; Player Information
+;-----------------------------
+[Info]
+name    ="King"
+displayname ="King"
+versiondate =11,15,2003
+mugenversion =04,14,2001
+author ="M.M.R."
+pal.defaults=1,2,3,4,5
+localcoord = 360
+;-----------------------------
+; Files for the Player
+;-----------------------------
+[Files]
+cmd			=King.cmd
+cns			=King-N.cns
+st			=King-N.cns
+stcommon	=common1.cns
+sprite		=King.sff
+anim		=King.air
+sound		=King.snd
+pal1=_palette/King01.act
+pal2=_palette/King03.act
+pal3=_palette/King04.act
+pal4=_palette/King05.act
+pal5=_palette/King06.act
+pal6=_palette/King07.act
+pal7=_palette/King08.act
+pal8=_palette/King10.act
+pal9=_palette/King11.act
+pal10=_palette/King10.act
+pal11=_palette/King11.act
+st1=King-S.cns
+st2=King-H.cns
+
+
+
+[Arcade]
+intro.storyboard=
+ending.storyboard=female.def

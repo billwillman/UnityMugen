@@ -1,0 +1,1731 @@
+;===============================================================================
+; Definition of the Special Arts
+;===============================================================================
+
+;-------------------------------------------------------------------------------
+; ベノムストライク  (Benom Strike)
+[Statedef 1000]
+type = S
+movetype = A
+physics = S
+velset = 0, 0
+ctrl = 0
+anim = 1000
+poweradd = 90
+juggle = 7
+
+[State 1000,PlaySnd]
+type = PlaySnd
+trigger1 = AnimElem = 3
+value = 1000, 0
+channel = 0
+
+[State 1000,Width]
+type = Width
+trigger1 = AnimElem = 4
+player = 30,20
+
+[State 1100,Projectile]
+type = Projectile
+trigger1 = AnimElem = 4
+projanim = 1010
+projID = 1000
+projhitanim = 1020
+projremanim = -1
+projcancelanim = 1020
+projremovetime = -1
+projedgebound = 50
+projpriority = 1
+projshadow = -1
+offset = 40,-55
+velocity = 4.0, 0
+attr = S, SP
+damage    = 91, 11
+getpower = 150
+givepower = 38
+animtype = Hard
+guardflag = MA
+hitflag = MAFP
+pausetime = 0,12
+hitsound   = S300, 2
+guardsound = S0, 1
+sparkno = S2020
+guard.sparkno = S2070
+sparkxy = 0, 0
+ground.type = High
+ground.slidetime = 14
+ground.hittime  = 18
+ground.velocity = -5.0
+air.velocity = -5.0,-3
+air.juggle = 6
+air.fall = 1
+AfterImage.time=-1
+AfterImage.length=7
+AfterImage.PalBright=0,0,0
+AfterImage.PalContrast=145,145,145
+AfterImage.PalAdd=IfElse(10,-35,5),-10,IfElse(10,15,-35)
+AfterImage.PalMul=.9,.9,.9
+AfterImage.FrameGap=1
+;Palinvertall = 1
+AfterImage.Palcolor = 0
+AfterImage.sprpriority=5
+AfterImage.Trans=Add
+AfterImage.ownpal=1
+AfterImage.ontop=1
+
+[State 1000,PlaySnd]
+type = PlaySnd
+trigger1 = AnimElem = 4
+value = 1000, 1
+
+[State 1000,End]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+;-------------------------------------------------------------------------------
+; ダブルストライク  (Outrage / Hard)
+[Statedef 1050]
+type = S
+movetype = A
+physics = S
+velset = 0, 0
+ctrl = 0
+anim = 1050
+poweradd = 90
+juggle = 7
+
+[State 1050,PlaySnd]
+type = PlaySnd
+trigger1 = AnimElem = 3
+value = 1000, 2
+channel = 0
+
+[State 1050,Width]
+type = Width
+trigger1 = AnimElem = 4
+player = 30,20
+
+[State 1050,Projectile]
+type = Projectile
+trigger1 = AnimElem = 4
+projanim = 1010
+projID = 1000
+projhitanim = 1020
+projremanim = 1020
+projcancelanim = 1020
+projremovetime = 100
+projedgebound = 50
+projpriority = 1
+projshadow = -1
+offset = 40,-55
+velocity = 7.0, 0
+attr = S, SP
+damage    = 56, 9
+getpower = 120
+givepower = 30
+animtype = Hard
+guardflag = MA
+hitflag = MAFP
+pausetime = 0,12
+hitsound   = S300, 2
+guardsound = S0, 1
+sparkno = S2020
+guard.sparkno = S2070
+sparkxy = 0, 0
+ground.type = High
+ground.slidetime = 14
+ground.hittime  = 18
+ground.velocity = -5.0
+air.velocity = -5.0,-3
+air.juggle = 6
+air.fall = 1
+AfterImage.time=-1
+AfterImage.length=7
+AfterImage.PalBright=0,0,0
+AfterImage.PalContrast=145,145,145
+AfterImage.PalAdd=IfElse(10,-35,5),-10,IfElse(10,15,-35)
+AfterImage.PalMul=.9,.9,.9
+AfterImage.FrameGap=1
+;Palinvertall = 1
+AfterImage.Palcolor = 0
+AfterImage.sprpriority=5
+AfterImage.Trans=Add
+AfterImage.ownpal=1
+AfterImage.ontop=1
+
+[State 1050,Projectile]
+type = Projectile
+trigger1 = AnimElem = 11
+projanim = 1010
+projID = 1000
+projhitanim = 1020
+projremanim = -1
+projcancelanim = 1020
+projremovetime = -1
+projedgebound = 50
+projpriority = 1
+projshadow = -1
+offset = 40,-55
+velocity = 7.0, 0
+attr = S, SP
+damage    = 56, 9
+getpower = 120
+givepower = 30
+animtype = Hard
+guardflag = MA
+hitflag = MAFP
+pausetime = 0,12
+hitsound   = S300, 2
+guardsound = S0, 1
+sparkno = S2020
+guard.sparkno = S2070
+sparkxy = 0, 0
+ground.type = High
+ground.slidetime = 14
+ground.hittime  = 18
+ground.velocity = -5.0
+air.velocity = -5.0,-3
+air.juggle = 6
+air.fall = 1
+AfterImage.time=-1
+AfterImage.length=7
+AfterImage.PalBright=0,0,0
+AfterImage.PalContrast=145,145,145
+AfterImage.PalAdd=IfElse(10,-35,5),-10,IfElse(10,15,-35)
+AfterImage.PalMul=.9,.9,.9
+AfterImage.FrameGap=1
+;Palinvertall = 1
+AfterImage.Palcolor = 0
+AfterImage.sprpriority=5
+AfterImage.Trans=Add
+AfterImage.ownpal=1
+AfterImage.ontop=1
+
+[State 1050,PlaySnd]
+type = PlaySnd
+trigger1 = AnimElem = 4 || AnimElem = 11
+value = 1000, 1
+
+[State 1050,End]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+;-------------------------------------------------------------------------------
+; トルネードキック'95・弱  (Tornade Kick '95 / Light)
+[Statedef 1100]
+type = S
+movetype = A
+physics = S
+ctrl = 0
+anim = 1100
+poweradd = 180
+juggle = 7
+
+[State 1100,PlaySnd]
+type = PlaySnd
+trigger1 = AnimElem = 1
+value = 1100, 0
+channel = 0
+
+[State 1100,StateTypeSet]
+type = StateTypeSet
+trigger1 = AnimElem = 2
+statetype = A
+physics = N
+
+[State 1100,NotHitBy]
+type = NotHitBy
+trigger1 = AnimElem = 4, < 0
+value = SCA
+
+[State 1100,VelSet]
+type = VelSet
+trigger1 = AnimElem = 2
+x = 4.8
+y = -5.32
+
+[State 1100,PlaySnd]
+type = PlaySnd
+trigger1 = AnimElem = 3
+value = 1100, 1
+
+[State 1100,VelAdd]
+type = VelAdd
+trigger1 = AnimElemNo(0) >= 2
+y = .38
+
+[State 1100,Explod]
+type = Explod
+trigger1 = AnimElem = 4
+anim = 1120
+pos = 0, 0
+postype = P1
+sprpriority = 2
+bindtime = -1
+ownpal = 1
+removeongethit = 1
+
+[State 1100,HitDef]
+type = HitDef
+trigger1 = AnimElem = 4
+attr = A, SA
+animtype = Hard
+hitflag = MAF
+guardflag = M
+priority = 5,Miss
+damage = 77, 9
+getpower = 120
+givepower = 30
+sparkno = S2020
+guard.sparkno = S2070
+sparkxy = -10,-82
+hitsound = S300, 4
+guardsound = S0, 1
+pausetime = 10,10
+ground.slidetime = 20
+ground.type = High
+ground.velocity = -3.6,-5.0
+guard.velocity = -4.2
+ground.cornerpush.veloff = -4.0
+air.velocity = -3.6,-4.5
+fall = 1
+fall.recovertime = 16
+
+[State 1100,ChangeState]
+type = ChangeState
+trigger1 = AnimElemNo(0) > 2 && Vel Y > 0 && Pos Y >= 0
+value = 1110
+
+;------------------------ 着地
+[Statedef 1110]
+type = S
+movetype = I
+physics = S
+anim = 1110
+velset = 0, 0
+
+[State 1110,PosSet]
+type = PosSet
+trigger1 = Time = 0
+y = 0
+
+[State 1110,PlaySnd]
+type = PlaySnd
+trigger1 = Time = 0
+value = 47, 0
+
+[State 1110,End]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+;-------------------------------------------------------------------------------
+; トルネードキック'95・強  (Tornade Kick '95 / Hard)
+[Statedef 1150]
+type = S
+movetype = A
+physics = S
+ctrl = 0
+anim = 1150
+poweradd = 180
+juggle = 7
+
+[State 1150,PlaySnd]
+type = PlaySnd
+trigger1 = AnimElem = 1
+value = 1100, 0
+channel = 0
+
+[State 1150,StateTypeSet]
+type = StateTypeSet
+trigger1 = AnimElem = 2
+statetype = A
+physics = N
+
+[State 1150,VelSet]
+type = VelSet
+trigger1 = AnimElem = 2
+x = 5.5
+y = -5.70
+
+[State 1150,VelAdd]
+type = VelAdd
+trigger1 = AnimElemNo(0) >= 2
+y = .38
+
+[State 1150,PlaySnd]
+type = PlaySnd
+trigger1 = AnimElem = 3 || AnimElem = 7
+value = 1100, 1
+
+[State 1150,Explod]
+type = Explod
+trigger1 = AnimElem = 4
+anim = 1120
+pos = 0, 0
+postype = P1
+sprpriority = 2
+bindtime = -1
+ownpal = 1
+removeongethit = 1
+
+[State 1150,Explod]
+type = Explod
+trigger1 = AnimElem = 8
+anim = 1130
+pos = 0, 0
+postype = P1
+sprpriority = 2
+bindtime = -1
+ownpal = 1
+removeongethit = 1
+
+[State 1100,HitDef]
+type = HitDef
+trigger1 = AnimElem = 4
+attr = A, SA
+animtype = Hard
+hitflag = MAF
+guardflag = M
+priority = 5,Miss
+damage = 56, 7
+getpower = 60
+givepower = 15
+sparkno = S2020
+guard.sparkno = S2070
+sparkxy = -10,-82
+hitsound = S300, 4
+guardsound = S0, 1
+pausetime = 10,10
+ground.slidetime = 20
+ground.type = High
+ground.velocity = -3.6,-5.0
+guard.velocity = -4.2
+ground.cornerpush.veloff = -4.0
+air.velocity = -3.6,-4.5
+fall = 1
+fall.recovertime = 16
+
+[State 1100,HitDef]
+type = HitDef
+trigger1 = AnimElem = 8
+attr = A, SA
+animtype = Hard
+hitflag = MAF
+guardflag = M
+priority = 5,Miss
+damage = 56, 7
+getpower = 60
+givepower = 15
+sparkno = S2020
+guard.sparkno = S2070
+sparkxy = -10,-44
+hitsound = S300, 4
+guardsound = S0, 1
+pausetime = 10,10
+ground.slidetime = 20
+ground.type = High
+ground.velocity = -3.6,-4.0
+guard.velocity = -4.2
+ground.cornerpush.veloff = -4.0
+air.velocity = -3.6,-4.0
+fall = 1
+fall.recovertime = 16
+
+[State 1150,ChangeState]
+type = ChangeState
+trigger1 = AnimElemNo(0) > 2 && Vel Y > 0 && Pos Y >= 0
+value = 1110
+
+;-------------------------------------------------------------------------------
+; サプライズローズ・弱  (Surprise Rose / Light)
+;------------------------ 地上
+[Statedef 1200]
+type = S
+movetype = A
+physics = S
+velset = 0, 0
+ctrl = 0
+anim = 1200
+poweradd = 120
+juggle = 7
+
+[State 1200,PlaySnd]
+type = PlaySnd
+trigger1 = AnimElem = 1
+value = 1200, 0
+channel = 0
+
+[State 1200,HitDef]
+type = HitDef
+trigger1 = Time = 0
+attr = S, SA
+animtype = Hard
+damage = 42, 5
+getpower = 60
+givepower = 15
+guardflag = M
+hitflag = MAF
+pausetime = 10,10
+sparkno = S2020
+guard.sparkno = S2070
+sparkxy = -10,-36
+hitsound = S300, 3
+guardsound = S0, 1
+ground.type = High
+ground.slidetime = 7
+ground.hittime  = 15
+ground.velocity = -2.5
+air.velocity = -2.5,-7.8
+ground.cornerpush.veloff = 0
+air.cornerpush.veloff = 0
+guard.cornerpush.veloff = -3.5
+airguard.cornerpush.veloff = -3.5
+
+[State 1200,ChangeState]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 1210
+
+;------------------------ 上昇
+[Statedef 1210]
+type = A
+movetype = A
+physics = N
+anim = 1210
+velset = 3.2, -8.00
+
+[State 1210,PlaySnd]
+type = PlaySnd
+trigger1 = Time = 0
+value = 40, 1
+
+[State 1210,VelAdd]
+type = VelAdd
+trigger1 = 1
+y = .38
+
+[State 1210,HitDef]
+type = HitDef
+trigger1 = Time = 0
+attr = A, SA
+animtype = Hard
+hitflag = MAF
+guardflag = M
+priority = 5,Miss
+damage = 21, 3
+getpower = 60
+givepower = 15
+sparkno = S2020
+guard.sparkno = S2070
+sparkxy = -10,-82
+hitsound = S300, 3
+guardsound = S0, 1
+pausetime = 10,10
+ground.slidetime = 20
+ground.type = High
+ground.velocity = -4.0,-5.5
+guard.velocity = -4.2
+ground.cornerpush.veloff = -4.0
+air.velocity = -4.0,-5.5
+fall = 1
+fall.recovertime = 16
+
+[State 1210,ChangeState]
+type = ChangeState
+trigger1 = Vel Y > 0
+value = 1220
+
+;------------------------ 下降
+[Statedef 1220]
+type = A
+movetype = A
+physics = N
+anim = 1220
+velset = 4.6, 2.0
+
+[State 1220,PlaySnd]
+type = PlaySnd
+trigger1 = AnimElem = 1
+value = 1200, 1
+
+[State 1220,Gravity]
+type = Gravity
+trigger1 = 1
+
+[State 1220,HitDef]
+type = HitDef
+trigger1 = AnimElem = 2
+attr = A, SA
+animtype = Hard
+hitflag = MAF
+guardflag = M
+priority = 5,Miss
+damage = Ceil(42 / (2 ** HitCount)), 5
+getpower = 30
+givepower = 8
+sparkno = S2020
+guard.sparkno = S2070
+sparkxy = -10,-14
+hitsound = S300, 3
+guardsound = S0, 1
+pausetime = 10,10
+ground.slidetime = 20
+ground.hittime = 18
+ground.type = High
+ground.velocity = -5.0
+guard.velocity = -5.2
+ground.cornerpush.veloff = -4.0
+air.velocity = -4.0,-4.5
+air.fall = 1
+fall.recovertime = 16
+
+[State 1220,HitDef]
+type = HitDef
+trigger1 = AnimElem = 5
+attr = A, SA
+animtype = Hard
+hitflag = MAF
+guardflag = M
+priority = 5,Miss
+damage = Ceil(42 / (2 ** HitCount)), 5
+getpower = 30
+givepower = 8
+sparkno = S2020
+guard.sparkno = S2070
+sparkxy = -10,-14
+hitsound = S300, 3
+guardsound = S0, 1
+pausetime = 10,10
+ground.slidetime = 20
+ground.hittime = 18
+ground.type = High
+ground.velocity = -5.0
+guard.velocity = -5.2
+ground.cornerpush.veloff = -4.0
+air.velocity = -4.0,-4.5
+air.fall = 1
+fall.recovertime = 16
+
+[State 1220,ChangeState]
+type = ChangeState
+trigger1 = Pos Y >= 0
+value = 1230
+
+;------------------------ 着地
+[Statedef 1230]
+type = S
+movetype = I
+physics = S
+anim = 1230
+velset = 0, 0
+
+[State 1230,PosAdd]
+type = PosAdd
+trigger1 = AnimElem = 2
+x = 12
+
+[State 1230,PosSet]
+type = PosSet
+trigger1 = Time = 0
+y = 0
+
+[State 1230,PlaySnd]
+type = PlaySnd
+trigger1 = Time = 0
+value = 47, 0
+
+[State 1230,ChangeState]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+;-------------------------------------------------------------------------------
+; サプライズローズ・強  (Surprise Rose / Hard)
+;------------------------ 地上
+[Statedef 1250]
+type = S
+movetype = A
+physics = S
+velset = 0, 0
+ctrl = 0
+anim = 1200
+poweradd = 120
+juggle = 7
+
+[State 1250,PlaySnd]
+type = PlaySnd
+trigger1 = AnimElem = 1
+value = 1200, 0
+channel = 0
+
+[State 1250,HitDef]
+type = HitDef
+trigger1 = Time = 0
+attr = S, SA
+animtype = Hard
+damage = 42, 5
+getpower = 60
+givepower = 15
+guardflag = M
+hitflag = MAF
+pausetime = 10,10
+sparkno = S2020
+guard.sparkno = S2070
+sparkxy = -10,-36
+hitsound = S300, 3
+guardsound = S0, 1
+ground.type = High
+ground.slidetime = 7
+ground.hittime  = 15
+ground.velocity = -2.5
+air.velocity = -2.5,-7.8
+ground.cornerpush.veloff = 0
+air.cornerpush.veloff = 0
+guard.cornerpush.veloff = -3.5
+airguard.cornerpush.veloff = -3.5
+
+[State 1250,ChangeState]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 1260
+
+;------------------------ 上昇
+[Statedef 1260]
+type = A
+movetype = A
+physics = N
+anim = 1210
+velset = 3.6, -8.00
+
+[State 1260,PlaySnd]
+type = PlaySnd
+trigger1 = Time = 0
+value = 40, 1
+
+[State 1260,VelAdd]
+type = VelAdd
+trigger1 = 1
+y = .38
+
+[State 1260,HitDef]
+type = HitDef
+trigger1 = Time = 0
+attr = A, SA
+animtype = Hard
+hitflag = MAF
+guardflag = M
+priority = 5,Miss
+damage = 21, 3
+getpower = 60
+givepower = 15
+sparkno = S2020
+guard.sparkno = S2070
+sparkxy = -10,-82
+hitsound = S300, 3
+guardsound = S0, 1
+pausetime = 10,10
+ground.slidetime = 20
+ground.type = High
+ground.velocity = -4.0,-5.5
+guard.velocity = -4.2
+ground.cornerpush.veloff = -4.0
+air.velocity = -4.0,-5.5
+fall = 1
+fall.recovertime = 16
+
+[State 1260,ChangeState]
+type = ChangeState
+trigger1 = Vel Y > 0
+value = 1270
+
+;------------------------ 下降
+[Statedef 1270]
+type = A
+movetype = A
+physics = N
+anim = 1250
+velset = 6.2, 2.0
+
+[State 1270,PlaySnd]
+type = PlaySnd
+trigger1 = AnimElem = 1
+value = 1200, 1
+
+[State 1270,Gravity]
+type = Gravity
+trigger1 = 1
+
+[State 1270,HitDef]
+type = HitDef
+trigger1 = AnimElem = 2
+attr = A, SA
+animtype = Hard
+hitflag = MAF
+guardflag = M
+priority = 5,Miss
+damage = Ceil(42 / (2 ** HitCount)), 5
+getpower = 30
+givepower = 8
+sparkno = S2020
+guard.sparkno = S2070
+sparkxy = -10,-14
+hitsound = S300, 3
+guardsound = S0, 1
+pausetime = 10,10
+ground.slidetime = 20
+ground.hittime = 18
+ground.type = High
+ground.velocity = -5.0
+guard.velocity = -5.2
+ground.cornerpush.veloff = -4.0
+air.velocity = -4.0,-4.5
+air.fall = 1
+fall.recovertime = 16
+
+[State 1270,HitDef]
+type = HitDef
+trigger1 = AnimElem = 5
+attr = A, SA
+animtype = Hard
+hitflag = MAF
+guardflag = M
+priority = 5,Miss
+damage = Ceil(42 / (2 ** HitCount)), 5
+getpower = 30
+givepower = 8
+sparkno = S2020
+guard.sparkno = S2070
+sparkxy = -10,-14
+hitsound = S300, 3
+guardsound = S0, 1
+pausetime = 10,10
+ground.slidetime = 20
+ground.hittime = 18
+ground.type = High
+ground.velocity = -5.0
+guard.velocity = -5.2
+ground.cornerpush.veloff = -4.0
+air.velocity = -4.0,-4.5
+air.fall = 1
+fall.recovertime = 16
+
+[State 1270,ChangeState]
+type = ChangeState
+trigger1 = Pos Y >= 0
+value = 1280
+
+;------------------------ 着地
+[Statedef 1280]
+type = S
+movetype = I
+physics = S
+anim = 1260
+velset = 0, 0
+
+[State 1280,PosAdd]
+type = PosAdd
+trigger1 = AnimElem = 2
+x = 12
+
+[State 1280,PosSet]
+type = PosSet
+trigger1 = Time = 0
+y = 0
+
+[State 1280,PlaySnd]
+type = PlaySnd
+trigger1 = Time = 0
+value = 47, 0
+
+[State 1280,ChangeState]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+;-------------------------------------------------------------------------------
+; ミラージュキック・弱  (Mirage Kick / Light)
+;------------------------ ダッシュ
+[Statedef 1300]
+type = S
+movetype = I
+physics = N
+anim = 1300
+velset = 5.0, 0
+ctrl = 0
+poweradd = 180
+juggle = 7
+
+[State 1300,PlaySnd]
+type = PlaySnd
+trigger1 = Time = 0
+value = 500, 0
+
+[State 1300,ChangeState]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 1310
+
+;------------------------ 
+[Statedef 1310]
+type = S
+movetype = A
+physics = S
+anim = 1310
+velset = 0, 0
+
+[State 1310,PlaySnd]
+type = PlaySnd
+trigger1 = AnimElem = 2
+value = 1300, 0
+channel = 0
+
+[State 1310,PosAdd]
+type = PosAdd
+trigger1 = AnimElem = 5 || AnimElem = 6
+x = 8
+
+[State 1310,PosAdd]
+type = PosAdd
+trigger1 = AnimElem = 7
+x = 10
+
+[State 1310,PosAdd]
+type = PosAdd
+trigger1 = AnimElemNo(0) = [10,16]
+x = .5
+
+[State 1310,PosAdd]
+type = PosAdd
+trigger1 = AnimElem = 19
+x = 12
+
+[State 1310,HitDef]
+type = HitDef
+trigger1 = AnimElem = 4
+attr = S, SA
+animtype = Hard
+damage = 56, 7
+getpower = 60
+givepower = 15
+guardflag = M
+hitflag = MAF
+pausetime = 8,8
+sparkno = S2020
+guard.sparkno = S2070
+sparkxy = -10,-76
+hitsound = S300, 3
+guardsound = S0, 1
+ground.type = High
+ground.slidetime = 7
+ground.hittime  = 15
+ground.velocity = 0
+air.velocity = 0, 0
+ground.cornerpush.veloff = 0
+air.cornerpush.veloff = 0
+guard.cornerpush.veloff = 0
+airguard.cornerpush.veloff = 0
+
+[State 1310,HitDef]
+type = HitDef
+trigger1 = AnimElem = 10
+attr = S, SA
+animtype = Hard
+damage = Ceil(35 / (2 ** (HitCount - 1))), 4
+getpower = 60
+givepower = 15
+guardflag = M
+hitflag = MAF
+pausetime = 8,8
+sparkno = S2020
+guard.sparkno = S2070
+sparkxy = -10,-38
+hitsound = S300, 3
+guardsound = S0, 1
+ground.type = Low
+ground.slidetime = 7
+ground.hittime  = 15
+ground.velocity = 0
+air.velocity = 0, 0
+ground.cornerpush.veloff = 0
+air.cornerpush.veloff = 0
+guard.cornerpush.veloff = 0
+airguard.cornerpush.veloff = 0
+
+[State 1310,HitDef]
+type = HitDef
+trigger1 = AnimElem = 13
+attr = S, SA
+animtype = Hard
+damage = Ceil(35 / (2 ** (HitCount - 1))), 4
+getpower = 60
+givepower = 15
+guardflag = M
+hitflag = MAF
+pausetime = 8,8
+sparkno = S2020
+guard.sparkno = S2070
+sparkxy = -10,-62
+hitsound = S300, 3
+guardsound = S0, 1
+ground.type = Low
+ground.slidetime = 7
+ground.hittime  = 15
+ground.velocity = 0
+air.velocity = 0, 0
+ground.cornerpush.veloff = 0
+air.cornerpush.veloff = 0
+guard.cornerpush.veloff = 0
+airguard.cornerpush.veloff = 0
+
+[State 1310,HitDef]
+type = HitDef
+trigger1 = AnimElem = 16
+attr = S, SA
+animtype = Hard
+hitflag = MAF
+guardflag = M
+priority = 5,Miss
+damage = Ceil(35 / (2 ** (HitCount - 1))), 4
+getpower = 60
+givepower = 15
+sparkno = S2020
+guard.sparkno = S2070
+sparkxy = -10,-83
+hitsound = S300, 3
+guardsound = S0, 1
+pausetime = 8,8
+ground.slidetime = 24
+ground.hittime = 18
+ground.type = High
+ground.velocity = -11.0
+guard.velocity = -11.2
+ground.cornerpush.veloff = -18.0
+air.velocity = -4.0,-4.5
+air.fall = 1
+fall.recovertime = 16
+
+[State 1310,PlaySnd]
+type = PlaySnd
+trigger1 = AnimElem = 3 || AnimElem = 9 || AnimElem = 12 || AnimElem = 15
+value = 200, 2
+
+[State 1310,ChangeState]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+;-------------------------------------------------------------------------------
+; ミラージュキック・強  (Mirage Kick / Hard)
+;------------------------ ダッシュ
+[Statedef 1350]
+type = S
+movetype = I
+physics = N
+anim = 1350
+velset = 5.0, 0
+ctrl = 0
+poweradd = 180
+juggle = 7
+
+[State 1350,PlaySnd]
+type = PlaySnd
+trigger1 = Time = 0
+value = 500, 0
+
+[State 1350,ChangeState]
+type = ChangeState
+trigger1 = AnimTime = 0
+trigger2 = AnimElem = 2, > 0 && P2BodyDist X < 20
+value = 1360
+
+;------------------------ 
+[Statedef 1360]
+type = S
+movetype = A
+physics = S
+anim = 1360
+velset = 0, 0
+
+[State 1310,PlaySnd]
+type = PlaySnd
+trigger1 = AnimElem = 2
+value = 1300, 0
+channel = 0
+
+[State 1360,PosAdd]
+type = PosAdd
+trigger1 = AnimElem = 5 || AnimElem = 6
+x = 8
+
+[State 1360,PosAdd]
+type = PosAdd
+trigger1 = AnimElem = 7
+x = 10
+
+[State 1360,PosAdd]
+type = PosAdd
+trigger1 = AnimElemNo(0) = [10,16]
+x = .5
+
+[State 1360,PosAdd]
+type = PosAdd
+trigger1 = AnimElem = 19
+x = 12
+
+[State 1360,HitDef]
+type = HitDef
+trigger1 = AnimElem = 4
+attr = S, SA
+animtype = Hard
+damage = 70, 9
+getpower = 60
+givepower = 15
+guardflag = M
+hitflag = MAF
+pausetime = 8,8
+sparkno = S2020
+guard.sparkno = S2070
+sparkxy = -10,-76
+hitsound = S300, 3
+guardsound = S0, 1
+ground.type = High
+ground.slidetime = 7
+ground.hittime  = 15
+ground.velocity = 0
+air.velocity = 0, 0
+ground.cornerpush.veloff = 0
+air.cornerpush.veloff = 0
+guard.cornerpush.veloff = 0
+airguard.cornerpush.veloff = 0
+
+[State 1360,HitDef]
+type = HitDef
+trigger1 = AnimElem = 10
+attr = S, SA
+animtype = Hard
+damage = Ceil(35 / (2 ** (HitCount - 1))), 4
+getpower = 60
+givepower = 15
+guardflag = M
+hitflag = MAF
+pausetime = 8,8
+sparkno = S2020
+guard.sparkno = S2070
+sparkxy = -10,-38
+hitsound = S300, 3
+guardsound = S0, 1
+ground.type = Low
+ground.slidetime = 7
+ground.hittime  = 15
+ground.velocity = 0
+air.velocity = 0, 0
+ground.cornerpush.veloff = 0
+air.cornerpush.veloff = 0
+guard.cornerpush.veloff = 0
+airguard.cornerpush.veloff = 0
+
+[State 1360,HitDef]
+type = HitDef
+trigger1 = AnimElem = 13
+attr = S, SA
+animtype = Hard
+damage = Ceil(35 / (2 ** (HitCount - 1))), 4
+getpower = 60
+givepower = 15
+guardflag = M
+hitflag = MAF
+pausetime = 8,8
+sparkno = S2020
+guard.sparkno = S2070
+sparkxy = -10,-62
+hitsound = S300, 3
+guardsound = S0, 1
+ground.type = Low
+ground.slidetime = 7
+ground.hittime  = 15
+ground.velocity = 0
+air.velocity = 0, 0
+ground.cornerpush.veloff = 0
+air.cornerpush.veloff = 0
+guard.cornerpush.veloff = 0
+airguard.cornerpush.veloff = 0
+
+[State 1360,HitDef]
+type = HitDef
+trigger1 = AnimElem = 16
+attr = S, SA
+animtype = Hard
+hitflag = MAF
+guardflag = M
+priority = 5,Miss
+damage = Ceil(35 / (2 ** (HitCount - 1))), 4
+getpower = 60
+givepower = 15
+sparkno = S2020
+guard.sparkno = S2070
+sparkxy = -10,-83
+hitsound = S300, 3
+guardsound = S0, 1
+pausetime = 8,8
+ground.slidetime = 24
+ground.hittime = 18
+ground.type = High
+ground.velocity = -11.0
+guard.velocity = -11.2
+ground.cornerpush.veloff = -18.0
+air.velocity = -4.0,-4.5
+air.fall = 1
+fall.recovertime = 16
+
+[State 1360,PlaySnd]
+type = PlaySnd
+trigger1 = AnimElem = 3 || AnimElem = 9 || AnimElem = 12 || AnimElem = 15
+value = 200, 2
+
+[State 1360,ChangeState]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+;-------------------------------------------------------------------------------
+; トラップショット・弱  (Trap Shot / Light)
+;------------------------ 予備動作
+[Statedef 1400]
+type = S
+movetype = A
+physics = S
+velset = 0, 0
+ctrl = 0
+anim = 1400
+poweradd = 120
+juggle = 7
+
+[State 1400,PlaySnd]
+type = PlaySnd
+trigger1 = AnimElem = 1
+value = 1400, 0
+channel = 0
+
+[State 1400,PlaySnd]
+type = PlaySnd
+trigger1 = AnimElem = 2
+value = 1400, 1
+
+[State 1400,Explod]
+type = Explod
+trigger1 = AnimElem = 4
+persistent = 0
+anim = 1410
+pos = 0, 0
+postype = P1
+sprpriority = 3
+bindtime = -1
+removeongethit = 1
+ignorehitpause = 1
+
+[State 1400,PosAdd]
+type = PosAdd
+trigger1 = AnimElem = 6
+x = -7
+
+[State 1400,PosAdd]
+type = PosAdd
+trigger1 = AnimElem = 8 || AnimElem = 9
+x = -10
+
+[State 1400,HitDef]
+type = HitDef
+trigger1 = Time = 0
+attr = S, SA
+animtype = Hard
+hitflag = MAF
+guardflag = M
+priority = 5,Miss
+damage = 0 ,0
+getpower = 60
+givepower = 15
+sparkno = S2020
+guard.sparkno = S2070
+sparkxy = -10,-77
+hitsound = S300, 3
+guardsound = S0, 1
+pausetime = 0,4
+ground.slidetime = 15
+ground.type = High
+ground.velocity = -6.0
+guard.velocity = -5.0
+air.velocity = -3.0,-5.8
+fall = 1 
+fall.recover = 0
+air.recover = 0
+p2facing = 1
+p1stateno = 1410
+p2stateno = 1420
+p2getp1state = 1
+
+[State 1400,End]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+;------------------------ ヒット後
+[Statedef 1410]
+type = S
+movetype = A
+physics = S
+anim = 1420
+velset = 0, 0
+ctrl = 0
+
+[State 1410,Explod]
+type = Explod
+trigger1 = AnimElem = 12 || AnimElem = 15
+trigger2 = AnimElem = 36 || AnimElem = 39
+trigger3 = AnimElem = 47
+anim = 2020
+pos = Ceil(Random / 50) - 10, -90 + Ceil(Random / 100)
+postype = P2
+sprpriority = 3
+bindtime = 1
+ownpal = 1
+
+[State 1410,Explod]
+type = Explod
+trigger1 = AnimElem = 18 || AnimElem = 21
+trigger2 = AnimElem = 31 || AnimElem = 34
+anim = 2020
+pos = Ceil(Random / 50) - 10, -68 + Ceil(Random / 100)
+postype = P2
+sprpriority = 3
+bindtime = 1
+ownpal = 1
+
+[State 1410,Explod]
+type = Explod
+trigger1 = AnimElem = 24 || AnimElem = 27
+anim = 2020
+pos = Ceil(Random / 50) - 10, -42 + Ceil(Random / 100)
+postype = P2
+sprpriority = 3
+bindtime = 1
+ownpal = 1
+
+[State 1410,HitAdd]
+type = HitAdd
+trigger1 = AnimElem = 12 || AnimElem = 15 || AnimElem = 18
+trigger2 = AnimElem = 21 || AnimElem = 24 || AnimElem = 27
+trigger3 = AnimElem = 31 || AnimElem = 34 || AnimElem = 36
+trigger4 = AnimElem = 39 || AnimElem = 47
+value = 1
+
+[State 1410,TargetLifeAdd]
+type = TargetLifeAdd
+trigger1 = AnimElem = 12 || AnimElem = 15 || AnimElem = 18
+trigger2 = AnimElem = 21 || AnimElem = 24 || AnimElem = 27
+trigger3 = AnimElem = 31 || AnimElem = 34 || AnimElem = 36
+trigger4 = AnimElem = 39
+value = -7
+kill = 0
+
+[State 1410,TargetPowerAdd]
+type = TargetPowerAdd
+trigger1 = AnimElem = 12 || AnimElem = 15 || AnimElem = 18
+trigger2 = AnimElem = 21 || AnimElem = 24 || AnimElem = 27
+trigger3 = AnimElem = 31 || AnimElem = 34 || AnimElem = 36
+trigger4 = AnimElem = 39 || AnimElem = 47
+value = 10
+
+[State 1410,TargetLifeAdd]
+type = TargetLifeAdd
+trigger1 = AnimElem = 47
+value = -70
+
+[State 1410,PlaySnd]
+type = PlaySnd
+trigger1 = AnimElem = 12 || AnimElem = 15 || AnimElem = 18
+trigger2 = AnimElem = 21 || AnimElem = 24 || AnimElem = 27
+trigger3 = AnimElem = 31 || AnimElem = 34 || AnimElem = 36
+trigger4 = AnimElem = 39
+value = 300, 3
+
+[State 1410,PlaySnd]
+type = PlaySnd
+trigger1 = AnimElem = 47
+value = 300, 4
+
+[State 1410,EnvShake]
+type = EnvShake
+trigger1 = AnimElem = 47
+time = 14
+ampl = -6
+freq = 90
+
+[State 1410,PowerAdd]
+type = PowerAdd
+trigger1 = AnimElem = 12 || AnimElem = 15 || AnimElem = 18
+trigger2 = AnimElem = 21 || AnimElem = 24 || AnimElem = 27
+trigger3 = AnimElem = 31 || AnimElem = 34 || AnimElem = 36
+trigger4 = AnimElem = 39 || AnimElem = 47
+value = 60
+
+[State 1410,PosAdd]
+type = PosAdd
+trigger1 = AnimElem = 2
+x = -7
+
+[State 1410,PosAdd]
+type = PosAdd
+trigger1 = AnimElem = 4 || AnimElem = 5
+x = -10
+
+[State 1410,Width]
+type = Width
+trigger1 = AnimElem = 1 && FrontEdgeDist < 40
+edge = 50, 25
+
+[State 1410,Width]
+type = Width
+trigger1 = AnimElem = 1 && BackEdgeBodyDist < 30
+edge = 25, 40
+
+[State 1410,TargetBind]
+type = TargetBind
+trigger1 = AnimElem = 1
+pos = 48, -35
+time = 4
+
+[State 1410,TargetBind]
+type = TargetBind
+trigger1 = AnimElemNo(0) = [2,3]
+pos = 55, -34 + (Time - 4)
+time = 1
+
+[State 1410,TargetBind]
+type = TargetBind
+trigger1 = AnimElemNo(0) = 4
+pos = 65, -34 + (Time - 4)
+time = 1
+
+[State 1410,TargetBind]
+type = TargetBind
+trigger1 = AnimElemNo(0) = [5,12]
+pos = 75, -34 + (Time - 4)
+time = 1
+
+[State 1410,TargetBind]
+type = TargetBind
+trigger1 = AnimElemNo(0) = [13,33]
+pos = 75, -6 - Ceil((Time - 32) / 5)
+time = 1
+
+[State 1410,TargetBind]
+type = TargetBind
+trigger1 = AnimElemNo(0) = [34,47]
+pos = 75, -15
+time = 1
+
+[State 1410,TargetState]
+type = TargetState
+trigger1 = AnimElem = 48
+value = 1430
+
+[State 1410,ChangeState]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+;------------------------ 喰らい側
+[Statedef 1420]
+type = A
+movetype = H
+physics = N
+velset = 0, 0
+ctrl = 0
+
+[State 1420,ChangeAnim2]
+type = ChangeAnim2
+trigger1 = HitShakeOver
+persistent = 0
+value = 1430
+
+;------------------------ 吹き飛び
+[Statedef 1430]
+type = A
+movetype = H
+physics = N
+anim = 5050
+velset = -4.0,-6.2
+ctrl = 0
+
+[State 1430,Gravity]
+type = Gravity
+trigger1 = 1
+
+[State 1430,ChangeAnim]
+type = ChangeAnim
+trigger1 = Vel Y > 0 && SelfAnimExist(5060)
+persistent = 0
+value = 5060
+
+[State 1430,SelfState]
+type = SelfState
+trigger1 = Vel Y > 0 && Pos Y >= 25
+value = 5100
+
+;-------------------------------------------------------------------------------
+; トラップショット・強  (Trap Shot / Hard)
+;------------------------ 予備動作
+[Statedef 1450]
+type = S
+movetype = A
+physics = S
+velset = 0, 0
+ctrl = 0
+anim = 1450
+poweradd = 120
+juggle = 7
+
+[State 1450,PlaySnd]
+type = PlaySnd
+trigger1 = AnimElem = 1
+value = 1400, 0
+channel = 0
+
+[State 1450,PlaySnd]
+type = PlaySnd
+trigger1 = AnimElem = 2
+value = 1400, 1
+
+[State 1450,Explod]
+type = Explod
+trigger1 = AnimElem = 4
+persistent = 0
+anim = 1410
+pos = 0, 0
+postype = P1
+sprpriority = 3
+bindtime = -1
+removeongethit = 1
+ignorehitpause = 1
+
+[State 1450,PosAdd]
+type = PosAdd
+trigger1 = AnimElem = 6
+x = -7
+
+[State 1450,PosAdd]
+type = PosAdd
+trigger1 = AnimElem = 8 || AnimElem = 9
+x = -10
+
+[State 1450,HitDef]
+type = HitDef
+trigger1 = Time = 0
+attr = S, SA
+animtype = Hard
+hitflag = MAF
+guardflag = M
+priority = 5,Miss
+damage = 0 ,0
+getpower = 60
+givepower = 15
+sparkno = S2020
+guard.sparkno = S2070
+sparkxy = -10,-77
+hitsound = S300, 3
+guardsound = S0, 1
+pausetime = 0,4
+ground.slidetime = 15
+ground.type = High
+ground.velocity = -6.0
+guard.velocity = -5.0
+air.velocity = -3.0,-5.8
+fall = 1 
+fall.recover = 0
+air.recover = 0
+p2facing = 1
+p1stateno = 1410
+p2stateno = 1420
+p2getp1state = 1
+
+[State 1450,End]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+;-------------------------------------------------------------------------------
+; ミラージュダンス・弱／強共通  (Mirage Dance / Light & Hard)
+;------------------------ 
+[Statedef 1500]
+type = S
+movetype = A
+physics = S
+velset = 0, 0
+ctrl = 0
+anim = 1500
+poweradd = 0
+juggle = 7
+
+[State 1500,VelSet]
+type = VelSet
+trigger1 = AnimElem = 23
+x = 13.0
+
+[State 1500,PlaySnd]
+type = PlaySnd
+trigger1 = AnimElem = 1
+value = 1500, 0
+channel = 0
+
+[State 1500,HitDef]
+type = HitDef
+trigger1 = AnimElem = 3
+attr = S, SA
+animtype = Hard
+damage = 24, 3
+getpower = 45
+givepower = 11
+hitflag = MAF
+guardflag = None
+pausetime = 10,10
+sparkno = S2020
+guard.sparkno = S2070
+sparkxy = -10,-85
+hitsound = S300, 3
+guardsound = S0, 1
+ground.type = High
+ground.slidetime = 7
+ground.hittime  = 20
+ground.velocity = 0
+air.velocity = 0, 0
+ground.cornerpush.veloff = 0
+air.cornerpush.veloff = 0
+guard.cornerpush.veloff = 0
+airguard.cornerpush.veloff = 0
+forcestand = 1
+
+[State 1500,HitDef]
+type = HitDef
+trigger1 = AnimElem = 9
+attr = S, SA
+animtype = Hard
+damage = 24, 3
+getpower = 45
+givepower = 11
+hitflag = MAF
+guardflag = M
+pausetime = 10,10
+sparkno = S2020
+guard.sparkno = S2070
+sparkxy = -10,-78
+hitsound = S300, 3
+guardsound = S0, 1
+ground.type = High
+ground.slidetime = 7
+ground.hittime  = 20
+ground.velocity = 0
+air.velocity = 0, 0
+ground.cornerpush.veloff = 0
+air.cornerpush.veloff = 0
+guard.cornerpush.veloff = 0
+airguard.cornerpush.veloff = 0
+
+[State 1500,HitDef]
+type = HitDef
+trigger1 = AnimElem = 13
+attr = S, SA
+animtype = Hard
+damage = 24, 3
+getpower = 45
+givepower = 11
+hitflag = MAF
+guardflag = M
+pausetime = 10,10
+sparkno = S2020
+guard.sparkno = S2070
+sparkxy = -10,-61
+hitsound = S300, 3
+guardsound = S0, 1
+ground.type = Low
+ground.slidetime = 7
+ground.hittime  = 20
+ground.velocity = 0
+air.velocity = 0, 0
+ground.cornerpush.veloff = 0
+air.cornerpush.veloff = 0
+guard.cornerpush.veloff = 0
+airguard.cornerpush.veloff = 0
+
+[State 1500,HitDef]
+type = HitDef
+trigger1 = AnimElem = 18
+attr = S, SA
+animtype = Hard
+damage = 24, 3
+getpower = 45
+givepower = 11
+hitflag = MAF
+guardflag = M
+pausetime = 10,10
+sparkno = S2020
+guard.sparkno = S2070
+sparkxy = -10,-63
+hitsound = S300, 3
+guardsound = S0, 1
+ground.type = Low
+ground.slidetime = 7
+ground.hittime  = 20
+ground.velocity = 0
+air.velocity = 0, 0
+ground.cornerpush.veloff = 0
+air.cornerpush.veloff = 0
+guard.cornerpush.veloff = 0
+airguard.cornerpush.veloff = 0
+
+[State 1500,HitDef]
+type = HitDef
+trigger1 = AnimElem = 24
+attr = S, SA
+animtype = Hard
+damage = 24, 3
+getpower = 45
+givepower = 11
+hitflag = MAF
+guardflag = L
+pausetime = 10,10
+sparkno = S2020
+guard.sparkno = S2070
+sparkxy = -10,-7
+hitsound = S300, 4
+guardsound = S0, 1
+ground.type = Low
+ground.slidetime = 7
+ground.hittime  = 20
+ground.velocity = -3.8,-5.0
+fall = 1
+fall.recovertime = 16
+
+[State 1500,PlaySnd]
+type = PlaySnd
+trigger1 = AnimElem = 2 || AnimElem = 8 || AnimElem = 12
+trigger2 = AnimElem = 17 || AnimElem = 23
+value = 200, 2
+
+[State 1500,ChangeAnim]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
