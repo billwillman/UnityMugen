@@ -507,7 +507,7 @@ public class PlayerDisplayEditor : Editor {
             string path = AssetDatabase.GetAssetPath(selObj);
             if (string.IsNullOrEmpty(path))
                 return;
-
+            path = System.IO.Path.GetDirectoryName(path);
             string[] files = System.IO.Directory.GetFiles(path, "*.*", System.IO.SearchOption.AllDirectories);
             if (files != null && files.Length > 0)
             {
