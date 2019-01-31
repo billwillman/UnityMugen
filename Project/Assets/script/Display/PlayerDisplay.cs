@@ -369,14 +369,12 @@ public class PlayerDisplay : BaseResLoader {
 		}
 	}
 
-    private void UpdateClsnRootOffsetPos(ImageFrame frame)
+    private void UpdateClsnRootOffsetPos(Vector2 localPos)
     {
-        if (frame == null)
-            return;
         if (m_ClsnSpriteRoot != null)
-            m_ClsnSpriteRoot.localPosition = -frame.OffsetPos;
+            m_ClsnSpriteRoot.localPosition = -localPos;
         if (m_ClsnBoxRoot != null)
-            m_ClsnBoxRoot.localPosition = -frame.OffsetPos;
+            m_ClsnBoxRoot.localPosition = -localPos;
     }
 
 	void UpdateRenderer(ImageFrame frame, ActionFlip flip, ImageAnimation imageAni)
@@ -439,7 +437,11 @@ public class PlayerDisplay : BaseResLoader {
                     break;
             }
 
-            trans.localPosition = frame.OffsetPos + m_OffsetPos;
+            Vector2 frameOffset = frame.OffsetPos;
+            if (IsFlipX)
+                frameOffset.x = -frameOffset.x;
+            trans.localPosition = frameOffset + m_OffsetPos;
+            UpdateClsnRootOffsetPos(frameOffset);
 		}
 
 		Material mat = r.sharedMaterial;
@@ -465,7 +467,6 @@ public class PlayerDisplay : BaseResLoader {
 				m_DefaultClsn2 = aniNode.defaultClsn2Arr;
 		}
 
-        UpdateClsnRootOffsetPos(frame);
 		DestroyAllClsn ();
         if (imageAni != null)
         {
