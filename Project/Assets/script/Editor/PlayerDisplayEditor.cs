@@ -520,22 +520,22 @@ public class PlayerDisplayEditor : Editor {
                     if (string.IsNullOrEmpty(ext))
                         continue;
                     string chgExt = string.Empty;
-                    if (string.Compare(ext, ".def.txt", true) == 0)
-                        chgExt = ".def";
-                    else if (string.Compare(ext, ".sff.bytes", true) == 0)
-                        chgExt = ".sff";
-                    else if (string.Compare(ext, ".snd.bytes", true) == 0)
-                        chgExt = ".snd";
-                    else if (string.Compare(ext, ".air.txt", true) == 0)
-                        chgExt = ".air";
-                    else if (string.Compare(ext, ".act.bytes", true) == 0)
-                        chgExt = ".act";
-                    else if (string.Compare(ext, ".ai.bytes", true) == 0)
-                        chgExt = ".ai";
-                    else if (string.Compare(ext, ".cmd.txt", true) == 0)
-                        chgExt = ".cmd";
-                    else if (string.Compare(ext, ".cns.txt", true) == 0)
-                        chgExt = ".cns";
+                    if (ext.IndexOf(".def.txt", System.StringComparison.CurrentCultureIgnoreCase) >= 0)
+                        chgExt = ext.Replace(".def.txt", ".def");
+                    else if (ext.IndexOf(".sff.bytes", System.StringComparison.CurrentCultureIgnoreCase) >= 0)
+                        chgExt = ext.Replace(".sff.bytes", ".sff");
+                    else if (ext.IndexOf(".snd.bytes", System.StringComparison.CurrentCultureIgnoreCase) >= 0)
+                        chgExt = ext.Replace(".snd.bytes", ".snd");
+                    else if (ext.IndexOf(".air.txt", System.StringComparison.CurrentCultureIgnoreCase) >= 0)
+                        chgExt = ext.Replace(".air.txt", ".air");
+                    else if (ext.IndexOf(".act.bytes", System.StringComparison.CurrentCultureIgnoreCase) >= 0)
+                        chgExt = ext.Replace(".act.bytes", ".act");
+                    else if (ext.IndexOf(".ai.bytes", System.StringComparison.CurrentCultureIgnoreCase) >= 0)
+                        chgExt = ext.Replace(".ai.bytes", ".ai");
+                    else if (ext.IndexOf(".cmd.txt", System.StringComparison.CurrentCultureIgnoreCase) >= 0)
+                        chgExt = ext.Replace(".cmd.txt", ".cmd");
+                    else if (ext.IndexOf(".cns.txt", System.StringComparison.CurrentCultureIgnoreCase) >= 0)
+                        chgExt = ext.Replace(".cns.txt", ".cns");
 
                     if (string.IsNullOrEmpty(chgExt))
                         continue;
