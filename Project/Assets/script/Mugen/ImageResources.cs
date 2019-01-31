@@ -37,10 +37,23 @@ namespace Mugen
 				return;
 
 			Rect r = new Rect(0, 0, tex.width, tex.height);
-			Vector2 offset = new Vector2(offsetX, offsetY);
-			Data = Sprite.Create(tex, r, offset);  
+			//Vector2 offset = new Vector2(offsetX, offsetY);
+			//Data = Sprite.Create(tex, r, offset);  
+            Vector2 center = new Vector2(0.5f, 0.5f);
+            Data = Sprite.Create(tex, r, center);
+            float w = ((float)tex.width) / 100f;
+            float h = ((float)tex.height) / 100f;
+            m_OffsetPos = new Vector2(center.x * w - offsetX * w, center.y * h - offsetY * h);
 			Data.name = name;
 		}
+
+        public Vector2 OffsetPos
+        {
+            get
+            {
+                return m_OffsetPos;
+            }
+        }
 
 		protected void DestroyTexture()
 		{
@@ -142,6 +155,7 @@ namespace Mugen
 		private Texture2D mLocalPalletTex = null;
 		private KeyValuePair<short, short> mLoaclPalletTexLink = new KeyValuePair<short, short>(-1, -1);
         private int m_Image = 0;
+        private Vector2 m_OffsetPos = Vector2.zero;
 	}
 
 	public struct ImageAnimateNode

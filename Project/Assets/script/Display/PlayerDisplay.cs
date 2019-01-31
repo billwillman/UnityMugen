@@ -19,6 +19,8 @@ public class PlayerDisplay : BaseResLoader {
 	private SpriteMovement m_Movement = null;
 	private PlayerAttribe m_Attribe = null;
 
+    public Vector2 m_OffsetPos = Vector2.zero;
+
 	public bool PlayCnsAnimate(int stateDefId, bool isLoop = true)
 	{
 		var player = this.GPlayer;
@@ -348,6 +350,16 @@ public class PlayerDisplay : BaseResLoader {
 		}
 	}
 
+    private void UpdateClsnRootOffsetPos(ImageFrame frame)
+    {
+        if (frame == null)
+            return;
+        if (m_ClsnSpriteRoot != null)
+            m_ClsnSpriteRoot.localPosition = -frame.OffsetPos;
+        if (m_ClsnBoxRoot != null)
+            m_ClsnBoxRoot.localPosition = -frame.OffsetPos;
+    }
+
 	void UpdateRenderer(ImageFrame frame, ActionFlip flip, ImageAnimation imageAni)
 	{
 		SpriteRenderer r = this.SpriteRender;
@@ -387,6 +399,7 @@ public class PlayerDisplay : BaseResLoader {
 			}
 
 			trans.localRotation = quat;
+            trans.localPosition = frame.OffsetPos + m_OffsetPos;
 		}
 
 		Material mat = r.sharedMaterial;
@@ -412,6 +425,7 @@ public class PlayerDisplay : BaseResLoader {
 				m_DefaultClsn2 = aniNode.defaultClsn2Arr;
 		}
 
+        UpdateClsnRootOffsetPos(frame);
 		DestroyAllClsn ();
         if (imageAni != null)
         {
