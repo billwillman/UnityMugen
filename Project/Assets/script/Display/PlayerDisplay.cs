@@ -19,6 +19,7 @@ public class PlayerDisplay : BaseResLoader {
 	private InputPlayerType m_PlayerType = InputPlayerType.none;
 	private SpriteMovement m_Movement = null;
 	private PlayerAttribe m_Attribe = null;
+    private LuaTable m_LuaPlayer = null;
     // 是否是2P另外对着的
     private bool m_IsFlipX = false;
 
@@ -196,6 +197,39 @@ public class PlayerDisplay : BaseResLoader {
 		InitSpriteRender ();
 	}
 
+    private void DestroyLuaPlayer()
+    {
+        if (m_LuaPlayer != null)
+        {
+            m_LuaPlayer.Call<LuaTable>("OnDestroy", m_LuaPlayer);
+            m_LuaPlayer.Dispose();
+            m_LuaPlayer = null;
+        }
+    }
+
+    private void CreateLuaPlayer()
+    {
+        DestroyLuaPlayer();
+        if (m_LoaderPlayer != null)
+        {
+            GlobalPlayer player = m_LoaderPlayer.GetGlobalPayer();
+            if (player != null && player.LuaCfg != null)
+            {
+                // 创建LUA对象
+                m_LuaPlayer = player.LuaCfg.NewLuaPlayer(this);
+            }
+        }
+    }
+
+    [NoToLuaAttribute]
+    public LuaTable LuaPly
+    {
+        get
+        {
+            return m_LuaPlayer;
+        }
+    }
+
 	[NoToLuaAttribute]
 	public void Init(DefaultLoaderPlayer loaderPlayer, InputPlayerType playerType, bool Shader_RGB_Zero_Alpha_One = true)
     {
@@ -203,6 +237,7 @@ public class PlayerDisplay : BaseResLoader {
             Clear();
         m_LoaderPlayer = loaderPlayer;
 		m_PlayerType = playerType;
+        CreateLuaPlayer();
 
 		var sp = this.SpriteRender;
 		if (sp != null && sp.sharedMaterial != null) {
@@ -367,6 +402,7 @@ public class PlayerDisplay : BaseResLoader {
     {
 		m_DefaultClsn2 = null;
 		DestroyAllClsn ();
+        DestroyLuaPlayer();
         if (m_ImgAni != null)
         {
             m_ImgAni.Clear();
@@ -595,6 +631,7 @@ public class PlayerDisplay : BaseResLoader {
 		if (!AppConfig.IsAppQuit) {
 			m_DefaultClsn2 = null;
 			DestroyAllClsn ();
+            DestroyLuaPlayer();
 		}
 	}
 

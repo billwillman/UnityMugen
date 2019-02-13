@@ -205,7 +205,11 @@ public class GlobalPlayer
 		m_PlayerConfig = null;
 		m_CNSConfig = null;
 		m_CmdConfig = null;
-		m_LuaConfig = null;
+        if (m_LuaConfig != null)
+        {
+            m_LuaConfig.Dispose();
+            m_LuaConfig = null;
+        }
 	}
 
 	public static GlobalPlayer CreatePlayer(string playerName, out GlobalPlayerLoaderResult result, string cnsName = "")

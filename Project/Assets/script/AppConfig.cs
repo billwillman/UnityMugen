@@ -51,24 +51,25 @@ public class AppConfig : MonoSingleton<AppConfig> {
 		}
 	}
 
-	public bool DoFile(string fileName)
+	public T DoFile<T>(string fileName) where T: class
 	{
 		if (string.IsNullOrEmpty(fileName))
-			return false;
+			return null;
+        T ret = default(T);
 		try
 		{
 			if (m_LuaState != null)
-				m_LuaState.DoFile(fileName);
+				ret = m_LuaState.DoFile<T>(fileName);
 			else
-				return false; 
+                return null; 
 		} catch(System.Exception e)
 		{
 			#if DEBUG
 			Debug.LogError(e.ToString());
 			#endif
-			return false;
+            return null;
 		}
-		return true;
+		return ret;
 	}
 
 	public void LuaGC()

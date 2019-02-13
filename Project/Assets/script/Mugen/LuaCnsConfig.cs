@@ -7,6 +7,7 @@ using LuaInterface;
 public class LuaCnsConfig
 	{
 		private CNSConfig m_CnsConfig = new CNSConfig();
+        private LuaTable m_LuaClass = null;
 		
 		public int CreateStateDef(string name)
 		{
@@ -30,8 +31,28 @@ public class LuaCnsConfig
 	{
 		if (string.IsNullOrEmpty(fileName))
 			return false;
-		return AppConfig.GetInstance().DoFile(fileName);
+		m_LuaClass =  AppConfig.GetInstance().DoFile<LuaTable>(fileName);
+        return m_LuaClass != null;
 	}
+
+    [NoToLuaAttribute]
+    public void Dispose()
+    {
+        if (m_LuaClass != null)
+        {
+            m_LuaClass.Dispose();
+            m_LuaClass = null;
+        }
+    }
+
+    [NoToLuaAttribute]
+    public LuaTable NewLuaPlayer(PlayerDisplay display)
+    {
+        if (m_LuaClass  == null || display == null)
+            return null;
+        LuaTable ret = m_LuaClass.Invoke<LuaTable, LuaTable>("new", m_LuaClass);
+        return ret;
+    }
 
 	[NoToLuaAttribute]
 	public CNSConfig CnsCfg
