@@ -26,6 +26,12 @@ namespace Mugen
     public class CNSState
     {
         private string m_Name = string.Empty;
+        private CnsStateType m_Type = CnsStateType.none;
         
+        [NoToLuaAttribute]
+        public CNSState(CnsStateType type)
+        {
+            m_Type = type;
+        }
     }
 }

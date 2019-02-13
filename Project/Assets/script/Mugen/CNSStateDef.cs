@@ -35,6 +35,8 @@ namespace Mugen
 		private Cns_Type m_Type = Cns_Type.none;
 		private Cns_MoveType m_MoveType = Cns_MoveType.none;
 		private Cns_PhysicsType m_PhysicsType = Cns_PhysicsType.none;
+        // 事件注册
+        private Dictionary<int, List<CNSState>> m_StateEventsMap = null;
 
 		private int m_Juggle;
 		private float m_Velset_x;
@@ -47,6 +49,37 @@ namespace Mugen
 		private static readonly int _cNoVaildVelset = -9999;
 		private static readonly int _cNoVaildCtrl = -1;
 		private static readonly int _cNoVaildAnim = (int)PlayerState.psNone;
+
+        [NoToLuaAttribute]
+        public void OnStateEvent(CnsStateType evtType)
+        {
+            // 触发状态事件
+        }
+
+        public CNSState CreateStateEvent(CnsStateType evtType)
+        {
+            if (evtType == CnsStateType.none)
+                return null;
+            CNSState state = new CNSState(evtType);
+            int key = (int)evtType;
+            List<CNSState> list;
+            if (m_StateEventsMap == null)
+            {
+                m_StateEventsMap = new Dictionary<int, List<CNSState>>();
+                list = null;
+            } else
+            {
+                if (!m_StateEventsMap.TryGetValue(key, out list))
+                    list = null;
+            }
+            if (list == null)
+            {
+                list = new List<CNSState>();
+                m_StateEventsMap[key] = list;
+            }
+            list.Add(state);
+            return state;
+        }
 
         public int Sprpriority
         {
