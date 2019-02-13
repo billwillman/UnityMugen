@@ -100,7 +100,9 @@ public static class LuaBinder
 		Mugen_Cns_TypeWrap.Register(L);
 		Mugen_Cns_MoveTypeWrap.Register(L);
 		Mugen_Cns_PhysicsTypeWrap.Register(L);
+		Mugen_CnsStateTypeWrap.Register(L);
 		Mugen_CNSStateDefWrap.Register(L);
+		Mugen_CNSStateWrap.Register(L);
 		L.EndModule();
 		L.BeginModule("Utils");
 		Utils_CachedMonoBehaviourWrap.Register(L);
