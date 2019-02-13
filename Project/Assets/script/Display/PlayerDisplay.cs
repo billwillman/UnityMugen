@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Mugen;
+using LuaInterface;
 
 [RequireComponent(typeof(ImageAnimation))]
 [RequireComponent(typeof(SpriteRenderer))]
@@ -21,6 +22,7 @@ public class PlayerDisplay : BaseResLoader {
     // 是否是2P另外对着的
     private bool m_IsFlipX = false;
 
+	[NoToLuaAttribute]
     public Vector2 m_OffsetPos = Vector2.zero;
 
 	public bool PlayCnsAnimate(int stateDefId, bool isLoop = true)
@@ -37,6 +39,7 @@ public class PlayerDisplay : BaseResLoader {
 		return PlayAni (def.Anim, isLoop);
 	}
 
+	[NoToLuaAttribute]
 	public bool HasCnsFiles
 	{
 		get
@@ -97,7 +100,7 @@ public class PlayerDisplay : BaseResLoader {
 		}
 	}
 
-
+	[NoToLuaAttribute]
 	public InputPlayerType PlyType
 	{
 		get {
@@ -105,6 +108,7 @@ public class PlayerDisplay : BaseResLoader {
 		}
 	}
 
+	[NoToLuaAttribute]
     public DefaultLoaderPlayer LoaderPlayer
     {
         get
@@ -122,6 +126,14 @@ public class PlayerDisplay : BaseResLoader {
 		}
 	}
 
+	public float GetMugenAnimateTime()
+	{
+		var ani = this.ImageAni;
+		if (ani == null)
+			return 0f;
+		return ani.GetMugenAnimateTime();
+	}
+
 	public bool ChangeState(PlayerState state, bool isCns = false)
     {
 		var mgr = this.StateMgr;
@@ -133,6 +145,7 @@ public class PlayerDisplay : BaseResLoader {
         return ret;
     }
 
+	[NoToLuaAttribute]
     public void SetAutoCnsState()
     {
         var mgr = this.StateMgr;
@@ -141,6 +154,7 @@ public class PlayerDisplay : BaseResLoader {
         mgr.SetCnsState(mgr.CanUseCnsCtl);
     }
 
+	[NoToLuaAttribute]
     public void SetCnsState(bool isUseCns)
     {
         var mgr = this.StateMgr;
@@ -149,6 +163,7 @@ public class PlayerDisplay : BaseResLoader {
         mgr.SetCnsState(isUseCns);
     }
 
+	[NoToLuaAttribute]
     public GlobalPlayer GPlayer
     {
         get
@@ -181,6 +196,7 @@ public class PlayerDisplay : BaseResLoader {
 		InitSpriteRender ();
 	}
 
+	[NoToLuaAttribute]
 	public void Init(DefaultLoaderPlayer loaderPlayer, InputPlayerType playerType, bool Shader_RGB_Zero_Alpha_One = true)
     {
         if (m_LoaderPlayer != null)
@@ -218,6 +234,7 @@ public class PlayerDisplay : BaseResLoader {
         }
     }
 
+	[NoToLuaAttribute]
 	public bool CanInputKey()
 	{
 		var stateMgr = this.StateMgr;
@@ -228,6 +245,12 @@ public class PlayerDisplay : BaseResLoader {
 		return true;
 	}
 
+	public bool HasAniGroup(PlayerState state)
+	{
+		return HasBeginActionSrpiteData(state, false);	
+	}
+
+	[NoToLuaAttribute]
     public bool HasBeginActionSrpiteData(PlayerState state, bool isCheckTex = false)
     {
         if (state == PlayerState.psNone)
@@ -257,6 +280,7 @@ public class PlayerDisplay : BaseResLoader {
         return false;
     }
 
+	[NoToLuaAttribute]
 	public void StopAni()
 	{
 		var ani = this.ImageAni;
@@ -265,6 +289,7 @@ public class PlayerDisplay : BaseResLoader {
 		ani.Stop ();
 	}
 
+	[NoToLuaAttribute]
 	public void ResetFirstFrame()
 	{
 		var ani = this.ImageAni;
@@ -318,6 +343,7 @@ public class PlayerDisplay : BaseResLoader {
         return ChangeState((PlayerState)id, true);
     }
 
+	[NoToLuaAttribute]
     public string PlayerName
     {
         get
@@ -328,6 +354,7 @@ public class PlayerDisplay : BaseResLoader {
         }
     }
 
+	[NoToLuaAttribute]
     public void Clear(bool isResetLoaderPlayer = true)
     {
 		m_DefaultClsn2 = null;
@@ -351,6 +378,7 @@ public class PlayerDisplay : BaseResLoader {
 		}
 	}
 
+	[NoToLuaAttribute]
     public ImageAnimation ImageAni
     {
         get
@@ -361,6 +389,7 @@ public class PlayerDisplay : BaseResLoader {
         }
     }
 
+	[NoToLuaAttribute]
 	public SpriteRenderer SpriteRender
 	{
 		get {
@@ -523,6 +552,7 @@ public class PlayerDisplay : BaseResLoader {
 		}
 	}
 
+	[NoToLuaAttribute]
 	public void DestroyAllClsn()
 	{
 		if (m_ClsnSpriteRoot != null && m_ClsnSpriteRoot.childCount > 0) {
@@ -671,6 +701,7 @@ public class PlayerDisplay : BaseResLoader {
         RefreshCurPallet();
     }
 
+	[NoToLuaAttribute]
     public string PalletName
     {
         get
@@ -687,6 +718,7 @@ public class PlayerDisplay : BaseResLoader {
         }
     }
 
+	[NoToLuaAttribute]
 	public void ShowClsn(bool isShow)
 	{
 		if (m_ShowClsnDebug == isShow)

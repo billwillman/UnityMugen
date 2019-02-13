@@ -1,0 +1,33 @@
+;----------------------------;
+;MUGEN MEMORIAL by ZELGADIS  ;
+;                            ;
+;        Play KOF            ;
+;----------------------------;
+
+;======================================================================================
+
+Este personaje fue creado por zelgadis con ayuda de JIN
+el cual me paso la base de sus chars (Eso explica por que algunos
+de los archivos están en idioma oriental).
+Bueno, la razón por la cual digo que mis chars son estilo
+KOF MEMORIAL es por que los efectos de las especiales de sparks, dobles he hypers
+son similares a los de KOF XI pero con varias diferencias ya sea los sonidos
+de las especiales, dobles o Hypers, mas que tienen nuevas especiales
+con mas poder que el juego original.
+
+
+;======================================================================================
+
+Agradecimientos:
+Bueno aquí paso a agradecer a todos los que me ayudaron a aprender a fondo sobre mugen
+gracias por la base de chas JIN, y sobre todas las cosas gracias a SNK (PLAYMORE)
+ya que todos los personajes son de su propiedad.
+
+
+;======================================================================================
+
+PD: ya sabes, si tienes alguna duda o quieres modificar alguno
+de mis chars no dudes en comunicarte con migo(Tengo mail sabes).
+
+
+;======================================================================================

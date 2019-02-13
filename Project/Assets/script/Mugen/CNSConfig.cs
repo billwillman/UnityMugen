@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using LuaInterface;
 
 namespace Mugen
 {
@@ -17,7 +18,20 @@ namespace Mugen
 			return ++m_GlobalId;
 		}
 
-		private void AddStateDef(string name, CNSStateDef def)
+		internal bool CreateStateDef(string name, out int id)
+		{
+			id = -1;
+			if (string.IsNullOrEmpty(name))
+				return false;
+			if (m_StateNameIdMap != null && m_StateNameIdMap.ContainsKey(name))
+				return false;
+			CNSStateDef def = new CNSStateDef();
+			AddStateDef(name, def);
+			id = def.id;
+			return true;
+		}
+
+		internal void AddStateDef(string name, CNSStateDef def)
 		{
 			if (string.IsNullOrEmpty (name) || def == null)
 				return;
@@ -75,6 +89,7 @@ namespace Mugen
 			return ret;
 		}
 
+		[NoToLuaAttribute]
 		public bool LoadPlayer(string playerName)
 		{
 			Reset();
@@ -84,6 +99,7 @@ namespace Mugen
 			return LoadFromFile(fileName);
 		}
 
+		[NoToLuaAttribute]
 		public bool LoadFromFile(string fileName)
 		{
 			Reset();

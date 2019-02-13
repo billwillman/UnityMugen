@@ -16,6 +16,15 @@ public class GlobalPlayer
 	private AirConfig m_AirConfig = null;
 	private CNSConfig m_CNSConfig = null;
 	private CmdConfig m_CmdConfig = null;
+	private LuaCnsConfig m_LuaConfig = null;
+
+	public LuaCnsConfig LuaCfg
+	{
+		get
+		{
+			return m_LuaConfig;
+		}
+	}
 
 	public CmdConfig CmdCfg
 	{
@@ -131,8 +140,30 @@ public class GlobalPlayer
 			result = GlobalPlayerLoaderResult.CmdConfigError;
 		}
 
+		// 判断LUA
+		bool isLua = false;
+		try
+		{
+			if (m_PlayerConfig != null && m_PlayerConfig.Files != null && m_PlayerConfig.Files.HasLuaFile)
+			{
+				isLua = true;
+				m_LuaConfig = new LuaCnsConfig();
+				if (!m_LuaConfig.LoadFromFile(m_PlayerConfig.Files.lua))
+				{
+					result = (GlobalPlayerLoaderResult)((int)result | (int)GlobalPlayerLoaderResult.LUAConfigError);
+				}
+			}
+		} catch (Exception e)
+		{
+			#if DEBUG
+			Debug.LogError(e.ToString());
+			#endif
+			result = (GlobalPlayerLoaderResult)((int)result | (int)GlobalPlayerLoaderResult.LUAConfigError);
+		}
 
 		//--------------------------- 最后加载cns
+		if (!isLua)
+		{
 		try
 		{
 			if (string.IsNullOrEmpty(cnsName))
@@ -158,8 +189,9 @@ public class GlobalPlayer
 			Debug.LogError(e.ToString());
 			#endif
 			//Clear ();
-			result = GlobalPlayerLoaderResult.CNSConfigError;
+				result =  (GlobalPlayerLoaderResult)((int)result | (int)GlobalPlayerLoaderResult.CNSConfigError);
 			//return false;
+		}
 		}
 
 		if (result == GlobalPlayerLoaderResult.None)
@@ -173,6 +205,7 @@ public class GlobalPlayer
 		m_PlayerConfig = null;
 		m_CNSConfig = null;
 		m_CmdConfig = null;
+		m_LuaConfig = null;
 	}
 
 	public static GlobalPlayer CreatePlayer(string playerName, out GlobalPlayerLoaderResult result, string cnsName = "")

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using LuaInterface;
 
 namespace Mugen
 {
@@ -47,11 +48,120 @@ namespace Mugen
 		private static readonly int _cNoVaildCtrl = -1;
 		private static readonly int _cNoVaildAnim = (int)PlayerState.psNone;
 
+		public Cns_PhysicsType PhysicsType
+		{
+			get
+			{
+				return m_PhysicsType;
+			}
+			set
+			{
+				m_PhysicsType = value;
+			}
+		}
+
+		public Cns_MoveType MoveType
+		{
+			get
+			{
+				return m_MoveType;
+			}
+			set
+			{
+				m_MoveType = value;
+			}
+		}
+
+		public Cns_Type Type
+		{
+			get
+			{
+				return m_Type;
+			}
+			set
+			{
+				m_Type = value;
+			}
+		}
+
+		public int PowerAdd
+		{
+			get
+			{
+				return m_PowerAdd;
+			}
+			set
+			{
+				m_PowerAdd = value;
+			}
+		}
+
+		public int Animate
+		{
+			get
+			{
+				return m_Anim;
+			}
+			set
+			{
+				m_Anim = value;
+			}
+		}
+
+		public int Ctrl
+		{
+			get
+			{
+				return m_Ctrl;
+			}
+			set
+			{
+				m_Ctrl = value;
+			}
+		}
+
+		public float Velset_y
+		{
+			get
+			{
+				return m_Velset_y;
+			}
+			set
+			{
+				m_Velset_y = value;
+			}
+		}
+
+		public int Juggle
+		{
+			get
+			{
+				return m_Juggle;
+			}
+			set
+			{
+				m_Juggle = value;
+			}
+		}
+
+		public float Velset_x
+		{
+			get
+			{
+				return m_Velset_x;
+			}
+			set
+			{
+				m_Velset_x = value;
+			}
+		}
+
 		internal int id {
 			get;
 			set;
 		}
 
+		[NoToLuaAttribute]
         public PlayerState Anim
         {
             get
@@ -75,6 +185,7 @@ namespace Mugen
 			m_Sprpriority = 0; 
 		}
 
+		[NoToLuaAttribute]
 		public bool LoadConfigReader(ConfigSection section)
 		{
 			ResetVars ();

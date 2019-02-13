@@ -1,0 +1,35 @@
+[Info]
+name="Dark Iori-XIII"
+displayname="Dark Iori-XIII"
+versiondate=2010-6-5
+mugenversion=04,14,2001
+author="Dark Yagami"
+pal.defaults=1,2,3,4
+
+[Files]
+sprite=DI12.sff
+sound=DI12.snd
+anim=DI12.air
+cmd=DI12.cmd
+cns=DI12.cns
+st=DI12.cns
+stcommon=common11.cns
+pal1=DI.act
+pal2=DI.act
+pal3=DI.act
+pal4=DI.act
+pal5=DI.act
+pal6=DI.act
+pal7=DI.act
+pal8=DI.act
+pal9=DI.act
+pal10=DI.act
+pal11=DI.act
+pal12=DI.act
+st1=DI1.cns
+st2=DI2.cns
+st3=max2.cns
+
+[Arcade]
+intro.storyboard=
+ending.storyboard=

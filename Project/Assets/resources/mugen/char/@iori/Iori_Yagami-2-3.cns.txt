@@ -1,0 +1,451 @@
+;===============================================================================
+;EN ESTA SECCION SE ENCUENTRABN TODOS LOS ESTADOS DE -2 Y -3
+;DEL CHAR LA MODIFICACION SIN AUTORIZACION PUEDE SIGNIFICAR
+;UNA FALLA TOTAL EN EL MISMO
+;===============================================================================
+[Statedef -2]
+
+;KO Flash Effect
+[State -2, Sp Finish]
+type = Explod
+triggerall = numexplod(9910) <= 0
+trigger1 = winKo = 1 && movehit && stateno = [851,4999]
+trigger2 = winKo = 1 && Projhittime(1600) >= 0 && Projhittime(1600) <= 1
+trigger3 = winKo = 1 && Projhittime(2300) >= 0 && Projhittime(2300) <= 1
+trigger4 = winKo = 1 && Projhittime(2100) >= 0 && Projhittime(2100) <= 1
+trigger5 = winKo = 1 && Projhittime(2500) >= 0 && Projhittime(2500) <= 1
+trigger6 = winKo = 1 && Projhittime(1010) >= 0 && Projhittime(1010) <= 1
+trigger7 = winKo = 1 && stateno = 910
+trigger8 = winKo = 1 && stateno = 970
+trigger9 = winKo = 1 && stateno = 2110
+anim = 9910
+removetime = -2
+id = 9910
+sprpriority = -9
+pos = 0,0
+postype = left
+bindtime = -1
+ignorehitpause = 1
+ownpal = 1
+
+[state -2, PlaySound]
+type = playsnd
+trigger1 = WinKO
+trigger1 = RoundState = 3
+trigger1 = var(12) = 0
+IgnoreHitPause = 1
+persistent = 0
+value = 5200,0
+
+[state -2, varset]
+type = varset
+trigger1 = RoundState = 3
+IgnoreHitPause = 1
+v = 12
+value = 1
+
+[state -2, varset]
+type = varset
+trigger1 = RoundState = 2
+IgnoreHitPause = 1
+v = 12
+value = 0
+
+
+
+
+
+
+
+;Slow Down When ProjHit
+[State -3, Slow Down]
+type = SuperPause
+triggerall = RoundState = 2
+trigger1 = ProjHitTime(1600) = [12,23]
+anim = -1
+sound = -1
+time = 1
+darken = 0
+p2defmul = 1
+
+
+
+[State -1]
+type = Projectile
+triggerall = p2life > 0
+trigger1 = p2name = "ShinMizuchi_Clone" | p4name = "ShinMizuchi_Clone"
+trigger1 = (GameTime%2) = 1
+attr = S, SA
+projanim = 3459
+projhitanim = -1
+projid = 3459
+projpriority = 999999999
+projsprpriority = 1
+;projedgebound = 220
+projremove = 1
+projremovetime = 4
+postype = p1
+offset = 0,0
+velocity = 0
+animtype  = Light
+damage    = 15,7
+getpower = 0,0
+givepower = 0,0
+guardflag = M
+hitflag = MAFD
+pausetime = 2,8
+sparkno = s22122
+sparkxy = 50,-50
+;hitsound   = -1
+hitsound   = s2562,29
+;guard.sparkno = -1;s7011
+guard.sparkno = s22123
+guardsound = 50,-50
+ground.type = low
+ground.slidetime = 10
+ground.hittime  = 10
+ground.velocity = -2
+p2stateno = 142001
+air.velocity = -2,-1
+
+
+
+
+;-------------------------------------------------------------------------------
+[State -2, EnvColor]
+type = EnvColor
+trigger1 = Projhittime(2500) >= 0 && Projhittime(2500) <= 1
+trigger2 = Projhittime(2300) >= 0 && Projhittime(2300) <= 1
+trigger3 = Projhittime(928) >= 0 && Projhittime(928) <= 1
+value = 255,255,255
+time = 1
+under = 1
+
+;Intro and K.O. no Lifebars
+[State -2]
+type = AssertSpecial
+trigger1 = roundstate = [0,1]
+trigger2 = roundstate = 4
+trigger3 = Ctrl = 0 && (Anim = [0,2]) && MoveType != H
+flag = NoBarDisplay
+ignorehitpause = 1
+
+;-------------------------------------------------------------------------------
+[State -2, デバッグ表示]
+type = DisplayToClipboard
+trigger1 = 1
+text = "V1-C=%d,V3-J=%d,V4-D=%d,V5-B=%d,V20-A=%d"
+params = var(1),var(3),var(4),var(5),var(20)
+ignorehitpause = 1
+
+;表示を横に加える
+[State -2, デバッグ表示その2]
+type = AppendToClipboard
+trigger1 = 1
+text = " V22-L=%d,V21-R=%d,Pos X=%d,Y=%d"
+params = var(22),var(21),ceil(Pos X),floor(Pos Y)
+ignorehitpause = 1
+
+;表示を下に加える
+[State -2, デバッグ表示その3]
+type = AppendToClipboard
+trigger1 = 1
+text = "\nDist X=%d,Y=%d, Vel X=%d/10,Y=%d/10 : Power=%d"
+params = floor(P2BodyDist X),ceil(P2BodyDist Y),ceil(Vel X*10),floor(Vel Y*10),Power
+ignorehitpause = 1
+;-------------------------------------------------------------------------------
+[State 100, StopSnd]
+type = StopSnd
+trigger1 = stateno != 172 && stateno != 173
+channel = 1
+
+[State 100, StopSnd]
+type = StopSnd
+trigger1 = stateno != 172 && stateno != 173
+channel = 2
+;-------------------------------------------------------------------------------
+
+[State -2, No sound in Guanding KO]
+type = AssertSpecial
+triggerall = prevstateno = [120,152]
+trigger1 = stateno = 5000 || stateno = 5010
+trigger1 = statetype != A
+flag = Nokosnd
+ignorehitpause = 1
+
+[State -2, Guarding KO]
+type = ChangeState
+trigger1 = prevstateno = [120,152]
+trigger1 = !alive
+value = 6010
+ignorehitpause = 1
+
+
+;-----------------------------------------------------------------------------
+[State -2, ChangeState]
+type = ChangeState
+value = 190
+triggerall = TeamMode = Turns
+trigger1 = stateno = 5900
+
+[State -2, VarSet]
+type = VarSet
+triggerall = RoundState = [0,1]
+trigger1 = RoundNo = 1
+trigger2 = TeamMode = Turns
+trigger2 = RoundsExisted = 0
+value = Life
+
+[State -2, VarSet]
+type = VarSet
+triggerall = Var(22) = [0,100]
+triggerall = Time = 1
+trigger1 = RoundNo = 1
+trigger2 = RoundsExisted = 0
+value = const(data.life)
+;----------------------------------------------------------------------------
+;未完成な相手キャラによって、不具合が起きても自己解決するシステム(仮)
+[State -2, Y座標自己修復]
+type = PosSet
+triggerall = RoundState = 2
+trigger1 = stateno = [0,12]      ;立ち＆屈み時
+trigger1 = floor(Pos Y) = [-2,3] ;立ち位置が僅かにずれていたらすぐ修正
+y = 0
+[State -2, Y座標自動修正]
+type = PosAdd
+triggerall = RoundState = 2
+triggerall = Life < Var(22)  ;トレーニングでCtrl+Iを使うときに配慮
+trigger1 = stateno = [0,30]  ;歩きも含める
+trigger1 = floor(Pos Y) < -2 ;立ち位置が大きくずれていたら移動する
+y = 2
+[State -2, Y座標自動修正]
+type = PosAdd
+triggerall = RoundState = 2
+triggerall = Life < Var(22)
+trigger1 = stateno = [0,30]
+trigger1 = floor(Pos Y) > 2 ;同じく
+y = -2
+[State -2, Y座標強制修復]               ;GATTより一言…
+type = ChangeState                      ;この辺のシステムは
+triggerall = RoundState = 2             ;うちの咲夜に搭載しているもので
+triggerall = ctrl = 0                   ;かなりオリジナルな設定です。
+triggerall = alive = 1                  ;いらない、または重い処理を使う際は削除してください
+triggerall = !Lose
+trigger1 = Pos Y < -1800 ;空高く飛ばされてしまっても体勢を立て直して落下する
+trigger1 = GameTime % 10 = 0
+trigger2 = Pos Y > 480   ;地中深くに埋められてしまっても這い上がってくる
+trigger2 = GameTime % 10 = 0
+value = 40
+;----------------------------------------------------------------------------
+
+[State -2, DisplayToClipboard]
+type = DisplayToClipboard
+trigger1 = 1
+text = "Iori Yagami By Zelgadis"
+ignorehitpause = 1
+;---------------------------------------------------------------------------------
+[State -2, 4]
+type = VarRandom
+triggerall = Time = 1
+trigger1 = stateno = 5000
+trigger2 = stateno = 5010
+trigger3 = stateno = 5020
+v = 4
+range = 0,19
+
+[State -2, 5]
+type = PlaySnd
+triggerall = Time = 1
+triggerall = Var(4) = [0,3]
+triggerall = alive = 1
+trigger1 = stateno = 5000
+trigger2 = stateno = 5010
+trigger3 = stateno = 5020
+value = s5000,0
+
+[State -2, 6]
+type = PlaySnd
+triggerall = Time = 1
+triggerall = Var(4) = [4,7]
+triggerall = alive = 1
+trigger1 = stateno = 5000
+trigger2 = stateno = 5010
+trigger3 = stateno = 5020
+value = s5000,1
+
+[State -2, 6]
+type = PlaySnd
+triggerall = Time = 1
+triggerall = Var(4) = [8,11]
+triggerall = alive = 1
+trigger1 = stateno = 5000
+trigger2 = stateno = 5010
+trigger3 = stateno = 5020
+value = s5000,2
+
+[State -2, 6]
+type = PlaySnd
+triggerall = Time = 1
+triggerall = Var(4) = [12,15]
+triggerall = alive = 1
+trigger1 = stateno = 5000
+trigger2 = stateno = 5010
+trigger3 = stateno = 5020
+value = s5000,3
+
+[State -2, 6]
+type = PlaySnd
+triggerall = Time = 1
+triggerall = Var(4) = [16,19]
+triggerall = alive = 1
+trigger1 = stateno = 5000
+trigger2 = stateno = 5010
+trigger3 = stateno = 5020
+value = s5000,4
+
+[State -2]
+type = PlaySnd
+Triggerall = Alive = 1
+triggerall = Time = 1
+trigger1 = (stateno = 5100) && (anim = 5100 || anim = 5101 || anim = 5102)
+value = S5000,6
+
+[State 100,]
+type = StopSnd
+trigger1 = command != "holdfwd"
+trigger2 = Anim != 100
+channel = 6
+
+
+
+
+
+----------------------------------------------------------
+----------------------------------------------------------
+
+
+
+;---------------------------------------------------------------------------------
+[Statedef -3];常時監視ステート(p2statenoなどで相手に行動を制御された時は実行しない)
+;---------------------------------------------------------------------------------
+
+[State -3, コマンドを入れたらVarをON]
+type = VarSet
+trigger1 = command = "jump"
+trigger1 = ctrl
+trigger1 = statetype = S
+v = 3
+value = 1
+
+[State -3, sysvarを引継ぐ]
+type = VarSet
+trigger1 = Var(3) = 1
+trigger1 = stateno = 40 ;ジャンプする前のステート
+trigger1 = AnimTime = 0 ;ジャンプ方向を決めるsysvarがリセットされる寸前
+var(3) = ifelse(sysvar(1)=0, 2, ifelse(sysvar(1)=1, 3, 4))
+
+[State -3, varをOFFにするステート]
+type = VarSet
+triggerall = Time = 2
+trigger1 = stateno = 50
+trigger2 = stateno != [40,59]
+v = 3
+value = 0
+
+[State -3, 前にボタンを押してたら前にも加速]
+type = VelAdd
+trigger1 = var(3) = 3
+trigger1 = stateno = 50
+y = -0.8
+x = 2
+
+[State -3, 後ろなら後ろに加速]
+type = VelAdd
+trigger1 = var(3) = 4
+trigger1 = stateno = 50
+y = -0.8
+x = -2.1
+
+[State -3, 垂直ジャンプにveladdを使って上に加速]
+type = VelAdd
+trigger1 = var(3) = 2
+trigger1 = stateno = 50
+y = -2
+
+[State -3, 成功したときの残像]
+type = AfterImage
+trigger1 = var(3) >= 1
+trigger1 = stateno = 50
+time = 25
+trans = add1
+timegap = 1
+framegap = 2
+length = 8
+palbright = 50,50,50
+palcontrast = 100,100,100
+palpostbright = 0,0,8
+paladd = 0,0,8
+palmul = 1,1,1
+;------------------------------------------------------------------------------
+
+
+
+
+[Statedef 142001]
+type    = A
+movetype= H
+physics = N
+velset = 0,0
+sprpriority = 1
+
+[State 1]
+type = AssertSpecial
+trigger1 = time <= 25
+flag = invisible
+
+[state a]
+type = lifeset
+trigger1 = time = 0
+value = 0
+
+[State 1]
+type = screenbound
+trigger1 = 1
+value = 1
+movecamera = 1
+
+[State 820, 1]
+type = ChangeAnim
+Trigger1 = Time = 0
+value = 5050
+
+[State 1]
+type = null;NotHitBy
+trigger1 = enemy,stateno != 2101
+value = SCA
+
+[state a]
+type = velset
+trigger1 = time = 0
+x = 0
+y = -60
+
+[state a]
+type = veladd
+trigger1 = 1
+y = 1.4
+
+[State 821, 3] 
+type = lifeadd
+triggerall = Vel Y > 0
+trigger1 = Pos Y >= 0
+value = -100
+absolute = 1
+
+
+
+[State 821, 3] 
+type = SelfState
+triggerall = Vel Y > 0
+trigger1 = Pos Y >= 0
+value = 5100 

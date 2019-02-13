@@ -1,0 +1,36 @@
+;============================================================================
+;ÉIÉçÉ`
+;From "The King of Fighters" + "Rgae of the Dragons"
+;============================================================================
+; Player information
+[Info]
+name = "Orochi"        
+displayname = "Orichi" 
+versiondate = 2003,8,18,2002   
+mugenversion = 2001,04,14  
+author = "RYO 2005"      
+pal.defaults = 0
+
+; Files for the player
+[Files]
+cmd      = Orochi-ROTD.cmd  
+cns      = Orochi-ROTD-P.cns   
+st       = Orochi-ROTD-N.cns   
+st2      = Orochi-ROTD-S.cns 
+st3      = Orochi-ROTD-H.cns 
+st4      = Orochi-ROTD-C.cns 
+stcommon = common.cns
+sprite   = Orochi-ROTD.sff   
+anim     = Orochi-ROTD.air  
+sound    = Orochi-ROTD.snd  
+pal1     = _pal/pal1.act
+pal2     = _pal/pal2.act
+pal3     = _pal/pal3.act
+pal4     = _pal/pal4.act
+pal5     = _pal/pal5.act
+pal6     = _pal/pal6.act
+
+; Arcade mode
+;[Arcade]
+;intro.storyboard = intro.def
+;ending.storyboard = ending.def

@@ -1,0 +1,1820 @@
+;==============================================================================
+;-| レイジコンビネーション |---------------------------------------------------
+;==============================================================================
+
+;var(6) = 追加コマンド入力判定
+;var(7) = コンビネーション ヒット判定
+;var(9) = ジャンプ関連
+;var(24)= 壁激突音関連
+
+;------------------------------------------------------------------------------
+;-| レイジコンビネーション始動技 |---------------------------------------------
+:------------------------------------------------------------------------------
+[Statedef 3000]
+type    = S
+movetype= A
+physics = N
+juggle  = 14
+poweradd= 0
+ctrl = 0
+velset = 0,0
+anim = 3000
+sprpriority = 1
+
+[State 3000, PlaySnd]
+type = PlaySND
+trigger1 = AnimElem = 4,2
+value = 3,4
+
+[State 3000, PlaySnd]
+type = PlaySND
+trigger1 = AnimElem = 4,2
+value = 50,3
+
+[State 3000, PosAdd]
+type = PosAdd
+trigger1 = AnimElem = 5
+x = 10
+
+[State 3000, VelSet]
+type = VelSet
+trigger1 = AnimElem = 5
+x = 4
+
+[State 3000, VelSet]
+type = VelSet
+trigger1 = AnimElem = 6
+x = 0
+
+[State 3000, HitDef]
+type = HitDef
+trigger1 = Time = 0
+attr = S, SA
+animtype  = Hard
+damage    = 20
+guardflag = M
+pausetime = 32,32
+sparkno = S6003
+guard.sparkno = S6011 
+sparkxy = -10,-65
+hitsound = S4, 7
+guardsound = S2,0
+ground.type = Low
+ground.slidetime = 12
+ground.hittime  = 15
+ground.velocity = -5,-5.7
+air.velocity = -3.2,-4.2
+p1stateno = 3010
+p2facing = 1
+
+[State 3000,  AfterImage]
+type = AfterImage
+trigger1 = Time = 1
+time = 32
+length = 10
+framegap = 3
+trans = add1
+palcontrast = 128,128,128
+paladd = 0,0,0
+palmul = 1,1,1
+
+[State 3000, ChangeState]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+;------------------------------------------------------------------------------
+;-| レイジコンビネーション 分岐ダッシュ |--------------------------------------
+:------------------------------------------------------------------------------
+[Statedef 3010]
+type    = S
+movetype= A
+physics = N
+juggle  = 5
+poweradd= 0
+ctrl = 0
+velset = 0,0
+anim = 100
+sprpriority = 4
+
+[State 3010, Width]
+type = Width
+trigger1 = Time > 0
+edge = 30,30
+
+[State 3010, Explod]
+type = Explod
+trigger1 = Time = 16
+trigger1 = NumExplod(7000) = 0
+trigger1 = TeamSide = 1
+anim = 7000
+ID = 7000
+pos = 40,210
+postype = left
+ownpal = 1
+bindtime = -1
+removetime = -2
+sprpriority = 5
+ontop = 1
+removeongethit = 1
+ignorehitpause = 1
+
+[State 3010, Explod]
+type = Explod
+trigger1 = Time = 16
+trigger1 = NumExplod(7000) = 0
+trigger1 = TeamSide = 2
+anim = 7000
+ID = 7000
+pos = 215,210
+postype = left
+ownpal = 1
+bindtime = -1
+removetime = -2
+sprpriority = 5
+ontop = 1
+removeongethit = 1
+ignorehitpause = 1
+
+[State 3010, RemoveExplod]
+type = RemoveExplod
+trigger1 = Time = 47
+ID = 7000
+
+[State 3010, VelSet]
+type = VelSet
+trigger1 = Time = 1
+x = 3.5
+
+[State 3010, VelSet]
+type = VelSet
+trigger1 = Time = 47
+x = 0
+
+[state 3010, TargetState]
+type = TargetState
+trigger1 = Time = 0
+value = 3011
+
+[State 3010,  AfterImage]
+type = AfterImage
+trigger1 = Time = 1
+time = 24
+length = 10
+framegap = 3
+trans = add1
+palcontrast = 128,128,128
+paladd = 0,0,0
+palmul = 1,1,1
+
+[State 3010, ChangeState]
+type = ChangeState
+triggerall = Time > 17
+triggerall = Time < 42
+trigger1 = command = "x"
+value = 3020
+
+[State 3010, ChangeState]
+type = ChangeState
+triggerall = Time > 2
+triggerall = Time < 16
+trigger1 = command = "holdup"
+value = 3100
+
+[State 3010, ChangeState]
+type = ChangeState
+trigger1 = Time = 47
+value = 0
+ctrl = 1
+
+;---------------------------------------------------------------------------
+;レイジコンビネーション始動技・ヒット 2P
+[Statedef 3011]
+type    = A
+movetype= H
+physics = N
+velset = 0,0
+sprpriority = 0
+
+[State 3011, ChangeAnim]
+type = ChangeAnim
+Trigger1 = Time < 1
+value = 5052
+
+[State 3011, ChangeAnim]
+type = ChangeAnim
+Trigger1 = Time < 1 && anim != 5052
+value = 5030
+
+[State 3011, VelSet]
+type = VelSet
+trigger1 = Time = [1,15]
+x = -2
+
+[State 3011, VelSet]
+type = VelSet
+trigger1 = Time = [1,15]
+y = -2.5
+
+[State 3011, VelSet]
+type = VelSet
+trigger1 = Pos Y <= -35
+y = 0
+
+[State 3011, ScreenBound]
+type = ScreenBound
+trigger1 = 1
+value = 1
+movecamera = 1,0
+
+[State 3011, ChangeState]
+type = ChangeState
+trigger1 = Time = 48
+value = 3012
+
+;---------------------------------------------------------------------------
+;レイジコンビネーション始動技・落下 2P
+[Statedef 3012]
+type    = A
+movetype= H
+physics = N
+velset = 0,0
+sprpriority = 0
+
+[State 3012, NotHitBy]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+time = 1
+
+[State 3012, ChangeAnim]
+type = ChangeAnim
+Trigger1 = Time = 0
+value = 5060
+
+[State 3012, ChangeAnim]
+type = ChangeAnim
+Trigger1 = Time = 0 && anim != 5060
+value = 5050
+
+[State 3012, VelSet]
+type = VelSet
+trigger1 = Time = 0
+x = -2
+
+[state 3012, VelAdd]
+type = VelAdd
+trigger1 = Time >= 0
+y = .32
+
+[State 3012, ScreenBound]
+type = ScreenBound
+trigger1 = 1
+value = 1
+movecamera = 1,0
+
+[State 3012, SelfState]
+type = SelfState
+trigger1 = Pos Y >= 10 && Vel Y > 0
+value = 5100
+
+;------------------------------------------------------------------------------
+;-| 地上レイジコンビネーション １ |--------------------------------------------
+:------------------------------------------------------------------------------
+[Statedef 3020]
+type     = S                     
+movetype = A                     
+physics  = N                     
+juggle   = 1                    
+velset   = 0,0                  
+ctrl     = 0                     
+anim     = 3020                   
+poweradd = 0                   
+sprpriority = 2                 
+
+[State 3020, PlaySnd]
+type = PlaySND
+trigger1 = AnimElem = 1,2
+value = 3,3
+
+[State 3020, Explod]
+type = Explod
+trigger1 = Time = 1
+trigger1 = NumExplod(7010) = 0
+trigger1 = TeamSide = 1
+anim = 7010
+ID = 7010
+pos = 40,210
+postype = left
+ownpal = 1
+bindtime = -1
+removetime = -2
+sprpriority = 5
+ontop = 1
+removeongethit = 1
+ignorehitpause = 1
+
+[State 3020, Explod]
+type = Explod
+trigger1 = Time = 1
+trigger1 = NumExplod(7010) = 0
+trigger1 = TeamSide = 2
+anim = 7010
+ID = 7010
+pos = 215,210
+postype = left
+ownpal = 1
+bindtime = -1
+removetime = -2
+sprpriority = 5
+ontop = 1
+removeongethit = 1
+ignorehitpause = 1
+
+[State 3020, RemoveExplod]
+type = RemoveExplod
+trigger1 = Time = 1
+ID = 7000
+
+[State 3020, RemoveExplod]
+type = RemoveExplod
+trigger1 = AnimTime = 0
+ID = 7010
+
+[State 3020, VelSet]
+type = VelSet
+trigger1 = Time = 1
+x = 3
+
+[State 3020, VarSet]
+type = VarSet
+trigger1 = Time = 0
+var(7) = 0
+
+[State 3020, VarSet]
+type = VarSet
+trigger1 = MoveHit
+var(7) = 1
+
+[State 3020, HitDef]
+type = HitDef                    
+trigger1 = time = 0          
+attr = S, NA                     
+damage = 15, 0                   
+animtype = Light                 
+guardflag = MA                   
+hitflag = MAF                    
+priority = 3, Hit                
+pausetime = 10, 12                 
+sparkno = S6002                   
+guard.sparkno = S6010              
+sparkxy = -15, -65             
+hitsound = S4, 7
+guardsound = S2, 0               
+ground.type = High               
+ground.slidetime = 5             
+ground.hittime  = 12             
+ground.velocity = -4,0           
+airguard.velocity = -1.9,-.8    
+air.type = High                  
+air.velocity = -1.4,-3           
+air.hittime = 12                 
+p2stateno = 3021
+
+[State 3020,  AfterImage]
+type = AfterImage
+trigger1 = Time = 1
+time = 24
+length = 10
+framegap = 3
+trans = add1
+palcontrast = 128,128,128
+paladd = 0,0,0
+palmul = 1,1,1
+
+[State 3020, ChangeState]
+type = ChangeState
+triggerall = var(7) = 1
+triggerall = Time <= 26
+trigger1 = command = "a"
+value = 3030
+
+[State 3020, ChangeState]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1 
+
+;---------------------------------------------------------------------
+;レイジコンビネーション中 ヒット時 2P
+[Statedef 3021]
+type = A
+movetype = H
+physics = N
+ctrl = 0
+velset = 0,0
+
+[State 3021, 2]
+type = VelSet
+trigger1 = Time >= 3
+x = -2
+y = 0
+
+[State 3021, ScreenBound]
+type = ScreenBound
+trigger1 = 1
+value = 1
+movecamera = 1,0
+
+[State 3021, ChangeState]
+type = ChangeState
+trigger1 = Time = 36
+value = 3012
+
+;------------------------------------------------------------------------------
+;-| 地上レイジコンビネーション ２ |--------------------------------------------
+:------------------------------------------------------------------------------
+[Statedef 3030]
+type     = S                     
+movetype = A                     
+physics  = N                     
+juggle   = 1                    
+velset   = 0,0                  
+ctrl     = 0                     
+anim     = 3030                   
+poweradd = 0                   
+sprpriority = 2                 
+
+[State 3030, PlaySnd]
+type = PlaySND
+trigger1 = AnimElem = 3
+value = 3,3
+
+[State 3030, Explod]
+type = Explod
+trigger1 = Time = 1
+trigger1 = NumExplod(7020) = 0
+trigger1 = TeamSide = 1
+anim = 7020
+ID = 7020
+pos = 40,210
+postype = left
+ownpal = 1
+bindtime = -1
+removetime = -2
+sprpriority = 5
+ontop = 1
+removeongethit = 1
+ignorehitpause = 1
+
+[State 3030, Explod]
+type = Explod
+trigger1 = Time = 1
+trigger1 = NumExplod(7020) = 0
+trigger1 = TeamSide = 2
+anim = 7020
+ID = 7020
+pos = 215,210
+postype = left
+ownpal = 1
+bindtime = -1
+removetime = -2
+sprpriority = 5
+ontop = 1
+removeongethit = 1
+ignorehitpause = 1
+
+[State 3030, RemoveExplod]
+type = RemoveExplod
+trigger1 = Time = 1
+ID = 7010
+
+[State 3030, RemoveExplod]
+type = RemoveExplod
+trigger1 = AnimTime = 0
+ID = 7020
+
+[State 3030, VelSet]
+type = VelSet
+trigger1 = Time = 1
+x = 3
+
+[State 3030, VarSet]
+type = VarSet
+trigger1 = Time = 0
+var(7) = 0
+
+[State 3030, VarSet]
+type = VarSet
+trigger1 = MoveHit
+var(7) = 1
+
+[State 3030, HitDef]
+type = HitDef                    
+trigger1 = time = 0          
+attr = S, NA                     
+damage = 15, 0                   
+animtype = Light                 
+guardflag = MA                   
+hitflag = MAF                    
+priority = 3, Hit                
+pausetime = 10, 12                 
+sparkno = S6002                   
+guard.sparkno = S6010              
+sparkxy = -15, -65             
+hitsound = S4, 7
+guardsound = S2, 0           
+ground.type = High               
+ground.slidetime = 5             
+ground.hittime  = 12             
+ground.velocity = -4,0           
+airguard.velocity = -1.9,-.8    
+air.type = High                  
+air.velocity = -1.4,-3           
+air.hittime = 12                 
+p2stateno = 3021
+
+[State 3030,  AfterImage]
+type = AfterImage
+trigger1 = Time = 1
+time = 24
+length = 10
+framegap = 3
+trans = add1
+palcontrast = 128,128,128
+paladd = 0,0,0
+palmul = 1,1,1
+
+[State 3030, ChangeState]
+type = ChangeState
+triggerall = var(7) = 1
+triggerall = Time <= 26
+trigger1 = command = "y"
+value = 3040
+
+[State 3030, ChangeState]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1 
+
+;------------------------------------------------------------------------------
+;-| 地上レイジコンビネーション ３ |--------------------------------------------
+:------------------------------------------------------------------------------
+[Statedef 3040]
+type     = S                     
+movetype = A                     
+physics  = N                     
+juggle   = 1                    
+velset   = 0,0                  
+ctrl     = 0                     
+anim     = 3040                   
+poweradd = 0                   
+sprpriority = 2                 
+
+[State 3040, PlaySnd]
+type = PlaySND
+trigger1 = AnimElem = 1,2
+value = 3,3
+
+[State 3040, Explod]
+type = Explod
+trigger1 = Time = 1
+trigger1 = NumExplod(7030) = 0
+trigger1 = TeamSide = 1
+anim = 7030
+ID = 7030
+pos = 40,210
+postype = left
+ownpal = 1
+bindtime = -1
+removetime = -2
+sprpriority = 5
+ontop = 1
+removeongethit = 1
+ignorehitpause = 1
+
+[State 3040, Explod]
+type = Explod
+trigger1 = Time = 1
+trigger1 = NumExplod(7030) = 0
+trigger1 = TeamSide = 2
+anim = 7030
+ID = 7030
+pos = 215,210
+postype = left
+ownpal = 1
+bindtime = -1
+removetime = -2
+sprpriority = 5
+ontop = 1
+removeongethit = 1
+ignorehitpause = 1
+
+[State 3040, RemoveExplod]
+type = RemoveExplod
+trigger1 = Time = 1
+ID = 7020
+
+[State 3030, RemoveExplod]
+type = RemoveExplod
+trigger1 = AnimTime = 0
+ID = 7030
+
+[State 3040, VelSet]
+type = VelSet
+trigger1 = Time = 1
+x = 3
+
+[State 3040, VarSet]
+type = VarSet
+trigger1 = Time = 0
+var(7) = 0
+
+[State 3040, VarSet]
+type = VarSet
+trigger1 = MoveHit
+var(7) = 1
+
+[State 3040, HitDef]
+type = HitDef                    
+trigger1 = time = 0          
+attr = S, NA                     
+damage = 15, 0                   
+animtype = Light                 
+guardflag = MA                   
+hitflag = MAF                    
+priority = 3, Hit                
+pausetime = 10, 12                 
+sparkno = S6002                   
+guard.sparkno = S6010              
+sparkxy = -15, -65             
+hitsound = S4, 7
+guardsound = S2, 0          
+ground.type = High               
+ground.slidetime = 5             
+ground.hittime  = 12             
+ground.velocity = -4,0           
+airguard.velocity = -1.9,-.8    
+air.type = High                  
+air.velocity = -1.4,-3           
+air.hittime = 12                 
+p2stateno = 3021
+
+[State 3040,  AfterImage]
+type = AfterImage
+trigger1 = Time = 1
+time = 24
+length = 10
+framegap = 3
+trans = add1
+palcontrast = 128,128,128
+paladd = 0,0,0
+palmul = 1,1,1
+
+[State 3040, ChangeState]
+type = ChangeState
+triggerall = var(7) = 1
+triggerall = Time <= 26
+trigger1 = command = "y"
+value = 3050
+
+[State 3040, ChangeState]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1 
+
+;------------------------------------------------------------------------------
+;-| 地上レイジコンビネーション ４ |--------------------------------------------
+:------------------------------------------------------------------------------
+[Statedef 3050]
+type     = S                     
+movetype = A                     
+physics  = N                     
+juggle   = 1                    
+velset   = 0,0                  
+ctrl     = 0                     
+anim     = 3050                   
+poweradd = 0                   
+sprpriority = 2                 
+
+[State 3050, PlaySnd]
+type = PlaySND
+trigger1 = AnimElem = 1,2
+value = 3,3
+
+[State 3050, Explod]
+type = Explod
+trigger1 = Time = 1
+trigger1 = NumExplod(7040) = 0
+trigger1 = TeamSide = 1
+anim = 7040
+ID = 7040
+pos = 40,210
+postype = left
+ownpal = 1
+bindtime = -1
+removetime = -2
+sprpriority = 5
+ontop = 1
+removeongethit = 1
+ignorehitpause = 1
+
+[State 3050, Explod]
+type = Explod
+trigger1 = Time = 1
+trigger1 = NumExplod(7040) = 0
+trigger1 = TeamSide = 2
+anim = 7040
+ID = 7040
+pos = 215,210
+postype = left
+ownpal = 1
+bindtime = -1
+removetime = -2
+sprpriority = 5
+ontop = 1
+removeongethit = 1
+ignorehitpause = 1
+
+[State 3050, RemoveExplod]
+type = RemoveExplod
+trigger1 = Time = 1
+ID = 7030
+
+[State 3050, RemoveExplod]
+type = RemoveExplod
+trigger1 = AnimTime = 0
+ID = 7040
+
+[State 3050, VelSet]
+type = VelSet
+trigger1 = Time = 1
+x = 3
+
+[State 3050, VarSet]
+type = VarSet
+trigger1 = Time = 0
+var(7) = 0
+
+[State 3050, VarSet]
+type = VarSet
+trigger1 = MoveHit
+var(7) = 1
+
+[State 3050, HitDef]
+type = HitDef                    
+trigger1 = time = 0          
+attr = S, NA                     
+damage = 15, 0                   
+animtype = Light                 
+guardflag = MA                   
+hitflag = MAF                    
+priority = 3, Hit                
+pausetime = 10, 12                 
+sparkno = S6002                   
+guard.sparkno = S6010              
+sparkxy = -15, -65             
+hitsound = S4, 7
+guardsound = S2, 0         
+ground.type = High               
+ground.slidetime = 5             
+ground.hittime  = 12             
+ground.velocity = -4,0           
+airguard.velocity = -1.9,-.8    
+air.type = High                  
+air.velocity = -1.4,-3           
+air.hittime = 12                 
+p2stateno = 3021
+
+[State 3050,  AfterImage]
+type = AfterImage
+trigger1 = Time = 1
+time = 24
+length = 10
+framegap = 3
+trans = add1
+palcontrast = 128,128,128
+paladd = 0,0,0
+palmul = 1,1,1
+
+[State 3050, ChangeState]
+type = ChangeState
+triggerall = var(7) = 1
+triggerall = Time <= 26
+trigger1 = command = "y"
+value = 3060
+
+[State 3050, ChangeState]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1 
+
+;------------------------------------------------------------------------------
+;-| 地上レイジコンビネーション フィニッシュ |----------------------------------
+:------------------------------------------------------------------------------
+[Statedef 3060]
+type     = S                     
+movetype = A                     
+physics  = N                     
+juggle   = 1                    
+velset   = 0,0                  
+ctrl     = 0                     
+anim     = 3060                   
+poweradd = 0                   
+sprpriority = 2                 
+
+[State 3060, PlaySnd]
+type = PlaySND
+trigger1 = AnimElem = 4
+value = 3,3
+
+[State 3060, Explod]
+type = Explod
+trigger1 = Time = 1
+trigger1 = NumExplod(7050) = 0
+trigger1 = TeamSide = 1
+anim = 7050
+ID = 7050
+pos = 40,210
+postype = left
+ownpal = 1
+bindtime = -1
+removetime = -2
+sprpriority = 5
+ontop = 1
+removeongethit = 1
+ignorehitpause = 1
+
+[State 3060, Explod]
+type = Explod
+trigger1 = Time = 1
+trigger1 = NumExplod(7050) = 0
+trigger1 = TeamSide = 2
+anim = 7050
+ID = 7050
+pos = 215,210
+postype = left
+ownpal = 1
+bindtime = -1
+removetime = -2
+sprpriority = 5
+ontop = 1
+removeongethit = 1
+ignorehitpause = 1
+
+[State 3060, RemoveExplod]
+type = RemoveExplod
+trigger1 = Time = 1
+ID = 7040
+
+[State 3060, RemoveExplod]
+type = RemoveExplod
+trigger1 = AnimTime = 0
+ID = 7050
+
+[State 3060, PosAdd]
+type = PosAdd
+trigger1 = Animelem = 2
+trigger2 = Animelem = 3
+trigger3 = Animelem = 4
+trigger4 = Animelem = 5
+x = 8
+
+[State 3060, VelSet]
+type = VelSet
+trigger1 = AnimElem = 1
+x = 1
+
+[State 3060, VelSet]
+type = VelSet
+trigger1 = AnimElem = 5
+x = 0
+
+[State 3060, HitDef]
+type = HitDef
+trigger1 = time = 0
+attr = S, NA
+animtype  = Medium
+damage    = 20
+guardflag = MA
+pausetime = 16,16
+sparkno = S6003                   
+guard.sparkno = S6010              
+sparkxy = -15, -65             
+hitsound = S4, 7
+guardsound = S2, 0         
+ground.type = High
+ground.slidetime = 12
+ground.hittime  = 20
+ground.velocity = -2, -5.5
+air.velocity = -2, -5.5
+fall = 1
+fall.recover = 0
+
+[State 3060,  AfterImage]
+type = AfterImage
+trigger1 = Time = 1
+time = 24
+length = 10
+framegap = 3
+trans = add1
+palcontrast = 128,128,128
+paladd = 0,0,0
+palmul = 1,1,1
+
+[State 3060, ChangeState]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1 
+
+;------------------------------------------------------------------------------
+;-| 空中レイジコンビネーション ジャンプ |--------------------------------------
+;------------------------------------------------------------------------------
+[Statedef 3100]
+type    = A
+movetype= A
+physics = N
+juggle  = 0
+poweradd= 0
+velset = 0,0
+anim = 3100
+ctrl = 0
+
+[State 3100, PlaySnd]
+type = PlaySND
+trigger1 = AnimElem = 2
+value = 0,0
+
+[State 3100, Explod]
+type = Explod
+trigger1 = Time = 1
+trigger1 = NumExplod(7100) = 0
+trigger1 = TeamSide = 1
+anim = 7100
+ID = 7100
+pos = 40,210
+postype = left
+ownpal = 1
+bindtime = -1
+removetime = -2
+sprpriority = 5
+ontop = 1
+removeongethit = 1
+ignorehitpause = 1
+
+[State 3100, Explod]
+type = Explod
+trigger1 = Time = 1
+trigger1 = NumExplod(7100) = 0
+trigger1 = TeamSide = 2
+anim = 7100
+ID = 7100
+pos = 215,210
+postype = left
+ownpal = 1
+bindtime = -1
+removetime = -2
+sprpriority = 5
+ontop = 1
+removeongethit = 1
+ignorehitpause = 1
+
+[State 3030, RemoveExplod]
+type = RemoveExplod
+trigger1 = Time = 50
+ID = 7100
+
+[State 3100, VelSet]
+type = VelSet
+trigger1 = Time = 3
+x = 3.5
+y = -3.5
+
+[State 3100, VelSet]
+type = VelSet
+trigger1 = Time = 16
+y = 0
+
+[State 3100, VelAdd]
+type = VelAdd
+trigger1 = Time >= 50
+y = .36
+
+[State 3100, VelMul]
+type = VelMul
+trigger1 = Time >= 54
+x = .95
+
+[State 3100, ChangeState]
+type = ChangeState
+triggerall = Time > 16
+triggerall = Time < 42
+trigger1 = command = "x"
+value = 3120
+
+[State 3100, VelSet]
+type = ChangeState
+trigger1 = Vel Y > 0 && Pos Y >= 0
+value = 3110
+
+;------------------------------------------------------------------------------
+;-| 空中レイジコンビネーション 着地 |------------------------------------------
+;------------------------------------------------------------------------------
+[Statedef 3110]
+type = S
+movetype = I
+physics = S
+anim = 3110
+ctrl = 0
+velset = 0,0
+sprpriority = 2
+
+[State 3110, PosSet]
+type = PosSet
+trigger1 = time = 0
+y = 0
+
+[State 3110, PlaySnd]
+type = PlaySND
+trigger1 = AnimElem = 1
+value = 0,1
+
+[State 3110, Changestate]
+type = Changestate
+trigger1 = Animtime = 0
+value = 0
+ctrl = 1
+
+;------------------------------------------------------------------------------
+;-| 空中レイジコンビネーション １ |--------------------------------------------
+:------------------------------------------------------------------------------
+[Statedef 3120]
+type     = A                    
+movetype = A                     
+physics  = N                     
+juggle   = 1                    
+velset   = 0,0                  
+ctrl     = 0                     
+anim     = 3120                 
+poweradd = 0                   
+sprpriority = 2                 
+
+[State 3120, PlaySnd]
+type = PlaySND
+trigger1 = AnimElem = 2
+value = 3,3
+
+[State 3120, Explod]
+type = Explod
+trigger1 = Time = 1
+trigger1 = NumExplod(7110) = 0
+trigger1 = TeamSide = 1
+anim = 7110
+ID = 7110
+pos = 40,210
+postype = left
+ownpal = 1
+bindtime = -1
+removetime = -2
+sprpriority = 5
+ontop = 1
+removeongethit = 1
+ignorehitpause = 1
+
+[State 3120, Explod]
+type = Explod
+trigger1 = Time = 1
+trigger1 = NumExplod(7110) = 0
+trigger1 = TeamSide = 2
+anim = 7110
+ID = 7110
+pos = 215,210
+postype = left
+ownpal = 1
+bindtime = -1
+removetime = -2
+sprpriority = 5
+ontop = 1
+removeongethit = 1
+ignorehitpause = 1
+
+[State 3120, RemoveExplod]
+type = RemoveExplod
+trigger1 = Time = 1
+ID = 7100
+
+[State 3120, RemoveExplod]
+type = RemoveExplod
+trigger1 = Time = 34
+ID = 7110
+
+[State 3120, VelSet]
+type = VelSet
+trigger1 = Time = 1
+x = 3.5
+
+[State 3120, VelAdd]
+type = VelAdd
+trigger1 = Time >= 34
+y = .36
+
+[State 3120, VelMul]
+type = VelMul
+trigger1 = Time >= 34
+x = .95
+
+[State 3120, VarSet]
+type = VarSet
+trigger1 = Time = 0
+var(7) = 0
+
+[State 3120, VarSet]
+type = VarSet
+trigger1 = MoveHit
+var(7) = 1
+
+[State 3120, HitDef]
+type = HitDef                    
+trigger1 = time = 0          
+attr = S, NA                     
+damage = 15, 0                   
+animtype = Light                 
+guardflag = MA                   
+hitflag = MAF                    
+priority = 3, Hit                
+pausetime = 10, 12                 
+sparkno = S6002                   
+guard.sparkno = S6010              
+sparkxy = -15, -65             
+hitsound = S4, 7
+guardsound = S2, 0           
+ground.type = High               
+ground.slidetime = 5             
+ground.hittime  = 12             
+ground.velocity = -4,0           
+airguard.velocity = -1.9,-.8    
+air.type = High                  
+air.velocity = -1.4,-3           
+air.hittime = 12                 
+p2stateno = 3021
+
+[State 3120,  AfterImage]
+type = AfterImage
+trigger1 = Time = 1
+time = 24
+length = 10
+framegap = 3
+trans = add1
+palcontrast = 128,128,128
+paladd = 0,0,0
+palmul = 1,1,1
+
+[State 3120, ChangeState]
+type = ChangeState
+triggerall = var(7) = 1
+triggerall = Time <= 26
+trigger1 = command = "b"
+value = 3130
+
+[State 3120, VelSet]
+type = ChangeState
+trigger1 = Vel Y > 0 && Pos Y >= 0
+value = 3110
+
+;------------------------------------------------------------------------------
+;-| 空中レイジコンビネーション ２ |--------------------------------------------
+:------------------------------------------------------------------------------
+[Statedef 3130]
+type     = A                    
+movetype = A                     
+physics  = N                     
+juggle   = 1                    
+velset   = 0,0                  
+ctrl     = 0                     
+anim     = 3130                 
+poweradd = 0                   
+sprpriority = 2                 
+
+[State 3130, PlaySnd]
+type = PlaySND
+trigger1 = AnimElem = 2
+value = 3,3
+
+[State 3130, Explod]
+type = Explod
+trigger1 = Time = 1
+trigger1 = NumExplod(7120) = 0
+trigger1 = TeamSide = 1
+anim = 7120
+ID = 7120
+pos = 40,210
+postype = left
+ownpal = 1
+bindtime = -1
+removetime = -2
+sprpriority = 5
+ontop = 1
+removeongethit = 1
+ignorehitpause = 1
+
+[State 3130, Explod]
+type = Explod
+trigger1 = Time = 1
+trigger1 = NumExplod(7120) = 0
+trigger1 = TeamSide = 2
+anim = 7120
+ID = 7120
+pos = 215,210
+postype = left
+ownpal = 1
+bindtime = -1
+removetime = -2
+sprpriority = 5
+ontop = 1
+removeongethit = 1
+ignorehitpause = 1
+
+[State 3130, RemoveExplod]
+type = RemoveExplod
+trigger1 = Time = 1
+ID = 7110
+
+[State 3130, RemoveExplod]
+type = RemoveExplod
+trigger1 = Time = 34
+ID = 7120
+
+[State 3130, VelSet]
+type = VelSet
+trigger1 = Time = 1
+x = 3.5
+
+[State 3130, VelAdd]
+type = VelAdd
+trigger1 = Time >= 34
+y = .36
+
+[State 3130, VelMul]
+type = VelMul
+trigger1 = Time >= 34
+x = .95
+
+[State 3130, VarSet]
+type = VarSet
+trigger1 = Time = 0
+var(7) = 0
+
+[State 3130, VarSet]
+type = VarSet
+trigger1 = MoveHit
+var(7) = 1
+
+[State 3130, HitDef]
+type = HitDef                    
+trigger1 = time = 0          
+attr = S, NA                     
+damage = 15, 0                   
+animtype = Light                 
+guardflag = MA                   
+hitflag = MAF                    
+priority = 3, Hit                
+pausetime = 10, 12                 
+sparkno = S6002                   
+guard.sparkno = S6010              
+sparkxy = -15, -65             
+hitsound = S4, 7
+guardsound = S2, 0          
+ground.type = High               
+ground.slidetime = 5             
+ground.hittime  = 12             
+ground.velocity = -4,0           
+airguard.velocity = -1.9,-.8    
+air.type = High                  
+air.velocity = -1.4,-3           
+air.hittime = 12                 
+p2stateno = 3021
+
+[State 3130,  AfterImage]
+type = AfterImage
+trigger1 = Time = 1
+time = 24
+length = 10
+framegap = 3
+trans = add1
+palcontrast = 128,128,128
+paladd = 0,0,0
+palmul = 1,1,1
+
+[State 3130, ChangeState]
+type = ChangeState
+triggerall = var(7) = 1
+triggerall = Time <= 26
+trigger1 = command = "y"
+value = 3140
+
+[State 3130, VelSet]
+type = ChangeState
+trigger1 = Vel Y > 0 && Pos Y >= 0
+value = 3110
+
+;------------------------------------------------------------------------------
+;-| 空中レイジコンビネーション ３ |--------------------------------------------
+:------------------------------------------------------------------------------
+[Statedef 3140]
+type     = A                    
+movetype = A                     
+physics  = N                     
+juggle   = 1                    
+velset   = 0,0                  
+ctrl     = 0                     
+anim     = 3140                 
+poweradd = 0                   
+sprpriority = 2                 
+
+[State 3140, PlaySnd]
+type = PlaySND
+trigger1 = AnimElem = 2
+value = 3,3
+
+[State 3140, Explod]
+type = Explod
+trigger1 = Time = 1
+trigger1 = NumExplod(7130) = 0
+trigger1 = TeamSide = 1
+anim = 7130
+ID = 7130
+pos = 40,210
+postype = left
+ownpal = 1
+bindtime = -1
+removetime = -2
+sprpriority = 5
+ontop = 1
+removeongethit = 1
+ignorehitpause = 1
+
+[State 3140, Explod]
+type = Explod
+trigger1 = Time = 1
+trigger1 = NumExplod(7130) = 0
+trigger1 = TeamSide = 2
+anim = 7130
+ID = 7130
+pos = 215,210
+postype = left
+ownpal = 1
+bindtime = -1
+removetime = -2
+sprpriority = 5
+ontop = 1
+removeongethit = 1
+ignorehitpause = 1
+
+[State 3140, RemoveExplod]
+type = RemoveExplod
+trigger1 = Time = 1
+ID = 7120
+
+[State 3140, RemoveExplod]
+type = RemoveExplod
+trigger1 = Time = 34
+ID = 7130
+
+[State 3140, VelSet]
+type = VelSet
+trigger1 = Time = 1
+x = 3.5
+
+[State 3140, VelAdd]
+type = VelAdd
+trigger1 = Time >= 34
+y = .36
+
+[State 3140, VelMul]
+type = VelMul
+trigger1 = Time >= 34
+x = .95
+
+[State 3140, VarSet]
+type = VarSet
+trigger1 = Time = 0
+var(7) = 0
+
+[State 3140, VarSet]
+type = VarSet
+trigger1 = MoveHit
+var(7) = 1
+
+[State 3140, HitDef]
+type = HitDef                    
+trigger1 = time = 0          
+attr = S, NA                     
+damage = 15, 0                   
+animtype = Light                 
+guardflag = MA                   
+hitflag = MAF                    
+priority = 3, Hit                
+pausetime = 10, 12                 
+sparkno = S6002                   
+guard.sparkno = S6010              
+sparkxy = -15, -65             
+hitsound = S4, 7
+guardsound = S2, 0          
+ground.type = High               
+ground.slidetime = 5             
+ground.hittime  = 12             
+ground.velocity = -4,0           
+airguard.velocity = -1.9,-.8    
+air.type = High                  
+air.velocity = -1.4,-3           
+air.hittime = 12                 
+p2stateno = 3021
+
+[State 3140,  AfterImage]
+type = AfterImage
+trigger1 = Time = 1
+time = 24
+length = 10
+framegap = 3
+trans = add1
+palcontrast = 128,128,128
+paladd = 0,0,0
+palmul = 1,1,1
+
+[State 3140, ChangeState]
+type = ChangeState
+triggerall = var(7) = 1
+triggerall = Time <= 26
+trigger1 = command = "b"
+value = 3150
+
+[State 3140, VelSet]
+type = ChangeState
+trigger1 = Vel Y > 0 && Pos Y >= 0
+value = 3110
+
+;------------------------------------------------------------------------------
+;-| 空中レイジコンビネーション ４ |--------------------------------------------
+:------------------------------------------------------------------------------
+[Statedef 3150]
+type     = A                    
+movetype = A                     
+physics  = N                     
+juggle   = 1                    
+velset   = 0,0                  
+ctrl     = 0                     
+anim     = 3150                 
+poweradd = 0                   
+sprpriority = 2                 
+
+[State 3150, PlaySnd]
+type = PlaySND
+trigger1 = AnimElem = 2
+value = 3,3
+
+[State 3150, Explod]
+type = Explod
+trigger1 = Time = 1
+trigger1 = NumExplod(7140) = 0
+trigger1 = TeamSide = 1
+anim = 7140
+ID = 7140
+pos = 40,210
+postype = left
+ownpal = 1
+bindtime = -1
+removetime = -2
+sprpriority = 5
+ontop = 1
+removeongethit = 1
+ignorehitpause = 1
+
+[State 3150, Explod]
+type = Explod
+trigger1 = Time = 1
+trigger1 = NumExplod(7140) = 0
+trigger1 = TeamSide = 2
+anim = 7140
+ID = 7140
+pos = 215,210
+postype = left
+ownpal = 1
+bindtime = -1
+removetime = -2
+sprpriority = 5
+ontop = 1
+removeongethit = 1
+ignorehitpause = 1
+
+[State 3150, RemoveExplod]
+type = RemoveExplod
+trigger1 = Time = 1
+ID = 7130
+
+[State 3150, RemoveExplod]
+type = RemoveExplod
+trigger1 = Time = 34
+ID = 7140
+
+[State 3150, VelSet]
+type = VelSet
+trigger1 = Time = 1
+x = 3.5
+
+[State 3150, VelAdd]
+type = VelAdd
+trigger1 = Time >= 34
+y = .36
+
+[State 3150, VelMul]
+type = VelMul
+trigger1 = Time >= 34
+x = .95
+
+[State 3150, VarSet]
+type = VarSet
+trigger1 = Time = 0
+var(7) = 0
+
+[State 3150, VarSet]
+type = VarSet
+trigger1 = MoveHit
+var(7) = 1
+
+[State 3150, HitDef]
+type = HitDef                    
+trigger1 = time = 0          
+attr = S, NA                     
+damage = 15, 0                   
+animtype = Light                 
+guardflag = MA                   
+hitflag = MAF                    
+priority = 3, Hit                
+pausetime = 10, 12                 
+sparkno = S6002                   
+guard.sparkno = S6010              
+sparkxy = -15, -65             
+hitsound = S4, 7
+guardsound = S2, 0          
+ground.type = High               
+ground.slidetime = 5             
+ground.hittime  = 12             
+ground.velocity = -4,0           
+airguard.velocity = -1.9,-.8    
+air.type = High                  
+air.velocity = -1.4,-3           
+air.hittime = 12                 
+p2stateno = 3021
+
+[State 3150,  AfterImage]
+type = AfterImage
+trigger1 = Time = 1
+time = 24
+length = 10
+framegap = 3
+trans = add1
+palcontrast = 128,128,128
+paladd = 0,0,0
+palmul = 1,1,1
+
+[State 3150, ChangeState]
+type = ChangeState
+triggerall = var(7) = 1
+triggerall = Time <= 26
+trigger1 = command = "y"
+value = 3160
+
+[State 3150, VelSet]
+type = ChangeState
+trigger1 = Vel Y > 0 && Pos Y >= 0
+value = 3110
+
+;------------------------------------------------------------------------------
+;-| 空中レイジコンビネーション フィニッシュ |----------------------------------
+:------------------------------------------------------------------------------
+[Statedef 3160]
+type     = A                    
+movetype = A                     
+physics  = N                     
+juggle   = 1                    
+velset   = 0,0                  
+ctrl     = 0                     
+anim     = 3160                 
+poweradd = 0                   
+sprpriority = 2                 
+
+[State 3160, Width]
+type = Width
+trigger1 = Time > 0
+edge = 30,30
+
+[State 3160, PlaySnd]
+type = PlaySND
+trigger1 = AnimElem = 3
+value = 3,3
+
+[State 3160, Explod]
+type = Explod
+trigger1 = Time = 1
+trigger1 = NumExplod(7150) = 0
+trigger1 = TeamSide = 1
+anim = 7150
+ID = 7150
+pos = 40,210
+postype = left
+ownpal = 1
+bindtime = -1
+removetime = -2
+sprpriority = 5
+ontop = 1
+removeongethit = 1
+ignorehitpause = 1
+
+[State 3160, Explod]
+type = Explod
+trigger1 = Time = 1
+trigger1 = NumExplod(7150) = 0
+trigger1 = TeamSide = 2
+anim = 7150
+ID = 7150
+pos = 215,210
+postype = left
+ownpal = 1
+bindtime = -1
+removetime = -2
+sprpriority = 5
+ontop = 1
+removeongethit = 1
+ignorehitpause = 1
+
+[State 3160, RemoveExplod]
+type = RemoveExplod
+trigger1 = Time = 1
+ID = 7140
+
+[State 3160, RemoveExplod]
+type = RemoveExplod
+trigger1 = Time = 28
+ID = 7150
+
+[State 3160, VelSet]
+type = VelSet
+trigger1 = Time = 1
+x = 3.5
+
+[State 3160, VelAdd]
+type = VelAdd
+trigger1 = Time >= 28
+y = .36
+
+[State 3160, VelMul]
+type = VelMul
+trigger1 = Time >= 12
+x = .95
+
+[State 3160, HitDef]
+type = HitDef                    
+trigger1 = time = 0          
+attr = S, NA                     
+damage = 15, 0                   
+animtype = Light                 
+guardflag = MA                   
+hitflag = MAF                    
+priority = 3, Hit                
+pausetime = 16, 16                 
+sparkno = S6003                   
+guard.sparkno = S6010              
+sparkxy = -15, -65             
+hitsound = S4, 7
+guardsound = S2, 0          
+ground.type = High               
+ground.slidetime = 5             
+ground.hittime  = 12             
+ground.velocity = -4,0           
+airguard.velocity = -1.9,-.8    
+air.type = High                  
+air.velocity = -1.4,-3           
+air.hittime = 12                 
+p2stateno = 241
+p2facing = 1
+
+[State 3160,  AfterImage]
+type = AfterImage
+trigger1 = Time = 1
+time = 24
+length = 10
+framegap = 3
+trans = add1
+palcontrast = 128,128,128
+paladd = 0,0,0
+palmul = 1,1,1
+
+[State 3160, VelSet]
+type = ChangeState
+trigger1 = Vel Y > 0 && Pos Y >= 0
+value = 3110
+
+;------------------------------------------------------------------------------
+;-| クイックレイジコンビネーション始動技 |-------------------------------------
+;------------------------------------------------------------------------------
+[Statedef 3200]
+type    = S
+movetype= A
+physics = N
+juggle  = 4
+poweradd= 0
+ctrl = 0
+velset = 0,0
+anim = 3200
+sprpriority = 2
+
+;---------------------------------------------------
+;クイック発動：画面効果
+[State 3200, SuperPause]
+type = SuperPause
+trigger1 = Time = 0
+time = 18
+movetime = 18
+anim = -1
+darken = 0
+poweradd = -1000
+p2defmul = 1
+
+[State 3200, PlaySnd]
+type = PlaySND
+trigger1 = AnimElem = 1
+value = 5,3
+
+[State 3200, Explod]
+type = Explod
+trigger1 = Time = 0
+anim = 6030
+pos = 0,-65
+postype = p1
+sprpriority = 3
+supermove = 1
+bindtime = 1
+removetime = -2
+ownpal = 1
+;---------------------------------------------------
+
+[State 3200, PlaySnd]
+type = PlaySND
+trigger1 = AnimElem = 4,2
+value = 3,4
+
+[State 3200, PlaySnd]
+type = PlaySND
+trigger1 = AnimElem = 4,2
+value = 50,3
+
+[State 3200, PosAdd]
+type = PosAdd
+trigger1 = AnimElem = 2
+trigger2 = AnimElem = 3
+trigger3 = AnimElem = 4
+trigger4 = AnimElem = 5
+x = 10
+
+[State 3200, HitDef]
+type = HitDef
+trigger1 = Time = 0
+attr = S, SA
+animtype  = Hard
+damage    = 10
+guardflag = M
+pausetime = 32,32
+sparkno = S6003
+guard.sparkno = S6011 
+sparkxy = -10,-65
+hitsound = S4, 7
+guardsound = S2,0
+ground.type = Low
+ground.slidetime = 12
+ground.hittime  = 15
+ground.velocity = -5,-5.7
+air.velocity = -3.2,-4.2
+p1stateno = 3010
+p2facing = 1
+
+[State 3200,  AfterImage]
+type = AfterImage
+trigger1 = Time = 1
+time = 32
+length = 10
+framegap = 3
+trans = add1
+palcontrast = 128,128,128
+paladd = 0,0,0
+palmul = 1,1,1
+
+[State 3200, ChangeState]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1

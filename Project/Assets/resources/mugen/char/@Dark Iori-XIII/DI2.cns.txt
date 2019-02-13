@@ -1,0 +1,298 @@
+;------------------
+
+
+;废剐狦い秖
+[Statedef 7401]
+type    = S
+movetype = A
+physics = N
+anim = 7450
+velset = 0,0
+ctrl = 0
+
+[State 7401, 0]
+type = Explod
+triggerall = Random < 300
+trigger1 = NumExplod(498) <= 1
+trigger1 = Time =[150, 300]
+persistent = 10
+anim = 498
+id = 498
+pos = -20, 0
+random = 30, 20
+postype = p2
+shadow = -1
+sprpriority = 5
+bindtime = 1
+ignorehitpause = 1
+supermove = 1
+ownpal = 1
+scale               = .5,.5
+
+
+[State 7401, 0]
+type = Explod
+triggerall = Random < 300
+trigger1 = NumExplod(501) <= 1
+trigger1 = Time =[150, 270]
+persistent = 15
+anim = 13000
+id = 501
+pos = -10, -75
+random = 10, 10
+postype = p2
+shadow = -1
+sprpriority = 5
+bindtime = 1
+ignorehitpause = 1
+supermove = 1
+ownpal = 1
+scale               = .5,.5
+
+[State 7401, 0]
+type = Explod
+triggerall = Random < 300
+trigger1 = NumExplod(501) <= 1
+trigger1 = Time =[150, 270]
+persistent = 15
+anim = 13200
+id = 501
+pos = -10, -75
+random = 10, 10
+postype = p2
+shadow = -1
+sprpriority = 5
+bindtime = 1
+ignorehitpause = 1
+supermove = 1
+ownpal = 1
+scale               = .5,.5
+
+
+
+
+[State 7401, 0]
+type = DestroySelf
+trigger1 = Time = 490
+
+[Statedef 30160]
+type    = S
+movetype = H
+physics = N
+ctrl = 0
+velset = -.2,0
+sprpriority = 1
+
+[State 3007,pf ]
+type = PalFX
+trigger1 = timemod = 8,0
+time = 7
+add = 100,0,0
+mul = 165,0,0
+sinadd = 195,0,0,17
+invertall = 1
+color = 1
+
+[State 3005,ca2 ]
+type = ChangeAnim2
+trigger1 = time = 0
+value = 13016
+
+[Statedef 13017]
+type    = A
+movetype = H
+physics = N
+ctrl = 0
+anim = 5030
+velset = 6,-11
+sprpriority = 1
+
+[State 3007,pf ]
+type = PalFX
+trigger1 = timemod = 8,0 && time < 25
+time = 7
+add = 100,0,0
+mul = 165,0,0
+sinadd = 195,0,0,17
+invertall = 1
+color = 1
+
+[State 3017, vs ]
+type = VelSet
+trigger1 = time = 5
+trigger2 = time = 15
+x = -4
+y = -7
+
+[State 3017, vs ]
+type = VelSet
+trigger1 = time = 10
+x = 4
+y = -7
+
+
+[State 3007,g ]
+type = Gravity
+trigger1 = time >= 0
+
+[State 3006,ca ]
+type = ChangeAnim
+trigger1 = (time = 15) && (selfanimexist(5062))
+value = 5062
+
+[State 3007,sf ]
+type = SelfState
+trigger1 = pos Y >= 0 && time > 5
+value = 5100
+
+[Statedef 3015]
+type    = S
+movetype = H
+physics = S
+ctrl = 0
+velset = -2,0
+sprpriority = 1
+
+[State 3005,ps ]
+type = PosSet
+trigger1 = time = 0
+y = 0
+
+
+[State 3005,ca2 ]
+type = ChangeAnim2
+trigger1 = time = 0
+value = 13005
+
+
+[Statedef 33621]
+type = A
+movetype = I
+physics = N
+anim = 3016
+ctrl = 0
+sprpriority = 10
+supermove = 1
+
+[State 0, BindToRoot]
+type = BindToRoot ;基绑定位置控制器 同bindtoParent
+trigger1 = 1
+time = 1
+;facing = 0
+pos = 0,0
+;ignorehitpause =
+;persistent =
+
+
+[State 0, AfterImage]
+type = AfterImage ;残影控制器
+trigger1 = time = 0
+time = -1 ;残影持续时间
+length = 20 ;残影长度
+timegap = 1 ;多少ticks记录一次残影
+framegap = 1 ;AIR播放多少动画图片记录一次
+trans = add ;"none","add1","sub" ;残影透明类型
+
+[State 0, DestroySelf]
+type = DestroySelf ;毁灭自己控制器
+trigger1 = animtime = 0
+
+
+;---------------------------------------------------------------------------
+;憡庤摦嶌(忋抜傗傜傟)
+[Statedef 2420]
+type    = A
+movetype= H
+physics = N
+velset = 0,0
+
+[State 52, 1]
+type = Hitfallset
+trigger1 = 1
+value = 0
+
+[State 52, 1]
+type = VelSet
+trigger1 = 1
+x = 0
+y = 0
+
+[State 52, 2]
+type = PosSet
+trigger1 = Time = 0
+y = 0
+
+[State 1830]
+type = ChangeAnim2
+Trigger1 = Time = 0
+value = 2430
+
+[State 1830]
+type = SelfState
+trigger1 = Animtime = 0
+value = 0
+ctrl = 1
+
+;---------------------------------------------------------------------------
+;憡庤摦嶌(壓抜傗傜傟)
+[Statedef 24250]
+type    = A
+movetype= H
+physics = N
+velset = 0,0
+
+[State 52, 1]
+type = Hitfallset
+trigger1 = 1
+value = 0
+
+[State 52, 1]
+type = VelSet
+trigger1 = 1
+x = 0
+y = 0
+
+[State 52, 2]
+type = PosSet
+trigger1 = Time = 0
+y = 0
+
+[State 1830]
+type = ChangeAnim2
+Trigger1 = Time = 0
+value = 2440
+
+[State 1830]
+type = SelfState
+trigger1 = Animtime = 0
+value = 0
+ctrl = 1
+
+;——————————————————————————————————————————
+[Statedef 2421]
+type    = A
+movetype= H
+physics = N
+velset = 0,0
+
+[State 52, 1]
+type = Hitfallset
+trigger1 = 1
+value = 0
+
+[State 52, 1]
+type = VelSet
+trigger1 = 1
+x = 0
+y = 0
+
+[State 1830]
+type = ChangeAnim2
+Trigger1 = Time = 0
+value = 2430
+
+[State 1830]
+type = SelfState
+trigger1 = Animtime = 0
+value = 0
+ctrl = 1

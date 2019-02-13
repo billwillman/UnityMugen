@@ -140,6 +140,21 @@ namespace Mugen
             get; protected set;
         }
 
+		// Lua½Å±¾ÎÄ¼þ
+		public string lua
+		{
+			get;
+			protected set;
+		}
+
+		public bool HasLuaFile
+		{
+			get
+			{
+				return !string.IsNullOrEmpty(lua);
+			}
+		}
+
 
         public bool IsDefaultPal
         {

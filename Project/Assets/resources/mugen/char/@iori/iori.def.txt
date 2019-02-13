@@ -1,0 +1,35 @@
+;---------------------------------
+; IORI YAGAMI ver 8.00. = 95,9%
+; -zelgadis-
+;---------------------------------
+
+;Información General
+
+[Info]
+Name         ="Av Iori"
+DisplayName  ="Orochi Yagami"
+Author       ="Zelgadis"
+finaluptate  = 01,26,2007
+Pal.Defaults =1,2,3
+versiondate  =1/8/2006
+mugenversion =06,14,2003
+
+[Files]
+Cmd      =Iori_Yagami.cmd
+Cns      =Iori_Yagami.cns
+St       =Iori_Yagami.cns
+StCommon =common1.cns
+Sprite   =Iori_Yagami.sff
+Anim     =Iori_Yagami.air
+Sound    =Iori_Yagami.snd
+pal1=_Paletas/Iori_Orochi.act
+st1=Iori_Yagami-N.cns
+st2=Iori_Yagami-S.cns
+st3=Iori_Yagami-H.cns
+st4=Iori_Yagami-2-3.cns
+
+
+;Arcade mode
+[Arcade]
+intro.storyboard  =
+ending.storyboard =

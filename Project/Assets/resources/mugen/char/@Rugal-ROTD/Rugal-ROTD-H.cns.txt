@@ -1,0 +1,2081 @@
+;==============================================================================
+;-| 超必殺技 |-----------------------------------------------------------------
+;==============================================================================
+
+;var(6) = 追加コマンド入力判定
+;var(7) = コンビネーション ヒット判定
+;var(9) = ジャンプ関連
+;var(24)= 壁激突音関連
+;var(30)= カイザーウェイブ・タメ関連
+
+;------------------------------------------------------------------------------
+;-| ギガンテックプレッシャー |-------------------------------------------------
+;------------------------------------------------------------------------------
+[Statedef 2000]
+type    = S
+movetype= A
+physics = N
+juggle  = 4
+poweradd= 0
+ctrl = 0
+velset = 0,0
+anim = 2000
+sprpriority = 3
+
+;---------------------------------------------------
+;超必殺技：画面効果
+[State 2000, SuperPause]
+type = SuperPause
+trigger1 = Time = 2
+time = 30
+movetime = 30
+anim = -1
+darken = 0
+poweradd = -1000
+p2defmul = 1
+
+[State 2000, PlaySnd]
+type = PlaySND
+trigger1 = AnimElem = 1
+value = 5,0
+
+[State 2000, EnvColor]
+type = EnvColor
+trigger1 = Time = 2
+ignorehitpause = 1
+value = 0, 0, 0
+time = 31
+under = 1
+
+[State 2000, AssertSpecial]
+type = AssertSpecial
+trigger1 = Time = [1,31]
+flag = NoFG
+flag1 = noshadow
+ignorehitpause = 1
+
+[State 2000, Explod]
+type = Explod
+trigger1 = Time = 2
+anim = 6050
+pos = -45,-100
+postype = p1
+sprpriority = 0
+supermove = 1
+bindtime = 1
+removetime = -2
+ownpal = 1
+
+[State 2000, Explod]
+type = Explod
+trigger1 = Time = 2
+anim = 6051
+pos = -45,-100
+postype = p1
+sprpriority = 3
+supermove = 1
+bindtime = 1
+removetime = -2
+ownpal = 1
+;---------------------------------------------------
+
+[State 2000, PlaySnd]
+type = PlaySND
+trigger1 = AnimElem = 4
+value = 50,0
+channel = 0
+
+[State 2000, PlaySnd]
+type = PlaySnd
+trigger1 = AnimElem = 6 || AnimElem = 10
+value = 1,0
+channel = 4
+
+[State 2000, VelSet]
+type = VelSet
+trigger1 = AnimElem = 5
+x = 7.5
+
+[State 2000, HitDef]
+type = HitDef                    
+trigger1 = time = 0          
+attr = S, ST                     
+damage = 0                
+animtype = Hard                 
+guardflag = MAF                   
+hitflag = MAF                    
+priority = 3, Hit                
+pausetime = 6, 6                
+sparkno = S90000                
+guard.sparkno = S6011             
+sparkxy = -5, -40            
+hitsound = S7, 1
+guardsound = S2, 0               
+ground.type = Low               
+ground.slidetime = 12            
+ground.hittime  = 20             
+ground.velocity = 0          
+airguard.velocity = -1.9,-.8    
+air.type = High                  
+air.velocity = -3.0,-3.0           
+air.hittime = 12       
+p2facing = 1
+fall = 0
+numhits = 0
+
+[State 2000, ChangeState]
+type = ChangeState
+trigger1 = MoveHit = 1
+value = 2020
+
+[State 2000, ChangeState]
+type = ChangeState
+trigger1 = MoveGuarded = 1
+value = 1340
+
+[State 2000, ChangeState]
+type = ChangeState
+trigger1 = Time = 60
+value = 1310
+
+;------------------------------------------------------------------------------
+;-| ギガンテックプレッシャー 掴み |--------------------------------------------
+;------------------------------------------------------------------------------
+[Statedef 2020]
+type    = S
+movetype= A
+physics = N
+juggle  = 0
+poweradd= 0
+ctrl = 0
+velset = 0,0
+anim = 1320
+sprpriority = 3
+
+[State 2020, PlaySnd]
+type = PlaySND
+trigger1 = AnimElem = 1
+value = 3,6
+
+[State 2020, Explod]
+type = Explod
+trigger1 = AnimElem = 1
+anim = 30200
+ID = 30200
+pos = -20,-60
+postype = p1
+ownpal = 1
+bindtime = -1
+removetime = -1
+sprpriority = 5
+persistent = 0
+removeongethit = 1
+ignorehitpause = 1
+
+[State 2020, Explod]
+type = Explod
+trigger1 = time % 8 = 0
+anim = 26200
+ID = 26200
+pos = 0,5
+postype = p1
+ownpal = 1
+bindtime = 1
+removetime = -2
+sprpriority = 4
+persistent = 1
+removeongethit = 1
+ignorehitpause = 1
+
+[State 2020, VelSet]
+type = VelSet
+trigger1 = time = 0
+x = 8.5
+
+[state 2020, TargetState]
+type = TargetState
+trigger1 = time = 0
+value = 2021
+
+[State 2020, TargetBind]
+type = TargetBind
+trigger1 = time = 0
+pos = -25,-65
+time = -1
+
+[State 2020, ChangeState]
+type = ChangeState
+trigger1 = FrontEdgeDist < 10
+value = 2030
+
+;---------------------------------------------------------------------------
+;ギガンテックプレッシャー 掴み 2P
+[Statedef 2021]
+type    = A
+movetype= H
+physics = N
+velset = 0,0
+sprpriority = 4
+
+[State 2021, ScreenBound]
+type = ScreenBound
+trigger1 = 1
+value = 1
+movecamera = 1
+
+[State 2021, ChangeAnim2]
+type = ChangeAnim2
+Trigger1 = Time = 0
+value = 1321
+
+[State 2021, PalFX]
+type = PalFX 
+trigger1 = Time = 0
+time = -1
+color = 0
+invertall = 1
+add = 104,0,0
+sinadd = -64,-8,-8,8
+
+;------------------------------------------------------------------------------
+;-| ギガンテックプレッシャー 叩き潰し |----------------------------------------
+;------------------------------------------------------------------------------
+[Statedef 2030]
+type    = S
+movetype= A
+physics = N
+juggle  = 0
+poweradd= 0
+ctrl = 0
+velset = 0,0
+anim = 2030
+sprpriority = 3
+
+[State 2030, PlaySnd]
+type = PlaySND
+trigger1 = AnimElem = 2
+value = 65, 0
+
+[State 2030, PlaySnd]
+type = PlaySND
+trigger1 = AnimElem = 2
+value = 3, 4
+
+[State 2030, PlaySnd]
+type = PlaySND
+trigger1 = AnimElem = 3
+value = 63, 1
+
+[State 2030, PlaySnd]
+type = PlaySND
+trigger1 = AnimElem = 3
+value = 65, 1
+
+[State 2030, PlaySnd]
+type = PlaySND
+trigger1 = AnimElem = 7
+value = 1, 1
+
+[State 2030, Explod]
+type = Explod
+trigger1 = AnimElem = 1
+anim = 30200
+ID = 30201
+pos = -20,-60
+postype = p1
+ownpal = 1
+bindtime = -1
+removetime = 1
+sprpriority = 5
+persistent = 0
+removeongethit = 1
+ignorehitpause = 1
+
+[State 2030, Explod]
+type = Explod
+trigger1 = AnimElem = 2
+anim = 30200
+ID = 30202
+pos = 55,-70
+postype = p1
+ownpal = 1
+bindtime = -1
+removetime = 2
+sprpriority = 5
+persistent = 0
+removeongethit = 1
+ignorehitpause = 1
+
+[State 2030, Explod]
+type = Explod
+trigger1 = AnimElem = 3
+anim = 30300
+ID = 30300
+pos = 55,0
+postype = p1
+ownpal = 1
+bindtime = 1
+removetime = -2
+sprpriority = 5
+persistent = 0
+removeongethit = 1
+ignorehitpause = 1
+
+[State 2030, RemoveExplod]
+type = RemoveExplod
+trigger1 = Time = 0
+ID = 30200
+
+[State 2030, PosAdd]
+type = PosAdd
+trigger1 = Time = 0
+x = -60
+
+[State 2030, PosAdd]
+type = PosAdd
+trigger1 = AnimElem = 6
+x = -24
+
+[State 2030, VelSet]
+type = VelSet
+trigger1 = AnimElem = 7
+x = -5
+y = -4.25
+
+[State 2030, VelAdd]
+type = VelAdd
+trigger1 = AnimElem = 7,>= 0
+y = .48
+
+[State 2030, TargetState]
+type = TargetState
+trigger1 = Time = 0
+value = 2031
+
+[State 2030, TargetLifeAdd]
+type = TargetLifeAdd
+trigger1 = AnimElem = 3
+value = -200
+kill = 1
+
+[State 2030, TargetBind]
+type = TargetBind
+trigger1 = AnimElem = 1
+pos = -25,-65
+time = -1
+
+[State 2030, TargetBind]
+type = TargetBind
+trigger1 = AnimElem = 2
+pos = 65,-70
+time = -1
+
+[State 2030, TargetBind]
+type = TargetBind
+trigger1 = AnimElem = 3
+pos = 95,-70
+time = 17
+
+[State 2030, EnvShake]
+type = EnvShake
+trigger1 = AnimElem = 3
+time = 24
+ampl = 6
+freq = 180
+
+[State 2030, Envcolor]
+type = Envcolor
+trigger1 = AnimElem = 3
+persistent = 1
+ignorehitpause = 1
+value = 240, 8, 8
+time = 1
+under = 1
+supermove = 1
+
+[State 2030, ChangeState]
+type = ChangeState
+trigger1 = Vel Y > 0 && Pos Y >= 0
+value = 1335
+
+;---------------------------------------------------------------------------
+;ギガンテックプレッシャー 叩き潰し 2P
+[Statedef 2031]
+type    = A
+movetype= H
+physics = N
+velset = 0,0
+sprpriority = 4
+
+[State 2031, ChangeAnim2]
+type = ChangeAnim2
+Trigger1 = Time = 0
+value = 1331
+
+[State 2031, ScreenBound]
+type = ScreenBound
+trigger1 = Time < 20
+value = 1
+movecamera = 1
+
+[State 2031, SprPriority]
+type = SprPriority
+trigger1 = AnimElem = 4
+value = 0
+
+[State 2031, PosAdd]
+type = PosAdd
+trigger1 = AnimElem = 4
+y = 65
+
+[State 2031, VelSet]
+type = VelSet
+trigger1 = AnimElem = 4
+x = -5.5
+y = -4.5
+
+[State 2031, VelAdd]
+type = VelAdd
+trigger1 = AnimElem = 4,>= 0
+y = .4
+
+[State 2031, PalFX]
+type = PalFX 
+trigger1 = Time = 0
+time = 48
+color = 0
+invertall = 1
+add = 104,0,0
+sinadd = -64,-8,-8,8
+
+[State 2031, SelfState]
+type = SelfState
+triggerall = AnimElemtime(4) > 0
+trigger1 = Vel Y > 0
+trigger1 = Pos Y >= 24
+value = 5100
+
+;------------------------------------------------------------------------------
+;-| デッドエンドスクリーマー |-------------------------------------------------
+;------------------------------------------------------------------------------
+[Statedef 2100]
+type    = S
+movetype= A
+physics = N
+juggle  = 4
+poweradd= 0
+ctrl = 0
+velset = 0,0
+anim = 2100
+sprpriority = 3
+
+;---------------------------------------------------
+;超必殺技：画面効果
+[State 2100, SuperPause]
+type = SuperPause
+trigger1 = Time = 2
+time = 30
+movetime = 30
+anim = -1
+darken = 0
+poweradd = -1000
+
+[State 2100, PlaySnd]
+type = PlaySND
+trigger1 = AnimElem = 1
+value = 5,0
+
+[State 2100, EnvColor]
+type = EnvColor
+trigger1 = Time = 2
+ignorehitpause = 1
+value = 0, 0, 0
+time = 31
+under = 1
+
+[State 2100, AssertSpecial]
+type = AssertSpecial
+trigger1 = Time = [1,31]
+flag = NoFG
+flag1 = noshadow
+ignorehitpause = 1
+
+[State 2100, Explod]
+type = Explod
+trigger1 = Time = 2
+anim = 6050
+pos = 15,-70
+postype = p1
+sprpriority = 0
+supermove = 1
+bindtime = 1
+removetime = -2
+ownpal = 1
+
+[State 2100, Explod]
+type = Explod
+trigger1 = Time = 2
+anim = 6051
+pos = 15,-70
+postype = p1
+sprpriority = 3
+supermove = 1
+bindtime = 1
+removetime = -2
+ownpal = 1
+;---------------------------------------------------
+
+[State 2100, PlaySnd]
+type = PlaySND
+trigger1 = AnimElem = 4
+value = 66,2
+
+[State 2100, PosAdd]
+type = PosAdd
+trigger1 = AnimElem = 4
+x = 8
+
+[State 2100, VelSet]
+type = VelSet
+trigger1 = Animelem = 4
+x = 2.5
+y = -11.5
+
+[State 2100, VelAdd]
+type = VelAdd
+trigger1 = Animelem = 4,>= 0
+y = .64
+
+[State 2100, StateTypeSet]
+type = StateTypeSet
+trigger1 = AnimElem = 4
+StateType = A
+physics = N
+
+[State 2100, HitDef]
+type = HitDef                    
+trigger1 = time = 0          
+attr = S, ST                     
+damage = 0                
+animtype = Hard                 
+;guardflag = MAF                   
+hitflag = MAF                    
+priority = 3, Hit                
+pausetime = 6, 6                
+sparkno = S90000                
+guard.sparkno = S6011             
+sparkxy = -5, -40            
+hitsound = S99, 0
+guardsound = S2, 0               
+ground.type = Low               
+ground.slidetime = 12            
+ground.hittime  = 20             
+ground.velocity = 0          
+airguard.velocity = -1.9,-.8    
+air.type = High                  
+air.velocity = -3.0,-3.0           
+air.hittime = 12       
+p2facing = 1
+fall = 0
+numhits = 0
+
+[State 2100, ChangeState]
+type = ChangeState
+trigger1 = MoveHit = 1
+value = 2120
+
+[State 2100, VelSet]
+type = ChangeState
+trigger1 = Vel Y > 0 && Pos Y >= 0
+value = 2110
+
+;------------------------------------------------------------------------------
+;-| デッドエンドスクリーマー Miss |--------------------------------------------
+;------------------------------------------------------------------------------
+[Statedef 2110]
+type = S
+movetype = I
+physics = S
+anim = 2110
+ctrl = 0
+velset = 0,0
+sprpriority = 2
+
+[State 2110, PlaySnd]
+type = PlaySND
+trigger1 = AnimElem = 1
+value = 0,1
+
+[State 2110, PosSet]
+type = PosSet
+trigger1 = time = 0
+y = 0
+
+[State 2110, PosAdd]
+type = PosAdd
+trigger1 = AnimElem = 1 || AnimElem = 5
+x = 8
+
+[State 2110, Changestate]
+type = Changestate
+trigger1 = Animtime = 0
+value = 0
+ctrl = 1
+
+;------------------------------------------------------------------------------
+;-| デッドエンドスクリーマー 頭・着地 |----------------------------------------
+;------------------------------------------------------------------------------
+[Statedef 2120]
+type    = A
+movetype= A
+physics = N
+juggle  = 0
+poweradd= 0
+ctrl = 0
+velset = 0,0
+anim = 2120
+sprpriority = 3
+
+[State 2120, PlaySnd]
+type = PlaySND
+trigger1 = AnimElem = 1
+value = 4, 4
+
+[State 2120, Explod]
+type = Explod
+trigger1 = AnimElem = 1
+anim = 6002
+postype = p1
+pos = 0,0
+ownpal = 1
+bindtime = 1
+removetime = -2
+sprpriority = 4
+removeongethit = 1
+ignorehitpause = 1
+
+
+[State 2120, TargetState]
+type = TargetState
+trigger1 = Time = 0
+value = 2121
+
+[State 2120, BindToTarget]
+type = BindToTarget
+trigger1 = Time = 0
+pos = 10,10,Head
+time = 1
+
+[State 2120, Envcolor]
+type = Envcolor
+trigger1 = AnimElem = 2
+persistent = 0
+ignorehitpause = 1
+value = 255, 255, 255
+time = 1
+under = 1
+supermove = 1
+
+[State 2120, ChangeState]
+type = ChangeState
+trigger1 = Animtime = 0
+value = 2130
+
+;---------------------------------------------------------------------------
+;デッドエンドスクリーマー 頭・着地 2P
+[Statedef 2121]
+type    = S
+movetype= H
+physics = N
+velset = 0,0
+sprpriority = 2
+
+[State 2121, ScreenBound]
+type = ScreenBound
+trigger1 = 1
+value = 1
+movecamera = 1
+
+[State 2121, ChangeAnim2]
+type = ChangeAnim2
+Trigger1 = Time = 0
+value = 2121
+
+;------------------------------------------------------------------------------
+;-| デッドエンドスクリーマー 落下 |--------------------------------------------
+;------------------------------------------------------------------------------
+[Statedef 2130]
+type    = A
+movetype= A
+physics = N
+juggle  = 0
+poweradd= 0
+ctrl = 0
+velset = 0,0
+anim = 2130
+sprpriority = 3
+
+[State 2130, Width]
+type = Width
+trigger1 = AnimElem = 1,>= 0
+edge = 30
+
+[State 2130, PlaySnd]
+type = PlaySND
+trigger1 = AnimElem = 1
+value = 66,0
+channel = 0
+
+[State 2130, PosAdd]
+type = PosAdd
+trigger1 = time = 0
+y = 20
+
+[State 2130, VelSet]
+type = VelSet
+trigger1 = AnimElem = 1
+y = 6
+
+[State 2130, VelAdd]
+type = VelAdd
+trigger1 = Animelem = 1,>= 0
+y = .48
+
+[State 2130, TargetState]
+type = TargetState
+trigger1 = Time = 0
+value = 2131
+
+[State 2130, TargetBind]
+type = TargetBind
+trigger1 = Time = 0
+pos = 0,-25
+time = -1
+
+[State 2130, TargetBind]
+type = TargetBind
+trigger1 = AnimElem = 2
+pos = 0,-20
+time = -1
+
+[State 2130, TargetBind]
+type = TargetBind
+trigger1 = AnimElem = 3
+pos = 0,0
+time = -1
+
+[State 2130, VelSet]
+type = ChangeState
+trigger1 = Vel Y > 0 && Pos Y >= -8
+value = 2140
+
+;---------------------------------------------------------------------------
+;デッドエンドスクリーマー 落下 2P
+[Statedef 2131]
+type    = S
+movetype= H
+physics = N
+velset = 0,0
+sprpriority = 2
+
+[State 2131, ScreenBound]
+type = ScreenBound
+trigger1 = 1
+value = 1
+movecamera = 1
+
+[State 2131, ChangeAnim2]
+type = ChangeAnim2
+Trigger1 = Time = 0
+value = 2131
+
+;------------------------------------------------------------------------------
+;-| デッドエンドスクリーマー 叩き潰し |----------------------------------------
+;------------------------------------------------------------------------------
+[Statedef 2140]
+type = S
+movetype = A
+physics = S
+anim = 2140
+ctrl = 0
+velset = 0,0
+sprpriority = 3
+
+[State 2140, PlaySnd]
+type = PlaySND
+trigger1 = AnimElem = 1
+value = 63, 1
+
+[State 2140, Explod]
+type = Explod
+trigger1 = AnimElem = 1
+anim = 31400
+ID = 31400
+pos = 5,0
+vel = 0,0
+postype = p1
+ownpal = 1
+bindtime = 1
+removetime = -2
+sprpriority = 0
+removeongethit = 1
+ignorehitpause = 1
+
+[State 2140, Explod]
+type = Explod
+trigger1 = AnimElem = 1
+anim = 31401
+ID = 31400
+pos = 5,0
+vel = 0,0
+postype = p1
+ownpal = 1
+bindtime = 1
+removetime = -2
+sprpriority = 4
+removeongethit = 1
+ignorehitpause = 1
+
+[State 2140, PosSet]
+type = PosSet
+trigger1 = time = 0
+y = 0
+
+[State 2140, PosAdd]
+type = PosAdd
+trigger1 = time = 0
+x = -8
+
+[state 2140, TargetState]
+type = TargetState
+trigger1 = Time = 0
+value = 2141
+
+[State 2140, TargetLifeAdd]
+type = TargetLifeAdd
+trigger1 = AnimElem = 1
+value = -20
+kill = 0
+
+[State 2140, TargetBind]
+type = TargetBind
+trigger1 = Time = 0
+pos = 5,0
+time = -1
+
+[State 2140, EnvShake]
+type = EnvShake
+trigger1 = AnimElem = 1
+time = 16
+ampl = 4
+freq = 180
+
+[State 2140, Envcolor]
+type = Envcolor
+trigger1 = AnimElem = 1
+persistent = 0
+ignorehitpause = 1
+value = 255, 255, 255
+time = 1
+under = 1
+supermove = 1
+
+[State 2140, Changestate]
+type = Changestate
+trigger1 = Animtime = 0
+value = 2150
+
+;---------------------------------------------------------------------------
+;デッドエンドスクリーマー 叩き潰し 2P
+[Statedef 2141]
+type    = S
+movetype= H
+physics = N
+velset = 0,0
+sprpriority = 2
+
+[State 2141, ScreenBound]
+type = ScreenBound
+trigger1 = 1
+value = 1
+movecamera = 1
+
+[State 2141, ChangeAnim2]
+type = ChangeAnim2
+Trigger1 = Time = 0
+value = 2141
+
+;------------------------------------------------------------------------------
+;-| デッドエンドスクリーマー 高速回転 |----------------------------------------
+;------------------------------------------------------------------------------
+[Statedef 2150]
+type = S
+movetype = A
+physics = S
+anim = 2150
+ctrl = 0
+velset = 0,0
+sprpriority = 3
+
+[State 2150, PlaySnd]
+type = PlaySND
+trigger1 = time = 0
+value = 66,1
+
+[State 2150, PlaySnd]
+type = PlaySND
+trigger1 = time = 0
+value = 66, 3
+channel = 2
+
+[State 2150, Explod]
+type = Explod
+trigger1 = time = 1
+anim = 31500
+ID = 31500
+pos = 0,0
+vel = 0,0
+postype = p1
+ownpal = 1
+bindtime = -1
+removetime = -1
+sprpriority = 4
+removeongethit = 1
+ignorehitpause = 1
+
+[state 2150, TargetState]
+type = TargetState
+trigger1 = Time = 0
+value = 2151
+
+[State 2150, TargetLifeAdd]
+type = TargetLifeAdd
+trigger1 = time % 8 = 0
+value = -10
+kill = 0
+
+[State 2150, TargetBind]
+type = TargetBind
+trigger1 = Time = 0
+pos = 5,0
+time = -1
+
+[State 2150, Envcolor]
+type = Envcolor
+trigger1 = time % 8 = 0
+persistent = 1
+ignorehitpause = 1
+value = 255, 255, 255
+time = 1
+under = 1
+supermove = 1
+
+[State 2150, Changestate]
+type = Changestate
+trigger1 = time = 120
+value = 2160
+
+;---------------------------------------------------------------------------
+;デッドエンドスクリーマー 高速回転 2P
+[Statedef 2151]
+type    = S
+movetype= H
+physics = N
+velset = 0,0
+sprpriority = 2
+
+[State 2151, ScreenBound]
+type = ScreenBound
+trigger1 = 1
+value = 1
+movecamera = 1
+
+[State 2151, ChangeAnim2]
+type = ChangeAnim2
+Trigger1 = Time = 0
+value = 2151
+
+;------------------------------------------------------------------------------
+;-| デッドエンドスクリーマー ポージング |--------------------------------------
+;------------------------------------------------------------------------------
+[Statedef 2160]
+type = S
+movetype = A
+physics = S
+anim = 2160
+ctrl = 0
+velset = 0,0
+sprpriority = 3
+
+[State 2160, PlaySnd]
+type = PlaySND
+trigger1 = time = 0
+value = 66,4
+
+[State 2160, StopSnd]
+type = StopSND
+trigger1 = time = 0
+channel = 2
+
+[State 2160, RemoveExplod]
+type = RemoveExplod
+trigger1 = Time = 0
+ID = 31500
+
+[state 2160, TargetState]
+type = TargetState
+trigger1 = Time = 0
+value = 2161
+
+[State 2160, TargetLifeAdd]
+type = TargetLifeAdd
+trigger1 = time = 0
+value = -20
+kill = 1
+
+[State 2160, TargetBind]
+type = TargetBind
+trigger1 = Time = 0
+pos = 5,0
+time = 1
+
+[State 2160, Changestate]
+type = Changestate
+trigger1 = Animtime = 0
+value = 0
+ctrl = 1
+
+;---------------------------------------------------------------------------
+;デッドエンドスクリーマー ポージング 2P
+[Statedef 2161]
+type    = A
+movetype= H
+physics = N
+velset = 0,0
+sprpriority = 0
+
+[State 2161,ChangeAnim2]
+type = ChangeAnim2
+Trigger1 = Time = 0
+value = 2161
+
+[State 2161, VelSet]
+type = VelSet
+trigger1 = AnimElem = 1
+x = -4.5
+y = -4.5
+
+[State 2161, VelAdd]
+type = VelAdd
+trigger1 = Animelem = 1,>= 0
+y = .42
+
+[State 2161, SelfState]
+type = SelfState
+trigger1 = Vel Y > 0 && Pos Y >= 16
+value = 5100
+
+;------------------------------------------------------------------------------
+;-| ギガンテックプレッシャー２ |-----------------------------------------------
+;------------------------------------------------------------------------------
+[Statedef 2200]
+type    = S
+movetype= A
+physics = N
+juggle  = 4
+poweradd= 0
+ctrl = 0
+velset = 0,0
+anim = 2000
+sprpriority = 2
+
+;---------------------------------------------------
+;超必殺技：画面効果
+[State 2200, SuperPause]
+type = SuperPause
+trigger1 = Time = 2
+time = 30
+movetime = 30
+anim = -1
+darken = 0
+poweradd = -2000
+p2defmul = 1
+
+[State 2200, PlaySnd]
+type = PlaySND
+trigger1 = AnimElem = 1
+value = 5,1
+
+[State 2200, EnvColor]
+type = EnvColor
+trigger1 = Time = 2
+ignorehitpause = 1
+value = 0, 0, 0
+time = 31
+under = 1
+
+[State 2200, AssertSpecial]
+type = AssertSpecial
+trigger1 = Time = [1,31]
+flag = NoFG
+flag1 = noshadow
+ignorehitpause = 1
+
+[State 2200, Explod]
+type = Explod
+trigger1 = Time = 2
+anim = 6060
+pos = 0,-80
+postype = p1
+sprpriority = 0
+supermove = 1
+bindtime = 1
+removetime = -2
+ownpal = 1
+
+[State 2200, Explod]
+type = Explod
+trigger1 = Time = 2
+anim = 6061
+pos = 0,-80
+postype = p1
+sprpriority = 3
+supermove = 1
+bindtime = 1
+removetime = -2
+ownpal = 1
+;---------------------------------------------------
+
+[State 2200, PlaySnd]
+type = PlaySND
+trigger1 = AnimElem = 4
+value = 50,0
+channel = 0
+
+[State 2200, PlaySnd]
+type = PlaySnd
+trigger1 = AnimElem = 6 || AnimElem = 10
+value = 1,0
+channel = 4
+
+[State 2200, VelSet]
+type = VelSet
+trigger1 = AnimElem = 5
+x = 7.5
+
+[State 2200, HitDef]
+type = HitDef                    
+trigger1 = time = 0          
+attr = S, ST                     
+damage = 0                
+animtype = Hard                 
+guardflag = MAF                   
+hitflag = MAF                    
+priority = 3, Hit                
+pausetime = 6, 6                
+sparkno = S90000                
+guard.sparkno = S6011             
+sparkxy = -5, -40            
+hitsound = S7, 1
+guardsound = S2, 0               
+ground.type = Low               
+ground.slidetime = 12            
+ground.hittime  = 20             
+ground.velocity = 0          
+airguard.velocity = -1.9,-.8    
+air.type = High                  
+air.velocity = -3.0,-3.0           
+air.hittime = 12       
+p2facing = 1
+fall = 0
+numhits = 0
+
+[State 2200, ChangeState]
+type = ChangeState
+trigger1 = MoveHit = 1
+value = 2220
+
+[State 2200, ChangeState]
+type = ChangeState
+trigger1 = MoveGuarded = 1
+value = 1340
+
+[State 2200, ChangeState]
+type = ChangeState
+trigger1 = Time = 60
+value = 1310
+
+;------------------------------------------------------------------------------
+;-| ギガンテックプレッシャー２ 掴み |------------------------------------------
+;------------------------------------------------------------------------------
+[Statedef 2220]
+type    = S
+movetype= A
+physics = N
+juggle  = 0
+poweradd= 0
+ctrl = 0
+velset = 0,0
+anim = 1320
+sprpriority = 3
+
+[State 2220, Explod]
+type = Explod
+trigger1 = AnimElem = 1
+anim = 30200
+ID = 30200
+pos = -20,-60
+postype = p1
+ownpal = 1
+bindtime = -1
+removetime = -1
+sprpriority = 5
+persistent = 0
+removeongethit = 1
+ignorehitpause = 1
+
+[State 2220, Explod]
+type = Explod
+trigger1 = time % 8 = 0
+anim = 26200
+ID = 26200
+pos = 0,5
+postype = p1
+ownpal = 1
+bindtime = 1
+removetime = -2
+sprpriority = 4
+persistent = 1
+removeongethit = 1
+ignorehitpause = 1
+
+[State 2220, VelSet]
+type = VelSet
+trigger1 = time = 0
+x = 8.5
+
+[state 2220, TargetState]
+type = TargetState
+trigger1 = time = 0
+value = 2021
+
+[State 2220, TargetBind]
+type = TargetBind
+trigger1 = time = 0
+pos = -25,-65
+time = -1
+
+[State 2220, ChangeState]
+type = ChangeState
+trigger1 = FrontEdgeDist < 10
+value = 2230
+
+;------------------------------------------------------------------------------
+;-| ギガンテックプレッシャー２ 叩き潰し１ |------------------------------------
+;------------------------------------------------------------------------------
+[Statedef 2230]
+type    = S
+movetype= A
+physics = N
+juggle  = 0
+poweradd= 0
+ctrl = 0
+velset = 0,0
+anim = 2230
+sprpriority = 3
+
+[State 2230, Turn]
+type = Turn
+trigger1 = AnimElem = 8
+
+[State 2230, PlaySnd]
+type = PlaySND
+trigger1 = AnimElem = 2
+value = 63, 0
+
+[State 2230, PlaySnd]
+type = PlaySND
+trigger1 = AnimElem = 2
+value = 3, 4
+
+[State 2230, PlaySnd]
+type = PlaySND
+trigger1 = AnimElem = 3
+value = 63, 1
+
+[State 2230, PlaySnd]
+type = PlaySND
+trigger1 = AnimElem = 3
+value = 65, 1
+
+[State 2230, PlaySnd]
+type = PlaySND
+trigger1 = AnimElem = 9
+value = 3, 6
+
+[State 2230, Explod]
+type = Explod
+trigger1 = AnimElem = 1
+anim = 30200
+ID = 30201
+pos = -20,-60
+postype = p1
+ownpal = 1
+bindtime = -1
+removetime = 1
+sprpriority = 5
+persistent = 0
+removeongethit = 1
+ignorehitpause = 1
+
+[State 2230, Explod]
+type = Explod
+trigger1 = AnimElem = 2
+anim = 30200
+ID = 30202
+pos = 55,-70
+postype = p1
+ownpal = 1
+bindtime = -1
+removetime = 3
+sprpriority = 5
+persistent = 0
+removeongethit = 1
+ignorehitpause = 1
+
+[State 2230, Explod]
+type = Explod
+trigger1 = AnimElem = 3
+anim = 30300
+ID = 30300
+pos = 55,0
+postype = p1
+ownpal = 1
+bindtime = 1
+removetime = -2
+sprpriority = 5
+persistent = 0
+removeongethit = 1
+ignorehitpause = 1
+
+[State 2230, Explod]
+type = Explod
+trigger1 = AnimElem = 9
+anim = 30200
+ID = 30200
+pos = -20,-60
+postype = p1
+ownpal = 1
+bindtime = -1
+removetime = -1
+sprpriority = 5
+persistent = 0
+removeongethit = 1
+ignorehitpause = 1
+
+[State 2230, Explod]
+type = Explod
+triggerall = AnimElemtime(9) > 0
+trigger1 = time % 8 = 0
+anim = 26200
+ID = 26200
+pos = 0,5
+postype = p1
+ownpal = 1
+bindtime = 1
+removetime = -2
+sprpriority = 4
+persistent = 1
+removeongethit = 1
+ignorehitpause = 1
+
+[State 2230, RemoveExplod]
+type = RemoveExplod
+trigger1 = Time = 0
+ID = 30200
+
+[State 2230, PosAdd]
+type = PosAdd
+trigger1 = Time = 0
+x = -60
+
+[State 2230, PosAdd]
+type = PosAdd
+trigger1 = AnimElem = 6
+x = -15
+
+[State 2230, PosAdd]
+type = PosAdd
+trigger1 = AnimElem = 7
+x = -8
+
+[State 2230, PosAdd]
+type = PosAdd
+trigger1 = AnimElem = 8 || AnimElem = 9
+x = 16
+
+[State 2230, VelSet]
+type = VelSet
+trigger1 = AnimElem = 9
+x = 8.5
+
+[State 2230, TargetState]
+type = TargetState
+trigger1 = Time = 0
+value = 2231
+
+[State 2230, TargetLifeAdd]
+type = TargetLifeAdd
+trigger1 = AnimElem = 3
+value = -140
+kill = 0
+
+[State 2230, TargetBind]
+type = TargetBind
+trigger1 = AnimElem = 1
+pos = -25,-65
+time = -1
+
+[State 2230, TargetBind]
+type = TargetBind
+trigger1 = AnimElem = 2
+pos = 65,-70
+time = -1
+
+[State 2230, TargetBind]
+type = TargetBind
+trigger1 = AnimElem = 3
+pos = 95,-70
+time = -1
+
+[State 2230, TargetBind]
+type = TargetBind
+trigger1 = AnimElem = 5
+pos = 65,-70
+time = -1
+
+[State 2230, TargetBind]
+type = TargetBind
+trigger1 = AnimElem = 6
+pos = 35,-70
+time = -1
+
+[State 2230, TargetBind]
+type = TargetBind
+trigger1 = AnimElem = 7
+pos = -5,-70
+time = -1
+
+[State 2230, TargetBind]
+type = TargetBind
+trigger1 = AnimElem = 8
+pos = -10,-70
+time = -1
+
+[State 2230, TargetBind]
+type = TargetBind
+trigger1 = AnimElem = 9
+pos = -25,-65
+time = -1
+
+[State 2230, EnvShake]
+type = EnvShake
+trigger1 = AnimElem = 3
+time = 24
+ampl = 6
+freq = 180
+
+[State 2230, Envcolor]
+type = Envcolor
+trigger1 = AnimElem = 3
+persistent = 1
+ignorehitpause = 1
+value = 240, 8, 8
+time = 1
+under = 1
+supermove = 1
+
+[State 2230, ChangeState]
+type = ChangeState
+triggerall = AnimElemtime(9) > 0
+trigger1 = FrontEdgeDist < 10
+value = 2030
+
+;---------------------------------------------------------------------------
+;ギガンテックプレッシャー２ 叩き潰し１ 2P
+[Statedef 2231]
+type    = A
+movetype= H
+physics = N
+velset = 0,0
+sprpriority = 4
+
+[State 2231, Turn]
+type = Turn
+trigger1 = AnimElem = 8
+
+[State 2231, ScreenBound]
+type = ScreenBound
+trigger1 = 1
+value = 1
+movecamera = 1
+
+[State 2231, ChangeAnim2]
+type = ChangeAnim2
+Trigger1 = Time = 0
+value = 2231
+
+[State 2231, PalFX]
+type = PalFX 
+trigger1 = Time = 0
+time = -1
+color = 0
+invertall = 1
+add = 104,0,0
+sinadd = -64,-8,-8,8
+
+;------------------------------------------------------------------------------
+;-| デッドエンドスクリーマー２ |-----------------------------------------------
+;------------------------------------------------------------------------------
+[Statedef 2300]
+type    = S
+movetype= A
+physics = N
+juggle  = 4
+poweradd= 0
+ctrl = 0
+velset = 0,0
+anim = 2100
+sprpriority = 2
+
+;---------------------------------------------------
+;超必殺技：画面効果
+[State 2300, SuperPause]
+type = SuperPause
+trigger1 = Time = 2
+time = 30
+movetime = 30
+anim = -1
+darken = 0
+poweradd = -2000
+p2defmul = 1
+
+[State 2300, PlaySnd]
+type = PlaySND
+trigger1 = AnimElem = 1
+value = 5,1
+
+[State 2300, EnvColor]
+type = EnvColor
+trigger1 = Time = 2
+ignorehitpause = 1
+value = 0, 0, 0
+time = 31
+under = 1
+
+[State 2300, AssertSpecial]
+type = AssertSpecial
+trigger1 = Time = [1,31]
+flag = NoFG
+flag1 = noshadow
+ignorehitpause = 1
+
+[State 2300, Explod]
+type = Explod
+trigger1 = Time = 2
+anim = 6060
+pos = 15,-70
+postype = p1
+sprpriority = 0
+supermove = 1
+bindtime = 1
+removetime = -2
+ownpal = 1
+
+[State 2300, Explod]
+type = Explod
+trigger1 = Time = 2
+anim = 6061
+pos = 15,-70
+postype = p1
+sprpriority = 3
+supermove = 1
+bindtime = 1
+removetime = -2
+ownpal = 1
+;---------------------------------------------------
+
+[State 2300, PlaySnd]
+type = PlaySND
+trigger1 = AnimElem = 4
+value = 66,2
+
+[State 2300, PosAdd]
+type = PosAdd
+trigger1 = AnimElem = 4
+x = 8
+
+[State 2300, VelSet]
+type = VelSet
+trigger1 = Animelem = 4
+x = 2.5
+y = -11.5
+
+[State 2300, VelAdd]
+type = VelAdd
+trigger1 = Animelem = 4,>= 0
+y = .64
+
+[State 2300, StateTypeSet]
+type = StateTypeSet
+trigger1 = AnimElem = 4
+StateType = A
+physics = N
+
+[State 2300, HitDef]
+type = HitDef                    
+trigger1 = time = 0          
+attr = S, ST                     
+damage = 0                
+animtype = Hard                 
+;guardflag = MAF                   
+hitflag = MAF                    
+priority = 3, Hit                
+pausetime = 6, 6                
+sparkno = S90000                
+guard.sparkno = S6011             
+sparkxy = -5, -40            
+hitsound = S99, 0
+guardsound = S2, 0               
+ground.type = Low               
+ground.slidetime = 12            
+ground.hittime  = 20             
+ground.velocity = 0          
+airguard.velocity = -1.9,-.8    
+air.type = High                  
+air.velocity = -3.0,-3.0           
+air.hittime = 12       
+p2facing = 1
+fall = 0
+numhits = 0
+
+[State 2300, ChangeState]
+type = ChangeState
+trigger1 = MoveHit = 1
+value = 2320
+
+[State 2300, VelSet]
+type = ChangeState
+trigger1 = Vel Y > 0 && Pos Y >= 0
+value = 2110
+
+;------------------------------------------------------------------------------
+;-| デッドエンドスクリーマー２ 頭・着地 |--------------------------------------
+;------------------------------------------------------------------------------
+[Statedef 2320]
+type    = A
+movetype= A
+physics = N
+juggle  = 0
+poweradd= 0
+ctrl = 0
+velset = 0,0
+anim = 2120
+sprpriority = 3
+
+[State 2320, PlaySnd]
+type = PlaySND
+trigger1 = AnimElem = 1
+value = 4, 4
+
+[State 2320, Explod]
+type = Explod
+trigger1 = AnimElem = 1
+anim = 6002
+postype = p1
+pos = 0,0
+ownpal = 1
+bindtime = 1
+removetime = -2
+sprpriority = 4
+removeongethit = 1
+ignorehitpause = 1
+
+[State 2320, TargetState]
+type = TargetState
+trigger1 = Time = 0
+value = 2121
+
+[State 2320, BindToTarget]
+type = BindToTarget
+trigger1 = Time = 0
+pos = 10,10,Head
+time = 1
+
+[State 2320, Envcolor]
+type = Envcolor
+trigger1 = AnimElem = 2
+persistent = 0
+ignorehitpause = 1
+value = 255, 255, 255
+time = 1
+under = 1
+supermove = 1
+
+[State 2320, ChangeState]
+type = ChangeState
+trigger1 = Animtime = 0
+value = 2330
+
+;------------------------------------------------------------------------------
+;-| デッドエンドスクリーマー２ 落下 |------------------------------------------
+;------------------------------------------------------------------------------
+[Statedef 2330]
+type    = A
+movetype= A
+physics = N
+juggle  = 0
+poweradd= 0
+ctrl = 0
+velset = 0,0
+anim = 2130
+sprpriority = 3
+
+[State 2330, Width]
+type = Width
+trigger1 = AnimElem = 1,>= 0
+edge = 30
+
+[State 2330, PlaySnd]
+type = PlaySND
+trigger1 = AnimElem = 1
+value = 66,0
+channel = 0
+
+[State 2330, PosAdd]
+type = PosAdd
+trigger1 = time = 0
+y = 20
+
+[State 2330, VelSet]
+type = VelSet
+trigger1 = AnimElem = 1
+y = 6
+
+[State 2330, VelAdd]
+type = VelAdd
+trigger1 = Animelem = 1,>= 0
+y = .48
+
+[State 2330, TargetState]
+type = TargetState
+trigger1 = Time = 0
+value = 2131
+
+[State 2330, TargetBind]
+type = TargetBind
+trigger1 = Time = 0
+pos = 0,-25
+time = -1
+
+[State 2330, TargetBind]
+type = TargetBind
+trigger1 = AnimElem = 2
+pos = 0,-20
+time = -1
+
+[State 2330, TargetBind]
+type = TargetBind
+trigger1 = AnimElem = 3
+pos = 0,0
+time = -1
+
+[State 2330, VelSet]
+type = ChangeState
+trigger1 = Vel Y > 0 && Pos Y >= -8
+value = 2340
+
+;------------------------------------------------------------------------------
+;-| デッドエンドスクリーマー２ 叩き潰し |--------------------------------------
+;------------------------------------------------------------------------------
+[Statedef 2340]
+type = S
+movetype = A
+physics = S
+anim = 2340
+ctrl = 0
+velset = 0,0
+sprpriority = 3
+
+[State 2340, PlaySnd]
+type = PlaySND
+trigger1 = AnimElem = 1
+value = 63, 1
+
+[State 2340, PlaySnd]
+type = PlaySND
+trigger1 = AnimElem = 6,16
+value = 67, 0
+
+[State 2340, Explod]
+type = Explod
+trigger1 = AnimElem = 1
+anim = 31400
+ID = 31400
+pos = 5,0
+vel = 0,0
+postype = p1
+ownpal = 1
+bindtime = 1
+removetime = -2
+sprpriority = 0
+removeongethit = 1
+ignorehitpause = 1
+
+[State 2340, Explod]
+type = Explod
+trigger1 = AnimElem = 1
+anim = 31401
+ID = 31400
+pos = 5,0
+vel = 0,0
+postype = p1
+ownpal = 1
+bindtime = 1
+removetime = -2
+sprpriority = 4
+removeongethit = 1
+ignorehitpause = 1
+
+[State 2340, PosSet]
+type = PosSet
+trigger1 = time = 0
+y = 0
+
+[State 2340, PosAdd]
+type = PosAdd
+trigger1 = time = 0
+x = -8
+
+[state 2340, TargetState]
+type = TargetState
+trigger1 = Time = 0
+value = 2141
+
+[State 2340, TargetLifeAdd]
+type = TargetLifeAdd
+trigger1 = AnimElem = 1
+value = -30
+kill = 0
+
+[State 2340, TargetBind]
+type = TargetBind
+trigger1 = Time = 0
+pos = 5,0
+time = -1
+
+[State 2340, EnvShake]
+type = EnvShake
+trigger1 = AnimElem = 1
+time = 16
+ampl = 4
+freq = 180
+
+[State 2340, Envcolor]
+type = Envcolor
+trigger1 = AnimElem = 1
+persistent = 0
+ignorehitpause = 1
+value = 255, 255, 255
+time = 1
+under = 1
+supermove = 1
+
+[State 2340, Changestate]
+type = Changestate
+trigger1 = Animtime = 0
+value = 2350
+
+;------------------------------------------------------------------------------
+;-| デッドエンドスクリーマー２ 高速回転 |--------------------------------------
+;------------------------------------------------------------------------------
+[Statedef 2350]
+type = S
+movetype = A
+physics = S
+anim = 2150
+ctrl = 0
+velset = 0,0
+sprpriority = 3
+
+[State 2350, PlaySnd]
+type = PlaySND
+trigger1 = time = 0
+value = 66,1
+
+[State 2350, PlaySnd]
+type = PlaySND
+trigger1 = time = 0
+value = 66, 3
+channel = 2
+
+[State 2350, Explod]
+type = Explod
+trigger1 = time = 1
+anim = 31500
+ID = 31500
+pos = 0,0
+vel = 0,0
+postype = p1
+ownpal = 1
+bindtime = -1
+removetime = -1
+sprpriority = 4
+removeongethit = 1
+ignorehitpause = 1
+
+[State 2350, Explod]
+type = Explod
+trigger1 = time = 1
+anim = 31501
+ID = 31500
+pos = 0,0
+vel = 0,0
+postype = p1
+ownpal = 1
+bindtime = -1
+removetime = -1
+sprpriority = 5
+removeongethit = 1
+ignorehitpause = 1
+
+[state 2350, TargetState]
+type = TargetState
+trigger1 = Time = 0
+value = 2151
+
+[State 2350, TargetLifeAdd]
+type = TargetLifeAdd
+trigger1 = time % 8 = 0
+value = -10
+kill = 0
+
+[State 2350, TargetBind]
+type = TargetBind
+trigger1 = Time = 0
+pos = 5,0
+time = -1
+
+[State 2350, EnvShake]
+type = EnvShake
+trigger1 = time % 2 = 0
+time = 2
+ampl = 4
+freq = 180
+
+[State 2350, Envcolor]
+type = Envcolor
+trigger1 = time % 8 = 0
+persistent = 1
+ignorehitpause = 1
+value = 240, 8, 8
+time = 1
+under = 1
+supermove = 1
+
+[State 2350, Changestate]
+type = Changestate
+trigger1 = time = 200
+value = 2360
+
+;------------------------------------------------------------------------------
+;-| デッドエンドスクリーマー２ ポージング |------------------------------------
+;------------------------------------------------------------------------------
+[Statedef 2360]
+type = S
+movetype = A
+physics = S
+anim = 2160
+ctrl = 0
+velset = 0,0
+sprpriority = 3
+
+[State 2360, PlaySnd]
+type = PlaySND
+trigger1 = time = 0
+value = 66,4
+
+[State 2360, PlaySnd]
+type = PlaySND
+trigger1 = time = 0
+value = 65, 1
+
+[State 2360, StopSnd]
+type = StopSND
+trigger1 = time = 0
+channel = 2
+
+[State 2360, Explod]
+type = Explod
+trigger1 = AnimElem = 1
+anim = 31502
+ID = 31502
+pos = 0,0
+postype = p1
+ownpal = 1
+bindtime = -1
+removetime = -2
+sprpriority = 5
+persistent = 0
+removeongethit = 1
+ignorehitpause = 1
+
+[State 2360, Explod]
+type = Explod
+trigger1 = AnimElem = 1
+anim = 30300
+ID = 30300
+pos = 0,0
+postype = p1
+ownpal = 1
+bindtime = 1
+removetime = -2
+sprpriority = 2
+persistent = 0
+removeongethit = 1
+ignorehitpause = 1
+
+[State 2360, RemoveExplod]
+type = RemoveExplod
+trigger1 = Time = 0
+ID = 31500
+
+[state 2360, TargetState]
+type = TargetState
+trigger1 = Time = 0
+value = 2161
+
+[State 2360, TargetLifeAdd]
+type = TargetLifeAdd
+trigger1 = AnimElem = 1
+value = -35
+kill = 1
+
+[State 2360, TargetBind]
+type = TargetBind
+trigger1 = Time = 0
+pos = 5,0
+time = 1
+
+[State 2360, EnvShake]
+type = EnvShake
+trigger1 = AnimElem = 1
+time = 24
+ampl = 6
+freq = 180
+
+[State 2360, Changestate]
+type = Changestate
+trigger1 = Animtime = 0
+value = 0
+ctrl = 1

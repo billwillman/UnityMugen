@@ -23,12 +23,12 @@ stcommon = common.cns
 sprite   = Iori-ROTD.sff   
 anim     = Iori-ROTD.air  
 sound    = Iori-ROTD.snd  
-pal1     = pal1.act
-pal2     = pal2.act
-pal3     = pal3.act
-pal4     = pal4.act
-pal5     = pal5.act
-pal6     = pal6.act
+pal1     = _pal/pal1.act
+pal2     = _pal/pal2.act
+pal3     = _pal/pal3.act
+pal4     = _pal/pal4.act
+pal5     = _pal/pal5.act
+pal6     = _pal/pal6.act
 
 ; Arcade mode
 ;[Arcade]

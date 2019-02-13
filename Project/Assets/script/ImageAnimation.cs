@@ -681,6 +681,18 @@ public class ImageAnimation : MonoBehaviour {
         }
     }
 
+	public float GetMugenAnimateTime()
+	{
+		var ani = this.CacheAnimation;
+		if (ani == null)
+			return 0f;
+		var info = ani[_cPlayAnimationName];
+		if (info == null)
+			return 0f;
+		float time = info.time/_cImageAnimationScale;
+		return time;
+	}
+
     // 当前帧
     private static float _cImageAnimationScale = 0.015f;
     private int m_CurFrame = -1;

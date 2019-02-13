@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Mugen;
+using LuaInterface;
 
 public class PlayerAttribe : MonoBehaviour {
 	// 生命值
@@ -27,6 +28,20 @@ public class PlayerAttribe : MonoBehaviour {
 	public int IntPersistIndex = 60;
 	public int FloatPersistIndex = 40;
 
+	public int Power = 0;
+	public int AILevel = 0;
+
+	public int HitCount = 0;
+
+	public bool IsAlive
+	{
+		get
+		{
+			return life > 0;
+		}
+	}
+
+	[NoToLuaAttribute]
 	public bool Init(CNSConfig config)
 	{
 		ResetDatas ();
@@ -52,10 +67,45 @@ public class PlayerAttribe : MonoBehaviour {
 		return true;
 	}
 
+	[NoToLuaAttribute]
 	public void Clear()
 	{
 		m_IntVars = null;
 		m_FloatVars = null;
+	}
+
+	public bool GetIntVars(int index, out int value)
+	{
+		value = 0;
+		if (m_IntVars == null || index < 0 || index >= m_IntVars.Length)
+			return false;
+		value = m_IntVars[index];
+		return true;
+	}
+
+	public bool SetIntVars(int index, int value)
+	{
+		if (m_IntVars == null || index < 0 || index >= m_IntVars.Length)
+			return false;
+		m_IntVars[index] = value;
+		return true;
+	}
+
+	public bool GetFloatVars(int index, out float value)
+	{
+		value = 0f;
+		if (m_FloatVars == null || index < 0 || index >= m_FloatVars.Length)
+			return false;
+		value = m_FloatVars[index];
+		return true;
+	}
+
+	public bool SetFloatVars(int index, float value)
+	{
+		if (m_FloatVars == null || index < 0 || index >= m_FloatVars.Length)
+			return false;
+		m_FloatVars[index] = value;
+		return true;
 	}
 
 	private void ResetDatas()

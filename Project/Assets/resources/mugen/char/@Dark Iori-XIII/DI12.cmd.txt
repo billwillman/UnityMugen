@@ -1,0 +1,1297 @@
+;-| 按鍵配置 |-----------------------------------------------------
+[Remap]
+x = x
+y = y
+z = z
+a = a
+b = b
+c = c
+s = s
+
+;-| 指令時間標準化 |-------------------------------------------------------
+[Defaults]
+Command.time = 15
+Command.buffer.time = 1
+
+;------------------------------------------------------------------------------
+;-| 必殺技 |--------------------------------------------------------------
+[Command]
+name = "还是不知道"
+Command = ~D,B,D,B,z
+time = 30
+
+[Command]
+name = "3500"
+Command = D,F,D,F,z
+time = 30
+
+[Command]
+name = "wahaha"
+Command = ~D,D,s
+time = 30
+
+[Command]
+name = "抓！"
+Command = ~D,F,D,F,c
+time = 30
+
+[Command]
+name = "XIII"
+Command = ~D,B,D,B,c
+time = 30
+
+[Command]
+name = "乱抓"
+Command = ~D,F,D,F,x
+time = 30
+
+[Command]
+name = "乱抓连击MAX1"
+Command = ~D,F,D,F,y
+time = 30
+
+[Command]
+name = "3000"
+Command = ~D,F,D,F,b
+time = 30
+
+[Command]
+name = "buzd"
+Command = ~D,F,c
+time = 30
+
+[Command]
+name = "3000"
+Command = ~D,F,D,F,a
+time = 30
+
+[Command]
+name = "1200"
+Command = ~D,F,a
+
+[Command]
+name = "1200"
+Command = ~D,F,b
+
+[Command]
+name = "1100"
+Command = ~D,D,x
+
+[Command]
+name = "半月"
+Command = ~D,F,x
+
+[Command]
+name = "半月Y"
+Command = ~D,F,y
+
+[Command]
+name = "跑步抓"
+Command = ~D,B,a
+
+[Command]
+name = "连击"
+Command = ~D,B,c
+
+[Command]
+name = "1000"
+Command = ~D,B,b
+
+[Command]
+name = "1000"
+Command = ~D,B,y
+
+[Command]
+name = "抓1"
+Command = ~D,B,x
+
+[Command]
+name = "1300"
+Command = ~D,F,z
+
+[Command]
+name = "乱抓"
+Command = ~D,F,D,F,s
+time = 30
+
+[Command]
+name = "jump" ;長跳
+Command = D, $U
+time = 12
+
+;------------------------------------------------------------------------------
+;-| 連按 |---------------------------------------------------------
+[Command]
+name = "FF"
+Command = F, F
+time = 10
+
+[Command]
+name = "BB"
+Command = B, B
+time = 10
+
+;------------------------------------------------------------------------------
+;-| 同時按 |-----------------------------------------------------------------
+[Command]
+name = "MAX"
+Command = a+y
+time = 1
+
+[Command]
+name = "recovery"
+Command = x+a
+time = 1
+
+[Command]
+name = "recovery"
+Command = z
+time = 1
+
+[Command]
+name = "吹飛攻擊"
+Command = y+b
+time = 1
+
+[Command]
+name = "吹飛攻擊"
+Command = c
+time = 1
+
+;------------------------------------------------------------------------------
+;-| 方向鍵＋攻擊 |---------------------------------------------------------
+[Command]
+name = "down_a"
+Command = /$D,a
+time = 1
+
+[Command]
+name = "down_b"
+Command = /$D,b
+time = 1
+
+;------------------------------------------------------------------------------
+;-| 單鍵攻擊 |---------------------------------------------------------------
+[Command]
+name = "a"
+Command = a
+time = 1
+
+[Command]
+name = "a,a"
+Command = F,x
+time = 1
+
+[Command]
+name = "b"
+Command = b
+time = 1
+
+[Command]
+name = "c"
+Command = c
+time = 1
+
+[Command]
+name = "x"
+Command = x
+time = 1
+
+[Command]
+name = "y"
+Command = y
+time = 1
+
+[Command]
+name = "z"
+Command = z
+time = 1
+
+[Command]
+name = "start"
+Command = s
+time = 1
+
+;------------------------------------------------------------------------------
+;-| 方向鍵 |-----------------------------------------------------
+[Command]
+name = "holdfwd"
+Command = /$F
+time = 1
+
+[Command]
+name = "holdback"
+Command = /$B
+time = 1
+
+[Command]
+name = "holdup"
+Command = /$U
+time = 1
+
+[Command]
+name = "holddown"
+Command = /$D
+time = 1
+
+;------------------------------------------------------------------------------
+[Statedef -1]
+
+[state ]
+
+type = poweradd
+
+trigger1 = 1
+
+value = 7
+
+[state ]
+
+type = attackmulset
+
+trigger1 = 1
+
+value = 1.5
+
+[state ]
+
+type = defencemulset
+
+trigger1 = 1
+
+value = 1
+
+;------------------------------------------------------------------------------
+[State -1, L ONI]
+type = ChangeState
+value = 12655
+triggerall = var(55) != 1
+triggerall = Command = "XIII"
+triggerall = Power >= 2000 || (var(20) > 0 && Power >= 1000)
+triggerall = StateType != A
+trigger1 = ctrl
+trigger2 = StateNo = 210 && MoveContact
+trigger3 = StateNo = 215 && MoveContact
+trigger4 = StateNo = 235 && MoveContact
+trigger5 = StateNo = 400 && MoveContact
+trigger6 = StateNo = 410 && MoveContact
+trigger7 = StateNo = 300 && MoveContact
+trigger8 = StateNo = 305 && MoveContact
+trigger9 = StateNo = 1100 && MoveContact
+trigger10 = StateNo = 1201 && MoveContact
+trigger11 = StateNo = 1240 && MoveContact
+trigger12 = StateNo = 1230 && MoveContact
+trigger13 = StateNo = 11100 && MoveContact
+trigger14 = StateNo = 2101 && MoveContact
+trigger15 = StateNo = 2102 && MoveContact
+trigger16 = StateNo = 2103 && MoveContact
+trigger17 = StateNo = 2104 && MoveContact
+trigger18 = StateNo = 3015 && MoveContact
+trigger19 = StateNo = 13000 && MoveContact
+trigger20 = StateNo = 1300 && MoveContact
+trigger21 = StateNo = 3104 && MoveContact
+trigger22 = StateNo = 2500 && MoveContact
+trigger23 = StateNo = 2100 && MoveContact
+trigger24 = StateNo = 2510 && MoveContact
+trigger25 = StateNo = 2511 && MoveContact
+trigger26 = StateNo = 2101 && MoveContact
+trigger27 = StateNo = 2102 && MoveContact
+trigger28 = StateNo = 2103 && MoveContact
+trigger29 = StateNo = 2104 && MoveContact
+trigger30 = StateNo = 1230 && MoveContact
+trigger31 = StateNo = 3015 && MoveContact
+trigger32 = StateNo = 305 && MoveContact
+trigger33 = StateNo = 11500 && MoveContact
+trigger34 = StateNo = 1240 && MoveContact
+trigger35 = StateNo = 1230 && MoveContact
+
+
+
+
+[State -1, L ONI]
+type = ChangeState
+value = 25000
+triggerall = var(55) != 1
+triggerall = Command = "还是不知道"
+triggerall = Power >= 3000 || (var(20) > 0 && Power >= 1000)
+triggerall = StateType != A
+trigger1 = ctrl
+
+
+
+
+[State -1, L ONI]
+type = ChangeState
+value = 11200
+triggerall = var(55) != 1
+triggerall = Command = "wahaha"
+triggerall = Power >= 2000 || (var(20) > 0 && Power >= 1000)
+triggerall = StateType != A
+trigger1 = ctrl
+
+
+
+; MAX禁千二百十一式.八稚女
+[State -1, L ONI]
+type = ChangeState
+value = 3500
+triggerall = var(55) != 1
+triggerall = Command = "3500"
+triggerall = Power >= 2000 || (var(20) > 0 && Power >= 1000)
+triggerall = StateType != A
+trigger1 = ctrl
+trigger2 = StateNo = 210 && MoveContact
+trigger3 = StateNo = 215 && MoveContact
+trigger4 = StateNo = 235 && MoveContact
+trigger5 = StateNo = 400 && MoveContact
+trigger6 = StateNo = 410 && MoveContact
+trigger7 = StateNo = 300 && MoveContact
+trigger8 = StateNo = 305 && MoveContact
+trigger9 = StateNo = 1100 && MoveContact
+trigger10 = StateNo = 1201 && MoveContact
+trigger11 = StateNo = 1240 && MoveContact
+trigger12 = StateNo = 1230 && MoveContact
+trigger13 = StateNo = 11100 && MoveContact
+trigger14 = StateNo = 2101 && MoveContact
+trigger15 = StateNo = 2102 && MoveContact
+trigger16 = StateNo = 2103 && MoveContact
+trigger17 = StateNo = 2104 && MoveContact
+trigger18 = StateNo = 3015 && MoveContact
+trigger19 = StateNo = 13000 && MoveContact
+trigger20 = StateNo = 1300 && MoveContact
+trigger21 = StateNo = 3015 && MoveContact
+trigger22 = StateNo = 2500 && MoveContact
+trigger23 = StateNo = 2100 && MoveContact
+trigger24 = StateNo = 2510 && MoveContact
+trigger25 = StateNo = 2511 && MoveContact
+trigger26 = StateNo = 2101 && MoveContact
+trigger27 = StateNo = 2102 && MoveContact
+trigger28 = StateNo = 2103 && MoveContact
+trigger29 = StateNo = 2104 && MoveContact
+trigger30 = StateNo = 1230 && MoveContact
+trigger31 = StateNo = 3015 && MoveContact
+trigger32 = StateNo = 305 && MoveContact
+trigger33 = StateNo = 11500 && MoveContact
+trigger34 = StateNo = 1240 && MoveContact
+trigger35 = StateNo = 1230 && MoveContact
+
+
+; 抓！
+[State -1, L ONI]
+type = ChangeState
+value = 13010
+triggerall = var(55) != 1
+triggerall = Command = "抓！"
+triggerall = Power >= 2000
+triggerall = StateType != A
+trigger1 = ctrl
+trigger2 = StateNo = 210 && MoveContact
+trigger3 = StateNo = 215 && MoveContact
+trigger4 = StateNo = 235 && MoveContact
+trigger5 = StateNo = 400 && MoveContact
+trigger6 = StateNo = 410 && MoveContact
+trigger7 = StateNo = 300 && MoveContact
+trigger8 = StateNo = 305 && MoveContact
+trigger9 = StateNo = 1100 && MoveContact
+trigger10 = StateNo = 1201 && MoveContact
+trigger11 = StateNo = 1240 && MoveContact
+trigger12 = StateNo = 1230 && MoveContact
+trigger13 = StateNo = 11100 && MoveContact
+trigger14 = StateNo = 2101 && MoveContact
+trigger15 = StateNo = 2102 && MoveContact
+trigger16 = StateNo = 2103 && MoveContact
+trigger17 = StateNo = 2104 && MoveContact
+trigger18 = StateNo = 3015 && MoveContact
+trigger19 = StateNo = 13000 && MoveContact
+trigger20 = StateNo = 1300 && MoveContact
+trigger21 = StateNo = 3015 && MoveContact
+trigger22 = StateNo = 2500 && MoveContact
+trigger23 = StateNo = 2100 && MoveContact
+trigger24 = StateNo = 2510 && MoveContact
+trigger25 = StateNo = 2511 && MoveContact
+trigger26 = StateNo = 2101 && MoveContact
+trigger27 = StateNo = 2102 && MoveContact
+trigger28 = StateNo = 2103 && MoveContact
+trigger29 = StateNo = 2104 && MoveContact
+trigger30 = StateNo = 1230 && MoveContact
+trigger31 = StateNo = 3015 && MoveContact
+trigger32 = StateNo = 305 && MoveContact
+trigger33 = StateNo = 11500 && MoveContact
+trigger34 = StateNo = 1240 && MoveContact
+trigger35 = StateNo = 1230 && MoveContact
+
+
+
+; 禁千二百十一式.八稚女
+[State -1, L ONI]
+type = ChangeState
+value = 3000
+triggerall = var(55) != 1
+triggerall = Command = "3000"
+triggerall = Power >= 1000 || var(20) > 0
+triggerall = StateType != A
+trigger1 = ctrl
+trigger2 = StateNo = 210 && MoveContact
+trigger3 = StateNo = 215 && MoveContact
+trigger4 = StateNo = 235 && MoveContact
+trigger5 = StateNo = 400 && MoveContact
+trigger6 = StateNo = 410 && MoveContact
+trigger7 = StateNo = 300 && MoveContact
+trigger8 = StateNo = 305 && MoveContact
+trigger9 = StateNo = 1100 && MoveContact
+trigger10 = StateNo = 1201 && MoveContact
+trigger11 = StateNo = 305 && MoveContact
+trigger12 = StateNo = 11500 && MoveContact
+trigger13 = StateNo = 1000 && MoveContact
+trigger14 = StateNo = 1100 && MoveContact
+trigger15 = StateNo = 11100 && MoveContact
+trigger16 = StateNo = 1100 && MoveContact
+trigger17 = StateNo = 1410 && MoveContact
+trigger18 = StateNo = 1411 && MoveContact
+trigger19 = StateNo = 1100 && MoveContact
+trigger20 = StateNo = 1240 && MoveContact
+trigger21 = StateNo = 1230 && MoveContact
+trigger22 = StateNo = 305 && MoveContact
+trigger23 = StateNo = 11500 && MoveContact
+trigger24 = StateNo = 1240 && MoveContact
+trigger25 = StateNo = 1230 && MoveContact
+
+
+；乱抓
+[State -1, L ONI]
+type = ChangeState
+value = 2500
+triggerall = var(55) != 1
+triggerall = Command = "乱抓"
+triggerall = Power >= 1000 
+triggerall = StateType != A
+trigger1 = ctrl
+trigger2 = StateNo = 210 && MoveContact
+trigger3 = StateNo = 215 && MoveContact
+trigger4 = StateNo = 235 && MoveContact
+trigger5 = StateNo = 400 && MoveContact
+trigger6 = StateNo = 410 && MoveContact
+trigger7 = StateNo = 300 && MoveContact
+trigger8 = StateNo = 305 && MoveContact
+trigger9 = StateNo = 1100 && MoveContact
+trigger10 = StateNo = 1201 && MoveContact
+trigger11 = StateNo = 1300 && MoveContact
+trigger12 = StateNo = 1200 && MoveContact
+trigger13 = StateNo = 1000 && MoveContact
+trigger14 = StateNo = 1100 && MoveContact
+trigger15 = StateNo = 11100 && MoveContact
+trigger16 = StateNo = 1100 && MoveContact
+trigger17 = StateNo = 1410 && MoveContact
+trigger18 = StateNo = 1411 && MoveContact
+trigger19 = StateNo = 1100 && MoveContact
+trigger20 = StateNo = 1240 && MoveContact
+trigger21 = StateNo = 1230 && MoveContact
+trigger22 = StateNo = 305 && MoveContact
+trigger23 = StateNo = 11500 && MoveContact
+trigger24 = StateNo = 1240 && MoveContact
+trigger25 = StateNo = 1230 && MoveContact
+
+
+
+；乱抓
+[State -1, L ONI]
+type = ChangeState
+value = 2100
+triggerall = var(55) != 1
+triggerall = Command = "乱抓连击MAX1"
+triggerall = Power >= 20 
+triggerall = StateType != A
+trigger1 = ctrl
+trigger2 = StateNo = 210 && MoveContact
+trigger3 = StateNo = 215 && MoveContact
+trigger4 = StateNo = 235 && MoveContact
+trigger5 = StateNo = 400 && MoveContact
+trigger6 = StateNo = 410 && MoveContact
+trigger7 = StateNo = 300 && MoveContact
+trigger8 = StateNo = 305 && MoveContact
+trigger9 = StateNo = 1100 && MoveContact
+trigger10 = StateNo = 1201 && MoveContact
+trigger11 = StateNo = 1300 && MoveContact
+trigger12 = StateNo = 1200 && MoveContact
+trigger13 = StateNo = 1000 && MoveContact
+trigger14 = StateNo = 1100 && MoveContact
+trigger15 = StateNo = 11100 && MoveContact
+trigger16 = StateNo = 1100 && MoveContact
+trigger17 = StateNo = 1410 && MoveContact
+trigger18 = StateNo = 1411 && MoveContact
+trigger19 = StateNo = 1100 && MoveContact
+trigger20 = StateNo = 1240 && MoveContact
+trigger21 = StateNo = 1230 && MoveContact
+trigger22 = StateNo = 305 && MoveContact
+trigger23 = StateNo = 11500 && MoveContact
+trigger24 = StateNo = 1240 && MoveContact
+trigger25 = StateNo = 1230 && MoveContact
+
+;------------------------------------------------------------------------------
+; MAX
+;------------------------------------------------------------------------------
+; 二百三式.槌椿
+[State -1, L ONI]
+type = ChangeState
+value = 1300
+triggerall = var(55) != 1
+triggerall = Command = "1300"
+triggerall = StateType != A
+triggerall = var(20) > 0
+trigger1 = ctrl
+trigger2 = StateNo = 200 && MoveContact
+trigger3 = StateNo = 210 && MoveContact
+trigger4 = StateNo = 230 && MoveContact
+trigger5 = StateNo = 235 && MoveContact
+trigger6 = StateNo = 240 && MoveContact
+trigger7 = StateNo = 245 && MoveContact
+trigger8 = StateNo = 430 && MoveContact
+trigger9 = StateNo = 440 && MoveContact
+trigger10 = StateNo = 1000 && MoveContact
+trigger11 = StateNo = 1100 && MoveContact
+trigger12 = StateNo = 1201 && MoveContact
+trigger13 = StateNo = 1240 && MoveContact
+trigger14 = StateNo = 1230 && MoveContact
+trigger15 = StateNo = 305 && MoveContact
+trigger16 = StateNo = 1240 && MoveContact
+trigger17 = StateNo = 1230 && MoveContact
+
+
+[State -1, L ONI]
+type = ChangeState
+value = 11500
+triggerall = var(55) != 1
+triggerall = Command = "buzd"
+triggerall = StateType != A
+trigger1 = ctrl
+trigger2 = StateNo = 200 && MoveContact
+trigger3 = StateNo = 210 && MoveContact
+trigger4 = StateNo = 230 && MoveContact
+trigger5 = StateNo = 235 && MoveContact
+trigger6 = StateNo = 240 && MoveContact
+trigger7 = StateNo = 245 && MoveContact
+trigger8 = StateNo = 430 && MoveContact
+trigger9 = StateNo = 440 && MoveContact
+trigger10 = StateNo = 1000 && MoveContact
+trigger11 = StateNo = 1100 && MoveContact
+trigger12 = StateNo = 1201 && MoveContact
+trigger13 = StateNo = 1240 && MoveContact
+trigger14 = StateNo = 1230 && MoveContact
+trigger15 = StateNo = 305 && MoveContact
+trigger16 = StateNo = 1411 && MoveContact
+trigger17 = StateNo = 1240 && MoveContact
+trigger18 = StateNo = 1230 && MoveContact
+
+
+; 百二十九式.明鳥
+[State -1, L ONI]
+type = ChangeState
+value = 1200
+triggerall = var(55) != 1
+triggerall = Command = "1200"
+triggerall = StateType != A
+triggerall = var(20) > 0
+trigger1 = ctrl
+trigger2 = StateNo = 200 && MoveContact
+trigger3 = StateNo = 210 && MoveContact
+trigger4 = StateNo = 230 && MoveContact
+trigger5 = StateNo = 235 && MoveContact
+trigger6 = StateNo = 240 && MoveContact
+trigger7 = StateNo = 245 && MoveContact
+trigger8 = StateNo = 430 && MoveContact
+trigger9 = StateNo = 440 && MoveContact
+trigger10 = StateNo = 1000 && MoveContact
+trigger11 = StateNo = 1100 && MoveContact
+trigger12 = StateNo = 1240 && MoveContact
+trigger13 = StateNo = 1230 && MoveContact
+trigger14 = StateNo = 305 && MoveContact
+
+; 百四式.鵺討
+[State -1, L ONI]
+type = ChangeState
+value = 1100
+triggerall = var(55) != 1
+triggerall = Command = "1100"
+triggerall = StateType != A
+triggerall = var(20) > 0
+trigger1 = ctrl
+trigger2 = StateNo = 200 && MoveContact
+trigger3 = StateNo = 210 && MoveContact
+trigger4 = StateNo = 230 && MoveContact
+trigger5 = StateNo = 235 && MoveContact
+trigger6 = StateNo = 240 && MoveContact
+trigger7 = StateNo = 245 && MoveContact
+trigger8 = StateNo = 430 && MoveContact
+trigger9 = StateNo = 440 && MoveContact
+trigger10 = StateNo = 1000 && MoveContact
+trigger11 = StateNo = 1201 && MoveContact
+trigger12 = StateNo = 1411 && MoveContact
+trigger13 = StateNo = 1240 && MoveContact
+trigger14 = StateNo = 1230 && MoveContact
+trigger15 = StateNo = 305 && MoveContact
+
+
+
+ 百四一式.沖月
+[State -1, L ONI]
+type = ChangeState
+value = 11100
+triggerall = var(55) != 1
+triggerall = Command = "1000"
+triggerall = StateType != A
+triggerall = var(20) > 0
+trigger1 = ctrl
+trigger2 = StateNo = 200 && MoveContact
+trigger3 = StateNo = 210 && MoveContact
+trigger4 = StateNo = 230 && MoveContact
+trigger5 = StateNo = 235 && MoveContact
+trigger6 = StateNo = 240 && MoveContact
+trigger7 = StateNo = 245 && MoveContact
+trigger8 = StateNo = 430 && MoveContact
+trigger9 = StateNo = 440 && MoveContact
+trigger10 = StateNo = 1100 && MoveContact
+trigger11 = StateNo = 1201 && MoveContact
+trigger12 = StateNo = 1411 && MoveContact
+trigger13 = StateNo = 1240 && MoveContact
+trigger14 = StateNo = 1230 && MoveContact
+trigger16 = StateNo = 305 && MoveContact
+
+
+[State -1]
+type = ChangeState
+value = 11100
+triggerall = var(55) != 1
+triggerall = command = "连击"
+triggerall = StateType != A
+trigger1 = ctrl
+trigger2 = StateNo = 200 && MoveContact
+trigger3 = StateNo = 210 && MoveContact
+trigger4 = StateNo = 230 && MoveContact
+trigger5 = StateNo = 235 && MoveContact
+trigger6 = StateNo = 240 && MoveContact
+trigger7 = StateNo = 245 && MoveContact
+trigger8 = StateNo = 430 && MoveContact
+trigger9 = StateNo = 440 && MoveContact
+trigger10 = StateNo = 1100 && MoveContact
+trigger11 = StateNo = 1201 && MoveContact
+trigger12 = StateNo = 1411 && MoveContact
+trigger13 = StateNo = 1230 && MoveContact
+trigger14 = StateNo = 1410 && MoveContact
+trigger15 = StateNo = 1240 && MoveContact
+trigger16 = StateNo = 1230 && MoveContact
+trigger17 = StateNo = 305 && MoveContact
+trigger18 = StateNo = 1240 && MoveContact
+trigger19 = StateNo = 1230 && MoveContact
+
+
+[State -1]
+type = ChangeState
+value = 13000
+triggerall = var(55) != 1
+triggerall = command = "跑步抓"
+triggerall = StateType != A
+trigger1 = ctrl
+trigger2 = StateNo = 200 && MoveContact
+trigger3 = StateNo = 210 && MoveContact
+trigger4 = StateNo = 230 && MoveContact
+trigger5 = StateNo = 235 && MoveContact
+trigger6 = StateNo = 240 && MoveContact
+trigger7 = StateNo = 245 && MoveContact
+trigger8 = StateNo = 430 && MoveContact
+trigger9 = StateNo = 440 && MoveContact
+trigger10 = StateNo = 1100 && MoveContact
+trigger11 = StateNo = 1201 && MoveContact
+trigger12 = StateNo = 1411 && MoveContact
+trigger13 = StateNo = 1230 && MoveContact
+trigger14 = StateNo = 1410 && MoveContact
+trigger15 = StateNo = 1240 && MoveContact
+trigger16 = StateNo = 1230 && MoveContact
+trigger17 = StateNo = 1200 && MoveContact
+trigger18 = StateNo = 2013 && MoveContact
+trigger19 = StateNo = 2014 && MoveContact
+trigger20 = StateNo = 1000 && MoveContact
+trigger21 = StateNo = 1004 && MoveContact
+trigger22 = StateNo = 305 && MoveContact
+trigger23 = StateNo = 1240 && MoveContact
+trigger24 = StateNo = 1230 && MoveContact
+
+
+
+;------------------------------------------------------------------------------
+; !MAX
+;------------------------------------------------------------------------------
+; 二百三式.槌椿
+[State -1, L ONI]
+type = ChangeState
+value = 1300
+triggerall = var(55) != 1
+triggerall = Command = "1300"
+triggerall = StateType != A
+trigger1 = ctrl
+trigger2 = StateNo = 210 && MoveContact
+trigger3 = StateNo = 215 && MoveContact
+trigger4 = StateNo = 235 && MoveContact
+trigger5 = StateNo = 400 && MoveContact
+trigger6 = StateNo = 410 && MoveContact
+trigger7 = StateNo = 300 && MoveContact
+trigger8 = StateNo = 305 && MoveContact
+trigger9 = StateNo = 1411 && MoveContact
+trigger10 = StateNo = 305 && MoveContact
+
+; 百二十九式.明鳥
+[State -1, L ONI]
+type = ChangeState
+value = 1200
+triggerall = var(55) != 1
+triggerall = Command = "1200"
+triggerall = StateType != A
+trigger1 = ctrl
+trigger2 = StateNo = 210 && MoveContact
+trigger3 = StateNo = 215 && MoveContact
+trigger4 = StateNo = 235 && MoveContact
+trigger5 = StateNo = 400 && MoveContact
+trigger6 = StateNo = 410 && MoveContact
+trigger7 = StateNo = 300 && MoveContact
+trigger8 = StateNo = 305 && MoveContact
+trigger9 = StateNo = 1411 && MoveContact
+trigger10 = StateNo = 305 && MoveContact
+
+
+[State -1]
+type = ChangeState
+value = 2013
+triggerall = var(55) != 1
+triggerall = command = "半月"
+triggerall = StateType != A
+trigger1 = ctrl
+trigger2 = StateNo = 200 && MoveContact
+trigger3 = StateNo = 210 && MoveContact
+trigger4 = StateNo = 230 && MoveContact
+trigger5 = StateNo = 235 && MoveContact
+trigger6 = StateNo = 240 && MoveContact
+trigger7 = StateNo = 245 && MoveContact
+trigger8 = StateNo = 430 && MoveContact
+trigger9 = StateNo = 440 && MoveContact
+trigger10 = StateNo = 1100 && MoveContact
+trigger11 = StateNo = 1201 && MoveContact
+trigger12 = StateNo = 1411 && MoveContact
+trigger13 = StateNo = 1230 && MoveContact
+trigger14 = StateNo = 1410 && MoveContact
+trigger15 = StateNo = 1240 && MoveContact
+trigger16 = StateNo = 1230 && MoveContact
+trigger17 = StateNo = 1230 && MoveContact
+trigger18 = StateNo = 1240 && MoveContact
+trigger19 = StateNo = 1200 && MoveContact
+trigger20 = StateNo = 305 && MoveContact
+trigger21 = StateNo = 1240 && MoveContact
+trigger22 = StateNo = 1230 && MoveContact
+
+
+[State -1]
+type = ChangeState
+value = 2014
+triggerall = var(55) != 1
+triggerall = command = "半月Y"
+triggerall = StateType != A
+trigger1 = ctrl
+trigger2 = StateNo = 200 && MoveContact
+trigger3 = StateNo = 210 && MoveContact
+trigger4 = StateNo = 230 && MoveContact
+trigger5 = StateNo = 235 && MoveContact
+trigger6 = StateNo = 240 && MoveContact
+trigger7 = StateNo = 245 && MoveContact
+trigger8 = StateNo = 430 && MoveContact
+trigger9 = StateNo = 440 && MoveContact
+trigger10 = StateNo = 1100 && MoveContact
+trigger11 = StateNo = 1201 && MoveContact
+trigger12 = StateNo = 1411 && MoveContact
+trigger13 = StateNo = 1230 && MoveContact
+trigger14 = StateNo = 1410 && MoveContact
+trigger15 = StateNo = 1240 && MoveContact
+trigger16 = StateNo = 1230 && MoveContact
+trigger17 = StateNo = 305 && MoveContact
+trigger18 = StateNo = 1240 && MoveContact
+trigger19 = StateNo = 1230 && MoveContact
+
+
+
+[State -1]
+type = ChangeState
+value = 1230
+triggerall = var(55) != 1
+triggerall = command = "1200"
+triggerall = StateType != A
+trigger1 = ctrl
+trigger2 = StateNo = 200 && MoveContact
+trigger3 = StateNo = 210 && MoveContact
+trigger4 = StateNo = 230 && MoveContact
+trigger5 = StateNo = 235 && MoveContact
+trigger6 = StateNo = 240 && MoveContact
+trigger7 = StateNo = 245 && MoveContact
+trigger8 = StateNo = 430 && MoveContact
+trigger9 = StateNo = 440 && MoveContact
+trigger10 = StateNo = 1100 && MoveContact
+trigger11 = StateNo = 1201 && MoveContact
+trigger12 = StateNo = 1411 && MoveContact
+trigger13 = StateNo = 1410 && MoveContact
+trigger14 = StateNo = 11100 && MoveContact
+trigger15 = StateNo = 1200 && MoveContact
+trigger16 = StateNo = 13000 && MoveContact
+trigger17 = StateNo = 305 && MoveContact
+
+[State -1]
+type = ChangeState
+value = 1240
+triggerall = var(55) != 1
+triggerall = command = "1200"
+triggerall = StateType != A
+trigger1 = ctrl
+trigger2 = StateNo = 200 && MoveContact
+trigger3 = StateNo = 210 && MoveContact
+trigger4 = StateNo = 230 && MoveContact
+trigger5 = StateNo = 235 && MoveContact
+trigger6 = StateNo = 240 && MoveContact
+trigger7 = StateNo = 245 && MoveContact
+trigger8 = StateNo = 430 && MoveContact
+trigger9 = StateNo = 440 && MoveContact
+trigger10 = StateNo = 1100 && MoveContact
+trigger11 = StateNo = 1201 && MoveContact
+trigger12 = StateNo = 1411 && MoveContact
+trigger13 = StateNo = 1230 && MoveContact
+trigger14 = StateNo = 1410 && MoveContact
+trigger15 = StateNo = 11100 && MoveContact
+trigger16 = StateNo = 1200 && MoveContact
+trigger17 = StateNo = 13000 && MoveContact
+trigger18 = StateNo = 305 && MoveContact
+
+
+
+; 百四式.鵺討
+[State -1, L ONI]
+type = ChangeState
+value = 1100
+triggerall = var(55) != 1
+triggerall = Command = "1100"
+triggerall = StateType != A
+trigger1 = ctrl
+trigger2 = StateNo = 210 && MoveContact
+trigger3 = StateNo = 215 && MoveContact
+trigger4 = StateNo = 235 && MoveContact
+trigger5 = StateNo = 400 && MoveContact
+trigger6 = StateNo = 410 && MoveContact
+trigger7 = StateNo = 300 && MoveContact
+trigger8 = StateNo = 305 && MoveContact
+trigger9 = StateNo = 1411 && MoveContact
+trigger10 = StateNo = 305 && MoveContact
+
+; 百四一式.沖月
+[State -1, L ONI]
+type = ChangeState
+value = 1000
+triggerall = var(55) != 1
+triggerall = Command = "1000"
+triggerall = StateType != A
+trigger1 = ctrl
+trigger2 = StateNo = 210 && MoveContact
+trigger3 = StateNo = 215 && MoveContact
+trigger4 = StateNo = 235 && MoveContact
+trigger5 = StateNo = 400 && MoveContact
+trigger6 = StateNo = 410 && MoveContact
+trigger7 = StateNo = 300 && MoveContact
+trigger8 = StateNo = 305 && MoveContact
+trigger9 = StateNo = 1411 && MoveContact
+trigger10 = StateNo = 305 && MoveContact
+
+
+[State -1]
+type = ChangeState
+value = 1410
+triggerall = var(55) != 1
+triggerall = command = "抓1"
+trigger1 = statetype = S
+trigger1 = ctrl = 1
+trigger2 = stateno = 1000 || stateno = 1100 || stateno = 1200 || stateno = 1300 || stateno = 2100 || stateno = 215 || stateno = 235 || stateno = 400 || stateno = 410 || stateno = 300 || stateno = 305 || stateno = 305
+trigger3 = stateno = 320
+trigger4 = StateNo = 1240 && MoveContact
+trigger5 = StateNo = 1230 && MoveContact
+trigger6 = StateNo = 305 && MoveContact
+trigger7 = StateNo = 1240 && MoveContact
+trigger8 = StateNo = 1230 && MoveContact
+
+;---------------------------------------------------------------------------
+
+[State -1]
+type = ChangeState
+value = 1411
+triggerall = var(55) != 1
+triggerall = command = "抓1"
+trigger1 = stateno = 1410
+trigger1 = time >= 15
+trigger2 = stateno = 1400
+trigger2 = time >= 17
+
+
+[State -1]
+type = ChangeState
+value = 1004
+triggerall = var(55) != 1
+triggerall = command = "1000"
+trigger1 = stateno = 1000
+trigger1 = time >= 21
+trigger2 = stateno = 1410
+trigger2 = time >= 17
+
+[State -1]
+type = ChangeState
+value = 1111
+triggerall = var(55) != 1
+triggerall = command = "1000"
+trigger1 = stateno = 1004
+trigger1 = time >= 15
+trigger2 = stateno = 1411
+trigger2 = time >= 18
+
+
+[State -1]
+type = ChangeState
+value = 1100
+triggerall = var(55) != 1
+triggerall = command = "抓1"
+trigger1 = stateno = 1411
+trigger1 = time >= 16
+trigger2 = stateno = 1401
+trigger2 = time >= 19
+;---------------------------------------------------------------------------
+;MAX
+[State -1, MAX]
+type = ChangeState
+value = 900
+triggerall = command = "MAX"
+triggerall = statetype != A
+triggerall = power >= 1000
+trigger1 = var(20) = 0
+trigger1 = ctrl
+
+[State -1, MAX]
+type = ChangeState
+value = 901
+triggerall = command = "MAX"
+triggerall = statetype != A
+triggerall = power >= 1000
+trigger1 = var(20) = 0
+trigger1 = stateno = [200,499]
+trigger1 = movecontact
+
+;---------------------------------------------------------------------------
+; 後緊急回避
+[State -1, T S]
+type = ChangeState
+value = 710
+triggerall = Command = "recovery" && Command = "holdback"
+trigger1 = StateType = S
+trigger1 = ctrl
+trigger2 = StateNo = [150,151]
+
+;---------------------------------------------------------------------------
+; 前緊急回避
+[State -1, T S]
+type = ChangeState
+value = 700
+triggerall = Command = "recovery"
+trigger1 = StateType = S
+trigger1 = ctrl
+trigger2 = StateNo = [150,151]
+trigger3 = StateNo = [200,499]
+trigger3 = MoveContact
+trigger4 = StateNo = 100
+
+;---------------------------------------------------------------------------
+; 受身
+[State -1, UKEMI]
+type = ChangeState
+value = 5200
+triggerall = Command = "recovery"
+triggerall = alive = 1
+trigger1 = StateNo = 5050
+trigger1 = Pos Y > -30
+trigger1 = Vel Y > 0 && Vel Y < 9
+
+;------------------------------------------------------------------------------
+; 吹飛攻擊
+[State -1, CD]
+type = ChangeState
+value = 250
+triggerall = Command = "吹飛攻擊"
+triggerall = StateType = S
+triggerall = StateNo != 100
+trigger1 = ctrl
+trigger2 = power >= 1000
+trigger2 = StateNo = [150,151]
+
+;------------------------------------------------------------------------------
+; 空中吹飛攻擊
+[State -1, CD]
+type = ChangeState
+value = 650
+triggerall = Command = "吹飛攻擊"
+triggerall = StateType = A
+trigger1 = ctrl
+
+;------------------------------------------------------------------------------
+; 外式.夢弾
+[State -1, rokotu]
+type = ChangeState
+value = 300
+triggerall = Command = "x"
+triggerall = Command = "holdfwd"
+triggerall = StateType != A
+triggerall = Command != "holddown"
+trigger1 = ctrl
+trigger2 = StateNo = 200 && MoveContact
+trigger3 = StateNo = 205 && MoveContact
+trigger4 = StateNo = 210 && MoveContact
+trigger5 = StateNo = 215 && MoveContact
+trigger6 = StateNo = 235 && MoveContact
+trigger7 = StateNo = 400 && MoveContact
+trigger8 = StateNo = 410 && MoveContact
+trigger9 = StateNo = 230 && MoveContact
+
+;------------------------------------------------------------------------------
+; 外式.夢弾
+[State -1, rokotu]
+type = ChangeState
+value = 305
+triggerall = Command = "x"
+triggerall = Command = "holdfwd"
+triggerall = StateType != A
+triggerall = Command != "holddown"
+trigger1 = ctrl
+trigger2 = StateNo = 200 && MoveContact
+trigger3 = StateNo = 205 && MoveContact
+trigger4 = StateNo = 210 && MoveContact
+trigger5 = StateNo = 215 && MoveContact
+trigger6 = StateNo = 235 && MoveContact
+trigger7 = StateNo = 400 && MoveContact
+trigger8 = StateNo = 410 && MoveContact
+trigger9 = StateNo = 230 && MoveContact
+
+
+; 外式.百合折
+[State -1, rokotu]
+type = ChangeState
+value = 320
+triggerall = StateType = A
+trigger1 = ctrl
+trigger1 = Command = "a"
+trigger1 = Command = "holdback"
+trigger1 = P2Dist X >= 5
+trigger2 = ctrl
+trigger2 = Command = "a"
+trigger2 = Command = "holdfwd"
+trigger2 = P2Dist X < 5
+trigger3 = StateNo = 105 && (Command = "holdback" && Command = "a")
+trigger4 = StateNo = 305 && MoveContact
+
+;------------------------------------------------------------------------------
+; P投
+[State -1, Throw]
+type = ChangeState
+value = 800
+triggerall = Command = "y"
+triggerall = Command = "holdfwd" || Command = "holdback"
+triggerall = StateType = S
+triggerall = StateNo != 100
+trigger1 = P2BodyDist X < 15
+trigger1 = p2StateType != A && p2MoveType != H
+trigger1 = ctrl
+trigger2 = StateNo = 305 && MoveContact
+
+;------------------------------------------------------------------------------
+; K投
+[State -1, Throw]
+type = ChangeState
+value = 830
+triggerall = Command = "b"
+triggerall = Command = "holdfwd" || Command = "holdback"
+triggerall = StateType = S
+triggerall = StateNo != 100
+trigger1 = P2BodyDist X < 15
+trigger1 = p2StateType != A && p2MoveType != H
+trigger1 = ctrl
+trigger2 = StateNo = 305 && MoveContact
+
+;------------------------------------------------------------------------------
+; 前跑
+[State -1, Dash]
+type = ChangeState
+value = 100
+trigger1 = Command = "FF"
+trigger1 = StateType = S
+trigger1 = ctrl
+
+; 后疾
+[State -1, Back Step]
+type = ChangeState
+value = 105
+trigger1 = Command = "BB"
+trigger1 = StateType = S
+trigger1 = ctrl
+
+;------------------------------------------------------------------------------
+[State -1, Stand Light Punch]
+type = ChangeState
+value = 205
+triggerall = Command = "x"
+triggerall = Command != "holddown"
+triggerall = StateType = S
+triggerall = P2BodyDist X < 25
+trigger1 = ctrl
+
+[State -1, Stand Light Punch]
+type = ChangeState
+value = 200
+triggerall = Command = "x"
+triggerall = Command != "holddown"
+triggerall = StateType = S
+trigger1 = ctrl
+
+[State -1, Stand Strong Punch]
+type = ChangeState
+value = 215
+triggerall = Command = "y"
+triggerall = Command != "holddown"
+triggerall = StateType = S
+triggerall = P2BodyDist X < 20
+trigger1 = ctrl
+
+[State -1, Stand Strong Punch]
+type = ChangeState
+value = 210
+triggerall = Command = "y"
+triggerall = Command != "holddown"
+triggerall = StateType = S
+trigger1 = ctrl
+
+[State -1, Stand Light Kick]
+type = ChangeState
+value = 235
+triggerall = Command = "a,a"
+triggerall = StateType != A
+trigger1 = ctrl
+trigger2 = StateNo = 200 && MoveContact
+trigger3 = StateNo = 205 && MoveContact
+trigger4 = StateNo = 210 && MoveContact
+trigger5 = StateNo = 215 && MoveContact
+trigger6 = StateNo = 230 && MoveContact
+trigger7 = StateNo = 240 && MoveContact
+trigger8 = StateNo = 245 && MoveContact
+trigger9 = StateNo = 300 && MoveContact
+trigger10 = StateNo = 400 && MoveContact
+trigger11 = stateno = 305
+trigger11 = time >= 28
+trigger12 = stateno = 410
+trigger12 = time >= 17
+
+[State -1, Stand Light Kick]
+type = ChangeState
+value = 230
+triggerall = Command = "a"
+triggerall = Command != "holddown"
+triggerall = StateType = S
+trigger1 = ctrl
+
+[State -1, Standing Strong Kick]
+type = ChangeState
+value = 245
+triggerall = Command = "b"
+triggerall = Command != "holddown"
+triggerall = StateType = S
+triggerall = P2BodyDist X < 20
+trigger1 = ctrl
+
+[State -1, Standing Strong Kick]
+type = ChangeState
+value = 240
+triggerall = Command = "b"
+triggerall = Command != "holddown"
+triggerall = StateType = S
+trigger1 = ctrl
+
+;------------------------------------------------------------------------------
+; 挑釁
+[State -1, Taunt]
+type = ChangeState
+value = 195
+triggerall = Command = "start"
+trigger1 = StateType != A
+trigger1 = ctrl
+
+;------------------------------------------------------------------------------
+[State -1, Crouching Light Punch]
+type = ChangeState
+value = 400
+triggerall = Command = "x"
+triggerall = Command = "holddown"
+trigger1 = StateType = C
+trigger1 = ctrl
+trigger2 = StateNo = 430 && MoveContact
+
+[State -1, Crouching Strong Punch]
+type = ChangeState
+value = 410
+triggerall = Command = "y"
+triggerall = Command = "holddown"
+trigger1 = StateType = C
+trigger1 = ctrl
+
+[State -1, Crouching Light Kick]
+type = ChangeState
+value = 430
+triggerall = Command = "a"
+triggerall = Command = "holddown"
+trigger1 = StateType = C
+trigger1 = ctrl
+
+[State -1, Crouching Strong Kick]
+type = ChangeState
+value = 440
+triggerall = Command = "b"
+triggerall = Command = "holddown"
+trigger1 = StateType = C
+trigger1 = ctrl
+
+;------------------------------------------------------------------------------
+[State -1, Jump Light Punch]
+type = ChangeState
+value = 600
+triggerall = Command = "x"
+triggerall = StateNo != 105
+trigger1 = StateType = A
+trigger1 = ctrl
+
+[State -1, Jump Strong Punch]
+type = ChangeState
+value = 610
+triggerall = Command = "y"
+triggerall = StateNo != 105
+trigger1 = StateType = A
+trigger1 = ctrl
+
+[State -1, Jump Light Kick]
+type = ChangeState
+value = 630
+triggerall = Command = "a"
+triggerall = StateNo != 105
+trigger1 = StateType = A
+trigger1 = ctrl
+
+[State -1, Jump Strong Kick]
+type = ChangeState
+value = 640
+triggerall = Command = "b"
+triggerall = StateNo != 105
+trigger1 = StateType = A
+trigger1 = ctrl
+
+;------------------------------------------------------------------------------
+

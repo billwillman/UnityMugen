@@ -1,0 +1,36 @@
+;============================================================================
+;テリー・ボガード
+;From "The King of Fighters" + "Rgae of the Dragons"
+;============================================================================
+; Player information
+[Info]
+name = "Terry"        
+displayname = "Terry" 
+versiondate = 2003,8,18,2002   
+mugenversion = 2001,04,14  
+author = "RYO 2005"      
+pal.defaults = 0
+
+; Files for the player
+[Files]
+cmd      = Terry-ROTD.cmd  
+cns      = Terry-ROTD-P.cns   
+st       = Terry-ROTD-N.cns   
+st2      = Terry-ROTD-S.cns 
+st3      = Terry-ROTD-H.cns 
+st4      = Terry-ROTD-C.cns 
+stcommon = common.cns
+sprite   = Terry-ROTD.sff   
+anim     = Terry-ROTD.air  
+sound    = Terry-ROTD.snd  
+pal1     = _pal/pal1.act
+pal2     = _pal/pal2.act
+pal3     = _pal/pal3.act
+pal4     = _pal/pal4.act
+pal5     = _pal/pal5.act
+pal6     = _pal/pal6.act
+
+; Arcade mode
+;[Arcade]
+;intro.storyboard = intro.def
+;ending.storyboard = ending.def

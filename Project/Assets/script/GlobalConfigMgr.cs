@@ -4,9 +4,11 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using Mugen;
+using LuaInterface;
 
 public enum GlobalPlayerLoaderResult
 {
+	LUAConfigError = -0x20,
 	CmdConfigError = -0x10,
 	CNSConfigError = -0x8,
 	AirConfigError = -0x4,
@@ -15,7 +17,8 @@ public enum GlobalPlayerLoaderResult
 	None = 0x0,
 	Ok = 0x1,
 
-	CNSAndCmdError = (int)CmdConfigError | (int)CNSConfigError
+	CNSAndCmdError = (int)CmdConfigError | (int)CNSConfigError,
+	LUAAndCmdError = (int)CmdConfigError | (int)LUAConfigError,
 }
 
 [RequireComponent(typeof(PlayerStateCtl))]
@@ -85,6 +88,7 @@ public class GlobalConfigMgr : MonoSingleton<GlobalConfigMgr> {
 		return r;
 	}
 
+	[NoToLuaAttribute]
     public Clsn CreateClsnBox(InputPlayerType playerType, string name, Transform parent, float x, float y, float w, float h, bool isClsn2 = true)
     {
         Clsn r = GetClsnColliderFromPool(name);
@@ -117,6 +121,7 @@ public class GlobalConfigMgr : MonoSingleton<GlobalConfigMgr> {
 	/// <param name="offsetX">像素偏移X</param>
 	/// <param name="offsetY">像素偏移Y</param>
 	/// <param name="isClsn2">If set to <c>true</c> 防御盒，否则攻击盒</param>
+	[NoToLuaAttribute]
 	public SpriteRenderer CreateClsnSprite(string name, Transform parent, float x, float y, float w, float h, bool isClsn2 = true)
 	{
 		SpriteRenderer r = GetClsnSpriteFromPool (name);
@@ -158,7 +163,7 @@ public class GlobalConfigMgr : MonoSingleton<GlobalConfigMgr> {
 			r.gameObject.SetActive (true);
 		return r;
 	}
-
+	[NoToLuaAttribute]
 	public void DestroyClsn(SpriteRenderer r)
 	{
 		if (r == null)
@@ -171,7 +176,7 @@ public class GlobalConfigMgr : MonoSingleton<GlobalConfigMgr> {
 		r.sprite = null;
 		r.transform.SetParent (m_ClsnSpritePoolRoot.transform, false);
 	}
-
+	[NoToLuaAttribute]
     public void DestroyBoxCollider(Clsn box)
     {
         if (box == null)
@@ -182,9 +187,23 @@ public class GlobalConfigMgr : MonoSingleton<GlobalConfigMgr> {
         box.transform.SetParent(m_ClsnColliderPoolRoot.transform, false);
     }
 
+	// LUA调用使用
+	public LuaCnsConfig GetLuaCnsCfg(string playerName)
+	{
+		if (string.IsNullOrEmpty(playerName))
+			return null;
+		GlobalPlayerLoaderResult result;
+		var player = LoadPlayer_(playerName, out result);
+		if (player == null)
+			return null;
+		return player.LuaCfg;
+	}
+		
 	// 默认加载的PlayerName, 可用于测试
+	[NoToLuaAttribute]
 	public List<DefaultLoaderPlayer> m_DefaultLoaderPlayers = null;
 
+	[NoToLuaAttribute]
     public bool HasLoadPlayer(DefaultLoaderPlayer loaderPlayer)
     {
         if (loaderPlayer == null)
@@ -193,6 +212,39 @@ public class GlobalConfigMgr : MonoSingleton<GlobalConfigMgr> {
         return m_PlayerDict.ContainsKey(playerName);
     }
 
+	[NoToLuaAttribute]
+	public GlobalPlayer LoadPlayer_(string playerName, out GlobalPlayerLoaderResult result)
+	{
+		if (string.IsNullOrEmpty(playerName))
+		{
+			result = GlobalPlayerLoaderResult.ParamError;
+			return null;
+		}
+		var trans = this.transform;
+		DefaultLoaderPlayer finder = null;
+		for (int i = 0; i < trans.childCount; ++i)
+		{
+			var child = trans.GetChild(i);
+			DefaultLoaderPlayer loader = child.GetComponent<DefaultLoaderPlayer>();
+			if (loader == null)
+				continue;
+			var plyName = loader.GetPlayerName();
+			if (string.Compare(plyName, playerName) == 0)
+			{
+				finder = loader;
+				break;
+			}
+		}
+		if (finder == null)
+		{ 
+			GameObject obj = new GameObject(playerName, typeof(DefaultLoaderPlayer));
+			finder  = obj.GetComponent<DefaultLoaderPlayer>();
+		}
+		GlobalPlayer ret = LoadPlayer(finder, out result);
+		return ret;
+	}
+
+	[NoToLuaAttribute]
 	public GlobalPlayer LoadPlayer(DefaultLoaderPlayer loaderPlayer, out GlobalPlayerLoaderResult result)
 	{
 		if (loaderPlayer == null) {
@@ -219,6 +271,7 @@ public class GlobalConfigMgr : MonoSingleton<GlobalConfigMgr> {
 		return player;
 	}
 
+	[NoToLuaAttribute]
 	public void Clear()
 	{
 		m_PlayerDict.Clear ();
@@ -253,6 +306,7 @@ public class GlobalConfigMgr : MonoSingleton<GlobalConfigMgr> {
 		}
 	}
 
+	[NoToLuaAttribute]
 	public static string GetConfigFileNameNoExt(string fileName)
 	{
 		if (string.IsNullOrEmpty (fileName))
