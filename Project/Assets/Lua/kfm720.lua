@@ -1,15 +1,19 @@
-require("trigger")
+local trigger = require("trigger")
 
 local setmetatable = setmetatable
+local GlobaConfigMgr = MonoSingleton_GlobalConfigMgr.GetInstance()
 
 local kfm720 = {}
 kfm720.__index = kfm720
 
 function kfm720:new()
    -- 静态数据
-   self:_initData()
-   self:_initSize()
-   self:_initStateDefs()
+   if self._isInit == nil then
+		self._isInit = true
+		self:_initData()
+		self:_initSize()
+		self:_initStateDefs()
+    end
    -- 动态数据
    local t = {PlayerDisplay = nil}
    return setmetatable(t, kfm720)
@@ -56,7 +60,21 @@ function kfm720:_initSize()
   self.Size.yscale = 1
 end
 
+--创建StateDef
 function kfm720:_initStateDefs()
+	local luaCfg = GlobaConfigMgr:GetLuaCnsCfg("kfm720")
+	if luaCfg == nil then
+		return
+	end
+	
+	-- 创建各种状态
+	self:_initStateDef_200(luaCfg)
+end
+
+function kfm720:_initStateDef_200(luaCfg)
+	local id = trigger:Help_CreateStateDef(luaCfg, 200)
+	local def = trigger:Help_GetStateDef(luaCfg, id)
+	--Def注册State
 end
 
 setmetatable(kfm720, {__call = kfm720.new})

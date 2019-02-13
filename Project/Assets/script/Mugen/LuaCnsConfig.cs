@@ -16,6 +16,15 @@ public class LuaCnsConfig
 			return ret;
 		}
 
+    public bool HasStateDef
+        {
+            get
+            {
+                return m_CnsConfig.HasStateDef;
+            }
+
+        }
+
 	[NoToLuaAttribute]
 	public bool LoadFromFile(string fileName)
 	{

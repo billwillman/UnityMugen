@@ -11,6 +11,7 @@ public class LuaCnsConfigWrap
 		L.RegFunction("GetStateDef", GetStateDef);
 		L.RegFunction("New", _CreateLuaCnsConfig);
 		L.RegFunction("__tostring", ToLua.op_ToString);
+		L.RegVar("HasStateDef", get_HasStateDef, null);
 		L.EndClass();
 	}
 
@@ -71,6 +72,25 @@ public class LuaCnsConfigWrap
 		catch (Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_HasStateDef(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			LuaCnsConfig obj = (LuaCnsConfig)o;
+			bool ret = obj.HasStateDef;
+			LuaDLL.lua_pushboolean(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index HasStateDef on a nil value");
 		}
 	}
 }

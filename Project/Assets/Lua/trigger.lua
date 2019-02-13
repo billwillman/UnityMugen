@@ -33,11 +33,11 @@ function trigger:AILevel(luaPlayer)
 	if display == nil then
 		return nil 
 	end
-	local attribe = display:Attribe()
+	local attribe = display.Attribe
 	if attribe == nil then
 		return nil
 	end
-	return attribe:AILevel()
+	return attribe.AILevel
 end
 
 function trigger:Alive(luaPlayer)
@@ -48,12 +48,12 @@ function trigger:Alive(luaPlayer)
 	if display == nil then
 		return nil 
 	end
-	local attribe = display:Attribe()
+	local attribe = display.Attribe
 	if attribe == nil then
 		return nil
 	end
 	local ret = 0
-	if attribe:IsAlive() then
+	if attribe.IsAlive then
 		ret = 1
 	end
 	return ret
@@ -91,7 +91,7 @@ function trigger:Facing(luaPlayer)
 	if display == nil then
 		return nil 
 	end
-	local isFlipX = display:IsFlipX()
+	local isFlipX = display.IsFlipX
 	if not isFlipX then
 		return 1
 	else
@@ -107,11 +107,11 @@ function trigger:HitCount(luaPlayer)
 	if display == nil then
 		return nil 
 	end
-	local attribe = display:Attribe()
+	local attribe = display.Attribe
 	if attribe == nil then
 		return nil
 	end
-	return attribe:HitCount()
+	return attribe.HitCount
 end
 
 function trigger:Life(luaPlayer)
@@ -122,11 +122,11 @@ function trigger:Life(luaPlayer)
 	if display == nil then
 		return nil 
 	end
-	local attribe = display:Attribe()
+	local attribe = display.Attribe
 	if attribe == nil then
 		return nil
 	end
-	return attribe:Life()
+	return attribe.Life
 end
 
 
@@ -136,6 +136,23 @@ end
 -- 处理模块
 
 function trigger:Do_PlaySnd()
+end
+
+-- 帮助模块
+function trigger:Help_CreateStateDef(luaCfg, name)
+	if luaCfg == nil or name == nil then
+		return nil
+	end
+	local id = luaCfg:CreateStateDef(name)
+	return id
+end
+
+function trigger:Help_GetStateDef(luaCfg, id)
+	if luaCfg == nil or id == nil then
+		return nil
+	end
+	local def = luaCfg:GetStateDef(id)
+	return def;
 end
 
 return trigger
