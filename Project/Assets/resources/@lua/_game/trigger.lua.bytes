@@ -214,6 +214,16 @@ function trigger:Help_InitLuaPlayer(newLuaPlayer, basePlayer)
 	if org.volume ~= nil then
 		dst.volume = org.volume
 	end
+	
+	if org.IntPersistIndex ~= nil then
+		dst.IntPersistIndex = org.IntPersistIndex
+	end
+	
+	if org.FloatPersistIndex ~= nil then
+		dst.FloatPersistIndex = org.FloatPersistIndex
+	end
+	-- 初始化變量
+	dst:InitVars()
 end
 
 return trigger

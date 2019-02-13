@@ -3,10 +3,11 @@ local trigger = require("trigger")
 local setmetatable = setmetatable
 local GlobaConfigMgr = MonoSingleton_GlobalConfigMgr.GetInstance()
 
-local kfm720 = {}
-kfm720.__index = kfm720
+local Iori-ROTD = {}
+Iori-ROTD.__index = Iori-ROTD
 
-function kfm720:new()
+
+function Iori-ROTD:new()
    -- 静态数据
    if self._isInit == nil then
 		self._isInit = true
@@ -16,19 +17,19 @@ function kfm720:new()
     end
    -- 动态数据
    local t = {PlayerDisplay = nil}
-   return setmetatable(t, kfm720)
+   return setmetatable(t, Iori-ROTD)
 end
 
-function kfm720:OnInit(playerDisplay)
+function Iori-ROTD:OnInit(playerDisplay)
 	self.PlayerDisplay = playerDisplay;
 	trigger:Help_InitLuaPlayer(self, self)
 end
 
-function kfm720:OnDestroy()
+function Iori-ROTD:OnDestroy()
   self.PlayerDisplay = nil
 end
 
-function kfm720:_initData()
+function Iori-ROTD:_initData()
   if self.Data ~= nil then
 	return
   end
@@ -58,7 +59,7 @@ function kfm720:_initData()
   self.Data.FloatPersistIndex = 40
 end
 
-function kfm720:_initSize()
+function Iori-ROTD:_initSize()
   if self.Size ~= nil then
 	return
   end
@@ -67,37 +68,6 @@ function kfm720:_initSize()
   self.Size.yscale = 1
 end
 
---创建StateDef
-function kfm720:_initStateDefs()
-	local luaCfg = GlobaConfigMgr:GetLuaCnsCfg("kfm720")
-	if luaCfg == nil then
-		return
-	end
-	
-	-- 创建各种状态
-	self:_initStateDef_200(luaCfg)
-	self:_initStateDef_3000(luaCfg)
-end
 
-function kfm720:_initStateDef_200(luaCfg)
-	local id = trigger:Help_CreateStateDef(luaCfg, "200")
-	local def = trigger:Help_GetStateDef(luaCfg, id)
-	--Def注册State
-end
-
-function kfm720:_initStateDef_3000(luaCfg)
-	local id = trigger:Help_CreateStateDef(luaCfg, "3000")
-	local def = trigger:Help_GetStateDef(luaCfg, id)
-	def.Type = Mugen.Cns_Type.S
-	def.MoveType = Mugen.Cns_MoveType.A
-	def.PhysicsType = Mugen.Cns_PhysicsType.S
-	def.Juggle = 4
-	def.Animate = 3000
-	def.Ctrl = 0
-	def.Sprpriority = 2
-	def.Velset_x = 0
-	def.Velset_y = 0
-end
-
-setmetatable(kfm720, {__call = kfm720.new})
-return kfm720
+setmetatable(Iori-ROTD, {__call = Iori-ROTD.new})
+return Iori-ROTD

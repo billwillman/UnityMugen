@@ -21,6 +21,9 @@ namespace Mugen
         AngleMul,
         // 角度设置
         AngleSet,
+
+        // 飞行道具
+        Projectile,
     }
 
     public class CNSState

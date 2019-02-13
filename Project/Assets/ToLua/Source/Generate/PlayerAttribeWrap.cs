@@ -7,6 +7,7 @@ public class PlayerAttribeWrap
 	public static void Register(LuaState L)
 	{
 		L.BeginClass(typeof(PlayerAttribe), typeof(UnityEngine.MonoBehaviour));
+		L.RegFunction("InitVars", InitVars);
 		L.RegFunction("GetIntVars", GetIntVars);
 		L.RegFunction("SetIntVars", SetIntVars);
 		L.RegFunction("GetFloatVars", GetFloatVars);
@@ -30,6 +31,22 @@ public class PlayerAttribeWrap
 		L.RegVar("HitCount", get_HitCount, set_HitCount);
 		L.RegVar("IsAlive", get_IsAlive, null);
 		L.EndClass();
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int InitVars(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			PlayerAttribe obj = (PlayerAttribe)ToLua.CheckObject<PlayerAttribe>(L, 1);
+			obj.InitVars();
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

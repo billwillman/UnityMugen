@@ -41,6 +41,31 @@ public class PlayerAttribe : MonoBehaviour {
 		}
 	}
 
+    public void InitVars()
+    {
+        if (IntPersistIndex <= 0)
+        {
+            m_IntVars = null;
+        }
+        else
+        {
+            if (m_IntVars == null || m_IntVars.Length != IntPersistIndex)
+            {
+                m_IntVars = new int[IntPersistIndex];
+            }
+        }
+
+        if (FloatPersistIndex <= 0)
+            m_FloatVars = null;
+        else
+        {
+            if (m_FloatVars == null || m_FloatVars.Length != FloatPersistIndex)
+            {
+                m_FloatVars = new float[FloatPersistIndex];
+            }
+        }
+    }
+
 	[NoToLuaAttribute]
 	public bool Init(CNSConfig config)
 	{

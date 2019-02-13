@@ -15,6 +15,7 @@ public class Mugen_CnsStateTypeWrap
 		L.RegVar("AngleDraw", get_AngleDraw, null);
 		L.RegVar("AngleMul", get_AngleMul, null);
 		L.RegVar("AngleSet", get_AngleSet, null);
+		L.RegVar("Projectile", get_Projectile, null);
 		L.RegFunction("IntToEnum", IntToEnum);
 		L.EndEnum();
 		TypeTraits<Mugen.CnsStateType>.Check = CheckType;
@@ -84,6 +85,13 @@ public class Mugen_CnsStateTypeWrap
 	static int get_AngleSet(IntPtr L)
 	{
 		ToLua.Push(L, Mugen.CnsStateType.AngleSet);
+		return 1;
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_Projectile(IntPtr L)
+	{
+		ToLua.Push(L, Mugen.CnsStateType.Projectile);
 		return 1;
 	}
 
