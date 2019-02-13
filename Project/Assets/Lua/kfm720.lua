@@ -93,6 +93,8 @@ function kfm720:_initStateDef_3000(luaCfg)
 	def.Animate = 3000
 	def.Ctrl = 0
 	def.Sprpriority = 2
+	def.Velset_x = 0
+	def.Velset_y = 0
 end
 
 setmetatable(kfm720, {__call = kfm720.new})

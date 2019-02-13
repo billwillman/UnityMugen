@@ -64,4 +64,6 @@ public class CnsPlayerStateCtl : MonoBehaviour, IStateMgrListener<PlayerState, P
 		
 		isDone = true;
 	}
+
+
 }
