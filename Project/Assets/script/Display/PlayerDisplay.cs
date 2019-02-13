@@ -336,7 +336,15 @@ public class PlayerDisplay : BaseResLoader {
 
         CNSConfig cnsCfg = ply.CnsCfg;
         if (cnsCfg == null)
-            return false;
+        {
+            if (ply.LuaCfg != null)
+            {
+                cnsCfg = ply.LuaCfg.CnsCfg;
+                if (cnsCfg == null)
+                    return false;
+            } else
+                return false;
+        }
         int id;
 		if (!cnsCfg.GetCNSStateId(aiCmd.value, out id))
             return false;
