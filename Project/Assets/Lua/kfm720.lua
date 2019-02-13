@@ -72,7 +72,7 @@ function kfm720:_initStateDefs()
 end
 
 function kfm720:_initStateDef_200(luaCfg)
-	local id = trigger:Help_CreateStateDef(luaCfg, 200)
+	local id = trigger:Help_CreateStateDef(luaCfg, "200")
 	local def = trigger:Help_GetStateDef(luaCfg, id)
 	--Def注册State
 end
