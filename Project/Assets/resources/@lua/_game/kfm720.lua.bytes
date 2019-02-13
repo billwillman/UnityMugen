@@ -19,6 +19,11 @@ function kfm720:new()
    return setmetatable(t, kfm720)
 end
 
+function kfm720:OnInit(playerDisplay)
+	self.PlayerDisplay = playerDisplay;
+	trigger:Help_InitLuaPlayer(self, self)
+end
+
 function kfm720:OnDestroy()
   self.PlayerDisplay = nil
 end
@@ -29,7 +34,7 @@ function kfm720:_initData()
   end
   self.Data = {};
   
-  self.Data.life = 1000
+  self.Data.life = 10000
   self.Data.attack = 100
   self.Data.defence = 100
   

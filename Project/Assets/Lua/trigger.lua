@@ -155,4 +155,65 @@ function trigger:Help_GetStateDef(luaCfg, id)
 	return def;
 end
 
+function trigger:Help_InitLuaPlayer(newLuaPlayer, basePlayer)
+	if newLuaPlayer == nil or basePlayer == nil then
+		return
+	end
+	
+	local org = basePlayer.Data
+	if org == nil then
+		return
+	end
+	
+	local display = newLuaPlayer.PlayerDisplay;
+	if display == nil then
+		return 
+	end
+	
+	local dst = display.Attribe
+	if dst == nil then
+		return
+	end
+	
+	if org.life ~= nil then
+		dst.life = org.life
+	end
+	
+	if org.attack ~= nil then
+		dst.attack = org.attack
+	end
+	
+	if org.defence ~= nil then
+		dst.defence = org.defence
+	end
+	
+	if org.fall ~= nil and org.fall.defence_up ~= nil then
+		dst.fail__defence_up = org.fall.defence_up
+	end
+	
+	if org.liedown ~= nil and org.liedown.time ~= nil then
+		dst.liedown__time = org.liedown.time
+	end
+	
+	if org.airjuggle ~= nil then
+		dst.airjuggle = org.airjuggle
+	end
+	
+	if org.sparkno ~= nil then
+		dst.sparkno = org.sparkno
+	end
+	
+	if org.guard ~= nil and org.guard.sparkno ~= nil then
+		dst.guard__sparkno = org.guard.sparkno
+	end
+	
+	if org.KO ~= nil and org.KO.echo ~= nil then
+		dst.ko__echo = org.KO.echo
+	end
+	
+	if org.volume ~= nil then
+		dst.volume = org.volume
+	end
+end
+
 return trigger

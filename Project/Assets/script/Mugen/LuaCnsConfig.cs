@@ -51,6 +51,10 @@ public class LuaCnsConfig
         if (m_LuaClass  == null || display == null)
             return null;
         LuaTable ret = m_LuaClass.Invoke<LuaTable, LuaTable>("new", m_LuaClass);
+        if (ret != null)
+        {
+            ret.Call<LuaTable, PlayerDisplay>("OnInit", ret, display);
+        }
         return ret;
     }
 
