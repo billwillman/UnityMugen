@@ -7,6 +7,7 @@ public class Mugen_CNSStateDefWrap
 	public static void Register(LuaState L)
 	{
 		L.BeginClass(typeof(Mugen.CNSStateDef), typeof(System.Object));
+		L.RegFunction("CreateStateEvent", CreateStateEvent);
 		L.RegFunction("New", _CreateMugen_CNSStateDef);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("Sprpriority", get_Sprpriority, set_Sprpriority);
@@ -39,6 +40,24 @@ public class Mugen_CNSStateDefWrap
 			{
 				return LuaDLL.luaL_throw(L, "invalid arguments to ctor method: Mugen.CNSStateDef.New");
 			}
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int CreateStateEvent(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			Mugen.CNSStateDef obj = (Mugen.CNSStateDef)ToLua.CheckObject<Mugen.CNSStateDef>(L, 1);
+			Mugen.CnsStateType arg0 = (Mugen.CnsStateType)ToLua.CheckObject(L, 2, typeof(Mugen.CnsStateType));
+			Mugen.CNSState o = obj.CreateStateEvent(arg0);
+			ToLua.PushObject(L, o);
+			return 1;
 		}
 		catch (Exception e)
 		{
