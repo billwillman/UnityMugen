@@ -34,7 +34,7 @@ function kfm720:_initData()
   end
   self.Data = {};
   
-  self.Data.life = 10000
+  self.Data.life = 1000
   self.Data.attack = 100
   self.Data.defence = 100
   
@@ -74,12 +74,25 @@ function kfm720:_initStateDefs()
 	
 	-- 创建各种状态
 	self:_initStateDef_200(luaCfg)
+	self:_initStateDef_3000(luaCfg)
 end
 
 function kfm720:_initStateDef_200(luaCfg)
 	local id = trigger:Help_CreateStateDef(luaCfg, "200")
 	local def = trigger:Help_GetStateDef(luaCfg, id)
 	--Def注册State
+end
+
+function kfm720:_initStateDef_3000(luaCfg)
+	local id = trigger:Help_CreateStateDef(luaCfg, "3000")
+	local def = trigger:Help_GetStateDef(luaCfg, id)
+	def.Type = Mugen.Cns_Type.S
+	def.MoveType = Mugen.Cns_MoveType.A
+	def.PhysicsType = Mugen.Cns_PhysicsType.S
+	def.Juggle = 4
+	def.Animate = 3000
+	def.Ctrl = 0
+	def.Sprpriority = 2
 end
 
 setmetatable(kfm720, {__call = kfm720.new})

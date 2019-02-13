@@ -97,6 +97,9 @@ public static class LuaBinder
 		L.EndModule();
 		L.EndModule();
 		L.BeginModule("Mugen");
+		Mugen_Cns_TypeWrap.Register(L);
+		Mugen_Cns_MoveTypeWrap.Register(L);
+		Mugen_Cns_PhysicsTypeWrap.Register(L);
 		Mugen_CNSStateDefWrap.Register(L);
 		L.EndModule();
 		L.BeginModule("Utils");

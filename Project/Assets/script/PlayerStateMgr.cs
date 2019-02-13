@@ -47,9 +47,17 @@ public class PlayerStateMgr : MonoBehaviour {
 				return false;
 		} else {
 			var player = display.GPlayer;
-			if (player == null || player.CnsCfg == null || !player.CnsCfg.HasStateDef)
+            if (player == null)
+                return false;
+            var cnsCfg = player.CnsCfg;
+            if (cnsCfg == null)
+            {
+                if (player.LuaCfg != null)
+                    cnsCfg = player.LuaCfg.CnsCfg;
+            }
+            if (cnsCfg == null || !cnsCfg.HasStateDef)
 				return false;
-			var def = player.CnsCfg.GetStateDef ((int)state);
+            var def = cnsCfg.GetStateDef((int)state);
 			if (def == null)
 				return false;
             if (!display.HasBeginActionSrpiteData((PlayerState)def.Anim))

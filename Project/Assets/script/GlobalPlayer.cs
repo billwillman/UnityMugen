@@ -37,6 +37,11 @@ public class GlobalPlayer
     {
         get
         {
+            if (m_CNSConfig == null)
+            {
+                if (m_LuaConfig != null)
+                    return m_LuaConfig.CnsCfg;
+            }
             return m_CNSConfig;
         }
     }

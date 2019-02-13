@@ -9,6 +9,7 @@ public class Mugen_CNSStateDefWrap
 		L.BeginClass(typeof(Mugen.CNSStateDef), typeof(System.Object));
 		L.RegFunction("New", _CreateMugen_CNSStateDef);
 		L.RegFunction("__tostring", ToLua.op_ToString);
+		L.RegVar("Sprpriority", get_Sprpriority, set_Sprpriority);
 		L.RegVar("PhysicsType", get_PhysicsType, set_PhysicsType);
 		L.RegVar("MoveType", get_MoveType, set_MoveType);
 		L.RegVar("Type", get_Type, set_Type);
@@ -42,6 +43,25 @@ public class Mugen_CNSStateDefWrap
 		catch (Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_Sprpriority(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Mugen.CNSStateDef obj = (Mugen.CNSStateDef)o;
+			int ret = obj.Sprpriority;
+			LuaDLL.lua_pushinteger(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index Sprpriority on a nil value");
 		}
 	}
 
@@ -213,6 +233,25 @@ public class Mugen_CNSStateDefWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index Velset_x on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_Sprpriority(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Mugen.CNSStateDef obj = (Mugen.CNSStateDef)o;
+			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
+			obj.Sprpriority = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index Sprpriority on a nil value");
 		}
 	}
 

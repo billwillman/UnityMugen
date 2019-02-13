@@ -7,7 +7,7 @@ namespace Mugen
 {
 	public enum Cns_Type
 	{
-		none,
+		none = 0,
 		S,  // 站立
 		C,  // 蹲
 		A,  // 空中
@@ -16,7 +16,7 @@ namespace Mugen
 
 	public enum Cns_MoveType
 	{
-		none,
+		none = 0,
 		A, //攻击
 		I, // 非攻击
 		H  // 受击
@@ -24,7 +24,7 @@ namespace Mugen
 
 	public enum Cns_PhysicsType
 	{
-		none,
+		none = 0,
 		S,
 		C,
 		A
@@ -47,6 +47,18 @@ namespace Mugen
 		private static readonly int _cNoVaildVelset = -9999;
 		private static readonly int _cNoVaildCtrl = -1;
 		private static readonly int _cNoVaildAnim = (int)PlayerState.psNone;
+
+        public int Sprpriority
+        {
+            get
+            {
+                return m_Sprpriority;
+            }
+            set
+            {
+                m_Sprpriority = value;
+            }
+        }
 
 		public Cns_PhysicsType PhysicsType
 		{
