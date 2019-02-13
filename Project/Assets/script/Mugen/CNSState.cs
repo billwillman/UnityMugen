@@ -36,5 +36,17 @@ namespace Mugen
         {
             m_Type = type;
         }
+
+        public int projid
+        {
+            get;
+            set;
+        }
+
+        public int projanim
+        {
+            get;
+            set;
+        }
     }
 }
