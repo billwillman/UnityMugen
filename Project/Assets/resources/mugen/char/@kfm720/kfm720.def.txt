@@ -22,6 +22,7 @@ sprite  = kfm720.sff        ;Sprite
 anim    = kfm720.air        ;Animation
 sound   = kfm.snd           ;Sound
 ai      = kfm720.ai         ;AI hints data (not used)
+lua 	= kfm720.lua
 pal1    = 1.act  ;Palettes (can have up to 12)
 pal2    = 2.act
 pal3    = 3.act

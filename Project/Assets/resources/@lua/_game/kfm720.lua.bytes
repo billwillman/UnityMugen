@@ -1,3 +1,5 @@
+require("trigger")
+
 local setmetatable = setmetatable
 
 local kfm720 = {}
@@ -54,7 +56,7 @@ function kfm720:_initSize()
   self.Size.yscale = 1
 end
 
-function kfm720:_initStateDefs
+function kfm720:_initStateDefs()
 end
 
 setmetatable(kfm720, {__call = kfm720.new})

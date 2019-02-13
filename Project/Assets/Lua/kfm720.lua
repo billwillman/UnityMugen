@@ -1,3 +1,5 @@
+require("trigger")
+
 local setmetatable = setmetatable
 
 local kfm720 = {}

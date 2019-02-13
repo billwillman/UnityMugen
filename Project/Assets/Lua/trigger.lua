@@ -18,7 +18,7 @@ function trigger:AnimElem(luaPlayer)
    if display == nil then
 	  return nil
    end
-   local currentFrame = display:ImageCurrentFrame
+   local currentFrame = display:ImageCurrentFrame()
    if currentFrame == nil then
 	  return nil
    end
@@ -33,11 +33,11 @@ function trigger:AILevel(luaPlayer)
 	if display == nil then
 		return nil 
 	end
-	local attribe = display:Attribe
+	local attribe = display:Attribe()
 	if attribe == nil then
 		return nil
 	end
-	return attribe:AILevel
+	return attribe:AILevel()
 end
 
 function trigger:Alive(luaPlayer)
@@ -48,13 +48,14 @@ function trigger:Alive(luaPlayer)
 	if display == nil then
 		return nil 
 	end
-	local attribe = display:Attribe
+	local attribe = display:Attribe()
 	if attribe == nil then
 		return nil
 	end
 	local ret = 0
-	if attribe:IsAlive then
+	if attribe:IsAlive() then
 		ret = 1
+	end
 	return ret
 end
 
@@ -66,7 +67,7 @@ function trigger:Anim(luaPlayer)
 	if display == nil then
 		return nil 
 	end
-	local ret = display:AnimationState
+	local ret = display:AnimationState()
 	return ret
 end
 
@@ -90,7 +91,7 @@ function trigger:Facing(luaPlayer)
 	if display == nil then
 		return nil 
 	end
-	local isFlipX = display:IsFlipX
+	local isFlipX = display:IsFlipX()
 	if not isFlipX then
 		return 1
 	else
@@ -106,11 +107,11 @@ function trigger:HitCount(luaPlayer)
 	if display == nil then
 		return nil 
 	end
-	local attribe = display:Attribe
+	local attribe = display:Attribe()
 	if attribe == nil then
 		return nil
 	end
-	return attribe:HitCount
+	return attribe:HitCount()
 end
 
 function trigger:Life(luaPlayer)
@@ -121,12 +122,13 @@ function trigger:Life(luaPlayer)
 	if display == nil then
 		return nil 
 	end
-	local attribe = display:Attribe
+	local attribe = display:Attribe()
 	if attribe == nil then
 		return nil
 	end
-	return attribe:Life
+	return attribe:Life()
 end
+
 
 function trigger:Time(luaPlayer)
 end
