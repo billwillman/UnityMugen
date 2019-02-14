@@ -11,6 +11,7 @@ public class Mugen_Cns_PhysicsTypeWrap
 		L.RegVar("S", get_S, null);
 		L.RegVar("C", get_C, null);
 		L.RegVar("A", get_A, null);
+		L.RegVar("N", get_N, null);
 		L.RegFunction("IntToEnum", IntToEnum);
 		L.EndEnum();
 		TypeTraits<Mugen.Cns_PhysicsType>.Check = CheckType;
@@ -52,6 +53,13 @@ public class Mugen_Cns_PhysicsTypeWrap
 	static int get_A(IntPtr L)
 	{
 		ToLua.Push(L, Mugen.Cns_PhysicsType.A);
+		return 1;
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_N(IntPtr L)
+	{
+		ToLua.Push(L, Mugen.Cns_PhysicsType.N);
 		return 1;
 	}
 

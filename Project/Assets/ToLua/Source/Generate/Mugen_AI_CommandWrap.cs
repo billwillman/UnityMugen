@@ -13,6 +13,7 @@ public class Mugen_AI_CommandWrap
 		L.RegVar("type", get_type, set_type);
 		L.RegVar("value", get_value, set_value);
 		L.RegVar("command", get_command, set_command);
+		L.RegVar("OnTriggerEvent", get_OnTriggerEvent, set_OnTriggerEvent);
 		L.EndClass();
 	}
 
@@ -117,6 +118,25 @@ public class Mugen_AI_CommandWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_OnTriggerEvent(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Mugen.AI_Command obj = (Mugen.AI_Command)o;
+			System.Func<string,bool> ret = obj.OnTriggerEvent;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index OnTriggerEvent on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int set_name(IntPtr L)
 	{
 		object o = null;
@@ -189,6 +209,25 @@ public class Mugen_AI_CommandWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index command on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_OnTriggerEvent(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Mugen.AI_Command obj = (Mugen.AI_Command)o;
+			System.Func<string,bool> arg0 = (System.Func<string,bool>)ToLua.CheckDelegate<System.Func<string,bool>>(L, 2);
+			obj.OnTriggerEvent = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index OnTriggerEvent on a nil value");
 		}
 	}
 }

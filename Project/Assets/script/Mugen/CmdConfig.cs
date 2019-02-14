@@ -37,6 +37,20 @@ namespace Mugen
 			get;
 			set;
 		}
+
+        public Func<string, bool> OnTriggerEvent
+        {
+            get;
+            set;
+        }
+
+        [NoToLuaAttribute]
+        public bool CanTrigger()
+        {
+            if (OnTriggerEvent == null)
+                return true;
+            return OnTriggerEvent(name);
+        }
 	}
 
     // 用户按键映射
@@ -162,29 +176,35 @@ namespace Mugen
         }
 
         // LUA可以调用
-        public AI_Command CreateAICommand(string aiName)
+        public AI_Command CreateAICommand(string aiName, string commandName = "")
         {
             if (string.IsNullOrEmpty(aiName))
                 return null;
+            if (string.IsNullOrEmpty(commandName))
+                commandName = aiName;
             AI_Command ret;
             if (m_AICmdMap == null)
             {
                 m_AICmdMap = new Dictionary<string, AI_Command>();
                 ret = new AI_Command();
                 ret.name = aiName;
+                ret.command = commandName;
             } else
             {
                 if (!m_AICmdMap.TryGetValue(aiName, out ret))
                 {
                     ret = new AI_Command();
                     ret.name = aiName;
+                    ret.command = commandName;
+                } else
+                {
+                    ret.command = commandName;
                 }
             }
             m_AICmdMap[aiName] = ret;
             return ret;
         }
 
-        [NoToLuaAttribute]
         public Cmd_Command GetCommand(string name)
         {
             if (string.IsNullOrEmpty(name) || m_CommandMap == null)
@@ -193,6 +213,21 @@ namespace Mugen
             if (!m_CommandMap.TryGetValue(name, out ret))
                 ret = null;
             return ret;
+        }
+
+        public AI_Command GetAICommand(string aiName)
+        {
+            if (string.IsNullOrEmpty(aiName) || m_AICmdMap == null)
+                return null;
+            if (!string.IsNullOrEmpty(aiName))
+            {
+                AI_Command cmd;
+                if (!m_AICmdMap.TryGetValue(aiName, out cmd))
+                    cmd = null;
+                return cmd;
+            }
+
+            return null;
         }
 
         [NoToLuaAttribute]

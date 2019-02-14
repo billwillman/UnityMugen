@@ -393,7 +393,7 @@ public class PlayerDisplay : BaseResLoader {
             return false;
 
 		AI_Command aiCmd = ply.CmdCfg.GetAICommand (cmd, this);
-		if (aiCmd == null)
+		if (aiCmd == null || !aiCmd.CanTrigger())
 			return false;
 
         CNSConfig cnsCfg = ply.CnsCfg;

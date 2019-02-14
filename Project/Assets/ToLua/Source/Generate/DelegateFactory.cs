@@ -23,6 +23,7 @@ public class DelegateFactory
 		dict.Add(typeof(System.Action<int>), factory.System_Action_int);
 		dict.Add(typeof(System.Comparison<int>), factory.System_Comparison_int);
 		dict.Add(typeof(System.Func<int,int>), factory.System_Func_int_int);
+		dict.Add(typeof(System.Func<string,bool>), factory.System_Func_string_bool);
 		dict.Add(typeof(System.Action<float,bool,UnityEngine.GameObject>), factory.System_Action_float_bool_UnityEngine_GameObject);
 		dict.Add(typeof(System.Action<bool>), factory.System_Action_bool);
 		dict.Add(typeof(System.Action<UnityEngine.AsyncOperation>), factory.System_Action_UnityEngine_AsyncOperation);
@@ -56,6 +57,7 @@ public class DelegateFactory
 		DelegateTraits<System.Action<int>>.Init(factory.System_Action_int);
 		DelegateTraits<System.Comparison<int>>.Init(factory.System_Comparison_int);
 		DelegateTraits<System.Func<int,int>>.Init(factory.System_Func_int_int);
+		DelegateTraits<System.Func<string,bool>>.Init(factory.System_Func_string_bool);
 		DelegateTraits<System.Action<float,bool,UnityEngine.GameObject>>.Init(factory.System_Action_float_bool_UnityEngine_GameObject);
 		DelegateTraits<System.Action<bool>>.Init(factory.System_Action_bool);
 		DelegateTraits<System.Action<UnityEngine.AsyncOperation>>.Init(factory.System_Action_UnityEngine_AsyncOperation);
@@ -89,6 +91,7 @@ public class DelegateFactory
 		TypeTraits<System.Action<int>>.Init(factory.Check_System_Action_int);
 		TypeTraits<System.Comparison<int>>.Init(factory.Check_System_Comparison_int);
 		TypeTraits<System.Func<int,int>>.Init(factory.Check_System_Func_int_int);
+		TypeTraits<System.Func<string,bool>>.Init(factory.Check_System_Func_string_bool);
 		TypeTraits<System.Action<float,bool,UnityEngine.GameObject>>.Init(factory.Check_System_Action_float_bool_UnityEngine_GameObject);
 		TypeTraits<System.Action<bool>>.Init(factory.Check_System_Action_bool);
 		TypeTraits<System.Action<UnityEngine.AsyncOperation>>.Init(factory.Check_System_Action_UnityEngine_AsyncOperation);
@@ -122,6 +125,7 @@ public class DelegateFactory
 		StackTraits<System.Action<int>>.Push = factory.Push_System_Action_int;
 		StackTraits<System.Comparison<int>>.Push = factory.Push_System_Comparison_int;
 		StackTraits<System.Func<int,int>>.Push = factory.Push_System_Func_int_int;
+		StackTraits<System.Func<string,bool>>.Push = factory.Push_System_Func_string_bool;
 		StackTraits<System.Action<float,bool,UnityEngine.GameObject>>.Push = factory.Push_System_Action_float_bool_UnityEngine_GameObject;
 		StackTraits<System.Action<bool>>.Push = factory.Push_System_Action_bool;
 		StackTraits<System.Action<UnityEngine.AsyncOperation>>.Push = factory.Push_System_Action_UnityEngine_AsyncOperation;
@@ -603,6 +607,67 @@ public class DelegateFactory
 	}
 
 	void Push_System_Func_int_int(IntPtr L, System.Func<int,int> o)
+	{
+		ToLua.Push(L, o);
+	}
+
+	class System_Func_string_bool_Event : LuaDelegate
+	{
+		public System_Func_string_bool_Event(LuaFunction func) : base(func) { }
+		public System_Func_string_bool_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+
+		public bool Call(string param0)
+		{
+			func.BeginPCall();
+			func.Push(param0);
+			func.PCall();
+			bool ret = func.CheckBoolean();
+			func.EndPCall();
+			return ret;
+		}
+
+		public bool CallWithSelf(string param0)
+		{
+			func.BeginPCall();
+			func.Push(self);
+			func.Push(param0);
+			func.PCall();
+			bool ret = func.CheckBoolean();
+			func.EndPCall();
+			return ret;
+		}
+	}
+
+	public System.Func<string,bool> System_Func_string_bool(LuaFunction func, LuaTable self, bool flag)
+	{
+		if (func == null)
+		{
+			System.Func<string,bool> fn = delegate(string param0) { return false; };
+			return fn;
+		}
+
+		if(!flag)
+		{
+			System_Func_string_bool_Event target = new System_Func_string_bool_Event(func);
+			System.Func<string,bool> d = target.Call;
+			target.method = d.Method;
+			return d;
+		}
+		else
+		{
+			System_Func_string_bool_Event target = new System_Func_string_bool_Event(func, self);
+			System.Func<string,bool> d = target.CallWithSelf;
+			target.method = d.Method;
+			return d;
+		}
+	}
+
+	bool Check_System_Func_string_bool(IntPtr L, int pos)
+	{
+		return TypeChecker.CheckDelegateType(typeof(System.Func<string,bool>), L, pos);
+	}
+
+	void Push_System_Func_string_bool(IntPtr L, System.Func<string,bool> o)
 	{
 		ToLua.Push(L, o);
 	}

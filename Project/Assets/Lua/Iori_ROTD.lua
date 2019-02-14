@@ -89,10 +89,22 @@ function Iori_ROTD:_initStateDefs()
 	end
 	
 	-- 创建各种状态
-	self:_initStateDef_2210(luaCfg)
+	self:_initStateDef_2000(luaCfg)
 end
 
-function Iori_ROTD:_initStateDef_2210(luaCfg)
+function Iori_ROTD:_initStateDef_2000(luaCfg)
+	local id = luaCfg:CreateStateDef("2000")
+	local def = luaCfg:GetStateDef(id)
+	def.Type = Mugen.Cns_Type.S
+	def.MoveType = Mugen.Cns_MoveType.A
+	def.PhysicsType = Mugen.Cns_PhysicsType.N
+	def.Juggle = 4
+	def.PowerAdd = 0
+	def.Animate = 2000
+	def.Ctrl = 0
+	def.Sprpriority = 3
+	def.Velset_x = 0
+	def.Velset_y = 0
 	
 end
 
@@ -104,7 +116,15 @@ function Iori_ROTD:_initCmds()
 		return
 	end
 	
+	--禁千弐百十壱式・八稚女
 	self:_initCmd_禁千弐百十壱式・八稚女(luaCfg)
+end
+
+
+--==禁千弐百十壱式・八稚女
+
+function Iori_ROTD:OnAICmd_禁千弐百十壱式・八稚女(aiName)
+	return true
 end
 
 function Iori_ROTD:_initCmd_禁千弐百十壱式・八稚女(luaCfg)
@@ -113,7 +133,13 @@ function Iori_ROTD:_initCmd_禁千弐百十壱式・八稚女(luaCfg)
 	cmd:AttachKeyCommands("~D, DF, F, DF, D, DB, x")
 	
 	-- 创建状态
+	local aiCmd = luaCfg:CreateAICmd("禁千弐百十壱式・八稚女")
+	aiCmd.type = Mugen.AI_Type.ChangeState
+	aiCmd.value = 2000
+	aiCmd.OnTriggerEvent = self.OnAICmd_禁千弐百十壱式・八稚女
 end
+
+--==
 
 
 setmetatable(Iori_ROTD, {__call = Iori_ROTD.new})

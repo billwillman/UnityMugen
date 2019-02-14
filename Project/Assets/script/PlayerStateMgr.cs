@@ -38,8 +38,11 @@ public class PlayerStateMgr : MonoBehaviour {
             return false;
 		if (display.PlyType == InputPlayerType.none)
 			return false;
-        if (m_StateMgr.CurrStateKey == state && m_HasFirstChangedStated)
-            return false;
+        if (!isCns)
+        {
+            if (m_StateMgr.CurrStateKey == state && m_HasFirstChangedStated)
+                return false;
+        }
         if (!m_HasFirstChangedStated)
             m_HasFirstChangedStated = true;
 		if (!isCns) {

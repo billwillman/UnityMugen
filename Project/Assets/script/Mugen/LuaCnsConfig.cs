@@ -23,13 +23,18 @@ public class LuaCnsConfig
             return m_CmdConfig.CreateCommand(name, aiName);
         }
 
-        public AI_Command CreateAICmd(string aiName)
+        public AI_Command CreateAICmd(string aiName, string commandName = "")
         {
-            return m_CmdConfig.CreateAICommand(aiName);
+            return m_CmdConfig.CreateAICommand(aiName, commandName);
         }
-        
 
-    public bool HasStateDef
+        public AI_Command GetAICommand(string aiName)
+        {
+            return m_CmdConfig.GetAICommand(aiName);
+        }
+
+
+        public bool HasStateDef
         {
             get
             {

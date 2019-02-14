@@ -27,7 +27,8 @@ namespace Mugen
 		none = 0,
 		S,
 		C,
-		A
+		A,
+        N
 	}
 
 	public class CNSStateDef

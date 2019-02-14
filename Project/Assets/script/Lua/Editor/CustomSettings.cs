@@ -46,7 +46,7 @@ public static class CustomSettings  {
 		_DT(typeof(System.Action<int>)),
 		_DT(typeof(System.Comparison<int>)),
 		_DT(typeof(System.Func<int, int>)),
-
+        _DT(typeof(System.Func<string, bool>)),
 
 		_DT(typeof(System.Action<float, bool, GameObject>)),
 		_DT(typeof(Action<bool>)),
