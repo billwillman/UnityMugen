@@ -206,6 +206,9 @@ public static class CustomSettings  {
 		_GT(typeof(CNSStateDef)),
         _GT(typeof(CNSState)),
 		_GT(typeof(LuaCnsConfig)),
+        _GT(typeof(AI_Type)),
+        _GT(typeof(Cmd_Command)),
+        _GT(typeof(AI_Command)),
 		_GT(typeof(GlobalConfigMgr)),
 	};
 

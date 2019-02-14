@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using LuaInterface;
 
 namespace Mugen
 {
@@ -54,43 +55,43 @@ namespace Mugen
         public string x
         {
             get;
-            protected set;
+            set;
         }
 
         public string y
         {
             get;
-            protected set;
+            set;
         }
 
         public string z
         {
             get;
-            protected set;
+            set;
         }
 
         public string a
         {
             get;
-            protected set;
+            set;
         }
 
         public string b
         {
             get;
-            protected set;
+            set;
         }
 
         public string c
         {
             get;
-            protected set;
+            set;
         }
 
         public string s
         {
             get;
-            protected set;
+            set;
         }
     }
 
@@ -102,11 +103,17 @@ namespace Mugen
             set;
         }
 
+        [NoToLuaAttribute]
         // 按键组
         public string[] keyCommands
         {
             get;
             set;
+        }
+
+        public void AttachKeyCommands(string keys)
+        {
+            keyCommands = ConfigSection.Split(keys);
         }
 
         // 多久时间按下按键为有效（单位：帧）
@@ -139,6 +146,45 @@ namespace Mugen
         private Dictionary<string, Cmd_Command> m_CommandMap = null;
 		private Dictionary<string, AI_Command> m_AICmdMap = null;
 
+        // LUA可以调用
+        public Cmd_Command CreateCommand(string name, string aiName = "")
+        {
+            if (string.IsNullOrEmpty(name))
+                return null;
+            Cmd_Command ret = GetCommand(name);
+            if (ret != null)
+                return ret;
+            ret = new Cmd_Command();
+            ret.name = name;
+            ret.aiName = aiName;
+            AddCommand(ret);
+            return ret;
+        }
+
+        // LUA可以调用
+        public AI_Command CreateAICommand(string aiName)
+        {
+            if (string.IsNullOrEmpty(aiName))
+                return null;
+            AI_Command ret;
+            if (m_AICmdMap == null)
+            {
+                m_AICmdMap = new Dictionary<string, AI_Command>();
+                ret = new AI_Command();
+                ret.name = aiName;
+            } else
+            {
+                if (!m_AICmdMap.TryGetValue(aiName, out ret))
+                {
+                    ret = new AI_Command();
+                    ret.name = aiName;
+                }
+            }
+            m_AICmdMap[aiName] = ret;
+            return ret;
+        }
+
+        [NoToLuaAttribute]
         public Cmd_Command GetCommand(string name)
         {
             if (string.IsNullOrEmpty(name) || m_CommandMap == null)
@@ -149,16 +195,33 @@ namespace Mugen
             return ret;
         }
 
-		public AI_Command GetAICommand(string name)
+        [NoToLuaAttribute]
+		public AI_Command GetAICommand(Cmd_Command command, PlayerDisplay display)
 		{
-			if (string.IsNullOrEmpty (name) || m_AICmdMap == null)
+            if (command == null || m_AICmdMap == null)
 				return null;
-			AI_Command cmd;
-			if (!m_AICmdMap.TryGetValue (name, out cmd))
-				cmd = null;
-			return cmd;
+            string aiName = command.aiName;
+            if (!string.IsNullOrEmpty(aiName))
+            {
+                AI_Command cmd;
+                if (!m_AICmdMap.TryGetValue(aiName, out cmd))
+                    cmd = null;
+                return cmd;
+            } else
+            {
+                if (display == null || display.LuaPly == null)
+                    return null;
+                aiName = display.Call_LuaPly_GetAIName(command.name);
+                if (string.IsNullOrEmpty(aiName))
+                    return null;
+                AI_Command cmd;
+                if (!m_AICmdMap.TryGetValue(aiName, out cmd))
+                    cmd = null;
+                return cmd;
+            }
 		}
 
+        [NoToLuaAttribute]
         public Cmd_Command[] GetCommandArray()
         {
             if (m_CommandMap == null)
@@ -192,6 +255,7 @@ namespace Mugen
             }
         }
 
+        [NoToLuaAttribute]
         public Cmd_Remap reMap
         {
             get
@@ -200,6 +264,7 @@ namespace Mugen
             }
         }
 
+        [NoToLuaAttribute]
 		public bool LoadFromFile(string fileName)
 		{
             Clear();
@@ -218,6 +283,7 @@ namespace Mugen
                 m_CommandMap.Clear();
         }
 
+        [NoToLuaAttribute]
 		public bool LoadFromStr(string str)
 		{
             Clear();
@@ -228,6 +294,7 @@ namespace Mugen
 			return LoadFromReader (reader);
 		}
 
+        [NoToLuaAttribute]
 		public bool LoadFromReader(ConfigReader reader)
 		{
             Clear();

@@ -13,11 +13,14 @@ function kfm720:new()
 		self:_initData()
 		self:_initSize()
 		self:_initStateDefs()
+		self:_initCmds()
     end
    -- 动态数据
    local t = {PlayerDisplay = nil}
    return setmetatable(t, kfm720)
 end
+
+--====================外部调用接口==============================
 
 function kfm720:OnInit(playerDisplay)
 	self.PlayerDisplay = playerDisplay;
@@ -27,6 +30,12 @@ end
 function kfm720:OnDestroy()
   self.PlayerDisplay = nil
 end
+
+function kfm720:OnGetAICommandName(cmdName)
+	
+end
+
+--===========================================================
 
 function kfm720:_initData()
   if self.Data ~= nil then
@@ -67,7 +76,7 @@ function kfm720:_initSize()
   self.Size.yscale = 1
 end
 
---创建StateDef
+--=====================================创建StateDef===================================
 function kfm720:_initStateDefs()
 	local luaCfg = GlobaConfigMgr:GetLuaCnsCfg("kfm720")
 	if luaCfg == nil then
@@ -97,6 +106,10 @@ function kfm720:_initStateDef_3000(luaCfg)
 	def.Sprpriority = 2
 	def.Velset_x = 0
 	def.Velset_y = 0
+end
+--======================================================================================
+
+function kfm720:_initCmds()
 end
 
 setmetatable(kfm720, {__call = kfm720.new})

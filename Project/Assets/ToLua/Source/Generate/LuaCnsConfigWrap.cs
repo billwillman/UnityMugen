@@ -8,6 +8,8 @@ public class LuaCnsConfigWrap
 	{
 		L.BeginClass(typeof(LuaCnsConfig), typeof(System.Object));
 		L.RegFunction("CreateStateDef", CreateStateDef);
+		L.RegFunction("CreateCmd", CreateCmd);
+		L.RegFunction("CreateAICmd", CreateAICmd);
 		L.RegFunction("GetStateDef", GetStateDef);
 		L.RegFunction("New", _CreateLuaCnsConfig);
 		L.RegFunction("__tostring", ToLua.op_ToString);
@@ -49,6 +51,59 @@ public class LuaCnsConfigWrap
 			string arg0 = ToLua.CheckString(L, 2);
 			int o = obj.CreateStateDef(arg0);
 			LuaDLL.lua_pushinteger(L, o);
+			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int CreateCmd(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+
+			if (count == 2)
+			{
+				LuaCnsConfig obj = (LuaCnsConfig)ToLua.CheckObject<LuaCnsConfig>(L, 1);
+				string arg0 = ToLua.CheckString(L, 2);
+				Mugen.Cmd_Command o = obj.CreateCmd(arg0);
+				ToLua.PushObject(L, o);
+				return 1;
+			}
+			else if (count == 3)
+			{
+				LuaCnsConfig obj = (LuaCnsConfig)ToLua.CheckObject<LuaCnsConfig>(L, 1);
+				string arg0 = ToLua.CheckString(L, 2);
+				string arg1 = ToLua.CheckString(L, 3);
+				Mugen.Cmd_Command o = obj.CreateCmd(arg0, arg1);
+				ToLua.PushObject(L, o);
+				return 1;
+			}
+			else
+			{
+				return LuaDLL.luaL_throw(L, "invalid arguments to method: LuaCnsConfig.CreateCmd");
+			}
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int CreateAICmd(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			LuaCnsConfig obj = (LuaCnsConfig)ToLua.CheckObject<LuaCnsConfig>(L, 1);
+			string arg0 = ToLua.CheckString(L, 2);
+			Mugen.AI_Command o = obj.CreateAICmd(arg0);
+			ToLua.PushObject(L, o);
 			return 1;
 		}
 		catch (Exception e)

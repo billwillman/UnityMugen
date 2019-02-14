@@ -211,6 +211,10 @@ function trigger:Help_InitLuaPlayer(newLuaPlayer, basePlayer)
 		dst.ko__echo = org.KO.echo
 	end
 	
+	if org.Power ~= nil then
+		dst.Power = org.Power
+	end
+	
 	if org.volume ~= nil then
 		dst.volume = org.volume
 	end

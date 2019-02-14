@@ -29,6 +29,8 @@ public class GlobalConfigMgr : MonoSingleton<GlobalConfigMgr> {
 	private List<BoxCollider2D> m_ClsnColliderPool = new List<BoxCollider2D> ();
 	private GameObject m_ClsnSpritePoolRoot = null;
 	private GameObject m_ClsnColliderPoolRoot = null;
+    // 飞行道具池
+    private GameObject m_FlyPoolRoot = null;
 	private BaseResLoader m_Loader = null;
 	private Texture m_ClsnTex = null;
 	private PlayerStateCtl m_PlayerStateCtl = null;
@@ -238,6 +240,7 @@ public class GlobalConfigMgr : MonoSingleton<GlobalConfigMgr> {
 		if (finder == null)
 		{ 
 			GameObject obj = new GameObject(playerName, typeof(DefaultLoaderPlayer));
+            obj.transform.SetParent(this.transform, false);
 			finder  = obj.GetComponent<DefaultLoaderPlayer>();
 		}
 		GlobalPlayer ret = LoadPlayer(finder, out result);
@@ -385,6 +388,10 @@ public class GlobalConfigMgr : MonoSingleton<GlobalConfigMgr> {
 		m_ClsnColliderPoolRoot = new GameObject ("Pool_ColliderClsn");
 		m_ClsnColliderPoolRoot.transform.SetParent (this.transform, false);
 		m_ClsnColliderPoolRoot.SetActive (false);
+
+        m_FlyPoolRoot = new GameObject("Fly_Pool");
+        m_FlyPoolRoot.transform.SetParent(this.transform, false);
+        m_FlyPoolRoot.SetActive(false);
 
 		RegisterDefaultStates ();
 		RegisterStateMgrListener ();

@@ -29,6 +29,7 @@ pal3     = _pal/pal3.act
 pal4     = _pal/pal4.act
 pal5     = _pal/pal5.act
 pal6     = _pal/pal6.act
+lua		 = Iori_ROTD
 
 ; Arcade mode
 ;[Arcade]

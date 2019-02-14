@@ -29,6 +29,8 @@ public class GlobalPlayer
 	public CmdConfig CmdCfg
 	{
 		get {
+            if (m_LuaConfig != null)
+                return m_LuaConfig.CmdCfg;
 			return m_CmdConfig;
 		}
 	}
@@ -118,53 +120,62 @@ public class GlobalPlayer
 			return false;
 		}
 
-		//---------------------------- 加载Cmd
-		try
-		{
-			if (m_PlayerConfig != null && m_PlayerConfig.Files != null)
-			{
-				string cmdName = m_PlayerConfig.Files.cmd;
-				if (string.IsNullOrEmpty(cmdName))
-				{
-					cmdName = playerName;
-				} else
-				{
-					cmdName = GlobalConfigMgr.GetConfigFileNameNoExt(cmdName);
-				}
-				string fileName = string.Format("{0}@{1}/{2}.cmd.txt", AppConfig.GetInstance().PlayerRootDir, playerName, cmdName);
-				m_CmdConfig = new CmdConfig();
-				if (!m_CmdConfig.LoadFromFile(fileName))
-				{
-					result = GlobalPlayerLoaderResult.CmdConfigError;
-				}
-			}
-		} catch (Exception e) {
-			#if DEBUG
-			Debug.LogError(e.ToString());
-			#endif
-			result = GlobalPlayerLoaderResult.CmdConfigError;
-		}
+        // 判断LUA
+        bool isLua = false;
+        try
+        {
+            if (m_PlayerConfig != null && m_PlayerConfig.Files != null && m_PlayerConfig.Files.HasLuaFile)
+            {
+                isLua = true;
+                m_LuaConfig = new LuaCnsConfig();
+                if (!m_LuaConfig.LoadFromFile(m_PlayerConfig.Files.lua))
+                {
+                    result = (GlobalPlayerLoaderResult)((int)result | (int)GlobalPlayerLoaderResult.LUAConfigError);
+                }
+            }
+        }
+        catch (Exception e)
+        {
+#if DEBUG
+            Debug.LogError(e.ToString());
+#endif
+            result = (GlobalPlayerLoaderResult)((int)result | (int)GlobalPlayerLoaderResult.LUAConfigError);
+        }
 
-		// 判断LUA
-		bool isLua = false;
-		try
-		{
-			if (m_PlayerConfig != null && m_PlayerConfig.Files != null && m_PlayerConfig.Files.HasLuaFile)
-			{
-				isLua = true;
-				m_LuaConfig = new LuaCnsConfig();
-				if (!m_LuaConfig.LoadFromFile(m_PlayerConfig.Files.lua))
-				{
-					result = (GlobalPlayerLoaderResult)((int)result | (int)GlobalPlayerLoaderResult.LUAConfigError);
-				}
-			}
-		} catch (Exception e)
-		{
-			#if DEBUG
-			Debug.LogError(e.ToString());
-			#endif
-			result = (GlobalPlayerLoaderResult)((int)result | (int)GlobalPlayerLoaderResult.LUAConfigError);
-		}
+		//---------------------------- 加载Cmd
+        if (!isLua)
+        {
+            try
+            {
+                if (m_PlayerConfig != null && m_PlayerConfig.Files != null)
+                {
+                    string cmdName = m_PlayerConfig.Files.cmd;
+                    if (string.IsNullOrEmpty(cmdName))
+                    {
+                        cmdName = playerName;
+                    }
+                    else
+                    {
+                        cmdName = GlobalConfigMgr.GetConfigFileNameNoExt(cmdName);
+                    }
+                    string fileName = string.Format("{0}@{1}/{2}.cmd.txt", AppConfig.GetInstance().PlayerRootDir, playerName, cmdName);
+                    m_CmdConfig = new CmdConfig();
+                    if (!m_CmdConfig.LoadFromFile(fileName))
+                    {
+                        result = GlobalPlayerLoaderResult.CmdConfigError;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+#if DEBUG
+                Debug.LogError(e.ToString());
+#endif
+                result = GlobalPlayerLoaderResult.CmdConfigError;
+            }
+        }
+
+		
 
 		//--------------------------- 最后加载cns
 		if (!isLua)

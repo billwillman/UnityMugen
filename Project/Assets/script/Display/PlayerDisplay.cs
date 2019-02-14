@@ -26,6 +26,25 @@ public class PlayerDisplay : BaseResLoader {
 	[NoToLuaAttribute]
     public Vector2 m_OffsetPos = Vector2.zero;
 
+    [NoToLuaAttribute]
+    public string Call_LuaPly_GetAIName(string cmdName)
+    {
+        if (string.IsNullOrEmpty(cmdName) || m_LuaPlayer == null)
+            return string.Empty;
+        try
+        {
+            string ret = m_LuaPlayer.Invoke<LuaTable, string, string>("OnGetAICommandName", m_LuaPlayer, cmdName);
+            return ret;
+        } catch (System.Exception e)
+        {
+#if DEBUG
+            Debug.LogError(e.ToString());
+#endif
+        }
+
+        return string.Empty;
+    }
+
 	public bool PlayCnsAnimate(int stateDefId, bool isLoop = true)
 	{
 		var player = this.GPlayer;
@@ -199,11 +218,19 @@ public class PlayerDisplay : BaseResLoader {
 
     private void DestroyLuaPlayer()
     {
-        if (m_LuaPlayer != null)
+        try
         {
-            m_LuaPlayer.Call<LuaTable>("OnDestroy", m_LuaPlayer);
-            m_LuaPlayer.Dispose();
-            m_LuaPlayer = null;
+            if (m_LuaPlayer != null)
+            {
+                m_LuaPlayer.Call<LuaTable>("OnDestroy", m_LuaPlayer);
+                m_LuaPlayer.Dispose();
+                m_LuaPlayer = null;
+            }
+        } catch (System.Exception e)
+        {
+#if DEBUG
+            Debug.LogError(e.ToString());
+#endif
         }
     }
 
@@ -365,7 +392,7 @@ public class PlayerDisplay : BaseResLoader {
         if (cmd == null)
             return false;
 
-		AI_Command aiCmd = ply.CmdCfg.GetAICommand (cmd.aiName);
+		AI_Command aiCmd = ply.CmdCfg.GetAICommand (cmd, this);
 		if (aiCmd == null)
 			return false;
 
@@ -774,6 +801,8 @@ public class PlayerDisplay : BaseResLoader {
 
 	private void OnShowClsnDebugChanged()
 	{}
+
+    // 创建飞行道具
 
     private ImageAnimation m_ImgAni = null;
 	private SpriteRenderer m_SpriteRender = null;

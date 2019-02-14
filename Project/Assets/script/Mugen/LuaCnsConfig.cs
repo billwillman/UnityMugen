@@ -7,6 +7,7 @@ using LuaInterface;
 public class LuaCnsConfig
 	{
 		private CNSConfig m_CnsConfig = new CNSConfig();
+        private CmdConfig m_CmdConfig = new CmdConfig();
         private LuaTable m_LuaClass = null;
 		
 		public int CreateStateDef(string name)
@@ -16,6 +17,17 @@ public class LuaCnsConfig
 				ret = -1;
 			return ret;
 		}
+
+        public Cmd_Command CreateCmd(string name, string aiName = "")
+        {
+            return m_CmdConfig.CreateCommand(name, aiName);
+        }
+
+        public AI_Command CreateAICmd(string aiName)
+        {
+            return m_CmdConfig.CreateAICommand(aiName);
+        }
+        
 
     public bool HasStateDef
         {
@@ -66,6 +78,15 @@ public class LuaCnsConfig
 			return m_CnsConfig;
 		}
 	}
+
+    [NoToLuaAttribute]
+    public CmdConfig CmdCfg
+    {
+        get
+        {
+            return m_CmdConfig;
+        }
+    }
 
 		public CNSStateDef GetStateDef(int id)
 		{

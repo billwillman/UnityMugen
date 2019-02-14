@@ -3,10 +3,11 @@ local trigger = require("trigger")
 local setmetatable = setmetatable
 local GlobaConfigMgr = MonoSingleton_GlobalConfigMgr.GetInstance()
 
-local kfm720 = {}
-kfm720.__index = kfm720
+local Iori_ROTD = {}
+Iori_ROTD.__index = Iori_ROTD
 
-function kfm720:new()
+
+function Iori_ROTD:new()
    -- 静态数据
    if self._isInit == nil then
 		self._isInit = true
@@ -17,35 +18,37 @@ function kfm720:new()
     end
    -- 动态数据
    local t = {PlayerDisplay = nil}
-   return setmetatable(t, kfm720)
+   return setmetatable(t, Iori_ROTD)
 end
 
 --====================外部调用接口==============================
 
-function kfm720:OnInit(playerDisplay)
+function Iori_ROTD:OnInit(playerDisplay)
 	self.PlayerDisplay = playerDisplay;
 	trigger:Help_InitLuaPlayer(self, self)
 end
 
-function kfm720:OnDestroy()
+function Iori_ROTD:OnDestroy()
   self.PlayerDisplay = nil
 end
 
-function kfm720:OnGetAICommandName(cmdName)
+function Iori_ROTD:OnGetAICommandName(cmdName)
 	
 end
 
 --===========================================================
 
-function kfm720:_initData()
+function Iori_ROTD:_initData()
   if self.Data ~= nil then
 	return
   end
   self.Data = {};
   
   self.Data.life = 1000
+  self.Data.Power = 3000
   self.Data.attack = 100
   self.Data.defence = 100
+  
   
   self.Data.fall = {}
   self.Data.fall.defence_up = 50
@@ -54,7 +57,7 @@ function kfm720:_initData()
   self.Data.liedown.time = 60
   
   self.Data.airjuggle = 15
-  self.Data.sparkno = 2
+  self.Data.sparkno = 200
   
   self.Data.guard = {}
   self.Data.guard.sparkno = 40
@@ -67,7 +70,7 @@ function kfm720:_initData()
   self.Data.FloatPersistIndex = 40
 end
 
-function kfm720:_initSize()
+function Iori_ROTD:_initSize()
   if self.Size ~= nil then
 	return
   end
@@ -77,40 +80,41 @@ function kfm720:_initSize()
 end
 
 --=====================================创建StateDef===================================
-function kfm720:_initStateDefs()
-	local luaCfg = GlobaConfigMgr:GetLuaCnsCfg("kfm720")
+
+--创建StateDef
+function Iori_ROTD:_initStateDefs()
+	local luaCfg = GlobaConfigMgr:GetLuaCnsCfg("Iori-ROTD")
 	if luaCfg == nil then
 		return
 	end
 	
 	-- 创建各种状态
-	self:_initStateDef_200(luaCfg)
-	self:_initStateDef_3000(luaCfg)
+	self:_initStateDef_2210(luaCfg)
 end
 
-function kfm720:_initStateDef_200(luaCfg)
-	local id = trigger:Help_CreateStateDef(luaCfg, "200")
-	local def = trigger:Help_GetStateDef(luaCfg, id)
-	--Def注册State
+function Iori_ROTD:_initStateDef_2210(luaCfg)
+	
 end
 
-function kfm720:_initStateDef_3000(luaCfg)
-	local id = trigger:Help_CreateStateDef(luaCfg, "3000")
-	local def = trigger:Help_GetStateDef(luaCfg, id)
-	def.Type = Mugen.Cns_Type.S
-	def.MoveType = Mugen.Cns_MoveType.A
-	def.PhysicsType = Mugen.Cns_PhysicsType.S
-	def.Juggle = 4
-	def.Animate = 3000
-	def.Ctrl = 0
-	def.Sprpriority = 2
-	def.Velset_x = 0
-	def.Velset_y = 0
-end
 --======================================================================================
 
-function kfm720:_initCmds()
+function Iori_ROTD:_initCmds()
+	local luaCfg = GlobaConfigMgr:GetLuaCnsCfg("Iori-ROTD")
+	if luaCfg == nil then
+		return
+	end
+	
+	self:_initCmd_禁千弐百十壱式・八稚女(luaCfg)
 end
 
-setmetatable(kfm720, {__call = kfm720.new})
-return kfm720
+function Iori_ROTD:_initCmd_禁千弐百十壱式・八稚女(luaCfg)
+	local cmd = luaCfg:CreateCmd("禁千弐百十壱式・八稚女", "禁千弐百十壱式・八稚女")
+	cmd.time = 30
+	cmd:AttachKeyCommands("~D, DF, F, DF, D, DB, x")
+	
+	-- 创建状态
+end
+
+
+setmetatable(Iori_ROTD, {__call = Iori_ROTD.new})
+return Iori_ROTD
