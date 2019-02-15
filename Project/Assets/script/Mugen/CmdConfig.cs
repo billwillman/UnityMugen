@@ -57,6 +57,16 @@ namespace Mugen
     public class Cmd_Remap: IConfigPropertys
     {
 
+		public Cmd_Remap()
+		{
+			this.x = "x";
+			this.y = "y";
+			this.z = "z";
+			this.a = "a";
+			this.b = "b";
+			this.c = "c";
+		}
+
         public string ConfigName
         {
             get
@@ -290,6 +300,18 @@ namespace Mugen
             }
         }
 
+		public void AttachRemap(string x, string y, string z, string a, string b, string c)
+		{
+			if (m_Remap == null)
+				m_Remap = new Cmd_Remap ();
+			m_Remap.x = x;
+			m_Remap.y = y;
+			m_Remap.z = z;
+			m_Remap.a = a;
+			m_Remap.b = b;
+			m_Remap.c = c;
+		}
+
         [NoToLuaAttribute]
         public Cmd_Remap reMap
         {
@@ -298,6 +320,25 @@ namespace Mugen
                 return m_Remap;
             }
         }
+
+		public string TransRemap(string input)
+		{
+			if (string.IsNullOrEmpty (input) || m_Remap == null)
+				return input;
+			if (string.Compare(m_Remap.x, input, true) == 0)
+				return "x";
+			else if (string.Compare(m_Remap.y, input, true) == 0)
+				return "y";
+			else if (string.Compare(m_Remap.z, input, true) == 0)
+				return "z";
+			else if (string.Compare(m_Remap.a, input, true) == 0)
+				return "a";
+			else if (string.Compare(m_Remap.b, input, true) == 0)
+				return "b";
+			else if (string.Compare(m_Remap.c, input, true) == 0)
+				return "c";
+			return input;
+		}
 
         [NoToLuaAttribute]
 		public bool LoadFromFile(string fileName)
