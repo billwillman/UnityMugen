@@ -117,17 +117,17 @@ function Iori_ROTD:_initCmds()
 	end
 	
 	--禁千弐百十壱式・八稚女
-	self:_initCmd_禁千弐百十壱式・八稚女(luaCfg)
+	self:_initCmd_SuperCode1(luaCfg)
 end
 
 
 --==禁千弐百十壱式・八稚女
 
-function Iori_ROTD:OnAICmd_禁千弐百十壱式・八稚女(aiName)
+function Iori_ROTD:OnAICmd_SuperCode1(aiName)
 	return true
 end
 
-function Iori_ROTD:_initCmd_禁千弐百十壱式・八稚女(luaCfg)
+function Iori_ROTD:_initCmd_SuperCode1(luaCfg)
 	local cmd = luaCfg:CreateCmd("禁千弐百十壱式・八稚女", "禁千弐百十壱式・八稚女")
 	cmd.time = 30
 	cmd:AttachKeyCommands("~D, DF, F, DF, D, DB, x")
@@ -136,7 +136,7 @@ function Iori_ROTD:_initCmd_禁千弐百十壱式・八稚女(luaCfg)
 	local aiCmd = luaCfg:CreateAICmd("禁千弐百十壱式・八稚女")
 	aiCmd.type = Mugen.AI_Type.ChangeState
 	aiCmd.value = 2000
-	aiCmd.OnTriggerEvent = self.OnAICmd_禁千弐百十壱式・八稚女
+	aiCmd.OnTriggerEvent = self.OnAICmd_SuperCode1
 end
 
 --==
