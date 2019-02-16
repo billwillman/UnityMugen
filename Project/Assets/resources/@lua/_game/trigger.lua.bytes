@@ -194,6 +194,74 @@ function trigger:Stateno(luaPlayer)
 	return ret
 end
 
+function trigger:Var(luaPlayer, index)
+	if luaPlayer == nil or index == nil then
+		return nil
+	end
+	local display = luaPlayer.PlayerDisplay;
+	if display == nil then
+		return nil 
+	end
+	local attribe = display.Attribe
+	if attribe == nil then
+		return nil
+	end
+	local isOk, value = attribe:GetIntVars(index)
+	if not isOk then
+		return nil
+	end
+	return value
+end
+
+function trigger:VarSet(luaPlayer, index, value)
+	if luaPlayer == nil or index == nil or value == nil then
+		return nil
+	end
+	local display = luaPlayer.PlayerDisplay;
+	if display == nil then
+		return nil 
+	end
+	local attribe = display.Attribe
+	if attribe == nil then
+		return nil
+	end
+	attribe:SetIntVars(index, value)
+end
+
+function trigger:fVar(luaPlayer, index)
+	if luaPlayer == nil or index == nil then
+		return nil
+	end
+	local display = luaPlayer.PlayerDisplay;
+	if display == nil then
+		return nil 
+	end
+	local attribe = display.Attribe
+	if attribe == nil then
+		return nil
+	end
+	local isOk, value = attribe:GetFloatVars(index)
+	if not isOk then
+		return nil
+	end
+	return value
+end
+
+function trigger:fVarSet(luaPlayer, index, value)
+	if luaPlayer == nil or index == nil or value == nil then
+		return nil
+	end
+	local display = luaPlayer.PlayerDisplay;
+	if display == nil then
+		return nil 
+	end
+	local attribe = display.Attribe
+	if attribe == nil then
+		return nil
+	end
+	attribe:SetFloatVars(index, value)
+end
+
 function trigger:Time(luaPlayer)
 end
 

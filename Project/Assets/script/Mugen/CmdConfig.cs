@@ -115,7 +115,7 @@ namespace Mugen
             set;
         }
 
-        public string s
+		public string s
         {
             get;
             set;
@@ -244,8 +244,9 @@ namespace Mugen
         }
 
         [NoToLuaAttribute]
-		public AI_Command GetAICommand(Cmd_Command command, PlayerDisplay display)
+		public AI_Command GetAICommand(Cmd_Command command, PlayerDisplay display, out bool mustCheckTrigger)
 		{
+			mustCheckTrigger = true;
             if (command == null || m_AICmdMap == null)
 				return null;
             string aiName = command.aiName;
@@ -259,6 +260,24 @@ namespace Mugen
             {
                 if (display == null || display.LuaPly == null)
                     return null;
+
+				AI_Command finder = null;
+				// 遍历所有条件，如果没有满足的再调用LUA的方法GetAIName
+				var iter = m_AICmdMap.GetEnumerator();
+				while (iter.MoveNext ()) {
+					var aiCmd = iter.Current.Value;
+					if (aiCmd != null && aiCmd.OnTriggerEvent != null) {
+						if (aiCmd.CanTrigger (display)) {
+							mustCheckTrigger = false;
+							finder = aiCmd;
+							break;
+						}
+					}
+				}
+				iter.Dispose ();
+				if (finder != null)
+					return finder;
+
                 aiName = display.Call_LuaPly_GetAIName(command.name);
                 if (string.IsNullOrEmpty(aiName))
                     return null;

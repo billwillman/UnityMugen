@@ -33,7 +33,7 @@ public class PlayerDisplay : BaseResLoader {
             return string.Empty;
         try
         {
-            string ret = m_LuaPlayer.Invoke<LuaTable, string, string>("OnGetAICommandName", m_LuaPlayer, cmdName);
+			string ret = m_LuaPlayer.Invoke<LuaTable, string, string>("OnGetAICommandName", m_LuaPlayer, cmdName);
             return ret;
         } catch (System.Exception e)
         {
@@ -424,6 +424,20 @@ public class PlayerDisplay : BaseResLoader {
         return ret;
     }
 
+	public bool IsCommandInputKeyOk(string cmdName)
+	{
+		if (string.IsNullOrEmpty(cmdName))
+			return false;
+		GlobalPlayer ply = this.GPlayer;
+		if (ply == null || ply.CmdCfg == null)
+			return false;
+		Cmd_Command cmd = ply.CmdCfg.GetCommand(cmdName);
+		if (cmd == null)
+			return false;
+		bool ret = PlayerControls.GetInstance ().InputCtl.CheckPlayerCmdCommandInputOk (this.PlyType, cmd);
+		return ret;
+	}
+
 	public bool RunCmd(string cmdName)
     {
         if (string.IsNullOrEmpty(cmdName))
@@ -435,8 +449,9 @@ public class PlayerDisplay : BaseResLoader {
         if (cmd == null)
             return false;
 
-		AI_Command aiCmd = ply.CmdCfg.GetAICommand (cmd, this);
-		if (aiCmd == null || !aiCmd.CanTrigger(this))
+		bool mustCheckTrigger;
+		AI_Command aiCmd = ply.CmdCfg.GetAICommand (cmd, this, out mustCheckTrigger);
+		if (aiCmd == null || (mustCheckTrigger && !aiCmd.CanTrigger(this)))
 			return false;
 
         CNSConfig cnsCfg = ply.CnsCfg;

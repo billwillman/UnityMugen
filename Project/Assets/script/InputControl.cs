@@ -495,6 +495,20 @@ public class InputControl: MonoBehaviour
 		return false;
 	}
 
+	public bool CheckPlayerCmdCommandInputOk(InputPlayerType plyType, Mugen.Cmd_Command cmd)
+	{
+		if (plyType == InputPlayerType.none || cmd == null)
+			return false;
+		return CheckPlayerCmdCommandInputOk(plyType, cmd.keyCommands);
+	}
+
+	bool CheckPlayerCmdCommandInputOk(InputPlayerType plyType, string[] keyCommands)
+	{
+		if (plyType == InputPlayerType.none || keyCommands == null || keyCommands.Length <= 0)
+			return false;
+		return true;
+	}
+
 
     void CheckInputs(InputPlayerType playerType, bool checkPress, float currentTime)
     {

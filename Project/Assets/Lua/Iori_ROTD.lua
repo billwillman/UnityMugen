@@ -38,7 +38,7 @@ function Iori_ROTD:OnDestroy()
 end
 
 function Iori_ROTD:OnGetAICommandName(cmdName)
-	
+	return ""
 end
 
 --===========================================================
@@ -103,11 +103,36 @@ function Iori_ROTD:_initCmds()
 		return
 	end
 	
+	-- 普攻
+	self:_initCmd_a(luaCfg)
 	--禁千弐百十壱式・八稚女
 	self:_initCmd_SuperCode1(luaCfg)
 end
 
 --======================================================================================
+
+--== 普攻 a
+
+function Iori_ROTD:OnAICmd_a_or_b(aiName)
+	local triggerall = trigger:Command(self, "a") or trigger:Command(self, "b")
+	if not triggerall then
+		return false
+	end
+	local trigger1 = trigger:Stateno(self) == 100
+	local ret = triggerall and trigger1
+	return ret 
+end
+
+function Iori_ROTD:_initCmd_a(luaCfg)
+	local cmd = luaCfg:CreateCmd("a", "")
+	cmd.time = 1
+	cmd:AttachKeyCommands("a")
+
+	local aiCmd = luaCfg:CreateAICmd("a or b", "")
+	aiCmd.type = Mugen.AI_Type.ChangeState
+	aiCmd.value = "260"
+	aiCmd.OnTriggerEvent = self.OnAICmd_a_or_b
+end
 
 
 --==禁千弐百十壱式・八稚女
@@ -131,7 +156,13 @@ end
 function Iori_ROTD:OnAICmd_SuperCode1(aiName)
 	--print(self.PlayerDisplay)
 	local triggerAll = (aiName == "禁千弐百十壱式・八稚女") and (trigger:Statetype(self) ~= Mugen.Cns_Type.A)
+	if not triggerAll then
+		return false
+	end
 	triggerAll = triggerAll and (trigger:Power(self) >= 1000)
+	if not triggerAll then
+		return false
+	end
 	local trigger1 = trigger:CanCtrl(self)
 	local ret = triggerAll and trigger1
 	--print(triggerAll)
