@@ -32,6 +32,7 @@ public class PlayerAttribeWrap
 		L.RegVar("HitCount", get_HitCount, set_HitCount);
 		L.RegVar("StandType", get_StandType, set_StandType);
 		L.RegVar("Ctrl", get_Ctrl, set_Ctrl);
+		L.RegVar("StateStartVec", get_StateStartVec, set_StateStartVec);
 		L.RegVar("IsAlive", get_IsAlive, null);
 		L.EndClass();
 	}
@@ -488,6 +489,25 @@ public class PlayerAttribeWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_StateStartVec(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			PlayerAttribe obj = (PlayerAttribe)o;
+			UnityEngine.Vector2 ret = obj.StateStartVec;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index StateStartVec on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_IsAlive(IntPtr L)
 	{
 		object o = null;
@@ -826,6 +846,25 @@ public class PlayerAttribeWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index Ctrl on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_StateStartVec(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			PlayerAttribe obj = (PlayerAttribe)o;
+			UnityEngine.Vector2 arg0 = ToLua.ToVector2(L, 2);
+			obj.StateStartVec = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index StateStartVec on a nil value");
 		}
 	}
 }

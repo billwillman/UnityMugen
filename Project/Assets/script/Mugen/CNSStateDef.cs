@@ -40,15 +40,16 @@ namespace Mugen
         private Dictionary<int, List<CNSState>> m_StateEventsMap = null;
 
 		private int m_Juggle;
-		private float m_Velset_x;
-		private float m_Velset_y;
+		private float m_Velset_x;		// 开始速度
+		private float m_Velset_y;		// 开始速度
 		private int m_Ctrl; 			// 设定可控与否,没有则，不改变
 		private int m_Anim; 			// 改变动作，不写则不改变
 		private int m_PowerAdd;
 		private int m_Sprpriority;
+		private int m_FaceP2 = 0;
 
-		private static readonly int _cNoVaildVelset = -9999;
-		private static readonly int _cNoVaildCtrl = -1;
+		private static readonly int _cNoVaildVelset = 0;
+		private static readonly int _cNoVaildCtrl = 1;
 		private static readonly int _cNoVaildAnim = (int)PlayerState.psNone;
 
         [NoToLuaAttribute]
@@ -207,6 +208,17 @@ namespace Mugen
 			set;
 		}
 
+		public int FaceP2
+		{
+			get {
+				return m_FaceP2;
+			}
+			set
+			{
+				m_FaceP2 = value;
+			}
+		}
+
 		[NoToLuaAttribute]
         public PlayerState Anim
         {
@@ -229,6 +241,7 @@ namespace Mugen
 			m_Anim = _cNoVaildAnim;
 			m_PowerAdd = 0;
 			m_Sprpriority = 0; 
+			m_FaceP2 = 0;
 		}
 
 		[NoToLuaAttribute]
@@ -282,6 +295,8 @@ namespace Mugen
 						m_Ctrl = int.Parse (value);
 					} else if (string.Compare (key, "anim", true) == 0) {
 						m_Anim = int.Parse (value);
+					} else if (string.Compare (key, "facep2", true) == 0) {
+						m_FaceP2 = int.Parse (value);
 					}
 
 				}

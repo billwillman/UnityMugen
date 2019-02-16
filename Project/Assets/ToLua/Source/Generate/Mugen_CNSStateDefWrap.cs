@@ -20,6 +20,7 @@ public class Mugen_CNSStateDefWrap
 		L.RegVar("Velset_y", get_Velset_y, set_Velset_y);
 		L.RegVar("Juggle", get_Juggle, set_Juggle);
 		L.RegVar("Velset_x", get_Velset_x, set_Velset_x);
+		L.RegVar("FaceP2", get_FaceP2, set_FaceP2);
 		L.EndClass();
 	}
 
@@ -256,6 +257,25 @@ public class Mugen_CNSStateDefWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_FaceP2(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Mugen.CNSStateDef obj = (Mugen.CNSStateDef)o;
+			int ret = obj.FaceP2;
+			LuaDLL.lua_pushinteger(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index FaceP2 on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int set_Sprpriority(IntPtr L)
 	{
 		object o = null;
@@ -442,6 +462,25 @@ public class Mugen_CNSStateDefWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index Velset_x on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_FaceP2(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Mugen.CNSStateDef obj = (Mugen.CNSStateDef)o;
+			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
+			obj.FaceP2 = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index FaceP2 on a nil value");
 		}
 	}
 }

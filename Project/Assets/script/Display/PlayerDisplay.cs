@@ -45,6 +45,36 @@ public class PlayerDisplay : BaseResLoader {
         return string.Empty;
     }
 
+	private void AttachAttribeToSpriteMovement()
+	{
+		PlayerAttribe attribe = this.Attribe;
+		if (attribe == null)
+			return;
+		SpriteMovement movement = this.Movement;
+		if (movement == null)
+			return;
+		movement.StartVec = attribe.StateStartVec;
+	}
+
+	private void AttachAttribeFromStateDef(CNSStateDef def)
+	{
+		if (def == null)
+			return;
+		/*
+		 * 设置属性
+		*/
+		PlayerAttribe attribe = this.Attribe;
+		if (attribe != null) {
+			//attribe.StandType = def.MoveType;
+			attribe.Power += def.PowerAdd;
+			attribe.Ctrl = def.Ctrl;
+			// 状态开始的速度
+			attribe.StateStartVec = new Vector2 (def.Velset_x, def.Velset_y);
+
+			AttachAttribeToSpriteMovement ();
+		}
+	}
+
 	public bool PlayCnsAnimate(int stateDefId, bool isLoop = true)
 	{
 		var player = this.GPlayer;
@@ -55,6 +85,8 @@ public class PlayerDisplay : BaseResLoader {
 		var def = player.CnsCfg.GetStateDef (stateDefId);
 		if (def == null || def.Anim == PlayerState.psNone)
 			return false;
+
+		AttachAttribeFromStateDef (def);
 
 		return PlayAni (def.Anim, isLoop);
 	}

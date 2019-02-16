@@ -8,9 +8,129 @@ public class Mugen_CNSStateWrap
 	{
 		L.BeginClass(typeof(Mugen.CNSState), typeof(System.Object));
 		L.RegFunction("__tostring", ToLua.op_ToString);
+		L.RegVar("time", get_time, set_time);
+		L.RegVar("movetime", get_movetime, set_movetime);
+		L.RegVar("anim", get_anim, set_anim);
+		L.RegVar("darken", get_darken, set_darken);
+		L.RegVar("poweradd", get_poweradd, set_poweradd);
+		L.RegVar("p2defmul", get_p2defmul, set_p2defmul);
 		L.RegVar("projid", get_projid, set_projid);
 		L.RegVar("projanim", get_projanim, set_projanim);
 		L.EndClass();
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_time(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Mugen.CNSState obj = (Mugen.CNSState)o;
+			int ret = obj.time;
+			LuaDLL.lua_pushinteger(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index time on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_movetime(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Mugen.CNSState obj = (Mugen.CNSState)o;
+			int ret = obj.movetime;
+			LuaDLL.lua_pushinteger(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index movetime on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_anim(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Mugen.CNSState obj = (Mugen.CNSState)o;
+			int ret = obj.anim;
+			LuaDLL.lua_pushinteger(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index anim on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_darken(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Mugen.CNSState obj = (Mugen.CNSState)o;
+			int ret = obj.darken;
+			LuaDLL.lua_pushinteger(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index darken on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_poweradd(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Mugen.CNSState obj = (Mugen.CNSState)o;
+			int ret = obj.poweradd;
+			LuaDLL.lua_pushinteger(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index poweradd on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_p2defmul(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Mugen.CNSState obj = (Mugen.CNSState)o;
+			int ret = obj.p2defmul;
+			LuaDLL.lua_pushinteger(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index p2defmul on a nil value");
+		}
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -48,6 +168,120 @@ public class Mugen_CNSStateWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index projanim on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_time(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Mugen.CNSState obj = (Mugen.CNSState)o;
+			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
+			obj.time = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index time on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_movetime(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Mugen.CNSState obj = (Mugen.CNSState)o;
+			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
+			obj.movetime = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index movetime on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_anim(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Mugen.CNSState obj = (Mugen.CNSState)o;
+			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
+			obj.anim = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index anim on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_darken(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Mugen.CNSState obj = (Mugen.CNSState)o;
+			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
+			obj.darken = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index darken on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_poweradd(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Mugen.CNSState obj = (Mugen.CNSState)o;
+			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
+			obj.poweradd = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index poweradd on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_p2defmul(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Mugen.CNSState obj = (Mugen.CNSState)o;
+			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
+			obj.p2defmul = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index p2defmul on a nil value");
 		}
 	}
 

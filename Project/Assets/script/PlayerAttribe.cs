@@ -39,6 +39,8 @@ public class PlayerAttribe : MonoBehaviour {
 	public Cns_Type StandType = Cns_Type.S;
 	// 是否可控制
 	public int Ctrl = 1;
+	// 状态开始的速度
+	public Vector2 StateStartVec = Vector2.zero;
 	/*------------------------------------*/
 
 	public bool IsAlive
@@ -149,6 +151,7 @@ public class PlayerAttribe : MonoBehaviour {
 		HitCount = 0;
 		StandType = Cns_Type.S;
 		Ctrl = 1;
+		StateStartVec = Vector2.zero;
 	}
 
 	void OnApplicationQuit()

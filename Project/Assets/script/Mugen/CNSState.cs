@@ -21,6 +21,8 @@ namespace Mugen
         AngleMul,
         // 角度设置
         AngleSet,
+		// 超必杀暂停
+		SuperPause,
 
         // 飞行道具
         Projectile,
@@ -37,6 +39,38 @@ namespace Mugen
             m_Type = type;
         }
 
+		public int time {
+			get;
+			set;
+		}
+
+		public int movetime {
+			get;
+			set;
+		}
+
+		public int anim {
+			get;
+			set;
+		}
+
+		public int darken {
+			get;
+			set;
+		}
+
+		public int poweradd {
+			get;
+			set;
+		}
+
+		public int p2defmul {
+			get;
+			set;
+		}
+
+
+
         public int projid
         {
             get;
@@ -48,5 +82,7 @@ namespace Mugen
             get;
             set;
         }
+
+
     }
 }
