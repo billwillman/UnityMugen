@@ -38,18 +38,21 @@ namespace Mugen
 			set;
 		}
 
-        public Func<string, bool> OnTriggerEvent
+        public Func<LuaTable, string, bool> OnTriggerEvent
         {
             get;
             set;
         }
 
         [NoToLuaAttribute]
-        public bool CanTrigger()
+		public bool CanTrigger(PlayerDisplay display)
         {
-            if (OnTriggerEvent == null)
+			if (display == null)
+				return false;
+			if (OnTriggerEvent == null || display.LuaPly == null)
                 return true;
-            return OnTriggerEvent(name);
+			//display.LuaPly.Get
+			return OnTriggerEvent(display.LuaPly, name);
         }
 	}
 

@@ -18,18 +18,23 @@ function Iori_ROTD:new()
     end
    -- 动态数据
    local t = {PlayerDisplay = nil}
-   return setmetatable(t, Iori_ROTD)
+   local ret = setmetatable(t, Iori_ROTD)
+   --print(ret)
+   return ret
 end
 
 --====================外部调用接口==============================
 
 function Iori_ROTD:OnInit(playerDisplay)
+	--print(playerDisplay)
 	self.PlayerDisplay = playerDisplay;
+	--print(self.PlayerDisplay)
 	trigger:Help_InitLuaPlayer(self, self)
 end
 
 function Iori_ROTD:OnDestroy()
   self.PlayerDisplay = nil
+  --print(null)
 end
 
 function Iori_ROTD:OnGetAICommandName(cmdName)
@@ -92,6 +97,21 @@ function Iori_ROTD:_initStateDefs()
 	self:_initStateDef_2000(luaCfg)
 end
 
+function Iori_ROTD:_initCmds()
+	local luaCfg = GlobaConfigMgr:GetLuaCnsCfg("Iori-ROTD")
+	if luaCfg == nil then
+		return
+	end
+	
+	--禁千弐百十壱式・八稚女
+	self:_initCmd_SuperCode1(luaCfg)
+end
+
+--======================================================================================
+
+
+--==禁千弐百十壱式・八稚女
+
 function Iori_ROTD:_initStateDef_2000(luaCfg)
 	local id = luaCfg:CreateStateDef("2000")
 	local def = luaCfg:GetStateDef(id)
@@ -108,23 +128,15 @@ function Iori_ROTD:_initStateDef_2000(luaCfg)
 	
 end
 
---======================================================================================
-
-function Iori_ROTD:_initCmds()
-	local luaCfg = GlobaConfigMgr:GetLuaCnsCfg("Iori-ROTD")
-	if luaCfg == nil then
-		return
-	end
-	
-	--禁千弐百十壱式・八稚女
-	self:_initCmd_SuperCode1(luaCfg)
-end
-
-
---==禁千弐百十壱式・八稚女
-
 function Iori_ROTD:OnAICmd_SuperCode1(aiName)
-	return true
+	--print(self.PlayerDisplay)
+	local triggerAll = (aiName == "禁千弐百十壱式・八稚女") and (trigger:Statetype(self) ~= Mugen.Cns_Type.A)
+	triggerAll = triggerAll and (trigger:Power(self) >= 1000)
+	local trigger1 = trigger:CanCtrl(self)
+	local ret = triggerAll and trigger1
+	--print(triggerAll)
+	--print(trigger1)
+	return ret
 end
 
 function Iori_ROTD:_initCmd_SuperCode1(luaCfg)
@@ -135,7 +147,7 @@ function Iori_ROTD:_initCmd_SuperCode1(luaCfg)
 	-- 创建状态
 	local aiCmd = luaCfg:CreateAICmd("禁千弐百十壱式・八稚女")
 	aiCmd.type = Mugen.AI_Type.ChangeState
-	aiCmd.value = 2000
+	aiCmd.value = "2000"
 	aiCmd.OnTriggerEvent = self.OnAICmd_SuperCode1
 end
 

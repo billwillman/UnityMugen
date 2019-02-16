@@ -12,6 +12,7 @@ public class PlayerAttribeWrap
 		L.RegFunction("SetIntVars", SetIntVars);
 		L.RegFunction("GetFloatVars", GetFloatVars);
 		L.RegFunction("SetFloatVars", SetFloatVars);
+		L.RegFunction("ResetDatas", ResetDatas);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("life", get_life, set_life);
@@ -29,6 +30,8 @@ public class PlayerAttribeWrap
 		L.RegVar("Power", get_Power, set_Power);
 		L.RegVar("AILevel", get_AILevel, set_AILevel);
 		L.RegVar("HitCount", get_HitCount, set_HitCount);
+		L.RegVar("StandType", get_StandType, set_StandType);
+		L.RegVar("Ctrl", get_Ctrl, set_Ctrl);
 		L.RegVar("IsAlive", get_IsAlive, null);
 		L.EndClass();
 	}
@@ -120,6 +123,22 @@ public class PlayerAttribeWrap
 			bool o = obj.SetFloatVars(arg0, arg1);
 			LuaDLL.lua_pushboolean(L, o);
 			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int ResetDatas(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			PlayerAttribe obj = (PlayerAttribe)ToLua.CheckObject<PlayerAttribe>(L, 1);
+			obj.ResetDatas();
+			return 0;
 		}
 		catch (Exception e)
 		{
@@ -431,6 +450,44 @@ public class PlayerAttribeWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_StandType(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			PlayerAttribe obj = (PlayerAttribe)o;
+			Mugen.Cns_Type ret = obj.StandType;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index StandType on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_Ctrl(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			PlayerAttribe obj = (PlayerAttribe)o;
+			int ret = obj.Ctrl;
+			LuaDLL.lua_pushinteger(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index Ctrl on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_IsAlive(IntPtr L)
 	{
 		object o = null;
@@ -731,6 +788,44 @@ public class PlayerAttribeWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index HitCount on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_StandType(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			PlayerAttribe obj = (PlayerAttribe)o;
+			Mugen.Cns_Type arg0 = (Mugen.Cns_Type)ToLua.CheckObject(L, 2, typeof(Mugen.Cns_Type));
+			obj.StandType = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index StandType on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_Ctrl(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			PlayerAttribe obj = (PlayerAttribe)o;
+			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
+			obj.Ctrl = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index Ctrl on a nil value");
 		}
 	}
 }

@@ -116,7 +116,7 @@ public static class LuaBinder
 		L.RegFunction("Action_int", System_Action_int);
 		L.RegFunction("Comparison_int", System_Comparison_int);
 		L.RegFunction("Func_int_int", System_Func_int_int);
-		L.RegFunction("Func_string_bool", System_Func_string_bool);
+		L.RegFunction("Func_LuaInterface_LuaTable_string_bool", System_Func_LuaInterface_LuaTable_string_bool);
 		L.RegFunction("Action_float_bool_UnityEngine_GameObject", System_Action_float_bool_UnityEngine_GameObject);
 		L.RegFunction("Action_bool", System_Action_bool);
 		L.RegFunction("Action_UnityEngine_AsyncOperation", System_Action_UnityEngine_AsyncOperation);
@@ -486,7 +486,7 @@ public static class LuaBinder
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int System_Func_string_bool(IntPtr L)
+	static int System_Func_LuaInterface_LuaTable_string_bool(IntPtr L)
 	{
 		try
 		{
@@ -495,13 +495,13 @@ public static class LuaBinder
 
 			if (count == 1)
 			{
-				Delegate arg1 = DelegateTraits<System.Func<string,bool>>.Create(func);
+				Delegate arg1 = DelegateTraits<System.Func<LuaInterface.LuaTable,string,bool>>.Create(func);
 				ToLua.Push(L, arg1);
 			}
 			else
 			{
 				LuaTable self = ToLua.CheckLuaTable(L, 2);
-				Delegate arg1 = DelegateTraits<System.Func<string,bool>>.Create(func, self);
+				Delegate arg1 = DelegateTraits<System.Func<LuaInterface.LuaTable,string,bool>>.Create(func, self);
 				ToLua.Push(L, arg1);
 			}
 			return 1;

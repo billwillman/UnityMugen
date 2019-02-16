@@ -67,7 +67,7 @@ function trigger:Anim(luaPlayer)
 	if display == nil then
 		return nil 
 	end
-	local ret = display:AnimationState()
+	local ret = display.Stateno
 	return ret
 end
 
@@ -129,6 +129,70 @@ function trigger:Life(luaPlayer)
 	return attribe.Life
 end
 
+function trigger:Power(luaPlayer)
+	if luaPlayer == nil then
+		return nil
+	end
+	local display = luaPlayer.PlayerDisplay;
+	if display == nil then
+		return nil 
+	end
+	local attribe = display.Attribe
+	if attribe == nil then
+		return nil
+	end
+	return attribe.Power
+end
+
+function trigger:Statetype(luaPlayer)
+	if luaPlayer == nil then
+		return nil
+	end
+	local display = luaPlayer.PlayerDisplay;
+	if display == nil then
+		return nil 
+	end
+	local attribe = display.Attribe
+	if attribe == nil then
+		return nil
+	end
+	return attribe.StandType
+end
+
+function trigger:CanCtrl(luaPlayer)
+	local ctrl = self:Ctrl(luaPlayer)
+	if ctrl == nil then
+		return false
+	end
+	return ctrl ~= 0
+end
+
+function trigger:Ctrl(luaPlayer)
+	if luaPlayer == nil then
+		return nil
+	end
+	local display = luaPlayer.PlayerDisplay;
+	if display == nil then
+		return nil 
+	end
+	local attribe = display.Attribe
+	if attribe == nil then
+		return nil
+	end
+	return attribe.Ctrl
+end
+
+function trigger:Stateno(luaPlayer)
+	if luaPlayer == nil then
+		return nil
+	end
+	local display = luaPlayer.PlayerDisplay;
+	if display == nil then
+		return nil 
+	end
+	local ret = display.Stateno
+	return ret
+end
 
 function trigger:Time(luaPlayer)
 end
@@ -228,6 +292,7 @@ function trigger:Help_InitLuaPlayer(newLuaPlayer, basePlayer)
 	end
 	-- 初始化變量
 	dst:InitVars()
+	dst:ResetDatas()
 end
 
 return trigger

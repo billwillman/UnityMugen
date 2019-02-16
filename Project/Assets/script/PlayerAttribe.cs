@@ -4,6 +4,7 @@ using Mugen;
 using LuaInterface;
 
 public class PlayerAttribe : MonoBehaviour {
+	/* LUA配置读取设置部分 */
 	// 生命值
 	public int life = 1000;
 	// 攻击力
@@ -27,11 +28,18 @@ public class PlayerAttribe : MonoBehaviour {
 	// 变量数量
 	public int IntPersistIndex = 60;
 	public int FloatPersistIndex = 40;
+	/*------------------------------------*/
 
+	/* 运行时属性 */
 	public int Power = 0;
 	public int AILevel = 0;
 
 	public int HitCount = 0;
+	// 角色当前站姿状态（站立还是下蹲或者空中等）
+	public Cns_Type StandType = Cns_Type.S;
+	// 是否可控制
+	public int Ctrl = 1;
+	/*------------------------------------*/
 
 	public bool IsAlive
 	{
@@ -132,10 +140,15 @@ public class PlayerAttribe : MonoBehaviour {
 		m_FloatVars[index] = value;
 		return true;
 	}
-
-	private void ResetDatas()
+		
+	public void ResetDatas()
 	{
 		// 通过CNS重置
+		Power = 0;
+		AILevel = 0;
+		HitCount = 0;
+		StandType = Cns_Type.S;
+		Ctrl = 1;
 	}
 
 	void OnApplicationQuit()

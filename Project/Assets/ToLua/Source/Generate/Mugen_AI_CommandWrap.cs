@@ -126,7 +126,7 @@ public class Mugen_AI_CommandWrap
 		{
 			o = ToLua.ToObject(L, 1);
 			Mugen.AI_Command obj = (Mugen.AI_Command)o;
-			System.Func<string,bool> ret = obj.OnTriggerEvent;
+			System.Func<LuaInterface.LuaTable,string,bool> ret = obj.OnTriggerEvent;
 			ToLua.Push(L, ret);
 			return 1;
 		}
@@ -221,7 +221,7 @@ public class Mugen_AI_CommandWrap
 		{
 			o = ToLua.ToObject(L, 1);
 			Mugen.AI_Command obj = (Mugen.AI_Command)o;
-			System.Func<string,bool> arg0 = (System.Func<string,bool>)ToLua.CheckDelegate<System.Func<string,bool>>(L, 2);
+			System.Func<LuaInterface.LuaTable,string,bool> arg0 = (System.Func<LuaInterface.LuaTable,string,bool>)ToLua.CheckDelegate<System.Func<LuaInterface.LuaTable,string,bool>>(L, 2);
 			obj.OnTriggerEvent = arg0;
 			return 0;
 		}

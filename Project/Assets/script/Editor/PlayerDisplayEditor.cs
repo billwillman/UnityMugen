@@ -388,6 +388,7 @@ public class PlayerDisplayEditor : Editor {
                 if (GUILayout.Button(cmd.name))
                 {
                     newCmdIdx = i;
+					m_CommandSel = -1;
                 }
 
                 if (idx % 2 == 1 && isVV)

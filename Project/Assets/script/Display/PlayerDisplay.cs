@@ -285,6 +285,14 @@ public class PlayerDisplay : BaseResLoader {
 		PlayerControls.GetInstance().SwitchPlayer(playerType, this);
     }
 
+	public int Stateno
+	{
+		get {
+			return (int)this.AnimationState;
+		}
+	}
+		
+	[NoToLuaAttribute]
     public PlayerState AnimationState
     {
         get
@@ -299,11 +307,14 @@ public class PlayerDisplay : BaseResLoader {
 	[NoToLuaAttribute]
 	public bool CanInputKey()
 	{
+		/*
 		var stateMgr = this.StateMgr;
 		if (stateMgr == null)
 			return false;
 		if (stateMgr.CurState == (PlayerState)200)
 			return false;
+		return true;
+		*/
 		return true;
 	}
 
@@ -393,7 +404,7 @@ public class PlayerDisplay : BaseResLoader {
             return false;
 
 		AI_Command aiCmd = ply.CmdCfg.GetAICommand (cmd, this);
-		if (aiCmd == null || !aiCmd.CanTrigger())
+		if (aiCmd == null || !aiCmd.CanTrigger(this))
 			return false;
 
         CNSConfig cnsCfg = ply.CnsCfg;

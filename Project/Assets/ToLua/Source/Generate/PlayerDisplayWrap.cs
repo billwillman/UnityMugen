@@ -17,7 +17,7 @@ public class PlayerDisplayWrap
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("IsFlipX", get_IsFlipX, set_IsFlipX);
 		L.RegVar("Attribe", get_Attribe, null);
-		L.RegVar("AnimationState", get_AnimationState, null);
+		L.RegVar("Stateno", get_Stateno, null);
 		L.RegVar("ImageCurrentFrame", get_ImageCurrentFrame, null);
 		L.EndClass();
 	}
@@ -237,7 +237,7 @@ public class PlayerDisplayWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_AnimationState(IntPtr L)
+	static int get_Stateno(IntPtr L)
 	{
 		object o = null;
 
@@ -245,13 +245,13 @@ public class PlayerDisplayWrap
 		{
 			o = ToLua.ToObject(L, 1);
 			PlayerDisplay obj = (PlayerDisplay)o;
-			Mugen.PlayerState ret = obj.AnimationState;
-			ToLua.Push(L, ret);
+			int ret = obj.Stateno;
+			LuaDLL.lua_pushinteger(L, ret);
 			return 1;
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index AnimationState on a nil value");
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index Stateno on a nil value");
 		}
 	}
 
