@@ -111,12 +111,27 @@ end
 
 --======================================================================================
 
-
 --== 普攻 a
+
+function Iori_ROTD:OnAICmd_a_or_b(aiName)
+	local triggerall = trigger:Command(self, "a") or trigger:Command(self, "b")
+	if not triggerall then
+		return false
+	end
+	local trigger1 = trigger:Stateno(self) == 100
+	local ret = triggerall and trigger1
+	return ret 
+end
+
 function Iori_ROTD:_initCmd_a(luaCfg)
-	local cmd = luaCfg:CreateCmd("a")
+	local cmd = luaCfg:CreateCmd("a", "")
 	cmd.time = 1
 	cmd:AttachKeyCommands("a")
+
+	local aiCmd = luaCfg:CreateAICmd("a or b", "")
+	aiCmd.type = Mugen.AI_Type.ChangeState
+	aiCmd.value = "260"
+	aiCmd.OnTriggerEvent = self.OnAICmd_a_or_b
 end
 
 

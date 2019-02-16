@@ -262,6 +262,18 @@ function trigger:fVarSet(luaPlayer, index, value)
 	attribe:SetFloatVars(index, value)
 end
 
+function trigger:Command(luaPlayer, cmdName)
+	if luaPlayer == nil or cmdName == nil then
+		return nil
+	end
+	local display = luaPlayer.PlayerDisplay;
+	if display == nil then
+		return nil 
+	end
+	local ret = display:IsCommandInputKeyOk(cmdName)
+	return ret
+end
+
 function trigger:Time(luaPlayer)
 end
 

@@ -12,6 +12,7 @@ public class PlayerDisplayWrap
 		L.RegFunction("ChangeState", ChangeState);
 		L.RegFunction("HasAniGroup", HasAniGroup);
 		L.RegFunction("PlayAni", PlayAni);
+		L.RegFunction("IsCommandInputKeyOk", IsCommandInputKeyOk);
 		L.RegFunction("RunCmd", RunCmd);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
@@ -155,6 +156,24 @@ public class PlayerDisplayWrap
 			{
 				return LuaDLL.luaL_throw(L, "invalid arguments to method: PlayerDisplay.PlayAni");
 			}
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int IsCommandInputKeyOk(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			PlayerDisplay obj = (PlayerDisplay)ToLua.CheckObject<PlayerDisplay>(L, 1);
+			string arg0 = ToLua.CheckString(L, 2);
+			bool o = obj.IsCommandInputKeyOk(arg0);
+			LuaDLL.lua_pushboolean(L, o);
+			return 1;
 		}
 		catch (Exception e)
 		{
