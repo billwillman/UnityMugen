@@ -95,15 +95,41 @@ public class ImageAnimation : MonoBehaviour {
     }
     */
 
-	public void SetLimitFrame(int startFrame = -1, int endFrame = -1)
+	public void Pause(bool isPause)
+	{
+		bool isEnable = !isPause;
+		var ani = this.CacheAnimation;
+		if (ani != null && ani.enabled != isEnable)
+			ani.enabled = isEnable;
+	}
+
+	public void SetLimitFrame(int startFrame = -1, int endFrame = -1, bool checkCurrentFrame = true)
 	{
 		m_LimitStartFrame = startFrame;
 		m_LimitEndFrame = endFrame;
+		if (checkCurrentFrame) {
+			int oldFrame = m_CurFrame;
+			bool isChanged = CheckCurrentFrameLimit ();
+			if (isChanged && oldFrame != m_CurFrame) {
+				var ani = this.CacheAnimation;
+				if (ani != null) {
+					Pause (true);
+					if (ani.clip != null) {
+						var info = ani [_cPlayAnimationName];
+						if (info != null) {
+							float t = CalcAnimationTime (m_CurFrame);
+							info.time = t;
+						}
+					}
+				}
+				DoChangeFrame ();
+			}
+		}
 	}
 
 	public bool PlayerPlayerAni(PlayerState state, int startFrame, int endFrame, bool isLoop = true)
 	{
-		SetLimitFrame (startFrame, endFrame);
+		SetLimitFrame (startFrame, endFrame, false);
 		if (m_State == state) {
 			if (CacheAnimation.enabled && !CacheAnimation.isPlaying)
 			{
@@ -617,7 +643,7 @@ public class ImageAnimation : MonoBehaviour {
 		if (ret && checkLimitStop) {
 			int limitEnd = this.LimitEndFrame;
 			if (limitEnd >= 0 && limitEnd == this.m_CurFrame) {
-				this.CacheAnimation.Stop ();
+				Pause (true);
 			}
 		}
 		return ret;
@@ -634,7 +660,7 @@ public class ImageAnimation : MonoBehaviour {
 		if (ret && checkLimitStop) {
 			int limitStart = this.LimitStartFrame;
 			if (limitStart >= 0 && limitStart == this.m_CurFrame) {
-				this.CacheAnimation.Stop ();
+				Pause (true);
 			}
 		}
 		return ret;
