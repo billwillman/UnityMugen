@@ -132,6 +132,14 @@ public class PlayerDisplay : BaseResLoader {
         }
 	}
 
+	public void AniCtlPauseTime(float pauseTime)
+	{
+		SpriteMovement mov = this.Movement;
+		if (mov != null) {
+			mov.AniCtlPause (pauseTime);
+		}
+	}
+
 	protected SpriteMovement Movement
 	{
 		get
