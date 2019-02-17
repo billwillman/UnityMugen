@@ -3,6 +3,7 @@ using System.Collections;
 using Mugen;
 using LuaInterface;
 
+[RequireComponent(typeof(SndSound))]
 [RequireComponent(typeof(ImageAnimation))]
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(PlayerStateMgr))]
@@ -22,6 +23,10 @@ public class PlayerDisplay : BaseResLoader {
     private LuaTable m_LuaPlayer = null;
     // 是否是2P另外对着的
     private bool m_IsFlipX = false;
+
+	private SndSound m_SndSound = null;
+
+
 
 	[NoToLuaAttribute]
     public Vector2 m_OffsetPos = Vector2.zero;
@@ -44,6 +49,25 @@ public class PlayerDisplay : BaseResLoader {
 
         return string.Empty;
     }
+
+	[NoToLuaAttribute]
+	public SndSound Sound
+	{
+		get
+		{
+			if (m_SndSound == null)
+				m_SndSound = GetComponent<SndSound> ();
+			return m_SndSound;
+		}
+	}
+
+	public bool PlaySound(int group, int index)
+	{
+		var snd = this.Sound;
+		if (snd == null)
+			return false;
+		return snd.PlaySound (group, index);
+	}
 
 	private void AttachAttribeToSpriteMovement()
 	{
@@ -132,7 +156,12 @@ public class PlayerDisplay : BaseResLoader {
         }
 	}
 
-	public void AniCtlPauseTime(float pauseTime)
+	public void Trigger_SuperPause(int pauseTime, int moveTime)
+	{
+		
+	}
+
+	protected void AniCtlPauseTime(float pauseTime)
 	{
 		SpriteMovement mov = this.Movement;
 		if (mov != null) {
