@@ -580,14 +580,64 @@ public class ImageAnimation : MonoBehaviour {
 		}
 	}
 
-    public bool NextFrame()
+	protected int LimitEndFrame
+	{
+		get {
+			int limitEnd = m_LimitEndFrame;
+			if (limitEnd < 0)
+				return limitEnd;
+			int curFrameCount = this.AniNodeCount;
+			if (limitEnd >= curFrameCount)
+				limitEnd = curFrameCount - 1;
+			return limitEnd;
+		}
+	}
+
+	protected int LimitStartFrame
+	{
+		get {
+			int limitStart = m_LimitStartFrame;
+			if (limitStart < 0)
+				return limitStart;
+			int curFrameCount = this.AniNodeCount;
+			if (limitStart >= curFrameCount)
+				limitStart = curFrameCount - 1;
+			return limitStart;
+		}
+	}
+
+	public bool NextFrame()
+	{
+		return NextFrame (true);
+	}
+
+	public bool NextFrame(bool checkLimitStop)
     {
-        return UpdateFrame(CurFrame + 1);
+		bool ret = UpdateFrame(CurFrame + 1);
+		if (ret && checkLimitStop) {
+			int limitEnd = this.LimitEndFrame;
+			if (limitEnd >= 0 && limitEnd == this.m_CurFrame) {
+				this.CacheAnimation.Stop ();
+			}
+		}
+		return ret;
     }
 
 	public bool PrevFrame()
 	{
-		return UpdateFrame(m_CurFrame - 1);
+		return PrevFrame (true);
+	}
+
+	public bool PrevFrame(bool checkLimitStop)
+	{
+		bool ret = UpdateFrame(m_CurFrame - 1);
+		if (ret && checkLimitStop) {
+			int limitStart = this.LimitStartFrame;
+			if (limitStart >= 0 && limitStart == this.m_CurFrame) {
+				this.CacheAnimation.Stop ();
+			}
+		}
+		return ret;
 	}
 
 	public void EndFrame()
