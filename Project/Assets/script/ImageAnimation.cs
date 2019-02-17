@@ -101,6 +101,7 @@ public class ImageAnimation : MonoBehaviour {
 		var ani = this.CacheAnimation;
 		if (ani != null && ani.enabled != isEnable)
 			ani.enabled = isEnable;
+		//var info = ani [_cPlayAnimationName];
 	}
 
 	public void SetLimitFrame(int startFrame = -1, int endFrame = -1, bool checkCurrentFrame = true)
