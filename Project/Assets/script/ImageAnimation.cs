@@ -95,45 +95,51 @@ public class ImageAnimation : MonoBehaviour {
     }
     */
 
-    // 播放角色动画
-    public bool PlayerPlayerAni(PlayerState state, bool isLoop = true)
-    {
+	public void SetLimitFrame(int startFrame = -1, int endFrame = -1)
+	{
+		m_LimitStartFrame = startFrame;
+		m_LimitEndFrame = endFrame;
+	}
+
+	public bool PlayerPlayerAni(PlayerState state, int startFrame, int endFrame, bool isLoop = true)
+	{
+		SetLimitFrame (startFrame, endFrame);
 		if (m_State == state) {
-            if (CacheAnimation.enabled && !CacheAnimation.isPlaying)
-            {
-                CacheAnimation.Play();
-            }
+			if (CacheAnimation.enabled && !CacheAnimation.isPlaying)
+			{
+				CacheAnimation.Play();
+			}
 			return true;
 		}
 
-        ResetAnimation();
+		ResetAnimation();
 
-        PlayerDisplay displayer = this.CacheDisplayer;
-        if (displayer == null)
-            return false;
-        var loaderPlayer = displayer.LoaderPlayer;
-        if (loaderPlayer == null)
-            return false;
+		PlayerDisplay displayer = this.CacheDisplayer;
+		if (displayer == null)
+			return false;
+		var loaderPlayer = displayer.LoaderPlayer;
+		if (loaderPlayer == null)
+			return false;
 
-        var imgRes = loaderPlayer.ImageRes;
-        if (imgRes == null)
-            return false;
-        var imgLib = imgRes.ImgLib;
-        if (imgLib == null)
-        {
-            imgRes.Init();
-            imgLib = imgRes.ImgLib;
-            if (imgLib == null)
-                return false;
-        }
+		var imgRes = loaderPlayer.ImageRes;
+		if (imgRes == null)
+			return false;
+		var imgLib = imgRes.ImgLib;
+		if (imgLib == null)
+		{
+			imgRes.Init();
+			imgLib = imgRes.ImgLib;
+			if (imgLib == null)
+				return false;
+		}
 
 
-        m_FrameList = imgLib.GetAnimationNodeList(state);
-        bool ret = DoInitAnimation();
-        if (ret)
-        {
-            m_IsLoop = isLoop;
-            m_State = state;
+		m_FrameList = imgLib.GetAnimationNodeList(state);
+		bool ret = DoInitAnimation();
+		if (ret)
+		{
+			m_IsLoop = isLoop;
+			m_State = state;
 
 			CacheAnimation.Stop ();
 			if(isLoop)
@@ -141,14 +147,20 @@ public class ImageAnimation : MonoBehaviour {
 			else
 				CacheAnimation.wrapMode = WrapMode.Once;
 			CacheAnimation.Play();
-        } else
-        {
-            m_IsLoop = isLoop;
-            m_State = state;
+		} else
+		{
+			m_IsLoop = isLoop;
+			m_State = state;
 
-            DoEndFrame();
-        }
-        return ret;
+			DoEndFrame();
+		}
+		return ret;
+	}
+
+    // 播放角色动画
+    public bool PlayerPlayerAni(PlayerState state, bool isLoop = true)
+    {
+		return PlayerPlayerAni (state, -1, -1, isLoop);
     }
 
 	public ImageFrame GetCurImageFrame(out ActionFlip flip)
@@ -407,24 +419,63 @@ public class ImageAnimation : MonoBehaviour {
         }
     }
 
+	private float CalcAnimationTime(int ff)
+	{
+		if (m_FrameList == null || m_FrameList.Count <= 0)
+			return -1;
+		int curFrame = ff;
+		if (curFrame < 0)
+			curFrame = 0;
+		else if (curFrame >= m_FrameList.Count)
+			curFrame = m_FrameList.Count - 1;
+		float ret = 0;
+		for (int i = 0; i <= curFrame; ++i)
+		{
+			ImageAnimateNode frame = m_FrameList[i];
+			float evtTime = frame.AniTick * _cImageAnimationScale;
+			ret += evtTime;
+		}
+		return 0;
+	}
+
     private float CalcCurrentAnimationTime()
     {
-        if (m_FrameList == null || m_FrameList.Count <= 0)
-            return -1;
-        int curFrame = m_CurFrame;
-        if (curFrame < 0)
-            curFrame = 0;
-        else if (curFrame >= m_FrameList.Count)
-            curFrame = m_FrameList.Count - 1;
-        float ret = 0;
-        for (int i = 0; i <= curFrame; ++i)
-        {
-            ImageAnimateNode frame = m_FrameList[i];
-            float evtTime = frame.AniTick * _cImageAnimationScale;
-            ret += evtTime;
-        }
-        return 0;
+		return CalcAnimationTime (m_CurFrame);
     }
+
+	private bool CheckFrameLimit(ref int frameIndex)
+	{
+		if (m_LimitStartFrame >= 0 && m_LimitEndFrame >= 0 && m_LimitStartFrame > m_LimitEndFrame)
+			return false;
+		int curFrameCount = this.AniNodeCount;
+		int limitStart = m_LimitStartFrame;
+		if (limitStart >= curFrameCount)
+			limitStart = curFrameCount - 1;
+		int limitEnd = m_LimitEndFrame;
+		if (limitEnd >= curFrameCount)
+			limitEnd = curFrameCount - 1;
+		bool ret = false;
+		if (limitStart >= 0) {
+			if (m_CurFrame < limitStart) {
+				m_CurFrame = limitStart;
+				ret = true;
+			}
+		}
+
+		if (limitEnd >= 0) {
+			if (m_CurFrame > limitEnd) {
+				m_CurFrame = limitEnd;
+				ret = true;
+			}
+		}
+
+		return ret;
+	}
+
+	private bool CheckCurrentFrameLimit()
+	{
+		return CheckFrameLimit (ref m_CurFrame);
+	}
 
     public bool UpdateFrame(int frameIndex)
     {
@@ -446,34 +497,88 @@ public class ImageAnimation : MonoBehaviour {
         }
         int oldFrame = m_CurFrame;
         m_CurFrame = frameIndex;
-        if (oldFrame != m_CurFrame)
-        {
-            if (m_CurFrame >= 0 && m_CurFrame < m_FrameList.Count)
-            {
-                var node = m_FrameList[m_CurFrame];
-                if (node.isLoopStart)
-                {
-                    var aniCtl = this.CacheAnimation;
-                    if (aniCtl != null && aniCtl.isPlaying && aniCtl.clip != null)
-                    {
-                        if (m_LoopStart != m_CurFrame)
-                        {
-                            var info = aniCtl[_cPlayAnimationName];
-                            if (info != null)
-                            {
-                                m_LoopStart = m_CurFrame;
-                                m_LoopStartAniTime = info.time;
-                            }
+		bool isChanged = CheckCurrentFrameLimit ();
+		if (oldFrame != m_CurFrame) {
+			if (m_CurFrame >= 0 && m_CurFrame < m_FrameList.Count) {
+				var node = m_FrameList [m_CurFrame];
 
-                        }
-                    }
-                }
-            }
+				if (isChanged) {
+					var aniCtl = this.CacheAnimation;
+					if (aniCtl != null && aniCtl.isPlaying && aniCtl.clip != null) {
+						var info = aniCtl [_cPlayAnimationName];
+						if (info != null) {
+							float t = CalcAnimationTime (m_CurFrame);
+							info.time = t;
+						}
+					}
+				}
 
-            DoChangeFrame();
-        }
+				if (node.isLoopStart) {
+					var aniCtl = this.CacheAnimation;
+					if (aniCtl != null && aniCtl.isPlaying && aniCtl.clip != null) {
+						if (m_LoopStart != m_CurFrame) {
+							var info = aniCtl [_cPlayAnimationName];
+							if (info != null) {
+								m_LoopStart = m_CurFrame;
+								m_LoopStartAniTime = info.time;
+								CheckLoopStartLimit ();
+							}
+
+						}
+					}
+				}
+			}
+
+			DoChangeFrame ();
+		} else {
+			if (isChanged) {
+				var aniCtl = this.CacheAnimation;
+				if (aniCtl != null && aniCtl.isPlaying && aniCtl.clip != null) {
+					var info = aniCtl [_cPlayAnimationName];
+					if (info != null) {
+						float t = CalcAnimationTime (m_CurFrame);
+						info.time = t;
+					}
+				}
+			}
+		}
         return true;
     }
+
+	private void CheckLoopStartLimit()
+	{
+		if (m_LimitEndFrame >= 0 && m_LimitStartFrame >= 0 && 
+			m_LimitEndFrame < m_LimitStartFrame)
+			return;
+
+		int curFrameCount = this.AniNodeCount;
+		int limitStart = m_LimitStartFrame;
+		if (limitStart >= curFrameCount)
+			limitStart = curFrameCount - 1;
+		int limitEnd = m_LimitEndFrame;
+		if (limitEnd >= curFrameCount)
+			limitEnd = curFrameCount - 1;
+
+		bool isChanged = false;
+		if (limitStart >= 0) {
+			if (m_LoopStart < limitStart) {
+				m_LoopStart = limitStart;
+				isChanged = true;
+			}
+		}
+
+		if (limitEnd >= 0) {
+			if (m_LoopStart > limitEnd) {
+				m_LoopStart = limitEnd;
+				isChanged = true;
+			}
+		}
+
+		if (isChanged) {
+			// 重新计算时间
+			m_LoopStartAniTime = CalcAnimationTime(m_LoopStart);
+		}
+	}
 
     public bool NextFrame()
     {
@@ -704,6 +809,9 @@ public class ImageAnimation : MonoBehaviour {
     private PlayerState m_State = PlayerState.psNone;
     private List<ImageAnimateNode> m_FrameList = null;
     private bool m_IsLoop = false;
+	// 限定动画帧范围
+	private int m_LimitStartFrame = -1;
+	private int m_LimitEndFrame = -1;
     // 动画文件名
     private static string _cPlayAnimationName = "Mugen Player";
 }
