@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using Mugen;
 using LuaInterface;
 
@@ -66,8 +67,58 @@ public class PlayerDisplay : BaseResLoader {
 		var snd = this.Sound;
 		if (snd == null)
 			return false;
-		return snd.PlaySound (group, index);
+        if (m_LoaderPlayer == null)
+            return false;
+        var sndLoader = m_LoaderPlayer.SoundLoader;
+        if (sndLoader == null)
+            return false;
+        var clip = sndLoader.GetSoundClip(group, index);
+        return snd.PlaySound(clip);
 	}
+
+    public int SoundCount
+    {
+        get
+        {
+            if (m_LoaderPlayer == null)
+                return 0;
+            var sndLoader = m_LoaderPlayer.SoundLoader;
+            if (sndLoader == null)
+                return 0;
+            return sndLoader.SoundCount;
+        }
+    }
+
+    [NoToLua]
+    // 判断角色声音是否加载了
+    public bool IsSoundInited
+    {
+        get
+        {
+            if (m_LoaderPlayer == null)
+                return false;
+            var sndLoader = m_LoaderPlayer.SoundLoader;
+            if (sndLoader == null)
+                return false;
+            return sndLoader.IsInited;
+        }
+    }
+
+    [NoToLua]
+    public bool LoadSounds()
+    {
+        if (m_LoaderPlayer == null)
+            return false;
+        return m_LoaderPlayer.LoadSounds();
+    }
+
+    [NoToLua]
+    public Dictionary<KeyValuePair<int, int>, byte[]>.Enumerator GetSoundIter()
+    {
+        if (m_LoaderPlayer == null)
+            return new Dictionary<KeyValuePair<int, int>, byte[]>.Enumerator();
+        return m_LoaderPlayer.GetSoundIter();
+    }
 
 	private void AttachAttribeToSpriteMovement()
 	{

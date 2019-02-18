@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Mugen;
 
+[RequireComponent(typeof(SndLoader))]
 [RequireComponent(typeof(PlayerImageRes))]
 public class DefaultLoaderPlayer : MonoBehaviour {
 	public string PlayerName = string.Empty;
@@ -12,6 +13,8 @@ public class DefaultLoaderPlayer : MonoBehaviour {
 	public bool Shader_RGB_Zero_Alpha_One = true;
 
     private PlayerImageRes m_ImageLibrary = null;
+    private SndLoader m_SndLoader = null;
+    
 
     // 清理图片资源
     public void ClearImageRes()
@@ -19,6 +22,51 @@ public class DefaultLoaderPlayer : MonoBehaviour {
         if (m_ImageLibrary != null)
         {
             m_ImageLibrary.Clear();
+        }
+    }
+
+    public byte[] GetSoundBuf(int group, int index)
+    {
+        if (group < 0 || index < 0)
+            return null;
+
+        var sndLoader = this.SoundLoader;
+        if (sndLoader == null)
+            return null;
+
+
+        if (!sndLoader.IsInited)
+        {
+            if (!sndLoader.Load(this))
+                return null;
+        }
+        byte[] ret = sndLoader.GetSoundBuf(group, index);
+        return ret;
+    }
+
+    public bool LoadSounds()
+    {
+        var snd = this.SoundLoader;
+        if (snd == null)
+            return false;
+        return snd.Load(this);
+    }
+
+    public Dictionary<KeyValuePair<int, int>, byte[]>.Enumerator GetSoundIter()
+    {
+        var sndLoader = this.SoundLoader;
+        if (sndLoader == null)
+            return new Dictionary<KeyValuePair<int, int>, byte[]>.Enumerator();
+        return sndLoader.GetSoundIter();
+    }
+
+    public SndLoader SoundLoader
+    {
+        get
+        {
+            if (m_SndLoader == null)
+                m_SndLoader = GetComponent<SndLoader>();
+            return m_SndLoader;
         }
     }
 

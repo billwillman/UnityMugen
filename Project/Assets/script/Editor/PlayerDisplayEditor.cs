@@ -34,6 +34,7 @@ public class PlayerDisplayEditor : Editor {
     private int m_AniSelect = -1;
     private int m_CommandSel = -1;
     private bool m_IsFlipX = false;
+    private bool m_IsExpandSound = false;
 
     private void InitPlayerDisplay()
     {
@@ -48,6 +49,7 @@ public class PlayerDisplayEditor : Editor {
        // m_CommandNameList = null;
         m_CommandSel = -1;
         m_IsFlipX = false;
+        m_IsExpandSound = false;
         if (m_LastDisplay == null)
             return;
         var player = m_LastDisplay.GPlayer;
@@ -360,6 +362,74 @@ public class PlayerDisplayEditor : Editor {
                 }
             }
         }
+
+
+        if (!m_LastDisplay.IsSoundInited)
+        {
+            EditorGUILayout.Space();
+            if (GUILayout.Button("加载角色声音"))
+            {
+                m_LastDisplay.LoadSounds();
+            }
+        } else
+        {
+            EditorGUILayout.Space();
+
+            string tile;
+            if (m_IsExpandSound)
+                tile = string.Format("收缩角色声音({0:D})", m_LastDisplay.SoundCount);
+            else
+                tile = string.Format("展开角色声音({0:D})", m_LastDisplay.SoundCount);
+            if (GUILayout.Button(tile))
+            {
+                m_IsExpandSound = !m_IsExpandSound;
+            }
+
+            if (m_IsExpandSound)
+            {
+                int idx = 0;
+                bool isVV = false;
+                var sndIter = m_LastDisplay.GetSoundIter();
+                int playKey = -1;
+                int playValue = -1;
+                while (sndIter.MoveNext())
+                {
+                    var snd = sndIter.Current.Key;
+                    if (idx % 5 == 0)
+                    {
+                        EditorGUILayout.BeginHorizontal();
+                        isVV = true;
+                    }
+                    string sndName = string.Format("{0:D}:{1:D}", snd.Key, snd.Value);
+                    if (GUILayout.Button(sndName))
+                    {
+                        playKey = snd.Key;
+                        playValue = snd.Value;
+                        // 播放声音
+                       // m_LastDisplay.PlaySound(snd.Key, snd.Value);
+                    }
+
+                    if (idx % 5 == 4 && isVV)
+                    {
+                        EditorGUILayout.EndHorizontal();
+                        isVV = false;
+                    }
+
+                    ++idx;
+
+                }
+                sndIter.Dispose();
+                if (isVV)
+                    EditorGUILayout.EndHorizontal();
+
+                if (playKey >= 0 && playValue >= 0)
+                {
+                    m_LastDisplay.PlaySound(playKey, playValue);
+                }
+            }
+
+        }
+
 
 		int playerType = (int)m_LastDisplay.PlyType;
 		EditorGUILayout.LabelField("角色控制", playerType.ToString());
