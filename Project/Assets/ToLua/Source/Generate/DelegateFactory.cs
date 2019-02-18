@@ -38,6 +38,7 @@ public class DelegateFactory
 		dict.Add(typeof(System.Action<float,bool,UnityEngine.Object[]>), factory.System_Action_float_bool_UnityEngine_Objects);
 		dict.Add(typeof(System.Action<float,bool,UnityEngine.ScriptableObject>), factory.System_Action_float_bool_UnityEngine_ScriptableObject);
 		dict.Add(typeof(System.Action<float,bool,UnityEngine.ShaderVariantCollection>), factory.System_Action_float_bool_UnityEngine_ShaderVariantCollection);
+		dict.Add(typeof(System.Action<LuaInterface.LuaTable,Mugen.CNSState>), factory.System_Action_LuaInterface_LuaTable_Mugen_CNSState);
 		dict.Add(typeof(UnityEngine.Camera.CameraCallback), factory.UnityEngine_Camera_CameraCallback);
 		dict.Add(typeof(UnityEngine.Application.LogCallback), factory.UnityEngine_Application_LogCallback);
 		dict.Add(typeof(UnityEngine.Application.AdvertisingIdentifierCallback), factory.UnityEngine_Application_AdvertisingIdentifierCallback);
@@ -72,6 +73,7 @@ public class DelegateFactory
 		DelegateTraits<System.Action<float,bool,UnityEngine.Object[]>>.Init(factory.System_Action_float_bool_UnityEngine_Objects);
 		DelegateTraits<System.Action<float,bool,UnityEngine.ScriptableObject>>.Init(factory.System_Action_float_bool_UnityEngine_ScriptableObject);
 		DelegateTraits<System.Action<float,bool,UnityEngine.ShaderVariantCollection>>.Init(factory.System_Action_float_bool_UnityEngine_ShaderVariantCollection);
+		DelegateTraits<System.Action<LuaInterface.LuaTable,Mugen.CNSState>>.Init(factory.System_Action_LuaInterface_LuaTable_Mugen_CNSState);
 		DelegateTraits<UnityEngine.Camera.CameraCallback>.Init(factory.UnityEngine_Camera_CameraCallback);
 		DelegateTraits<UnityEngine.Application.LogCallback>.Init(factory.UnityEngine_Application_LogCallback);
 		DelegateTraits<UnityEngine.Application.AdvertisingIdentifierCallback>.Init(factory.UnityEngine_Application_AdvertisingIdentifierCallback);
@@ -106,6 +108,7 @@ public class DelegateFactory
 		TypeTraits<System.Action<float,bool,UnityEngine.Object[]>>.Init(factory.Check_System_Action_float_bool_UnityEngine_Objects);
 		TypeTraits<System.Action<float,bool,UnityEngine.ScriptableObject>>.Init(factory.Check_System_Action_float_bool_UnityEngine_ScriptableObject);
 		TypeTraits<System.Action<float,bool,UnityEngine.ShaderVariantCollection>>.Init(factory.Check_System_Action_float_bool_UnityEngine_ShaderVariantCollection);
+		TypeTraits<System.Action<LuaInterface.LuaTable,Mugen.CNSState>>.Init(factory.Check_System_Action_LuaInterface_LuaTable_Mugen_CNSState);
 		TypeTraits<UnityEngine.Camera.CameraCallback>.Init(factory.Check_UnityEngine_Camera_CameraCallback);
 		TypeTraits<UnityEngine.Application.LogCallback>.Init(factory.Check_UnityEngine_Application_LogCallback);
 		TypeTraits<UnityEngine.Application.AdvertisingIdentifierCallback>.Init(factory.Check_UnityEngine_Application_AdvertisingIdentifierCallback);
@@ -140,6 +143,7 @@ public class DelegateFactory
 		StackTraits<System.Action<float,bool,UnityEngine.Object[]>>.Push = factory.Push_System_Action_float_bool_UnityEngine_Objects;
 		StackTraits<System.Action<float,bool,UnityEngine.ScriptableObject>>.Push = factory.Push_System_Action_float_bool_UnityEngine_ScriptableObject;
 		StackTraits<System.Action<float,bool,UnityEngine.ShaderVariantCollection>>.Push = factory.Push_System_Action_float_bool_UnityEngine_ShaderVariantCollection;
+		StackTraits<System.Action<LuaInterface.LuaTable,Mugen.CNSState>>.Push = factory.Push_System_Action_LuaInterface_LuaTable_Mugen_CNSState;
 		StackTraits<UnityEngine.Camera.CameraCallback>.Push = factory.Push_UnityEngine_Camera_CameraCallback;
 		StackTraits<UnityEngine.Application.LogCallback>.Push = factory.Push_UnityEngine_Application_LogCallback;
 		StackTraits<UnityEngine.Application.AdvertisingIdentifierCallback>.Push = factory.Push_UnityEngine_Application_AdvertisingIdentifierCallback;
@@ -1516,6 +1520,65 @@ public class DelegateFactory
 	}
 
 	void Push_System_Action_float_bool_UnityEngine_ShaderVariantCollection(IntPtr L, System.Action<float,bool,UnityEngine.ShaderVariantCollection> o)
+	{
+		ToLua.Push(L, o);
+	}
+
+	class System_Action_LuaInterface_LuaTable_Mugen_CNSState_Event : LuaDelegate
+	{
+		public System_Action_LuaInterface_LuaTable_Mugen_CNSState_Event(LuaFunction func) : base(func) { }
+		public System_Action_LuaInterface_LuaTable_Mugen_CNSState_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+
+		public void Call(LuaInterface.LuaTable param0, Mugen.CNSState param1)
+		{
+			func.BeginPCall();
+			func.Push(param0);
+			func.PushObject(param1);
+			func.PCall();
+			func.EndPCall();
+		}
+
+		public void CallWithSelf(LuaInterface.LuaTable param0, Mugen.CNSState param1)
+		{
+			func.BeginPCall();
+			func.Push(self);
+			func.Push(param0);
+			func.PushObject(param1);
+			func.PCall();
+			func.EndPCall();
+		}
+	}
+
+	public System.Action<LuaInterface.LuaTable,Mugen.CNSState> System_Action_LuaInterface_LuaTable_Mugen_CNSState(LuaFunction func, LuaTable self, bool flag)
+	{
+		if (func == null)
+		{
+			System.Action<LuaInterface.LuaTable,Mugen.CNSState> fn = delegate(LuaInterface.LuaTable param0, Mugen.CNSState param1) { };
+			return fn;
+		}
+
+		if(!flag)
+		{
+			System_Action_LuaInterface_LuaTable_Mugen_CNSState_Event target = new System_Action_LuaInterface_LuaTable_Mugen_CNSState_Event(func);
+			System.Action<LuaInterface.LuaTable,Mugen.CNSState> d = target.Call;
+			target.method = d.Method;
+			return d;
+		}
+		else
+		{
+			System_Action_LuaInterface_LuaTable_Mugen_CNSState_Event target = new System_Action_LuaInterface_LuaTable_Mugen_CNSState_Event(func, self);
+			System.Action<LuaInterface.LuaTable,Mugen.CNSState> d = target.CallWithSelf;
+			target.method = d.Method;
+			return d;
+		}
+	}
+
+	bool Check_System_Action_LuaInterface_LuaTable_Mugen_CNSState(IntPtr L, int pos)
+	{
+		return TypeChecker.CheckDelegateType(typeof(System.Action<LuaInterface.LuaTable,Mugen.CNSState>), L, pos);
+	}
+
+	void Push_System_Action_LuaInterface_LuaTable_Mugen_CNSState(IntPtr L, System.Action<LuaInterface.LuaTable,Mugen.CNSState> o)
 	{
 		ToLua.Push(L, o);
 	}

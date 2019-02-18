@@ -4,10 +4,11 @@ using LuaInterface;
 
 namespace Mugen
 {
-
-    public enum CnsStateType
+	// 触发时机
+	public enum CnsStateTriggerType
     {
         none = 0,
+		/*
         // 残影
         AfterImage,
         // 残影时间
@@ -26,15 +27,17 @@ namespace Mugen
 
         // 飞行道具
         Projectile,
+		*/
+		AnimElem,
     }
 
     public class CNSState
     {
         private string m_Name = string.Empty;
-        private CnsStateType m_Type = CnsStateType.none;
+		private CnsStateTriggerType m_Type = CnsStateTriggerType.none;
         
         [NoToLuaAttribute]
-        public CNSState(CnsStateType type)
+		public CNSState(CnsStateTriggerType type)
         {
             m_Type = type;
         }
@@ -83,6 +86,24 @@ namespace Mugen
             set;
         }
 
+		public System.Action<LuaTable, CNSState> OnTriggerEvent {
+			get;
+			set;
+		}
 
+
+		[NoToLuaAttribute]
+		public void Call_TriggerEvent(PlayerDisplay display)
+		{
+			if (OnTriggerEvent == null)
+				return;
+			
+			if (display == null)
+				return;
+			var lua = display.LuaPly;
+			if (lua == null)
+				return;
+			OnTriggerEvent (lua, this);
+		}
     }
 }

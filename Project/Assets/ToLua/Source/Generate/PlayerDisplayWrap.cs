@@ -7,7 +7,9 @@ public class PlayerDisplayWrap
 	public static void Register(LuaState L)
 	{
 		L.BeginClass(typeof(PlayerDisplay), typeof(BaseResLoader));
+		L.RegFunction("PlaySound", PlaySound);
 		L.RegFunction("PlayCnsAnimate", PlayCnsAnimate);
+		L.RegFunction("Trigger_SuperPause", Trigger_SuperPause);
 		L.RegFunction("GetMugenAnimateTime", GetMugenAnimateTime);
 		L.RegFunction("ChangeState", ChangeState);
 		L.RegFunction("HasAniGroup", HasAniGroup);
@@ -16,11 +18,31 @@ public class PlayerDisplayWrap
 		L.RegFunction("RunCmd", RunCmd);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
+		L.RegVar("SoundCount", get_SoundCount, null);
 		L.RegVar("IsFlipX", get_IsFlipX, set_IsFlipX);
 		L.RegVar("Attribe", get_Attribe, null);
 		L.RegVar("Stateno", get_Stateno, null);
 		L.RegVar("ImageCurrentFrame", get_ImageCurrentFrame, null);
 		L.EndClass();
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int PlaySound(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 3);
+			PlayerDisplay obj = (PlayerDisplay)ToLua.CheckObject<PlayerDisplay>(L, 1);
+			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
+			int arg1 = (int)LuaDLL.luaL_checknumber(L, 3);
+			bool o = obj.PlaySound(arg0, arg1);
+			LuaDLL.lua_pushboolean(L, o);
+			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -51,6 +73,24 @@ public class PlayerDisplayWrap
 			{
 				return LuaDLL.luaL_throw(L, "invalid arguments to method: PlayerDisplay.PlayCnsAnimate");
 			}
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int Trigger_SuperPause(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 3);
+			PlayerDisplay obj = (PlayerDisplay)ToLua.CheckObject<PlayerDisplay>(L, 1);
+			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
+			int arg1 = (int)LuaDLL.luaL_checknumber(L, 3);
+			obj.Trigger_SuperPause(arg0, arg1);
+			return 0;
 		}
 		catch (Exception e)
 		{
@@ -214,6 +254,25 @@ public class PlayerDisplayWrap
 		catch (Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_SoundCount(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			PlayerDisplay obj = (PlayerDisplay)o;
+			int ret = obj.SoundCount;
+			LuaDLL.lua_pushinteger(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index SoundCount on a nil value");
 		}
 	}
 

@@ -896,7 +896,33 @@ public class PlayerDisplay : BaseResLoader {
         if (frame == null)
             return;
 		UpdateRenderer(frame, flip, target);
+
+		CallCnsTriggerEvent (CnsStateTriggerType.AnimElem);
     }
+
+	[NoToLua]
+	public void CallCnsTriggerEvent(params CnsStateTriggerType[] triggerTypes)
+	{
+		if (triggerTypes == null || triggerTypes.Length <= 0)
+			return;
+		
+		var stateMgr = this.StateMgr;
+		if (stateMgr != null && stateMgr.IsCnsState) {
+			var player = this.GPlayer;
+			if (player != null) {
+				var cns = player.CnsCfg;
+				if (cns != null) {
+					var def = cns.GetStateDef ((int)stateMgr.CurState);
+					if (def != null) {
+						for (int i = 0; i < triggerTypes.Length; ++i) {
+							var triggerType = triggerTypes [i];
+							def.OnStateEvent (this, triggerType);
+						}
+					}
+				}
+			}
+		}
+	}
 
 	void OnImageAnimationFrame(ImageAnimation target)
 	{

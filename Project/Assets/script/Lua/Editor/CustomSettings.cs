@@ -62,6 +62,8 @@ public static class CustomSettings  {
 		_DT(typeof(Action<float, bool, UnityEngine.Object[]>)),
 		_DT(typeof(Action<float, bool, ScriptableObject>)),
 		_DT(typeof(Action<float, bool, ShaderVariantCollection>)),
+
+		_DT(typeof(System.Action<LuaTable, CNSState>)),
 	};
 
 	//在这里添加你要导出注册到lua的类型列表
@@ -202,7 +204,7 @@ public static class CustomSettings  {
         _GT(typeof(Cns_Type)),
         _GT(typeof(Cns_MoveType)),
         _GT(typeof(Cns_PhysicsType)),
-        _GT(typeof(CnsStateType)),
+		_GT(typeof(CnsStateTriggerType)),
 		_GT(typeof(CNSStateDef)),
         _GT(typeof(CNSState)),
 		_GT(typeof(LuaCnsConfig)),

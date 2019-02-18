@@ -16,6 +16,7 @@ public class Mugen_CNSStateWrap
 		L.RegVar("p2defmul", get_p2defmul, set_p2defmul);
 		L.RegVar("projid", get_projid, set_projid);
 		L.RegVar("projanim", get_projanim, set_projanim);
+		L.RegVar("OnTriggerEvent", get_OnTriggerEvent, set_OnTriggerEvent);
 		L.EndClass();
 	}
 
@@ -172,6 +173,25 @@ public class Mugen_CNSStateWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_OnTriggerEvent(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Mugen.CNSState obj = (Mugen.CNSState)o;
+			System.Action<LuaInterface.LuaTable,Mugen.CNSState> ret = obj.OnTriggerEvent;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index OnTriggerEvent on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int set_time(IntPtr L)
 	{
 		object o = null;
@@ -320,6 +340,25 @@ public class Mugen_CNSStateWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index projanim on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_OnTriggerEvent(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Mugen.CNSState obj = (Mugen.CNSState)o;
+			System.Action<LuaInterface.LuaTable,Mugen.CNSState> arg0 = (System.Action<LuaInterface.LuaTable,Mugen.CNSState>)ToLua.CheckDelegate<System.Action<LuaInterface.LuaTable,Mugen.CNSState>>(L, 2);
+			obj.OnTriggerEvent = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index OnTriggerEvent on a nil value");
 		}
 	}
 }

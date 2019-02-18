@@ -53,14 +53,28 @@ namespace Mugen
 		private static readonly int _cNoVaildAnim = (int)PlayerState.psNone;
 
         [NoToLuaAttribute]
-        public void OnStateEvent(CnsStateType evtType)
+		public void OnStateEvent(PlayerDisplay display, CnsStateTriggerType evtType)
         {
+			if (display == null)
+				return;
+			
             // 触发状态事件
+			if (m_StateEventsMap != null) {
+				int key = (int)evtType;
+				List<CNSState> list;
+				if (m_StateEventsMap.TryGetValue (key, out list)) {
+					for (int i = 0; i < list.Count; ++i) {
+						CNSState state = list [i];
+						if (state != null)
+							state.Call_TriggerEvent (display);
+					}
+				}
+			}
         }
 
-        public CNSState CreateStateEvent(CnsStateType evtType)
+		public CNSState CreateStateEvent(CnsStateTriggerType evtType)
         {
-            if (evtType == CnsStateType.none)
+			if (evtType == CnsStateTriggerType.none)
                 return null;
             CNSState state = new CNSState(evtType);
             int key = (int)evtType;

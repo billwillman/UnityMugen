@@ -100,7 +100,7 @@ public static class LuaBinder
 		Mugen_Cns_TypeWrap.Register(L);
 		Mugen_Cns_MoveTypeWrap.Register(L);
 		Mugen_Cns_PhysicsTypeWrap.Register(L);
-		Mugen_CnsStateTypeWrap.Register(L);
+		Mugen_CnsStateTriggerTypeWrap.Register(L);
 		Mugen_CNSStateDefWrap.Register(L);
 		Mugen_CNSStateWrap.Register(L);
 		Mugen_AI_TypeWrap.Register(L);
@@ -131,6 +131,7 @@ public static class LuaBinder
 		L.RegFunction("Action_float_bool_UnityEngine_Objects", System_Action_float_bool_UnityEngine_Objects);
 		L.RegFunction("Action_float_bool_UnityEngine_ScriptableObject", System_Action_float_bool_UnityEngine_ScriptableObject);
 		L.RegFunction("Action_float_bool_UnityEngine_ShaderVariantCollection", System_Action_float_bool_UnityEngine_ShaderVariantCollection);
+		L.RegFunction("Action_LuaInterface_LuaTable_Mugen_CNSState", System_Action_LuaInterface_LuaTable_Mugen_CNSState);
 		L.RegFunction("Action_UnityEngine_AsyncOperation_bool", System_Action_UnityEngine_AsyncOperation_bool);
 		L.EndModule();
 		L.BeginModule("BaseResLoader");
@@ -880,6 +881,33 @@ public static class LuaBinder
 			{
 				LuaTable self = ToLua.CheckLuaTable(L, 2);
 				Delegate arg1 = DelegateTraits<System.Action<float,bool,UnityEngine.ShaderVariantCollection>>.Create(func, self);
+				ToLua.Push(L, arg1);
+			}
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int System_Action_LuaInterface_LuaTable_Mugen_CNSState(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateTraits<System.Action<LuaInterface.LuaTable,Mugen.CNSState>>.Create(func);
+				ToLua.Push(L, arg1);
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateTraits<System.Action<LuaInterface.LuaTable,Mugen.CNSState>>.Create(func, self);
 				ToLua.Push(L, arg1);
 			}
 			return 1;

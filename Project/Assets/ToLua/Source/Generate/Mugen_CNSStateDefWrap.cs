@@ -55,7 +55,7 @@ public class Mugen_CNSStateDefWrap
 		{
 			ToLua.CheckArgsCount(L, 2);
 			Mugen.CNSStateDef obj = (Mugen.CNSStateDef)ToLua.CheckObject<Mugen.CNSStateDef>(L, 1);
-			Mugen.CnsStateType arg0 = (Mugen.CnsStateType)ToLua.CheckObject(L, 2, typeof(Mugen.CnsStateType));
+			Mugen.CnsStateTriggerType arg0 = (Mugen.CnsStateTriggerType)ToLua.CheckObject(L, 2, typeof(Mugen.CnsStateTriggerType));
 			Mugen.CNSState o = obj.CreateStateEvent(arg0);
 			ToLua.PushObject(L, o);
 			return 1;

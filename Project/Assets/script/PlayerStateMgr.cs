@@ -14,6 +14,14 @@ public class PlayerStateMgr : MonoBehaviour {
     {
         m_IsCnsState = isUseCns;
     }
+
+	public bool IsCnsState
+	{
+		get {
+			return m_IsCnsState;
+		}
+	}
+
     void Awake()
     {
         m_StateMgr = new StateMgr<PlayerState, PlayerStateMgr>(this);
