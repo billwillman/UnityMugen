@@ -89,6 +89,11 @@ public class PlayerStateMgr : MonoBehaviour {
 		return ret;
     }
 
+	public void ClearCurrentCnsDef()
+	{
+		m_CurrentCnsDef = null;
+	}
+
 	public CNSStateDef CurrentCnsDef
 	{
 		get {

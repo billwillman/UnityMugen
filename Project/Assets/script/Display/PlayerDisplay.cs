@@ -165,7 +165,7 @@ public class PlayerDisplay : BaseResLoader {
 
 		AttachAttribeFromStateDef (def);
 
-		return PlayAni (def.Anim, isLoop);
+		return PlayAni (def.Anim, isLoop, false);
 	}
 
 	[NoToLuaAttribute]
@@ -493,8 +493,16 @@ public class PlayerDisplay : BaseResLoader {
 		ani.ResetFirstFrame ();
 	}
 
-    public bool PlayAni(PlayerState state, bool isLoop = true)
+	public bool PlayAni(PlayerState state, bool isLoop = true, bool isClearTempCnsDef = true)
     {
+		if (isClearTempCnsDef) {
+			var stateMgr = this.StateMgr;
+			if (stateMgr != null) {
+				stateMgr.ClearCurrentCnsDef ();
+			}
+		}
+
+
         var playerName = this.PlayerName;
         if (string.IsNullOrEmpty(playerName))
             return false;
