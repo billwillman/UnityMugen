@@ -164,8 +164,6 @@ function Iori_ROTD:_initStateDef_2000(luaCfg)
 	def.Velset_y = 0
 	
 	local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem, Mugen.CnsStateType.none)
-	state.value1 = 5
-	state.value2 = 0
 	state.OnTriggerEvent = self._On_2000_PlaySnd
 end
 
@@ -173,7 +171,11 @@ function Iori_ROTD:_On_2000_PlaySnd(state)
 	local curFrame = trigger:AnimElem(self)
 	--print(curFrame)
 	if curFrame == 1 then
-		trigger:Do_StatePlaySnd(self, state)
+		trigger:Do_PlaySnd(self, 5, 0)
+	elseif curFrame == 2 then
+		trigger:Do_PlaySnd(self, 66, 0)
+	elseif curFrame == 6 then
+		trigger:Do_PlaySnd(self, 66, 2)
 	end
 end
 
