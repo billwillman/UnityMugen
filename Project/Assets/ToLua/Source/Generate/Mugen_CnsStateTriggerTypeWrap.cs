@@ -8,6 +8,7 @@ public class Mugen_CnsStateTriggerTypeWrap
 	{
 		L.BeginEnum(typeof(Mugen.CnsStateTriggerType));
 		L.RegVar("none", get_none, null);
+		L.RegVar("Anim", get_Anim, null);
 		L.RegVar("AnimElem", get_AnimElem, null);
 		L.RegFunction("IntToEnum", IntToEnum);
 		L.EndEnum();
@@ -29,6 +30,13 @@ public class Mugen_CnsStateTriggerTypeWrap
 	static int get_none(IntPtr L)
 	{
 		ToLua.Push(L, Mugen.CnsStateTriggerType.none);
+		return 1;
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_Anim(IntPtr L)
+	{
+		ToLua.Push(L, Mugen.CnsStateTriggerType.Anim);
 		return 1;
 	}
 

@@ -254,6 +254,7 @@
      <Compile Include="Assets\ToLua\Source\Generate\Mugen_CNSStateDefWrap.cs" />
      <Compile Include="Assets\ToLua\Source\Generate\Mugen_CNSStateWrap.cs" />
      <Compile Include="Assets\ToLua\Source\Generate\Mugen_Cmd_CommandWrap.cs" />
+     <Compile Include="Assets\ToLua\Source\Generate\Mugen_CnsStateTriggerTypeWrap.cs" />
      <Compile Include="Assets\ToLua\Source\Generate\Mugen_CnsStateTypeWrap.cs" />
      <Compile Include="Assets\ToLua\Source\Generate\Mugen_Cns_MoveTypeWrap.cs" />
      <Compile Include="Assets\ToLua\Source\Generate\Mugen_Cns_PhysicsTypeWrap.cs" />
@@ -396,6 +397,8 @@
      <Compile Include="Assets\script\Res\XmlParser\XMLNodeList.cs" />
      <Compile Include="Assets\script\Res\XmlParser\XMLParser.cs" />
      <Compile Include="Assets\script\SceneImageRes.cs" />
+     <Compile Include="Assets\script\SndLoader.cs" />
+     <Compile Include="Assets\script\SndSound.cs" />
      <Compile Include="Assets\script\SpriteMovement.cs" />
      <Compile Include="Assets\script\StageMgr.cs" />
      <Compile Include="Assets\script\Util\CachedMonoBehaviour.cs" />
@@ -413,6 +416,7 @@
      <Compile Include="Assets\script\Util\ThreadPool.cs" />
      <Compile Include="Assets\script\Util\TimerMgr.cs" />
      <Compile Include="Assets\script\Util\UnZipThread.cs" />
+     <Compile Include="Assets\script\WAV.cs" />
      <None Include="Assets\NGUI\Examples\Shaders\Unlit - Depth Cutout.shader" />
      <None Include="Assets\resources\mugen\char\@Robert-ROTD\Robert-ROTD.air.txt" />
      <None Include="Assets\resources\mugen\scene\kof97\@KOF97-OrochiChinaStage\KOF97-OrochiChinaStage.def.txt" />

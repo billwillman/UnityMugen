@@ -8,6 +8,10 @@ public class Mugen_CNSStateWrap
 	{
 		L.BeginClass(typeof(Mugen.CNSState), typeof(System.Object));
 		L.RegFunction("__tostring", ToLua.op_ToString);
+		L.RegVar("value1", get_value1, set_value1);
+		L.RegVar("value2", get_value2, set_value2);
+		L.RegVar("value3", get_value3, set_value3);
+		L.RegVar("value4", get_value4, set_value4);
 		L.RegVar("time", get_time, set_time);
 		L.RegVar("movetime", get_movetime, set_movetime);
 		L.RegVar("anim", get_anim, set_anim);
@@ -18,6 +22,82 @@ public class Mugen_CNSStateWrap
 		L.RegVar("projanim", get_projanim, set_projanim);
 		L.RegVar("OnTriggerEvent", get_OnTriggerEvent, set_OnTriggerEvent);
 		L.EndClass();
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_value1(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Mugen.CNSState obj = (Mugen.CNSState)o;
+			int ret = obj.value1;
+			LuaDLL.lua_pushinteger(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index value1 on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_value2(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Mugen.CNSState obj = (Mugen.CNSState)o;
+			int ret = obj.value2;
+			LuaDLL.lua_pushinteger(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index value2 on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_value3(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Mugen.CNSState obj = (Mugen.CNSState)o;
+			int ret = obj.value3;
+			LuaDLL.lua_pushinteger(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index value3 on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_value4(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Mugen.CNSState obj = (Mugen.CNSState)o;
+			int ret = obj.value4;
+			LuaDLL.lua_pushinteger(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index value4 on a nil value");
+		}
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -188,6 +268,82 @@ public class Mugen_CNSStateWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index OnTriggerEvent on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_value1(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Mugen.CNSState obj = (Mugen.CNSState)o;
+			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
+			obj.value1 = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index value1 on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_value2(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Mugen.CNSState obj = (Mugen.CNSState)o;
+			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
+			obj.value2 = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index value2 on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_value3(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Mugen.CNSState obj = (Mugen.CNSState)o;
+			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
+			obj.value3 = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index value3 on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_value4(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Mugen.CNSState obj = (Mugen.CNSState)o;
+			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
+			obj.value4 = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index value4 on a nil value");
 		}
 	}
 

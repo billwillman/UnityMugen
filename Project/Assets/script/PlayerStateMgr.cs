@@ -9,6 +9,7 @@ public class PlayerStateMgr : MonoBehaviour {
 	private PlayerDisplay m_PlayerDisplay = null;
     private bool m_HasFirstChangedStated = false;
     private bool m_IsCnsState = false;
+	private CNSStateDef m_CurrentCnsDef = null;
 
     public void SetCnsState(bool isUseCns)
     {
@@ -51,6 +52,7 @@ public class PlayerStateMgr : MonoBehaviour {
             if (m_StateMgr.CurrStateKey == state && m_HasFirstChangedStated)
                 return false;
         }
+		CNSStateDef selDef = null;
         if (!m_HasFirstChangedStated)
             m_HasFirstChangedStated = true;
 		if (!isCns) {
@@ -73,11 +75,26 @@ public class PlayerStateMgr : MonoBehaviour {
 				return false;
             if (!display.HasBeginActionSrpiteData((PlayerState)def.Anim))
 				return false;
+			selDef = def;
 		}
 
+		m_CurrentCnsDef = selDef;
+
         m_IsCnsState = isCns;
-        return m_StateMgr.ChangeState(state, m_IsCnsState);
+		bool ret = m_StateMgr.ChangeState(state, m_IsCnsState);
+		if (ret)
+			m_CurrentCnsDef = selDef;
+		else
+			m_CurrentCnsDef = null;
+		return ret;
     }
+
+	public CNSStateDef CurrentCnsDef
+	{
+		get {
+			return m_CurrentCnsDef;
+		}
+	}
 
 	public PlayerDisplay PlyDisplay
 	{

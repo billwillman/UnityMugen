@@ -123,6 +123,13 @@ function Iori_ROTD:OnAICmd_a_or_b(aiName)
 	return ret 
 end
 
+function Iori_ROTD:OnAICmd_a_and_holdfwd(aiName)
+	local triggerall = trigger:Command(self, "a") and trigger:Command(self, "holdfwd")
+	local trigger1 = trigger:Statetype(self) ~= Mugen.Cns_Type.A and trigger:CanCtrl(self)
+	local ret = triggerall and trigger1
+	return ret
+end
+
 function Iori_ROTD:_initCmd_a(luaCfg)
 	local cmd = luaCfg:CreateCmd("a", "")
 	cmd.time = 1
@@ -132,6 +139,11 @@ function Iori_ROTD:_initCmd_a(luaCfg)
 	aiCmd.type = Mugen.AI_Type.ChangeState
 	aiCmd.value = "260"
 	aiCmd.OnTriggerEvent = self.OnAICmd_a_or_b
+
+	aiCmd = luaCfg:CreateAICmd("a or holdfwd", "")
+	aiCmd.type = Mugen.AI_Type.ChangeState
+	aiCmd.value = "320"
+	aiCmd.OnTriggerEvent = self.OnAICmd_a_and_holdfwd
 end
 
 
@@ -151,6 +163,18 @@ function Iori_ROTD:_initStateDef_2000(luaCfg)
 	def.Velset_x = 0
 	def.Velset_y = 0
 	
+	local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem, Mugen.CnsStateType.none)
+	state.value1 = 5
+	state.value2 = 0
+	state.OnTriggerEvent = self._On_2000_PlaySnd
+end
+
+function Iori_ROTD:_On_2000_PlaySnd(state)
+	local curFrame = trigger:AnimElem(self)
+	--print(curFrame)
+	if curFrame == 1 then
+		trigger:Do_StatePlaySnd(self, state)
+	end
 end
 
 function Iori_ROTD:OnAICmd_SuperCode1(aiName)

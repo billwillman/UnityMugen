@@ -101,6 +101,7 @@ public static class LuaBinder
 		Mugen_Cns_MoveTypeWrap.Register(L);
 		Mugen_Cns_PhysicsTypeWrap.Register(L);
 		Mugen_CnsStateTriggerTypeWrap.Register(L);
+		Mugen_CnsStateTypeWrap.Register(L);
 		Mugen_CNSStateDefWrap.Register(L);
 		Mugen_CNSStateWrap.Register(L);
 		Mugen_AI_TypeWrap.Register(L);

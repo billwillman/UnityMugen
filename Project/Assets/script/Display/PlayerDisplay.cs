@@ -72,6 +72,8 @@ public class PlayerDisplay : BaseResLoader {
         var sndLoader = m_LoaderPlayer.SoundLoader;
         if (sndLoader == null)
             return false;
+		if (!sndLoader.IsInited)
+			sndLoader.Load (m_LoaderPlayer);
         var clip = sndLoader.GetSoundClip(group, index);
         return snd.PlaySound(clip);
 	}
@@ -503,6 +505,9 @@ public class PlayerDisplay : BaseResLoader {
 		m_DefaultClsn2 = null;
         if (ret)
         {
+
+			CallCnsTriggerEvent (CnsStateTriggerType.Anim);
+
             RefreshCurFrame(this.ImageAni);
         } else
         {
@@ -907,18 +912,12 @@ public class PlayerDisplay : BaseResLoader {
 			return;
 		
 		var stateMgr = this.StateMgr;
-		if (stateMgr != null && stateMgr.IsCnsState) {
-			var player = this.GPlayer;
-			if (player != null) {
-				var cns = player.CnsCfg;
-				if (cns != null) {
-					var def = cns.GetStateDef ((int)stateMgr.CurState);
-					if (def != null) {
-						for (int i = 0; i < triggerTypes.Length; ++i) {
-							var triggerType = triggerTypes [i];
-							def.OnStateEvent (this, triggerType);
-						}
-					}
+		if (stateMgr != null) {
+			var def = stateMgr.CurrentCnsDef;
+			if (def != null) {
+				for (int i = 0; i < triggerTypes.Length; ++i) {
+					var triggerType = triggerTypes [i];
+					def.OnStateEvent (this, triggerType);
 				}
 			}
 		}

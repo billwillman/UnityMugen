@@ -181,6 +181,7 @@ public class ImageAnimation : MonoBehaviour {
 
 			DoEndFrame();
 		}
+
 		return ret;
 	}
 
@@ -247,7 +248,7 @@ public class ImageAnimation : MonoBehaviour {
 
         InitAnimationClip();
         m_CurFrame = 0;
-        DoChangeFrame();
+       // DoChangeFrame();
 
         return true;
     }

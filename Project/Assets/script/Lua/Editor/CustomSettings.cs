@@ -205,6 +205,7 @@ public static class CustomSettings  {
         _GT(typeof(Cns_MoveType)),
         _GT(typeof(Cns_PhysicsType)),
 		_GT(typeof(CnsStateTriggerType)),
+		_GT(typeof(CnsStateType)),
 		_GT(typeof(CNSStateDef)),
         _GT(typeof(CNSState)),
 		_GT(typeof(LuaCnsConfig)),

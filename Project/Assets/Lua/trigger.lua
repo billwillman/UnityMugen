@@ -18,7 +18,7 @@ function trigger:AnimElem(luaPlayer)
    if display == nil then
 	  return nil
    end
-   local currentFrame = display:ImageCurrentFrame()
+   local currentFrame = display.ImageCurrentFrame
    if currentFrame == nil then
 	  return nil
    end
@@ -279,7 +279,22 @@ end
 
 -- 处理模块
 
-function trigger:Do_PlaySnd()
+function trigger:Do_PlaySnd(luaPlayer, group, index)
+	if luaPlayer == nil or group == nil or index == nil then
+		return
+	end
+	local display = luaPlayer.PlayerDisplay;
+	if display == nil then
+		return 
+	end
+	display:PlaySound(group, index)
+end
+
+function trigger:Do_StatePlaySnd(luaPlayer, state)
+	if luaPlayer == nil or state == nil then
+		return
+	end
+	self:Do_PlaySnd(luaPlayer, state.value1, state.value2)
 end
 
 -- 帮助模块

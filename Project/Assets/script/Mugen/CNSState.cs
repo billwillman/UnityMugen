@@ -25,12 +25,18 @@ namespace Mugen
 
 		// 飞行道具
 		Projectile,
+		PlaySND,
+		VelSet,
+		VelMul,
+		HitDef,
+		TargetState,
 	}
 
 	// 触发时机
 	public enum CnsStateTriggerType
     {
         none = 0,
+		Anim,
 		AnimElem,
     }
 
@@ -46,6 +52,28 @@ namespace Mugen
             m_TriggeType = triggeType;
 			m_Type = type;
         }
+
+		public int value1
+		{
+			get;
+			set;
+		}
+
+		public int value2 {
+			get;
+			set;
+		}
+
+		public int value3
+		{
+			get;
+			set;
+		}
+
+		public int value4 {
+			get;
+			set;
+		}
 
 		public int time {
 			get;
