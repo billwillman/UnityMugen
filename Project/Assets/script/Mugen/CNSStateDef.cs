@@ -72,11 +72,11 @@ namespace Mugen
 			}
         }
 
-		public CNSState CreateStateEvent(CnsStateTriggerType evtType)
+		public CNSState CreateStateEvent(CnsStateTriggerType evtType, CnsStateType type)
         {
 			if (evtType == CnsStateTriggerType.none)
                 return null;
-            CNSState state = new CNSState(evtType);
+			CNSState state = new CNSState(evtType, type);
             int key = (int)evtType;
             List<CNSState> list;
             if (m_StateEventsMap == null)

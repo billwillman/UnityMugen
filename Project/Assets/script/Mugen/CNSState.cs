@@ -4,42 +4,47 @@ using LuaInterface;
 
 namespace Mugen
 {
+	public enum CnsStateType
+	{
+		none = 0,
+		// 残影
+		AfterImage,
+		// 残影时间
+		AfterImageTime,
+		AllPalFX,
+		// 角度加
+		AngleAdd,
+		// 角度绘制
+		AngleDraw,
+		// 角度乘
+		AngleMul,
+		// 角度设置
+		AngleSet,
+		// 超必杀暂停
+		SuperPause,
+
+		// 飞行道具
+		Projectile,
+	}
+
 	// 触发时机
 	public enum CnsStateTriggerType
     {
         none = 0,
-		/*
-        // 残影
-        AfterImage,
-        // 残影时间
-        AfterImageTime,
-        AllPalFX,
-        // 角度加
-        AngleAdd,
-        // 角度绘制
-        AngleDraw,
-        // 角度乘
-        AngleMul,
-        // 角度设置
-        AngleSet,
-		// 超必杀暂停
-		SuperPause,
-
-        // 飞行道具
-        Projectile,
-		*/
 		AnimElem,
     }
 
     public class CNSState
     {
         private string m_Name = string.Empty;
-		private CnsStateTriggerType m_Type = CnsStateTriggerType.none;
+		private CnsStateTriggerType m_TriggeType = CnsStateTriggerType.none;
+		private CnsStateType m_Type = CnsStateType.none;
         
         [NoToLuaAttribute]
-		public CNSState(CnsStateTriggerType type)
+		public CNSState(CnsStateTriggerType triggeType, CnsStateType type)
         {
-            m_Type = type;
+            m_TriggeType = triggeType;
+			m_Type = type;
         }
 
 		public int time {
