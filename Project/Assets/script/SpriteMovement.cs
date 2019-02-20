@@ -8,45 +8,69 @@ public class SpriteMovement : MonoBehaviour {
 
 	// 开始速度
 	public Vector2 StartVec  = Vector2.zero;
+	public Vector2 Vec = Vector2.zero;
 
 	public float AniCtlPauseTime = -1;
 
 	private ImageAnimation m_Animation = null;
-	private bool m_IsInitAnimation = false;
+	private PlayerDisplay m_Display = null;
+
+	void Awake()
+	{
+		m_Animation = GetComponent<ImageAnimation> ();
+		m_Display = GetComponent<PlayerDisplay> ();
+	}
 
 	protected ImageAnimation CacheAnimation
 	{
 		get
 		{
-			if (m_Animation == null && !m_IsInitAnimation)
-			{
-				m_IsInitAnimation = true;
-				m_Animation = GetComponent<ImageAnimation> ();
-			}
 			return m_Animation;
 		}
 	}
 
-	void UpdatePause(float deltaTime)
+	protected bool IsFlipX
+	{
+		get {
+			if (m_Display == null)
+				return false;
+			return m_Display.IsFlipX;
+		}
+	}
+
+	bool UpdatePause(float deltaTime)
 	{
 		if (AniCtlPauseTime <= 0)
-			return;
+			return false;
 		if (AniCtlPauseTime - deltaTime <= 0) {
 			AniCtlPauseTime = -1;
 			var ani = this.CacheAnimation;
 			if (ani != null) {
 				ani.Pause (false);
 			}
-		} else
+			return false;
+		} else {
 			AniCtlPauseTime -= deltaTime;
+			return true;
+		}
 	}
 
 	void Update()
 	{
 		float deltaTime = Time.deltaTime;
 		UpdatePause (deltaTime);
+		UpdateMove (deltaTime);
 	}
 		
+
+	void UpdateMove(float deltaTime)
+	{
+		if (Mathf.Abs (Vec.x) <= float.Epsilon && Mathf.Abs (Vec.y) <= float.Epsilon)
+			return;
+		var trans = this.transform;
+		Vector3 vv = Vec * (IsFlipX? -1:1);
+		trans.position += vv;
+	}
 
 	public void AniCtlPause(float pauseTime)
 	{
