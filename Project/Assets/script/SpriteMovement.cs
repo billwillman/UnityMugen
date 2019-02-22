@@ -15,7 +15,7 @@ public class SpriteMovement : MonoBehaviour {
 	private ImageAnimation m_Animation = null;
 	private PlayerDisplay m_Display = null;
 
-	void Awake()
+	void Start()
 	{
 		m_Animation = GetComponent<ImageAnimation> ();
 		m_Display = GetComponent<PlayerDisplay> ();
@@ -35,6 +35,23 @@ public class SpriteMovement : MonoBehaviour {
 			if (m_Display == null)
 				return false;
 			return m_Display.IsFlipX;
+		}
+	}
+
+	protected Vector2 OffsetPos
+	{
+		get
+		{
+			if (m_Display == null)
+				return Vector2.zero;
+			return m_Display.m_OffsetPos;
+		}
+
+		set
+		{
+			if (m_Display == null)
+				return;
+			m_Display.m_OffsetPos = value;
 		}
 	}
 
@@ -67,9 +84,10 @@ public class SpriteMovement : MonoBehaviour {
 	{
 		if (Mathf.Abs (Vec.x) <= float.Epsilon && Mathf.Abs (Vec.y) <= float.Epsilon)
 			return;
-		var trans = this.transform;
-		Vector3 vv = Vec * (IsFlipX? -1:1);
-		trans.position += vv;
+		Vector2 vv = Vec * (IsFlipX? -1:1) * deltaTime;
+		Vector2 org = this.OffsetPos;
+		org += vv;
+		this.OffsetPos = org;
 	}
 
 	public void AniCtlPause(float pauseTime)
