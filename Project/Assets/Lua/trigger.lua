@@ -182,6 +182,18 @@ function trigger:Ctrl(luaPlayer)
 	return attribe.Ctrl
 end
 
+function trigger:VelSet(luaPlayer, x, y)
+	if luaPlayer == nil or x == nil or y == nil then
+		return nil
+	end
+	local display = luaPlayer.PlayerDisplay;
+	if display == nil then
+		return nil 
+	end
+	display:SetVelSet(x, y)
+	return true
+end
+
 function trigger:Stateno(luaPlayer)
 	if luaPlayer == nil then
 		return nil

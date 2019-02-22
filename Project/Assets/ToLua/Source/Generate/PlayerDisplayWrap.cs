@@ -16,6 +16,7 @@ public class PlayerDisplayWrap
 		L.RegFunction("PlayAni", PlayAni);
 		L.RegFunction("IsCommandInputKeyOk", IsCommandInputKeyOk);
 		L.RegFunction("RunCmd", RunCmd);
+		L.RegFunction("SetVelSet", SetVelSet);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("SoundCount", get_SoundCount, null);
@@ -192,6 +193,16 @@ public class PlayerDisplayWrap
 				LuaDLL.lua_pushboolean(L, o);
 				return 1;
 			}
+			else if (count == 4)
+			{
+				PlayerDisplay obj = (PlayerDisplay)ToLua.CheckObject<PlayerDisplay>(L, 1);
+				Mugen.PlayerState arg0 = (Mugen.PlayerState)ToLua.CheckObject(L, 2, typeof(Mugen.PlayerState));
+				bool arg1 = LuaDLL.luaL_checkboolean(L, 3);
+				bool arg2 = LuaDLL.luaL_checkboolean(L, 4);
+				bool o = obj.PlayAni(arg0, arg1, arg2);
+				LuaDLL.lua_pushboolean(L, o);
+				return 1;
+			}
 			else
 			{
 				return LuaDLL.luaL_throw(L, "invalid arguments to method: PlayerDisplay.PlayAni");
@@ -232,6 +243,24 @@ public class PlayerDisplayWrap
 			bool o = obj.RunCmd(arg0);
 			LuaDLL.lua_pushboolean(L, o);
 			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int SetVelSet(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 3);
+			PlayerDisplay obj = (PlayerDisplay)ToLua.CheckObject<PlayerDisplay>(L, 1);
+			float arg0 = (float)LuaDLL.luaL_checknumber(L, 2);
+			float arg1 = (float)LuaDLL.luaL_checknumber(L, 3);
+			obj.SetVelSet(arg0, arg1);
+			return 0;
 		}
 		catch (Exception e)
 		{

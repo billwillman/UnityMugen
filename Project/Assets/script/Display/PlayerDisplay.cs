@@ -629,6 +629,14 @@ public class PlayerDisplay : BaseResLoader {
 		}
 	}
 
+	public void SetVelSet(float x, float y)
+	{
+		var movement = this.Movement;
+		if (movement == null)
+			return;
+		movement.Vec = new Vector2 (x, y);
+	}
+
     private void UpdateClsnRootOffsetPos(Vector2 localPos)
     {
         if (m_ClsnSpriteRoot != null)
