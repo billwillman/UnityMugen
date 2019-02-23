@@ -17,6 +17,7 @@ public class PlayerDisplayWrap
 		L.RegFunction("IsCommandInputKeyOk", IsCommandInputKeyOk);
 		L.RegFunction("RunCmd", RunCmd);
 		L.RegFunction("SetVelSet", SetVelSet);
+		L.RegFunction("VelMul", VelMul);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("SoundCount", get_SoundCount, null);
@@ -260,6 +261,24 @@ public class PlayerDisplayWrap
 			float arg0 = (float)LuaDLL.luaL_checknumber(L, 2);
 			float arg1 = (float)LuaDLL.luaL_checknumber(L, 3);
 			obj.SetVelSet(arg0, arg1);
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int VelMul(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 3);
+			PlayerDisplay obj = (PlayerDisplay)ToLua.CheckObject<PlayerDisplay>(L, 1);
+			float arg0 = (float)LuaDLL.luaL_checknumber(L, 2);
+			float arg1 = (float)LuaDLL.luaL_checknumber(L, 3);
+			obj.VelMul(arg0, arg1);
 			return 0;
 		}
 		catch (Exception e)

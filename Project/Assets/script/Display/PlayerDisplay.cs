@@ -637,6 +637,18 @@ public class PlayerDisplay : BaseResLoader {
 		movement.Vec = new Vector2 (x, y);
 	}
 
+	public void VelMul(float x, float y)
+	{
+		var movement = this.Movement;
+		if (movement == null)
+			return;
+		Vector2 v = movement.Vec;
+		Vector2 mulVec = new Vector2 (x, y);
+		v.x *= mulVec.x;
+		v.y *= mulVec.y;
+		movement.Vec = v;
+	}
+
     private void UpdateClsnRootOffsetPos(Vector2 localPos)
     {
         if (m_ClsnSpriteRoot != null)
