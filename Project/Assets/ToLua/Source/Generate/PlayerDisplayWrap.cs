@@ -16,6 +16,7 @@ public class PlayerDisplayWrap
 		L.RegFunction("PlayAni", PlayAni);
 		L.RegFunction("IsCommandInputKeyOk", IsCommandInputKeyOk);
 		L.RegFunction("RunCmd", RunCmd);
+		L.RegFunction("Trigger_AnimTime", Trigger_AnimTime);
 		L.RegFunction("SetVelSet", SetVelSet);
 		L.RegFunction("VelMul", VelMul);
 		L.RegFunction("__eq", op_Equality);
@@ -124,19 +125,36 @@ public class PlayerDisplayWrap
 		{
 			int count = LuaDLL.lua_gettop(L);
 
-			if (count == 2)
+			if (count == 2 && TypeChecker.CheckTypes<Mugen.PlayerState>(L, 2))
 			{
 				PlayerDisplay obj = (PlayerDisplay)ToLua.CheckObject<PlayerDisplay>(L, 1);
-				Mugen.PlayerState arg0 = (Mugen.PlayerState)ToLua.CheckObject(L, 2, typeof(Mugen.PlayerState));
+				Mugen.PlayerState arg0 = (Mugen.PlayerState)ToLua.ToObject(L, 2);
 				bool o = obj.ChangeState(arg0);
 				LuaDLL.lua_pushboolean(L, o);
 				return 1;
 			}
-			else if (count == 3)
+			else if (count == 2 && TypeChecker.CheckTypes<int>(L, 2))
 			{
 				PlayerDisplay obj = (PlayerDisplay)ToLua.CheckObject<PlayerDisplay>(L, 1);
-				Mugen.PlayerState arg0 = (Mugen.PlayerState)ToLua.CheckObject(L, 2, typeof(Mugen.PlayerState));
-				bool arg1 = LuaDLL.luaL_checkboolean(L, 3);
+				int arg0 = (int)LuaDLL.lua_tonumber(L, 2);
+				bool o = obj.ChangeState(arg0);
+				LuaDLL.lua_pushboolean(L, o);
+				return 1;
+			}
+			else if (count == 3 && TypeChecker.CheckTypes<int, bool>(L, 2))
+			{
+				PlayerDisplay obj = (PlayerDisplay)ToLua.CheckObject<PlayerDisplay>(L, 1);
+				int arg0 = (int)LuaDLL.lua_tonumber(L, 2);
+				bool arg1 = LuaDLL.lua_toboolean(L, 3);
+				bool o = obj.ChangeState(arg0, arg1);
+				LuaDLL.lua_pushboolean(L, o);
+				return 1;
+			}
+			else if (count == 3 && TypeChecker.CheckTypes<Mugen.PlayerState, bool>(L, 2))
+			{
+				PlayerDisplay obj = (PlayerDisplay)ToLua.CheckObject<PlayerDisplay>(L, 1);
+				Mugen.PlayerState arg0 = (Mugen.PlayerState)ToLua.ToObject(L, 2);
+				bool arg1 = LuaDLL.lua_toboolean(L, 3);
 				bool o = obj.ChangeState(arg0, arg1);
 				LuaDLL.lua_pushboolean(L, o);
 				return 1;
@@ -243,6 +261,23 @@ public class PlayerDisplayWrap
 			string arg0 = ToLua.CheckString(L, 2);
 			bool o = obj.RunCmd(arg0);
 			LuaDLL.lua_pushboolean(L, o);
+			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int Trigger_AnimTime(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			PlayerDisplay obj = (PlayerDisplay)ToLua.CheckObject<PlayerDisplay>(L, 1);
+			int o = obj.Trigger_AnimTime();
+			LuaDLL.lua_pushinteger(L, o);
 			return 1;
 		}
 		catch (Exception e)

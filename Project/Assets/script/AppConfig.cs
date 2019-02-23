@@ -136,6 +136,9 @@ public class AppConfig : MonoSingleton<AppConfig> {
 	protected override void Awake()
 	{
 		base.Awake();
+
+		Time.timeScale = 1.5f;
+
 		InitLuaEnv();
 		InitStart();
 	}

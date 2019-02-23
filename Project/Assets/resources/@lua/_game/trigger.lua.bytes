@@ -182,6 +182,32 @@ function trigger:Ctrl(luaPlayer)
 	return attribe.Ctrl
 end
 
+function trigger:ChangeState(luaPlayer, newState, isCns)
+	if luaPlayer == nil or newState == nil then
+		return nil
+	end
+	local display = luaPlayer.PlayerDisplay;
+	if display == nil then
+		return nil 
+	end
+	return display:ChangeState(newState, isCns)
+end
+
+function trigger:SetCtrl(luaPlayer, ctrl)
+	if luaPlayer == nil or ctrl == nil then
+		return nil
+	end
+	local display = luaPlayer.PlayerDisplay;
+	if display == nil then
+		return nil 
+	end
+	local attribe = display.Attribe
+	if attribe == nil then
+		return nil
+	end
+	attribe.Ctrl = ctrl
+end
+
 function trigger:VelSet(luaPlayer, x, y)
 	if luaPlayer == nil or x == nil or y == nil then
 		return nil
@@ -204,6 +230,18 @@ function trigger:VelMul(luaPlayer, x, y)
 	end
 	display:VelMul(x, y)
 	return true;
+end
+
+function trigger:AnimTime(luaPlayer)
+	if luaPlayer == nil then
+		return nil
+	end
+	local display = luaPlayer.PlayerDisplay;
+	if display == nil then
+		return nil 
+	end
+	local ret = display:Trigger_AnimTime()
+	return ret
 end
 
 function trigger:Stateno(luaPlayer)

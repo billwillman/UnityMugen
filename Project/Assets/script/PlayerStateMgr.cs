@@ -49,7 +49,7 @@ public class PlayerStateMgr : MonoBehaviour {
 			return false;
         if (!isCns)
         {
-            if (m_StateMgr.CurrStateKey == state && m_HasFirstChangedStated)
+			if (m_CurrentCnsDef == null && m_StateMgr.CurrStateKey == state && m_HasFirstChangedStated)
                 return false;
         }
 		CNSStateDef selDef = null;

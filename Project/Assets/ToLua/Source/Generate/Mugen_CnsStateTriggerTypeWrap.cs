@@ -10,6 +10,7 @@ public class Mugen_CnsStateTriggerTypeWrap
 		L.RegVar("none", get_none, null);
 		L.RegVar("Anim", get_Anim, null);
 		L.RegVar("AnimElem", get_AnimElem, null);
+		L.RegVar("AnimTime", get_AnimTime, null);
 		L.RegFunction("IntToEnum", IntToEnum);
 		L.EndEnum();
 		TypeTraits<Mugen.CnsStateTriggerType>.Check = CheckType;
@@ -44,6 +45,13 @@ public class Mugen_CnsStateTriggerTypeWrap
 	static int get_AnimElem(IntPtr L)
 	{
 		ToLua.Push(L, Mugen.CnsStateTriggerType.AnimElem);
+		return 1;
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_AnimTime(IntPtr L)
+	{
+		ToLua.Push(L, Mugen.CnsStateTriggerType.AnimTime);
 		return 1;
 	}
 

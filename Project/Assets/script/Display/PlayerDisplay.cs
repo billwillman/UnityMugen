@@ -276,6 +276,11 @@ public class PlayerDisplay : BaseResLoader {
 		return ani.GetMugenAnimateTime();
 	}
 
+	public bool ChangeState(int state, bool isCns = false)
+	{
+		return ChangeState ((PlayerState)state, isCns);
+	}
+
 	public bool ChangeState(PlayerState state, bool isCns = false)
     {
 		var mgr = this.StateMgr;
@@ -629,6 +634,15 @@ public class PlayerDisplay : BaseResLoader {
 		}
 	}
 
+	public int Trigger_AnimTime()
+	{
+		var imgAni = this.ImageAni;
+		if (imgAni == null)
+			return -9999;
+		int ret = (imgAni.CurFrame + 1) - imgAni.AniNodeCount;
+		return ret;
+	}
+
 	public void SetVelSet(float x, float y)
 	{
 		var movement = this.Movement;
@@ -930,7 +944,7 @@ public class PlayerDisplay : BaseResLoader {
             return;
 		UpdateRenderer(frame, flip, target);
 
-		CallCnsTriggerEvent (CnsStateTriggerType.AnimElem);
+		CallCnsTriggerEvent (CnsStateTriggerType.AnimElem, CnsStateTriggerType.AnimTime);
     }
 
 	[NoToLua]

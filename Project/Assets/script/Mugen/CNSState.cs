@@ -38,6 +38,7 @@ namespace Mugen
         none = 0,
 		Anim,
 		AnimElem,
+		AnimTime,
     }
 
     public class CNSState
