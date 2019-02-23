@@ -557,7 +557,7 @@ public class PlayerDisplay : BaseResLoader {
 
 		bool mustCheckTrigger;
 		AI_Command aiCmd = ply.CmdCfg.GetAICommand (cmd, this, out mustCheckTrigger);
-		if (aiCmd == null || (mustCheckTrigger && !aiCmd.CanTrigger(this)))
+		if (aiCmd == null || (mustCheckTrigger && !aiCmd.CanTrigger(this, cmdName)))
 			return false;
 
         CNSConfig cnsCfg = ply.CnsCfg;

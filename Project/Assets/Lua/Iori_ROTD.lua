@@ -1,7 +1,6 @@
 local trigger = require("trigger")
 
 local setmetatable = setmetatable
-local GlobaConfigMgr = MonoSingleton_GlobalConfigMgr.GetInstance()
 
 local Iori_ROTD = {}
 Iori_ROTD.__index = Iori_ROTD
@@ -88,7 +87,7 @@ end
 
 --创建StateDef
 function Iori_ROTD:_initStateDefs()
-	local luaCfg = GlobaConfigMgr:GetLuaCnsCfg("Iori-ROTD")
+	local luaCfg = trigger:GetLuaCnsCfg("Iori-ROTD")
 	if luaCfg == nil then
 		return
 	end
@@ -98,7 +97,7 @@ function Iori_ROTD:_initStateDefs()
 end
 
 function Iori_ROTD:_initCmds()
-	local luaCfg = GlobaConfigMgr:GetLuaCnsCfg("Iori-ROTD")
+	local luaCfg = trigger:GetLuaCnsCfg("Iori-ROTD")
 	if luaCfg == nil then
 		return
 	end
@@ -123,7 +122,7 @@ function Iori_ROTD:OnAICmd_a_or_b(aiName)
 	return ret 
 end
 
-function Iori_ROTD:OnAICmd_a_and_holdfwd(aiName)
+function Iori_ROTD:OnAICmd_a_and_holdfwd(cmdName)
 	local triggerall = trigger:Command(self, "a") and trigger:Command(self, "holdfwd")
 	local trigger1 = trigger:Statetype(self) ~= Mugen.Cns_Type.A and trigger:CanCtrl(self)
 	local ret = triggerall and trigger1
@@ -171,6 +170,8 @@ function Iori_ROTD:_initStateDef_2000(luaCfg)
 
 	state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime, Mugen.CnsStateType.none)
 	state.OnTriggerEvent = self._On_2000_AnimTime
+
+	trigger:RegisterAnimationState(2010)
 end
 
 function Iori_ROTD:_On_2000_AnimTime(state)
@@ -180,6 +181,7 @@ function Iori_ROTD:_On_2000_AnimTime(state)
 	if animTime == 0 then
 		trigger:SetCtrl(self, 1)
 		trigger:ChangeState(self, 0, false)
+		--trigger:ChangeState(self, 2010, false)
 	end
 end
 
@@ -206,9 +208,9 @@ function Iori_ROTD:_On_2000_Vel(state)
 	end
 end
 
-function Iori_ROTD:OnAICmd_SuperCode1(aiName)
+function Iori_ROTD:OnAICmd_SuperCode1(cmdName)
 	--print(self.PlayerDisplay)
-	local triggerAll = (aiName == "禁千弐百十壱式・八稚女") and (trigger:Statetype(self) ~= Mugen.Cns_Type.A)
+	local triggerAll = (cmdName == "禁千弐百十壱式・八稚女") and (trigger:Statetype(self) ~= Mugen.Cns_Type.A)
 	if not triggerAll then
 		return false
 	end

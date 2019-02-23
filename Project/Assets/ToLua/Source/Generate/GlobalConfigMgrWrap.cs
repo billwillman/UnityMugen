@@ -7,10 +7,28 @@ public class GlobalConfigMgrWrap
 	public static void Register(LuaState L)
 	{
 		L.BeginClass(typeof(GlobalConfigMgr), typeof(MonoSingleton<GlobalConfigMgr>));
+		L.RegFunction("RegisterAnimationState", RegisterAnimationState);
 		L.RegFunction("GetLuaCnsCfg", GetLuaCnsCfg);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.EndClass();
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int RegisterAnimationState(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			GlobalConfigMgr obj = (GlobalConfigMgr)ToLua.CheckObject<GlobalConfigMgr>(L, 1);
+			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
+			obj.RegisterAnimationState(arg0);
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

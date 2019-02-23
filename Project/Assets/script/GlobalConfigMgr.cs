@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using Mugen;
+using Utils;
 using LuaInterface;
 
 public enum GlobalPlayerLoaderResult
@@ -35,6 +36,29 @@ public class GlobalConfigMgr : MonoSingleton<GlobalConfigMgr> {
 	private Texture m_ClsnTex = null;
 	private PlayerStateCtl m_PlayerStateCtl = null;
 	private CnsPlayerStateCtl m_CnsPlayerStateCtl = null;
+
+	public void RegisterAnimationState(int state)
+	{
+		if (ContainsAnimationState (state))
+			return;
+		
+		var plyCtl = this.PlyStateCtl;
+		if (plyCtl == null)
+			return;
+	
+		plyCtl.RegisterState (state);
+	}
+
+	private bool ContainsAnimationState(int state)
+	{
+		var plyCtl = this.PlyStateCtl;
+		if (plyCtl == null)
+			return false;
+		IState<PlayerState, PlayerStateMgr> st;
+		if (StateMgr<PlayerState, PlayerStateMgr>.FindState ((PlayerState)state, out st) && st != null)
+			return true;
+		return false;
+	}
 
 	protected CnsPlayerStateCtl CnsPlyStateCtl
 	{

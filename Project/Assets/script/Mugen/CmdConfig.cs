@@ -45,14 +45,14 @@ namespace Mugen
         }
 
         [NoToLuaAttribute]
-		public bool CanTrigger(PlayerDisplay display)
+		public bool CanTrigger(PlayerDisplay display, string cmdName)
         {
 			if (display == null)
 				return false;
 			if (OnTriggerEvent == null || display.LuaPly == null)
                 return true;
 			//display.LuaPly.Get
-			return OnTriggerEvent(display.LuaPly, name);
+			return OnTriggerEvent(display.LuaPly, cmdName);
         }
 	}
 
@@ -267,7 +267,7 @@ namespace Mugen
 				while (iter.MoveNext ()) {
 					var aiCmd = iter.Current.Value;
 					if (aiCmd != null && aiCmd.OnTriggerEvent != null) {
-						if (aiCmd.CanTrigger (display)) {
+						if (aiCmd.CanTrigger (display, command.name)) {
 							mustCheckTrigger = false;
 							finder = aiCmd;
 							break;

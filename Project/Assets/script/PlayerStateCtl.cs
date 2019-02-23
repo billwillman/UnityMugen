@@ -87,6 +87,8 @@ public class PlayerStateCtl: MonoBehaviour, IBasePlayerStateListener
         if (player == null)
             return;
         var plyState = target.CurState;
+		player.PlayAni(plyState);
+		/*
         switch (plyState)
         {
             case PlayerState.psStand1:
@@ -129,6 +131,7 @@ public class PlayerStateCtl: MonoBehaviour, IBasePlayerStateListener
                 player.PlayAni((PlayerState)430, false);
                 break;
         }
+        */
     }
 
 	public virtual void Enter(PlayerStateMgr target)
@@ -292,7 +295,7 @@ public class PlayerStateCtl: MonoBehaviour, IBasePlayerStateListener
         StateMgr<PlayerState, PlayerStateMgr>.Register(state, new BasePlayerState(this));
     }
 
-    private void RegisterState(int state)
+    public void RegisterState(int state)
     {
         RegisterState((PlayerState)state);
     }

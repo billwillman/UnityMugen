@@ -8,6 +8,23 @@ end
 trigger = {}
 mugen.trigger = trigger
 
+local GlobaConfigMgr = MonoSingleton_GlobalConfigMgr.GetInstance()
+
+function trigger:GetLuaCnsCfg(name)
+	if name == nil then
+		return nil
+	end
+	local luaCfg = GlobaConfigMgr:GetLuaCnsCfg("Iori-ROTD")
+	return luaCfg
+end
+
+function trigger:RegisterAnimationState(newState)
+	if newState == nil then
+		return nil
+	end
+	GlobaConfigMgr:RegisterAnimationState(newState)
+end
+
 -- 条件模块
 
 function trigger:AnimElem(luaPlayer)
