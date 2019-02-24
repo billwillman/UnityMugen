@@ -634,6 +634,12 @@ public class PlayerDisplay : BaseResLoader {
 		}
 	}
 
+	// 创建爆炸效果
+	public bool Trigger_CreateExplode()
+	{
+		return true;
+	}
+
 	public int Trigger_AnimTime()
 	{
 		var imgAni = this.ImageAni;
