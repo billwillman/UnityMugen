@@ -640,6 +640,14 @@ public class PlayerDisplay : BaseResLoader {
 		return true;
 	}
 
+	public int Trigger_Time()
+	{
+		var imgAni = this.ImageAni;
+		if (imgAni == null)
+			return -1;
+		return ImageAni.CurFrame;
+	}
+
 	public int Trigger_AnimTime()
 	{
 		var imgAni = this.ImageAni;

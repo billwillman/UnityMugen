@@ -249,6 +249,18 @@ function trigger:VelMul(luaPlayer, x, y)
 	return true;
 end
 
+function trigger:Time(luaPlayer)
+	if luaPlayer == nil then
+		return nil
+	end
+	local display = luaPlayer.PlayerDisplay;
+	if display == nil then
+		return nil 
+	end
+	local ret  = display:Trigger_Time()
+	return ret
+end
+
 function trigger:AnimTime(luaPlayer)
 	if luaPlayer == nil then
 		return nil
@@ -351,9 +363,6 @@ function trigger:Command(luaPlayer, cmdName)
 	end
 	local ret = display:IsCommandInputKeyOk(cmdName)
 	return ret
-end
-
-function trigger:Time(luaPlayer)
 end
 
 -- 处理模块

@@ -16,6 +16,8 @@ public class PlayerDisplayWrap
 		L.RegFunction("PlayAni", PlayAni);
 		L.RegFunction("IsCommandInputKeyOk", IsCommandInputKeyOk);
 		L.RegFunction("RunCmd", RunCmd);
+		L.RegFunction("Trigger_CreateExplode", Trigger_CreateExplode);
+		L.RegFunction("Trigger_Time", Trigger_Time);
 		L.RegFunction("Trigger_AnimTime", Trigger_AnimTime);
 		L.RegFunction("SetVelSet", SetVelSet);
 		L.RegFunction("VelMul", VelMul);
@@ -261,6 +263,40 @@ public class PlayerDisplayWrap
 			string arg0 = ToLua.CheckString(L, 2);
 			bool o = obj.RunCmd(arg0);
 			LuaDLL.lua_pushboolean(L, o);
+			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int Trigger_CreateExplode(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			PlayerDisplay obj = (PlayerDisplay)ToLua.CheckObject<PlayerDisplay>(L, 1);
+			bool o = obj.Trigger_CreateExplode();
+			LuaDLL.lua_pushboolean(L, o);
+			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int Trigger_Time(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			PlayerDisplay obj = (PlayerDisplay)ToLua.CheckObject<PlayerDisplay>(L, 1);
+			int o = obj.Trigger_Time();
+			LuaDLL.lua_pushinteger(L, o);
 			return 1;
 		}
 		catch (Exception e)
