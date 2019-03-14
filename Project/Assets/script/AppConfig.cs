@@ -133,12 +133,18 @@ public class AppConfig : MonoSingleton<AppConfig> {
 		}
 	}
 
+	private void InitDefaultLoader()
+	{
+		new GameObject("DefaultLoader", typeof(DefaultLoader));
+	}
+
 	protected override void Awake()
 	{
 		base.Awake();
 
 		Time.timeScale = 1.5f;
 
+		InitDefaultLoader ();
 		InitLuaEnv();
 		InitStart();
 	}
