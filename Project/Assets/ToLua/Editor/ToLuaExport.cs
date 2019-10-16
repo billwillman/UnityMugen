@@ -187,10 +187,8 @@ public static class ToLuaExport
             }
         }
 
-        public MethodBase Method
-        {
-            get
-            {
+        public MethodBase Method {
+            get {
                 return method;
             }
         }

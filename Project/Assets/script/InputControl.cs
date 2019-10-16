@@ -43,6 +43,7 @@ public struct InputValue
 	public int keyCodeValue;
 	public float tick;
 	public float downTick;
+	public static int v;
 }
 		
 

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 using Mugen;
 using NsLib.ResMgr;
@@ -102,6 +103,29 @@ public class AppConfig : MonoSingleton<AppConfig> {
 		DelegateFactory.Init();
 		LuaCoroutine.Register(m_LuaState, this);
 	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int LuaOpen_Socket_Core(IntPtr L)
+	{        
+		return LuaDLL.luaopen_socket_core(L);
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int LuaOpen_Mime_Core(IntPtr L)
+	{
+		return LuaDLL.luaopen_mime_core(L);
+	}
+
+	protected void OpenLuaSocket()
+	{
+		LuaConst.openLuaSocket = true;
+
+		m_LuaState.BeginPreLoad();
+		m_LuaState.RegFunction("socket.core", LuaOpen_Socket_Core);
+		m_LuaState.RegFunction("mime.core", LuaOpen_Mime_Core);                
+		m_LuaState.EndPreLoad();                     
+	}
+
 	/// <summary>
 	/// 注册的C库
 	/// </summary>
@@ -117,6 +141,10 @@ public class AppConfig : MonoSingleton<AppConfig> {
 			m_LuaState.OpenLibs(LuaDLL.luaopen_socket_core);
 		}
 		OpenCJson();
+
+		if (LuaConst.openLuaSocket) {
+			OpenLuaSocket ();
+		}
 	}
 
 	//cjson 比较特殊，只new了一个table，没有注册库，这里注册一下
@@ -173,5 +201,14 @@ public class AppConfig : MonoSingleton<AppConfig> {
 			m_LuaLoop = gameObject.AddComponent<LuaLooper>();
 			m_LuaLoop.luaState = m_LuaState;
 		}
+
+		m_LuaState.DoString("testVar = 123", "@AppConst.cs");
+		m_LuaState.DoFile("test.lua");
+		var func = m_LuaState.GetFunction ("CallTest");
+		int top = func.BeginPCall ();
+		func.PCall ();
+		top = func.GetLuaState ().LuaGetTop ();
+		var obj = func.CheckObject (typeof(TestClass));
+		func.EndPCall ();
 	}
 }

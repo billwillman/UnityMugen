@@ -176,6 +176,8 @@ public static class CustomSettings  {
 		_GT(typeof(Resources)),      
 		_GT(typeof(LuaProfiler)),
 
+		_GT(typeof(InputValue)),
+
 		//for LuaFramework
 		_GT(typeof(RectTransform)),
 		_GT(typeof(Text)),
@@ -213,6 +215,8 @@ public static class CustomSettings  {
         _GT(typeof(Cmd_Command)),
         _GT(typeof(AI_Command)),
 		_GT(typeof(GlobalConfigMgr)),
+		_GT(typeof(List<int>)),
+		_GT(typeof(TestClass)),
 	};
 
 	public static List<Type> dynamicList = new List<Type>()

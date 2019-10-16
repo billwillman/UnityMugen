@@ -57,6 +57,7 @@ namespace LuaInterface
 
         static ToLua()
         {
+			
             ToVarMap[LuaValueType.Vector3] = ToObjectVec3;
             ToVarMap[LuaValueType.Quaternion] = ToObjectQuat;
             ToVarMap[LuaValueType.Vector2] = ToObjectVec2;
@@ -65,6 +66,7 @@ namespace LuaInterface
             ToVarMap[LuaValueType.Ray] = ToObjectRay;
             ToVarMap[LuaValueType.LayerMask] = ToObjectLayerMask;
             ToVarMap[LuaValueType.Bounds] = ToObjectBounds;
+            
         }
 
         public static void OpenLibs(IntPtr L)
@@ -2551,6 +2553,9 @@ namespace LuaInterface
             }
 
             index = translator.AddObject(o);
+
+			//int top = LuaDLL.lua_gettop (L);
+
             LuaDLL.tolua_pushnewudata(L, reference, index);
         }
 
