@@ -12,8 +12,8 @@ public class UnityEngine_CharacterControllerWrap
 		L.RegFunction("New", _CreateUnityEngine_CharacterController);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
-		L.RegVar("isGrounded", get_isGrounded, null);
 		L.RegVar("velocity", get_velocity, null);
+		L.RegVar("isGrounded", get_isGrounded, null);
 		L.RegVar("collisionFlags", get_collisionFlags, null);
 		L.RegVar("radius", get_radius, set_radius);
 		L.RegVar("height", get_height, set_height);
@@ -21,7 +21,9 @@ public class UnityEngine_CharacterControllerWrap
 		L.RegVar("slopeLimit", get_slopeLimit, set_slopeLimit);
 		L.RegVar("stepOffset", get_stepOffset, set_stepOffset);
 		L.RegVar("skinWidth", get_skinWidth, set_skinWidth);
+		L.RegVar("minMoveDistance", get_minMoveDistance, set_minMoveDistance);
 		L.RegVar("detectCollisions", get_detectCollisions, set_detectCollisions);
+		L.RegVar("enableOverlapRecovery", get_enableOverlapRecovery, set_enableOverlapRecovery);
 		L.EndClass();
 	}
 
@@ -35,7 +37,7 @@ public class UnityEngine_CharacterControllerWrap
 			if (count == 0)
 			{
 				UnityEngine.CharacterController obj = new UnityEngine.CharacterController();
-				ToLua.PushSealed(L, obj);
+				ToLua.Push(L, obj);
 				return 1;
 			}
 			else
@@ -55,7 +57,7 @@ public class UnityEngine_CharacterControllerWrap
 		try
 		{
 			ToLua.CheckArgsCount(L, 2);
-			UnityEngine.CharacterController obj = (UnityEngine.CharacterController)ToLua.CheckObject(L, 1, typeof(UnityEngine.CharacterController));
+			UnityEngine.CharacterController obj = (UnityEngine.CharacterController)ToLua.CheckObject<UnityEngine.CharacterController>(L, 1);
 			UnityEngine.Vector3 arg0 = ToLua.ToVector3(L, 2);
 			bool o = obj.SimpleMove(arg0);
 			LuaDLL.lua_pushboolean(L, o);
@@ -73,7 +75,7 @@ public class UnityEngine_CharacterControllerWrap
 		try
 		{
 			ToLua.CheckArgsCount(L, 2);
-			UnityEngine.CharacterController obj = (UnityEngine.CharacterController)ToLua.CheckObject(L, 1, typeof(UnityEngine.CharacterController));
+			UnityEngine.CharacterController obj = (UnityEngine.CharacterController)ToLua.CheckObject<UnityEngine.CharacterController>(L, 1);
 			UnityEngine.Vector3 arg0 = ToLua.ToVector3(L, 2);
 			UnityEngine.CollisionFlags o = obj.Move(arg0);
 			ToLua.Push(L, o);
@@ -104,25 +106,6 @@ public class UnityEngine_CharacterControllerWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_isGrounded(IntPtr L)
-	{
-		object o = null;
-
-		try
-		{
-			o = ToLua.ToObject(L, 1);
-			UnityEngine.CharacterController obj = (UnityEngine.CharacterController)o;
-			bool ret = obj.isGrounded;
-			LuaDLL.lua_pushboolean(L, ret);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index isGrounded on a nil value");
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_velocity(IntPtr L)
 	{
 		object o = null;
@@ -138,6 +121,25 @@ public class UnityEngine_CharacterControllerWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index velocity on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_isGrounded(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.CharacterController obj = (UnityEngine.CharacterController)o;
+			bool ret = obj.isGrounded;
+			LuaDLL.lua_pushboolean(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index isGrounded on a nil value");
 		}
 	}
 
@@ -275,6 +277,25 @@ public class UnityEngine_CharacterControllerWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_minMoveDistance(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.CharacterController obj = (UnityEngine.CharacterController)o;
+			float ret = obj.minMoveDistance;
+			LuaDLL.lua_pushnumber(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index minMoveDistance on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_detectCollisions(IntPtr L)
 	{
 		object o = null;
@@ -290,6 +311,25 @@ public class UnityEngine_CharacterControllerWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index detectCollisions on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_enableOverlapRecovery(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.CharacterController obj = (UnityEngine.CharacterController)o;
+			bool ret = obj.enableOverlapRecovery;
+			LuaDLL.lua_pushboolean(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index enableOverlapRecovery on a nil value");
 		}
 	}
 
@@ -408,6 +448,25 @@ public class UnityEngine_CharacterControllerWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_minMoveDistance(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.CharacterController obj = (UnityEngine.CharacterController)o;
+			float arg0 = (float)LuaDLL.luaL_checknumber(L, 2);
+			obj.minMoveDistance = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index minMoveDistance on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int set_detectCollisions(IntPtr L)
 	{
 		object o = null;
@@ -423,6 +482,25 @@ public class UnityEngine_CharacterControllerWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index detectCollisions on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_enableOverlapRecovery(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.CharacterController obj = (UnityEngine.CharacterController)o;
+			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
+			obj.enableOverlapRecovery = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index enableOverlapRecovery on a nil value");
 		}
 	}
 }

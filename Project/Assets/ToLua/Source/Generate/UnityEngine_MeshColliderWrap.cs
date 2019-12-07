@@ -12,6 +12,7 @@ public class UnityEngine_MeshColliderWrap
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("sharedMesh", get_sharedMesh, set_sharedMesh);
 		L.RegVar("convex", get_convex, set_convex);
+		L.RegVar("cookingOptions", get_cookingOptions, set_cookingOptions);
 		L.EndClass();
 	}
 
@@ -25,7 +26,7 @@ public class UnityEngine_MeshColliderWrap
 			if (count == 0)
 			{
 				UnityEngine.MeshCollider obj = new UnityEngine.MeshCollider();
-				ToLua.PushSealed(L, obj);
+				ToLua.Push(L, obj);
 				return 1;
 			}
 			else
@@ -96,6 +97,25 @@ public class UnityEngine_MeshColliderWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_cookingOptions(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.MeshCollider obj = (UnityEngine.MeshCollider)o;
+			UnityEngine.MeshColliderCookingOptions ret = obj.cookingOptions;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index cookingOptions on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int set_sharedMesh(IntPtr L)
 	{
 		object o = null;
@@ -130,6 +150,25 @@ public class UnityEngine_MeshColliderWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index convex on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_cookingOptions(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.MeshCollider obj = (UnityEngine.MeshCollider)o;
+			UnityEngine.MeshColliderCookingOptions arg0 = (UnityEngine.MeshColliderCookingOptions)ToLua.CheckObject(L, 2, typeof(UnityEngine.MeshColliderCookingOptions));
+			obj.cookingOptions = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index cookingOptions on a nil value");
 		}
 	}
 }

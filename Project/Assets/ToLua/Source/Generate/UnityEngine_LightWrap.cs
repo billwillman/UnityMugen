@@ -7,7 +7,10 @@ public class UnityEngine_LightWrap
 	public static void Register(LuaState L)
 	{
 		L.BeginClass(typeof(UnityEngine.Light), typeof(UnityEngine.Behaviour));
+		L.RegFunction("Reset", Reset);
+		L.RegFunction("SetLightDirty", SetLightDirty);
 		L.RegFunction("AddCommandBuffer", AddCommandBuffer);
+		L.RegFunction("AddCommandBufferAsync", AddCommandBufferAsync);
 		L.RegFunction("RemoveCommandBuffer", RemoveCommandBuffer);
 		L.RegFunction("RemoveCommandBuffers", RemoveCommandBuffers);
 		L.RegFunction("RemoveAllCommandBuffers", RemoveAllCommandBuffers);
@@ -17,22 +20,27 @@ public class UnityEngine_LightWrap
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("type", get_type, set_type);
+		L.RegVar("spotAngle", get_spotAngle, set_spotAngle);
 		L.RegVar("color", get_color, set_color);
+		L.RegVar("colorTemperature", get_colorTemperature, set_colorTemperature);
 		L.RegVar("intensity", get_intensity, set_intensity);
 		L.RegVar("bounceIntensity", get_bounceIntensity, set_bounceIntensity);
-		L.RegVar("shadows", get_shadows, set_shadows);
-		L.RegVar("shadowStrength", get_shadowStrength, set_shadowStrength);
+		L.RegVar("shadowCustomResolution", get_shadowCustomResolution, set_shadowCustomResolution);
 		L.RegVar("shadowBias", get_shadowBias, set_shadowBias);
 		L.RegVar("shadowNormalBias", get_shadowNormalBias, set_shadowNormalBias);
 		L.RegVar("shadowNearPlane", get_shadowNearPlane, set_shadowNearPlane);
 		L.RegVar("range", get_range, set_range);
-		L.RegVar("spotAngle", get_spotAngle, set_spotAngle);
+		L.RegVar("flare", get_flare, set_flare);
+		L.RegVar("bakingOutput", get_bakingOutput, set_bakingOutput);
+		L.RegVar("cullingMask", get_cullingMask, set_cullingMask);
+		L.RegVar("lightShadowCasterMode", get_lightShadowCasterMode, set_lightShadowCasterMode);
+		L.RegVar("shadows", get_shadows, set_shadows);
+		L.RegVar("shadowStrength", get_shadowStrength, set_shadowStrength);
+		L.RegVar("shadowResolution", get_shadowResolution, set_shadowResolution);
+		L.RegVar("layerShadowCullDistances", get_layerShadowCullDistances, set_layerShadowCullDistances);
 		L.RegVar("cookieSize", get_cookieSize, set_cookieSize);
 		L.RegVar("cookie", get_cookie, set_cookie);
-		L.RegVar("flare", get_flare, set_flare);
 		L.RegVar("renderMode", get_renderMode, set_renderMode);
-		L.RegVar("alreadyLightmapped", get_alreadyLightmapped, set_alreadyLightmapped);
-		L.RegVar("cullingMask", get_cullingMask, set_cullingMask);
 		L.RegVar("commandBufferCount", get_commandBufferCount, null);
 		L.EndClass();
 	}
@@ -62,16 +70,102 @@ public class UnityEngine_LightWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int Reset(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			UnityEngine.Light obj = (UnityEngine.Light)ToLua.CheckObject(L, 1, typeof(UnityEngine.Light));
+			obj.Reset();
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int SetLightDirty(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			UnityEngine.Light obj = (UnityEngine.Light)ToLua.CheckObject(L, 1, typeof(UnityEngine.Light));
+			obj.SetLightDirty();
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int AddCommandBuffer(IntPtr L)
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 3);
-			UnityEngine.Light obj = (UnityEngine.Light)ToLua.CheckObject(L, 1, typeof(UnityEngine.Light));
-			UnityEngine.Rendering.LightEvent arg0 = (UnityEngine.Rendering.LightEvent)ToLua.CheckObject(L, 2, typeof(UnityEngine.Rendering.LightEvent));
-			UnityEngine.Rendering.CommandBuffer arg1 = (UnityEngine.Rendering.CommandBuffer)ToLua.CheckObject(L, 3, typeof(UnityEngine.Rendering.CommandBuffer));
-			obj.AddCommandBuffer(arg0, arg1);
-			return 0;
+			int count = LuaDLL.lua_gettop(L);
+
+			if (count == 3)
+			{
+				UnityEngine.Light obj = (UnityEngine.Light)ToLua.CheckObject(L, 1, typeof(UnityEngine.Light));
+				UnityEngine.Rendering.LightEvent arg0 = (UnityEngine.Rendering.LightEvent)ToLua.CheckObject(L, 2, typeof(UnityEngine.Rendering.LightEvent));
+				UnityEngine.Rendering.CommandBuffer arg1 = (UnityEngine.Rendering.CommandBuffer)ToLua.CheckObject<UnityEngine.Rendering.CommandBuffer>(L, 3);
+				obj.AddCommandBuffer(arg0, arg1);
+				return 0;
+			}
+			else if (count == 4)
+			{
+				UnityEngine.Light obj = (UnityEngine.Light)ToLua.CheckObject(L, 1, typeof(UnityEngine.Light));
+				UnityEngine.Rendering.LightEvent arg0 = (UnityEngine.Rendering.LightEvent)ToLua.CheckObject(L, 2, typeof(UnityEngine.Rendering.LightEvent));
+				UnityEngine.Rendering.CommandBuffer arg1 = (UnityEngine.Rendering.CommandBuffer)ToLua.CheckObject<UnityEngine.Rendering.CommandBuffer>(L, 3);
+				UnityEngine.Rendering.ShadowMapPass arg2 = (UnityEngine.Rendering.ShadowMapPass)ToLua.CheckObject(L, 4, typeof(UnityEngine.Rendering.ShadowMapPass));
+				obj.AddCommandBuffer(arg0, arg1, arg2);
+				return 0;
+			}
+			else
+			{
+				return LuaDLL.luaL_throw(L, "invalid arguments to method: UnityEngine.Light.AddCommandBuffer");
+			}
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int AddCommandBufferAsync(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+
+			if (count == 4)
+			{
+				UnityEngine.Light obj = (UnityEngine.Light)ToLua.CheckObject(L, 1, typeof(UnityEngine.Light));
+				UnityEngine.Rendering.LightEvent arg0 = (UnityEngine.Rendering.LightEvent)ToLua.CheckObject(L, 2, typeof(UnityEngine.Rendering.LightEvent));
+				UnityEngine.Rendering.CommandBuffer arg1 = (UnityEngine.Rendering.CommandBuffer)ToLua.CheckObject<UnityEngine.Rendering.CommandBuffer>(L, 3);
+				UnityEngine.Rendering.ComputeQueueType arg2 = (UnityEngine.Rendering.ComputeQueueType)ToLua.CheckObject(L, 4, typeof(UnityEngine.Rendering.ComputeQueueType));
+				obj.AddCommandBufferAsync(arg0, arg1, arg2);
+				return 0;
+			}
+			else if (count == 5)
+			{
+				UnityEngine.Light obj = (UnityEngine.Light)ToLua.CheckObject(L, 1, typeof(UnityEngine.Light));
+				UnityEngine.Rendering.LightEvent arg0 = (UnityEngine.Rendering.LightEvent)ToLua.CheckObject(L, 2, typeof(UnityEngine.Rendering.LightEvent));
+				UnityEngine.Rendering.CommandBuffer arg1 = (UnityEngine.Rendering.CommandBuffer)ToLua.CheckObject<UnityEngine.Rendering.CommandBuffer>(L, 3);
+				UnityEngine.Rendering.ShadowMapPass arg2 = (UnityEngine.Rendering.ShadowMapPass)ToLua.CheckObject(L, 4, typeof(UnityEngine.Rendering.ShadowMapPass));
+				UnityEngine.Rendering.ComputeQueueType arg3 = (UnityEngine.Rendering.ComputeQueueType)ToLua.CheckObject(L, 5, typeof(UnityEngine.Rendering.ComputeQueueType));
+				obj.AddCommandBufferAsync(arg0, arg1, arg2, arg3);
+				return 0;
+			}
+			else
+			{
+				return LuaDLL.luaL_throw(L, "invalid arguments to method: UnityEngine.Light.AddCommandBufferAsync");
+			}
 		}
 		catch (Exception e)
 		{
@@ -87,7 +181,7 @@ public class UnityEngine_LightWrap
 			ToLua.CheckArgsCount(L, 3);
 			UnityEngine.Light obj = (UnityEngine.Light)ToLua.CheckObject(L, 1, typeof(UnityEngine.Light));
 			UnityEngine.Rendering.LightEvent arg0 = (UnityEngine.Rendering.LightEvent)ToLua.CheckObject(L, 2, typeof(UnityEngine.Rendering.LightEvent));
-			UnityEngine.Rendering.CommandBuffer arg1 = (UnityEngine.Rendering.CommandBuffer)ToLua.CheckObject(L, 3, typeof(UnityEngine.Rendering.CommandBuffer));
+			UnityEngine.Rendering.CommandBuffer arg1 = (UnityEngine.Rendering.CommandBuffer)ToLua.CheckObject<UnityEngine.Rendering.CommandBuffer>(L, 3);
 			obj.RemoveCommandBuffer(arg0, arg1);
 			return 0;
 		}
@@ -204,6 +298,25 @@ public class UnityEngine_LightWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_spotAngle(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.Light obj = (UnityEngine.Light)o;
+			float ret = obj.spotAngle;
+			LuaDLL.lua_pushnumber(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index spotAngle on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_color(IntPtr L)
 	{
 		object o = null;
@@ -219,6 +332,25 @@ public class UnityEngine_LightWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index color on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_colorTemperature(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.Light obj = (UnityEngine.Light)o;
+			float ret = obj.colorTemperature;
+			LuaDLL.lua_pushnumber(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index colorTemperature on a nil value");
 		}
 	}
 
@@ -261,7 +393,7 @@ public class UnityEngine_LightWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_shadows(IntPtr L)
+	static int get_shadowCustomResolution(IntPtr L)
 	{
 		object o = null;
 
@@ -269,32 +401,13 @@ public class UnityEngine_LightWrap
 		{
 			o = ToLua.ToObject(L, 1);
 			UnityEngine.Light obj = (UnityEngine.Light)o;
-			UnityEngine.LightShadows ret = obj.shadows;
-			ToLua.Push(L, ret);
+			int ret = obj.shadowCustomResolution;
+			LuaDLL.lua_pushinteger(L, ret);
 			return 1;
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index shadows on a nil value");
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_shadowStrength(IntPtr L)
-	{
-		object o = null;
-
-		try
-		{
-			o = ToLua.ToObject(L, 1);
-			UnityEngine.Light obj = (UnityEngine.Light)o;
-			float ret = obj.shadowStrength;
-			LuaDLL.lua_pushnumber(L, ret);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index shadowStrength on a nil value");
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index shadowCustomResolution on a nil value");
 		}
 	}
 
@@ -375,7 +488,7 @@ public class UnityEngine_LightWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_spotAngle(IntPtr L)
+	static int get_flare(IntPtr L)
 	{
 		object o = null;
 
@@ -383,13 +496,146 @@ public class UnityEngine_LightWrap
 		{
 			o = ToLua.ToObject(L, 1);
 			UnityEngine.Light obj = (UnityEngine.Light)o;
-			float ret = obj.spotAngle;
+			UnityEngine.Flare ret = obj.flare;
+			ToLua.PushSealed(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index flare on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_bakingOutput(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.Light obj = (UnityEngine.Light)o;
+			UnityEngine.LightBakingOutput ret = obj.bakingOutput;
+			ToLua.PushValue(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index bakingOutput on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_cullingMask(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.Light obj = (UnityEngine.Light)o;
+			int ret = obj.cullingMask;
+			LuaDLL.lua_pushinteger(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index cullingMask on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_lightShadowCasterMode(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.Light obj = (UnityEngine.Light)o;
+			UnityEngine.LightShadowCasterMode ret = obj.lightShadowCasterMode;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index lightShadowCasterMode on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_shadows(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.Light obj = (UnityEngine.Light)o;
+			UnityEngine.LightShadows ret = obj.shadows;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index shadows on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_shadowStrength(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.Light obj = (UnityEngine.Light)o;
+			float ret = obj.shadowStrength;
 			LuaDLL.lua_pushnumber(L, ret);
 			return 1;
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index spotAngle on a nil value");
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index shadowStrength on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_shadowResolution(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.Light obj = (UnityEngine.Light)o;
+			UnityEngine.Rendering.LightShadowResolution ret = obj.shadowResolution;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index shadowResolution on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_layerShadowCullDistances(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.Light obj = (UnityEngine.Light)o;
+			float[] ret = obj.layerShadowCullDistances;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index layerShadowCullDistances on a nil value");
 		}
 	}
 
@@ -432,25 +678,6 @@ public class UnityEngine_LightWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_flare(IntPtr L)
-	{
-		object o = null;
-
-		try
-		{
-			o = ToLua.ToObject(L, 1);
-			UnityEngine.Light obj = (UnityEngine.Light)o;
-			UnityEngine.Flare ret = obj.flare;
-			ToLua.PushSealed(L, ret);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index flare on a nil value");
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_renderMode(IntPtr L)
 	{
 		object o = null;
@@ -466,44 +693,6 @@ public class UnityEngine_LightWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index renderMode on a nil value");
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_alreadyLightmapped(IntPtr L)
-	{
-		object o = null;
-
-		try
-		{
-			o = ToLua.ToObject(L, 1);
-			UnityEngine.Light obj = (UnityEngine.Light)o;
-			bool ret = obj.alreadyLightmapped;
-			LuaDLL.lua_pushboolean(L, ret);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index alreadyLightmapped on a nil value");
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_cullingMask(IntPtr L)
-	{
-		object o = null;
-
-		try
-		{
-			o = ToLua.ToObject(L, 1);
-			UnityEngine.Light obj = (UnityEngine.Light)o;
-			int ret = obj.cullingMask;
-			LuaDLL.lua_pushinteger(L, ret);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index cullingMask on a nil value");
 		}
 	}
 
@@ -546,6 +735,25 @@ public class UnityEngine_LightWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_spotAngle(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.Light obj = (UnityEngine.Light)o;
+			float arg0 = (float)LuaDLL.luaL_checknumber(L, 2);
+			obj.spotAngle = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index spotAngle on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int set_color(IntPtr L)
 	{
 		object o = null;
@@ -561,6 +769,25 @@ public class UnityEngine_LightWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index color on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_colorTemperature(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.Light obj = (UnityEngine.Light)o;
+			float arg0 = (float)LuaDLL.luaL_checknumber(L, 2);
+			obj.colorTemperature = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index colorTemperature on a nil value");
 		}
 	}
 
@@ -603,7 +830,7 @@ public class UnityEngine_LightWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_shadows(IntPtr L)
+	static int set_shadowCustomResolution(IntPtr L)
 	{
 		object o = null;
 
@@ -611,32 +838,13 @@ public class UnityEngine_LightWrap
 		{
 			o = ToLua.ToObject(L, 1);
 			UnityEngine.Light obj = (UnityEngine.Light)o;
-			UnityEngine.LightShadows arg0 = (UnityEngine.LightShadows)ToLua.CheckObject(L, 2, typeof(UnityEngine.LightShadows));
-			obj.shadows = arg0;
+			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
+			obj.shadowCustomResolution = arg0;
 			return 0;
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index shadows on a nil value");
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_shadowStrength(IntPtr L)
-	{
-		object o = null;
-
-		try
-		{
-			o = ToLua.ToObject(L, 1);
-			UnityEngine.Light obj = (UnityEngine.Light)o;
-			float arg0 = (float)LuaDLL.luaL_checknumber(L, 2);
-			obj.shadowStrength = arg0;
-			return 0;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index shadowStrength on a nil value");
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index shadowCustomResolution on a nil value");
 		}
 	}
 
@@ -717,7 +925,102 @@ public class UnityEngine_LightWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_spotAngle(IntPtr L)
+	static int set_flare(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.Light obj = (UnityEngine.Light)o;
+			UnityEngine.Flare arg0 = (UnityEngine.Flare)ToLua.CheckObject(L, 2, typeof(UnityEngine.Flare));
+			obj.flare = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index flare on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_bakingOutput(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.Light obj = (UnityEngine.Light)o;
+			UnityEngine.LightBakingOutput arg0 = StackTraits<UnityEngine.LightBakingOutput>.Check(L, 2);
+			obj.bakingOutput = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index bakingOutput on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_cullingMask(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.Light obj = (UnityEngine.Light)o;
+			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
+			obj.cullingMask = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index cullingMask on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_lightShadowCasterMode(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.Light obj = (UnityEngine.Light)o;
+			UnityEngine.LightShadowCasterMode arg0 = (UnityEngine.LightShadowCasterMode)ToLua.CheckObject(L, 2, typeof(UnityEngine.LightShadowCasterMode));
+			obj.lightShadowCasterMode = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index lightShadowCasterMode on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_shadows(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.Light obj = (UnityEngine.Light)o;
+			UnityEngine.LightShadows arg0 = (UnityEngine.LightShadows)ToLua.CheckObject(L, 2, typeof(UnityEngine.LightShadows));
+			obj.shadows = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index shadows on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_shadowStrength(IntPtr L)
 	{
 		object o = null;
 
@@ -726,12 +1029,50 @@ public class UnityEngine_LightWrap
 			o = ToLua.ToObject(L, 1);
 			UnityEngine.Light obj = (UnityEngine.Light)o;
 			float arg0 = (float)LuaDLL.luaL_checknumber(L, 2);
-			obj.spotAngle = arg0;
+			obj.shadowStrength = arg0;
 			return 0;
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index spotAngle on a nil value");
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index shadowStrength on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_shadowResolution(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.Light obj = (UnityEngine.Light)o;
+			UnityEngine.Rendering.LightShadowResolution arg0 = (UnityEngine.Rendering.LightShadowResolution)ToLua.CheckObject(L, 2, typeof(UnityEngine.Rendering.LightShadowResolution));
+			obj.shadowResolution = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index shadowResolution on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_layerShadowCullDistances(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.Light obj = (UnityEngine.Light)o;
+			float[] arg0 = ToLua.CheckNumberArray<float>(L, 2);
+			obj.layerShadowCullDistances = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index layerShadowCullDistances on a nil value");
 		}
 	}
 
@@ -774,25 +1115,6 @@ public class UnityEngine_LightWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_flare(IntPtr L)
-	{
-		object o = null;
-
-		try
-		{
-			o = ToLua.ToObject(L, 1);
-			UnityEngine.Light obj = (UnityEngine.Light)o;
-			UnityEngine.Flare arg0 = (UnityEngine.Flare)ToLua.CheckObject(L, 2, typeof(UnityEngine.Flare));
-			obj.flare = arg0;
-			return 0;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index flare on a nil value");
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int set_renderMode(IntPtr L)
 	{
 		object o = null;
@@ -808,44 +1130,6 @@ public class UnityEngine_LightWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index renderMode on a nil value");
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_alreadyLightmapped(IntPtr L)
-	{
-		object o = null;
-
-		try
-		{
-			o = ToLua.ToObject(L, 1);
-			UnityEngine.Light obj = (UnityEngine.Light)o;
-			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
-			obj.alreadyLightmapped = arg0;
-			return 0;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index alreadyLightmapped on a nil value");
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_cullingMask(IntPtr L)
-	{
-		object o = null;
-
-		try
-		{
-			o = ToLua.ToObject(L, 1);
-			UnityEngine.Light obj = (UnityEngine.Light)o;
-			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
-			obj.cullingMask = arg0;
-			return 0;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index cullingMask on a nil value");
 		}
 	}
 }

@@ -7,6 +7,7 @@ public class UnityEngine_RectTransformWrap
 	public static void Register(LuaState L)
 	{
 		L.BeginClass(typeof(UnityEngine.RectTransform), typeof(UnityEngine.Transform));
+		L.RegFunction("ForceUpdateRectTransforms", ForceUpdateRectTransforms);
 		L.RegFunction("GetLocalCorners", GetLocalCorners);
 		L.RegFunction("GetWorldCorners", GetWorldCorners);
 		L.RegFunction("SetInsetAndSizeFromParentEdge", SetInsetAndSizeFromParentEdge);
@@ -17,10 +18,10 @@ public class UnityEngine_RectTransformWrap
 		L.RegVar("rect", get_rect, null);
 		L.RegVar("anchorMin", get_anchorMin, set_anchorMin);
 		L.RegVar("anchorMax", get_anchorMax, set_anchorMax);
-		L.RegVar("anchoredPosition3D", get_anchoredPosition3D, set_anchoredPosition3D);
 		L.RegVar("anchoredPosition", get_anchoredPosition, set_anchoredPosition);
 		L.RegVar("sizeDelta", get_sizeDelta, set_sizeDelta);
 		L.RegVar("pivot", get_pivot, set_pivot);
+		L.RegVar("anchoredPosition3D", get_anchoredPosition3D, set_anchoredPosition3D);
 		L.RegVar("offsetMin", get_offsetMin, set_offsetMin);
 		L.RegVar("offsetMax", get_offsetMax, set_offsetMax);
 		L.RegVar("reapplyDrivenProperties", get_reapplyDrivenProperties, set_reapplyDrivenProperties);
@@ -45,6 +46,22 @@ public class UnityEngine_RectTransformWrap
 			{
 				return LuaDLL.luaL_throw(L, "invalid arguments to ctor method: UnityEngine.RectTransform.New");
 			}
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int ForceUpdateRectTransforms(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			UnityEngine.RectTransform obj = (UnityEngine.RectTransform)ToLua.CheckObject(L, 1, typeof(UnityEngine.RectTransform));
+			obj.ForceUpdateRectTransforms();
+			return 0;
 		}
 		catch (Exception e)
 		{
@@ -231,25 +248,6 @@ public class UnityEngine_RectTransformWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_anchoredPosition3D(IntPtr L)
-	{
-		object o = null;
-
-		try
-		{
-			o = ToLua.ToObject(L, 1);
-			UnityEngine.RectTransform obj = (UnityEngine.RectTransform)o;
-			UnityEngine.Vector3 ret = obj.anchoredPosition3D;
-			ToLua.Push(L, ret);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index anchoredPosition3D on a nil value");
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_anchoredPosition(IntPtr L)
 	{
 		object o = null;
@@ -303,6 +301,25 @@ public class UnityEngine_RectTransformWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index pivot on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_anchoredPosition3D(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.RectTransform obj = (UnityEngine.RectTransform)o;
+			UnityEngine.Vector3 ret = obj.anchoredPosition3D;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index anchoredPosition3D on a nil value");
 		}
 	}
 
@@ -390,25 +407,6 @@ public class UnityEngine_RectTransformWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_anchoredPosition3D(IntPtr L)
-	{
-		object o = null;
-
-		try
-		{
-			o = ToLua.ToObject(L, 1);
-			UnityEngine.RectTransform obj = (UnityEngine.RectTransform)o;
-			UnityEngine.Vector3 arg0 = ToLua.ToVector3(L, 2);
-			obj.anchoredPosition3D = arg0;
-			return 0;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index anchoredPosition3D on a nil value");
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int set_anchoredPosition(IntPtr L)
 	{
 		object o = null;
@@ -462,6 +460,25 @@ public class UnityEngine_RectTransformWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index pivot on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_anchoredPosition3D(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.RectTransform obj = (UnityEngine.RectTransform)o;
+			UnityEngine.Vector3 arg0 = ToLua.ToVector3(L, 2);
+			obj.anchoredPosition3D = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index anchoredPosition3D on a nil value");
 		}
 	}
 

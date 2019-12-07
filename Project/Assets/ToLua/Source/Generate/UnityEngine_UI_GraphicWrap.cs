@@ -11,6 +11,7 @@ public class UnityEngine_UI_GraphicWrap
 		L.RegFunction("SetLayoutDirty", SetLayoutDirty);
 		L.RegFunction("SetVerticesDirty", SetVerticesDirty);
 		L.RegFunction("SetMaterialDirty", SetMaterialDirty);
+		L.RegFunction("OnCullingChanged", OnCullingChanged);
 		L.RegFunction("Rebuild", Rebuild);
 		L.RegFunction("LayoutComplete", LayoutComplete);
 		L.RegFunction("GraphicUpdateComplete", GraphicUpdateComplete);
@@ -98,6 +99,22 @@ public class UnityEngine_UI_GraphicWrap
 			ToLua.CheckArgsCount(L, 1);
 			UnityEngine.UI.Graphic obj = (UnityEngine.UI.Graphic)ToLua.CheckObject<UnityEngine.UI.Graphic>(L, 1);
 			obj.SetMaterialDirty();
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int OnCullingChanged(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			UnityEngine.UI.Graphic obj = (UnityEngine.UI.Graphic)ToLua.CheckObject<UnityEngine.UI.Graphic>(L, 1);
+			obj.OnCullingChanged();
 			return 0;
 		}
 		catch (Exception e)
@@ -230,14 +247,33 @@ public class UnityEngine_UI_GraphicWrap
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 5);
-			UnityEngine.UI.Graphic obj = (UnityEngine.UI.Graphic)ToLua.CheckObject<UnityEngine.UI.Graphic>(L, 1);
-			UnityEngine.Color arg0 = ToLua.ToColor(L, 2);
-			float arg1 = (float)LuaDLL.luaL_checknumber(L, 3);
-			bool arg2 = LuaDLL.luaL_checkboolean(L, 4);
-			bool arg3 = LuaDLL.luaL_checkboolean(L, 5);
-			obj.CrossFadeColor(arg0, arg1, arg2, arg3);
-			return 0;
+			int count = LuaDLL.lua_gettop(L);
+
+			if (count == 5)
+			{
+				UnityEngine.UI.Graphic obj = (UnityEngine.UI.Graphic)ToLua.CheckObject<UnityEngine.UI.Graphic>(L, 1);
+				UnityEngine.Color arg0 = ToLua.ToColor(L, 2);
+				float arg1 = (float)LuaDLL.luaL_checknumber(L, 3);
+				bool arg2 = LuaDLL.luaL_checkboolean(L, 4);
+				bool arg3 = LuaDLL.luaL_checkboolean(L, 5);
+				obj.CrossFadeColor(arg0, arg1, arg2, arg3);
+				return 0;
+			}
+			else if (count == 6)
+			{
+				UnityEngine.UI.Graphic obj = (UnityEngine.UI.Graphic)ToLua.CheckObject<UnityEngine.UI.Graphic>(L, 1);
+				UnityEngine.Color arg0 = ToLua.ToColor(L, 2);
+				float arg1 = (float)LuaDLL.luaL_checknumber(L, 3);
+				bool arg2 = LuaDLL.luaL_checkboolean(L, 4);
+				bool arg3 = LuaDLL.luaL_checkboolean(L, 5);
+				bool arg4 = LuaDLL.luaL_checkboolean(L, 6);
+				obj.CrossFadeColor(arg0, arg1, arg2, arg3, arg4);
+				return 0;
+			}
+			else
+			{
+				return LuaDLL.luaL_throw(L, "invalid arguments to method: UnityEngine.UI.Graphic.CrossFadeColor");
+			}
 		}
 		catch (Exception e)
 		{

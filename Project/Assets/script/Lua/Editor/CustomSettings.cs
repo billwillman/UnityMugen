@@ -216,7 +216,7 @@ public static class CustomSettings  {
         _GT(typeof(AI_Command)),
 		_GT(typeof(GlobalConfigMgr)),
 		_GT(typeof(List<int>)),
-		_GT(typeof(TestClass)),
+		//_GT(typeof(TestClass)),
 	};
 
 	public static List<Type> dynamicList = new List<Type>()

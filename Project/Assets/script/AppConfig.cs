@@ -201,7 +201,7 @@ public class AppConfig : MonoSingleton<AppConfig> {
 			m_LuaLoop = gameObject.AddComponent<LuaLooper>();
 			m_LuaLoop.luaState = m_LuaState;
 		}
-
+        /*
 		m_LuaState.DoString("testVar = 123", "@AppConst.cs");
 		m_LuaState.DoFile("test.lua");
 		var func = m_LuaState.GetFunction ("CallTest");
@@ -209,6 +209,6 @@ public class AppConfig : MonoSingleton<AppConfig> {
 		func.PCall ();
 		top = func.GetLuaState ().LuaGetTop ();
 		var obj = func.CheckObject (typeof(TestClass));
-		func.EndPCall ();
+		func.EndPCall ();*/
 	}
 }

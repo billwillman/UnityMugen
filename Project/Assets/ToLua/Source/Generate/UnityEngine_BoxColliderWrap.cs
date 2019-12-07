@@ -25,7 +25,7 @@ public class UnityEngine_BoxColliderWrap
 			if (count == 0)
 			{
 				UnityEngine.BoxCollider obj = new UnityEngine.BoxCollider();
-				ToLua.PushSealed(L, obj);
+				ToLua.Push(L, obj);
 				return 1;
 			}
 			else

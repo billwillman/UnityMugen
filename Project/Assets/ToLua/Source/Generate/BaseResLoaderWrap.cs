@@ -122,7 +122,7 @@ public class BaseResLoaderWrap
 		{
 			ToLua.CheckArgsCount(L, 2);
 			BaseResLoader obj = (BaseResLoader)ToLua.CheckObject<BaseResLoader>(L, 1);
-			UnityEngine.MeshRenderer arg0 = (UnityEngine.MeshRenderer)ToLua.CheckObject(L, 2, typeof(UnityEngine.MeshRenderer));
+			UnityEngine.MeshRenderer arg0 = (UnityEngine.MeshRenderer)ToLua.CheckObject<UnityEngine.MeshRenderer>(L, 2);
 			obj.ClearMaterials(arg0);
 			return 0;
 		}
@@ -277,7 +277,7 @@ public class BaseResLoaderWrap
 			else if (count == 3)
 			{
 				BaseResLoader obj = (BaseResLoader)ToLua.CheckObject<BaseResLoader>(L, 1);
-				UnityEngine.MeshRenderer arg0 = (UnityEngine.MeshRenderer)ToLua.CheckObject(L, 2, typeof(UnityEngine.MeshRenderer));
+				UnityEngine.MeshRenderer arg0 = (UnityEngine.MeshRenderer)ToLua.CheckObject<UnityEngine.MeshRenderer>(L, 2);
 				string arg1 = ToLua.CheckString(L, 3);
 				obj.ClearTexture(arg0, arg1);
 				return 0;
@@ -313,7 +313,7 @@ public class BaseResLoaderWrap
 			else if (count == 4)
 			{
 				BaseResLoader obj = (BaseResLoader)ToLua.CheckObject<BaseResLoader>(L, 1);
-				UnityEngine.MeshRenderer arg0 = (UnityEngine.MeshRenderer)ToLua.CheckObject(L, 2, typeof(UnityEngine.MeshRenderer));
+				UnityEngine.MeshRenderer arg0 = (UnityEngine.MeshRenderer)ToLua.CheckObject<UnityEngine.MeshRenderer>(L, 2);
 				string arg1 = ToLua.CheckString(L, 3);
 				string arg2 = ToLua.CheckString(L, 4);
 				bool o = obj.LoadTexture(arg0, arg1, arg2);
@@ -488,7 +488,7 @@ public class BaseResLoaderWrap
 		{
 			ToLua.CheckArgsCount(L, 2);
 			BaseResLoader obj = (BaseResLoader)ToLua.CheckObject<BaseResLoader>(L, 1);
-			UnityEngine.Animator arg0 = (UnityEngine.Animator)ToLua.CheckObject(L, 2, typeof(UnityEngine.Animator));
+			UnityEngine.Animator arg0 = (UnityEngine.Animator)ToLua.CheckObject<UnityEngine.Animator>(L, 2);
 			obj.ClearAniController(arg0);
 			return 0;
 		}
@@ -505,7 +505,7 @@ public class BaseResLoaderWrap
 		{
 			ToLua.CheckArgsCount(L, 3);
 			BaseResLoader obj = (BaseResLoader)ToLua.CheckObject<BaseResLoader>(L, 1);
-			UnityEngine.Animator arg0 = (UnityEngine.Animator)ToLua.CheckObject(L, 2, typeof(UnityEngine.Animator));
+			UnityEngine.Animator arg0 = (UnityEngine.Animator)ToLua.CheckObject<UnityEngine.Animator>(L, 2);
 			string arg1 = ToLua.CheckString(L, 3);
 			bool o = obj.LoadAniController(arg0, arg1);
 			LuaDLL.lua_pushboolean(L, o);
@@ -557,7 +557,7 @@ public class BaseResLoaderWrap
 		{
 			ToLua.CheckArgsCount(L, 2);
 			BaseResLoader obj = (BaseResLoader)ToLua.CheckObject<BaseResLoader>(L, 1);
-			UnityEngine.MeshRenderer arg0 = (UnityEngine.MeshRenderer)ToLua.CheckObject(L, 2, typeof(UnityEngine.MeshRenderer));
+			UnityEngine.MeshRenderer arg0 = (UnityEngine.MeshRenderer)ToLua.CheckObject<UnityEngine.MeshRenderer>(L, 2);
 			obj.ClearMainTexture(arg0);
 			return 0;
 		}
@@ -574,7 +574,7 @@ public class BaseResLoaderWrap
 		{
 			ToLua.CheckArgsCount(L, 3);
 			BaseResLoader obj = (BaseResLoader)ToLua.CheckObject<BaseResLoader>(L, 1);
-			UnityEngine.MeshRenderer arg0 = (UnityEngine.MeshRenderer)ToLua.CheckObject(L, 2, typeof(UnityEngine.MeshRenderer));
+			UnityEngine.MeshRenderer arg0 = (UnityEngine.MeshRenderer)ToLua.CheckObject<UnityEngine.MeshRenderer>(L, 2);
 			string arg1 = ToLua.CheckString(L, 3);
 			bool o = obj.LoadMainTexture(arg0, arg1);
 			LuaDLL.lua_pushboolean(L, o);

@@ -49,8 +49,6 @@ public class ResourceMgrWrap
 		L.RegFunction("LoadSpritesAsync", LoadSpritesAsync);
 		L.RegFunction("LoadScriptableObject", LoadScriptableObject);
 		L.RegFunction("LoadScriptableObjectAsync", LoadScriptableObjectAsync);
-		L.RegFunction("LoadShaderVarCollection", LoadShaderVarCollection);
-		L.RegFunction("LoadShaderVarCollectionAsync", LoadShaderVarCollectionAsync);
 		L.RegFunction("UnloadUnUsed", UnloadUnUsed);
 		L.RegFunction("OnApplicationQuit", OnApplicationQuit);
 		L.RegFunction("AutoUpdateClear", AutoUpdateClear);
@@ -1451,64 +1449,6 @@ public class ResourceMgrWrap
 			else
 			{
 				return LuaDLL.luaL_throw(L, "invalid arguments to method: ResourceMgr.LoadScriptableObjectAsync");
-			}
-		}
-		catch (Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int LoadShaderVarCollection(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 3);
-			ResourceMgr obj = (ResourceMgr)ToLua.CheckObject<ResourceMgr>(L, 1);
-			string arg0 = ToLua.CheckString(L, 2);
-			ResourceCacheType arg1 = (ResourceCacheType)ToLua.CheckObject(L, 3, typeof(ResourceCacheType));
-			UnityEngine.ShaderVariantCollection o = obj.LoadShaderVarCollection(arg0, arg1);
-			ToLua.PushSealed(L, o);
-			return 1;
-		}
-		catch (Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int LoadShaderVarCollectionAsync(IntPtr L)
-	{
-		try
-		{
-			int count = LuaDLL.lua_gettop(L);
-
-			if (count == 4)
-			{
-				ResourceMgr obj = (ResourceMgr)ToLua.CheckObject<ResourceMgr>(L, 1);
-				string arg0 = ToLua.CheckString(L, 2);
-				System.Action<float,bool,UnityEngine.ShaderVariantCollection> arg1 = (System.Action<float,bool,UnityEngine.ShaderVariantCollection>)ToLua.CheckDelegate<System.Action<float,bool,UnityEngine.ShaderVariantCollection>>(L, 3);
-				ResourceCacheType arg2 = (ResourceCacheType)ToLua.CheckObject(L, 4, typeof(ResourceCacheType));
-				bool o = obj.LoadShaderVarCollectionAsync(arg0, arg1, arg2);
-				LuaDLL.lua_pushboolean(L, o);
-				return 1;
-			}
-			else if (count == 5)
-			{
-				ResourceMgr obj = (ResourceMgr)ToLua.CheckObject<ResourceMgr>(L, 1);
-				string arg0 = ToLua.CheckString(L, 2);
-				System.Action<float,bool,UnityEngine.ShaderVariantCollection> arg1 = (System.Action<float,bool,UnityEngine.ShaderVariantCollection>)ToLua.CheckDelegate<System.Action<float,bool,UnityEngine.ShaderVariantCollection>>(L, 3);
-				ResourceCacheType arg2 = (ResourceCacheType)ToLua.CheckObject(L, 4, typeof(ResourceCacheType));
-				int arg3 = (int)LuaDLL.luaL_checknumber(L, 5);
-				bool o = obj.LoadShaderVarCollectionAsync(arg0, arg1, arg2, arg3);
-				LuaDLL.lua_pushboolean(L, o);
-				return 1;
-			}
-			else
-			{
-				return LuaDLL.luaL_throw(L, "invalid arguments to method: ResourceMgr.LoadShaderVarCollectionAsync");
 			}
 		}
 		catch (Exception e)
