@@ -815,7 +815,7 @@ public class ImageAnimation : MonoBehaviour {
 					AnimationClip c = iter.Current as AnimationClip;
 					if (c != null)
 					{
-						if (c == mAniClip)
+						if (c == m_Clip)
 						{
 							isFound = true;
 							break;
@@ -824,7 +824,7 @@ public class ImageAnimation : MonoBehaviour {
 				}
 
 				if (isFound)
-					m_Animation.RemoveClip(mAniClip);
+					m_Animation.RemoveClip(m_Clip);
 #endif
                 m_Animation.clip = null;
             }
