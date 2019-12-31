@@ -12,7 +12,10 @@ public class DefaultLoader : MonoBehaviour, IMugenLoader {
 
 	public string LoadText(string fileName)
 	{
-		return ResourceMgr.Instance.LoadText (fileName);
+        byte[] buf = ResourceMgr.Instance.LoadBytes(fileName);
+        string str = System.Text.Encoding.UTF8.GetString(buf);
+        //return ResourceMgr.Instance.LoadText (fileName);
+        return str;
 	}
 
 	public byte[] LoadBytes (string fileName)
