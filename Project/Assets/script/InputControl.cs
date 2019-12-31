@@ -654,6 +654,8 @@ public class InputControl: MonoBehaviour
 
     void Update()
     {
+        CheckGlobalInput();
+
         float time = Time.realtimeSinceStartup;
 
 		float delta = time - m_CheckInputTime;
@@ -684,6 +686,12 @@ public class InputControl: MonoBehaviour
     void CheckWuGong(InputPlayerType player, float checkTime)
     {
 
+    }
+
+    void CheckGlobalInput() {
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            Application.Quit();
+        }
     }
 
     public float _cCheckInputPressDeltaTime = 0.05f;
