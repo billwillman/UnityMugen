@@ -1,0 +1,3299 @@
+[STATEDEF -2]
+
+[State 0, VarSet,字的开关]
+type = VarSet
+trigger1 = 1 ;（1开启，0关闭）
+v = 20    ;fv = 10
+value = 1
+ignorehitpause = 1
+
+[State 0, VarSet,一般性能削弱开关]
+type = VarSet
+trigger1 = 0 ;（1开启，0关闭）
+v = 21    ;fv = 10
+value = 1
+ignorehitpause = 1
+;开启后：
+;闪避无敌时间削弱
+;弹幕削弱
+;基础性能削弱
+
+[State 0, VarSet,空连保护开关]
+type = VarSet
+trigger1 = 1 ;（1开启，0关闭）
+v = 22    
+value = 1
+ignorehitpause = 1
+;开启后：
+;2P空中加防
+;3P以上被空连回血
+;4P以上空中无敌
+
+[State 0, VarSet,高P脱离开关]
+type = VarSet
+trigger1 = 1 ;（1开启，0关闭）
+v = 23    ;fv = 10
+value = 1
+ignorehitpause = 1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+;特殊对策
+[State 0, LifeSet]
+type = LifeSet
+trigger1 = name != "Master-Lee"
+value = 0
+ignorehitpause = 1
+
+[State 0, NotHitBy]
+type = NotHitBy
+triggerall = var(22) = 1
+triggerALL = PALNO >= 4
+trigger1 = statetype = A
+trigger1 = movetype  = H
+value = SCA,NA,SA,HA,NP,SP,HP,NT,ST,HT
+time = 1
+ignorehitpause = 1
+
+[State 0, LifeAdd]
+type = LifeAdd
+triggerall = var(22) = 1
+triggerALL = PALNO >= 3
+triggerALL = life >= 1
+trigger1 = statetype = A
+trigger1 = movetype  = H
+value = 1
+kill = 1
+absolute = 0
+ignorehitpause = 1
+
+[State 0, DefenceMulSet]
+type = DefenceMulSet
+triggerall = var(22) = 1
+triggerall = palno = 2
+trigger1 = statetype = A
+trigger1 = movetype  = H
+value = 0.1 
+ignorehitpause = 1
+
+[State 0, DefenceMulSet]
+type = DefenceMulSet
+trigger1 = palno >= 2
+value = 0.6 - 0.02*palno
+ignorehitpause = 1
+
+[State 0, DefenceMulSet]
+type = DefenceMulSet
+trigger1 = palno >= 3
+trigger1 = life = [0,200]
+value = 0.3 - 0.02*palno
+ignorehitpause = 1
+
+[State 0, PowerSet]
+type = PowerSet
+trigger1 = palno >= 4
+value = 5000
+ignorehitpause = 1
+
+[State 0, PowerAdd]
+type = PowerAdd
+trigger1 = palno = 2 
+value = 1
+ignorehitpause = 1
+;persistent = 
+
+[State 0, PowerAdd]
+type = PowerAdd
+trigger1 = palno = 3 
+value = 2
+ignorehitpause = 1
+;persistent = 
+
+[State 0, LifeAdd]
+type = LifeAdd
+triggerall = palno >= 5 
+trigger1 = (GameTime % 5) = 0
+value = 1
+kill = 1
+absolute = 1
+ignorehitpause = 1
+
+[State 0, LifeAdd]
+type = LifeAdd
+triggerall = palno > 2 && palno <= 4
+trigger1 = (GameTime % 15) = 0
+value = 1
+kill = 1
+absolute = 1
+ignorehitpause = 1
+
+[State 0, LifeAdd]
+type = LifeAdd
+triggerall = palno > 3 && life <= 200
+trigger1 = (GameTime % 3) = 0
+value = 1
+kill = 1
+absolute = 1
+ignorehitpause = 1
+
+[State 0, LifeAdd]
+type = LifeAdd
+triggerall = palno = 1 && life <= 700
+trigger1 = (GameTime % 30) = 0
+value = 1
+kill = 1
+absolute = 1
+ignorehitpause = 1
+
+[State 0, NotHitBy]
+type = NotHitBy
+triggerall = Movetype = A
+trigger1 = palno >= 4
+value = SCA,NA,SA,HA,NP,SP,HP,NT,ST,HT
+time = 1
+ignorehitpause = 1
+
+[state -2]
+type = selfstate
+trigger1 = palno = 6
+trigger1 = Movetype = H
+value = 4000
+ignorehitpause = 1
+
+[state -2]
+type = selfstate
+triggerall = alive!=0
+trigger1 = palno = 5
+trigger1 = Movetype = H
+value = 4000
+ignorehitpause = 1
+
+[State 0, TargetLifeAdd]
+type = TargetLifeAdd
+trigger1 = palno = 6
+value = -1
+ID = -1
+kill = 1
+absolute = 1
+ignorehitpause = 1
+
+[State 0, TargetLifeAdd]
+type = TargetLifeAdd
+triggerall = palno = 5
+trigger1 = (GameTime % 3) = 0
+value = -1
+ID = -1
+kill = 1
+absolute = 1
+ignorehitpause = 1
+
+[State 0, AssertSpecial]
+type = AssertSpecial
+trigger1 = palno = 6
+trigger1 = life < 1000
+flag = noko
+ignorehitpause = 1
+
+[State 0, LifeSet]
+type = LifeSet
+triggerALL = ROUNDSTATE != 2 || enemynear,alive != 1
+trigger1 = PALNO = 6
+value = 1000
+ignorehitpause = 1
+
+[State 0, NotHitBy]
+type = NotHitBy
+triggerALL = ROUNDSTATE != 2
+trigger1 = PALNO = 6
+value = SCA,NA,SA,HA,NP,SP,HP,NT,ST,HT
+time = 1
+ignorehitpause = 1
+
+[State 0, LifeSet]
+type = LifeSet
+triggerALL = ROUNDSTATE != 2
+triggerALL = ALIVE = 1
+trigger1 = PALNO = [4,6]
+value = 1000
+ignorehitpause = 1
+
+[State 0, Helper]
+type = Helper
+triggerALL = VAR(59) =1
+triggerALL = numhelper(4001) < 1
+triggerALL = ROUNDSTATE = 2
+trigger1 = palno = life < 1000
+trigger1 = palno = 6
+helpertype = normal ;player
+name = "4001"
+ID = 4001
+stateno = 4001
+pos = 0,0
+postype = p1    ;p2,front,back,left,right
+facing = 1
+keyctrl = 0
+ownpal = 1
+supermovetime = 999999
+pausemovetime = 999999
+ignorehitpause = 1
+
+[STATE -2 ];NO AI
+type = ChangeState
+value = 0
+triggerALL = VAR(59) =1
+triggerALL = STATETYPE != A
+triggerALL = ROUNDSTATE = 2
+triggerALL = ENEMYNEAR,HITDEFATTR != SC,AT
+trigger1 = STATENO = [10,20]
+ignorehitpause = 1
+ctrl = 1
+
+[STATE -2 ];NO AI
+type = ChangeState
+value = 0
+triggerALL = VAR(59) =1
+triggerALL = STATETYPE != A
+triggerALL = ROUNDSTATE = 2
+triggerALL = ENEMYNEAR,HITDEFATTR != SC,AT
+trigger1 = STATENO = 40
+ignorehitpause = 1
+ctrl = 1 
+
+[State 0, VarSet]
+type = VarSet
+triggerall = var(20) = 0
+trigger1 = 1
+v = 50    ;fv = 10
+value = -1
+ignorehitpause = 1
+
+[State 0, VarSet]
+type = VarSet
+triggerall = var(20) = 1
+trigger1 = var(50) < 0
+v = 50    ;fv = 10
+value = 0
+ignorehitpause = 1
+
+[State 0, VarSet]
+type = VarSet
+trigger1 = var(50) > 20
+v = 50    ;fv = 10
+value = 20
+ignorehitpause = 1
+
+[state -2]
+type = removeexplod
+trigger1 = var(50) != 0
+id = 40000 
+
+[state -2]
+type = removeexplod
+trigger1 = var(50) != 1
+id = 40001
+
+[state -2]
+type = removeexplod
+trigger1 = var(50) != 2
+id = 40002
+
+[state -2]
+type = removeexplod
+trigger1 = var(50) != 3
+id = 40003
+
+[state -2]
+type = removeexplod
+trigger1 = var(50) != 4
+id = 40004
+
+[state -2]
+type = removeexplod
+trigger1 = var(50) != 5
+id = 40005
+
+[state -2]
+type = removeexplod
+trigger1 = var(50) != 6
+id = 40006
+
+[state -2]
+type = removeexplod
+trigger1 = var(50) != 7
+id = 40007
+
+[state -2]
+type = removeexplod
+trigger1 = var(50) != 8
+id = 40008
+
+[state -2]
+type = removeexplod
+trigger1 = var(50) != 9
+id = 40009
+
+[state -2]
+type = removeexplod
+trigger1 = var(50) != 10
+id = 40010
+
+[state -2]
+type = removeexplod
+trigger1 = var(50) != 11
+id = 40011
+
+
+[state -2]
+type = removeexplod
+trigger1 = var(50) != 12
+id = 40012
+
+[state -2]
+type = removeexplod
+trigger1 = var(50) != 13
+id = 40013
+
+[state -2]
+type = removeexplod
+trigger1 = var(50) != 14
+id = 40014
+
+[state -2]
+type = removeexplod
+trigger1 = var(50) != 15
+id = 40015
+
+[state -2]
+type = removeexplod
+trigger1 = var(50) != 16
+id = 40016
+
+[state -2]
+type = removeexplod
+trigger1 = var(50) != 17
+id = 40017
+
+[state -2]
+type = removeexplod
+trigger1 = var(50) != 18
+id = 40018
+
+[state -2]
+type = removeexplod
+trigger1 = var(50) != 19
+id = 40019
+
+[state -2]
+type = removeexplod
+trigger1 = var(50) != 20
+id = 40020
+
+[state -2,0]
+type = Explod
+trigger1 = TeamSide = 1
+trigger1 = numexplod(50000) = 0
+anim = 50000
+id = 50000
+postype = left
+bindtime = -1
+removetime = -1
+pos = 30,60
+sprpriority = 5
+ownpal = 1
+scale = 1.5,1.5
+
+[state -2,0]
+type = Explod
+trigger1 = TeamSide = 2
+trigger1 = numexplod(50000) = 0
+anim = 50000
+id = 50000
+postype = right
+bindtime = -1
+removetime = -1
+pos = -30,60
+sprpriority = 5
+ownpal = 1
+scale = 1.5,1.5
+
+[state -2,0]
+type = Explod
+trigger1 = TeamSide = 1
+trigger1 = numexplod(40000) = 0
+trigger1 = var(50) = 0
+anim = 40000
+id = 40000
+postype = left
+bindtime = -1
+pos = 30,60
+ontop = 1
+ownpal = 1
+scale = 0.25,0.25
+
+[state -2,0]
+type = Explod
+trigger1 = TeamSide = 2
+trigger1 = numexplod(40000) = 0
+trigger1 = var(50) = 0
+anim = 40000
+id = 40000
+postype = right
+bindtime = -1
+pos = -30,60
+ontop = 1
+ownpal = 1
+scale = 0.25,0.25
+
+[state -2,0]
+type = Explod
+trigger1 = TeamSide = 1
+trigger1 = numexplod(40001) = 0
+trigger1 = var(50) = 1
+anim = 40001
+id = 40001
+postype = left
+bindtime = -1
+pos = 30,60
+ontop = 1
+ownpal = 1
+scale = 0.25,0.25
+
+[state -2,0]
+type = Explod
+trigger1 = TeamSide = 2
+trigger1 = numexplod(40001) = 0
+trigger1 = var(50) = 1
+anim = 40001
+id = 40001
+postype = right
+bindtime = -1
+pos = -30,60
+ontop = 1
+ownpal = 1
+scale = 0.25,0.25
+
+[state -2,0]
+type = Explod
+trigger1 = TeamSide = 1
+trigger1 = numexplod(40002) = 0
+trigger1 = var(50) = 2
+anim = 40002
+id = 40002
+postype = left
+bindtime = -1
+pos = 30,60
+ontop = 1
+ownpal = 1
+scale = 0.25,0.25
+
+[state -2,0]
+type = Explod
+trigger1 = TeamSide = 2
+trigger1 = numexplod(40002) = 0
+trigger1 = var(50) = 2
+anim = 40002
+id = 40002
+postype = right
+bindtime = -1
+pos = -30,60
+ontop = 1
+ownpal = 1
+scale = 0.25,0.25
+
+[state -2,0]
+type = Explod
+trigger1 = TeamSide = 1
+trigger1 = numexplod(40003) = 0
+trigger1 = var(50) = 3
+anim = 40003
+id = 40003
+postype = left
+bindtime = -1
+pos = 30,60
+ontop = 1
+ownpal = 1
+scale = 0.25,0.25
+
+[state -2,0]
+type = Explod
+trigger1 = TeamSide = 2
+trigger1 = numexplod(40003) = 0
+trigger1 = var(50) = 3
+anim = 40003
+id = 40003
+postype = right
+bindtime = -1
+pos = -30,60
+ontop = 1
+ownpal = 1
+scale = 0.25,0.25
+
+[state -2,0]
+type = Explod
+trigger1 = TeamSide = 1
+trigger1 = numexplod(40004) = 0
+trigger1 = var(50) = 4
+anim = 40004
+id = 40004
+postype = left
+bindtime = -1
+pos = 30,60
+ontop = 1
+ownpal = 1
+scale = 0.25,0.25
+
+[state -2,0]
+type = Explod
+trigger1 = TeamSide = 2
+trigger1 = numexplod(40004) = 0
+trigger1 = var(50) = 4
+anim = 40004
+id = 40004
+postype = right
+bindtime = -1
+pos = -30,60
+ontop = 1
+ownpal = 1
+scale = 0.25,0.25
+
+[state -2,0]
+type = Explod
+trigger1 = TeamSide = 1
+trigger1 = numexplod(40005) = 0
+trigger1 = var(50) = 5
+anim = 40005
+id = 40005
+postype = left
+bindtime = -1
+pos = 30,60
+ontop = 1
+ownpal = 1
+scale = 0.25,0.25
+
+[state -2,0]
+type = Explod
+trigger1 = TeamSide = 2
+trigger1 = numexplod(40005) = 0
+trigger1 = var(50) = 5
+anim = 40005
+id = 40005
+postype = right
+bindtime = -1
+pos = -30,60
+ontop = 1
+ownpal = 1
+scale = 0.25,0.25
+
+[state -2,0]
+type = Explod
+trigger1 = TeamSide = 1
+trigger1 = numexplod(40006) = 0
+trigger1 = var(50) = 6
+anim = 40006
+id = 40006
+postype = left
+bindtime = -1
+pos = 30,60
+ontop = 1
+ownpal = 1
+scale = 0.25,0.25
+
+[state -2,0]
+type = Explod
+trigger1 = TeamSide = 2
+trigger1 = numexplod(40006) = 0
+trigger1 = var(50) = 6
+anim = 40006
+id = 40006
+postype = right
+bindtime = -1
+pos = -30,60
+ontop = 1
+ownpal = 1
+scale = 0.25,0.25
+
+[state -2,0]
+type = Explod
+trigger1 = TeamSide = 1
+trigger1 = numexplod(40007) = 0
+trigger1 = var(50) = 7
+anim = 40007
+id = 40007
+postype = left
+bindtime = -1
+pos = 30,60
+ontop = 1
+ownpal = 1
+scale = 0.25,0.25
+
+[state -2,0]
+type = Explod
+trigger1 = TeamSide = 2
+trigger1 = numexplod(40007) = 0
+trigger1 = var(50) = 7
+anim = 40007
+id = 40007
+postype = right
+bindtime = -1
+pos = -30,60
+ontop = 1
+ownpal = 1
+scale = 0.25,0.25
+
+[state -2,0]
+type = Explod
+trigger1 = TeamSide = 1
+trigger1 = numexplod(40008) = 0
+trigger1 = var(50) = 8
+anim = 40008
+id = 40008
+postype = left
+bindtime = -1
+pos = 30,60
+ontop = 1
+ownpal = 1
+scale = 0.25,0.25
+
+[state -2,0]
+type = Explod
+trigger1 = TeamSide = 2
+trigger1 = numexplod(40008) = 0
+trigger1 = var(50) = 8
+anim = 40008
+id = 40008
+postype = right
+bindtime = -1
+pos = -30,60
+ontop = 1
+ownpal = 1
+scale = 0.25,0.25
+
+[state -2,0]
+type = Explod
+trigger1 = TeamSide = 1
+trigger1 = numexplod(40009) = 0
+trigger1 = var(50) = 9
+anim = 40009
+id = 40009
+postype = left
+bindtime = -1
+pos = 30,60
+ontop = 1
+ownpal = 1
+scale = 0.25,0.25
+
+[state -2,0]
+type = Explod
+trigger1 = TeamSide = 2
+trigger1 = numexplod(40009) = 0
+trigger1 = var(50) = 9
+anim = 40009
+id = 40009
+postype = right
+bindtime = -1
+pos = -30,60
+ontop = 1
+ownpal = 1
+scale = 0.25,0.25
+
+[state -2,0]
+type = Explod
+trigger1 = TeamSide = 1
+trigger1 = numexplod(40010) = 0
+trigger1 = var(50) = 10
+anim = 40010
+id = 40010
+postype = left
+bindtime = -1
+pos = 30,60
+ontop = 1
+ownpal = 1
+scale = 0.25,0.25
+
+[state -2,0]
+type = Explod
+trigger1 = TeamSide = 2
+trigger1 = numexplod(40010) = 0
+trigger1 = var(50) = 10
+anim = 40010
+id = 40010
+postype = right
+bindtime = -1
+pos = -30,60
+ontop = 1
+ownpal = 1
+scale = 0.25,0.25
+
+[state -2,0]
+type = Explod
+trigger1 = TeamSide = 1
+trigger1 = numexplod(40011) = 0
+trigger1 = var(50) = 11
+anim = 40011
+id = 40011
+postype = left
+bindtime = -1
+pos = 30,60
+ontop = 1
+ownpal = 1
+scale = 0.25,0.25
+
+[state -2,0]
+type = Explod
+trigger1 = TeamSide = 2
+trigger1 = numexplod(40011) = 0
+trigger1 = var(50) = 11
+anim = 40011
+id = 40011
+postype = right
+bindtime = -1
+pos = -30,60
+ontop = 1
+ownpal = 1
+scale = 0.25,0.25
+
+[state -2,0]
+type = Explod
+trigger1 = TeamSide = 1
+trigger1 = numexplod(40012) = 0
+trigger1 = var(50) = 12
+anim = 40012
+id = 40012
+postype = left
+bindtime = -1
+pos = 30,60
+ontop = 1
+ownpal = 1
+scale = 0.25,0.25
+
+[state -2,0]
+type = Explod
+trigger1 = TeamSide = 2
+trigger1 = numexplod(40012) = 0
+trigger1 = var(50) = 12
+anim = 40012
+id = 40012
+postype = right
+bindtime = -1
+pos = -30,60
+ontop = 1
+ownpal = 1
+scale = 0.25,0.25
+
+[state -2,0]
+type = Explod
+trigger1 = TeamSide = 1
+trigger1 = numexplod(40013) = 0
+trigger1 = var(50) = 13
+anim = 40013
+id = 40013
+postype = left
+bindtime = -1
+pos = 30,60
+ontop = 1
+ownpal = 1
+scale = 0.25,0.25
+
+[state -2,0]
+type = Explod
+trigger1 = TeamSide = 2
+trigger1 = numexplod(40013) = 0
+trigger1 = var(50) = 13
+anim = 40013
+id = 40013
+postype = right
+bindtime = -1
+pos = -30,60
+ontop = 1
+ownpal = 1
+scale = 0.25,0.25
+
+[state -2,0]
+type = Explod
+trigger1 = TeamSide = 1
+trigger1 = numexplod(40014) = 0
+trigger1 = var(50) = 14
+anim = 40014
+id = 40014
+postype = left
+bindtime = -1
+pos = 30,60
+ontop = 1
+ownpal = 1
+scale = 0.25,0.25
+
+[state -2,0]
+type = Explod
+trigger1 = TeamSide = 2
+trigger1 = numexplod(40014) = 0
+trigger1 = var(50) = 14
+anim = 40014
+id = 40014
+postype = right
+bindtime = -1
+pos = -30,60
+ontop = 1
+ownpal = 1
+scale = 0.25,0.25
+
+[state -2,0]
+type = Explod
+trigger1 = TeamSide = 1
+trigger1 = numexplod(40015) = 0
+trigger1 = var(50) = 15
+anim = 40015
+id = 40015
+postype = left
+bindtime = -1
+pos = 30,60
+ontop = 1
+ownpal = 1
+scale = 0.25,0.25
+
+[state -2,0]
+type = Explod
+trigger1 = TeamSide = 2
+trigger1 = numexplod(40015) = 0
+trigger1 = var(50) = 15
+anim = 40015
+id = 40015
+postype = right
+bindtime = -1
+pos = -30,60
+ontop = 1
+ownpal = 1
+scale = 0.25,0.25
+
+[state -2,0]
+type = Explod
+trigger1 = TeamSide = 1
+trigger1 = numexplod(40016) = 0
+trigger1 = var(50) = 16
+anim = 40016
+id = 40016
+postype = left
+bindtime = -1
+pos = 30,60
+ontop = 1
+ownpal = 1
+scale = 0.25,0.25
+
+[state -2,0]
+type = Explod
+trigger1 = TeamSide = 2
+trigger1 = numexplod(40016) = 0
+trigger1 = var(50) = 16
+anim = 40016
+id = 40016
+postype = right
+bindtime = -1
+pos = -30,60
+ontop = 1
+ownpal = 1
+scale = 0.25,0.25
+
+[state -2,0]
+type = Explod
+trigger1 = TeamSide = 1
+trigger1 = numexplod(40017) = 0
+trigger1 = var(50) = 17
+anim = 40017
+id = 40017
+postype = left
+bindtime = -1
+pos = 30,60
+ontop = 1
+ownpal = 1
+scale = 0.25,0.25
+
+[state -2,0]
+type = Explod
+trigger1 = TeamSide = 2
+trigger1 = numexplod(40017) = 0
+trigger1 = var(50) = 17
+anim = 40017
+id = 40017
+postype = right
+bindtime = -1
+pos = -30,60
+ontop = 1
+ownpal = 1
+scale = 0.25,0.25
+
+[state -2,0]
+type = Explod
+trigger1 = TeamSide = 1
+trigger1 = numexplod(40018) = 0
+trigger1 = var(50) = 18
+anim = 40018
+id = 40018
+postype = left
+bindtime = -1
+pos = 30,60
+ontop = 1
+ownpal = 1
+scale = 0.25,0.25
+
+[state -2,0]
+type = Explod
+trigger1 = TeamSide = 2
+trigger1 = numexplod(40018) = 0
+trigger1 = var(50) = 18
+anim = 40018
+id = 40018
+postype = right
+bindtime = -1
+pos = -30,60
+ontop = 1
+ownpal = 1
+scale = 0.25,0.25
+
+[state -2,0]
+type = Explod
+trigger1 = TeamSide = 1
+trigger1 = numexplod(40019) = 0
+trigger1 = var(50) = 19
+anim = 40019
+id = 40019
+postype = left
+bindtime = -1
+pos = 30,60
+ontop = 1
+ownpal = 1
+scale = 0.25,0.25
+
+[state -2,0]
+type = Explod
+trigger1 = TeamSide = 2
+trigger1 = numexplod(40019) = 0
+trigger1 = var(50) = 19
+anim = 40019
+id = 40019
+postype = right
+bindtime = -1
+pos = -30,60
+ontop = 1
+ownpal = 1
+scale = 0.25,0.25
+
+[state -2,0]
+type = Explod
+trigger1 = TeamSide = 1
+trigger1 = numexplod(40020) = 0
+trigger1 = var(50) = 20
+anim = 40020
+id = 40020
+postype = left
+bindtime = -1
+removetime = -1
+pos = 30,60
+ontop = 1
+ownpal = 1
+scale = 0.25,0.25
+
+[state -2,0]
+type = Explod
+trigger1 = TeamSide = 2
+trigger1 = numexplod(40020) = 0
+trigger1 = var(50) = 20
+anim = 40020
+id = 40020
+postype = right
+bindtime = -1
+removetime = -1
+pos = -30,60
+ontop = 1
+ownpal = 1
+scale = 0.25,0.25
+;==================================================================
+[STATEDEF -3]
+
+[State -3, AI];=======@
+type = VarSet
+triggerALL =!ISHELPER
+trigger1 = 1 ;0关闭，1开启
+v = 59    ;fv = 10
+value = 1
+ignorehitpause = 1
+
+[State 0, VarRandom]
+type = VarRandom
+triggerall = var(59)= 1
+trigger1 = EnemyNear,Movetype = H || movehit = 1
+v = 35
+range = 0,3
+ignorehitpause = 1
+
+[State 1, VarSet]
+type = VarSet
+triggerall = var(59)= 1
+trigger1 = var(40) != [100,499]
+v = 40    ;fv = 10
+value = 100+(VAR(35)*100)
+ignorehitpause = 1
+persistent = 0
+
+[State 0, VarAdd]
+type = VarAdd
+triggerall = VAR(59) = 1
+triggerall = VAR(40) != 0 
+trigger1 =  stateno =200 && time = 1
+trigger2 =  stateno =205 && time = 1
+trigger3 =  stateno =210 && time = 1
+trigger4 =  stateno =220 && time = 1
+trigger5 =  stateno =230 && time = 1
+trigger6 =  stateno =235 && time = 1
+trigger7 =  stateno =400 && time = 1
+trigger8 =  stateno =410 && time = 1
+trigger9 =  stateno =430 && time = 1
+trigger10 =  stateno =500 && time = 1
+trigger11 =  stateno =550 && time = 1
+trigger12 =  stateno =600 && time = 1
+trigger13 =  stateno =700 && time = 1
+trigger14 =  stateno =720 && time = 1
+trigger15 =  stateno =900 && time = 1
+trigger16 =  stateno =1000 && time = 1
+trigger17 =  stateno = 660 && time = 1
+trigger18 =  stateno = 815 && time = 1
+trigger19 =  stateno = 250 && time = 1
+trigger20 =  stateno = 260 && time = 1
+trigger21 =  stateno = 240 && time = 1
+trigger22 =  stateno = 245 && time = 1
+trigger23 =  stateno = 2660 && time = 1
+trigger24 =  stateno = 2200 && time = 1
+trigger25 =  stateno = 2500 && time = 1
+trigger26 =  stateno = 3000 && time = 1
+trigger27 =  stateno = 3200 && time = 1
+trigger28 =  stateno = 3300 && time = 1
+trigger29 =  stateno = 420 && time = 1
+trigger30 =  stateno = 800 && time = 1
+trigger31 =  stateno = 810 && time = 1
+trigger32 =  stateno = 850 && time = 1
+trigger33 =  stateno = 3850 && time = 1
+v = 40    ;fv = 
+value = 1
+ignorehitpause = 1
+persistent = 0
+
+[State 0, VarSet]
+type = VarSet
+triggerall = var(59)= 1
+triggerall = var(40)!= 0
+trigger1 = EnemyNear,Movetype != H
+v = 40    ;fv = 10
+value = 0
+ignorehitpause = 1
+persistent = 0
+;=================================================================
+[State -3];前
+type = ChangeState
+trigger1 =! inguarddist
+value = 21
+triggerall =  Var(59) = 1
+TriggerALL = EnemyNear,Movetype != A
+triggerall = alive!=0
+triggerall = roundstate = 2
+triggerall = StateNO!= 21
+triggerall = statetype != A
+TriggerALL = EnemyNear,STATEtype != L
+trigger1 = P2BodyDist X >= 10
+Trigger1 = Ctrl
+
+;=================================================================
+
+[State -3, 1]
+Type = ChangeState
+Value = 430
+triggerall = var(40) <= 0
+TriggerAll = Var(59) = 1 && palno != 6
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype != H
+TriggerALL = EnemyNear,ANIMTIME < -5
+TriggerAll = Alive
+TriggerAll = STATENO != 430
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != L
+TriggerALL = EnemyNear,STATEtype != A
+triggerAll = P2BodyDist X <= 25
+Trigger1 = random <= 450
+Trigger1 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 205
+triggerall = var(40) <= 0
+TriggerAll = Var(59) = 1 && palno != 6
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype != H
+TriggerALL = EnemyNear,ANIMTIME < -5
+TriggerAll = Alive
+TriggerAll = STATENO != 205
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != L
+TriggerALL = EnemyNear,STATEtype != A
+triggerAll = P2BodyDist X <= 25
+Trigger1 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 650
+TriggerAll = Var(59) = 1
+triggerall = var(40) <= 0
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype != H
+TriggerAll = Alive
+TriggerAll = STATENO != 650
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,ANIMTIME < -5
+TriggerALL = EnemyNear,STATEtype != L
+TriggerALL = EnemyNear,STATEtype != A
+trigger1 = P2BodyDist X <= 50
+trigger1 =! inguarddist
+Trigger1 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 430
+TriggerAll = Var(59) = 1
+triggerall = var(40) <= 0
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype != H
+TriggerAll = Alive
+TriggerAll = STATENO != 430
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != L
+TriggerALL = EnemyNear,STATEtype != A
+trigger1 = P2BodyDist X = (50,60)
+TriggerALL = EnemyNear,ANIMTIME < -5
+Trigger1 = random <= 450
+Trigger1 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 200
+TriggerAll = Var(59) = 1
+triggerall = var(40) <= 0
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype != H
+TriggerAll = Alive
+TriggerAll = STATENO != 200
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != L
+TriggerALL = EnemyNear,STATEtype != A
+trigger1 = P2BodyDist X = (50,60)
+TriggerALL = EnemyNear,ANIMTIME < -5
+Trigger1 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 240
+triggerall = var(40) <= 0
+TriggerAll = !inguarddist
+TriggerAll = Var(59) = 1
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype != H
+TriggerAll = Alive
+TriggerAll = STATENO != 240
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != L
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,ANIMTIME < -5
+trigger1 = P2BodyDist X = [60,80)
+Trigger1 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 260
+TriggerAll = Var(59) = 1
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype != H
+TriggerAll = Alive
+TriggerAll = STATENO != 240
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != L
+trigger1 = P2BodyDist X = [80,110)
+trigger1 =! inguarddist
+Trigger1 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 500
+TriggerAll = !inguarddist
+TriggerAll = NumHelper (503) + NumHelper (501) + NumHelper (504) <= 3 
+TriggerAll = Var(59) = 1
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype != H
+TriggerAll = Alive
+TriggerAll = STATENO != 500
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != L
+TriggerALL = EnemyNear,STATEtype != A
+trigger1 = P2BodyDist X = [110,150]
+Trigger1 = Ctrl
+
+;==================================================================
+
+[State -3, 1,连段1]
+Type = ChangeState
+Value = 430
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 100
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+trigger1 = P2Dist X <= 40
+Trigger1 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 200
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 101
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+Trigger1 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 245
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 102
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno=200 && MoveContact   
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 260
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 103
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno=245 && MoveContact 
+TriggerAll = MoveContact 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 210
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 104
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno=260 && Animelem = 11 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 250
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 105
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno= 210 && MoveContact 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+trigger2 = p2bodydist x < 30
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 430
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 106
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno= 250 && MoveContact  
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 500
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 107
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno= 430 && MoveContact 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 3850
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 108
+TriggerAll = StateType != A 
+TriggerALL = var(50)>= 20
+TriggerALL = EnemyNear,Movetype = H
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+Trigger1 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 720
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 108
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno= 500 && animtime = 0 
+TriggerAll = Alive
+TriggerAll = random <= 500
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+TriggerALL = POWER = [1000,2000)
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 1000
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 108
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno= 500 && animtime = 0 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+TriggerALL = POWER = [1000,2000)
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 700
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 108
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno= 500 && animtime = 0 
+TriggerAll = Alive
+TriggerALL = POWER < 1000
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 230
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 109
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno= 410 && MoveContact  
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+trigger2 = p2bodydist x < 30
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 500
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 109
+TriggerAll = StateType != A 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+Trigger1 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 2650
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 108
+TriggerAll = StateType != A 
+TriggerALL = POWER >= 2000
+TriggerALL = EnemyNear,Movetype = H
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+Trigger1 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 260
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 109
+TriggerAll = StateType != A 
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno=2660 && animtime = 0
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 240
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 110
+TriggerAll = StateType != A 
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno=260 && Animelem = 11 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 250
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 111
+TriggerAll = StateType != A 
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno=240 && MoveContact
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 260
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 112
+TriggerAll = StateType != A 
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno=250 && MoveContact
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 650
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 113
+TriggerAll = StateType != A 
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno=260 && animelem = 11
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 3850
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 114
+TriggerAll = StateType != A 
+TriggerALL = var(50)>= 20
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno=660 && animtime = 0
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+Trigger1 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 550
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 114
+TriggerAll = StateType != A 
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno=660 && animtime = 0
+TriggerALL = POWER < 1000
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 2200
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 114
+TriggerAll = StateType != A 
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno= 660 && animtime = 0
+TriggerALL = POWER >= 1000
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 240
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 115
+TriggerAll = StateType != A 
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno=2200 && animtime = 0
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 260
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 116
+TriggerAll = StateType != A 
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno=240 && MoveContact
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 240
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 117
+TriggerAll = StateType != A 
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno=260 && animelem = 11
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 500
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 118
+TriggerAll = StateType != A 
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno=240 && MoveContact
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 3850
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 119
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno=500 && animtime = 0
+TriggerALL = var(50) >= 20 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 1000
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 119
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno=500 && animtime = 0
+TriggerALL = POWER >= 2000 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 550
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 119
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno=500 && animtime = 0
+TriggerALL = POWER < 2000 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+
+;==================================================================
+
+[State -3, 1,连段2]
+Type = ChangeState
+Value = 205
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 200
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+trigger1 = P2BodyDist X <= 30
+Trigger1 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 205
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 201
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+Trigger1 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 200
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 202
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno=205 && MoveContact   
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 250
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 203
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno=200 && MoveContact 
+TriggerAll = MoveContact 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 430
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 204
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno=250 && MoveContact 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 500
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 205
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno= 430 && MoveContact 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 260
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 206
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno= 500 && animtime = 0 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 3850
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 207
+TriggerAll = StateType != A
+TriggerALL = var(50) >= 20
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno= 260 && animtime = 0
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 900
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 207
+TriggerAll = StateType != A
+TriggerALL = POWER < 1000
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno= 260 && animtime = 0
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 750
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 207
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno= 260 && animtime = 0 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+TriggerALL = POWER <= 2000
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 500
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 208
+TriggerAll = StateType != A 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+Trigger1 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 2500
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 207
+TriggerAll = StateType != A 
+TriggerAll = Alive
+TriggerALL = POWER >= 2000
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno= 260 && MoveContact
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 430
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 208
+TriggerAll = StateType != A 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno= 2500 && animtime = 0
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 650
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 209
+TriggerAll = StateType != A 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+trigger1=stateno= 430 && MoveContact
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+TriggerALL = EnemyNear,Movetype = H
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 240
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 210
+TriggerAll = StateType != A 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+trigger1=stateno= 660 && animtime = 0
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+TriggerALL = EnemyNear,Movetype = H
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 250
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 211
+TriggerAll = StateType != A 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+trigger1=stateno= 240 && MoveContact
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+TriggerALL = EnemyNear,Movetype = H
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 260
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 212
+TriggerAll = StateType != A 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+trigger1=stateno= 250 && MoveContact
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+TriggerALL = EnemyNear,Movetype = H
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 430
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 213
+TriggerAll = StateType != A 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+trigger1=stateno= 260 && animelem = 11
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+TriggerALL = EnemyNear,Movetype = H
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 205
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 214
+TriggerAll = StateType != A 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+trigger1=stateno= 430 && MoveContact
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+TriggerALL = EnemyNear,Movetype = H
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 200
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 215
+TriggerAll = StateType != A 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+trigger1=stateno= 205 && MoveContact
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+TriggerALL = EnemyNear,Movetype = H
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 600
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 216
+TriggerAll = StateType != A 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+trigger1=stateno= 200 && MoveContact
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+TriggerALL = EnemyNear,Movetype = H
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 3300
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 217
+TriggerAll = StateType != A 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+trigger1=stateno= 600 && MoveContact
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+TriggerALL = EnemyNear,Movetype = H
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 2500
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 218
+TriggerAll = StateType != A 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+trigger1=stateno= 3300 && animtime = 0
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+TriggerALL = EnemyNear,Movetype = H
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 3850
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 219
+TriggerAll = StateType != A 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = var(50) >= 20
+trigger1=stateno= 2500 && animtime = 0
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+TriggerALL = EnemyNear,Movetype = H
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 3200
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 219
+TriggerAll = StateType != A 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = POWER >= 4000
+trigger1=stateno= 2500 && animtime = 0
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+TriggerALL = EnemyNear,Movetype = H
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 750
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 219
+TriggerAll = StateType != A 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = POWER = [2000,4000)
+trigger1=stateno= 2500 && animtime = 0
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+TriggerALL = EnemyNear,Movetype = H
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 2200
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 219
+TriggerAll = StateType != A 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = POWER = [1000,2000)
+trigger1=stateno= 2500 && animtime = 0
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+TriggerALL = EnemyNear,Movetype = H
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 900
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 219
+TriggerAll = StateType != A 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = POWER < 1000
+trigger1=stateno= 2500 && animtime = 0
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+TriggerALL = EnemyNear,Movetype = H
+Trigger2 = Ctrl
+
+
+;==================================================================
+
+[State -3, 1,连段3]
+Type = ChangeState
+Value = 200
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 300
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+trigger1 = P2Dist X <= 40
+Trigger1 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 210
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 301
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+Trigger1 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 245
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 302
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno=210 && MoveContact   
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 240
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 303
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno=245 && MoveContact 
+TriggerAll = MoveContact 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 250
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 304
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno=240 && Animelem = 6 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 200
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 305
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno= 250 && MoveContact 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+trigger2 = p2bodydist x < 30
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 210
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 306
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno= 200 && MoveContact  
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 260
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 307
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno= 210 && MoveContact 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 3850
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 308
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno= 260 && Animelem = 11
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+TriggerALL = var(50) >= 20
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 720
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 308
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno= 260 && Animelem = 11
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+TriggerALL = POWER = [1000,2000)
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 550
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 308
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno= 260 && Animelem = 11 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+TriggerALL = POWER < 1000
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 500
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 309
+TriggerAll = StateType != A 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+Trigger1 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 2200
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 308
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno= 260 && Animelem = 11 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+TriggerALL = POWER > 2000
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 2200
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 308
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno= 260 && Animelem = 11 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+TriggerALL = POWER > 2000
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 3300
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 309
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno= 2200 && MoveContact  
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 260
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 310
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno= 3300 && animtime = 0  
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 430
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 311
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno= 260 && Animelem = 11  
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 205
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 312
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno= 430 && MoveContact  
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 200
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 313
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno= 205 && MoveContact  
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 240
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 314
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno= 200 && MoveContact  
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 3850
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 315
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno= 240 && MoveContact  
+TriggerAll = Alive
+TriggerAll = var(50) >= 20
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 2650
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 315
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno= 240 && MoveContact  
+TriggerAll = Alive
+TriggerAll = power >= 1000
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 700
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 315
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno= 240 && MoveContact  
+TriggerAll = Alive
+TriggerAll = power < 1000
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 260
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 316
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno= 2660 && animtime = 0  
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 400
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 317
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno= 260 && animelem = 11  
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 205
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 318
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno= 400 && MoveContact  
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 200
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 319
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno= 205 && MoveContact  
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 250
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 320
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno= 200 && MoveContact  
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 3300
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 321
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno= 250 && animtime = 0  
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 3850
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 322
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno= 3300 && animtime = 0 
+TriggerAll = Alive
+TriggerAll = var(50) >= 20
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 2500
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 322
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno= 3300 && animtime = 0 
+TriggerAll = Alive
+TriggerAll = power >= 1000
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 260
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 322
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno= 3300 && animtime = 0 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 3850
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 323
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerAll = var(50) >= 20
+trigger1=stateno= 2500 && animtime = 0
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 3000
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 323
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerAll = power >= 4000
+trigger1=stateno= 2500 && animtime = 0
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 720
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 323
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerAll = power = [1000,4000)
+trigger1=stateno= 2500 && animtime = 0
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 550
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 323
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerAll = power < 1000
+trigger1=stateno= 2500 && animtime = 0
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 3000
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 323
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerAll = power >= 4000
+trigger1=stateno= 260 && animelem = 11
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 1000
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 323
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerAll = power = [2000,4000)
+trigger1=stateno= 260 && animelem = 11
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 900
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 323
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+trigger1=stateno= 260 && animelem = 11
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+;====================================================
+[State -3, 1,连段4]
+Type = ChangeState
+Value = 260
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 400
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger1 = Ctrl
+triggerall = p2bodydist x = [10,30]
+
+[State -3, 1,连段4]
+Type = ChangeState
+Value = 205
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 400
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger1 = Ctrl
+triggerall = p2bodydist x < 10
+
+[State -3, 1]
+Type = ChangeState
+Value = 205
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 401
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+Trigger1 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 205
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 402
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno=205 && MoveContact   
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 205
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 403
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno=205 && MoveContact 
+TriggerAll = MoveContact 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 205
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 404
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno=205 && MoveContact   
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 205
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 405
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno=205 && MoveContact 
+TriggerAll = MoveContact 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 205
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 406
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno=205 && MoveContact   
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 205
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 407
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno=205 && MoveContact 
+TriggerAll = MoveContact 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 200
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 408
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno=205 && MoveContact   
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 250
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 409
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno=200 && MoveContact 
+TriggerAll = MoveContact 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 245
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 410
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno=250 && MoveContact 
+TriggerAll = MoveContact 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 420
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 411
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno=245 && MoveContact 
+TriggerAll = MoveContact 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 420
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 412
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno=420 && MoveContact  
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 3850
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 413
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+TriggerALL = var(50) >= 20
+trigger1=stateno=420 && MoveContact 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 810
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 413
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+TriggerALL = power >= 3000
+trigger1=stateno=420 && MoveContact 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 850
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 413
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+TriggerALL = power >= 1000
+trigger1=stateno=420 && MoveContact  
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 800
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 413
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno=420 && MoveContact 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 260
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 414
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno=830 && animtime = 0 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 205
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 415
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno=260 && animelem = 11 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 205
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 416
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno=205 && MoveContact 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 205
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 417
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno=205 && MoveContact 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 205
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 418
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno=205 && MoveContact 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 200
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 419
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno=205 && MoveContact 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 250
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 420
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno=200 && MoveContact 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 245
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 421
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno=250 && MoveContact 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 420
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 422
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno=245 && MoveContact 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 420
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 423
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno=420 && MoveContact 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 3850
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 424
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+TriggerALL = var(50) >= 20
+trigger1=stateno=420 && MoveContact  
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 850
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 424
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+TriggerALL = power >= 1000
+trigger1=stateno=420 && MoveContact  
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+
+[State -3, 1]
+Type = ChangeState
+Value = 800
+TriggerAll = Var(59) = 1
+triggerall = var(40) = 424
+TriggerAll = StateType != A
+TriggerALL = EnemyNear,Movetype = H
+trigger1=stateno=420 && MoveContact 
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,STATEtype != A
+TriggerALL = EnemyNear,STATEtype != L
+Trigger2 = Ctrl
+;========================================================
+
+[State -3,强反]
+type = ChangeState
+triggerall =  var(21) = 1
+triggerall =  var(59) = 1
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,Movetype = A
+TriggerALL = Movetype = H
+TriggerAll = StateType != A
+triggerall = random <= 5 + (1000 - life)*0.1 
+trigger1 = enemynear,numproj < 1 || (enemynear,numhelper < 1 && p2movetype = A)
+trigger1 = inguarddist
+Trigger1 = Ctrl
+value = 1600
+
+[State -1, 回避飞道]
+type = changestate
+value = 1800    ;回避的stateno，这里随便写了个，具体你那个人物的回避动作是啥请自己到debug模式里看
+triggerall = roundstate = 2 && ctrl && var(59)
+triggerall = random <= 200 
+TriggerAll = StateType != A
+triggerall = stateno != 1800 ;别连续回避
+triggerall = facing !=enemy,facing ;和敌人的脸朝向不相同，面对面（如果朝向相同的话，就代表要么在敌人背后，要么敌人在自己背后）
+trigger1 = enemynear,numproj >=1 || (enemynear,numhelper >=1 && p2movetype = A) ;敌人的project数大于等于1或敌人的helper数大于等于1且在进攻。
+trigger1 = inguarddist
+
+[State -1, 回避飞道]
+type = changestate
+value = 1850    ;回避的stateno，这里随便写了个，具体你那个人物的回避动作是啥请自己到debug模式里看
+triggerall = roundstate = 2 && ctrl && var(59) 
+TriggerAll = StateType != A
+triggerall = stateno != 1850 ;别连续回避
+triggerall = facing !=enemy,facing ;和敌人的脸朝向不相同，面对面（如果朝向相同的话，就代表要么在敌人背后，要么敌人在自己背后）
+trigger1 = enemynear,numproj >=1 || (enemynear,numhelper >=1 && p2movetype = A) ;敌人的project数大于等于1或敌人的helper数大于等于1且在进攻。
+trigger1 = inguarddist
+triggerall = backEdgeBodyDist >= 50
+
+[State -1, 回避飞道]
+type = changestate
+value = 1850    ;回避的stateno，这里随便写了个，具体你那个人物的回避动作是啥请自己到debug模式里看
+triggerall = roundstate = 2 && ctrl && var(59) 
+TriggerAll = StateType != A
+triggerall = stateno != 1850 ;别连续回避
+triggerall = facing !=enemy,facing ;和敌人的脸朝向不相同，面对面（如果朝向相同的话，就代表要么在敌人背后，要么敌人在自己背后）
+trigger1 = enemynear,numproj >=1 || (enemynear,numhelper >=1 && p2movetype = A) ;敌人的project数大于等于1或敌人的helper数大于等于1且在进攻。
+trigger1 = inguarddist
+triggerall = random 
+triggerall = backEdgeBodyDist <= 50
+
+;=================================================================
+
+[State -1, 回避飞道]
+type = changestate
+value = 1850    ;回避的stateno，这里随便写了个，具体你那个人物的回避动作是啥请自己到debug模式里看
+triggerall = roundstate = 2 && ctrl && var(59)>= 1
+TriggerAll = StateType != A
+triggerall = random <= 500
+triggerall = prevstateno != 1850 ;别连续回避
+triggerAll = P2BodyDist X >= 100
+triggerall = facing !=enemy,facing ;和敌人的脸朝向不相同，面对面（如果朝向相同的话，就代表要么在敌人背后，要么敌人在自己背后）
+trigger1 = enemynear,numproj >=1 || (enemynear,numhelper >=1 && p2movetype = A) || enemynear,movetype = A ;敌人的project数大于等于1或敌人的helper数大于等于1且在进攻。
+trigger1 = inguarddist
+
+[State -1, 回避飞道]
+type = changestate
+value = 1850    ;回避的stateno，这里随便写了个，具体你那个人物的回避动作是啥请自己到debug模式里看
+triggerall = roundstate = 2 && ctrl && var(59)>= 1
+TriggerAll = StateType != A
+triggerall = prevstateno != 1850 ;别连续回避
+triggerAll = P2BodyDist X <= 100
+triggerall = facing !=enemy,facing ;和敌人的脸朝向不相同，面对面（如果朝向相同的话，就代表要么在敌人背后，要么敌人在自己背后）
+trigger1 = enemynear,numproj >=1 || (enemynear,numhelper >=1 && p2movetype = A) || enemynear,movetype = A;敌人的project数大于等于1或敌人的helper数大于等于1且在进攻。
+trigger1 = inguarddist
+triggerall = backEdgeBodyDist <= 50
+
+[State -1, 回避飞道]
+type = changestate
+value = 1875    ;回避的stateno，这里随便写了个，具体你那个人物的回避动作是啥请自己到debug模式里看
+triggerall = roundstate = 2 && ctrl && var(59)>= 1
+TriggerAll = StateType != A
+triggerall = prevstateno != 1875 ;别连续回避
+triggerAll = P2BodyDist X <= 100
+triggerall = facing !=enemy,facing ;和敌人的脸朝向不相同，面对面（如果朝向相同的话，就代表要么在敌人背后，要么敌人在自己背后）
+trigger1 = enemynear,numproj >=1 || (enemynear,numhelper >=1 && p2movetype = A) || enemynear,movetype = A;敌人的project数大于等于1或敌人的helper数大于等于1且在进攻。
+trigger1 = inguarddist
+triggerall = backEdgeBodyDist >= 50
+
+[State -3];后
+type = ChangeState
+value = 1850
+triggerall =  Var(59) >= 1
+triggerall = alive!= 0
+triggerall = roundstate = 2
+triggerall = StateNO!= 1850
+triggerall = statetype != A
+TriggerALL = EnemyNear,movetype = A
+triggerall = stateno = [120,155] 
+Trigger1 = random <= 100
+
+[State -3];后
+type = ChangeState
+value = 1875
+triggerall =  Var(59) >= 1
+triggerall = alive!= 0
+triggerall = roundstate = 2
+triggerall = StateNO!= 1875
+triggerall = statetype != A
+TriggerALL = EnemyNear,STATEtype = L
+triggerAll = P2BodyDist X <= 100
+triggerall = backEdgeBodyDist >= 50 
+Trigger1 = Ctrl
+
+[State -3];前
+type = ChangeState
+value = 1850
+triggerall =  Var(59) >= 1
+triggerall = alive!= 0
+triggerall = roundstate = 2
+triggerall = StateNO!= 1850
+triggerall = statetype != A
+TriggerALL = EnemyNear,STATEtype = L
+triggerAll = P2BodyDist X <= 100
+triggerall = backEdgeBodyDist < 50 
+Trigger1 = Ctrl
+
+[State -3];后
+type = ChangeState
+value = 1850
+triggerall =  Var(59) >= 1
+triggerall = alive!= 0
+triggerall = roundstate = 2
+triggerall = StateNO!= 1850
+triggerall = statetype != A
+TriggerALL = EnemyNear,STATEtype = A 
+TriggerALL = EnemyNear,Movetype = A 
+triggerall = backEdgeBodyDist >= 50
+Trigger1 = Ctrl
+
+[State -3];后
+type = ChangeState
+value = 1850
+triggerall =  Var(59) >= 1
+triggerall = alive!= 0
+triggerall = roundstate = 2
+triggerall = StateNO!= 1850
+triggerall = statetype != A
+TriggerALL = EnemyNear,STATEtype = A 
+TriggerALL = EnemyNear,Movetype = A 
+triggerall = backEdgeBodyDist < 50
+Trigger1 = Ctrl
+
+[State -3,受身]
+type = ChangeState
+triggerall =  var(59) = 1
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerAll = StateType != A
+trigger1 = StateNo = 5100  && (Pos y = 0) 
+trigger1 = P2dist x >= 100
+value = 199
+
+[State -3,受身]
+type = ChangeState
+triggerall =  var(21) = 0
+triggerall =  var(59) = 1
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerAll = StateType != A
+trigger1 = StateNo = 5100  && (Pos y = 0) 
+trigger1 = P2dist x < 100
+value = 1875
+
+[State -3,强反]
+type = ChangeState
+triggerall =  var(59) = 1
+TriggerAll = Alive
+TriggerAll = RoundState = 2
+TriggerALL = EnemyNear,Movetype = A
+TriggerALL = Movetype != H
+TriggerAll = StateType != A
+triggerall = StateNO!= 1600
+triggerall = StateNO!= 1800
+triggerall = StateNO!= 1850
+triggerall = StateNO!= 1875
+trigger1 = inguarddist
+trigger1 = p2dist x <= 50
+value = 1600
+
+[state -2]
+type = selfstate
+triggerall = var(23) = 1
+triggerall = alive!=0
+triggerall = palno >= 3
+trigger1 = Movetype = H
+trigger1 = random <= 5 +(1000 - life)*0.01
+value = 1875
+ignorehitpause = 1
+
+
+
+

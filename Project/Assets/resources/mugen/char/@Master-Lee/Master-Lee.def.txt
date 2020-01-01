@@ -1,0 +1,44 @@
+[Info]
+name = "Master-Lee"
+displayname  = "Master Lee"
+versiondate  = 2019,1,13
+mugenversion = 06,14,2003
+author  = "HZZMYHM"
+pal.defaults = 4
+
+; Files for the player
+[Files]
+cmd     = Master-Lee.cmd
+cns     = Master-Lee.cns
+st      = Master-Lee.cns
+st0      = Switch.cns           ;State定义
+stcommon = Master-Lee_common.cns 
+sprite  = Master-Lee.sff
+anim    = Master-Lee.air
+sound   = Master-Lee.snd 
+pal1    = lee.act
+pal2    = lee2.act
+pal3    = lee3.act
+pal4    = lee4.act
+pal5    = lee5.act
+pal6    = lee6.act
+pal7    = lee.act
+pal8    = lee2.act
+pal9    = lee3.act
+pal10    = lee4.act
+pal11    = lee5.act
+pal12    = lee6.act
+
+[Palette Keymap]
+a = 1 ;按X按键选色表1，以此类推
+b = 2
+c = 3
+x = 4
+y = 5
+z = 6
+a2 = 1 ;按start和X按键选色表7，以此类推
+b2 = 2
+c2 = 3
+x2 = 4
+y2 = 5
+z2 = 6

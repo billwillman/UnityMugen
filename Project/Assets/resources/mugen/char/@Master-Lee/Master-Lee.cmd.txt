@@ -1,0 +1,324 @@
+
+[Remap]
+x = x
+y = y
+z = z
+a = a
+b = b
+c = c
+s = s
+
+;-| 默认输入时间 |-------------------------------------------------------
+[Defaults]
+; 默认接受指令的时间，最小为1。
+command.time = 15
+
+; 默认指令蓄力的时间，最小为1，最大为30。
+command.buffer.time = 1
+
+;---------------------------------------------------------------------------
+[Command]
+name = "FF"     
+command = F, F
+time = 15
+
+[Command]
+name = "BB"     
+command = B, B
+time = 15
+
+[Command]
+name = "recovery"
+command = x+y
+time = 1
+
+[Command]
+name = "ab"
+command = a+b
+time = 1
+
+[Command]
+name = "ac"
+command = a+c
+time = 1
+
+[Command]
+name = "bc"
+command = b+c
+time = 1
+
+[Command]
+name = "xa"
+command = x+a
+time = 1
+
+[Command]
+name = "xy"
+command = x+y
+time = 1
+
+[Command]
+name = "hold"
+command = y+b
+time = 2
+
+[Command]
+name = "slash"
+command = a+y
+time = 2
+
+[Command]
+name = "down_y"
+command = /$D,y
+time = 1
+
+[Command]
+name = "down_a"
+command = /$D,a
+time = 1
+
+[Command]
+name = "down_b"
+command = /$D,b
+time = 1
+
+[Command]
+name = "down_z"
+command = /$D,z
+time = 1
+
+[Command]
+name = "up_z"
+command = /$U,z
+time = 1
+
+;---------------------------------------------------------------------------
+[Command]
+name = "a"
+command = a
+time = 1
+
+[Command]
+name = "b"
+command = b
+time = 1
+
+[Command]
+name = "c"
+command = c
+time = 1
+
+[Command]
+name = "x"
+command = x
+time = 1
+
+[Command]
+name = "y"
+command = y
+time = 1
+
+[Command]
+name = "z"
+command = z
+time = 1
+
+[Command]
+name = "start"
+command = s
+time = 1
+
+[command]
+name = "fwd"
+command = F
+time = 1
+
+[command]
+name = "back"
+command = B
+time = 1
+
+[command]
+name = "up"
+command = U
+time = 1
+
+[command]
+name = "down"
+command = D
+time = 1
+
+;---------------------------------------------------------------------------
+[Command]
+name = "holdfwd"
+command = /$F
+time = 1
+
+[Command]
+name = "holdback"
+command = /$B
+time = 1
+
+[Command]
+name = "holdup" 
+command = /$U
+time = 1
+
+[Command]
+name = "holddown"
+command = /$D
+time = 1
+
+[Statedef -1]
+
+;僟僢僔儏
+[State -1]
+type = ChangeState
+value = 100
+triggerall = VAR(59) = 0
+triggerall = VAR(40) = 0
+triggerall = stateno != 100
+trigger1 = command = "FF"
+trigger1 = statetype = S
+trigger1 = ctrl
+
+;---------------------------------------------------------------------------
+;僶僢僋僗僥僢僾
+[State -1]
+type = ChangeState
+value = 105
+triggerall = VAR(59) = 0
+triggerall = VAR(40) = 0
+triggerall = stateno != 100
+trigger1 = command = "BB"
+trigger1 = statetype = S
+trigger1 = ctrl
+
+;---------------------------------------------------------------------------
+
+;---------------------------------------------------------------------------
+;挧敪
+[State -1]
+type = ChangeState
+value = 3850
+triggerall = VAR(59) = 0
+triggerall = VAR(40) = 0
+triggerall = statetype = S
+triggerall = ctrl
+trigger1 = command = "start"
+
+;---------------------------------------------------------------------------
+;5A
+[State -1]
+type = ChangeState
+value = 1850
+triggerall = VAR(59) = 0
+triggerall = VAR(40) = 0
+triggerall = command = "x"
+triggerall = statetype = S
+trigger1 = ctrl
+
+[State -1]
+type = ChangeState
+value = 850
+triggerall = VAR(59) = 0
+triggerall = VAR(40) = 0
+triggerall = command = "y"
+triggerall = statetype = S
+trigger1 = ctrl 
+
+[State -1]
+type = ChangeState
+value = 800
+triggerall = VAR(59) = 0
+triggerall = VAR(40) = 0
+triggerall = command = "z"
+triggerall = statetype = S
+trigger1 = ctrl 
+
+[State -1]
+type = ChangeState
+value = 500
+triggerall = VAR(59) = 0
+triggerall = VAR(40) = 0
+triggerall = command = "a"
+triggerall = statetype = S
+trigger1 = ctrl 
+
+[State -1]
+type = ChangeState
+value = 3000
+triggerall = VAR(59) = 0
+triggerall = VAR(40) = 0
+triggerall = command = "b"
+triggerall = statetype = S
+trigger1 = ctrl 
+
+[State -1]
+type = ChangeState
+value = 1000
+triggerall = VAR(59) = 0
+triggerall = VAR(40) = 0
+triggerall = command = "c"
+triggerall = statetype = S
+trigger1 = ctrl 
+
+[State -1]
+type = ChangeState
+value = 2650
+triggerall = VAR(59) = 0
+triggerall = VAR(40) = 0
+triggerall = command = "x"
+triggerall = command = "holddown"
+triggerall = statetype = C
+trigger1 = ctrl 
+
+[State -1]
+type = ChangeState
+value = 750
+triggerall = VAR(59) = 0
+triggerall = VAR(40) = 0
+triggerall = command = "y"
+triggerall = command = "holddown"
+triggerall = statetype = C
+trigger1 = ctrl 
+
+[State -1]
+type = ChangeState
+value = 260
+triggerall = VAR(59) = 0
+triggerall = VAR(40) = 0
+triggerall = command = "z"
+triggerall = command = "holddown"
+triggerall = statetype = C
+trigger1 = ctrl 
+
+[State -1]
+type = ChangeState
+value = 600
+triggerall = VAR(59) = 0
+triggerall = VAR(40) = 0
+triggerall = command = "a"
+triggerall = command = "holddown"
+triggerall = statetype = C
+trigger1 = ctrl 
+
+[State -1]
+type = ChangeState
+value = 3300
+triggerall = VAR(59) = 0
+triggerall = VAR(40) = 0
+triggerall = command = "b"
+triggerall = command = "holddown"
+triggerall = statetype = C
+trigger1 = ctrl 
+
+[State -1]
+type = ChangeState
+value = 430
+triggerall = VAR(59) = 0
+triggerall = VAR(40) = 0
+triggerall = command = "c"
+triggerall = command = "holddown"
+triggerall = statetype = C
+trigger1 = ctrl 
