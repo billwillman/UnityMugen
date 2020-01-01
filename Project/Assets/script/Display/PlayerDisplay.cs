@@ -947,6 +947,25 @@ public class PlayerDisplay : BaseResLoader {
         return string.Empty;
     }
 
+	private PlayerPartMgr m_PartMgr = null;
+	private bool m_IsInitedPartMgr = false;
+
+	void InitPartMgr()
+	{
+		if (m_IsInitedPartMgr)
+			return;
+		m_IsInitedPartMgr = true;
+		m_PartMgr = GetComponent<PlayerPartMgr> ();
+	}
+
+	protected void SendPartMgrFrame(ImageAnimation target)
+	{
+		InitPartMgr ();
+		if (m_PartMgr == null)
+			return;
+		m_PartMgr.OnUpdateFrame (target);
+	}
+
     protected void RefreshCurFrame(ImageAnimation target)
     {
         SpriteRenderer r = this.SpriteRender;
@@ -959,6 +978,8 @@ public class PlayerDisplay : BaseResLoader {
 		UpdateRenderer(frame, flip, target);
 
 		CallCnsTriggerEvent (CnsStateTriggerType.AnimElem, CnsStateTriggerType.AnimTime);
+
+		SendPartMgrFrame (target);
     }
 
 	[NoToLua]
