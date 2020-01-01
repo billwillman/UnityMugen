@@ -246,7 +246,7 @@ public class GlobalPlayer
 	{
 		if (m_PlayerConfig == null || !m_PlayerConfig.IsVaild || m_AirConfig == null || !m_AirConfig.IsVaild)
 			return null;
-		GameObject obj = new GameObject (m_PlayerName, typeof(PlayerDisplay));
+		GameObject obj = new GameObject (m_PlayerName, typeof(PlayerDisplay), typeof(PlayerPartMgr));
         PlayerDisplay displayer = obj.GetComponent<PlayerDisplay>();
 		displayer.Init(loaderPlayer, playerType, Shader_RGB_Zero_Alpha_One);
 		return obj;
