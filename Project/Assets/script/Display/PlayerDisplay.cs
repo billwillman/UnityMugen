@@ -573,7 +573,11 @@ public class PlayerDisplay : BaseResLoader {
         }
         int id;
 		if (!cnsCfg.GetCNSStateId(aiCmd.value, out id))
-            return false;
+		{
+			if (!int.TryParse(aiCmd.value, out id))
+				return false;
+			return this.PlayAni((PlayerState)id, false);
+		}
         return ChangeState((PlayerState)id, true);
     }
 
