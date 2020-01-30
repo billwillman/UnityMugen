@@ -241,8 +241,4 @@ end
 
 setmetatable(Iori_ROTD, {__call = Iori_ROTD.new})
 
-local Object = System.Object
-local o = Object.New()
-o.Destroy()
-
 return Iori_ROTD
