@@ -276,6 +276,18 @@ public class PlayerDisplay : BaseResLoader {
 		return ani.GetMugenAnimateTime();
 	}
 
+	public bool ResetStateAndCtrlOne(int state = (int)PlayerState.psStand1)
+	{
+		bool ret = ChangeState(state, false);
+		if (ret)
+		{
+			var attr = this.Attribe;
+			if (attr != null)
+				attr.Ctrl = 1;
+		}
+		return ret;
+	}
+
 	public bool ChangeState(int state, bool isCns = false)
 	{
 		return ChangeState ((PlayerState)state, isCns);

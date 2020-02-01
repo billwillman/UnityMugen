@@ -237,6 +237,18 @@ function trigger:VelSet(luaPlayer, x, y)
 	return true
 end
 
+function trigger:ResetStateAndCtrl(luaPlayer, state)
+	if luaPlayer == nil then
+		return false
+	end
+	local display = luaPlayer.PlayerDisplay;
+	if display == nil then
+		return false 
+	end
+	state = state or 0
+	return display:ResetStateAndCtrlOne(state)
+end
+
 function trigger:VelMul(luaPlayer, x, y)
 	if luaPlayer == nil or x == nil or y == nil then
 		return nil
