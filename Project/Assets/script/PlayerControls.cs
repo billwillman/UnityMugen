@@ -68,7 +68,8 @@ public class PlayerControls: MonoSingleton<PlayerControls>
 
         if (display != null && display.AnimationState == PlayerState.psNone)
         {
-            display.ChangeState(PlayerState.psStand1);
+            if (display.LuaPly == null)
+                display.ChangeState(PlayerState.psStand1);
         }
     }
 }

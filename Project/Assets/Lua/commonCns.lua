@@ -13,6 +13,7 @@ local function _GetLuaCfg(luaPlayer)
 end
 
 function _On_0(luaPlayer, state)
+	print("_On_0")
 	local anim = trigger:Anim(luaPlayer)
 	local trigger1 = anim ~= 0 and anim ~= 5
 	local trigger2 = anim == 5 and trigger:AnimTime(luaPlayer) == 0
@@ -27,6 +28,7 @@ local function _InitStatedef_0(luaPlayer, luaCfg)
 	def.Type = Mugen.Cns_Type.S
 	def.PhysicsType = Mugen.Cns_PhysicsType.S
 	def.Sprpriority = 0
+	def.Animate = 0
 	
 	local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem, Mugen.CnsStateType.none)
 	state.OnTriggerEvent = _On_0
