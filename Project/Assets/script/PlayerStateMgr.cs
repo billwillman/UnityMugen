@@ -99,6 +99,10 @@ public class PlayerStateMgr : MonoBehaviour {
 		get {
 			return m_CurrentCnsDef;
 		}
+		set
+		{
+			m_CurrentCnsDef = value;
+		}
 	}
 
 	public PlayerDisplay PlyDisplay

@@ -13,7 +13,7 @@ local function _GetLuaCfg(luaPlayer)
 end
 
 function _On_0(luaPlayer, state)
-	print("_On_0")
+	--print("_On_0")
 	local anim = trigger:Anim(luaPlayer)
 	local trigger1 = anim ~= 0 and anim ~= 5
 	local trigger2 = anim == 5 and trigger:AnimTime(luaPlayer) == 0

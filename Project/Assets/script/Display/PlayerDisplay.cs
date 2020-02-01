@@ -165,7 +165,12 @@ public class PlayerDisplay : BaseResLoader {
 
 		AttachAttribeFromStateDef (def);
 
-		return PlayAni (def.Anim, isLoop, false);
+		bool ret = PlayAni (def.Anim, isLoop, false);
+		if (ret)
+		{
+			this.StateMgr.CurrentCnsDef = def;
+		}
+		return ret;
 	}
 
 	[NoToLuaAttribute]
