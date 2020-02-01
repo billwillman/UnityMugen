@@ -130,6 +130,15 @@ namespace Mugen
             set;
         }
 
+#if UNITY_EDITOR
+        [NoToLuaAttribute]
+        public bool isEditorActive
+        {
+            get;
+            set;
+        }
+#endif
+
         [NoToLuaAttribute]
         // 按键组
         public string[] keyCommands
@@ -241,6 +250,45 @@ namespace Mugen
             }
 
             return null;
+        }
+
+        [NoToLuaAttribute]
+        // 自动找到一个合适的触发器
+        public AI_Command GetAutoCheckAICommand(PlayerDisplay display, out bool mustCheckTrigger, string scriptCmdName = "")
+        {
+            mustCheckTrigger = true;
+            if (m_AICmdMap == null)
+                return null;
+            if (display == null || display.LuaPly == null)
+                return null;
+
+            AI_Command finder = null;
+            // 遍历所有条件，如果没有满足的再调用LUA的方法GetAIName
+            var iter = m_AICmdMap.GetEnumerator();
+            while (iter.MoveNext())
+            {
+                var aiCmd = iter.Current.Value;
+                if (aiCmd != null && aiCmd.OnTriggerEvent != null)
+                {
+                    if (aiCmd.CanTrigger(display, scriptCmdName))
+                    {
+                        mustCheckTrigger = false;
+                        finder = aiCmd;
+                        break;
+                    }
+                }
+            }
+            iter.Dispose();
+            if (finder != null)
+                return finder;
+
+            string aiName = display.Call_LuaPly_GetAIName(scriptCmdName);
+            if (string.IsNullOrEmpty(aiName))
+                return null;
+            AI_Command cmd;
+            if (!m_AICmdMap.TryGetValue(aiName, out cmd))
+                cmd = null;
+            return cmd;
         }
 
         [NoToLuaAttribute]

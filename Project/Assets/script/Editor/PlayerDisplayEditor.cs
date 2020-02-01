@@ -455,10 +455,19 @@ public class PlayerDisplayEditor : Editor {
                     EditorGUILayout.BeginHorizontal();
                     isVV = true;
                 }
-                if (GUILayout.Button(cmd.name))
+                
+                
+
+                if (GUILayout.Toggle(m_LastDisplay.IsCmdEditorActive(cmd.name), cmd.name))
                 {
+                    // 设置命令状态
+                    m_LastDisplay.SetCmdEditorActive(true, cmd.name);
+
                     newCmdIdx = i;
 					m_CommandSel = -1;
+                } else
+                {
+                    m_LastDisplay.SetCmdEditorActive(false, cmd.name);
                 }
 
                 if (idx % 2 == 1 && isVV)
@@ -486,7 +495,8 @@ public class PlayerDisplayEditor : Editor {
 
                 // 执行命令
                 string cmdName = m_CommandList[m_CommandSel].name;
-                m_LastDisplay.RunCmd(cmdName);
+                //m_LastDisplay.RunCmd(cmdName);
+                m_LastDisplay.RunAutoCmd();
             }
         }
     }

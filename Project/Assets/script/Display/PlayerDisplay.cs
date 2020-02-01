@@ -544,6 +544,74 @@ public class PlayerDisplay : BaseResLoader {
 		return ret;
 	}
 
+#if UNITY_EDITOR
+	[NoToLuaAttribute]
+	public bool IsCmdEditorActive(string cmdName)
+	{
+		if (string.IsNullOrEmpty(cmdName))
+			return false;
+		GlobalPlayer ply = this.GPlayer;
+		if (ply == null || ply.CmdCfg == null)
+			return false;
+		if (ply == null || ply.CmdCfg == null)
+			return false;
+		var ccmd = ply.CmdCfg.GetCommand(cmdName);
+		if (ccmd == null)
+			return false;
+		return ccmd.isEditorActive;
+	}
+
+	[NoToLuaAttribute]
+	public void SetCmdEditorActive(bool isActive, string cmdName)
+	{
+		if (string.IsNullOrEmpty(cmdName))
+			return;
+		GlobalPlayer ply = this.GPlayer;
+		if (ply == null || ply.CmdCfg == null)
+			return;
+		var ccmd = ply.CmdCfg.GetCommand(cmdName);
+		if (ccmd == null)
+			return;
+		ccmd.isEditorActive = isActive;
+	}
+#endif
+
+	public bool RunAutoCmd()
+	{
+		GlobalPlayer ply = this.GPlayer;
+		if (ply == null || ply.CmdCfg == null)
+			return false;
+
+		bool mustCheckTrigger;
+		AI_Command aiCmd = ply.CmdCfg.GetAutoCheckAICommand(this, out mustCheckTrigger);
+		if (aiCmd == null)
+			return false;
+		string cmdName = aiCmd.name;
+		if (mustCheckTrigger && !aiCmd.CanTrigger(this, cmdName))
+			return false;
+
+		CNSConfig cnsCfg = ply.CnsCfg;
+		if (cnsCfg == null)
+		{
+			if (ply.LuaCfg != null)
+			{
+				cnsCfg = ply.LuaCfg.CnsCfg;
+				if (cnsCfg == null)
+					return false;
+			}
+			else
+				return false;
+		}
+		int id;
+		if (!cnsCfg.GetCNSStateId(aiCmd.value, out id))
+		{
+			if (!int.TryParse(aiCmd.value, out id))
+				return false;
+			return this.PlayAni((PlayerState)id, false);
+		}
+		return ChangeState((PlayerState)id, true);
+	}
+
 	public bool RunCmd(string cmdName)
     {
         if (string.IsNullOrEmpty(cmdName))

@@ -500,6 +500,10 @@ public class InputControl: MonoBehaviour
 	{
 		if (plyType == InputPlayerType.none || cmd == null)
 			return false;
+#if UNITY_EDITOR
+		if (cmd.isEditorActive)
+			return true;
+#endif
 		return CheckPlayerCmdCommandInputOk(plyType, cmd.keyCommands);
 	}
 
@@ -507,7 +511,8 @@ public class InputControl: MonoBehaviour
 	{
 		if (plyType == InputPlayerType.none || keyCommands == null || keyCommands.Length <= 0)
 			return false;
-		return true;
+		// 暂时都不支持
+		return false;
 	}
 
 

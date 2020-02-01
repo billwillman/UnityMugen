@@ -104,6 +104,8 @@ function Iori_ROTD:_initCmds()
 	
 	-- 普攻
 	self:_initCmd_a(luaCfg)
+	-- 奔跑
+	self:_initCmd_FF(luaCfg)
 	--禁千弐百十壱式・八稚女
 	self:_initCmd_SuperCode1(luaCfg)
 end
@@ -143,6 +145,23 @@ function Iori_ROTD:_initCmd_a(luaCfg)
 	aiCmd.type = Mugen.AI_Type.ChangeState
 	aiCmd.value = "320"
 	aiCmd.OnTriggerEvent = self.OnAICmd_a_and_holdfwd
+end
+
+function Iori_ROTD:OnAICmd_Dash(cmdName)
+   local trigger1 = trigger:Command(self, "FF") and (trigger:Statetype(self) == Mugen.Cns_Type.S) 
+						and trigger:CanCtrl(self)
+   return trigger1
+end
+
+function Iori_ROTD:_initCmd_FF(luaCfg)
+	local cmd = luaCfg:CreateCmd("FF", "")
+	cmd.time = 10
+	cmd:AttachKeyCommands("F,F")
+	
+	local aiCmd = luaCfg:CreateAICmd("Dash", "")
+	aiCmd.type = Mugen.AI_Type.ChangeState
+	aiCmd.value = "100"
+	aiCmd.OnTriggerEvent = self.OnAICmd_Dash
 end
 
 
