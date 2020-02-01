@@ -243,7 +243,8 @@ namespace Mugen
             }
         }
 
-		private void ResetVars()
+		[NoToLuaAttribute]
+		internal void ResetVars()
 		{
 			m_Type = Cns_Type.none;
 			m_MoveType = Cns_MoveType.none;

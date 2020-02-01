@@ -588,6 +588,17 @@ public class PlayerDisplay : BaseResLoader {
 	}
 #endif
 
+	public LuaCnsConfig LuaCfg
+	{
+		get
+		{
+			GlobalPlayer ply = this.GPlayer;
+			if (ply == null)
+				return null;
+			return ply.LuaCfg;
+		}
+	}
+
 	public bool RunAutoCmd()
 	{
 		GlobalPlayer ply = this.GPlayer;

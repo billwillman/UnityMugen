@@ -26,6 +26,7 @@ namespace Mugen
 			if (m_StateNameIdMap != null && m_StateNameIdMap.ContainsKey(name))
 				return false;
 			CNSStateDef def = new CNSStateDef();
+			def.ResetVars();
 			AddStateDef(name, def);
 			id = def.id;
 			return true;
