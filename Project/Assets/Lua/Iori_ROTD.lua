@@ -1,4 +1,5 @@
 ﻿local trigger = require("trigger")
+local _InitCommonCns = require("commonCns")
 
 local setmetatable = setmetatable
 
@@ -29,6 +30,8 @@ function Iori_ROTD:OnInit(playerDisplay)
 	self.PlayerDisplay = playerDisplay;
 	--print(self.PlayerDisplay)
 	trigger:Help_InitLuaPlayer(self, self)
+	-- 初始化默认Cns状态
+	_InitCommonCns(self)
 end
 
 function Iori_ROTD:OnDestroy()
@@ -148,9 +151,12 @@ function Iori_ROTD:_initCmd_a(luaCfg)
 end
 
 function Iori_ROTD:OnAICmd_Dash(cmdName)
-   local trigger1 = trigger:Command(self, "FF") and (trigger:Statetype(self) == Mugen.Cns_Type.S) 
-						and trigger:CanCtrl(self)
-   return trigger1
+	local isCmdOk = trigger:Command(self, "FF")
+	local isStateType = trigger:Statetype(self) == Mugen.Cns_Type.S
+	local canCtrl = trigger:CanCtrl(self)
+	--print(canCtrl)
+    local trigger1 = isCmdOk and isStateType and canCtrl
+    return trigger1
 end
 
 function Iori_ROTD:_initCmd_FF(luaCfg)

@@ -1,4 +1,5 @@
 ﻿local trigger = require("trigger")
+local _InitCommonCns = require("commonCns")
 
 local setmetatable = setmetatable
 
@@ -29,6 +30,8 @@ function Iori_ROTD:OnInit(playerDisplay)
 	self.PlayerDisplay = playerDisplay;
 	--print(self.PlayerDisplay)
 	trigger:Help_InitLuaPlayer(self, self)
+	-- 初始化默认Cns状态
+	_InitCommonCns(self)
 end
 
 function Iori_ROTD:OnDestroy()
@@ -104,6 +107,8 @@ function Iori_ROTD:_initCmds()
 	
 	-- 普攻
 	self:_initCmd_a(luaCfg)
+	-- 奔跑
+	self:_initCmd_FF(luaCfg)
 	--禁千弐百十壱式・八稚女
 	self:_initCmd_SuperCode1(luaCfg)
 end
@@ -143,6 +148,26 @@ function Iori_ROTD:_initCmd_a(luaCfg)
 	aiCmd.type = Mugen.AI_Type.ChangeState
 	aiCmd.value = "320"
 	aiCmd.OnTriggerEvent = self.OnAICmd_a_and_holdfwd
+end
+
+function Iori_ROTD:OnAICmd_Dash(cmdName)
+	local isCmdOk = trigger:Command(self, "FF")
+	local isStateType = trigger:Statetype(self) == Mugen.Cns_Type.S
+	local canCtrl = trigger:CanCtrl(self)
+	--print(canCtrl)
+    local trigger1 = isCmdOk and isStateType and canCtrl
+    return trigger1
+end
+
+function Iori_ROTD:_initCmd_FF(luaCfg)
+	local cmd = luaCfg:CreateCmd("FF", "")
+	cmd.time = 10
+	cmd:AttachKeyCommands("F,F")
+	
+	local aiCmd = luaCfg:CreateAICmd("Dash", "")
+	aiCmd.type = Mugen.AI_Type.ChangeState
+	aiCmd.value = "100"
+	aiCmd.OnTriggerEvent = self.OnAICmd_Dash
 end
 
 

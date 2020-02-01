@@ -14,7 +14,7 @@ function trigger:GetLuaCnsCfg(name)
 	if name == nil then
 		return nil
 	end
-	local luaCfg = GlobaConfigMgr:GetLuaCnsCfg("Iori-ROTD")
+	local luaCfg = GlobaConfigMgr:GetLuaCnsCfg(name)
 	return luaCfg
 end
 
@@ -199,6 +199,36 @@ function trigger:Ctrl(luaPlayer)
 	return attribe.Ctrl
 end
 
+function trigger:PlayAnim(luaPlayerl, stateId, isLoop)
+	if luaPlayer == nil or stateId == nil then
+		return false
+	end
+	
+	local display = luaPlayer.PlayerDisplay;
+	if display == nil then
+		return false 
+	end
+	
+	isLoop = isLoop or false
+	local ret = display:PlayAni(stateId, isLoop, false)
+	return ret
+end
+
+function trigger:PlayCns(luaPlayer, stateDefId, isLoop)
+	if luaPlayer == nil or stateDefId == nil then
+		return false
+	end
+	
+	local display = luaPlayer.PlayerDisplay;
+	if display == nil then
+		return false 
+	end
+	
+	isLoop = isLoop or false
+	local ret = display:PlayCnsAnimate(stateDefId, isLoop)
+	return ret
+end
+
 function trigger:ChangeState(luaPlayer, newState, isCns)
 	if luaPlayer == nil or newState == nil then
 		return nil
@@ -207,6 +237,7 @@ function trigger:ChangeState(luaPlayer, newState, isCns)
 	if display == nil then
 		return nil 
 	end
+	isCns = isCns or true
 	return display:ChangeState(newState, isCns)
 end
 
@@ -235,6 +266,18 @@ function trigger:VelSet(luaPlayer, x, y)
 	end
 	display:SetVelSet(x, y)
 	return true
+end
+
+function trigger:ResetStateAndCtrl(luaPlayer, state)
+	if luaPlayer == nil then
+		return false
+	end
+	local display = luaPlayer.PlayerDisplay;
+	if display == nil then
+		return false 
+	end
+	state = state or 0
+	return display:ResetStateAndCtrlOne(state)
 end
 
 function trigger:VelMul(luaPlayer, x, y)
