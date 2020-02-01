@@ -37,6 +37,9 @@ local function _InitStatedef_0(luaPlayer, luaCfg)
 end
 
 
+local function _InitCmds(luaPlayer, luaCfg)
+end
+
 local function _InitCommonCns(luaPlayer)
 	if luaPlayer == nil then
 		return
@@ -46,6 +49,8 @@ local function _InitCommonCns(luaPlayer)
 		return
 	end
 	local standId = _InitStatedef_0(luaPlayer, luaCfg)
+	
+	_InitCmds(luaPlayer, luaCfg)
 	
 	trigger:PlayCns(luaPlayer, standId, true)
 end
