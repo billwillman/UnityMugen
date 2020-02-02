@@ -159,6 +159,10 @@ function kfm720:_initCommands(luaCfg)
 	cmd = luaCfg:CreateCmd("FF")
 	cmd.time = 10
 	cmd:AttachKeyCommands("F, F")
+	
+	cmd = luaCfg:CreateCmd("BB")
+	cmd.time = 10
+	cmd:AttachKeyCommands("B, B")
 end
 
 function kfm720:On_Taunt(cmdName)
@@ -176,17 +180,31 @@ function kfm720:On_Run_Fwd(cmdName)
 	return trigger1 
 end
 
+function kfm720:On_Run_Back(cmdName)
+	local trigger1 = trigger:Command(self, "BB") and 
+						trigger:Statetype(self) == Mugen.Cns_Type.S and 
+						trigger:CanCtrl(self)
+	
+	return trigger1 
+end
+
 function kfm720:_initState_Default(luaCfg)
 	local aiCmd = luaCfg:CreateAICmd("Taunt", "")
 	aiCmd.type = Mugen.AI_Type.ChangeState
 	aiCmd.value = "195"
 	aiCmd.OnTriggerEvent = self.On_Taunt
 	
-	local aiCmd = luaCfg:CreateAICmd("Run Fwd", "")
+	aiCmd = luaCfg:CreateAICmd("Run Fwd", "")
 	aiCmd.type = Mugen.AI_Type.ChangeState
 	aiCmd.value = "100"
 	aiCmd.AniLoop = true
 	aiCmd.OnTriggerEvent = self.On_Run_Fwd
+	
+	aiCmd = luaCfg:CreateAICmd("Run Back", "")
+	aiCmd.type = Mugen.AI_Type.ChangeState
+	aiCmd.value = "105"
+	aiCmd.AniLoop = false
+	aiCmd.OnTriggerEvent = self.On_Run_Back
 end
 
 function kfm720:_initCmds()
