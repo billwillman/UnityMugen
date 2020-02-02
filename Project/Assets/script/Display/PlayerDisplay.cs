@@ -708,10 +708,10 @@ public class PlayerDisplay : BaseResLoader {
 		{
 			if (!int.TryParse(aiCmd.value, out id))
 				return false;
-			return this.PlayAni((PlayerState)id, false);
+			return this.PlayAni((PlayerState)id, aiCmd.AniLoop);
 		}
-        return ChangeState((PlayerState)id, true);
-    }
+		return this.PlayCnsAnimate(id, aiCmd.AniLoop);
+	}
 
 	[NoToLuaAttribute]
     public string PlayerName
