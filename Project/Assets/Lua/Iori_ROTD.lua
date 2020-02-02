@@ -1,4 +1,4 @@
-﻿local trigger = require("trigger")
+local trigger = require("trigger")
 local _InitCommonCns = require("commonCns")
 
 local setmetatable = setmetatable

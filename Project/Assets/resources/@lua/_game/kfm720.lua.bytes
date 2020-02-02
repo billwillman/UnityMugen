@@ -1,4 +1,5 @@
 local trigger = require("trigger")
+local _InitCommonCns = require("commonCns")
 
 local setmetatable = setmetatable
 local GlobaConfigMgr = MonoSingleton_GlobalConfigMgr.GetInstance()
@@ -25,6 +26,7 @@ end
 function kfm720:OnInit(playerDisplay)
 	self.PlayerDisplay = playerDisplay;
 	trigger:Help_InitLuaPlayer(self, self)
+	_InitCommonCns(self)
 end
 
 function kfm720:OnDestroy()
@@ -109,7 +111,90 @@ function kfm720:_initStateDef_3000(luaCfg)
 end
 --======================================================================================
 
+function kfm720:_initCommands(luaCfg)
+	local cmd = luaCfg:CreateCmd("a")
+	cmd.time = 1
+	cmd:AttachKeyCommands("a")
+	
+	cmd = luaCfg:CreateCmd("b")
+	cmd.time = 1
+	cmd:AttachKeyCommands("b")
+	
+	cmd = luaCfg:CreateCmd("c")
+	cmd.time = 1
+	cmd:AttachKeyCommands("c")
+	
+	cmd = luaCfg:CreateCmd("x")
+	cmd.time = 1
+	cmd:AttachKeyCommands("x")
+	
+	cmd = luaCfg:CreateCmd("y")
+	cmd.time = 1
+	cmd:AttachKeyCommands("y")
+	
+	cmd = luaCfg:CreateCmd("z")
+	cmd.time = 1
+	cmd:AttachKeyCommands("z")
+	
+	cmd = luaCfg:CreateCmd("holdfwd")
+	cmd.time = 1
+	cmd:AttachKeyCommands("/$F")
+	
+	cmd = luaCfg:CreateCmd("holdback")
+	cmd.time = 1
+	cmd:AttachKeyCommands("/$B")
+	
+	cmd = luaCfg:CreateCmd("holdup")
+	cmd.time = 1
+	cmd:AttachKeyCommands("/$U")
+	
+	cmd = luaCfg:CreateCmd("holddown")
+	cmd.time = 1
+	cmd:AttachKeyCommands("/$D")
+	
+	cmd = luaCfg:CreateCmd("start")
+	cmd.time = 1
+	cmd:AttachKeyCommands("s")
+end
+
+function kfm720:On_Taunt(cmdName)
+	local triggerall = trigger:Command(self, "start")
+	local trigger1 = trigger:Statetype(self) ~= Mugen.Cns_Type.A and trigger:CanCtrl(self)
+	local ret = triggerall and trigger1
+	return ret
+end
+
+function kfm720:_initState_Default(luaCfg)
+	local aiCmd = luaCfg:CreateAICmd("Taunt", "")
+	aiCmd.type = Mugen.AI_Type.ChangeState
+	aiCmd.value = "195"
+	aiCmd.OnTriggerEvent = self.On_Taunt
+end
+
 function kfm720:_initCmds()
+	local luaCfg = trigger:GetLuaCnsCfg("kfm720")
+	if luaCfg == nil then
+		return
+	end
+	
+	self:_initCommands(luaCfg)
+	self:_initState_Default(luaCfg)
+	self:_initStateDef(luaCfg)
+end
+
+function kfm720:_initStateDef(luaCfg)
+--------------------- start -------------------
+	local id = luaCfg:CreateStateDef("195")
+	local def = luaCfg:GetStateDef(id)
+	def.Type = Mugen.Cns_Type.S
+	def.Ctrl = 0
+	def.Animate = 195
+	def.Velset_x = 0
+	def.Velset_y = 0
+	def.MoveType = Mugen.Cns_MoveType.I
+	def.PhysicsType = Mugen.Cns_PhysicsType.S
+	def.Sprpriority = 2
+	
 end
 
 setmetatable(kfm720, {__call = kfm720.new})
