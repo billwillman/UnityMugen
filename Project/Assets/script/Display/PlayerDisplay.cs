@@ -628,6 +628,7 @@ public class PlayerDisplay : BaseResLoader {
 		return string.Empty;
 	}
 
+	[NoToLuaAttribute]
 	public bool RunAutoCmd()
 	{
 		GlobalPlayer ply = this.GPlayer;
@@ -676,6 +677,7 @@ public class PlayerDisplay : BaseResLoader {
 		//return ChangeState((PlayerState)id, true);
 	}
 
+	/*
 	public bool RunCmd(string cmdName)
     {
         if (string.IsNullOrEmpty(cmdName))
@@ -712,6 +714,7 @@ public class PlayerDisplay : BaseResLoader {
 		}
 		return this.PlayCnsAnimate(id, aiCmd.AniLoop);
 	}
+	*/
 
 	[NoToLuaAttribute]
     public string PlayerName
