@@ -617,18 +617,21 @@ public class PlayerDisplay : BaseResLoader {
 		}
 	}
 
+	private string GetDefaultCnsName()
+	{
+		var attr = this.Attribe;
+		if (attr.Ctrl == 0)
+			return string.Empty;
+
+		if (attr.StandType == Cns_Type.S)
+			return "0";
+		return string.Empty;
+	}
+
 	public bool RunAutoCmd()
 	{
 		GlobalPlayer ply = this.GPlayer;
 		if (ply == null || ply.CmdCfg == null)
-			return false;
-
-		bool mustCheckTrigger;
-		AI_Command aiCmd = ply.CmdCfg.GetAutoCheckAICommand(this, out mustCheckTrigger);
-		if (aiCmd == null)
-			return false;
-		string cmdName = aiCmd.name;
-		if (mustCheckTrigger && !aiCmd.CanTrigger(this, cmdName))
 			return false;
 
 		CNSConfig cnsCfg = ply.CnsCfg;
@@ -643,6 +646,24 @@ public class PlayerDisplay : BaseResLoader {
 			else
 				return false;
 		}
+
+		bool mustCheckTrigger;
+		AI_Command aiCmd = ply.CmdCfg.GetAutoCheckAICommand(this, out mustCheckTrigger);
+		if (aiCmd == null)
+		{
+			// 判断stand以及需要Ctrl = 1
+			string defCnsName = GetDefaultCnsName();
+			if (!string.IsNullOrEmpty(defCnsName))
+			{
+				return PlayCnsAnimateByName(defCnsName, true);
+			}
+			return false;
+		}
+		string cmdName = aiCmd.name;
+		if (mustCheckTrigger && !aiCmd.CanTrigger(this, cmdName))
+			return false;
+
+		
 		int id;
 		if (!cnsCfg.GetCNSStateId(aiCmd.value, out id))
 		{

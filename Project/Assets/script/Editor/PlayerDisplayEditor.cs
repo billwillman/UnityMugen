@@ -496,8 +496,9 @@ public class PlayerDisplayEditor : Editor {
                 // 执行命令
                 string cmdName = m_CommandList[m_CommandSel].name;
                 //m_LastDisplay.RunCmd(cmdName);
-                m_LastDisplay.RunAutoCmd();
+                
             }
+            m_LastDisplay.RunAutoCmd();
         }
     }
 
