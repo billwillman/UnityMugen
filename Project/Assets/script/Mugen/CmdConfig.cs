@@ -32,6 +32,12 @@ namespace Mugen
 			set;
 		}
 
+        public bool AniLoop
+        {
+            get;
+            set;
+        }
+
 		public string command
 		{
 			get;

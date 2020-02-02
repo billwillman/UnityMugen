@@ -155,6 +155,10 @@ function kfm720:_initCommands(luaCfg)
 	cmd = luaCfg:CreateCmd("start")
 	cmd.time = 1
 	cmd:AttachKeyCommands("s")
+	
+	cmd = luaCfg:CreateCmd("FF")
+	cmd.time = 10
+	cmd:AttachKeyCommands("F, F")
 end
 
 function kfm720:On_Taunt(cmdName)
@@ -164,11 +168,25 @@ function kfm720:On_Taunt(cmdName)
 	return ret
 end
 
+function kfm720:On_Run_Fwd(cmdName)
+	local trigger1 = trigger:Command(self, "FF") and 
+						trigger:Statetype(self) == Mugen.Cns_Type.S and 
+						trigger:CanCtrl(self)
+	
+	return trigger1 
+end
+
 function kfm720:_initState_Default(luaCfg)
 	local aiCmd = luaCfg:CreateAICmd("Taunt", "")
 	aiCmd.type = Mugen.AI_Type.ChangeState
 	aiCmd.value = "195"
 	aiCmd.OnTriggerEvent = self.On_Taunt
+	
+	local aiCmd = luaCfg:CreateAICmd("Run Fwd", "")
+	aiCmd.type = Mugen.AI_Type.ChangeState
+	aiCmd.value = "100"
+	aiCmd.AniLoop = true
+	aiCmd.OnTriggerEvent = self.On_Run_Fwd
 end
 
 function kfm720:_initCmds()
@@ -195,6 +213,15 @@ function kfm720:_initStateDef(luaCfg)
 	def.PhysicsType = Mugen.Cns_PhysicsType.S
 	def.Sprpriority = 2
 	
+	local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime, Mugen.CnsStateType.none)
+	state.OnTriggerEvent = 
+		function (luaPlayer, state)
+			local aniTime = trigger:AnimTime(luaPlayer)
+			if aniTime == 0 then
+				trigger:PlayCnsByName(luaPlayer, "0", true)
+			end
+		end
+----------------------
 end
 
 setmetatable(kfm720, {__call = kfm720.new})

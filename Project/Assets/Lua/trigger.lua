@@ -214,6 +214,21 @@ function trigger:PlayAnim(luaPlayerl, stateId, isLoop)
 	return ret
 end
 
+function trigger:PlayCnsByName(luaPlayer, stateDefName, isLoop)
+	if luaPlayer == nil or stateDefName == nil then
+		return false
+	end
+	
+	local display = luaPlayer.PlayerDisplay;
+	if display == nil then
+		return false 
+	end
+	
+	isLoop = isLoop or false
+	local ret = display:PlayCnsAnimateByName(stateDefName, isLoop)
+	return ret
+end
+
 function trigger:PlayCns(luaPlayer, stateDefId, isLoop)
 	if luaPlayer == nil or stateDefId == nil then
 		return false

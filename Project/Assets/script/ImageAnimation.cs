@@ -7,6 +7,20 @@ using Mugen;
 [RequireComponent(typeof(Animation))]
 public class ImageAnimation : MonoBehaviour {
 
+    private void AniTimeUpdate()
+    {
+        if (m_AniTotalTime > 0)
+        {
+            m_AniUsedTime += Time.unscaledDeltaTime;
+            CacheAnimation.SendMessage("OnImageAniTimeUpdate", this, SendMessageOptions.DontRequireReceiver);
+        }
+    }
+
+    private void LateUpdate()
+    {
+        AniTimeUpdate();
+    }
+
     public void ResetState()
     {
         m_State = PlayerState.psNone;
@@ -403,6 +417,7 @@ public class ImageAnimation : MonoBehaviour {
 
 			if (!ctl.enabled)
 				ctl.enabled = true;
+            m_AniTotalTime = sumTime;
         }
         else
         {
@@ -421,6 +436,8 @@ public class ImageAnimation : MonoBehaviour {
             evtList.Add(evt);
 			if (ctl.enabled)
 				ctl.enabled = false;
+
+            m_AniTotalTime = Time.fixedDeltaTime;
         }
 #if UNITY_EDITOR
         if (Application.isPlaying)
@@ -505,7 +522,7 @@ public class ImageAnimation : MonoBehaviour {
 		return CheckFrameLimit (ref m_CurFrame);
 	}
 
-    public bool UpdateFrame(int frameIndex)
+    private bool UpdateFrame(int frameIndex)
     {
         if (m_FrameList == null || m_FrameList.Count <= 0)
             return false;
@@ -767,6 +784,27 @@ public class ImageAnimation : MonoBehaviour {
         return ret;
     }
 
+    // 单位：毫秒
+    public int CurAniUsedTime
+    {
+        get
+        {
+            return (int)(m_AniUsedTime * 1000f);
+        }
+    }
+
+    public int CurAniRetainTime
+    {
+        get
+        {
+            int ret = (int)((m_AniUsedTime - m_AniTotalTime) * 1000f);
+            if (ret > 0)
+                ret = 0;
+            return ret;
+        }
+    }
+
+
     public int CurFrame
     {
         get
@@ -854,6 +892,8 @@ public class ImageAnimation : MonoBehaviour {
     private void ResetAnimation()
     {
         m_CurFrame = -1;
+        m_AniUsedTime = 0;
+        m_AniTotalTime = 0;
     }
 
     public PlayerState State
@@ -879,6 +919,10 @@ public class ImageAnimation : MonoBehaviour {
     // 当前帧
     private static float _cImageAnimationScale = 0.015f;
     private int m_CurFrame = -1;
+    // 当前动画状态已经使用的时间
+    private float m_AniUsedTime = 0f;
+    // 离当前动画总时间
+    private float m_AniTotalTime = 0f;
 	private int m_LoopStart = -1;
     private float m_LoopStartAniTime = -1;
     private Animation m_Animation = null;

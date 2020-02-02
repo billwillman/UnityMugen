@@ -152,6 +152,19 @@ public class PlayerDisplay : BaseResLoader {
 		}
 	}
 
+	public bool PlayCnsAnimateByName(string stateDefName, bool isLoop = true)
+	{
+		var player = this.GPlayer;
+		if (player == null)
+			return false;
+		if (player.CnsCfg == null || !player.CnsCfg.HasStateDef)
+			return false;
+		int stateDefId;
+		if (!player.CnsCfg.GetCNSStateId(stateDefName, out stateDefId))
+			return false;
+		return PlayCnsAnimate(stateDefId, isLoop);
+	}
+
 	public bool PlayCnsAnimate(int stateDefId, bool isLoop = true)
 	{
 		var player = this.GPlayer;
@@ -635,9 +648,11 @@ public class PlayerDisplay : BaseResLoader {
 		{
 			if (!int.TryParse(aiCmd.value, out id))
 				return false;
-			return this.PlayAni((PlayerState)id, false);
+			return this.PlayAni((PlayerState)id, aiCmd.AniLoop);
 		}
-		return ChangeState((PlayerState)id, true);
+
+		return this.PlayCnsAnimate(id, aiCmd.AniLoop);
+		//return ChangeState((PlayerState)id, true);
 	}
 
 	public bool RunCmd(string cmdName)
@@ -742,19 +757,31 @@ public class PlayerDisplay : BaseResLoader {
 
 	public int Trigger_Time()
 	{
+		/*
 		var imgAni = this.ImageAni;
 		if (imgAni == null)
 			return -1;
 		return ImageAni.CurFrame;
+		*/
+		var imgAni = this.ImageAni;
+		if (imgAni == null)
+			return -1;
+		return imgAni.CurAniUsedTime;
 	}
 
 	public int Trigger_AnimTime()
 	{
+		/*
 		var imgAni = this.ImageAni;
 		if (imgAni == null)
 			return -9999;
 		int ret = (imgAni.CurFrame + 1) - imgAni.AniNodeCount;
 		return ret;
+		*/
+		var imgAni = this.ImageAni;
+		if (imgAni == null)
+			return -9999;
+		return imgAni.CurAniRetainTime;
 	}
 
 	public void SetVelSet(float x, float y)
@@ -1066,6 +1093,8 @@ public class PlayerDisplay : BaseResLoader {
 		m_PartMgr.OnUpdateFrame (target);
 	}
 
+	
+
     protected void RefreshCurFrame(ImageAnimation target)
     {
         SpriteRenderer r = this.SpriteRender;
@@ -1077,7 +1106,7 @@ public class PlayerDisplay : BaseResLoader {
             return;
 		UpdateRenderer(frame, flip, target);
 
-		CallCnsTriggerEvent (CnsStateTriggerType.AnimElem, CnsStateTriggerType.AnimTime);
+		CallCnsTriggerEvent (CnsStateTriggerType.AnimElem);
 
 		SendPartMgrFrame (target);
     }
@@ -1098,6 +1127,11 @@ public class PlayerDisplay : BaseResLoader {
 				}
 			}
 		}
+	}
+
+	void OnImageAniTimeUpdate(ImageAnimation target)
+	{
+		CallCnsTriggerEvent(CnsStateTriggerType.AnimTime);
 	}
 
 	void OnImageAnimationFrame(ImageAnimation target)
