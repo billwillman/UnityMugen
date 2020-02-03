@@ -321,6 +321,7 @@ function kfm720:_initStateDef(luaCfg)
 		function (luaPlayer, state)
 			local aniTime = trigger:AnimTime(luaPlayer)
 			if aniTime == 0 then
+				trigger:SetCtrl(luaPlayer, 1)
 				trigger:PlayCnsByName(luaPlayer, "0", true)
 			end
 		end
