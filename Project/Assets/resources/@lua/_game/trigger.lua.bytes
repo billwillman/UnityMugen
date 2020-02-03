@@ -52,6 +52,8 @@ function trigger:AnimElemTime(luaPlayer, frameNo)
    if display == nil then
 	  return nil
    end
+   -- CNS里是从1开始算第一个图片帧
+   frameNo = frameNo - 1
    local ret = display:AnimElemTime(frameNo)
    return ret
 end
