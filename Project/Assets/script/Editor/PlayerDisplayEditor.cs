@@ -35,6 +35,7 @@ public class PlayerDisplayEditor : Editor {
     private int m_CommandSel = -1;
     private bool m_IsFlipX = false;
     private bool m_IsExpandSound = false;
+    private bool m_IsAutoRunCmd = true;
 
     private void InitPlayerDisplay()
     {
@@ -50,6 +51,7 @@ public class PlayerDisplayEditor : Editor {
         m_CommandSel = -1;
         m_IsFlipX = false;
         m_IsExpandSound = false;
+        m_IsAutoRunCmd = true;
         if (m_LastDisplay == null)
             return;
         var player = m_LastDisplay.GPlayer;
@@ -170,11 +172,12 @@ public class PlayerDisplayEditor : Editor {
             string l0 = string.Format("手动选择角色动作({0:D})", m_VaildStateNameList.Length);
             int newSelected = EditorGUILayout.Popup(l0, m_StateSelected, m_VaildStateNameList);
             if (m_StateSelected != newSelected)
-            {
+            { 
                 var state = m_VaildStateList[newSelected];
                 m_StateSelected = newSelected;
                 if (m_LastDisplay.PlayAni(state, true))
                 {
+                    m_IsAutoRunCmd = false;
                     SelctedItem item;
                     if (!m_SelectedMap.TryGetValue(m_LastDisplay.GetInstanceID(), out item))
                         item = new SelctedItem();
@@ -498,7 +501,11 @@ public class PlayerDisplayEditor : Editor {
                 //m_LastDisplay.RunCmd(cmdName);
                 
             }
-            m_LastDisplay.RunAutoCmd();
+
+            m_IsAutoRunCmd = GUILayout.Toggle(m_IsAutoRunCmd, "开启命令执行");
+
+            if (m_IsAutoRunCmd)
+                m_LastDisplay.RunAutoCmd();
         }
     }
 

@@ -84,7 +84,8 @@ public class SpriteMovement : MonoBehaviour {
 	{
 		if (Mathf.Abs (Vec.x) <= float.Epsilon && Mathf.Abs (Vec.y) <= float.Epsilon)
 			return;
-		Vector2 vv = Vec * (IsFlipX? -1:1) * deltaTime;
+		// 按照毫秒算速度
+		Vector2 vv = Vec * (IsFlipX? -1:1) * deltaTime * 1000f;
 		Vector2 org = this.OffsetPos;
 		org += vv;
 		this.OffsetPos = org;

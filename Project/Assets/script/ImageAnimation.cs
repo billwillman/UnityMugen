@@ -12,7 +12,7 @@ public class ImageAnimation : MonoBehaviour {
         if (m_AniTotalTime > 0)
         {
             m_AnimElemTime += 1;
-            m_AniUsedTime += Time.unscaledDeltaTime;
+            m_AniUsedTime += Time.deltaTime;
             CacheAnimation.SendMessage("OnImageAniTimeUpdate", this, SendMessageOptions.DontRequireReceiver);
         }
     }
@@ -25,6 +25,7 @@ public class ImageAnimation : MonoBehaviour {
     public void ResetState()
     {
         m_State = PlayerState.psNone;
+        m_PrevState = PlayerState.psNone;
         var ani = this.CacheAnimation;
         if (ani != null && ani.isPlaying)
             ani.Stop();
@@ -181,7 +182,8 @@ public class ImageAnimation : MonoBehaviour {
 		if (ret)
 		{
 			m_IsLoop = isLoop;
-			m_State = state;
+            m_PrevState = m_State;
+            m_State = state;
 
 			CacheAnimation.Stop ();
 			if(isLoop)
@@ -192,7 +194,8 @@ public class ImageAnimation : MonoBehaviour {
 		} else
 		{
 			m_IsLoop = isLoop;
-			m_State = state;
+            m_PrevState = m_State;
+            m_State = state;
 
 			DoEndFrame();
 		}
@@ -277,7 +280,7 @@ public class ImageAnimation : MonoBehaviour {
 			info.time = 0f;
 		}
 		m_CurFrame = 0;
-		DoChangeFrame();
+        DoChangeFrame();
 		ctl.Play ();
 	}
 
@@ -884,6 +887,7 @@ public class ImageAnimation : MonoBehaviour {
         }
 
         m_State = PlayerState.psNone;
+        m_PrevState = PlayerState.psNone;
         m_FrameList = null;
         m_IsLoop = false;
     }
@@ -917,6 +921,14 @@ public class ImageAnimation : MonoBehaviour {
         }
     }
 
+    public PlayerState PrevState
+    {
+        get
+        {
+            return m_PrevState;
+        }
+    }
+
 	public float GetMugenAnimateTime()
 	{
 		var ani = this.CacheAnimation;
@@ -943,6 +955,7 @@ public class ImageAnimation : MonoBehaviour {
     private AnimationClip m_Clip = null;
     private GameObject m_GameObj = null;
     private PlayerState m_State = PlayerState.psNone;
+    private PlayerState m_PrevState = PlayerState.psNone;
     private List<ImageAnimateNode> m_FrameList = null;
     private bool m_IsLoop = false;
 	// 限定动画帧范围

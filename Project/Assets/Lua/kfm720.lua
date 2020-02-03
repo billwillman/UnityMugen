@@ -13,6 +13,7 @@ function kfm720:new()
 		self._isInit = true
 		self:_initData()
 		self:_initSize()
+		self:_initMovement()
 		self:_initStateDefs()
 		self:_initCmds()
     end
@@ -76,6 +77,15 @@ function kfm720:_initSize()
   self.Size = {}
   self.Size.xscale = 1
   self.Size.yscale = 1
+end
+
+function kfm720:_initMovement()
+	if self.Movement ~= nil then
+		return
+	end
+	
+	self.Movement = {}
+	self.Movement.yaccel = 1.76
 end
 
 --=====================================创建StateDef===================================
@@ -163,6 +173,9 @@ function kfm720:_initCommands(luaCfg)
 	cmd = luaCfg:CreateCmd("BB")
 	cmd.time = 10
 	cmd:AttachKeyCommands("B, B")
+	
+	cmd = luaCfg:CreateCmd("QCF_y")
+	cmd:AttachKeyCommands("~D, DF, F, y")
 end
 
 function kfm720:On_Taunt(cmdName)
@@ -188,6 +201,12 @@ function kfm720:On_Run_Back(cmdName)
 	return trigger1 
 end
 
+function kfm720:On_QCF_y(cmdName)
+	local triggerall = trigger:Command(self, "QCF_y")
+	-- 暂时忽略COMBO条件
+	return triggerall
+end
+
 function kfm720:_initState_Default(luaCfg)
 	local aiCmd = luaCfg:CreateAICmd("Taunt", "")
 	aiCmd.type = Mugen.AI_Type.ChangeState
@@ -205,6 +224,12 @@ function kfm720:_initState_Default(luaCfg)
 	aiCmd.value = "105"
 	aiCmd.AniLoop = false
 	aiCmd.OnTriggerEvent = self.On_Run_Back
+	
+	aiCmd = luaCfg:CreateAICmd("Strong Kung Fu Palm", "")
+	aiCmd.type = Mugen.AI_Type.ChangeState
+	aiCmd.value = "1010"
+	aiCmd.AniLoop = false
+	aiCmd.OnTriggerEvent = self.On_QCF_y
 end
 
 function kfm720:_initCmds()
@@ -239,7 +264,66 @@ function kfm720:_initStateDef(luaCfg)
 				trigger:PlayCnsByName(luaPlayer, "0", true)
 			end
 		end
-----------------------
+---------------------- Strong Kung Fu Palm ------------------
+	id = luaCfg:CreateStateDef("1010")
+	def = luaCfg:GetStateDef(id)
+	def.Type = Mugen.Cns_Type.S
+	def.MoveType = Mugen.Cns_MoveType.A
+	def.PhysicsType = Mugen.Cns_PhysicsType.S
+	def.Juggle = 4
+	def.PowerAdd = 60
+	def.Velset_x = 0
+	def.Velset_y = 0
+	def.Animate = 1010
+	def.Ctrl = 0
+	def.Sprpriority = 2
+	-- [State 1010, 1]
+	state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+	state.OnTriggerEvent = 
+		function (luaPlayer, state)
+		  local t = trigger:Time(luaPlayer)
+		  if t == 9 then
+			trigger:PlaySnd(luaPlayer, 0, 3)
+		  end
+		end
+	-- [State 1010, 2]
+	state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+	state.OnTriggerEvent = 
+		function (luaPlayer, state)
+			local frame = trigger:AnimElem(luaPlayer)
+			if frame == 2 then
+				trigger:PosAdd(luaPlayer, 80, 0)
+			end
+		end
+	-- [State 1010, 3]
+	state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+	state.OnTriggerEvent = 
+		function (luaPlayer, state)
+			local frame = trigger:AnimElem(luaPlayer)
+			if frame == 3 or frame == 13 then
+				trigger:PosAdd(luaPlayer, 40, 0)
+			end
+		end
+	-- [State 1010, 4]
+	-- [State 1010, 5]
+	state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+	state.OnTriggerEvent = 
+		function (luaPlayer, state)
+			local frame = trigger:AnimElem(luaPlayer)
+			if frame == 5 then
+				trigger:PosAdd(luaPlayer, 20, 0)
+				trigger:VelSet(luaPlayer, 16, 0)
+			end
+		end
+	-- [State 1010, 8]
+	state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+	state.OnTriggerEvent = 
+		function (luaPlayer, state)
+			local aniTime = trigger:AnimTime(luaPlayer)
+			if aniTime == 0 then
+				trigger:PlayCnsByName(luaPlayer, "0", true)
+			end
+		end
 end
 
 setmetatable(kfm720, {__call = kfm720.new})

@@ -36,9 +36,9 @@ namespace Mugen
 	public enum CnsStateTriggerType
     {
         none = 0,
-		Anim,
-		AnimElem,
-		AnimTime,
+		Anim, // 动画切换时
+		AnimElem,// 动画帧切换时
+		AnimTime,// 动画播放过程中（每次循环跑圈都会调用）
     }
 
     public class CNSState

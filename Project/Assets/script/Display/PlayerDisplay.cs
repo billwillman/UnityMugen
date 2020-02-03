@@ -131,6 +131,7 @@ public class PlayerDisplay : BaseResLoader {
 		if (movement == null)
 			return;
 		movement.StartVec = attribe.StateStartVec;
+		movement.Vec = Vector2.zero;
 	}
 
 	private void AttachAttribeFromStateDef(CNSStateDef def)
@@ -448,7 +449,16 @@ public class PlayerDisplay : BaseResLoader {
 			return (int)this.AnimationState;
 		}
 	}
-		
+
+	public int PrevStateNo
+	{
+		get
+		{
+			return (int)this.PrevAnimationState;
+		}
+	}
+
+
 	[NoToLuaAttribute]
     public PlayerState AnimationState
     {
@@ -460,6 +470,18 @@ public class PlayerDisplay : BaseResLoader {
             return ani.State;
         }
     }
+
+	[NoToLuaAttribute]
+	public PlayerState PrevAnimationState
+	{
+		get
+		{
+			ImageAnimation ani = this.ImageAni;
+			if (ani == null)
+				return PlayerState.psNone;
+			return ani.PrevState;
+		}
+	}
 
 	[NoToLuaAttribute]
 	public bool CanInputKey()
@@ -826,6 +848,16 @@ public class PlayerDisplay : BaseResLoader {
 		if (movement == null)
 			return;
 		movement.Vec = new Vector2 (x, y);
+	}
+
+	public void PosAdd(float x, float y)
+	{
+		float dir;
+		if (IsFlipX)
+			dir = -1;
+		else
+			dir = 1;
+		m_OffsetPos += new Vector2(x * dir, y);
 	}
 
 	public void VelMul(float x, float y)

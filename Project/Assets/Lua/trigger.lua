@@ -8,6 +8,8 @@ end
 trigger = {}
 mugen.trigger = trigger
 
+local _cPerUnit = 10000.0
+
 local GlobaConfigMgr = MonoSingleton_GlobalConfigMgr.GetInstance()
 
 function trigger:GetLuaCnsCfg(name)
@@ -291,7 +293,23 @@ function trigger:VelSet(luaPlayer, x, y)
 	if display == nil then
 		return nil 
 	end
+	x = x / _cPerUnit
+	y = y / _cPerUnit
 	display:SetVelSet(x, y)
+	return true
+end
+
+function trigger:PosAdd(luaPlayer, x, y)
+	if luaPlayer == nil or x == nil or y == nil then
+		return nil
+	end
+	local display = luaPlayer.PlayerDisplay;
+	if display == nil then
+		return nil 
+	end
+	x = x / _cPerUnit
+	y = y / _cPerUnit
+	display:PosAdd(x, y)
 	return true
 end
 
@@ -315,6 +333,8 @@ function trigger:VelMul(luaPlayer, x, y)
 	if display == nil then
 		return nil 
 	end
+	x = x / _cPerUnit
+	y = y / _cPerUnit
 	display:VelMul(x, y)
 	return true;
 end
@@ -352,6 +372,18 @@ function trigger:Stateno(luaPlayer)
 		return nil 
 	end
 	local ret = display.Stateno
+	return ret
+end
+
+function trigger:PrevStateNo(luaPlayer)
+	if luaPlayer == nil then
+		return nil
+	end
+	local display = luaPlayer.PlayerDisplay;
+	if display == nil then
+		return nil 
+	end
+	local ret = display.PrevStateNo
 	return ret
 end
 
@@ -436,6 +468,10 @@ function trigger:Command(luaPlayer, cmdName)
 end
 
 -- 处理模块
+
+function trigger:PlaySnd(luaPlayer, group, index)
+	self:Do_PlaySnd(luaPlayer, group, index)
+end
 
 function trigger:Do_PlaySnd(luaPlayer, group, index)
 	if luaPlayer == nil or group == nil or index == nil then

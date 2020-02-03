@@ -72,7 +72,7 @@ namespace Mugen
 			}
         }
 
-		public CNSState CreateStateEvent(CnsStateTriggerType evtType, CnsStateType type)
+		public CNSState CreateStateEvent(CnsStateTriggerType evtType, CnsStateType type = CnsStateType.none)
         {
 			if (evtType == CnsStateTriggerType.none)
                 return null;
