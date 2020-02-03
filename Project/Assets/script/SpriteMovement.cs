@@ -88,6 +88,8 @@ public class SpriteMovement : MonoBehaviour {
 		Vector2 vv = Vec * (IsFlipX? -1:1) * deltaTime * 1000f;
 		Vector2 org = this.OffsetPos;
 		org += vv;
+		if (org.y < 0)
+			org.y = 0;
 		this.OffsetPos = org;
 	}
 

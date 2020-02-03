@@ -111,6 +111,103 @@ function Iori_ROTD:_initCmds()
 	self:_initCmd_FF(luaCfg)
 	--禁千弐百十壱式・八稚女
 	self:_initCmd_SuperCode1(luaCfg)
+	
+---------------------Run Back ------------------------------
+	local cmd = luaCfg:CreateCmd("BB")
+	cmd.time = 10
+	cmd:AttachKeyCommands("B, B")
+	
+	local aiCmd = luaCfg:CreateAICmd("Back Step")
+	aiCmd.type = Mugen.AI_Type.ChangeState
+	aiCmd.value = "105"
+	aiCmd.OnTriggerEvent = 
+		function (luaPlayer, aiName)
+			local trigger1 = trigger:Command(luaPlayer, "BB") and 
+								trigger:Statetype(luaPlayer) == Mugen.Cns_Type.S and
+								trigger:CanCtrl(luaPlayer)
+			return trigger1
+		end
+-- Build By Iori-ROTD-N.cns.txt
+----- 105
+	local id = luaCfg:CreateStateDef("105")
+	local def = luaCfg:GetStateDef(id)
+	def.Type = Mugen.Cns_Type.S
+	def.PhysicsType = Mugen.Cns_PhysicsType.N
+	def.Ctrl = 0
+	def.Animate = 105
+	def.Velset_x = 0
+	def.Velset_y = 0
+	
+	local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+	state.OnTriggerEvent =
+	  function (luaPlayer, state)
+	    local trigger1 = trigger:AnimTime(luaPlayer) == 0
+		if trigger1 then
+		  trigger:PlayCnsByName(luaPlayer, "106")
+		end
+	  end
+----- 106 
+	id = luaCfg:CreateStateDef("106")
+	def = luaCfg:GetStateDef(id)
+	def.Type = Mugen.Cns_Type.A
+	def.PhysicsType = Mugen.Cns_PhysicsType.N
+	def.Ctrl = 0
+	def.Animate = 106
+	
+-- [State 106,PlaySnd]
+	state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+	state.OnTriggerEvent =
+	  function (luaPlayer, state)
+	    local trigger1 = trigger:Time(luaPlayer) == 0
+		if trigger1 then
+		  trigger:PlaySnd(luaPlayer, 1, 1)
+		end
+	  end
+-- [State 106, VelSet]
+	 state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+	 state.OnTriggerEvent =
+		function (luaPlayer, state)
+			local trigger1 = trigger:Time(luaPlayer) == 3
+			if trigger1 then
+				trigger:VelSet(luaPlayer, -8, -4)
+			end
+		end
+-- [State 106, VelAdd]
+	state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+	state.OnTriggerEvent =
+		function (luaPlayer, state)
+			local trigger1 = trigger:Time(luaPlayer) >= 5 and trigger:PosY(luaPlayer) < -3
+			if trigger1 then
+				trigger:VelAdd(luaPlayer, 0.43, 0.55)
+			end
+		end
+-- [State 106, VelSet]
+-- [State 106, PosSet]
+	state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+	state.OnTriggerEvent =
+		function (luaPlayer, state)
+			local trigger1 = trigger:Time(luaPlayer) > 10 and trigger:PosY(luaPlayer) >= -5
+			if trigger1 then
+				trigger:VelSet(luaPlayer, 0, 0)
+				trigger:PosSet(luaPlayer, nil , 0)
+			end
+		end
+-- [State 106, ChangeState]
+   state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+   state.OnTriggerEvent =
+		function (luaPlayer, state)
+			local trigger1 = trigger:Time(luaPlayer) > 10 and trigger:PosY(luaPlayer) == 0
+			if trigger1 then
+				trigger:PlayCnsByName(luaPlayer, "107")
+			end
+		end
+----- 107
+	id = luaCfg:CreateStateDef("107")
+	def = luaCfg:GetStateDef(id)
+	def.Type = Mugen.Cns_Type.S
+	def.PhysicsType = Mugen.Cns_PhysicsType.N
+	def.Ctrl = 0
+	def.Animate = 107
 end
 
 --======================================================================================

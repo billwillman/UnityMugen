@@ -32,6 +32,31 @@ public class PlayerDisplay : BaseResLoader {
 	[NoToLuaAttribute]
     public Vector2 m_OffsetPos = Vector2.zero;
 
+	public float PosY
+	{
+		get
+		{
+			return m_OffsetPos.y;
+		}
+
+		set
+		{
+			m_OffsetPos.y = value;
+		}
+	}
+
+	public float PosX
+	{
+		get
+		{
+			return m_OffsetPos.x;
+		}
+		set
+		{
+			m_OffsetPos.x = value;
+		}
+	}
+
     [NoToLuaAttribute]
     public string Call_LuaPly_GetAIName(string cmdName)
     {
