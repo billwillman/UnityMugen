@@ -1,6 +1,7 @@
 local setmetatable = setmetatable
 local mugen = mugen or {}
 local trigger = mugen.trigger
+local math = math
 if trigger ~= nil then
   return trigger
 end
@@ -28,6 +29,22 @@ function trigger:RegisterAnimationState(newState)
 end
 
 -- 条件模块
+
+function trigger:Abs(value)
+  local ret = math.abs(value)
+  return ret
+end
+
+function trigger:Floor(value)
+  local ret = math.floor(value)
+  return ret
+end
+
+-- 弧度制
+function trigger:ACos(angle)
+  local ret = math.acos(angle)
+  return ret
+end
 
 function trigger:AnimElem(luaPlayer)
    if luaPlayer == nil then
