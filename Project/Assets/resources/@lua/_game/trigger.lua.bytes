@@ -341,7 +341,7 @@ function trigger:PosAdd(luaPlayer, x, y)
 		return nil 
 	end
 	x = x / _cPerUnit
-	y = y / _cPerUnit
+	y = -y / _cPerUnit
 	display:PosAdd(x, y)
 	return true
 end
