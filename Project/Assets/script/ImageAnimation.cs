@@ -12,7 +12,10 @@ public class ImageAnimation : MonoBehaviour {
         if (m_AniTotalTime > 0)
         {
             m_AnimElemTime += 1;
-            m_AniUsedTime += Time.deltaTime;
+            if (m_AniUsedTime >= 0)
+                m_AniUsedTime += Time.deltaTime;
+            else
+                m_AniUsedTime = 0;
             CacheAnimation.SendMessage("OnImageAniTimeUpdate", this, SendMessageOptions.DontRequireReceiver);
         }
     }
@@ -356,6 +359,8 @@ public class ImageAnimation : MonoBehaviour {
 		clip.events = null;
 #endif
         Animation ctl = this.CacheAnimation;
+  //      if (!ctl.animatePhysics)
+   //         ctl.animatePhysics = true;
         bool isFound = false;
         var iter = ctl.GetEnumerator();
         while (iter.MoveNext())
@@ -394,6 +399,7 @@ public class ImageAnimation : MonoBehaviour {
 
         List<AnimationEvent> evtList = new List<AnimationEvent>();
 
+        m_AniUsedTime = -1;
         string nextFrameStr = "NextFrame";
         string endFrameStr = "EndFrame";
         string firstFrameStr = "StartFrame";
@@ -460,6 +466,8 @@ public class ImageAnimation : MonoBehaviour {
     {
         m_LoopStart = -1;
         m_LoopStartAniTime = -1;
+        if (m_AniUsedTime < 0)
+            m_AniUsedTime = 0;
     }
 
     public bool IsLoop
@@ -908,7 +916,7 @@ public class ImageAnimation : MonoBehaviour {
     private void ResetAnimation()
     {
         m_CurFrame = -1;
-        m_AniUsedTime = 0;
+        m_AniUsedTime = -1;
         m_AniTotalTime = 0;
         m_AnimElemTime = 0;
     }
@@ -945,7 +953,7 @@ public class ImageAnimation : MonoBehaviour {
     private static float _cImageAnimationScale = 0.015f;
     private int m_CurFrame = -1;
     // 当前动画状态已经使用的时间
-    private float m_AniUsedTime = 0f;
+    private float m_AniUsedTime = -1f;
     // 离当前动画总时间
     private float m_AniTotalTime = 0f;
     private int m_AnimElemTime = 0;
