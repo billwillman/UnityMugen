@@ -860,6 +860,16 @@ public class PlayerDisplay : BaseResLoader {
 		m_OffsetPos += new Vector2(x * dir, y);
 	}
 
+	public void VelAdd(float x, float y)
+	{
+		var movement = this.Movement;
+		if (movement == null)
+			return;
+		Vector2 v = movement.Vec;
+		v += new Vector2(x, y);
+		movement.Vec = v;
+	}
+
 	public void VelMul(float x, float y)
 	{
 		var movement = this.Movement;

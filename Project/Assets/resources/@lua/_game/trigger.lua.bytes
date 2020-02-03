@@ -313,8 +313,22 @@ function trigger:VelSet(luaPlayer, x, y)
 		return nil 
 	end
 	x = x / _cPerUnit
-	y = y / _cPerUnit
+	y = -y / _cPerUnit
 	display:SetVelSet(x, y)
+	return true
+end
+
+function trigger:VelAdd(luaPlayer, x, y)
+	if luaPlayer == nil or x == nil or y == nil then
+		return nil
+	end
+	local display = luaPlayer.PlayerDisplay;
+	if display == nil then
+		return nil 
+	end
+	x = x / _cPerUnit
+	y = -y / _cPerUnit
+	display:VelAdd(x, y)
 	return true
 end
 
@@ -353,7 +367,7 @@ function trigger:VelMul(luaPlayer, x, y)
 		return nil 
 	end
 	x = x / _cPerUnit
-	y = y / _cPerUnit
+	y = -y / _cPerUnit
 	display:VelMul(x, y)
 	return true;
 end

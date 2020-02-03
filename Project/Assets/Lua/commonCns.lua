@@ -1,4 +1,5 @@
 local trigger = require("trigger")
+local standDefName = "0"
 
 local function _GetLuaCfg(luaPlayer)
 	if luaPlayer == nil then
@@ -23,7 +24,7 @@ function _On_0(luaPlayer, state)
 end
 
 local function _InitStatedef_0(luaPlayer, luaCfg)
-	local id = luaCfg:CreateStateDef("0")
+	local id = luaCfg:CreateStateDef(standDefName)
 	local def = luaCfg:GetStateDef(id)
 	def.Type = Mugen.Cns_Type.S
 	def.PhysicsType = Mugen.Cns_PhysicsType.S
@@ -44,10 +45,20 @@ local function _InitCommonCns(luaPlayer)
 	if luaPlayer == nil then
 		return
 	end
+	local meta = getmetatable(luaPlayer)
+	if meta == nil then
+		return
+	end
+	if meta._isInitCommonCns then
+		trigger:PlayCnsByName(luaPlayer, standDefName, true)
+		return
+	end
 	local luaCfg = _GetLuaCfg(luaPlayer)
 	if luaCfg == nil then
 		return
 	end
+	meta._isInitCommonCns = true
+	
 	local standId = _InitStatedef_0(luaPlayer, luaCfg)
 	
 	_InitCmds(luaPlayer, luaCfg)
