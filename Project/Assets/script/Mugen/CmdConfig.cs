@@ -423,6 +423,8 @@ namespace Mugen
 			if (string.IsNullOrEmpty (fileName))
 				return false;
 			string str = AppConfig.GetInstance ().Loader.LoadText (fileName);
+            if (string.IsNullOrEmpty(str))
+                return false;
 			return LoadFromStr (str);
 		}
 
