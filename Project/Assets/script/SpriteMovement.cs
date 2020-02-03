@@ -75,8 +75,8 @@ public class SpriteMovement : MonoBehaviour {
 	void Update()
 	{
 		float deltaTime = Time.deltaTime;
-		UpdatePause (deltaTime);
-		UpdateMove (deltaTime);
+		if (!UpdatePause (deltaTime))
+			UpdateMove (deltaTime);
 	}
 		
 
