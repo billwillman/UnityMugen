@@ -42,6 +42,18 @@ function trigger:AnimElem(luaPlayer)
    return currentFrame + 1
 end
 
+function trigger:AnimElemTime(luaPlayer, frameNo)
+	if luaPlayer == nil or frameNo == nil then
+	  return nil
+   end
+   local display = luaPlayer.PlayerDisplay;
+   if display == nil then
+	  return nil
+   end
+   local ret = display:AnimElemTime(frameNo)
+   return ret
+end
+
 function trigger:AILevel(luaPlayer)
 	if luaPlayer == nil then
 		return nil

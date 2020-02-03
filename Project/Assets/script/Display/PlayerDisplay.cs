@@ -752,6 +752,18 @@ public class PlayerDisplay : BaseResLoader {
 		}
 	}
 
+	public int AnimElemTime(int frameNo)
+	{
+		if (frameNo < 0)
+			return -1;
+		ImageAnimation ani = this.ImageAni;
+		if (ani == null)
+			return -1;
+		if (ani.CurFrame != frameNo)
+			return -1;
+		return ani.AnimElemTime;
+	}
+
 	[NoToLuaAttribute]
     public ImageAnimation ImageAni
     {

@@ -11,6 +11,7 @@ public class ImageAnimation : MonoBehaviour {
     {
         if (m_AniTotalTime > 0)
         {
+            m_AnimElemTime += 1;
             m_AniUsedTime += Time.unscaledDeltaTime;
             CacheAnimation.SendMessage("OnImageAniTimeUpdate", this, SendMessageOptions.DontRequireReceiver);
         }
@@ -327,6 +328,8 @@ public class ImageAnimation : MonoBehaviour {
 
     void DoChangeFrame()
     {
+        m_AnimElemTime = 0;
+
         string evtName = "OnImageAnimationFrame";
 #if UNITY_EDITOR
         if (Application.isPlaying)
@@ -784,6 +787,15 @@ public class ImageAnimation : MonoBehaviour {
         return ret;
     }
 
+    // 当前动画帧下的持续Update次数
+    public int AnimElemTime
+    {
+        get
+        {
+            return m_AnimElemTime;
+        }
+    }
+
     // 单位：毫秒
     public int CurAniUsedTime
     {
@@ -894,6 +906,7 @@ public class ImageAnimation : MonoBehaviour {
         m_CurFrame = -1;
         m_AniUsedTime = 0;
         m_AniTotalTime = 0;
+        m_AnimElemTime = 0;
     }
 
     public PlayerState State
@@ -923,6 +936,7 @@ public class ImageAnimation : MonoBehaviour {
     private float m_AniUsedTime = 0f;
     // 离当前动画总时间
     private float m_AniTotalTime = 0f;
+    private int m_AnimElemTime = 0;
 	private int m_LoopStart = -1;
     private float m_LoopStartAniTime = -1;
     private Animation m_Animation = null;
