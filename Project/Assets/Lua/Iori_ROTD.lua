@@ -229,6 +229,7 @@ function Iori_ROTD:_initCmds()
 			local frame = trigger:Time(luaPlayer)
 			local trigger1 = frame == 1
 			if trigger1 then
+				print(string.format("State 107, PlaySnd: %d", frame))
 				trigger:PlaySnd(luaPlayer, 0, 1)
 			end
 		end
@@ -239,6 +240,7 @@ function Iori_ROTD:_initCmds()
 		function (luaPlayer, state)
 			local frame = trigger:Time(luaPlayer)
 			if frame == 0 then
+				print(string.format("State 107, VelSet && State 107, PosSet: %d", frame))
 				trigger:VelSet(luaPlayer, 0, 0)
 				trigger:PosSet(luaPlayer, nil, 0)
 			end
@@ -249,6 +251,7 @@ function Iori_ROTD:_initCmds()
 		function (luaPlayer, state)
 			local frame = trigger:AnimTime(luaPlayer)
 			if frame == 0 then
+				print(string.format("State 107, ChangeState: %d", frame))
 				trigger:PlayCnsByName(luaPlayer, "0", true)
 				trigger:SetCtrl(luaPlayer, 1)
 			end

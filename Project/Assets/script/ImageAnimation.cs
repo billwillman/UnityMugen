@@ -429,7 +429,7 @@ public class ImageAnimation : MonoBehaviour {
 
 			if (!ctl.enabled)
 				ctl.enabled = true;
-            m_AniTotalTime = sumTime;
+            m_AniTotalTime = sumTime + _cImageAnimationScale;
         }
         else
         {
