@@ -13,7 +13,7 @@ public class ImageAnimation : MonoBehaviour {
         {
             m_AnimElemTime += 1;
             if (m_AniUsedTime >= 0)
-                m_AniUsedTime += Time.deltaTime;
+                m_AniUsedTime += _cImageAnimationScale;
             else
                 m_AniUsedTime = 0;
             CacheAnimation.SendMessage("OnImageAniTimeUpdate", this, SendMessageOptions.DontRequireReceiver);
@@ -466,8 +466,8 @@ public class ImageAnimation : MonoBehaviour {
     {
         m_LoopStart = -1;
         m_LoopStartAniTime = -1;
-        if (m_AniUsedTime < 0)
-            m_AniUsedTime = 0;
+      //  if (m_AniUsedTime < 0)
+      //      m_AniUsedTime = 0;
     }
 
     public bool IsLoop
@@ -812,7 +812,7 @@ public class ImageAnimation : MonoBehaviour {
     {
         get
         {
-            return (int)(m_AniUsedTime * 1000f);
+            return Mathf.RoundToInt(m_AniUsedTime/ _cImageAnimationScale);
         }
     }
 
@@ -820,7 +820,7 @@ public class ImageAnimation : MonoBehaviour {
     {
         get
         {
-            int ret = (int)((m_AniUsedTime - m_AniTotalTime) * 1000f);
+            int ret = Mathf.RoundToInt((m_AniUsedTime - m_AniTotalTime)/ _cImageAnimationScale);
             if (ret > 0)
                 ret = 0;
             return ret;

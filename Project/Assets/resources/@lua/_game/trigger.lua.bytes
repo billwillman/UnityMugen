@@ -344,7 +344,7 @@ function trigger:PosY(luaPlayer)
 	if display == nil then
 		return nil 
 	end
-	local ret = -math.floor(display.PosY * _cPerUnit)
+	local ret = -math.floor(display.PosY * _cPerUnit + 0.5)
 	return ret
 end
 
@@ -356,25 +356,27 @@ function trigger:PosX(luaPlayer)
 	if display == nil then
 		return nil 
 	end
-	local ret = math.floor(display.PosX * _cPerUnit)
+	local ret = math.floor(display.PosX * _cPerUnit + 0.5)
 	return ret
 end
 
 function trigger:PosSet(luaPlayer, x, y)
 	if luaPlayer == nil or (x == nil and y == nil) then
+		--print("luaPlayer == nil or (x == nil and y == nil)")
 		return nil
 	end
 	local display = luaPlayer.PlayerDisplay;
 	if display == nil then
+		--print("display == nil")
 		return nil 
 	end
 	if x ~= nil then
 		x = x / _cPerUnit
-		luaPlayer.PosX = x
+		display.PosX = x
 	end
 	if y ~= nil then
 		y = -y / _cPerUnit
-		luaPlayer.PosY = y
+		display.PosY = y
 	end
 end
 

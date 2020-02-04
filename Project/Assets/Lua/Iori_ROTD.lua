@@ -158,17 +158,21 @@ function Iori_ROTD:_initCmds()
 	state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
 	state.OnTriggerEvent =
 	  function (luaPlayer, state)
-	    local trigger1 = trigger:Time(luaPlayer) == 0
+		local tt = trigger:Time(luaPlayer)
+	    local trigger1 = tt == 0
 		if trigger1 then
-		  trigger:PlaySnd(luaPlayer, 1, 1)
+			print(string.format("State 106,PlaySnd: %d", tt))
+			trigger:PlaySnd(luaPlayer, 1, 1)
 		end
 	  end
 -- [State 106, VelSet]
 	 state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
 	 state.OnTriggerEvent =
 		function (luaPlayer, state)
-			local trigger1 = trigger:Time(luaPlayer) == 3
+			local tt = trigger:Time(luaPlayer)
+			local trigger1 = tt == 3
 			if trigger1 then
+				print(string.format("State 106, VelSet: %d", tt))
 				trigger:VelSet(luaPlayer, -8, -4)
 			end
 		end
@@ -176,8 +180,11 @@ function Iori_ROTD:_initCmds()
 	state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
 	state.OnTriggerEvent =
 		function (luaPlayer, state)
-			local trigger1 = trigger:Time(luaPlayer) >= 5 and trigger:PosY(luaPlayer) < -3
+			local tt = trigger:Time(luaPlayer)
+			local posX = trigger:PosY(luaPlayer)
+			local trigger1 = tt >= 5 and posX < -3
 			if trigger1 then
+				print(string.format("State 106, VelAdd: %d, %d", tt, posX))
 				trigger:VelAdd(luaPlayer, 0.43, 0.55)
 			end
 		end
@@ -186,8 +193,12 @@ function Iori_ROTD:_initCmds()
 	state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
 	state.OnTriggerEvent =
 		function (luaPlayer, state)
-			local trigger1 = trigger:Time(luaPlayer) > 10 and trigger:PosY(luaPlayer) >= -5
+			local tt = trigger:Time(luaPlayer)
+			local posY = trigger:PosY(luaPlayer)
+			local trigger1 = tt > 10 and posY >= -5
 			if trigger1 then
+				print(string.format("State 106, VelSet: %d, %d", tt, posY))
+				print(string.format("State 106, PosSet: %d, %d", tt, posY))
 				trigger:VelSet(luaPlayer, 0, 0)
 				trigger:PosSet(luaPlayer, nil , 0)
 			end
@@ -196,8 +207,11 @@ function Iori_ROTD:_initCmds()
    state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
    state.OnTriggerEvent =
 		function (luaPlayer, state)
-			local trigger1 = trigger:Time(luaPlayer) > 10 and trigger:PosY(luaPlayer) == 0
+			local tt = trigger:Time(luaPlayer)
+			local posY = trigger:PosY(luaPlayer)
+			local trigger1 = tt > 10 and posY  == 0
 			if trigger1 then
+				print(string.format("State 106, ChangeState: %d, %d", tt, posY))
 				trigger:PlayCnsByName(luaPlayer, "107")
 			end
 		end
@@ -208,6 +222,37 @@ function Iori_ROTD:_initCmds()
 	def.PhysicsType = Mugen.Cns_PhysicsType.N
 	def.Ctrl = 0
 	def.Animate = 107
+-- [State 107, PlaySnd]
+	state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+	state.OnTriggerEvent =
+		function (luaPlayer, state)
+			local frame = trigger:Time(luaPlayer)
+			local trigger1 = frame == 1
+			if trigger1 then
+				trigger:PlaySnd(luaPlayer, 0, 1)
+			end
+		end
+-- [State 107, VelSet]
+-- [State 107, PosSet]
+	state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+	state.OnTriggerEvent =
+		function (luaPlayer, state)
+			local frame = trigger:Time(luaPlayer)
+			if frame == 0 then
+				trigger:VelSet(luaPlayer, 0, 0)
+				trigger:PosSet(luaPlayer, nil, 0)
+			end
+		end
+-- [State 107, ChangeState]
+	state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+	state.OnTriggerEvent =
+		function (luaPlayer, state)
+			local frame = trigger:AnimTime(luaPlayer)
+			if frame == 0 then
+				trigger:PlayCnsByName(luaPlayer, "0", true)
+				trigger:SetCtrl(luaPlayer, 1)
+			end
+		end
 end
 
 --======================================================================================

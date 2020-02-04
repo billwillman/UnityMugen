@@ -36,6 +36,8 @@ public class PlayerDisplay : BaseResLoader {
 	{
 		get
 		{
+			if (Mathf.Abs(m_OffsetPos.y) <= float.Epsilon)
+				return 0;
 			return m_OffsetPos.y;
 		}
 
@@ -49,6 +51,8 @@ public class PlayerDisplay : BaseResLoader {
 	{
 		get
 		{
+			if (Mathf.Abs(m_OffsetPos.x) <= float.Epsilon)
+				return 0;
 			return m_OffsetPos.x;
 		}
 		set
