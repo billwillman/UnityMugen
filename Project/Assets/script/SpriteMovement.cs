@@ -72,11 +72,23 @@ public class SpriteMovement : MonoBehaviour {
 		}
 	}
 
-	void Update()
+	void FixedUpdate()
 	{
-		float deltaTime = Time.deltaTime;
+		if (AppConfig.GetInstance ().IsUsePhysixUpdate)
+			MoveUpdate ();
+	}
+
+	void MoveUpdate()
+	{
+		float deltaTime = AppConfig.GetInstance().DeltaTime;
 		if (!UpdatePause (deltaTime))
 			UpdateMove (deltaTime);
+	}
+
+	void Update()
+	{
+		if (!AppConfig.GetInstance ().IsUsePhysixUpdate)
+			MoveUpdate ();
 	}
 		
 

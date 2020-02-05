@@ -22,8 +22,15 @@ public class ImageAnimation : MonoBehaviour {
 
     private void LateUpdate()
     {
-        AniTimeUpdate();
+		if (!AppConfig.GetInstance().IsUsePhysixUpdate)
+        	AniTimeUpdate();
     }
+
+	private void FixedUpdate()
+	{
+		if (AppConfig.GetInstance ().IsUsePhysixUpdate)
+			AniTimeUpdate ();
+	}
 
     public void ResetState()
     {
@@ -359,8 +366,9 @@ public class ImageAnimation : MonoBehaviour {
 		clip.events = null;
 #endif
         Animation ctl = this.CacheAnimation;
-  //      if (!ctl.animatePhysics)
-   //         ctl.animatePhysics = true;
+		bool isAnimatePhysics = AppConfig.GetInstance ().IsUsePhysixUpdate;
+		if (ctl.animatePhysics != isAnimatePhysics)
+			ctl.animatePhysics = isAnimatePhysics;
         bool isFound = false;
         var iter = ctl.GetEnumerator();
         while (iter.MoveNext())

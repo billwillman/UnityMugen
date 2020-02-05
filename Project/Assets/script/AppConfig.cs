@@ -14,6 +14,7 @@ public class AppConfig : MonoSingleton<AppConfig> {
 	public string PlayerRootDir = "resources/mugen/char/";
 	public string SceneRootDir = "resources/mugen/scene/";
 	public string PalleetMatFileName = "resources/mugen/@mat/palleetmaterial.mat";
+	public bool IsUsePhysixUpdate = true;
 
 	public IMugenLoader Loader = null;
 
@@ -22,6 +23,15 @@ public class AppConfig : MonoSingleton<AppConfig> {
 	private LuaLoader m_LuaLoader = null;
 	private LuaState m_LuaState = null;
 	private LuaLooper m_LuaLoop = null;
+
+	public float DeltaTime {
+		get {
+			if (IsUsePhysixUpdate)
+				return Time.fixedDeltaTime;
+			else
+				return Time.deltaTime;
+		}
+	}
 
 	public LuaLoader LuaLoader
 	{
@@ -170,7 +180,7 @@ public class AppConfig : MonoSingleton<AppConfig> {
 	{
 		base.Awake();
 
-		Time.timeScale = 1.5f;
+		//Time.timeScale = 1.5f;
 
 		InitDefaultLoader ();
 		InitLuaEnv();
