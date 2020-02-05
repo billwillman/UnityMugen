@@ -103,8 +103,13 @@ public class PlayerDisplay : BaseResLoader {
             return false;
 		if (!sndLoader.IsInited)
 			sndLoader.Load (m_LoaderPlayer);
-        var clip = sndLoader.GetSoundClip(group, index);
-        return snd.PlaySound(clip);
+		try
+		{
+        	var clip = sndLoader.GetSoundClip(group, index);
+        	return snd.PlaySound(clip);
+		} catch {
+			return false;
+		}
 	}
 
     public int SoundCount
