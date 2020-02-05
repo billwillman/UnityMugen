@@ -958,7 +958,7 @@ public class ImageAnimation : MonoBehaviour {
 	}
 
     // 当前帧
-    private static float _cImageAnimationScale = 0.015f;
+    public static float _cImageAnimationScale = 0.015f;
     private int m_CurFrame = -1;
     // 当前动画状态已经使用的时间
     private float m_AniUsedTime = -1f;

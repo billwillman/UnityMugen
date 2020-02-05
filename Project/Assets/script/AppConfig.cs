@@ -181,6 +181,7 @@ public class AppConfig : MonoSingleton<AppConfig> {
 		base.Awake();
 
 		//Time.timeScale = 1.5f;
+		Time.fixedDeltaTime = ImageAnimation._cImageAnimationScale;
 
 		InitDefaultLoader ();
 		InitLuaEnv();
