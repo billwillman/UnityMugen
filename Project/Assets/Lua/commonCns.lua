@@ -37,10 +37,6 @@ local function _InitStatedef_0(luaPlayer, luaCfg)
 	return id
 end
 
-function _On_100(luaPlayer, state)
-	trigger:VelSet(luaPlayer, 18.4, nil)
-end
-
 local function _InitStatedef_100(luaPlayer, luaCfg)
 	local aiCmd = luaCfg:CreateAICmd("Run Fwd", "")
 	aiCmd.type = Mugen.AI_Type.ChangeState
@@ -63,7 +59,10 @@ local function _InitStatedef_100(luaPlayer, luaCfg)
 	def.Sprpriority = 1
 
 	local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
-	state.OnTriggerEvent = _On_100
+	state.OnTriggerEvent = 
+		function (luaPlayer, state)
+			trigger:VelSet(luaPlayer, 18.4, nil)
+		end
 	return id
 end
 
