@@ -10,6 +10,7 @@ trigger = {}
 mugen.trigger = trigger
 
 local _cPerUnit = 10000.0
+local _cPerVelUnit = _cPerUnit/3.0
 
 local GlobaConfigMgr = MonoSingleton_GlobalConfigMgr.GetInstance()
 
@@ -319,14 +320,14 @@ function trigger:VelSet(luaPlayer, x, y)
 		return nil 
 	end
 	if x ~= nil and y ~= nil then
-		x = x / _cPerUnit
-		y = -y / _cPerUnit
+		x = x / _cPerVelUnit
+		y = -y / _cPerVelUnit
 		display:SetVelSet(x, y)
 	elseif x ~= nil then
-		x = x / _cPerUnit
+		x = x / _cPerVelUnit
 		display:SetVelSetX(x)
 	elseif y ~= nil then
-		y = -y / _cPerUnit
+		y = -y / _cPerVelUnit
 		display:SetVelSetY(y)
 	end
 	return true
@@ -342,8 +343,8 @@ function trigger:VelAdd(luaPlayer, x, y)
 	end
 	x = x or 0
 	y = y or 0
-	x = x / _cPerUnit
-	y = -y / _cPerUnit
+	x = x / _cPerVelUnit
+	y = -y / _cPerVelUnit
 	display:VelAdd(x, y)
 	return true
 end
@@ -428,7 +429,7 @@ function trigger:VelX(luaPlayer)
 	if display == nil then
 		return nil 
 	end
-	local ret = display.VelX * _cPerUnit
+	local ret = display.VelX * _cPerVelUnit
 	return ret
 end
 
@@ -440,7 +441,7 @@ function trigger:VelY(luaPlayer)
 	if display == nil then
 		return nil 
 	end
-	local ret = -display.VelY * _cPerUnit
+	local ret = -display.VelY * _cPerVelUnit
 	return ret
 end
 
@@ -455,12 +456,12 @@ function trigger:VelMul(luaPlayer, x, y)
 	if x == nil then
 		x = 1
 	else
-		x = x / _cPerUnit
+		x = x / _cPerVelUnit
 	end
 	if y == nil then
 		y = 1
 	else
-		y = -y / _cPerUnit
+		y = -y / _cPerVelUnit
 	end
 	display:VelMul(x, y)
 	return true;
