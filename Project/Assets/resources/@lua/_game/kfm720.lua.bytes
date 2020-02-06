@@ -197,7 +197,6 @@ function kfm720:On_Run_Back(cmdName)
 	local trigger1 = trigger:Command(self, "BB") and 
 						trigger:Statetype(self) == Mugen.Cns_Type.S and 
 						trigger:CanCtrl(self)
-	
 	return trigger1 
 end
 
@@ -321,6 +320,74 @@ function kfm720:_initStateDef(luaCfg)
 		function (luaPlayer, state)
 			local aniTime = trigger:AnimTime(luaPlayer)
 			if aniTime == 0 then
+				trigger:SetCtrl(luaPlayer, 1)
+				trigger:PlayCnsByName(luaPlayer, "0", true)
+			end
+		end
+----------------- RUN_BACK --------------
+	id = luaCfg:CreateStateDef("105")
+	def = luaCfg:GetStateDef(id)
+	def.Type = Mugen.Cns_Type.A
+	def.MoveType = Mugen.Cns_MoveType.A
+	def.Ctrl = 0
+	def.Animate = 105
+	def.Sprpriority = 1
+-- [State 105, 1]
+	state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+	state.OnTriggerEvent = 
+		function (luaPlayer, state)
+			local tt = trigger:Time(luaPlayer)
+			--print(tt)
+			if tt == 0 then
+				print("State 105, 1")
+				trigger:VelSet(luaPlayer, -18, -15.2)
+			end
+		end
+-- [State 105, 2]
+	state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+	state.OnTriggerEvent = 
+		function (luaPlayer, state)
+			local tt = trigger:Time(luaPlayer)
+			if tt == 2 then
+				print("State 105, 2")
+				trigger:CtrlSet(luaPlayer, 1)
+			end
+		end
+-- [State 105, 3]
+	state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+	state.OnTriggerEvent = 
+		function (luaPlayer, state)
+			local trigger1 = trigger:VelY(luaPlayer) > 0 and trigger:PosY(luaPlayer) >= 0
+			if trigger1 then
+				print("State 105, 3")
+				trigger:PlayCnsByName(luaPlayer, "106")
+			end
+		end
+
+	id = luaCfg:CreateStateDef("106")
+	def = luaCfg:GetStateDef(id)
+	def.Type = Mugen.Cns_Type.S
+	def.PhysicsType = Mugen.Cns_PhysicsType.S
+	def.Ctrl = 0
+	def.Animate = 47
+-- [State 106, 1]
+-- [State 106, 2]
+	state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+	state.OnTriggerEvent = 
+		function (luaPlayer, state)
+			print("106 Check")
+			local trigger1 = trigger:Time(luaPlayer) == 0
+			if trigger1 then
+				trigger:VelSet(luaPlayer, nil, 0)
+				trigger:PosSet(luaPlayer, nil, 0)
+			end
+		end
+-- [State 106, 4]
+	state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+	state.OnTriggerEvent = 
+		function (luaPlayer, state)
+			local trigger1 = trigger:Time(luaPlayer) == 7
+			if trigger1 then
 				trigger:SetCtrl(luaPlayer, 1)
 				trigger:PlayCnsByName(luaPlayer, "0", true)
 			end

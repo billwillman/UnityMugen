@@ -192,6 +192,7 @@ public class PlayerDisplayEditor : Editor {
                 {
 					GUILayout.BeginHorizontal ();
 					if (GUILayout.Button ("上一个动作")) {
+						m_IsAutoRunCmd = false;
 						int newState = m_StateSelected;
 						if (newState - 1 < 0)
 							newState = m_VaildStateNameList.Length - 1;
@@ -215,6 +216,7 @@ public class PlayerDisplayEditor : Editor {
 
                     if (GUILayout.Button("下一个动作"))
                     {
+						m_IsAutoRunCmd = false;
                         int newState = m_StateSelected;
                         if (newState + 1 >= m_VaildStateNameList.Length)
                             newState = 0;

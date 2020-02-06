@@ -108,7 +108,7 @@ public class PlayerDisplay : BaseResLoader {
         	var clip = sndLoader.GetSoundClip(group, index);
         	return snd.PlaySound(clip);
 		} catch {
-			return false;
+			return true;
 		}
 	}
 
@@ -175,6 +175,9 @@ public class PlayerDisplay : BaseResLoader {
 		/*
 		 * 设置属性
 		*/
+		if (this.StateMgr.CurrentCnsDef == def)
+			return;
+		
 		PlayerAttribe attribe = this.Attribe;
 		if (attribe != null) {
 			//attribe.StandType = def.MoveType;
@@ -876,6 +879,22 @@ public class PlayerDisplay : BaseResLoader {
 		return imgAni.CurAniRetainTime;
 	}
 
+	public void SetVelSetX(float x)
+	{
+		var movement = this.Movement;
+		if (movement == null)
+			return;
+		movement.Vec.x = x;
+	}
+
+	public void SetVelSetY(float y)
+	{
+		var movement = this.Movement;
+		if (movement == null)
+			return;
+		movement.Vec.x = y;
+	}
+
 	public void SetVelSet(float x, float y)
 	{
 		var movement = this.Movement;
@@ -902,6 +921,24 @@ public class PlayerDisplay : BaseResLoader {
 		Vector2 v = movement.Vec;
 		v += new Vector2(x, y);
 		movement.Vec = v;
+	}
+
+	public float VelX {
+		get {
+			var movement = this.Movement;
+			if (movement == null)
+				return 0;
+			return movement.Vec.x;
+		}
+	}
+
+	public float VelY {
+		get {
+			var movement = this.Movement;
+			if (movement == null)
+				return 0;
+			return movement.Vec.y;
+		}
 	}
 
 	public void VelMul(float x, float y)

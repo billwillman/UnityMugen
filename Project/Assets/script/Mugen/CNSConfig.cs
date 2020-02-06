@@ -29,6 +29,10 @@ namespace Mugen
 			def.ResetVars();
 			AddStateDef(name, def);
 			id = def.id;
+			int anim;
+			if (int.TryParse (name, out anim)) {
+				def.Animate = anim;
+			}
 			return true;
 		}
 

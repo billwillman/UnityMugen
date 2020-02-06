@@ -291,6 +291,10 @@ function trigger:ChangeState(luaPlayer, newState, isCns)
 end
 --]]
 
+function trigger:CtrlSet(luaPlayer, ctrl)
+	return trigger:SetCtrl(luaPlayer, ctrl)
+end
+
 function trigger:SetCtrl(luaPlayer, ctrl)
 	if luaPlayer == nil or ctrl == nil then
 		return nil
@@ -307,16 +311,24 @@ function trigger:SetCtrl(luaPlayer, ctrl)
 end
 
 function trigger:VelSet(luaPlayer, x, y)
-	if luaPlayer == nil or x == nil or y == nil then
+	if luaPlayer == nil or (x == nil and y == nil) then
 		return nil
 	end
 	local display = luaPlayer.PlayerDisplay;
 	if display == nil then
 		return nil 
 	end
-	x = x / _cPerUnit
-	y = -y / _cPerUnit
-	display:SetVelSet(x, y)
+	if x ~= nil and y ~= nil then
+		x = x / _cPerUnit
+		y = -y / _cPerUnit
+		display:SetVelSet(x, y)
+	elseif x ~= nil then
+		x = x / _cPerUnit
+		display:SetVelSetX(x)
+	elseif y ~= nil then
+		y = -y / _cPerUnit
+		display:SetVelSetY(y)
+	end
 	return true
 end
 
@@ -406,6 +418,30 @@ function trigger:ResetStateAndCtrl(luaPlayer, state)
 	end
 	state = state or 0
 	return display:ResetStateAndCtrlOne(state)
+end
+
+function trigger:VelX(luaPlayer)
+	if luaPlayer == nil then
+		return nil
+	end
+	local display = luaPlayer.PlayerDisplay;
+	if display == nil then
+		return nil 
+	end
+	local ret = display.VelX * _cPerUnit
+	return ret
+end
+
+function trigger:VelY(luaPlayer)
+	if luaPlayer == nil then
+		return nil
+	end
+	local display = luaPlayer.PlayerDisplay;
+	if display == nil then
+		return nil 
+	end
+	local ret = -display.VelY * _cPerUnit
+	return ret
 end
 
 function trigger:VelMul(luaPlayer, x, y)
