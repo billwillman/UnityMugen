@@ -392,6 +392,19 @@ function kfm720:_initStateDef(luaCfg)
 				trigger:PlayCnsByName(luaPlayer, "0", true)
 			end
 		end
+------------------------- Run Fwd -----------------
+	id = luaCfg:CreateStateDef("100")
+	def = luaCfg:GetStateDef(id)
+	def.Type = Mugen.Cns_Type.S
+	def.PhysicsType = Mugen.Cns_PhysicsType.S
+	def.Animate = 100
+	def.Sprpriority = 1
+-- State 100, 1
+	state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+	state.OnTriggerEvent =
+		function (luaPlayer, state)
+			trigger:VelSet(luaPlayer, 18.4, nil)
+		end
 end
 
 setmetatable(kfm720, {__call = kfm720.new})
