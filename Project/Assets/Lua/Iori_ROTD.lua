@@ -307,24 +307,10 @@ function Iori_ROTD:_initCmd_a(luaCfg)
 	aiCmd.OnTriggerEvent = self.OnAICmd_a_and_holdfwd
 end
 
-function Iori_ROTD:OnAICmd_Dash(cmdName)
-	local isCmdOk = trigger:Command(self, "FF")
-	local isStateType = trigger:Statetype(self) == Mugen.Cns_Type.S
-	local canCtrl = trigger:CanCtrl(self)
-	--print(canCtrl)
-    local trigger1 = isCmdOk and isStateType and canCtrl
-    return trigger1
-end
-
 function Iori_ROTD:_initCmd_FF(luaCfg)
 	local cmd = luaCfg:CreateCmd("FF", "")
 	cmd.time = 10
 	cmd:AttachKeyCommands("F,F")
-	
-	local aiCmd = luaCfg:CreateAICmd("Dash", "")
-	aiCmd.type = Mugen.AI_Type.ChangeState
-	aiCmd.value = "100"
-	aiCmd.OnTriggerEvent = self.OnAICmd_Dash
 end
 
 

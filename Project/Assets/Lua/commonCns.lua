@@ -37,8 +37,39 @@ local function _InitStatedef_0(luaPlayer, luaCfg)
 	return id
 end
 
+function _On_100(luaPlayer, state)
+	trigger:VelSet(luaPlayer, 18.4, nil)
+end
+
+local function _InitStatedef_100(luaPlayer, luaCfg)
+	local aiCmd = luaCfg:CreateAICmd("Run Fwd", "")
+	aiCmd.type = Mugen.AI_Type.ChangeState
+	aiCmd.value = "100"
+	aiCmd.AniLoop = true
+	aiCmd.OnTriggerEvent = 
+		function (cmdName)
+			local trigger1 = trigger:Command(luaPlayer, "FF") and 
+						trigger:Statetype(luaPlayer) == Mugen.Cns_Type.S and 
+						trigger:CanCtrl(luaPlayer)
+	
+			return trigger1 
+		end
+
+	local id = luaCfg:CreateStateDef("100")
+	local def = luaCfg:GetStateDef(id)
+	def.Type = Mugen.Cns_Type.S
+	def.PhysicsType = Mugen.Cns_PhysicsType.S
+	def.Animate = 100
+	def.Sprpriority = 1
+
+	local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+	state.OnTriggerEvent = _On_100
+	return id
+end
+
 
 local function _InitCmds(luaPlayer, luaCfg)
+	_InitStatedef_100(luaPlayer, luaCfg)
 end
 
 local function _InitCommonCns(luaPlayer)

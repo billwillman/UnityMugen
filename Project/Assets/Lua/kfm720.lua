@@ -185,6 +185,7 @@ function kfm720:On_Taunt(cmdName)
 	return ret
 end
 
+--[[
 function kfm720:On_Run_Fwd(cmdName)
 	local trigger1 = trigger:Command(self, "FF") and 
 						trigger:Statetype(self) == Mugen.Cns_Type.S and 
@@ -192,6 +193,7 @@ function kfm720:On_Run_Fwd(cmdName)
 	
 	return trigger1 
 end
+--]]
 
 function kfm720:On_Run_Back(cmdName)
 	local trigger1 = trigger:Command(self, "BB") and 
@@ -211,12 +213,13 @@ function kfm720:_initState_Default(luaCfg)
 	aiCmd.type = Mugen.AI_Type.ChangeState
 	aiCmd.value = "195"
 	aiCmd.OnTriggerEvent = self.On_Taunt
-	
+	--[[
 	aiCmd = luaCfg:CreateAICmd("Run Fwd", "")
 	aiCmd.type = Mugen.AI_Type.ChangeState
 	aiCmd.value = "100"
 	aiCmd.AniLoop = true
 	aiCmd.OnTriggerEvent = self.On_Run_Fwd
+	--]]
 	
 	aiCmd = luaCfg:CreateAICmd("Run Back", "")
 	aiCmd.type = Mugen.AI_Type.ChangeState
@@ -393,6 +396,7 @@ function kfm720:_initStateDef(luaCfg)
 			end
 		end
 ------------------------- Run Fwd -----------------
+--[[
 	id = luaCfg:CreateStateDef("100")
 	def = luaCfg:GetStateDef(id)
 	def.Type = Mugen.Cns_Type.S
@@ -405,6 +409,7 @@ function kfm720:_initStateDef(luaCfg)
 		function (luaPlayer, state)
 			trigger:VelSet(luaPlayer, 18.4, nil)
 		end
+--]]
 end
 
 setmetatable(kfm720, {__call = kfm720.new})
