@@ -61,7 +61,7 @@ local function _InitStatedef_100(luaPlayer, luaCfg)
 	local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
 	state.OnTriggerEvent = 
 		function (luaPlayer, state)
-			trigger:VelSet(luaPlayer, 18.4, nil)
+			trigger:VelSet(luaPlayer, luaPlayer.velocity.run.fwd.x, nil)
 		end
 	return id
 end

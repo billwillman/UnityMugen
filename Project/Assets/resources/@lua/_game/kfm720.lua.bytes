@@ -84,8 +84,13 @@ function kfm720:_initMovement()
 		return
 	end
 	
-	self.Movement = {}
-	self.Movement.yaccel = 1.76
+	self.movement = {}
+	self.movement.yaccel = 1.76
+
+	self.velocity = {}
+	self.velocity.run = {}
+	self.velocity.run.fwd = Vector2.New(18.4, 0)
+	self.velocity.run.back = Vector2.New(-18,-15.2)
 end
 
 --=====================================创建StateDef===================================

@@ -75,6 +75,11 @@ function Iori_ROTD:_initData()
   self.Data.volume = 0
   self.Data.IntPersistIndex = 60
   self.Data.FloatPersistIndex = 40
+
+  	self.velocity = {}
+	self.velocity.run = {}
+	self.velocity.run.fwd = Vector2.New(6.5, 0)
+	self.velocity.run.back = Vector2.New(-6.5,-2.9)
 end
 
 function Iori_ROTD:_initSize()
