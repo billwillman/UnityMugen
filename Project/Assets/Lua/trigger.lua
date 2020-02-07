@@ -10,7 +10,7 @@ trigger = {}
 mugen.trigger = trigger
 
 local _cPerUnit = 10000.0
-local _cPerVelUnit = _cPerUnit/3.0
+local _cPerVelUnit = _cPerUnit/6.5
 
 local GlobaConfigMgr = MonoSingleton_GlobalConfigMgr.GetInstance()
 
