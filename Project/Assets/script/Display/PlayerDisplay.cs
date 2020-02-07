@@ -230,6 +230,7 @@ public class PlayerDisplay : BaseResLoader {
 		if (StateMgr.CurrentCnsDef != def) {
 			// 重置动画属性
 			ImageAni.ResetCns();
+			def.ResetStatesPersistent ();
 		}
 
 		bool ret;

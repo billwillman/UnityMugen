@@ -52,6 +52,25 @@ namespace Mugen
 		public static readonly int _cNoVaildCtrl = 1;
 		public static readonly int _cNoVaildAnim = (int)PlayerState.psNone;
 
+		[NoToLuaAttribute]
+		public void ResetStatesPersistent()
+		{
+			if (m_StateEventsMap != null) {
+				var iter = m_StateEventsMap.GetEnumerator ();
+				while (iter.MoveNext ()) {
+					var list = iter.Current.Value;
+					if (list != null) {
+						for (int i = 0; i < list.Count; ++i) {
+							var state = list [i];
+							if (state != null)
+								state.persistent = false;
+						}
+					}
+				}
+				iter.Dispose ();
+			}
+		}
+
         [NoToLuaAttribute]
 		public void OnStateEvent(PlayerDisplay display, CnsStateTriggerType evtType)
         {
@@ -65,7 +84,7 @@ namespace Mugen
 				if (m_StateEventsMap.TryGetValue (key, out list)) {
 					for (int i = 0; i < list.Count; ++i) {
 						CNSState state = list [i];
-						if (state != null)
+						if (state != null && (!state.persistent))
 							state.Call_TriggerEvent (display);
 					}
 				}

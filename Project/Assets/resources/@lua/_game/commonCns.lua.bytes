@@ -185,6 +185,41 @@ local function _InitJump(luaPlayer, luaCfg)
 	def.Type = Mugen.Cns_Type.A
 	def.PhysicsType = Mugen.Cns_PhysicsType.A
 	--def.Animate = -1
+-- State 50, 1
+-- State 50, 2
+	state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+	state.OnTriggerEvent = 
+		function (luaPlayer, state)
+			local trigger1 = trigger:Time(luaPlayer) == 0
+			if trigger1 then
+				-- State 50, 1
+				print("State 50, 1")
+				trigger:VarSet(luaPlayer, 1, 0)
+				-- State 50, 2
+				print("State 50, 2")
+				if (trigger:Abs(trigger:VelX(luaPlayer)) <= 0.000001) then
+					trigger:PlayAnim(luaPlayer, 41)
+				elseif trigger:VelX(luaPlayer) > 0 then
+					trigger:PlayAnim(luaPlayer, 42)
+				else
+					trigger:PlayAnim(luaPlayer, 43)
+				end
+			end
+		end
+-- State 50, 3
+	state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+	state.OnTriggerEvent = 
+		function (luaPlayer, state)
+			local anim = trigger:Anim(luaPlayer)
+			local trigger1 = trigger:VelY(luaPlayer) > -2 and trigger:AnimExist(anim + 3)
+			print(anim + 3)
+			if trigger1 then
+				print("State 50, 3")
+				-- 只执行一次
+				state.persistent = true
+				trigger:PlayAnim(luaPlayer, anim + 3)
+			end
+		end
 end
 
 

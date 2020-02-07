@@ -119,6 +119,11 @@ namespace Mugen
             get;
             set;
         }
+			
+		public bool persistent {
+			get;
+			set;
+		}
 
 		public System.Action<LuaTable, CNSState> OnTriggerEvent {
 			get;
