@@ -80,7 +80,8 @@ public class PlayerDisplay : BaseResLoader {
         return string.Empty;
     }
 
-	public static float _cVelPerUnit = 1;
+	public static float _cVelPerUnit = 1f;
+	public static float _cAPerUnit = 100f;
 
 	[NoToLuaAttribute]
 	public SndSound Sound
@@ -168,9 +169,9 @@ public class PlayerDisplay : BaseResLoader {
 			return;
 		movement.StartVec = attribe.StateStartVec;
 
-		//if (isVaildX)
+		if (isVaildX)
 			movement.Vec.x = 0;
-		//if (isVaildY)
+		if (isVaildY)
 			movement.Vec.y = 0;
 	}
 
