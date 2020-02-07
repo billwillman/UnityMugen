@@ -113,7 +113,7 @@ local function _InitJump(luaPlayer, luaCfg)
 	def.Ctrl = 0
 	def.Velset_x = 0
 	def.Velset_y = 0
-	def.Animate = -1
+	--def.Animate = -1
 -- State 45, 1
 -- State 45, 2
 	local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
@@ -184,7 +184,7 @@ local function _InitJump(luaPlayer, luaCfg)
 	def = luaCfg:GetStateDef(id)
 	def.Type = Mugen.Cns_Type.A
 	def.PhysicsType = Mugen.Cns_PhysicsType.A
-	def.Animate = -1
+	--def.Animate = -1
 end
 
 

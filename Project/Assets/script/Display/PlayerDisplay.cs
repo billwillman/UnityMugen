@@ -222,7 +222,7 @@ public class PlayerDisplay : BaseResLoader {
 		if (player.CnsCfg == null || !player.CnsCfg.HasStateDef)
 			return false;
 		var def = player.CnsCfg.GetStateDef (stateDefId);
-		if (def == null || def.Animate == CNSStateDef._cNoVaildAnim)
+		if (def == null)
 			return false;
 
 		AttachAttribeFromStateDef (def);
@@ -233,7 +233,7 @@ public class PlayerDisplay : BaseResLoader {
 		}
 
 		bool ret;
-		if ((int)def.Anim >= 0) {
+		if ((int)def.Anim != CNSStateDef._cNoVaildAnim) {
 			ret = PlayAni (def.Anim, isLoop, false);
 			if (ret) {
 				this.StateMgr.CurrentCnsDef = def;
