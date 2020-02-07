@@ -96,7 +96,7 @@ function kfm720:_initMovement()
 	self.velocity.airjump.neu = Vector2.New(0,-32.4)
 	self.velocity.airjump.back = Vector2.New(-10.2,0)
 	self.velocity.airjump.fwd = Vector2.New(10,0)
-	self.velocity.airjump.y = -25.0
+	self.velocity.airjump.y = -27.5
 end
 
 --=====================================创建StateDef===================================
