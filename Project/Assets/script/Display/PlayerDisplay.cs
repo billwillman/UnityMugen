@@ -556,6 +556,11 @@ public class PlayerDisplay : BaseResLoader {
 		return true;
 	}
 
+	public bool HasAniGroup(int state)
+	{
+		return HasAniGroup ((PlayerState)state);
+	}
+
 	public bool HasAniGroup(PlayerState state)
 	{
 		return HasBeginActionSrpiteData(state, false);	

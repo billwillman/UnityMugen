@@ -131,6 +131,7 @@ local function _InitJump(luaPlayer, luaCfg)
 					print("State 45, 2")
 					trigger:PlayAnim(luaPlayer, 41)
 				end
+				state.persistent = true
 			end
 		end
 -- State 45, 3
@@ -197,6 +198,7 @@ local function _InitJump(luaPlayer, luaCfg)
 				trigger:VarSet(luaPlayer, 1, 0)
 				-- State 50, 2
 				print("State 50, 2")
+				state.persistent = true
 				if (trigger:Abs(trigger:VelX(luaPlayer)) <= 0.000001) then
 					trigger:PlayAnim(luaPlayer, 41)
 				elseif trigger:VelX(luaPlayer) > 0 then
@@ -211,13 +213,14 @@ local function _InitJump(luaPlayer, luaCfg)
 	state.OnTriggerEvent = 
 		function (luaPlayer, state)
 			local anim = trigger:Anim(luaPlayer)
-			local trigger1 = trigger:VelY(luaPlayer) > -2 and trigger:AnimExist(anim + 3)
-			print(anim + 3)
+			--print(anim + 3)
+			
+			local trigger1 = trigger:VelY(luaPlayer) > -2 and trigger:AnimExist(luaPlayer, anim + 2)
 			if trigger1 then
 				print("State 50, 3")
 				-- 只执行一次
 				state.persistent = true
-				trigger:PlayAnim(luaPlayer, anim + 3)
+				trigger:PlayAnim(luaPlayer, anim + 2)
 			end
 		end
 end

@@ -122,7 +122,7 @@ function trigger:Anim(luaPlayer)
 	return ret
 end
 
-function trigger.AnimExist(luaPlayer, state)
+function trigger:AnimExist(luaPlayer, state)
 	if luaPlayer == nil or state == nil then
 		return nil
 	end
