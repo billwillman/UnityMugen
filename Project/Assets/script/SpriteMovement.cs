@@ -99,7 +99,7 @@ public class SpriteMovement : MonoBehaviour {
 			return;
 		// 按照毫秒算速度
 		float d = deltaTime * 1000f;
-		float gg = -g/1000000f * 6.5f;
+		float gg = -g/PlayerDisplay._cVelPerUnit;
 		Vec.y += gg * d;
 		Vector2 vv = new Vector2(Vec.x * (IsFlipX? -1:1), Vec.y);
 		Vector2 org = this.OffsetPos;

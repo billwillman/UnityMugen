@@ -80,6 +80,8 @@ public class PlayerDisplay : BaseResLoader {
         return string.Empty;
     }
 
+	public static float _cVelPerUnit = 1;
+
 	[NoToLuaAttribute]
 	public SndSound Sound
 	{
