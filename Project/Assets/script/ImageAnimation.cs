@@ -929,12 +929,17 @@ public class ImageAnimation : MonoBehaviour {
         }
     }
 
+	public void ResetCns()
+	{
+		m_AniUsedTime = -1;
+		m_AnimElemTime = 0;
+	}
+
     private void ResetAnimation()
     {
         m_CurFrame = -1;
-        m_AniUsedTime = -1;
-        m_AniTotalTime = 0;
-        m_AnimElemTime = 0;
+		m_AniTotalTime = -1;
+		ResetCns ();
     }
 
     public PlayerState State

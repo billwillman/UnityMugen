@@ -40,17 +40,17 @@ namespace Mugen
         private Dictionary<int, List<CNSState>> m_StateEventsMap = null;
 
 		private int m_Juggle;
-		private float m_Velset_x;		// 开始速度
-		private float m_Velset_y;		// 开始速度
-		private int m_Ctrl; 			// 设定可控与否,没有则，不改变
-		private int m_Anim; 			// 改变动作，不写则不改变
+		private float m_Velset_x = _cNoVaildVelset;		// 开始速度
+		private float m_Velset_y = _cNoVaildVelset;		// 开始速度
+		private int m_Ctrl = _cNoVaildCtrl; 		// 设定可控与否,没有则，不改变
+		private int m_Anim = _cNoVaildAnim; 			// 改变动作，不写则不改变
 		private int m_PowerAdd;
 		private int m_Sprpriority;
 		private int m_FaceP2 = 0;
 
-		private static readonly int _cNoVaildVelset = 0;
-		private static readonly int _cNoVaildCtrl = 1;
-		private static readonly int _cNoVaildAnim = (int)PlayerState.psNone;
+		public static readonly int _cNoVaildVelset = -999999;
+		public static readonly int _cNoVaildCtrl = 1;
+		public static readonly int _cNoVaildAnim = (int)PlayerState.psNone;
 
         [NoToLuaAttribute]
 		public void OnStateEvent(PlayerDisplay display, CnsStateTriggerType evtType)

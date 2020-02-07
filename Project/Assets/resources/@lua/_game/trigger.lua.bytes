@@ -233,7 +233,7 @@ function trigger:Ctrl(luaPlayer)
 	return attribe.Ctrl
 end
 
-function trigger:PlayAnim(luaPlayerl, stateId, isLoop)
+function trigger:PlayAnim(luaPlayer, stateId, isLoop)
 	if luaPlayer == nil or stateId == nil then
 		return false
 	end
@@ -246,6 +246,10 @@ function trigger:PlayAnim(luaPlayerl, stateId, isLoop)
 	isLoop = isLoop or false
 	local ret = display:PlayAni(stateId, isLoop, false)
 	return ret
+end
+
+function trigger:PlayStandCns(luaPlayer)
+	return self:PlayCnsByName(luaPlayer, "0", true)
 end
 
 function trigger:PlayCnsByName(luaPlayer, stateDefName, isLoop)
@@ -527,7 +531,7 @@ function trigger:Var(luaPlayer, index)
 	if attribe == nil then
 		return nil
 	end
-	local isOk, value = attribe:GetIntVars(index)
+	local isOk, value = attribe:GetIntVars(index, nil)
 	if not isOk then
 		return nil
 	end
@@ -561,7 +565,7 @@ function trigger:fVar(luaPlayer, index)
 	if attribe == nil then
 		return nil
 	end
-	local isOk, value = attribe:GetFloatVars(index)
+	local isOk, value = attribe:GetFloatVars(index, nil)
 	if not isOk then
 		return nil
 	end
