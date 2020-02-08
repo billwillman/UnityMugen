@@ -45,6 +45,27 @@ public class Explod : PlayerPart {
 		}
 	}
 
+	void UpdateOffsetPos()
+	{
+		if (m_IsDestroy)
+			return;
+		
+		if (postype == ExplodPosType.p1) {
+			var display = this.Display;
+			if (display != null) 
+			{
+				Vector2 offset = Vector2.zero;
+				var parent = this.transform.parent;
+				if (parent != null) {
+					offset = -parent.transform.localPosition;
+				}
+				Vector2 vv = (new Vector2 (((float)pos_x) / PlayerDisplay._cPerUnit, ((float)pos_y)) / PlayerDisplay._cPerUnit) + offset;
+				display.m_OffsetPos = vv;
+				display.m_OffsetPos.z = -1;
+			}
+		}
+	}
+
 	public void Apply()
 	{
 		if (m_IsDestroy)
@@ -52,7 +73,7 @@ public class Explod : PlayerPart {
 		
 		var display = this.Display;
 		if (display != null) {
-			display.m_OffsetPos = new Vector2 (((float)pos_x) / PlayerDisplay._cPerUnit, ((float)pos_y) / PlayerDisplay._cPerUnit);
+			UpdateOffsetPos ();
 			display.SetVelSet (x_vel, y_vel);
 			if (!IsUseParentUpdate) {
 				bool isLoop = removetime == -1;

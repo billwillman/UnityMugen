@@ -30,7 +30,7 @@ public class PlayerDisplay : BaseResLoader {
 
 
 	[NoToLuaAttribute]
-    public Vector2 m_OffsetPos = Vector2.zero;
+    public Vector3 m_OffsetPos = Vector2.zero;
 
 	public float PosY
 	{
@@ -955,7 +955,7 @@ public class PlayerDisplay : BaseResLoader {
 			dir = -1;
 		else
 			dir = 1;
-		m_OffsetPos += new Vector2(x * dir, y);
+		m_OffsetPos += new Vector3(x * dir, y, 0);
 	}
 
 	public void VelAdd(float x, float y)
@@ -1066,7 +1066,7 @@ public class PlayerDisplay : BaseResLoader {
                     break;
             }
 
-            Vector2 frameOffset = frame.OffsetPos;
+            Vector3 frameOffset = frame.OffsetPos;
             if (IsFlipX)
                 frameOffset.x = -frameOffset.x;
             trans.localPosition = frameOffset + m_OffsetPos;
@@ -1112,7 +1112,7 @@ public class PlayerDisplay : BaseResLoader {
 	// 创建爆炸
 	public Explod CreateExplod()
 	{
-		GameObject gameObj = new GameObject ("Explod", typeof(PlayerDisplay), typeof(Explod), typeof(PlayerPart));
+		GameObject gameObj = new GameObject ("Explod", typeof(PlayerDisplay), typeof(Explod));
 		var trans = gameObj.transform;
 		trans.parent = this.CachedTransform;
 		trans.localPosition = Vector3.zero;
