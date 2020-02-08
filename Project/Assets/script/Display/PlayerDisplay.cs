@@ -82,6 +82,7 @@ public class PlayerDisplay : BaseResLoader {
 
 	public static float _cVelPerUnit = 1f;
 	public static float _cAPerUnit = 100f;
+	public static float _cPerUnit = 1f;
 
 	[NoToLuaAttribute]
 	public SndSound Sound
@@ -885,12 +886,6 @@ public class PlayerDisplay : BaseResLoader {
 		}
 	}
 
-	// 创建爆炸效果
-	public bool Trigger_CreateExplode()
-	{
-		return true;
-	}
-
 	public int Trigger_Time()
 	{
 		/*
@@ -1105,6 +1100,23 @@ public class PlayerDisplay : BaseResLoader {
         }
 	}
 
+	// 创建爆炸
+	public Explod CreateExplod()
+	{
+		GameObject gameObj = new GameObject ("Explod", typeof(PlayerDisplay), typeof(Explod), typeof(PlayerPart));
+		var trans = gameObj.transform;
+		trans.parent = this.CachedTransform;
+		trans.localPosition = Vector3.zero;
+		trans.localScale = Vector3.one;
+		trans.localRotation = Quaternion.identity;
+		Explod ret = gameObj.GetComponent<Explod> ();
+		PlayerPart part = gameObj.GetComponent<PlayerPart> ();
+		InitPartMgr ();
+		m_PartMgr.AddPart (part);
+	
+		return ret;
+	}
+
 	private void CreateClsn(Rect[] r, bool isCls2, bool showSprite)
 	{
 		if (r == null || r.Length <= 0)
@@ -1184,6 +1196,13 @@ public class PlayerDisplay : BaseResLoader {
 			DestroyAllClsn ();
             DestroyLuaPlayer();
 		}
+	}
+
+	internal void _OnPlayerPartDestroy(PlayerPart part)
+	{
+		if (part == null || m_PartMgr == null)
+			return;
+		m_PartMgr.RemovePart (part);
 	}
 
     private void RefreshCurPallet()

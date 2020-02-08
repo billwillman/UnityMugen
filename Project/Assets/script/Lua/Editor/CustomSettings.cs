@@ -215,6 +215,8 @@ public static class CustomSettings  {
         _GT(typeof(Cmd_Command)),
         _GT(typeof(AI_Command)),
 		_GT(typeof(GlobalConfigMgr)),
+		_GT(typeof(ExplodPosType)),
+		_GT(typeof(Explod)),
 		_GT(typeof(List<int>)),
 		//_GT(typeof(TestClass)),
 	};

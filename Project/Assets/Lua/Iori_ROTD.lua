@@ -309,6 +309,19 @@ function Iori_ROTD:_initCmds()
 				trigger:PlaySnd(luaPlayer, 60, 1)
 			elseif animElem == 3 then
 				--State 1000, Explod
+				local explod = trigger:CreateExplod()
+				explod.anim = 20000
+				explod.ID = 20000
+				explod.pos_x = 0
+				explod.pos_y = 0
+				explod.postype = ExplodPosType.p1
+				explod.bindtime = -1
+				explod.removetime = -2
+				explod.sprpriority = 4
+				explod.removeongethit = 1
+				explod.ignorehitpause = 1
+
+				explod:Apply()
 			end
 		end
 -- State 1000, ChangeState

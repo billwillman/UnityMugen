@@ -11,6 +11,7 @@ mugen.trigger = trigger
 
 local _cPerUnit = 10000.0 
 local _cPerVelUnit = _cPerUnit/6.5
+PlayerDisplay._cPerUnit = _cPerUnit
 PlayerDisplay._cVelPerUnit = _cPerVelUnit
 PlayerDisplay._cAPerUnit = 100.0
 
@@ -397,6 +398,18 @@ function trigger:PosSet(luaPlayer, x, y)
 		y = -y / _cPerUnit
 		display.PosY = y
 	end
+end
+
+function trigger:CreateExplod(luaPlayer)
+	if luaPlayer == nil then
+		return nil
+	end
+	local display = luaPlayer.PlayerDisplay;
+	if display == nil then
+		display = nil
+	end
+	local ret = display:CreateExplod()
+	return ret
 end
 
 function trigger:PosAdd(luaPlayer, x, y)
