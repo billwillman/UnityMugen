@@ -228,6 +228,8 @@ public class PlayerDisplay : BaseResLoader {
 		var def = player.CnsCfg.GetStateDef (stateDefId);
 		if (def == null)
 			return false;
+		if (StateMgr.CurrentCnsDef == def)
+			return true;
 
 		AttachAttribeFromStateDef (def);
 
@@ -637,6 +639,7 @@ public class PlayerDisplay : BaseResLoader {
 				stateMgr.ClearCurrentCnsDef ();
 			}
 		}
+			
 
 
         var playerName = this.PlayerName;
@@ -645,6 +648,12 @@ public class PlayerDisplay : BaseResLoader {
         var ani = this.ImageAni;
         if (ani == null)
             return false;
+
+		if (ani.State != state) {
+			if (m_PartMgr != null)
+				m_PartMgr.ResetPart ();
+		}
+
         bool ret = ani.PlayerPlayerAni(state, isLoop);
 		m_DefaultClsn2 = null;
         if (ret)
@@ -1319,6 +1328,8 @@ public class PlayerDisplay : BaseResLoader {
     {
 		InteralRefreshCurFrame (target);
 
+		//Debug.LogError (target.CurFrame.ToString ());
+
 		CallCnsTriggerEvent (CnsStateTriggerType.AnimElem);
 
 		SendPartMgrFrame (target);
@@ -1381,6 +1392,8 @@ public class PlayerDisplay : BaseResLoader {
 		if (mgr != null) {
 			mgr.CurStateOnAnimateEndFrame ();
 		}
+		if (m_PartMgr != null)
+			m_PartMgr.OnFrameEnd (this.ImageAni);
 	}
 
     // 调色板名字更换

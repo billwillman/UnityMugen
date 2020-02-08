@@ -38,13 +38,23 @@ public class Explod : PlayerPart {
 	public int removeongethit = 0;
 	public int ignorehitpause = 1;
 
+	protected bool IsUseParentUpdate
+	{
+		get {
+			return ignorehitpause == 1;
+		}
+	}
+
 	public void Apply()
 	{
+		if (m_IsDestroy)
+			return;
+		
 		var display = this.Display;
 		if (display != null) {
 			display.m_OffsetPos = new Vector2 (((float)pos_x) / PlayerDisplay._cPerUnit, ((float)pos_y) / PlayerDisplay._cPerUnit);
 			display.SetVelSet (x_vel, y_vel);
-			if (ignorehitpause == 0) {
+			if (!IsUseParentUpdate) {
 				bool isLoop = removetime == -1;
 				display.PlayAni (anim, isLoop);
 			}
@@ -54,6 +64,9 @@ public class Explod : PlayerPart {
 	[NoToLua]
 	public override void OnParentUpdateFrame(ImageAnimation target)
 	{
+		if (m_IsDestroy)
+			return;
+		
 		if (ignorehitpause == 1) {
 			this.InternalParentUpdateFrame (target, (PlayerState)anim);
 		}
@@ -68,22 +81,29 @@ public class Explod : PlayerPart {
 		GameObject.Destroy (this.gameObject);
 	}
 
-	void OnPlayerPartUpdateFrame()
+	[NoToLua]
+	public override void OnParentFrameEnd(ImageAnimation target)
 	{
-		var display = this.Display;
-		if (display != null) {
-			if (display.Trigger_AnimTime () == 0) {
-				// 最后一帧
-				if (removetime == -2) {
-					InteralDoDestroy ();
-				}
+		if (IsUseParentUpdate) {
+			if (removetime == -2) {
+				InteralDoDestroy ();
 			}
 		}
 	}
 
 	void OnImageAnimationFrame()
 	{
-		OnPlayerPartUpdateFrame ();
+		if (!IsUseParentUpdate) {
+			var display = this.Display;
+			if (display != null) {
+				if (display.Trigger_AnimTime () == 0) {
+					// 最后一帧
+					if (removetime == -2) {
+						InteralDoDestroy ();
+					}
+				}
+			}
+		}
 	}
 
 	void UpdateBindTime()

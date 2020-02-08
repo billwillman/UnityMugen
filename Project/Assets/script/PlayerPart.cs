@@ -45,13 +45,18 @@ public class PlayerPart : MonoBehaviour {
 				display._SetLoaderPlayer (targetDisplay.LoaderPlayer);
 				image._SetStateFrameList (state, target.CurFrame);
 				display.InteralRefreshCurFrame (image);
-				SendMessage ("OnPlayerPartUpdateFrame", SendMessageOptions.DontRequireReceiver);
+				//SendMessage ("OnPlayerPartUpdateFrame", SendMessageOptions.DontRequireReceiver);
 			}
 		}
 	}
 
 	[NoToLua]
 	public virtual void OnParentUpdateFrame(ImageAnimation target)
+	{
+	}
+
+	[NoToLua]
+	public virtual void OnParentFrameEnd(ImageAnimation target)
 	{
 	}
 

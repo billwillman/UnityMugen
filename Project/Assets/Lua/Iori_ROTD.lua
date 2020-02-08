@@ -306,10 +306,16 @@ function Iori_ROTD:_initCmds()
 			local animElem = trigger:AnimElem(luaPlayer)
 			if animElem == 4 then
 				trigger:PlaySnd(luaPlayer, 60, 0)
-				trigger:PlaySnd(luaPlayer, 60, 1)
-			elseif animElem == 3 then
-				--State 1000, Explod
-				local explod = trigger:CreateExplod()
+				trigger:PlaySnd(luaPlayer, 60, 1)	
+			end
+		end
+--State 1000, Explod
+	state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+	state.OnTriggerEvent =
+		function (luaPlayer, state)
+			local animElem = trigger:AnimElem(luaPlayer)
+			if animElem == 3 then
+				local explod = trigger:CreateExplod(luaPlayer)
 				explod.anim = 20000
 				explod.ID = 20000
 				explod.pos_x = 0

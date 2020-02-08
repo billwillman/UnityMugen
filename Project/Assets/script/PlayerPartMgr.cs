@@ -34,5 +34,28 @@ public class PlayerPartMgr : MonoBehaviour {
 			}
 		}
 	}
+
+	public void ResetPart()
+	{
+		if (m_PartList != null) {
+			for (int i = m_PartList.Count - 1; i >= 0; --i) {
+				var part = m_PartList [i];
+				if (part != null)
+					GameObject.Destroy (part.gameObject);
+			}
+			m_PartList.Clear ();
+		}
+	}
+
+	public void OnFrameEnd(ImageAnimation target)
+	{
+		if (m_PartList != null) {
+			for (int i = 0; i < m_PartList.Count; ++i) {
+				var part = m_PartList [i];
+				if (part != null)
+					part.OnParentFrameEnd (target);
+			}
+		}
+	}
 }
 
