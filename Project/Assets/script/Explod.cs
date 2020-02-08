@@ -57,18 +57,12 @@ public class Explod : PlayerPart {
 				Vector2 offset = -parentDisplay.transform.localPosition + parentDisplay.m_OffsetPos;
 				Vector2 vv = (new Vector2 (((float)pos_x) / PlayerDisplay._cPerUnit, ((float)pos_y)) / PlayerDisplay._cPerUnit) + offset;
 				display.m_OffsetPos = vv;
-				display.m_OffsetPos.z = -1;
+				display.m_OffsetPos.z = parentDisplay.IsFlipX ? 1: -1;
 			}
 		}
 	}
 
-	private PlayerDisplay GetParentDisplay()
-	{
-		var trans = this.transform;
-		if (trans.parent == null)
-			return null;
-		return trans.parent.GetComponent<PlayerDisplay> ();
-	}
+
 
 	public void Apply()
 	{
@@ -77,10 +71,12 @@ public class Explod : PlayerPart {
 		
 		var display = this.Display;
 		if (display != null) {
-			UpdateOffsetPos (GetParentDisplay());
+			var parentDisplay = GetParentDisplay ();
+			UpdateOffsetPos (parentDisplay);
 			display.SetVelSet (x_vel, y_vel);
 			if (!IsUseParentUpdate) {
 				bool isLoop = removetime == -1;
+				ApplyParentDisplayLoaderPlayer (parentDisplay);
 				display.PlayAni (anim, isLoop);
 			}
 		}

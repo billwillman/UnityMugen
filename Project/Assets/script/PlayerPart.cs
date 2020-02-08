@@ -31,6 +31,26 @@ public class PlayerPart : MonoBehaviour {
 		CheckVisible ();
 	}*/
 
+	protected PlayerDisplay GetParentDisplay()
+	{
+		var trans = this.transform;
+		if (trans.parent == null)
+			return null;
+		return trans.parent.GetComponent<PlayerDisplay> ();
+	}
+
+	protected void ApplyParentDisplayLoaderPlayer(PlayerDisplay parent)
+	{
+		var display = this.Display;
+		if (display == null)
+			return;
+		if (parent == null)
+			parent = GetParentDisplay ();
+		if (parent != null) {
+			display._SetLoaderPlayer (parent.LoaderPlayer);
+		}
+	}
+
 	protected void InternalParentUpdateFrame(ImageAnimation target, PlayerState state)
 	{
 		var display = this.Display;
