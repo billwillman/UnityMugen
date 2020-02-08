@@ -37,7 +37,7 @@ public class PlayerPart : MonoBehaviour {
 				return;
 			var image = display.ImageAni;
 			if (image != null) {
-				display._SetLoaderPlayer (targetDisplay);
+				display._SetLoaderPlayer (targetDisplay.LoaderPlayer);
 				image._SetStateFrameList (m_State, target.CurFrame);
 				display.InteralRefreshCurFrame (image);
 			}

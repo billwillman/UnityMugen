@@ -332,6 +332,12 @@ public class PlayerDisplay : BaseResLoader {
 	}
 
 	[NoToLuaAttribute]
+	internal void _SetLoaderPlayer(DefaultLoaderPlayer player)
+	{
+		m_LoaderPlayer = player;
+	}
+
+	[NoToLuaAttribute]
     public DefaultLoaderPlayer LoaderPlayer
     {
         get
@@ -1277,6 +1283,7 @@ public class PlayerDisplay : BaseResLoader {
 		m_PartMgr.OnUpdateFrame (target);
 	}
 
+	[NoToLua]
 	internal void InteralRefreshCurFrame(ImageAnimation target)
 	{
 		SpriteRenderer r = this.SpriteRender;
