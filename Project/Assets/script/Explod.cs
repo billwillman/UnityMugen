@@ -45,25 +45,29 @@ public class Explod : PlayerPart {
 		}
 	}
 
-	void UpdateOffsetPos()
+	void UpdateOffsetPos(PlayerDisplay parentDisplay)
 	{
-		if (m_IsDestroy)
+		if (m_IsDestroy || parentDisplay == null)
 			return;
 		
 		if (postype == ExplodPosType.p1) {
 			var display = this.Display;
 			if (display != null) 
 			{
-				Vector2 offset = Vector2.zero;
-				var parent = this.transform.parent;
-				if (parent != null) {
-					offset = -parent.transform.localPosition;
-				}
+				Vector2 offset = -parentDisplay.transform.localPosition + parentDisplay.m_OffsetPos;
 				Vector2 vv = (new Vector2 (((float)pos_x) / PlayerDisplay._cPerUnit, ((float)pos_y)) / PlayerDisplay._cPerUnit) + offset;
 				display.m_OffsetPos = vv;
 				display.m_OffsetPos.z = -1;
 			}
 		}
+	}
+
+	private PlayerDisplay GetParentDisplay()
+	{
+		var trans = this.transform;
+		if (trans.parent == null)
+			return null;
+		return trans.parent.GetComponent<PlayerDisplay> ();
 	}
 
 	public void Apply()
@@ -73,7 +77,7 @@ public class Explod : PlayerPart {
 		
 		var display = this.Display;
 		if (display != null) {
-			UpdateOffsetPos ();
+			UpdateOffsetPos (GetParentDisplay());
 			display.SetVelSet (x_vel, y_vel);
 			if (!IsUseParentUpdate) {
 				bool isLoop = removetime == -1;
@@ -83,14 +87,13 @@ public class Explod : PlayerPart {
 	}
 
 	[NoToLua]
-	public override void OnParentUpdateFrame(ImageAnimation target)
+	internal override void OnParentUpdateFrame(ImageAnimation target)
 	{
 		if (m_IsDestroy)
 			return;
 
 
 		if (IsUseParentUpdate) {
-			UpdateOffsetPos ();
 			this.InternalParentUpdateFrame (target, (PlayerState)anim);
 		}
 	}
@@ -105,7 +108,7 @@ public class Explod : PlayerPart {
 	}
 
 	[NoToLua]
-	public override void OnParentFrameEnd(ImageAnimation target)
+	internal override void OnParentFrameEnd(ImageAnimation target)
 	{
 		if (IsUseParentUpdate) {
 			if (removetime == -2) {
@@ -114,11 +117,17 @@ public class Explod : PlayerPart {
 		}
 	}
 
+	[NoToLua]
+	internal override void OnParentFramePosUpdate(ImageAnimation target)
+	{
+		if (m_IsDestroy)
+			return;
+		UpdateOffsetPos (target.CacheDisplayer);
+	}
+
 	void OnImageAnimationFrame()
 	{
 		if (!IsUseParentUpdate) {
-			UpdateOffsetPos ();
-
 			var display = this.Display;
 			if (display != null) {
 				if (display.Trigger_AnimTime () == 0) {

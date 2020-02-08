@@ -51,12 +51,17 @@ public class PlayerPart : MonoBehaviour {
 	}
 
 	[NoToLua]
-	public virtual void OnParentUpdateFrame(ImageAnimation target)
+	internal virtual void OnParentUpdateFrame(ImageAnimation target)
 	{
 	}
 
 	[NoToLua]
-	public virtual void OnParentFrameEnd(ImageAnimation target)
+	internal virtual void OnParentFrameEnd(ImageAnimation target)
+	{
+	}
+
+	[NoToLua]
+	internal virtual void OnParentFramePosUpdate(ImageAnimation target)
 	{
 	}
 

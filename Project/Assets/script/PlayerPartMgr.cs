@@ -57,5 +57,16 @@ public class PlayerPartMgr : MonoBehaviour {
 			}
 		}
 	}
+
+	public void OnFramePosUpdate(ImageAnimation target)
+	{
+		if (m_PartList != null) {
+			for (int i = 0; i < m_PartList.Count; ++i) {
+				var part = m_PartList [i];
+				if (part != null)
+					part.OnParentFramePosUpdate (target);
+			}
+		}
+	}
 }
 

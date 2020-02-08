@@ -1071,6 +1071,8 @@ public class PlayerDisplay : BaseResLoader {
                 frameOffset.x = -frameOffset.x;
             trans.localPosition = frameOffset + m_OffsetPos;
             UpdateClsnRootOffsetPos(frame.OffsetPos);
+
+			SendPartUpdatePos ();
 		}
 
 		Material mat = r.sharedMaterial;
@@ -1107,6 +1109,31 @@ public class PlayerDisplay : BaseResLoader {
 
             CreateClsn(aniNode.localCls1Arr, false, m_ShowClsnDebug);
         }
+	}
+
+	private void SendPartUpdatePos()
+	{
+		if (m_PartMgr != null) {
+		}
+	}
+
+	internal void InternalUpdatePos()
+	{
+		var img = this.ImageAni;
+		if (img != null) {
+			ActionFlip flip;
+			var frame = img.GetCurImageFrame(out flip);
+			if (frame != null) {
+				Vector3 frameOffset = frame.OffsetPos;
+				if (IsFlipX)
+					frameOffset.x = -frameOffset.x;
+				var trans = this.CachedTransform;
+				trans.localPosition = frameOffset + m_OffsetPos;
+				UpdateClsnRootOffsetPos(frame.OffsetPos);
+
+				SendPartUpdatePos ();
+			}
+		}
 	}
 
 	// 创建爆炸
