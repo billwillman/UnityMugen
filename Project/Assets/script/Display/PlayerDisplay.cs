@@ -1277,23 +1277,45 @@ public class PlayerDisplay : BaseResLoader {
 		m_PartMgr.OnUpdateFrame (target);
 	}
 
-	
+	internal void InteralRefreshCurFrame(ImageAnimation target)
+	{
+		SpriteRenderer r = this.SpriteRender;
+		if (r == null)
+			return;
+		ActionFlip flip;
+		var frame = target.GetCurImageFrame(out flip);
+		if (frame == null)
+			return;
+		UpdateRenderer(frame, flip, target);
+	}
 
     protected void RefreshCurFrame(ImageAnimation target)
     {
-        SpriteRenderer r = this.SpriteRender;
-        if (r == null)
-            return;
-        ActionFlip flip;
-        var frame = target.GetCurImageFrame(out flip);
-        if (frame == null)
-            return;
-		UpdateRenderer(frame, flip, target);
+		InteralRefreshCurFrame (target);
 
 		CallCnsTriggerEvent (CnsStateTriggerType.AnimElem);
 
 		SendPartMgrFrame (target);
     }
+
+	internal void ResetPlayerPart()
+	{
+		//var img = this.ImageAni;
+		//if (img != null && img.enabled)
+		//	img.enabled = false;
+		var attr = this.Attribe;
+		if (attr != null && attr.enabled)
+			attr.enabled = false;
+		var snd = this.Sound;
+		if (snd != null && snd.enabled)
+			snd.enabled = false;
+		var move = this.Movement;
+		if (move != null && move.enabled)
+			move.enabled = false;
+		var state = this.StateMgr;
+		if (state != null && state.enabled)
+			state.enabled = false;
+	}
 
 	[NoToLua]
 	public void CallCnsTriggerEvent(params CnsStateTriggerType[] triggerTypes)
