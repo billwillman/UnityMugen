@@ -290,7 +290,7 @@ public class PlayerDisplay : BaseResLoader {
                     trans.localRotation = quat;
                 }
 				// 因为翻转了，需要调整前后关系
-				SendPartUpdatePos ();
+				//SendPartUpdatePos ();
             }
         }
 	}
