@@ -87,8 +87,10 @@ public class Explod : PlayerPart {
 	{
 		if (m_IsDestroy)
 			return;
-		
-		if (ignorehitpause == 1) {
+
+
+		if (IsUseParentUpdate) {
+			UpdateOffsetPos ();
 			this.InternalParentUpdateFrame (target, (PlayerState)anim);
 		}
 	}
@@ -115,6 +117,8 @@ public class Explod : PlayerPart {
 	void OnImageAnimationFrame()
 	{
 		if (!IsUseParentUpdate) {
+			UpdateOffsetPos ();
+
 			var display = this.Display;
 			if (display != null) {
 				if (display.Trigger_AnimTime () == 0) {
