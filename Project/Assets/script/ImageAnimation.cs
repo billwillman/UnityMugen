@@ -12,11 +12,16 @@ public class ImageAnimation : MonoBehaviour {
         if (m_AniTotalTime > 0)
         {
             m_AnimElemTime += 1;
+			//int prevUsedTime = this.CurAniUsedTime;
             if (m_AniUsedTime >= 0)
                 m_AniUsedTime += _cImageAnimationScale;
             else
                 m_AniUsedTime = 0;
-            CacheAnimation.SendMessage("OnImageAniTimeUpdate", this, SendMessageOptions.DontRequireReceiver);
+
+			//int curTUsedTime = this.CurAniUsedTime;
+			if (m_AniUsedTime >= 0) {
+				CacheAnimation.SendMessage ("OnImageAniTimeUpdate", this, SendMessageOptions.DontRequireReceiver);
+			}
         }
     }
 
@@ -820,7 +825,10 @@ public class ImageAnimation : MonoBehaviour {
     {
         get
         {
-            return Mathf.RoundToInt(m_AniUsedTime/ _cImageAnimationScale);
+			int ret = Mathf.RoundToInt(m_AniUsedTime/ _cImageAnimationScale);
+			if (ret < 0)
+				ret = 0;
+			return ret;
         }
     }
 
@@ -921,12 +929,17 @@ public class ImageAnimation : MonoBehaviour {
         }
     }
 
+	public void ResetCns()
+	{
+		m_AniUsedTime = -1;
+		m_AnimElemTime = 0;
+	}
+
     private void ResetAnimation()
     {
         m_CurFrame = -1;
-        m_AniUsedTime = -1;
-        m_AniTotalTime = 0;
-        m_AnimElemTime = 0;
+		m_AniTotalTime = -1;
+		ResetCns ();
     }
 
     public PlayerState State
@@ -958,7 +971,7 @@ public class ImageAnimation : MonoBehaviour {
 	}
 
     // 当前帧
-    public static float _cImageAnimationScale = 0.015f;
+    public static float _cImageAnimationScale = 0.017f;
     private int m_CurFrame = -1;
     // 当前动画状态已经使用的时间
     private float m_AniUsedTime = -1f;

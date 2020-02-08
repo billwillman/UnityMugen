@@ -9,6 +9,7 @@ public class SpriteMovement : MonoBehaviour {
 	// 开始速度
 	public Vector2 StartVec  = Vector2.zero;
 	public Vector2 Vec = Vector2.zero;
+	public float g = 9.8f;
 
 	public float AniCtlPauseTime = -1;
 
@@ -97,11 +98,17 @@ public class SpriteMovement : MonoBehaviour {
 		if (Mathf.Abs (Vec.x) <= float.Epsilon && Mathf.Abs (Vec.y) <= float.Epsilon)
 			return;
 		// 按照毫秒算速度
-		Vector2 vv = Vec * (IsFlipX? -1:1) * deltaTime * 1000f;
+		float d = deltaTime * 1000f;
+		float gg = -g/(PlayerDisplay._cVelPerUnit * 100f);
+		//float gg = -g/1000000f * 6.5f;
+		Vec.y += gg * d;
+		Vector2 vv = new Vector2(Vec.x * (IsFlipX? -1:1), Vec.y);
 		Vector2 org = this.OffsetPos;
-		org += vv;
-		if (org.y < 0)
+		org += vv * d;
+		if (org.y < 0) {
+			//Vec.y = 0;
 			org.y = 0;
+		}
 		this.OffsetPos = org;
 	}
 

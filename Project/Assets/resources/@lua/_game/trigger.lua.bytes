@@ -9,7 +9,9 @@ end
 trigger = {}
 mugen.trigger = trigger
 
-local _cPerUnit = 10000.0
+local _cPerUnit = 10000.0 
+local _cPerVelUnit = _cPerUnit/6.5
+PlayerDisplay._cVelPerUnit = _cPerVelUnit
 
 local GlobaConfigMgr = MonoSingleton_GlobalConfigMgr.GetInstance()
 
@@ -121,7 +123,7 @@ function trigger:Anim(luaPlayer)
 	return ret
 end
 
-function trigger.AnimExist(luaPlayer, state)
+function trigger:AnimExist(luaPlayer, state)
 	if luaPlayer == nil or state == nil then
 		return nil
 	end
@@ -232,7 +234,7 @@ function trigger:Ctrl(luaPlayer)
 	return attribe.Ctrl
 end
 
-function trigger:PlayAnim(luaPlayerl, stateId, isLoop)
+function trigger:PlayAnim(luaPlayer, stateId, isLoop)
 	if luaPlayer == nil or stateId == nil then
 		return false
 	end
@@ -245,6 +247,10 @@ function trigger:PlayAnim(luaPlayerl, stateId, isLoop)
 	isLoop = isLoop or false
 	local ret = display:PlayAni(stateId, isLoop, false)
 	return ret
+end
+
+function trigger:PlayStandCns(luaPlayer)
+	return self:PlayCnsByName(luaPlayer, "0", true)
 end
 
 function trigger:PlayCnsByName(luaPlayer, stateDefName, isLoop)
@@ -291,6 +297,10 @@ function trigger:ChangeState(luaPlayer, newState, isCns)
 end
 --]]
 
+function trigger:CtrlSet(luaPlayer, ctrl)
+	return trigger:SetCtrl(luaPlayer, ctrl)
+end
+
 function trigger:SetCtrl(luaPlayer, ctrl)
 	if luaPlayer == nil or ctrl == nil then
 		return nil
@@ -307,16 +317,24 @@ function trigger:SetCtrl(luaPlayer, ctrl)
 end
 
 function trigger:VelSet(luaPlayer, x, y)
-	if luaPlayer == nil or x == nil or y == nil then
+	if luaPlayer == nil or (x == nil and y == nil) then
 		return nil
 	end
 	local display = luaPlayer.PlayerDisplay;
 	if display == nil then
 		return nil 
 	end
-	x = x / _cPerUnit
-	y = -y / _cPerUnit
-	display:SetVelSet(x, y)
+	if x ~= nil and y ~= nil then
+		x = x / _cPerVelUnit
+		y = -y / _cPerVelUnit
+		display:SetVelSet(x, y)
+	elseif x ~= nil then
+		x = x / _cPerVelUnit
+		display:SetVelSetX(x)
+	elseif y ~= nil then
+		y = -y / _cPerVelUnit
+		display:SetVelSetY(y)
+	end
 	return true
 end
 
@@ -330,8 +348,8 @@ function trigger:VelAdd(luaPlayer, x, y)
 	end
 	x = x or 0
 	y = y or 0
-	x = x / _cPerUnit
-	y = -y / _cPerUnit
+	x = x / _cPerVelUnit
+	y = -y / _cPerVelUnit
 	display:VelAdd(x, y)
 	return true
 end
@@ -408,6 +426,30 @@ function trigger:ResetStateAndCtrl(luaPlayer, state)
 	return display:ResetStateAndCtrlOne(state)
 end
 
+function trigger:VelX(luaPlayer)
+	if luaPlayer == nil then
+		return nil
+	end
+	local display = luaPlayer.PlayerDisplay;
+	if display == nil then
+		return nil 
+	end
+	local ret = display.VelX * _cPerVelUnit
+	return ret
+end
+
+function trigger:VelY(luaPlayer)
+	if luaPlayer == nil then
+		return nil
+	end
+	local display = luaPlayer.PlayerDisplay;
+	if display == nil then
+		return nil 
+	end
+	local ret = -display.VelY * _cPerVelUnit
+	return ret
+end
+
 function trigger:VelMul(luaPlayer, x, y)
 	if luaPlayer == nil or (x == nil and y == nil) then
 		return nil
@@ -419,12 +461,12 @@ function trigger:VelMul(luaPlayer, x, y)
 	if x == nil then
 		x = 1
 	else
-		x = x / _cPerUnit
+		x = x / _cPerVelUnit
 	end
 	if y == nil then
 		y = 1
 	else
-		y = -y / _cPerUnit
+		y = -y / _cPerVelUnit
 	end
 	display:VelMul(x, y)
 	return true;
@@ -490,7 +532,7 @@ function trigger:Var(luaPlayer, index)
 	if attribe == nil then
 		return nil
 	end
-	local isOk, value = attribe:GetIntVars(index)
+	local isOk, value = attribe:GetIntVars(index, nil)
 	if not isOk then
 		return nil
 	end
@@ -524,7 +566,7 @@ function trigger:fVar(luaPlayer, index)
 	if attribe == nil then
 		return nil
 	end
-	local isOk, value = attribe:GetFloatVars(index)
+	local isOk, value = attribe:GetFloatVars(index, nil)
 	if not isOk then
 		return nil
 	end

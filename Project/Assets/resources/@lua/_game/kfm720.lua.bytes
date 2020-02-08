@@ -84,8 +84,19 @@ function kfm720:_initMovement()
 		return
 	end
 	
-	self.Movement = {}
-	self.Movement.yaccel = 1.76
+	self.movement = {}
+	self.movement.yaccel = 1.76
+
+	self.velocity = {}
+	self.velocity.run = {}
+	self.velocity.run.fwd = Vector2.New(18.4, 0)
+	self.velocity.run.back = Vector2.New(-18,-15.2)
+
+	self.velocity.airjump = {}
+	self.velocity.airjump.neu = Vector2.New(0,-32.4)
+	self.velocity.airjump.back = Vector2.New(-10.2,0)
+	self.velocity.airjump.fwd = Vector2.New(10,0)
+	self.velocity.airjump.y = -27.5
 end
 
 --=====================================创建StateDef===================================
@@ -96,14 +107,7 @@ function kfm720:_initStateDefs()
 	end
 	
 	-- 创建各种状态
-	self:_initStateDef_200(luaCfg)
 	self:_initStateDef_3000(luaCfg)
-end
-
-function kfm720:_initStateDef_200(luaCfg)
-	local id = trigger:Help_CreateStateDef(luaCfg, "200")
-	local def = trigger:Help_GetStateDef(luaCfg, id)
-	--Def注册State
 end
 
 function kfm720:_initStateDef_3000(luaCfg)
@@ -185,6 +189,7 @@ function kfm720:On_Taunt(cmdName)
 	return ret
 end
 
+--[[
 function kfm720:On_Run_Fwd(cmdName)
 	local trigger1 = trigger:Command(self, "FF") and 
 						trigger:Statetype(self) == Mugen.Cns_Type.S and 
@@ -192,12 +197,12 @@ function kfm720:On_Run_Fwd(cmdName)
 	
 	return trigger1 
 end
+--]]
 
 function kfm720:On_Run_Back(cmdName)
 	local trigger1 = trigger:Command(self, "BB") and 
 						trigger:Statetype(self) == Mugen.Cns_Type.S and 
 						trigger:CanCtrl(self)
-	
 	return trigger1 
 end
 
@@ -207,29 +212,74 @@ function kfm720:On_QCF_y(cmdName)
 	return triggerall
 end
 
+function kfm720:On_Stand_Light_Punch(cmdName)
+	local triggerall = trigger:Command(self, "x") and (not trigger:Command(self, "holddown"))
+	local trigger1 = trigger:Statetype(self) == Mugen.Cns_Type.S and trigger:CanCtrl(self)
+	local trigger2 = trigger:Stateno(self) == 200 and trigger:Time(self) > 6
+	local ret = triggerall and (trigger1 or trigger2)
+	return ret
+end
+
+function kfm720:On_Stand_Light_Kick(cmdName)
+	local triggerall = trigger:Command(self, "a") and (not trigger:Command(self, "holddown"))
+	local trigger1 = trigger:Statetype(self) == Mugen.Cns_Type.S and trigger:CanCtrl(self)
+	local trigger2 = trigger:Stateno(self) == 200 and trigger:Time(self) > 7
+	local trigger3 = trigger:Stateno(self) == 230 and trigger:Time(self) > 9
+	local ret = triggerall and (trigger1 or trigger2 or trigger3)
+	return ret
+end
+
+function kfm720:On_Standing_Strong_Kick(cmdName)
+	local triggerall = trigger:Command(self, "b") and (not trigger:Command(self, "holddown"))
+	local trigger1 = trigger:Statetype(self) == Mugen.Cns_Type.S and trigger:CanCtrl(self)
+	local trigger2 = trigger:Stateno(self) == 200 and trigger:Time(self) > 5
+	local trigger3 = trigger:Stateno(self) == 230 and trigger:Time(self) > 6
+	local ret = triggerall and (trigger1 or trigger2 or trigger3)
+	return ret
+end
+
 function kfm720:_initState_Default(luaCfg)
-	local aiCmd = luaCfg:CreateAICmd("Taunt", "")
+	local aiCmd = luaCfg:CreateAICmd("Taunt")
 	aiCmd.type = Mugen.AI_Type.ChangeState
 	aiCmd.value = "195"
 	aiCmd.OnTriggerEvent = self.On_Taunt
-	
+	--[[
 	aiCmd = luaCfg:CreateAICmd("Run Fwd", "")
 	aiCmd.type = Mugen.AI_Type.ChangeState
 	aiCmd.value = "100"
 	aiCmd.AniLoop = true
 	aiCmd.OnTriggerEvent = self.On_Run_Fwd
+	--]]
 	
-	aiCmd = luaCfg:CreateAICmd("Run Back", "")
+	aiCmd = luaCfg:CreateAICmd("Run Back")
 	aiCmd.type = Mugen.AI_Type.ChangeState
 	aiCmd.value = "105"
 	aiCmd.AniLoop = false
 	aiCmd.OnTriggerEvent = self.On_Run_Back
 	
-	aiCmd = luaCfg:CreateAICmd("Strong Kung Fu Palm", "")
+	aiCmd = luaCfg:CreateAICmd("Strong Kung Fu Palm")
 	aiCmd.type = Mugen.AI_Type.ChangeState
 	aiCmd.value = "1010"
 	aiCmd.AniLoop = false
 	aiCmd.OnTriggerEvent = self.On_QCF_y
+
+	aiCmd = luaCfg:CreateAICmd("Stand Light Punch")
+	aiCmd.type = Mugen.AI_Type.ChangeState
+	aiCmd.value = "200"
+	aiCmd.AniLoop = false
+	aiCmd.OnTriggerEvent = self.On_Stand_Light_Punch
+
+	aiCmd = luaCfg:CreateAICmd("Stand Light Kick")
+	aiCmd.type = Mugen.AI_Type.ChangeState
+	aiCmd.value = "230"
+	aiCmd.AniLoop = false
+	aiCmd.OnTriggerEvent = self.On_Stand_Light_Kick
+
+	aiCmd = luaCfg:CreateAICmd("Standing Strong Kick")
+	aiCmd.type = Mugen.AI_Type.ChangeState
+	aiCmd.value = "240"
+	aiCmd.AniLoop = false
+	aiCmd.OnTriggerEvent = self.On_Standing_Strong_Kick
 end
 
 function kfm720:_initCmds()
@@ -261,7 +311,7 @@ function kfm720:_initStateDef(luaCfg)
 		function (luaPlayer, state)
 			local aniTime = trigger:AnimTime(luaPlayer)
 			if aniTime == 0 then
-				trigger:PlayCnsByName(luaPlayer, "0", true)
+				trigger:PlayStandCns(luaPlayer)
 			end
 		end
 ---------------------- Strong Kung Fu Palm ------------------
@@ -322,7 +372,194 @@ function kfm720:_initStateDef(luaCfg)
 			local aniTime = trigger:AnimTime(luaPlayer)
 			if aniTime == 0 then
 				trigger:SetCtrl(luaPlayer, 1)
-				trigger:PlayCnsByName(luaPlayer, "0", true)
+				trigger:PlayStandCns(luaPlayer)
+			end
+		end
+----------------- RUN_BACK --------------
+	id = luaCfg:CreateStateDef("105")
+	def = luaCfg:GetStateDef(id)
+	def.Type = Mugen.Cns_Type.A
+	def.MoveType = Mugen.Cns_MoveType.A
+	def.Ctrl = 0
+	def.Animate = 105
+	def.Sprpriority = 1
+-- [State 105, 1]
+	state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+	state.OnTriggerEvent = 
+		function (luaPlayer, state)
+			local tt = trigger:Time(luaPlayer)
+			--print(tt)
+			if tt == 0 then
+				print("State 105, 1")
+				trigger:VelSet(luaPlayer, -18, -15.2)
+			end
+		end
+-- [State 105, 2]
+	state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+	state.OnTriggerEvent = 
+		function (luaPlayer, state)
+			local tt = trigger:Time(luaPlayer)
+			if tt == 2 then
+				print("State 105, 2")
+				trigger:CtrlSet(luaPlayer, 1)
+			end
+		end
+-- [State 105, 3]
+	state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+	state.OnTriggerEvent = 
+		function (luaPlayer, state)
+			local trigger1 = trigger:VelY(luaPlayer) > 0 and trigger:PosY(luaPlayer) >= 0
+			if trigger1 then
+				print("State 105, 3")
+				trigger:PlayCnsByName(luaPlayer, "106")
+			end
+		end
+
+	id = luaCfg:CreateStateDef("106")
+	def = luaCfg:GetStateDef(id)
+	def.Type = Mugen.Cns_Type.S
+	def.PhysicsType = Mugen.Cns_PhysicsType.S
+	def.Ctrl = 0
+	def.Animate = 47
+-- [State 106, 1]
+-- [State 106, 2]
+	state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+	state.OnTriggerEvent = 
+		function (luaPlayer, state)
+			print("106 Check")
+			local trigger1 = trigger:Time(luaPlayer) == 0
+			if trigger1 then
+				trigger:VelSet(luaPlayer, nil, 0)
+				trigger:PosSet(luaPlayer, nil, 0)
+			end
+		end
+-- [State 106, 4]
+	state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+	state.OnTriggerEvent = 
+		function (luaPlayer, state)
+			local trigger1 = trigger:Time(luaPlayer) == 7
+			if trigger1 then
+				trigger:SetCtrl(luaPlayer, 1)
+				trigger:PlayStandCns(luaPlayer)
+			end
+		end
+------------------------- Run Fwd -----------------
+--[[
+	id = luaCfg:CreateStateDef("100")
+	def = luaCfg:GetStateDef(id)
+	def.Type = Mugen.Cns_Type.S
+	def.PhysicsType = Mugen.Cns_PhysicsType.S
+	def.Animate = 100
+	def.Sprpriority = 1
+-- State 100, 1
+	state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+	state.OnTriggerEvent =
+		function (luaPlayer, state)
+			trigger:VelSet(luaPlayer, 18.4, nil)
+		end
+--]]
+------------------------ Stand Light Punch -------------
+	id = luaCfg:CreateStateDef("200")
+  	def = luaCfg:GetStateDef(id)
+  	def.Type = Mugen.Cns_Type.S
+  	def.MoveType = Mugen.Cns_MoveType.A
+  	def.PhysicsType = Mugen.Cns_PhysicsType.S
+  	def.Juggle = 1
+  	def.Velset_x = 0
+  	def.Velset_y = 0
+  	def.Ctrl = 0
+  	def.Animate = 200
+  	def.PowerAdd = 10
+  	def.Sprpriority = 2
+-- State 200, 2
+	state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+	state.OnTriggerEvent =
+		function (luaPlayer, state)
+			local trigger1 = trigger:Time(luaPlayer) == 1
+			if trigger1 then
+				trigger:PlaySnd(luaPlayer, 0, 0)
+			end
+		end
+-- State 200, 3
+	state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+	state.OnTriggerEvent =
+		function (luaPlayer, state)
+			local trigger1 = trigger:AnimTime(luaPlayer) == 0
+			if trigger1 then
+				trigger:SetCtrl(luaPlayer, 1)
+				trigger:PlayStandCns(luaPlayer)
+			end
+		end
+------------------------- Stand Light Kick -----------------------
+	id = luaCfg:CreateStateDef("230")
+  	def = luaCfg:GetStateDef(id)
+  	def.Type = Mugen.Cns_Type.S
+  	def.MoveType = Mugen.Cns_MoveType.A
+  	def.PhysicsType = Mugen.Cns_PhysicsType.S
+  	def.Juggle = 4
+  	def.PowerAdd = 11
+  	def.Ctrl = 0
+  	def.Velset_x = 0
+  	def.Velset_y = 0
+  	def.Animate = 230
+  	def.Sprpriority = 2
+ -- State 230, 1
+ 	state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+ 	state.OnTriggerEvent =
+		function (luaPlayer, state)
+			local trigger1 = trigger:Time(luaPlayer) == 2
+			if trigger1 then
+				trigger:PlaySnd(luaPlayer, 0, 1)
+			end
+		end
+-- State 230, 3
+	state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+ 	state.OnTriggerEvent =
+ 		function (luaPlayer, state)
+ 			local trigger1 = trigger:AnimTime(luaPlayer) == 0
+ 			if trigger1 then
+ 				trigger:PlayStandCns(luaPlayer)
+ 			end
+ 		end
+ --------------------- Standing strong kick ------------------------
+ 	id = luaCfg:CreateStateDef("240")
+  	def = luaCfg:GetStateDef(id)
+  	def.Type = Mugen.Cns_Type.S
+  	def.MoveType = Mugen.Cns_MoveType.A
+  	def.PhysicsType = Mugen.Cns_PhysicsType.S
+  	def.Juggle = 5
+  	def.PowerAdd = 30
+  	def.Ctrl = 0
+  	def.Velset_x = 0
+  	def.Velset_y = 0
+  	def.Animate = 240
+  	def.Sprpriority = 2
+ -- State 240, 1
+ 	state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+ 	state.OnTriggerEvent =
+		function (luaPlayer, state)
+			local trigger1 = trigger:Time(luaPlayer) == 2
+			if trigger1 then
+				trigger:PlaySnd(luaPlayer, 0, 1)
+			end
+		end
+-- state 240, 3
+	state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+ 	state.OnTriggerEvent =
+		function (luaPlayer, state)
+			local trigger1 = trigger:AnimElem(luaPlayer) == 7
+			if trigger1 then
+				trigger:PosAdd(luaPlayer, 48, nil)
+			end
+		end
+-- State 240, 4
+	state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+ 	state.OnTriggerEvent =
+		function (luaPlayer, state)
+			local trigger1 = trigger:AnimTime(luaPlayer) == 0
+			if trigger1 then
+				trigger:SetCtrl(luaPlayer, 1)
+				trigger:PlayStandCns(luaPlayer)
 			end
 		end
 end

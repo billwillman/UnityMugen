@@ -80,6 +80,8 @@ public class PlayerDisplay : BaseResLoader {
         return string.Empty;
     }
 
+	public static float _cVelPerUnit = 1;
+
 	[NoToLuaAttribute]
 	public SndSound Sound
 	{
@@ -108,7 +110,7 @@ public class PlayerDisplay : BaseResLoader {
         	var clip = sndLoader.GetSoundClip(group, index);
         	return snd.PlaySound(clip);
 		} catch {
-			return false;
+			return true;
 		}
 	}
 
@@ -156,7 +158,7 @@ public class PlayerDisplay : BaseResLoader {
         return m_LoaderPlayer.GetSoundIter();
     }
 
-	private void AttachAttribeToSpriteMovement()
+	private void AttachAttribeToSpriteMovement(bool isVaildX, bool isVaildY)
 	{
 		PlayerAttribe attribe = this.Attribe;
 		if (attribe == null)
@@ -165,7 +167,11 @@ public class PlayerDisplay : BaseResLoader {
 		if (movement == null)
 			return;
 		movement.StartVec = attribe.StateStartVec;
-		movement.Vec = Vector2.zero;
+
+		//if (isVaildX)
+			movement.Vec.x = 0;
+		//if (isVaildY)
+			movement.Vec.y = 0;
 	}
 
 	private void AttachAttribeFromStateDef(CNSStateDef def)
@@ -175,15 +181,25 @@ public class PlayerDisplay : BaseResLoader {
 		/*
 		 * 设置属性
 		*/
+		if (this.StateMgr.CurrentCnsDef == def)
+			return;
+		
 		PlayerAttribe attribe = this.Attribe;
 		if (attribe != null) {
-			//attribe.StandType = def.MoveType;
+			if (def.Type != Cns_Type.none)
+				attribe.StandType = def.Type;
 			attribe.Power += def.PowerAdd;
+			//if (def.Ctrl != CNSStateDef._cNoVaildCtrl)
 			attribe.Ctrl = def.Ctrl;
 			// 状态开始的速度
-			attribe.StateStartVec = new Vector2 (def.Velset_x, def.Velset_y);
+			bool isVaildX = def.Velset_x != CNSStateDef._cNoVaildVelset;
+			bool isVaildY = def.Velset_y != CNSStateDef._cNoVaildVelset;
+			if (isVaildX)
+				attribe.StateStartVec.x = def.Velset_x;
+			if (isVaildY)
+				attribe.StateStartVec.y = def.Velset_y;
 
-			AttachAttribeToSpriteMovement ();
+			AttachAttribeToSpriteMovement (isVaildX, isVaildY);
 		}
 	}
 
@@ -208,15 +224,26 @@ public class PlayerDisplay : BaseResLoader {
 		if (player.CnsCfg == null || !player.CnsCfg.HasStateDef)
 			return false;
 		var def = player.CnsCfg.GetStateDef (stateDefId);
-		if (def == null || def.Anim == PlayerState.psNone)
+		if (def == null)
 			return false;
 
 		AttachAttribeFromStateDef (def);
 
-		bool ret = PlayAni (def.Anim, isLoop, false);
-		if (ret)
-		{
+		if (StateMgr.CurrentCnsDef != def) {
+			// 重置动画属性
+			ImageAni.ResetCns();
+			def.ResetStatesPersistent ();
+		}
+
+		bool ret;
+		if ((int)def.Anim != CNSStateDef._cNoVaildAnim) {
+			ret = PlayAni (def.Anim, isLoop, false);
+			if (ret) {
+				this.StateMgr.CurrentCnsDef = def;
+			}
+		} else {
 			this.StateMgr.CurrentCnsDef = def;
+			ret = true;
 		}
 		return ret;
 	}
@@ -531,6 +558,11 @@ public class PlayerDisplay : BaseResLoader {
 		return true;
 	}
 
+	public bool HasAniGroup(int state)
+	{
+		return HasAniGroup ((PlayerState)state);
+	}
+
 	public bool HasAniGroup(PlayerState state)
 	{
 		return HasBeginActionSrpiteData(state, false);	
@@ -582,6 +614,11 @@ public class PlayerDisplay : BaseResLoader {
 		if (ani == null)
 			return;
 		ani.ResetFirstFrame ();
+	}
+
+	public bool PlayAni(int state, bool isLoop = true, bool isClearTempCnsDef = true)
+	{
+		return PlayAni ((PlayerState)state, isLoop, isClearTempCnsDef);
 	}
 
 	public bool PlayAni(PlayerState state, bool isLoop = true, bool isClearTempCnsDef = true)
@@ -876,6 +913,22 @@ public class PlayerDisplay : BaseResLoader {
 		return imgAni.CurAniRetainTime;
 	}
 
+	public void SetVelSetX(float x)
+	{
+		var movement = this.Movement;
+		if (movement == null)
+			return;
+		movement.Vec.x = x;
+	}
+
+	public void SetVelSetY(float y)
+	{
+		var movement = this.Movement;
+		if (movement == null)
+			return;
+		movement.Vec.x = y;
+	}
+
 	public void SetVelSet(float x, float y)
 	{
 		var movement = this.Movement;
@@ -902,6 +955,24 @@ public class PlayerDisplay : BaseResLoader {
 		Vector2 v = movement.Vec;
 		v += new Vector2(x, y);
 		movement.Vec = v;
+	}
+
+	public float VelX {
+		get {
+			var movement = this.Movement;
+			if (movement == null)
+				return 0;
+			return movement.Vec.x;
+		}
+	}
+
+	public float VelY {
+		get {
+			var movement = this.Movement;
+			if (movement == null)
+				return 0;
+			return movement.Vec.y;
+		}
 	}
 
 	public void VelMul(float x, float y)

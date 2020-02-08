@@ -75,6 +75,11 @@ function Iori_ROTD:_initData()
   self.Data.volume = 0
   self.Data.IntPersistIndex = 60
   self.Data.FloatPersistIndex = 40
+
+  	self.velocity = {}
+	self.velocity.run = {}
+	self.velocity.run.fwd = Vector2.New(6.5, 0)
+	self.velocity.run.back = Vector2.New(-6.5,-2.9)
 end
 
 function Iori_ROTD:_initSize()
@@ -87,7 +92,7 @@ function Iori_ROTD:_initSize()
 end
 
 --=====================================创建StateDef===================================
-
+debugStartTime = 0
 --创建StateDef
 function Iori_ROTD:_initStateDefs()
 	local luaCfg = trigger:GetLuaCnsCfg("Iori-ROTD")
@@ -143,7 +148,8 @@ function Iori_ROTD:_initCmds()
 	  function (luaPlayer, state)
 	    local trigger1 = trigger:AnimTime(luaPlayer) == 0
 		if trigger1 then
-		  trigger:PlayCnsByName(luaPlayer, "106")
+			debugStartTime = os.time()
+		  	trigger:PlayCnsByName(luaPlayer, "106")
 		end
 	  end
 ----- 106 
@@ -161,7 +167,9 @@ function Iori_ROTD:_initCmds()
 		local tt = trigger:Time(luaPlayer)
 	    local trigger1 = tt == 0
 		if trigger1 then
-			print(string.format("State 106,PlaySnd: %d", tt))
+			print(os.time())
+			print(string.format("State 106,PlaySnd: %d[%d]%d - %d", tt, os.time() - debugStartTime, os.time(), debugStartTime))
+			debugStartTime = os.time()
 			trigger:PlaySnd(luaPlayer, 1, 1)
 		end
 	  end
@@ -172,7 +180,9 @@ function Iori_ROTD:_initCmds()
 			local tt = trigger:Time(luaPlayer)
 			local trigger1 = tt == 3
 			if trigger1 then
-				print(string.format("State 106, VelSet: %d", tt))
+				print(os.time())
+				print(string.format("State 106, VelSet: %d[%d]%d - %d", tt, os.time() - debugStartTime, os.time(), debugStartTime))
+				debugStartTime = os.time()
 				trigger:VelSet(luaPlayer, -8, -4)
 			end
 		end
@@ -184,7 +194,8 @@ function Iori_ROTD:_initCmds()
 			local posX = trigger:PosY(luaPlayer)
 			local trigger1 = tt >= 5 and posX < -3
 			if trigger1 then
-				print(string.format("State 106, VelAdd: %d, %d", tt, posX))
+				print(string.format("State 106, VelAdd: %d, %d[%d]", tt, posX, os.time() - debugStartTime))
+				debugStartTime = os.time()
 				trigger:VelAdd(luaPlayer, 0.43, 0.55)
 			end
 		end
@@ -197,8 +208,9 @@ function Iori_ROTD:_initCmds()
 			local posY = trigger:PosY(luaPlayer)
 			local trigger1 = tt > 10 and posY >= -5
 			if trigger1 then
-				print(string.format("State 106, VelSet: %d, %d", tt, posY))
-				print(string.format("State 106, PosSet: %d, %d", tt, posY))
+				print(string.format("State 106, VelSet: %d, %d[%d]", tt, posY, os.time() - debugStartTime))
+				print(string.format("State 106, PosSet: %d, %d[%d]", tt, posY, os.time() - debugStartTime))
+				debugStartTime = os.time()
 				trigger:VelSet(luaPlayer, 0, 0)
 				trigger:PosSet(luaPlayer, nil , 0)
 			end
@@ -211,7 +223,8 @@ function Iori_ROTD:_initCmds()
 			local posY = trigger:PosY(luaPlayer)
 			local trigger1 = tt > 10 and posY  == 0
 			if trigger1 then
-				print(string.format("State 106, ChangeState: %d, %d", tt, posY))
+				print(string.format("State 106, ChangeState: %d, %d[%d]", tt, posY, os.time() - debugStartTime))
+				debugStartTime = os.time()
 				trigger:PlayCnsByName(luaPlayer, "107")
 			end
 		end
@@ -229,7 +242,8 @@ function Iori_ROTD:_initCmds()
 			local frame = trigger:Time(luaPlayer)
 			local trigger1 = frame == 1
 			if trigger1 then
-				print(string.format("State 107, PlaySnd: %d", frame))
+				print(string.format("State 107, PlaySnd: %d[%d]", frame, os.time() - debugStartTime))
+				debugStartTime = os.time()
 				trigger:PlaySnd(luaPlayer, 0, 1)
 			end
 		end
@@ -240,7 +254,8 @@ function Iori_ROTD:_initCmds()
 		function (luaPlayer, state)
 			local frame = trigger:Time(luaPlayer)
 			if frame == 0 then
-				print(string.format("State 107, VelSet && State 107, PosSet: %d", frame))
+				print(string.format("State 107, VelSet && State 107, PosSet: %d[%d]", frame, os.time() - debugStartTime))
+				debugStartTime = os.time()
 				trigger:VelSet(luaPlayer, 0, 0)
 				trigger:PosSet(luaPlayer, nil, 0)
 			end
@@ -251,11 +266,13 @@ function Iori_ROTD:_initCmds()
 		function (luaPlayer, state)
 			local frame = trigger:AnimTime(luaPlayer)
 			if frame == 0 then
-				print(string.format("State 107, ChangeState: %d", frame))
+				print(string.format("State 107, ChangeState: %d[%d]", frame, os.time() - debugStartTime))
+				debugStartTime = os.time()
 				trigger:PlayCnsByName(luaPlayer, "0", true)
 				trigger:SetCtrl(luaPlayer, 1)
 			end
 		end
+
 end
 
 --======================================================================================
@@ -295,24 +312,10 @@ function Iori_ROTD:_initCmd_a(luaCfg)
 	aiCmd.OnTriggerEvent = self.OnAICmd_a_and_holdfwd
 end
 
-function Iori_ROTD:OnAICmd_Dash(cmdName)
-	local isCmdOk = trigger:Command(self, "FF")
-	local isStateType = trigger:Statetype(self) == Mugen.Cns_Type.S
-	local canCtrl = trigger:CanCtrl(self)
-	--print(canCtrl)
-    local trigger1 = isCmdOk and isStateType and canCtrl
-    return trigger1
-end
-
 function Iori_ROTD:_initCmd_FF(luaCfg)
 	local cmd = luaCfg:CreateCmd("FF", "")
 	cmd.time = 10
 	cmd:AttachKeyCommands("F,F")
-	
-	local aiCmd = luaCfg:CreateAICmd("Dash", "")
-	aiCmd.type = Mugen.AI_Type.ChangeState
-	aiCmd.value = "100"
-	aiCmd.OnTriggerEvent = self.OnAICmd_Dash
 end
 
 
