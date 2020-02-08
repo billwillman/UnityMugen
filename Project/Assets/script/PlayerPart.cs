@@ -6,6 +6,8 @@ using Mugen;
 public class PlayerPart : MonoBehaviour {
 	private PlayerDisplay m_Display = null;
 
+	public PlayerState m_State = PlayerState.psNone;
+
 	protected PlayerDisplay Display {
 		get {
 			if (m_Display == null)
@@ -29,7 +31,16 @@ public class PlayerPart : MonoBehaviour {
 	public void OnUpdateFrame(ImageAnimation target)
 	{
 		var display = this.Display;
-		if (display != null)
-			display.InteralRefreshCurFrame (target);
+		if (display != null) {
+			var targetDisplay = target.CacheDisplayer;
+			if (targetDisplay == null)
+				return;
+			var image = display.ImageAni;
+			if (image != null) {
+				display._SetLoaderPlayer (targetDisplay);
+				image._SetStateFrameList (m_State, target.CurFrame);
+				display.InteralRefreshCurFrame (image);
+			}
+		}
 	}
 }

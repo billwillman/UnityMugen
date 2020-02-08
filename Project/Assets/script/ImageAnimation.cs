@@ -159,6 +159,40 @@ public class ImageAnimation : MonoBehaviour {
 		}
 	}
 
+	internal bool _SetStateFrameList(PlayerState state, int curFrame)
+	{
+		bool ret = SetStateFrameList (state);
+		if (ret)
+			m_CurFrame = curFrame;
+		return ret;
+	}
+
+	internal bool SetStateFrameList(PlayerState state)
+	{
+		PlayerDisplay displayer = this.CacheDisplayer;
+		if (displayer == null)
+			return false;
+
+		var loaderPlayer = displayer.LoaderPlayer;
+		if (loaderPlayer == null)
+			return false;
+
+		var imgRes = loaderPlayer.ImageRes;
+		if (imgRes == null)
+			return false;
+
+		var imgLib = imgRes.ImgLib;
+		if (imgLib == null)
+		{
+			imgRes.Init();
+			imgLib = imgRes.ImgLib;
+			if (imgLib == null)
+				return false;
+		}
+		m_FrameList = imgLib.GetAnimationNodeList(state);
+		return true;
+	}
+
 	public bool PlayerPlayerAni(PlayerState state, int startFrame, int endFrame, bool isLoop = true)
 	{
 		SetLimitFrame (startFrame, endFrame, false);
@@ -172,27 +206,9 @@ public class ImageAnimation : MonoBehaviour {
 
 		ResetAnimation();
 
-		PlayerDisplay displayer = this.CacheDisplayer;
-		if (displayer == null)
+		if (!SetStateFrameList (state))
 			return false;
-		var loaderPlayer = displayer.LoaderPlayer;
-		if (loaderPlayer == null)
-			return false;
-
-		var imgRes = loaderPlayer.ImageRes;
-		if (imgRes == null)
-			return false;
-		var imgLib = imgRes.ImgLib;
-		if (imgLib == null)
-		{
-			imgRes.Init();
-			imgLib = imgRes.ImgLib;
-			if (imgLib == null)
-				return false;
-		}
-
-
-		m_FrameList = imgLib.GetAnimationNodeList(state);
+		
 		bool ret = DoInitAnimation();
 		if (ret)
 		{
@@ -238,7 +254,7 @@ public class ImageAnimation : MonoBehaviour {
 	}
 
     private PlayerDisplay m_CacheDisplayer = null;
-    protected PlayerDisplay CacheDisplayer
+    public PlayerDisplay CacheDisplayer
     {
         get
         {
