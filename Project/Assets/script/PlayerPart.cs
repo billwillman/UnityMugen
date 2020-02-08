@@ -32,6 +32,8 @@ public class PlayerPart : MonoBehaviour {
 	{
 		var display = this.Display;
 		if (display != null) {
+			CheckVisible ();
+
 			var targetDisplay = target.CacheDisplayer;
 			if (targetDisplay == null)
 				return;

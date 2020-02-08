@@ -1322,6 +1322,8 @@ public class PlayerDisplay : BaseResLoader {
 		var state = this.StateMgr;
 		if (state != null && state.enabled)
 			state.enabled = false;
+		if (this.enabled)
+			this.enabled = false;
 	}
 
 	[NoToLua]

@@ -272,7 +272,55 @@ function Iori_ROTD:_initCmds()
 				trigger:SetCtrl(luaPlayer, 1)
 			end
 		end
+-------------------------------- 气功波 -----------------------
+	cmd = luaCfg:CreateCmd("气功波")
+	cmd.time = 1
+	cmd:AttachKeyCommands("F,F,F,F")
 
+	aiCmd = luaCfg:CreateAICmd("气功波")
+	aiCmd.type = Mugen.AI_Type.ChangeState
+	aiCmd.value = "1000"
+	aiCmd.OnTriggerEvent = 
+		function (luaPlayer, aiName)
+			local trigger1 = trigger:Command(luaPlayer, "气功波")
+			return trigger1
+		end
+-- Statedef 1000
+	id = luaCfg:CreateStateDef("1000")
+	def = luaCfg:GetStateDef(id)
+	def.Type = Mugen.Cns_Type.S
+	def.MoveType = Mugen.Cns_MoveType.A
+	def.PhysicsType = Mugen.Cns_PhysicsType.N
+	def.Juggle = 0
+	def.PowerAdd = 65
+	def.Ctrl = 0
+	def.Velset_x = 0
+	def.Velset_y = 0
+	def.Animate = 1000
+	def.Sprpriority = 3
+-- State 1000, PlaySnd
+-- State 1000, PlaySnd
+	state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+	state.OnTriggerEvent =
+		function (luaPlayer, state)
+			local animElem = trigger:AnimElem(luaPlayer)
+			if animElem == 4 then
+				trigger:PlaySnd(luaPlayer, 60, 0)
+				trigger:PlaySnd(luaPlayer, 60, 1)
+			elseif animElem == 3 then
+				--State 1000, Explod
+			end
+		end
+-- State 1000, ChangeState
+	state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+	state.OnTriggerEvent =
+		function (luaPlayer, state)
+			local trigger1 = trigger:AnimTime(luaPlayer) == 0
+			if trigger1 then
+				trigger:SetCtrl(luaPlayer, 1)
+				trigger:PlayStandCns(luaPlayer)
+			end
+		end
 end
 
 --======================================================================================
@@ -317,7 +365,6 @@ function Iori_ROTD:_initCmd_FF(luaCfg)
 	cmd.time = 10
 	cmd:AttachKeyCommands("F,F")
 end
-
 
 --==禁千弐百十壱式・八稚女
 
