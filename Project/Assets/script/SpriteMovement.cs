@@ -52,7 +52,9 @@ public class SpriteMovement : MonoBehaviour {
 		{
 			if (m_Display == null)
 				return;
+			float z = m_Display.m_OffsetPos.z;
 			m_Display.m_OffsetPos = value;
+			m_Display.m_OffsetPos.z = z;
 		}
 	}
 

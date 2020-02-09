@@ -57,7 +57,7 @@ public class Explod : PlayerPart {
 				Vector2 offset = -parentDisplay.transform.localPosition + parentDisplay.m_OffsetPos;
 				Vector2 vv = (new Vector2 (((float)pos_x) / PlayerDisplay._cPerUnit, ((float)pos_y)) / PlayerDisplay._cPerUnit) + offset;
 				display.m_OffsetPos = vv;
-				display.m_OffsetPos.z = parentDisplay.IsFlipX ? 1: -1;
+				display.m_OffsetPos.z = parentDisplay.IsFlipX ? sprpriority: -sprpriority;
 			}
 		}
 	}

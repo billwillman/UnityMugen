@@ -185,7 +185,7 @@ public class PlayerDisplay : BaseResLoader {
 		*/
 		if (this.StateMgr.CurrentCnsDef == def)
 			return;
-		
+		m_OffsetPos.z = m_IsFlipX ? def.Sprpriority : -def.Sprpriority;
 		PlayerAttribe attribe = this.Attribe;
 		if (attribe != null) {
 			if (def.Type != Cns_Type.none)
@@ -975,7 +975,7 @@ public class PlayerDisplay : BaseResLoader {
 			dir = -1;
 		else
 			dir = 1;
-		m_OffsetPos += new Vector3(x * dir, y, 0);
+		m_OffsetPos += new Vector3(x * dir, y, m_OffsetPos.z);
 	}
 
 	public void VelAdd(float x, float y)
