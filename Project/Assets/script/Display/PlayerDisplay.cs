@@ -1219,7 +1219,7 @@ public class PlayerDisplay : BaseResLoader {
 	{
 		GameObject gameObj = new GameObject ("Explod", typeof(PlayerDisplay), typeof(Explod));
 		var trans = gameObj.transform;
-		trans.parent = this.CachedTransform;
+		//trans.parent = this.CachedTransform;
 		trans.localPosition = Vector3.zero;
 		trans.localScale = Vector3.one;
 		trans.localRotation = Quaternion.identity;

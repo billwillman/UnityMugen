@@ -25,23 +25,12 @@ public class Explod : PlayerPart {
 		}
 	}
 
-	protected bool IsDestroy
-	{
-		get {
-			var display = this.Display;
-			if (display == null)
-				return true;
-			return display.IsDestroying;
-		}
-	}
-
 	public int anim = (int)PlayerState.psNone;
 	public int ID = -1;
 	public int removetime = -2;
 	public float bindtime = -1; // 单位：秒
 	public int pos_x = 0;
 	public int pos_y = 0;
-	public ExplodPosType postype = ExplodPosType.p1;
 	public float x_vel;
 	public float y_vel;
 	public int sprpriority = 0;
@@ -57,17 +46,18 @@ public class Explod : PlayerPart {
 
 	void InitOffsetPos(PlayerDisplay parentDisplay)
 	{
-		if (IsDestroy || parentDisplay == null)
+		if (IsDestroying || parentDisplay == null)
 			return;
 		
 		if (postype == ExplodPosType.p1) {
 			var display = this.Display;
 			if (display != null) 
 			{
-				Vector2 offset = -parentDisplay.transform.localPosition + parentDisplay.m_OffsetPos;
+				Vector2 offset =  parentDisplay.m_OffsetPos;
 				Vector2 vv = (new Vector2 (((float)pos_x) / PlayerDisplay._cPerUnit, ((float)pos_y)) / PlayerDisplay._cPerUnit) + offset;
 				display.m_OffsetPos = vv;
-				display.m_OffsetPos.z = parentDisplay.IsFlipX ? sprpriority: -sprpriority;
+				display.m_OffsetPos.z = -sprpriority;
+				display.IsFlipX = parentDisplay.IsFlipX;
 			}
 		}
 	}
@@ -76,7 +66,7 @@ public class Explod : PlayerPart {
 
 	public void Apply()
 	{
-		if (IsDestroy)
+		if (IsDestroying)
 			return;
 		
 		var display = this.Display;
@@ -95,7 +85,7 @@ public class Explod : PlayerPart {
 	[NoToLua]
 	internal override void OnParentUpdateFrame(ImageAnimation target)
 	{
-		if (IsDestroy)
+		if (IsDestroying)
 			return;
 
 
@@ -106,7 +96,7 @@ public class Explod : PlayerPart {
 
 	void InteralDoDestroy()
 	{
-		if (IsDestroy)
+		if (IsDestroying)
 			return;
 		InteralDestroy ();
 		var display = this.Display;
@@ -127,7 +117,7 @@ public class Explod : PlayerPart {
 	[NoToLua]
 	internal override void OnParentFramePosUpdate(ImageAnimation target)
 	{
-		if (IsDestroy)
+		if (IsDestroying)
 			return;
 	}
 

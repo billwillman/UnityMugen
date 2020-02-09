@@ -7,6 +7,7 @@ using Mugen;
 public class PlayerPart : MonoBehaviour {
 	
 	private PlayerDisplay m_Display = null;
+	public ExplodPosType postype = ExplodPosType.p1;
 	/*
 	public PlayerState m_State = PlayerState.psNone;
 */
@@ -31,12 +32,29 @@ public class PlayerPart : MonoBehaviour {
 		CheckVisible ();
 	}*/
 
+	protected bool IsDestroying
+	{
+		get {
+			var display = this.Display;
+			if (display == null)
+				return false;
+			return display.IsDestroying;
+		}
+	}
+
 	protected PlayerDisplay GetParentDisplay()
 	{
-		var trans = this.transform;
-		if (trans.parent == null)
+		if (IsDestroying)
 			return null;
-		return trans.parent.GetComponent<PlayerDisplay> ();
+		
+		switch (postype) {
+		case ExplodPosType.p1:
+			return PlayerControls.GetInstance ().GetPlayer (InputPlayerType._1p);
+		case ExplodPosType.p2:
+			return PlayerControls.GetInstance ().GetPlayer (InputPlayerType._2p);
+		default:
+			return null;
+		}
 	}
 
 	protected void ApplyParentDisplayLoaderPlayer(PlayerDisplay parent)
@@ -87,12 +105,9 @@ public class PlayerPart : MonoBehaviour {
 
 	internal void InteralDestroy()
 	{
-		var parent = this.transform.parent;
-		if (parent != null) {
-			var display = parent.GetComponent<PlayerDisplay> ();
-			if (display != null)
-				display._OnPlayerPartDestroy (this);
-		}
+		var display = GetParentDisplay ();
+		if (display != null)
+			display._OnPlayerPartDestroy (this);
 	}
 
 	void OnDestroy()
