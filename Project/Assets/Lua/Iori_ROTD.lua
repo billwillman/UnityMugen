@@ -495,7 +495,7 @@ function Iori_ROTD:_initCmds()
 		function (luaPlayer, state)
 			local animElem = trigger:AnimElem(luaPlayer)
 			if animElem == 6 then
-				trigger:VelSet(luaPlayer, nil, -5 * 3.5)
+				trigger:VelSet(luaPlayer, nil, -5 * 2.5)
 			end
 		end
 -- State 1100, VelAdd
