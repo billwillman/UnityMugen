@@ -1179,6 +1179,7 @@ public class PlayerDisplay : BaseResLoader {
 	private void SendPartUpdatePos()
 	{
 		if (m_PartMgr != null) {
+			m_PartMgr.OnFramePosUpdate (this.ImageAni);
 		}
 	}
 

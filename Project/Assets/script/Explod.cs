@@ -15,6 +15,7 @@ public enum ExplodPosType
 [RequireComponent(typeof(PlayerDisplay))]
 public class Explod : PlayerPart {
 	private PlayerDisplay m_Display = null;
+	private Vector2 m_StartOffset = Vector2.zero;
 
 	protected PlayerDisplay Display {
 		get {
@@ -54,7 +55,7 @@ public class Explod : PlayerPart {
 		}
 	}
 
-	void UpdateOffsetPos(PlayerDisplay parentDisplay)
+	void InitOffsetPos(PlayerDisplay parentDisplay)
 	{
 		if (IsDestroy || parentDisplay == null)
 			return;
@@ -81,7 +82,7 @@ public class Explod : PlayerPart {
 		var display = this.Display;
 		if (display != null) {
 			var parentDisplay = GetParentDisplay ();
-			UpdateOffsetPos (parentDisplay);
+			InitOffsetPos (parentDisplay);
 			display.SetVelSet (x_vel, y_vel);
 			if (!IsUseParentUpdate) {
 				bool isLoop = removetime == -1;
@@ -128,7 +129,6 @@ public class Explod : PlayerPart {
 	{
 		if (IsDestroy)
 			return;
-		UpdateOffsetPos (target.CacheDisplayer);
 	}
 
 	void OnImageAnimationFrame()
