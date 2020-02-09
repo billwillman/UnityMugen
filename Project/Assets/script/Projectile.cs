@@ -75,13 +75,14 @@ public class Projectile : MonoBehaviour {
 				if (owner.IsFlipX) {
 					offx = -offx;
 					velx = -velx;
-					offz = -offz;
+					//offz = -offz;
 				}
 			}
 
 			display.m_OffsetPos.x = offx;
 			display.m_OffsetPos.y = offy;
 			display.m_OffsetPos.z = offz;
+			//Debug.LogError (offz.ToString ());
 			display.SetVelSet (velx, vely);
 			display.PlayAni ((PlayerState)projanim, true);
 		}

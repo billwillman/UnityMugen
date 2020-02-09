@@ -112,8 +112,10 @@ public class SpriteMovement : MonoBehaviour {
 			org.y = 0;
 		}
 		this.OffsetPos = org;
-		if (m_Display != null)
+		if (m_Display != null) {
 			m_Display.InternalUpdatePos ();
+			//Debug.LogError (m_Display.transform.localPosition.z.ToString ());
+		}
 	}
 
 	public void AniCtlPause(float pauseTime)

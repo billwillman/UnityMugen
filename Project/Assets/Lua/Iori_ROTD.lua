@@ -348,6 +348,9 @@ function Iori_ROTD:_initCmds()
 				proj.projsprpriority = 4
 				proj.velocity_x = 4.5
 
+				-- 自己写间隔
+				proj.projremovetime = 100
+
 				trigger:ProjApply(luaPlayer, proj)
 			end
 		end
