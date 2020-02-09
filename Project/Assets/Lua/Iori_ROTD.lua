@@ -351,7 +351,7 @@ function Iori_ROTD:_initCmds()
 				-- 自己写间隔
 				proj.projremovetime = 100
 
-				trigger:ProjApply(luaPlayer, proj)
+				proj:Apply()
 			end
 		end
 -- State 1000, ChangeState

@@ -1211,6 +1211,7 @@ public class PlayerDisplay : BaseResLoader {
 		trans.localScale = Vector3.one;
 		trans.localRotation = Quaternion.identity;
 		Projectile ret = gameObj.GetComponent<Projectile> ();
+		ret.OwnerCtl = m_PlayerType;
 		return ret;
 	}
 

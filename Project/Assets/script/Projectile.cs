@@ -32,6 +32,8 @@ public class Projectile : MonoBehaviour {
 	public int projpriority = 0;
 	public int projsprpriority = 0;
 
+	internal InputPlayerType OwnerCtl = InputPlayerType.none;
+
 	void UpdateRemoveTime()
 	{
 		if (projremovetime > 0) {
@@ -57,8 +59,17 @@ public class Projectile : MonoBehaviour {
 			UpdateRemoveTime ();
 	}
 
-	public void Apply(PlayerDisplay owner)
+	protected PlayerDisplay Owner
 	{
+		get
+		{
+			return PlayerControls.GetInstance ().GetPlayer (OwnerCtl);
+		}
+	}
+
+	public void Apply()
+	{
+		var owner = this.Owner;
 		if (owner == null)
 			return;
 		var display = this.Display;

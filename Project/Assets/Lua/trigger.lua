@@ -672,17 +672,6 @@ function trigger:CreateProj(luaPlayer)
 	return ret
 end
 
-function trigger:ProjApply(luaPlayer, proj)
-	if luaPlayer == nil or proj == nil then
-		return
-	end
-	local display = luaPlayer.PlayerDisplay;
-	if display == nil then
-		return 
-	end
-	proj:Apply(display)
-end
-
 -- 帮助模块
 function trigger:Help_CreateStateDef(luaCfg, name)
 	if luaCfg == nil or name == nil then
