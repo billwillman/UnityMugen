@@ -1224,6 +1224,7 @@ public class PlayerDisplay : BaseResLoader {
 		trans.localScale = Vector3.one;
 		trans.localRotation = Quaternion.identity;
 		Explod ret = gameObj.GetComponent<Explod> ();
+		ret.OwnerCtl = m_PlayerType;
 		PlayerPart part = gameObj.GetComponent<PlayerPart> ();
 		InitPartMgr ();
 		m_PartMgr.AddPart (part);

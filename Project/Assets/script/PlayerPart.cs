@@ -8,6 +8,14 @@ public class PlayerPart : MonoBehaviour {
 	
 	private PlayerDisplay m_Display = null;
 	public ExplodPosType postype = ExplodPosType.p1;
+	internal InputPlayerType OwnerCtl = InputPlayerType.none;
+	internal InputPlayerType TargetCtl = InputPlayerType.none;
+
+	internal void _SetCtl(InputPlayerType owner, InputPlayerType target)
+	{
+		OwnerCtl = owner;
+		TargetCtl = target;
+	}
 	/*
 	public PlayerState m_State = PlayerState.psNone;
 */
@@ -49,9 +57,9 @@ public class PlayerPart : MonoBehaviour {
 		
 		switch (postype) {
 		case ExplodPosType.p1:
-			return PlayerControls.GetInstance ().GetPlayer (InputPlayerType._1p);
+			return PlayerControls.GetInstance ().GetPlayer (OwnerCtl);
 		case ExplodPosType.p2:
-			return PlayerControls.GetInstance ().GetPlayer (InputPlayerType._2p);
+			return PlayerControls.GetInstance ().GetPlayer (TargetCtl);
 		default:
 			return null;
 		}
