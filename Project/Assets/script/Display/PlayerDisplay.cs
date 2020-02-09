@@ -1167,7 +1167,7 @@ public class PlayerDisplay : BaseResLoader {
 	// 创建飞行道具
 	public Projectile CreateProjectile()
 	{
-		GameObject gameObj = new GameObject ("Explod", typeof(PlayerDisplay), typeof(Projectile));
+		GameObject gameObj = new GameObject ("Projectile", typeof(PlayerDisplay), typeof(Projectile));
 		var trans = gameObj.transform;
 		trans.localPosition = Vector3.zero;
 		trans.localScale = Vector3.one;
