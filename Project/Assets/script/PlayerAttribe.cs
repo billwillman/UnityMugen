@@ -37,6 +37,7 @@ public class PlayerAttribe : MonoBehaviour {
 	public int HitCount = 0;
 	// 角色当前站姿状态（站立还是下蹲或者空中等）
 	public Cns_Type StandType = Cns_Type.S;
+	public Cns_PhysicsType PhysicsType = Cns_PhysicsType.S;
 	// 是否可控制
 	public int Ctrl = 1;
 	// 状态开始的速度

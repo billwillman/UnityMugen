@@ -50,6 +50,28 @@ function trigger:ACos(angle)
   return ret
 end
 
+function trigger:StateTypeSet(luaPlayer, stateType)
+	if luaPlayer == nil or stateType == nil then
+		return
+	end
+	local display = luaPlayer.PlayerDisplay;
+   if display == nil then
+	  return
+   end
+   display.StateType = stateType 
+end
+
+function trigger:PhysicsTypeSet(luaPlayer, stateType)
+	if luaPlayer == nil or stateType == nil then
+		return
+	end
+	local display = luaPlayer.PlayerDisplay;
+   if display == nil then
+	  return
+   end
+   display.PhysicsType = stateType 
+end
+
 function trigger:AnimElem(luaPlayer)
    if luaPlayer == nil then
 	  return nil

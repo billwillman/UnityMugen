@@ -179,9 +179,9 @@ public class PlayerDisplay : BaseResLoader {
 		movement.StartVec = attribe.StateStartVec;
 
 		if (isVaildX)
-			movement.Vec.x = 0;
+			movement.Vec.x = movement.StartVec.x;
 		if (isVaildY)
-			movement.Vec.y = 0;
+			movement.Vec.y = movement.StartVec.y;
 	}
 
 	private void AttachAttribeFromStateDef(CNSStateDef def)
@@ -194,10 +194,13 @@ public class PlayerDisplay : BaseResLoader {
 		if (this.StateMgr.CurrentCnsDef == def)
 			return;
 		m_OffsetPos.z = m_IsFlipX ? def.Sprpriority : -def.Sprpriority;
+		//Debug.LogError (def.Sprpriority.ToString ());
 		PlayerAttribe attribe = this.Attribe;
 		if (attribe != null) {
 			if (def.Type != Cns_Type.none)
 				attribe.StandType = def.Type;
+			if (def.PhysicsType != Cns_PhysicsType.none)
+				attribe.PhysicsType = def.PhysicsType;
 			attribe.Power += def.PowerAdd;
 			//if (def.Ctrl != CNSStateDef._cNoVaildCtrl)
 			attribe.Ctrl = def.Ctrl;
@@ -335,6 +338,40 @@ public class PlayerDisplay : BaseResLoader {
 			if (m_Movement == null)
 				m_Movement = GetComponent<SpriteMovement> ();
 			return m_Movement;
+		}
+	}
+
+	public Cns_PhysicsType PhysicsType
+	{
+		get {
+			var attr = this.Attribe;
+			if (attr == null)
+				return Cns_PhysicsType.none;
+			return attr.PhysicsType;
+		}
+		set
+		{
+			var attr = this.Attribe;
+			if (attr == null)
+				return;
+			attr.PhysicsType = value;
+		}
+	}
+
+	public Cns_Type StateType
+	{
+		get {
+			var attr = this.Attribe;
+			if (attr == null)
+				return Cns_Type.none;
+			return attr.StandType;
+		}
+
+		set {
+			var attr = this.Attribe;
+			if (attr == null)
+				return;
+			attr.StandType = value;
 		}
 	}
 
@@ -965,7 +1002,7 @@ public class PlayerDisplay : BaseResLoader {
 		var movement = this.Movement;
 		if (movement == null)
 			return;
-		movement.Vec.x = y;
+		movement.Vec.y = y;
 	}
 
 	public void SetVelSet(float x, float y)
@@ -983,7 +1020,7 @@ public class PlayerDisplay : BaseResLoader {
 			dir = -1;
 		else
 			dir = 1;
-		m_OffsetPos += new Vector3(x * dir, y, m_OffsetPos.z);
+		m_OffsetPos += new Vector3(x * dir, y, 0);
 	}
 
 	public void VelAdd(float x, float y)
