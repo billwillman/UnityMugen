@@ -42,6 +42,12 @@ namespace Mugen
 				return;
 
 			def.id = NewGlobalId ();
+			int stateNo;
+			if (int.TryParse (name, out stateNo)) {
+				def.StateNo = stateNo;
+			} else {
+				def.StateNo = (int)PlayerState.psNone;
+			}
 
 			if (m_StateNameIdMap == null)
 				m_StateNameIdMap = new Dictionary<string, int> ();

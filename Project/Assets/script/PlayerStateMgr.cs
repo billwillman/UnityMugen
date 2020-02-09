@@ -107,7 +107,7 @@ public class PlayerStateMgr : MonoBehaviour {
 		get {
 			if (m_PrevCnsDef == null)
 				return (int)PlayerState.psNone;
-			return m_PrevCnsDef.Animate;
+			return m_PrevCnsDef.StateNo;
 		}
 	}
 
@@ -117,7 +117,7 @@ public class PlayerStateMgr : MonoBehaviour {
 		{
 			if (m_CurrentCnsDef == null)
 				return (int)PlayerState.psNone;
-			return m_CurrentCnsDef.Animate;
+			return m_CurrentCnsDef.StateNo;
 		}
 	}
 

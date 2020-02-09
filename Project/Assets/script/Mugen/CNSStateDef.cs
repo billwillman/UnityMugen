@@ -241,6 +241,11 @@ namespace Mugen
 			set;
 		}
 
+		internal int StateNo {
+			get;
+			set;
+		}
+
 		public int FaceP2
 		{
 			get {
