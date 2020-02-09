@@ -79,8 +79,8 @@ public class Projectile : MonoBehaviour {
 				}
 			}
 
-			display.m_OffsetPos.x = offx;
-			display.m_OffsetPos.y = offy;
+			display.m_OffsetPos.x = offx + owner.m_OffsetPos.x;
+			display.m_OffsetPos.y = offy + owner.m_OffsetPos.y;
 			display.m_OffsetPos.z = offz;
 			//Debug.LogError (offz.ToString ());
 			display.SetVelSet (velx, vely);
