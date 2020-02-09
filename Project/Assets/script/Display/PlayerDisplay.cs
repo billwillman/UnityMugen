@@ -520,10 +520,24 @@ public class PlayerDisplay : BaseResLoader {
 		PlayerControls.GetInstance().SwitchPlayer(playerType, this);
     }
 
-	public int Stateno
+	public int Anim
 	{
 		get {
 			return (int)this.AnimationState;
+		}
+	}
+
+	public int PrevAnim
+	{
+		get {
+			return (int)this.PrevAnimationState;
+		}
+	}
+
+	public int Stateno
+	{
+		get {
+			return this.StateMgr.StateNo;
 		}
 	}
 
@@ -531,7 +545,7 @@ public class PlayerDisplay : BaseResLoader {
 	{
 		get
 		{
-			return (int)this.PrevAnimationState;
+			return this.StateMgr.PrevStateNo;
 		}
 	}
 

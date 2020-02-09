@@ -121,7 +121,7 @@ function trigger:Anim(luaPlayer)
 	if display == nil then
 		return nil 
 	end
-	local ret = display.Stateno
+	local ret = display.Anim
 	return ret
 end
 
