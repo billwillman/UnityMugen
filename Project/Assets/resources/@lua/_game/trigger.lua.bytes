@@ -400,13 +400,24 @@ function trigger:PosSet(luaPlayer, x, y)
 	end
 end
 
+function trigger:DestroySelf(luaPlayer)
+	if luaPlayer == nil then
+		return
+	end
+	local display = luaPlayer.PlayerDisplay;
+	if display == nil then
+		return nil
+	end
+	return display:DestroySelf()
+end
+
 function trigger:CreateExplod(luaPlayer)
 	if luaPlayer == nil then
 		return nil
 	end
 	local display = luaPlayer.PlayerDisplay;
 	if display == nil then
-		display = nil
+		return nil
 	end
 	local ret = display:CreateExplod()
 	return ret
@@ -426,18 +437,6 @@ function trigger:PosAdd(luaPlayer, x, y)
 	y = -y / _cPerUnit
 	display:PosAdd(x, y)
 	return true
-end
-
-function trigger:ResetStateAndCtrl(luaPlayer, state)
-	if luaPlayer == nil then
-		return false
-	end
-	local display = luaPlayer.PlayerDisplay;
-	if display == nil then
-		return false 
-	end
-	state = state or 0
-	return display:ResetStateAndCtrlOne(state)
 end
 
 function trigger:VelX(luaPlayer)

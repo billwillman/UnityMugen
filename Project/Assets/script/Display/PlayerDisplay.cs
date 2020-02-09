@@ -26,7 +26,7 @@ public class PlayerDisplay : BaseResLoader {
     private bool m_IsFlipX = false;
 
 	private SndSound m_SndSound = null;
-
+	private bool m_IsDestroy = false;
 
 
 	[NoToLuaAttribute]
@@ -207,6 +207,8 @@ public class PlayerDisplay : BaseResLoader {
 
 	public bool PlayCnsAnimateByName(string stateDefName, bool isLoop = true)
 	{
+		if (m_IsDestroy)
+			return false;
 		var player = this.GPlayer;
 		if (player == null)
 			return false;
@@ -220,6 +222,8 @@ public class PlayerDisplay : BaseResLoader {
 
 	public bool PlayCnsAnimate(int stateDefId, bool isLoop = true)
 	{
+		if (m_IsDestroy)
+			return false;
 		var player = this.GPlayer;
 		if (player == null)
 			return false;
@@ -264,6 +268,14 @@ public class PlayerDisplay : BaseResLoader {
 				return false;
 			return player.CnsCfg.HasStateDef;
 		}
+	}
+
+	public void DestroySelf()
+	{
+		if (m_IsDestroy)
+			return;
+		m_IsDestroy = true;
+		GameObject.Destroy (this.gameObject);
 	}
 
 	public bool IsFlipX
@@ -368,25 +380,17 @@ public class PlayerDisplay : BaseResLoader {
 		return ani.GetMugenAnimateTime();
 	}
 
-	public bool ResetStateAndCtrlOne(int state = (int)PlayerState.psStand1)
-	{
-		bool ret = ChangeState(state, false);
-		if (ret)
-		{
-			var attr = this.Attribe;
-			if (attr != null)
-				attr.Ctrl = 1;
-		}
-		return ret;
-	}
-
 	public bool ChangeState(int state, bool isCns = false)
 	{
+		if (m_IsDestroy)
+			return false;
 		return ChangeState ((PlayerState)state, isCns);
 	}
 
 	public bool ChangeState(PlayerState state, bool isCns = false)
     {
+		if (m_IsDestroy)
+			return false;
 		var mgr = this.StateMgr;
 		if (mgr == null)
             return false;
