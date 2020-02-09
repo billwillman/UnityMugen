@@ -637,6 +637,30 @@ function trigger:Do_StatePlaySnd(luaPlayer, state)
 	self:Do_PlaySnd(luaPlayer, state.value1, state.value2)
 end
 
+-- 创建飞行道具
+function trigger:CreateProj(luaPlayer)
+	if luaPlayer == nil then
+		return nil
+	end
+	local display = luaPlayer.PlayerDisplay;
+	if display == nil then
+		return nil
+	end
+	local ret = display:CreateProjectile()
+	return ret
+end
+
+function trigger:ProjApply(luaPlayer, proj)
+	if luaPlayer == nil or proj == nil then
+		return
+	end
+	local display = luaPlayer.PlayerDisplay;
+	if display == nil then
+		return 
+	end
+	proj:Apply(display)
+end
+
 -- 帮助模块
 function trigger:Help_CreateStateDef(luaCfg, name)
 	if luaCfg == nil or name == nil then

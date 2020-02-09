@@ -15,13 +15,22 @@ public enum ExplodPosType
 [RequireComponent(typeof(PlayerDisplay))]
 public class Explod : PlayerPart {
 	private PlayerDisplay m_Display = null;
-	private bool m_IsDestroy = false;
 
 	protected PlayerDisplay Display {
 		get {
 			if (m_Display == null)
 				m_Display = GetComponent<PlayerDisplay> ();
 			return m_Display;
+		}
+	}
+
+	protected bool IsDestroy
+	{
+		get {
+			var display = this.Display;
+			if (display == null)
+				return true;
+			return display.IsDestroying;
 		}
 	}
 
@@ -47,7 +56,7 @@ public class Explod : PlayerPart {
 
 	void UpdateOffsetPos(PlayerDisplay parentDisplay)
 	{
-		if (m_IsDestroy || parentDisplay == null)
+		if (IsDestroy || parentDisplay == null)
 			return;
 		
 		if (postype == ExplodPosType.p1) {
@@ -66,7 +75,7 @@ public class Explod : PlayerPart {
 
 	public void Apply()
 	{
-		if (m_IsDestroy)
+		if (IsDestroy)
 			return;
 		
 		var display = this.Display;
@@ -85,7 +94,7 @@ public class Explod : PlayerPart {
 	[NoToLua]
 	internal override void OnParentUpdateFrame(ImageAnimation target)
 	{
-		if (m_IsDestroy)
+		if (IsDestroy)
 			return;
 
 
@@ -96,11 +105,12 @@ public class Explod : PlayerPart {
 
 	void InteralDoDestroy()
 	{
-		if (m_IsDestroy)
+		if (IsDestroy)
 			return;
-		m_IsDestroy = true;
 		InteralDestroy ();
-		GameObject.Destroy (this.gameObject);
+		var display = this.Display;
+		if (display != null)
+			display.DestroySelf ();
 	}
 
 	[NoToLua]
@@ -116,7 +126,7 @@ public class Explod : PlayerPart {
 	[NoToLua]
 	internal override void OnParentFramePosUpdate(ImageAnimation target)
 	{
-		if (m_IsDestroy)
+		if (IsDestroy)
 			return;
 		UpdateOffsetPos (target.CacheDisplayer);
 	}
@@ -139,7 +149,7 @@ public class Explod : PlayerPart {
 	void UpdateBindTime()
 	{
 		if (bindtime > 0) {
-			bindtime -= AppConfig.GetInstance ().DeltaTime;
+			bindtime -= AppConfig.GetInstance ().DeltaTick;
 			if (bindtime <= 0) {
 				bindtime = -1;
 				InteralDoDestroy ();

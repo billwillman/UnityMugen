@@ -28,6 +28,14 @@ public class PlayerDisplay : BaseResLoader {
 	private SndSound m_SndSound = null;
 	private bool m_IsDestroy = false;
 
+	public bool IsDestroying
+	{
+		get
+		{
+			return m_IsDestroy;
+		}
+	}
+
 
 	[NoToLuaAttribute]
     public Vector3 m_OffsetPos = Vector2.zero;
@@ -1156,6 +1164,18 @@ public class PlayerDisplay : BaseResLoader {
 		}
 	}
 
+	// 创建飞行道具
+	public Projectile CreateProjectile()
+	{
+		GameObject gameObj = new GameObject ("Explod", typeof(PlayerDisplay), typeof(Projectile));
+		var trans = gameObj.transform;
+		trans.localPosition = Vector3.zero;
+		trans.localScale = Vector3.one;
+		trans.localRotation = Quaternion.identity;
+		Projectile ret = gameObj.GetComponent<Projectile> ();
+		return ret;
+	}
+
 	// 创建爆炸
 	public Explod CreateExplod()
 	{
@@ -1247,6 +1267,7 @@ public class PlayerDisplay : BaseResLoader {
 
 	void OnDestroy()
 	{
+		m_IsDestroy = true;
 		if (!AppConfig.IsAppQuit) {
 			m_DefaultClsn2 = null;
 			DestroyAllClsn ();

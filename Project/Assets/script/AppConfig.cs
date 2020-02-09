@@ -33,6 +33,13 @@ public class AppConfig : MonoSingleton<AppConfig> {
 		}
 	}
 
+	public float DeltaTick
+	{
+		get {
+			return DeltaTime / ImageAnimation._cImageAnimationScale;
+		}
+	}
+
 	public LuaLoader LuaLoader
 	{
 		get

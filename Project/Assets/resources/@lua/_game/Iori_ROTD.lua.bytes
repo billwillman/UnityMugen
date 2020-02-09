@@ -330,6 +330,27 @@ function Iori_ROTD:_initCmds()
 				explod:Apply()
 			end
 		end
+-- State 1000, Projectile]
+	state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+	state.OnTriggerEvent =
+		function (luaPlayer, state)
+			local trigger1 = trigger:AnimElem(luaPlayer) == 4
+			if trigger1 then
+				local proj = trigger:CreateProj(luaPlayer)
+				proj.projanim = 20005
+				proj.projhitanim = 90000
+				proj.projremanim = 90000
+				proj.projcancelanim = 90000
+				proj.projshadow = -1
+				proj.offset_x = 30
+				proj.offset_y = 0
+				proj.projpriority = 1
+				proj.projsprpriority = 4
+				proj.velocity_x = 4.5
+
+				trigger:ProjApply(luaPlayer, proj)
+			end
+		end
 -- State 1000, ChangeState
 	state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
 	state.OnTriggerEvent =
