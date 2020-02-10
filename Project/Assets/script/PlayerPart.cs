@@ -4,7 +4,7 @@ using LuaInterface;
 using Mugen;
 
 [RequireComponent(typeof(PlayerDisplay))]
-public class PlayerPart : MonoBehaviour {
+public abstract class PlayerPart : MonoBehaviour {
 	
 	private PlayerDisplay m_Display = null;
 	public ExplodPosType postype = ExplodPosType.p1;
@@ -17,6 +17,24 @@ public class PlayerPart : MonoBehaviour {
 		OwnerCtl = owner;
 		TargetCtl = target;
 	}
+
+	public DisplayType ShowType
+	{
+		get {
+			var display = this.Display;
+			if (display == null)
+				return DisplayType.None;
+			return display.ShowType;
+		}
+
+		protected set {
+			var display = this.Display;
+			if (display == null)
+				return;
+			display.ShowType = value;
+		}
+	}
+
 	/*
 	public PlayerState m_State = PlayerState.psNone;
 */

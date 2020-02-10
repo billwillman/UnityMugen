@@ -16,6 +16,14 @@ public class Projectile : MonoBehaviour {
 		}
 	}
 
+	void Awake()
+	{
+		var display = this.Display;
+		if (display != null) {
+			display.ShowType = DisplayType.Projectile;
+		}
+	}
+
 	public int projid = -1;
 	public int projanim = (int)PlayerState.psNone;
 	public int projhitanim = (int)PlayerState.psNone;

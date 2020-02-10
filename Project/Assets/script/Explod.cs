@@ -14,16 +14,7 @@ public enum ExplodPosType
 
 [RequireComponent(typeof(PlayerDisplay))]
 public class Explod : PlayerPart {
-	private PlayerDisplay m_Display = null;
 	private Vector2 m_StartOffset = Vector2.zero;
-
-	protected PlayerDisplay Display {
-		get {
-			if (m_Display == null)
-				m_Display = GetComponent<PlayerDisplay> ();
-			return m_Display;
-		}
-	}
 
 	public int anim = (int)PlayerState.psNone;
 	public int ID = -1;
@@ -37,6 +28,11 @@ public class Explod : PlayerPart {
 	public int removeongethit = 0;
 	public int ignorehitpause = 1;
 	public bool IsUseParentUpdate = true;
+
+	void Awake()
+	{
+		this.ShowType = DisplayType.Explod;
+	}
 
 	void InitOffsetPos(PlayerDisplay parentDisplay)
 	{

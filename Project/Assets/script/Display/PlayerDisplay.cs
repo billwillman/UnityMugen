@@ -4,6 +4,14 @@ using System.Collections.Generic;
 using Mugen;
 using LuaInterface;
 
+public enum DisplayType
+{
+	None = -1,
+	Player,
+	Explod,
+	Projectile
+}
+
 [RequireComponent(typeof(SndSound))]
 [RequireComponent(typeof(ImageAnimation))]
 [RequireComponent(typeof(SpriteRenderer))]
@@ -27,6 +35,9 @@ public class PlayerDisplay : BaseResLoader {
 
 	private SndSound m_SndSound = null;
 	private bool m_IsDestroy = false;
+
+	[NoToLua]
+	public DisplayType ShowType = DisplayType.Player;
 
 	public bool IsDestroying
 	{
@@ -803,9 +814,20 @@ public class PlayerDisplay : BaseResLoader {
 		return string.Empty;
 	}
 
+	protected bool IsCanRunAutoCmd
+	{
+		get
+		{
+			return (!IsDestroying) && (ShowType == DisplayType.Player);
+		}
+	}
+
 	[NoToLuaAttribute]
 	public bool RunAutoCmd()
 	{
+		if (!IsCanRunAutoCmd)
+			return false;
+		
 		GlobalPlayer ply = this.GPlayer;
 		if (ply == null || ply.CmdCfg == null)
 			return false;
@@ -1226,9 +1248,9 @@ public class PlayerDisplay : BaseResLoader {
 		trans.localRotation = Quaternion.identity;
 		Explod ret = gameObj.GetComponent<Explod> ();
 		ret.OwnerCtl = m_PlayerType;
-		PlayerPart part = gameObj.GetComponent<PlayerPart> ();
+
 		InitPartMgr ();
-		m_PartMgr.AddPart (part);
+		m_PartMgr.AddPart (ret);
 	
 		return ret;
 	}
