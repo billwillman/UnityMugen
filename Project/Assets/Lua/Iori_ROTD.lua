@@ -103,7 +103,7 @@ function Iori_ROTD:_initStateDefs()
 	end
 	
 	-- 创建各种状态
-	self:_initStateDef_2000(luaCfg)
+	--self:_initStateDef_2000(luaCfg)
 end
 
 function Iori_ROTD:_initCmds()
@@ -117,7 +117,7 @@ function Iori_ROTD:_initCmds()
 	-- 奔跑
 	self:_initCmd_FF(luaCfg)
 	--禁千弐百十壱式・八稚女
-	self:_initCmd_SuperCode1(luaCfg)
+	--self:_initCmd_SuperCode1(luaCfg)
 	
 ---------------------Run Back ------------------------------
 	local cmd = luaCfg:CreateCmd("BB")
@@ -738,6 +738,8 @@ function Iori_ROTD:_initCmds()
 				trigger:PlayStandCns(luaPlayer)
 			end
 		end
+-------------------- 禁千弐百十壱式・八稚女 ----------------
+
 end
 
 --======================================================================================
