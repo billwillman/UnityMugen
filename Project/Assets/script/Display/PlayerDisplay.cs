@@ -765,7 +765,7 @@ public class PlayerDisplay : BaseResLoader {
 		return ret;
 	}
 
-#if UNITY_EDITOR
+//#if UNITY_EDITOR
 	[NoToLuaAttribute]
 	public bool IsCmdEditorActive(string cmdName)
 	{
@@ -795,7 +795,7 @@ public class PlayerDisplay : BaseResLoader {
 			return;
 		ccmd.isEditorActive = isActive;
 	}
-#endif
+//#endif
 
 	public LuaCnsConfig LuaCfg
 	{

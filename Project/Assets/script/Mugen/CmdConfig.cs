@@ -136,14 +136,14 @@ namespace Mugen
             set;
         }
 
-#if UNITY_EDITOR
+//#if UNITY_EDITOR
         [NoToLuaAttribute]
         public bool isEditorActive
         {
             get;
             set;
         }
-#endif
+//#endif
 
         [NoToLuaAttribute]
         // 按键组
