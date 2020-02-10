@@ -500,10 +500,10 @@ public class InputControl: MonoBehaviour
 	{
 		if (plyType == InputPlayerType.none || cmd == null)
 			return false;
-#if UNITY_EDITOR
+//#if UNITY_EDITOR
 		if (cmd.isEditorActive)
 			return true;
-#endif
+//#endif
 		return CheckPlayerCmdCommandInputOk(plyType, cmd.keyCommands);
 	}
 
