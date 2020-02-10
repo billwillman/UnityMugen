@@ -555,6 +555,17 @@ function trigger:PrevStateNo(luaPlayer)
 	return ret
 end
 
+function trigger:Pause(luaPlayer, time)
+	if luaPlayer == nil or time == nil then
+		return
+	end
+	local display = luaPlayer.PlayerDisplay;
+	if display == nil then
+		return
+	end
+	display:CtlPause(time)
+end
+
 function trigger:Var(luaPlayer, index)
 	if luaPlayer == nil or index == nil then
 		return nil

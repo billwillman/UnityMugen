@@ -334,6 +334,11 @@ public class PlayerDisplay : BaseResLoader {
 		
 	}
 
+	public void CtlPause(float time)
+	{
+		AniCtlPauseTime (time);
+	}
+
 	protected void AniCtlPauseTime(float pauseTime)
 	{
 		SpriteMovement mov = this.Movement;
