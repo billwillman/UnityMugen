@@ -284,7 +284,7 @@ function Iori_ROTD:_initCmds()
 	aiCmd.value = "1000"
 	aiCmd.OnTriggerEvent = 
 		function (luaPlayer, aiName)
-			local trigger1 = trigger:Command(luaPlayer, "气功波")
+			local trigger1 = trigger:Command(luaPlayer, "气功波") and trigger:Statetype(luaPlayer) ~= Mugen.Cns_Type.A and trigger:CanCtrl(luaPlayer)
 			return trigger1
 		end
 -- Statedef 1000
