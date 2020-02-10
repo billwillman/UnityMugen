@@ -716,7 +716,7 @@ public class PlayerDisplay : BaseResLoader {
 
 		if (ani.State != state) {
 			if (m_PartMgr != null)
-				m_PartMgr.ResetPart ();
+				m_PartMgr.ResetChangeStatePart ();
 		}
 
         bool ret = ani.PlayerPlayerAni(state, isLoop);

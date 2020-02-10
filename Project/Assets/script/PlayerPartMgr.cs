@@ -35,15 +35,14 @@ public class PlayerPartMgr : MonoBehaviour {
 		}
 	}
 
-	public void ResetPart()
+	public void ResetChangeStatePart()
 	{
 		if (m_PartList != null) {
 			for (int i = m_PartList.Count - 1; i >= 0; --i) {
 				var part = m_PartList [i];
-				if (part != null)
-					GameObject.Destroy (part.gameObject);
+				if (part != null && part.isChangeStateRemove)
+					part.InteralDoDestroy ();
 			}
-			m_PartList.Clear ();
 		}
 	}
 

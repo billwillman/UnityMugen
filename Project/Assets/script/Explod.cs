@@ -94,16 +94,6 @@ public class Explod : PlayerPart {
 		}
 	}
 
-	void InteralDoDestroy()
-	{
-		if (IsDestroying)
-			return;
-		InteralDestroy ();
-		var display = this.Display;
-		if (display != null)
-			display.DestroySelf ();
-	}
-
 	[NoToLua]
 	internal override void OnParentFrameEnd(ImageAnimation target)
 	{

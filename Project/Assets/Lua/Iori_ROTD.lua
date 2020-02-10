@@ -564,6 +564,173 @@ function Iori_ROTD:_initCmds()
 				trigger:PlayStandCns(luaPlayer)
 			end
 		end
+------------------------ 风车轮 -------------------------
+	cmd = luaCfg:CreateCmd("风车轮")
+	cmd.time = 10
+	cmd:AttachKeyCommands("")
+
+	aiCmd = luaCfg:CreateAICmd("风车轮")
+	aiCmd.type = Mugen.AI_Type.ChangeState
+	aiCmd.value = "1500"
+	aiCmd.OnTriggerEvent = 
+		function (luaPlayer, aiName)
+			local trigger1 = trigger:Command(luaPlayer, "风车轮") and trigger:Statetype(luaPlayer) ~= Mugen.Cns_Type.A and trigger:CanCtrl(luaPlayer)
+			return trigger1
+		end
+
+	id = luaCfg:CreateStateDef("1500")
+	def = luaCfg:GetStateDef(id)
+	def.Type = Mugen.Cns_Type.S
+	def.MoveType = Mugen.Cns_MoveType.A
+	def.PhysicsType = Mugen.Cns_PhysicsType.N
+	def.PowerAdd = 30
+	def.Velset_x = 0
+	def.Velset_y = 0
+	def.Animate = 1500
+	def.Ctrl = 0
+	def.Sprpriority = 3
+-- State 1700, PlaySnd
+-- State 1700, PlaySnd
+	state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+	state.OnTriggerEvent =
+		function (luaPlayer, state)
+			local animElem = trigger:AnimElem(luaPlayer)
+			if animElem == 3 then
+				trigger:PlaySnd(luaPlayer, 65, 0)
+			elseif animElem == 5 then
+				trigger:PlaySnd(luaPlayer, 65, 1)
+			end
+		end
+-- State 1700, PosAdd
+	state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+	state.OnTriggerEvent =
+		function (luaPlayer, state)
+			local animElem = trigger:AnimElem(luaPlayer)
+			if animElem == 2 or animElem == 3 or animElem == 4 then
+				trigger:PosAdd(luaPlayer, 16, nil)
+			end
+		end
+-- State 1700, PosAdd
+	state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+	state.OnTriggerEvent =
+		function (luaPlayer, state)
+			local animElem = trigger:AnimElem(luaPlayer)
+			if animElem == 5 or animElem == 6 or animElem == 7 or animElem == 8 or animElem == 9 then
+				trigger:PosAdd(luaPlayer, 8, nil)
+			end
+		end
+-- State 1700, VelSet
+	state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+	state.OnTriggerEvent =
+		function (luaPlayer, state)
+			local animElem = trigger:AnimElem(luaPlayer)
+			if animElem == 6 then
+				trigger:VelSet(luaPlayer, 4, -3.5 * 2.5)
+			end
+		end
+-- State 1700, VelAdd
+	state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+	state.OnTriggerEvent =
+		function (luaPlayer, state)
+			local animElem = trigger:AnimElem(luaPlayer)
+			if animElem >= 6 then
+				trigger:VelAdd(luaPlayer, nil, 0.56)
+			end
+		end
+-- State 1700, StateTypeSet
+	state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+	state.OnTriggerEvent =
+		function (luaPlayer, state)
+			local animElem = trigger:AnimElem(luaPlayer)
+			if animElem == 6 then
+				trigger:StateTypeSet(luaPlayer, Mugen.Cns_Type.A)
+				trigger:PhysicsTypeSet(luaPlayer, Mugen.Cns_PhysicsType.N)
+			end
+		end
+-- State 1700, ChangeState
+	state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+	state.OnTriggerEvent =
+		function (luaPlayer, state)
+			local trigger1 = trigger:VelY(luaPlayer) > 0 and trigger:PosY(luaPlayer) >= 0
+			if trigger1 then
+				trigger:PlayCnsByName(luaPlayer, "1710")
+			end
+		end
+--- StateDef 1710
+	id = luaCfg:CreateStateDef("1710")
+	def = luaCfg:GetStateDef(id)
+	def.Type = Mugen.Cns_Type.S
+	def.MoveType = Mugen.Cns_MoveType.A
+	def.PhysicsType = Mugen.Cns_PhysicsType.S
+	def.Juggle = 4
+	def.Animate = 1510
+	def.Ctrl = 0
+	def.Velset_x = 0
+	def.Velset_y = 0
+	def.Sprpriority = 2
+-- State 1710, PlaySnd
+	state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+	state.OnTriggerEvent =
+		function (luaPlayer, state)
+			local animElem = trigger:AnimElem(luaPlayer)
+			if animElem == 1 then
+				trigger:PlaySnd(luaPlayer, 61, 1)
+			end
+		end
+-- State 1710, Explod
+	state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+	state.OnTriggerEvent =
+		function (luaPlayer, state)
+			local animElem = trigger:AnimElem(luaPlayer)
+			if animElem == 1 then
+				local explod = trigger:CreateExplod(luaPlayer)
+				explod.anim = 25100
+				explod.ID = 25100
+				explod.pos_x = 0
+				explod.pos_y = 0
+				explod.postype = ExplodPosType.p1
+				explod.bindtime = 1 * 100
+				explod.removetime = -2
+				explod.sprpriority = 4
+				explod.removeongethit = 0
+				explod.ignorehitpause = 1
+
+				-- 切换状态是否删除对象，默认为TRUE
+				explod.isChangeStateRemove = false
+
+				explod:Apply()
+
+				state.persistent = true
+			end
+		end
+-- State 1710, PosSet
+	state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+	state.OnTriggerEvent =
+		function (luaPlayer, state)
+			local tt = trigger:Time(luaPlayer)
+			if tt == 0 then
+				trigger:PosSet(luaPlayer, nil, 0)
+			end
+		end
+-- State 1710, PosAdd
+	state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+	state.OnTriggerEvent =
+		function (luaPlayer, state)
+			local animElem = trigger:AnimElem(luaPlayer)
+			if animElem == 2 or animElem == 3 then
+				trigger:PosAdd(luaPlayer, 8, nil)
+			end
+		end
+-- State 1710, Changestate
+	state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+	state.OnTriggerEvent =
+		function (luaPlayer, state)
+			local tt = trigger:AnimTime(luaPlayer)
+			if tt == 0 then
+				trigger:CtrlSet(luaPlayer, 1)
+				trigger:PlayStandCns(luaPlayer)
+			end
+		end
 end
 
 --======================================================================================

@@ -8,6 +8,7 @@ public class PlayerPart : MonoBehaviour {
 	
 	private PlayerDisplay m_Display = null;
 	public ExplodPosType postype = ExplodPosType.p1;
+	public bool isChangeStateRemove = true;
 	internal InputPlayerType OwnerCtl = InputPlayerType.none;
 	internal InputPlayerType TargetCtl = InputPlayerType.none;
 
@@ -111,11 +112,28 @@ public class PlayerPart : MonoBehaviour {
 	{
 	}
 
-	internal void InteralDestroy()
+	public void DestroySelf()
 	{
+		
+	}
+
+	private void InteralDestroy()
+	{
+		if (IsDestroying)
+			return;
 		var display = GetParentDisplay ();
 		if (display != null)
 			display._OnPlayerPartDestroy (this);
+	}
+
+	internal void InteralDoDestroy()
+	{
+		if (IsDestroying)
+			return;
+		InteralDestroy ();
+		var display = this.Display;
+		if (display != null)
+			display.DestroySelf ();
 	}
 
 	void OnDestroy()
