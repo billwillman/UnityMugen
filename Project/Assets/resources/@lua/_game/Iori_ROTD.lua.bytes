@@ -773,6 +773,7 @@ function Iori_ROTD:_initCmds()
 		function (luaPlayer, state)
 			local animElem = trigger:AnimElem(luaPlayer)
 			if animElem == 1 then
+				print("State 2300, PlaySnd: 5, 1")
 				trigger:PlaySnd(luaPlayer, 5, 1)
 			end
 		end
@@ -783,6 +784,7 @@ function Iori_ROTD:_initCmds()
 		function (luaPlayer, state)
 			local tt = trigger:Time(luaPlayer)
 			if tt == 2 then
+				print("State 2300, Explod: 6060")
 				local explod = trigger:CreateExplod(luaPlayer)
 				explod.anim = 6060
 				explod.pos_x = 10
@@ -806,6 +808,7 @@ function Iori_ROTD:_initCmds()
 		function (luaPlayer, state)
 			local tt = trigger:Time(luaPlayer)
 			if tt == 2 then
+				print("State 2300, Explod: 6061")
 				local explod = trigger:CreateExplod(luaPlayer)
 				explod.anim = 6061
 				explod.pos_x = 10
@@ -830,10 +833,13 @@ function Iori_ROTD:_initCmds()
 		function (luaPlayer, state)
 			local animElem = trigger:AnimElem(luaPlayer)
 			if animElem == 1 then
+				print("State 2300, PlaySnd: 67, 0")
 				trigger:PlaySnd(luaPlayer, 67, 0)
 			elseif animElem == 5 then
+				print("State 2300, PlaySnd: 65, 1")
 				trigger:PlaySnd(luaPlayer, 65, 1)
 			elseif animElem == 9 then
+				print("State 2300, PlaySnd: 61, 1")
 				trigger:PlaySnd(luaPlayer, 61, 1)
 			end
 		end
@@ -843,6 +849,7 @@ function Iori_ROTD:_initCmds()
 		function (luaPlayer, state)
 			local animElem = trigger:AnimElem(luaPlayer)
 			if animElem == 2 or animElem == 3 or animElem == 4 then
+				print("State 2300, PosAdd: 16, nil")
 				trigger:PosAdd(luaPlayer, 16, nil)
 			end
 		end
@@ -852,6 +859,7 @@ function Iori_ROTD:_initCmds()
 		function (luaPlayer, state)
 			local animElem = trigger:AnimElem(luaPlayer)
 			if animElem == 5 or animElem == 6 or animElem == 7 or animElem == 8 or animElem == 9 then
+				print("State 2300, PosAdd: 8, nil")
 				trigger:PosAdd(luaPlayer, 8, nil)
 			end
 		end
@@ -863,10 +871,13 @@ function Iori_ROTD:_initCmds()
 		function (luaPlayer, state)
 			local animElem = trigger:AnimElem(luaPlayer)
 			if animElem == 6 then
+				print("State 2300, VelSet: 5.5, -4")
 				trigger:VelSet(luaPlayer, 5.5 * VelSetPer, -4 * VelSetPer)
+				print("State 2300, StateTypeSet: Mugen.Cns_Type.A, Mugen.Cns_PhysicsType.N")
 				trigger:StateTypeSet(luaPlayer, Mugen.Cns_Type.A)
 				trigger:PhysicsTypeSet(luaPlayer, Mugen.Cns_PhysicsType.N)
 			elseif animElem >= 6 then
+				print("State 2300, VelAdd: nil, 0.56")
 				trigger:VelAdd(luaPlayer, nil, 0.56)
 			end
 		end
@@ -876,6 +887,7 @@ function Iori_ROTD:_initCmds()
 		function (luaPlayer, state)
 			local trigger1 = trigger:VelY(luaPlayer) > 0 and trigger:PosY(luaPlayer) >= 0
 			if trigger1 then
+				print("State 2300, VelSet: 2110")
 				trigger:PlayCnsByName(luaPlayer, "2110")
 			end
 		end
@@ -896,6 +908,7 @@ function Iori_ROTD:_initCmds()
 		function (luaPlayer, state)
 			local animElem = trigger:AnimElem(luaPlayer)
 			if animElem == 1 then
+				print("State 2110, PlaySnd: 61, 1")
 				trigger:PlaySnd(luaPlayer, 61, 1)
 			end
 		end
@@ -905,6 +918,7 @@ function Iori_ROTD:_initCmds()
 		function (luaPlayer, state)
 			local animElem = trigger:AnimElem(luaPlayer)
 			if animElem == 1 then
+				print("State 2110, Explod: 25100")
 				local explod = trigger:CreateExplod(luaPlayer)
 				explod.anim = 25100
 				explod.ID = 25100
@@ -932,6 +946,7 @@ function Iori_ROTD:_initCmds()
 		function (luaPlayer, state)
 			local tt = trigger:Time(luaPlayer)
 			if tt == 0 then
+				print("State 2110, PosSet: nil, 0")
 				trigger:PosSet(luaPlayer, nil, 0)
 			end
 		end
@@ -941,6 +956,7 @@ function Iori_ROTD:_initCmds()
 		function (luaPlayer, state)
 			local animElem = trigger:AnimElem(luaPlayer)
 			if animElem == 2 or animElem == 3 then
+				print("State 2110, PosAdd: 8")
 				trigger:PosAdd(luaPlayer, 8)
 			end
 		end
@@ -950,6 +966,7 @@ function Iori_ROTD:_initCmds()
 		function (luaPlayer, state)
 			local tt = trigger:AnimTime(luaPlayer)
 			if tt == 0 then
+				print("State 2110, Changestate: 0")
 				trigger:CtrlSet(luaPlayer, 1)
 				trigger:PlayStandCns(luaPlayer)
 			end
