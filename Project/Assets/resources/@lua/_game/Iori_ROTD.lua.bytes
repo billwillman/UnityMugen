@@ -747,10 +747,13 @@ function Iori_ROTD:_initCmds()
 
 	aiCmd = luaCfg:CreateAICmd("真・大风车")
 	aiCmd.type = Mugen.AI_Type.ChangeState
-	aiCmd.value = "1500"
+	aiCmd.value = "2100"
 	aiCmd.OnTriggerEvent = 
 		function (luaPlayer, aiName)
 			local trigger1 = trigger:Command(luaPlayer, "真・大风车") and trigger:Statetype(luaPlayer) ~= Mugen.Cns_Type.A and trigger:CanCtrl(luaPlayer)
+			if trigger1 then
+				print(">>>>>>>>>>>真・大风车")
+			end
 			return trigger1
 		end
 
@@ -779,6 +782,7 @@ function Iori_ROTD:_initCmds()
 		end
 
 -- State 2300, Explod
+--[[
 	state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
 	state.OnTriggerEvent =
 		function (luaPlayer, state)
@@ -801,6 +805,7 @@ function Iori_ROTD:_initCmds()
 				explod:Apply()
 			end
 		end	
+
 
 -- State 2300, Explod
 	state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
@@ -825,6 +830,7 @@ function Iori_ROTD:_initCmds()
 				explod:Apply()
 			end
 		end
+	--]]
 -- State 2300, PlaySnd
 -- State 2300, PlaySnd
 -- State 2300, PlaySnd
