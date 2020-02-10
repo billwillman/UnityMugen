@@ -91,6 +91,8 @@ function Iori_ROTD:_initSize()
   self.Size.yscale = 1
 end
 
+local bindTimePer = 20
+
 --=====================================创建StateDef===================================
 debugStartTime = 0
 --创建StateDef
@@ -414,11 +416,13 @@ function Iori_ROTD:_initCmds()
 				explod.pos_x = 0
 				explod.pos_y = 0
 				explod.postype = ExplodPosType.p1
-				explod.bindtime = 1 * 100
+				explod.bindtime = 1 * bindTimePer
 				explod.removetime = -2
 				explod.sprpriority = 4
 				explod.removeongethit = 0
 				explod.ignorehitpause = 1
+				explod.isChangeStateRemove = false
+				explod.IsUseParentUpdate = false
 
 				explod:Apply()
 
@@ -437,11 +441,12 @@ function Iori_ROTD:_initCmds()
 				explod.pos_x = 0
 				explod.pos_y = 0
 				explod.postype = ExplodPosType.p1
-				explod.bindtime = 1 * 100
+				explod.bindtime = 1 * bindTimePer
 				explod.removetime = -2
 				explod.sprpriority = 4
 				explod.removeongethit = 0
 				explod.ignorehitpause = 1
+				explod.IsUseParentUpdate = false
 
 				explod:Apply()
 
@@ -460,11 +465,12 @@ function Iori_ROTD:_initCmds()
 				explod.pos_x = 0
 				explod.pos_y = 0
 				explod.postype = ExplodPosType.p1
-				explod.bindtime = 1 * 100
+				explod.bindtime = 1 * bindTimePer
 				explod.removetime = -2
 				explod.sprpriority = 4
 				explod.removeongethit = 0
 				explod.ignorehitpause = 1
+				explod.IsUseParentUpdate = false
 
 				explod:Apply()
 
@@ -689,7 +695,7 @@ function Iori_ROTD:_initCmds()
 				explod.pos_x = 0
 				explod.pos_y = 0
 				explod.postype = ExplodPosType.p1
-				explod.bindtime = 1 * 100
+				explod.bindtime = 1 * bindTimePer
 				explod.removetime = -2
 				explod.sprpriority = 4
 				explod.removeongethit = 0
@@ -697,6 +703,7 @@ function Iori_ROTD:_initCmds()
 
 				-- 切换状态是否删除对象，默认为TRUE
 				explod.isChangeStateRemove = false
+				explod.IsUseParentUpdate = false
 
 				explod:Apply()
 

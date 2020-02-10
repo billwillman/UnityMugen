@@ -36,13 +36,7 @@ public class Explod : PlayerPart {
 	public int sprpriority = 0;
 	public int removeongethit = 0;
 	public int ignorehitpause = 1;
-
-	protected bool IsUseParentUpdate
-	{
-		get {
-			return ignorehitpause == 1;
-		}
-	}
+	public bool IsUseParentUpdate = true;
 
 	void InitOffsetPos(PlayerDisplay parentDisplay)
 	{
