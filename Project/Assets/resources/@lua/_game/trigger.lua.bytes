@@ -434,7 +434,12 @@ function trigger:P2dist_X(luaPlayer, ohterPlayer)
 	if luaPlayer == nil or ohterPlayer == nil then
 		return nil
 	end
-	local ret = luaPlayer:DistanceX(ohterPlayer)
+	local s = luaPlayer.PlayerDisplay
+	local o = ohterPlayer.PlayerDisplay
+	if s == nil or o == nil then
+		return nil
+	end
+	local ret = s:DistanceX(o)
 	return ret
 end
 
@@ -442,8 +447,13 @@ function trigger:P2dist_Y(luaPlayer, ohterPlayer)
 	if luaPlayer == nil or ohterPlayer == nil then
 		return nil
 	end
+	local s = luaPlayer.PlayerDisplay
+	local o = ohterPlayer.PlayerDisplay
+	if s == nil or o == nil then
+		return nil
+	end
 	-- Unity和MUGEN的Y坐标相反
-	local ret = -luaPlayer:DistanceY(ohterPlayer)
+	local ret = -s:DistanceY(o)
 	return ret
 end
 
