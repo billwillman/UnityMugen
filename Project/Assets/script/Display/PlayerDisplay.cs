@@ -1601,6 +1601,21 @@ public class PlayerDisplay : BaseResLoader {
         RefreshCurPallet();
     }
 
+	// 切换调色板，根据索引
+	public bool SwitchPallet(int idx)
+	{
+		if (idx < 0)
+			return false;
+		var loaderPlayer = this.LoaderPlayer;
+		if (loaderPlayer == null || loaderPlayer.PalNameList == null || idx >= loaderPlayer.PalNameList.Count)
+			return false;
+		var name = loaderPlayer.PalNameList [idx];
+		if (string.IsNullOrEmpty (name))
+			return false;
+		this.PalletName = name;
+		return true;
+	}
+
 	[NoToLuaAttribute]
     public string PalletName
     {

@@ -80,6 +80,10 @@ public class PlayerControls: MonoSingleton<PlayerControls>
 			display.InternalUpdatePos ();
 		}
 
+		if (display != null) {
+			display.SwitchPallet ((int)playerType - 1);
+		}
+
         if (display != null && display.AnimationState == PlayerState.psNone)
         {
             if (display.LuaPly == null)

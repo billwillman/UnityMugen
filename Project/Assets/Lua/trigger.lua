@@ -704,6 +704,18 @@ function trigger:Command(luaPlayer, cmdName)
 	return ret
 end
 
+function trigger:SwitchPallet(luaPlayer, idx)
+	if luaPlayer == nil or idx == nil then
+		return nil
+	end
+	local display = luaPlayer.PlayerDisplay;
+	if display == nil then
+		return nil 
+	end
+	local ret = display:SwitchPallet(idx)
+	return ret
+end
+
 function trigger:RemoveExplod(luaPlayer, id)
 	if luaPlayer == nil or id == nil then
 		return
