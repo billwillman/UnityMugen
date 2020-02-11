@@ -35,7 +35,6 @@ public class PlayerDisplayEditor : Editor {
     private int m_CommandSel = -1;
     private bool m_IsFlipX = false;
     private bool m_IsExpandSound = false;
-    private bool m_IsAutoRunCmd = true;
 
     private void InitPlayerDisplay()
     {
@@ -51,7 +50,6 @@ public class PlayerDisplayEditor : Editor {
         m_CommandSel = -1;
         m_IsFlipX = false;
         m_IsExpandSound = false;
-        m_IsAutoRunCmd = true;
         if (m_LastDisplay == null)
             return;
         var player = m_LastDisplay.GPlayer;
@@ -92,13 +90,13 @@ public class PlayerDisplayEditor : Editor {
                     m_VaildStateNameList[i] = string.Format("{0}({1:D})", state.ToString(), (int)state);
                 }
             }
-
+			/*
             SelctedItem selItem;
 			if (m_SelectedMap.TryGetValue (m_LastDisplay.GetInstanceID (), out selItem)) {
 				var state = m_VaildStateList [selItem.stateIndex];
 				if (m_LastDisplay.PlayAni (state, true))
 					m_StateSelected = selItem.stateIndex;
-			} else {
+			} else*/ {
 				var ani1 = m_LastDisplay.ImageAni;
 				if (ani1 != null) {
 					if (ani1.State != PlayerState.psNone) {
@@ -166,6 +164,7 @@ public class PlayerDisplayEditor : Editor {
             m_LastDisplay.IsFlipX = m_IsFlipX;
         }
 
+		bool m_IsAutoRunCmd = true;
         if (m_VaildStateList != null && m_VaildStateNameList != null)
         {
             EditorGUILayout.BeginVertical();
@@ -503,7 +502,8 @@ public class PlayerDisplayEditor : Editor {
                 //m_LastDisplay.RunCmd(cmdName);
                 
             }
-
+			if (!m_IsAutoRunCmd)
+				m_LastDisplay.IsAutoRunCmd = m_IsAutoRunCmd;
 			m_LastDisplay.IsAutoRunCmd = GUILayout.Toggle(m_LastDisplay.IsAutoRunCmd, "开启命令执行");
            // m_LastDisplay.RunAutoCmd();
         }

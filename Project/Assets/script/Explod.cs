@@ -62,6 +62,9 @@ public class Explod : PlayerPart {
 		var display = this.Display;
 		if (display != null) {
 			var parentDisplay = GetParentDisplay ();
+			if (parentDisplay.PlyType == InputPlayerType._2p) {
+				print ("tt");
+			}
 			InitOffsetPos (parentDisplay);
 			display.SetVelSet (x_vel, y_vel);
 			if (!IsUseParentUpdate) {
