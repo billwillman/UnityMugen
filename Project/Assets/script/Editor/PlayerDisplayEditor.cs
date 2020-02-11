@@ -504,10 +504,8 @@ public class PlayerDisplayEditor : Editor {
                 
             }
 
-            m_IsAutoRunCmd = GUILayout.Toggle(m_IsAutoRunCmd, "开启命令执行");
-
-            if (m_IsAutoRunCmd)
-                m_LastDisplay.RunAutoCmd();
+			m_LastDisplay.IsAutoRunCmd = GUILayout.Toggle(m_LastDisplay.IsAutoRunCmd, "开启命令执行");
+           // m_LastDisplay.RunAutoCmd();
         }
     }
 

@@ -38,6 +38,14 @@ public class PlayerDisplay : BaseResLoader {
 
 	[NoToLua]
 	public DisplayType ShowType = DisplayType.Player;
+	[NoToLua]
+	public bool IsAutoRunCmd = true;
+
+	void Update()
+	{
+		if (IsAutoRunCmd)
+			RunAutoCmd ();
+	}
 
 	public bool IsDestroying
 	{
@@ -539,7 +547,7 @@ public class PlayerDisplay : BaseResLoader {
 
 	void Awake()
 	{
-		InitSpriteRender ();
+		InitSpriteRender ();	
 	}
 
     private void DestroyLuaPlayer()
@@ -1405,7 +1413,7 @@ public class PlayerDisplay : BaseResLoader {
             palletTex = GetPalletTexture();
             // 只能刷新用公用調色版的
             m1.SetTexture("_PalletTex", palletTex);
-        }
+		}
     }
 
     protected Texture2D GetPalletTexture()

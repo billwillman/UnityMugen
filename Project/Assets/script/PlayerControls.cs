@@ -50,26 +50,42 @@ public class PlayerControls: MonoSingleton<PlayerControls>
 
     public void SwitchPlayer(InputPlayerType playerType, PlayerDisplay display)
     {
+		float x = 0f;
         switch (playerType)
         {
             case InputPlayerType._1p:
                 m_1P = display;
+				x  = 100.0f;
                 break;
-            case InputPlayerType._2p:
-                m_2P = display;
+		case InputPlayerType._2p:
+				m_2P = display;
+				x = ((float)Screen.width) - 100.0f;
+				if (m_2P != null)
+					m_2P.IsFlipX = true;
                 break;
-            case InputPlayerType._3p:
-                m_3P = display;
+			case InputPlayerType._3p:
+				m_3P = display;
+				x = 0f;
                 break;
             case InputPlayerType._4p:
                 m_4P = display;
+				x = 0f;
                 break;
         }
+
+		var cam = Camera.main;
+		if (display != null && cam != null) {
+			var pt = cam.ScreenToWorldPoint (new Vector3 (x, 0, 0)); 
+			display.m_OffsetPos.x = pt.x;
+			display.InternalUpdatePos ();
+		}
 
         if (display != null && display.AnimationState == PlayerState.psNone)
         {
             if (display.LuaPly == null)
-                display.ChangeState(PlayerState.psStand1);
+				display.PlayAni(PlayerState.psStand1);
         }
+
+
     }
 }
