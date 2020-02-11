@@ -23,6 +23,21 @@ public class PlayerPartMgr : MonoBehaviour {
 			return;
 		m_PartList.Remove (part);
 	}
+
+	public void RemoveExplod(int explodId)
+	{
+		if (explodId < 0 || m_PartList == null)
+			return;
+		for (int i = m_PartList.Count - 1; i >= 0; --i) {
+			var part = m_PartList [i];
+			if (part != null) {
+				Explod explod = part as Explod;
+				if (explod != null && explod.ID == explodId) {
+					part.InteralDoDestroy ();
+				}
+			}
+		}
+	}
 	
 	public void OnUpdateFrame(ImageAnimation target)
 	{

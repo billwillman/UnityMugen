@@ -704,6 +704,17 @@ function trigger:Command(luaPlayer, cmdName)
 	return ret
 end
 
+function trigger:RemoveExplod(luaPlayer, id)
+	if luaPlayer == nil or id == nil then
+		return
+	end
+	local display = luaPlayer.PlayerDisplay;
+	if display == nil then
+		return 
+	end
+	display:RemoveExplod(id)
+end
+
 -- 处理模块
 
 function trigger:PlaySnd(luaPlayer, group, index)
