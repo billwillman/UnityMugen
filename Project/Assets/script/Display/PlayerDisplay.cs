@@ -99,6 +99,26 @@ public class PlayerDisplay : BaseResLoader {
         return string.Empty;
     }
 
+	public float DistanceX(PlayerDisplay other)
+	{
+		if (other == null)
+			return 0;
+		var s = this.CachedTransform.position;
+		var o = other.CachedTransform.position;
+		float ret = o.x - s.x;
+		return ret;
+	}
+
+	public float DistanceY(PlayerDisplay other)
+	{
+		if (other == null)
+			return 0;
+		var s = this.CachedTransform.position;
+		var o = other.CachedTransform.position;
+		float ret = o.y - s.y;
+		return ret;
+	}
+
 	public static LuaTable GetPlayer(InputPlayerType playerType)
 	{
 		if (playerType == InputPlayerType.none || AppConfig.IsAppQuit)

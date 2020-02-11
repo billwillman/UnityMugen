@@ -430,6 +430,23 @@ function trigger:GetPlayer(playerType)
 	return ret
 end
 
+function trigger:P2dist_X(luaPlayer, ohterPlayer)
+	if luaPlayer == nil or ohterPlayer == nil then
+		return nil
+	end
+	local ret = luaPlayer:DistanceX(ohterPlayer)
+	return ret
+end
+
+function trigger:P2dist_Y(luaPlayer, ohterPlayer)
+	if luaPlayer == nil or ohterPlayer == nil then
+		return nil
+	end
+	-- Unity和MUGEN的Y坐标相反
+	local ret = -luaPlayer:DistanceY(ohterPlayer)
+	return ret
+end
+
 function trigger:DestroySelf(luaPlayer)
 	if luaPlayer == nil then
 		return
