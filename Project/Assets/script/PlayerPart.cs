@@ -130,12 +130,7 @@ public abstract class PlayerPart : MonoBehaviour {
 	{
 	}
 
-	public void DestroySelf()
-	{
-		
-	}
-
-	private void InteralDestroy()
+	protected virtual void InteralDestroy()
 	{
 		if (IsDestroying)
 			return;
