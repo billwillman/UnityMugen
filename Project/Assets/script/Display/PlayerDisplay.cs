@@ -1327,7 +1327,7 @@ public class PlayerDisplay : BaseResLoader {
                     m_ClsnBoxRoot.localRotation = Quaternion.identity;
                     m_ClsnBoxRoot.localScale = Vector3.one;
                 }
-                mgr.CreateClsnBox(m_LoaderPlayer.PlayerType, name, m_ClsnBoxRoot, s.min.x, s.min.y, s.width, s.height, isCls2);
+				mgr.CreateClsnBox(m_PlayerType, name, m_ClsnBoxRoot, s.min.x, s.min.y, s.width, s.height, isCls2);
             }
 		}
 	}
