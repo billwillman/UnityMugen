@@ -218,6 +218,7 @@ public static class CustomSettings  {
 		_GT(typeof(ExplodPosType)),
 		_GT(typeof(Explod)),
 		_GT(typeof(Projectile)),
+		_GT(typeof(InputPlayerType)),
 		_GT(typeof(List<int>)),
 		//_GT(typeof(TestClass)),
 	};

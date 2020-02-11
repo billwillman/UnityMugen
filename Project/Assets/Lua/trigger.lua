@@ -422,6 +422,14 @@ function trigger:PosSet(luaPlayer, x, y)
 	end
 end
 
+function trigger:GetPlayer(playerType)
+	if playerType == nil then
+		return nil
+	end
+	local ret = PlayerDisplay.GetPlayer(playerType)
+	return ret
+end
+
 function trigger:DestroySelf(luaPlayer)
 	if luaPlayer == nil then
 		return

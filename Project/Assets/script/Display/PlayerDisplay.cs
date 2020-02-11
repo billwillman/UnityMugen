@@ -99,6 +99,16 @@ public class PlayerDisplay : BaseResLoader {
         return string.Empty;
     }
 
+	public static LuaTable GetPlayer(InputPlayerType playerType)
+	{
+		if (playerType == InputPlayerType.none || AppConfig.IsAppQuit)
+			return null;
+		var display = PlayerControls.GetInstance ().GetPlayer (playerType);
+		if (display == null)
+			return null;
+		return display.LuaPly;
+	}
+
 	public static float _cVelPerUnit = 1f;
 	public static float _cAPerUnit = 100f;
 	public static float _cPerUnit = 1f;
