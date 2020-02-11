@@ -443,6 +443,29 @@ function trigger:Dist_X(luaPlayer, ohterPlayer)
 	return ret
 end
 
+function trigger:IsPersistent(luaPlayer, state)
+	if luaPlayer == nil or state == nil then
+		return nil
+	end
+	local display = luaPlayer.PlayerDisplay
+	if display == nil then
+		return nil
+	end
+	local ret = display:IsStatePersistent(state)
+	return ret
+end
+
+function trigger:Persistent(luaPlayer, state, isPersistent)
+	if luaPlayer == nil or state == nil or isPersistent then
+		return
+	end
+	local display = luaPlayer.PlayerDisplay
+	if display == nil then
+		return
+	end
+	display:RegStatePersistent(luaPlayer, state, isPersistent)
+end
+
 function trigger:Dist_Y(luaPlayer, ohterPlayer)
 	if luaPlayer == nil or ohterPlayer == nil then
 		return nil

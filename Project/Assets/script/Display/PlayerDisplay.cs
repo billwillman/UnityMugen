@@ -280,6 +280,25 @@ public class PlayerDisplay : BaseResLoader {
 		return PlayCnsAnimate(stateDefId, isLoop);
 	}
 
+	private Dictionary<int, bool> m_StatePersistentMap = new Dictionary<int, bool> ();
+
+	public void RegStatePersistent(CNSState state, bool isPersistent)
+	{
+		if (state == null || AppConfig.IsAppQuit || IsDestroying)
+			return;
+		m_StatePersistentMap [state.GenId] = isPersistent;
+	}
+
+	public bool IsStatePersistent(CNSState state)
+	{
+		if (state == null)
+			return true;
+		bool ret;
+		if (!m_StatePersistentMap.TryGetValue (state.GenId, out ret))
+			ret = true;
+		return ret;
+	}
+
 	public bool PlayCnsAnimate(int stateDefId, bool isLoop = true)
 	{
 		if (m_IsDestroy)
@@ -300,7 +319,7 @@ public class PlayerDisplay : BaseResLoader {
 		if (StateMgr.CurrentCnsDef != def) {
 			// 重置动画属性
 			ImageAni.ResetCns();
-			def.ResetStatesPersistent ();
+			def.ResetStatesPersistent (this);
 		}
 
 		bool ret;

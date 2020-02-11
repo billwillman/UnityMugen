@@ -427,7 +427,7 @@ function Iori_ROTD:_initCmds()
 
 				explod:Apply()
 
-				state.persistent = true
+				trigger:Persistent(luaPlayer, state, true)
 			end
 		end
 -- State 1100, Explod
@@ -451,7 +451,7 @@ function Iori_ROTD:_initCmds()
 
 				explod:Apply()
 
-				state.persistent = true
+				trigger:Persistent(luaPlayer, state, true)
 			end
 		end
 
@@ -475,7 +475,7 @@ function Iori_ROTD:_initCmds()
 
 				explod:Apply()
 
-				state.persistent = true
+				trigger:Persistent(luaPlayer, state, true)
 			end
 		end
 -- State 1100, PosAdd
@@ -708,7 +708,7 @@ function Iori_ROTD:_initCmds()
 
 				explod:Apply()
 
-				state.persistent = true
+				trigger:Persistent(luaPlayer, state, true)
 			end
 		end
 -- State 1710, PosSet
@@ -941,7 +941,7 @@ function Iori_ROTD:_initCmds()
 				explod.isChangeStateRemove = false
 				explod.IsUseParentUpdate = false
 
-				state.persistent = true
+				trigger:Persistent(luaPlayer, state, true)
 
 				explod:Apply()
 			end
