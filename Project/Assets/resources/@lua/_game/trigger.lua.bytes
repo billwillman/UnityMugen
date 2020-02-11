@@ -430,7 +430,7 @@ function trigger:GetPlayer(playerType)
 	return ret
 end
 
-function trigger:P2dist_X(luaPlayer, ohterPlayer)
+function trigger:Dist_X(luaPlayer, ohterPlayer)
 	if luaPlayer == nil or ohterPlayer == nil then
 		return nil
 	end
@@ -443,7 +443,7 @@ function trigger:P2dist_X(luaPlayer, ohterPlayer)
 	return ret
 end
 
-function trigger:P2dist_Y(luaPlayer, ohterPlayer)
+function trigger:Dist_Y(luaPlayer, ohterPlayer)
 	if luaPlayer == nil or ohterPlayer == nil then
 		return nil
 	end
