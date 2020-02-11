@@ -1287,9 +1287,13 @@ public class PlayerDisplay : BaseResLoader {
 	}
 
 	// 创建飞行道具
-	public Projectile CreateProjectile()
+	public Projectile CreateProjectile(out Helper helper, bool isCreateHelper = false)
 	{
 		GameObject gameObj = new GameObject ("Projectile", typeof(PlayerDisplay), typeof(Projectile));
+		if (isCreateHelper) {
+			helper = gameObj.AddComponent<Helper> ();
+		} else
+			helper = null;
 		var trans = gameObj.transform;
 		trans.localPosition = Vector3.zero;
 		trans.localScale = Vector3.one;

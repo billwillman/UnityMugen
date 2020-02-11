@@ -752,7 +752,7 @@ function trigger:Do_StatePlaySnd(luaPlayer, state)
 end
 
 -- 创建飞行道具
-function trigger:CreateProj(luaPlayer)
+function trigger:CreateProj(luaPlayer, isCreateHelper)
 	if luaPlayer == nil then
 		return nil
 	end
@@ -760,8 +760,9 @@ function trigger:CreateProj(luaPlayer)
 	if display == nil then
 		return nil
 	end
-	local ret = display:CreateProjectile()
-	return ret
+	isCreateHelper = isCreateHelper or false
+	local proj, helper = display:CreateProjectile(isCreateHelper)
+	return proj, helper
 end
 
 -- 帮助模块
