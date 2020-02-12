@@ -89,9 +89,9 @@ namespace Mugen
 
         private static int OnBgSort(IBg b1, IBg b2)
         {
-			int ret = b1.layerno - b2.layerno;
+			int ret = b2.layerno - b1.layerno;
 			if (ret == 0)
-				ret = b1.GenId - b2.GenId;
+				ret = b2.GenId - b1.GenId;
 			return ret;
         }
 
