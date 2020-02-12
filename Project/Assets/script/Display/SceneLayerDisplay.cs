@@ -184,6 +184,15 @@ public class SceneLayerDisplay : BaseResLoader {
         }
     }
 
+	private void InitFrameInfo(ImageFrame frame)
+	{
+		if (frame == null)
+			return;
+		if (frame.Data != null && frame.Data.texture != null) {
+			frame.Data.texture.wrapMode = TextureWrapMode.Repeat;
+		}
+	}
+
 	public void InitStatic(BgStaticInfo bgInfo)
     {
 		if (bgInfo == null)
@@ -194,6 +203,7 @@ public class SceneLayerDisplay : BaseResLoader {
         if (imageRes != null && imageRes.LoadOk)
         {
 			var frame = imageRes.GetImageFrame ((PlayerState)bgInfo.srpiteno_Group, bgInfo.spriteno_Image);
+			InitFrameInfo (frame);
 			UpdateImageFrame(bgInfo.srpiteno_Group, frame, bgInfo.mask == MaskType.none);
             m_Group = bgInfo.srpiteno_Group;
             m_Image = bgInfo.spriteno_Image;
