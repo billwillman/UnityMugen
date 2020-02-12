@@ -2,6 +2,13 @@
 using System.Collections;
 using Mugen;
 
+public enum SceneLayerType
+{
+	None,
+	Static,
+	Animation
+}
+
 
 [RequireComponent(typeof(ImageAnimation))]
 [RequireComponent(typeof(SpriteRenderer))]
@@ -15,6 +22,8 @@ public class SceneLayerDisplay : BaseResLoader {
     private int m_Image = -1;
     private bool m_IsPalletNull = true;
     private bool m_IsInited = false;
+
+	public SceneLayerType m_SceneType = SceneLayerType.None;
 
     public SpriteRenderer SpriteRender
     {
@@ -165,6 +174,7 @@ public class SceneLayerDisplay : BaseResLoader {
             UpdateImageFrame(bgInfo.srpiteno_Group, frame);
             m_Group = bgInfo.srpiteno_Group;
             m_Image = bgInfo.spriteno_Image;
+			m_SceneType = SceneLayerType.Static;
             m_IsInited = true;
         }
     }
