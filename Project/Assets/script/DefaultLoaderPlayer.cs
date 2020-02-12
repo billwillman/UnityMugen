@@ -104,11 +104,6 @@ public class DefaultLoaderPlayer : MonoBehaviour {
 	public List<string> PalNameList = null;
 	public string LoadAnim = string.Empty;
 
-    public void _OnLoadCns()
-    {
-        
-    }
-
 	public void AddCnsName(string name)
 	{
 		if (string.IsNullOrEmpty (name))
