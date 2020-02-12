@@ -92,8 +92,12 @@ namespace Mugen
             if (string.IsNullOrEmpty(sceneFileName) || group < 0 || m_Image < 0 || mParentLib == null)
                 return false;
             string fileName = GlobalConfigMgr.GetConfigFileNameNoExt(sceneFileName);
-            fileName = string.Format("{0}_{1:D}-{2:D}.act.bytes", fileName, group, m_Image);
-            tex = mParentLib.GetScenePalletTexture(fileName);
+			string globalFileName = string.Format ("{0}.act.bytes", fileName);
+			tex = mParentLib.GetScenePalletTexture(globalFileName);
+			if (tex == null) {
+				fileName = string.Format ("{0}_{1:D}-{2:D}.act.bytes", fileName, group, m_Image);
+				tex = mParentLib.GetScenePalletTexture (fileName);
+			}
             bool ret = tex != null;
             if (ret)
             {
@@ -389,32 +393,40 @@ namespace Mugen
         }
          */
 
-        public bool LoadScene(string fileName, BgConfig config)
+		public bool LoadScene(string fileName, SceneConfig config)
         {
-            if (string.IsNullOrEmpty(fileName) || config == null)
+			if (string.IsNullOrEmpty(fileName) || config == null || config.BgCfg == null)
                 return false;
             SffFile sf = new SffFile();
             if (!sf.LoadFromFileName(fileName))
                 return false;
             /* 处理场景 */
 
-            for (int i = 0; i < config.BgCount; ++i)
+			var cfg = config.BgCfg;
+			for (int i = 0; i < cfg.BgCount; ++i)
             {
-                var bg = config.GetBg(i);
+				var bg = cfg.GetBg(i);
                 if (bg != null)
                 {
-                    if (bg.bgType == BgType.normal)
-                    {
-                        var staticBg = bg as BgStaticInfo;
-                       // PlayerState saveGroup = SceneGroupToSaveGroup(staticBg.srpiteno_Group);
-                        PlayerState group = (PlayerState)(staticBg.srpiteno_Group);
-                     //   if (!HasLoadImageFrame(saveGroup, staticBg.srpiteno_Group, staticBg.spriteno_Image))
-                     //       LoadCharState(sf, group, bg.name, staticBg.spriteno_Image, false, true, saveGroup);
-                        if (!HasLoadImageFrame(staticBg.srpiteno_Group, staticBg.spriteno_Image))
-                            LoadCharState(sf, group, bg.name, staticBg.spriteno_Image);
-                    }
+					if (bg.bgType == BgType.normal) {
+						var staticBg = bg as BgStaticInfo;
+						// PlayerState saveGroup = SceneGroupToSaveGroup(staticBg.srpiteno_Group);
+						PlayerState group = (PlayerState)(staticBg.srpiteno_Group);
+						//   if (!HasLoadImageFrame(saveGroup, staticBg.srpiteno_Group, staticBg.spriteno_Image))
+						//       LoadCharState(sf, group, bg.name, staticBg.spriteno_Image, false, true, saveGroup);
+						if (!HasLoadImageFrame (staticBg.srpiteno_Group, staticBg.spriteno_Image))
+							LoadCharState (sf, group, bg.name, staticBg.spriteno_Image);
+					}
                 }
             }
+
+			if (config.AirCfg != null) {
+				if (!LoadAir ("Scene", config.AirCfg)) {
+					ClearAll ();
+					return false;
+				}
+				
+			}
 
             return true;
         }

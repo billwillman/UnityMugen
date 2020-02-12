@@ -15,14 +15,16 @@ public enum SceneLayerType
 [RequireComponent(typeof(SpriteRenderer))]
 public class SceneLayerDisplay : BaseResLoader {
     public int layerno = -1;
+	public MaskType m_MaskType = MaskType.alpha;
+	public int m_Group = (int)PlayerState.psNone;
 
     private SpriteRenderer m_SpriteRender = null;
     private ImageAnimation m_Anim = null;
 	private Material m_OrgSpMat = null;
-    private int m_Group = (int)PlayerState.psNone;
     private int m_Image = -1;
     private bool m_IsPalletNull = true;
     private bool m_IsInited = false;
+
 
 	public SceneLayerType m_SceneType = SceneLayerType.None;
 
@@ -85,7 +87,7 @@ public class SceneLayerDisplay : BaseResLoader {
 		}
 	}
 
-	private void UpdateImageFrame(int group, ImageFrame frame, bool isNoMask)
+	private void UpdateImageFrame(ImageFrame frame, ActionFlip flip, bool isNoMask)
 	{
 		SpriteRenderer r = this.SpriteRender;
 		if (r == null)
@@ -101,8 +103,7 @@ public class SceneLayerDisplay : BaseResLoader {
 			}
 			return;
 		}
-
-		var flip = ActionFlip.afNone;
+			
 		r.sprite = frame.Data;
 		if (r.sprite != null)
 		{
@@ -134,12 +135,12 @@ public class SceneLayerDisplay : BaseResLoader {
             {
                 string sceneFileName = StageMgr.GetInstance().LoadedSceneFileName;
                 // 再尝试额外加载一个文件
-                if (frame.LoadSceneExtLocalPalletTex(sceneFileName, group))
+				if (frame.LoadSceneExtLocalPalletTex(sceneFileName, m_Group))
                 {
                     palletTex = frame.LocalPalletTex;
                    // int saveGroup = (int)ImageLibrary.SceneGroupToSaveGroup(group);
                   //  StageMgr.GetInstance().SetLastPalletLink(saveGroup, frame.Image);
-                    StageMgr.GetInstance().SetLastPalletLink(group, frame.Image);
+					StageMgr.GetInstance().SetLastPalletLink(m_Group, frame.Image);
                 } else
                 {
                     StageMgr.GetInstance().LinkImageFramePalletLastLink(frame);
@@ -193,6 +194,54 @@ public class SceneLayerDisplay : BaseResLoader {
 		}
 	}
 
+	protected void RefreshCurFrame(ImageAnimation target)
+	{
+		if (target == null)
+			return;
+		SpriteRenderer r = this.SpriteRender;
+		if (r == null)
+			return;
+		ActionFlip flip;
+		var frame = target.GetCurImageFrame(out flip);
+		if (frame == null)
+			return;
+		InitFrameInfo (frame);
+		UpdateImageFrame(frame, flip, m_MaskType == MaskType.none);
+	}
+
+	void OnImageAnimationFrame(ImageAnimation target)
+	{
+		if (target == null)
+			return;
+		RefreshCurFrame(target);
+	}
+
+	public void InitAnimated(BgAniInfo anInfo)
+	{
+		if (anInfo == null)
+			return;
+		layerno = anInfo.layerno;
+		var imageRes = StageMgr.GetInstance().ImageRes;
+		if (imageRes != null && imageRes.LoadOk) {
+			// 处理动画层
+			m_Group = anInfo.actionno;
+			m_MaskType = anInfo.mask;
+
+			m_SceneType = SceneLayerType.Animation;
+			m_IsInited = true;
+
+			if (StageMgr.GetInstance ().HasBeginAction (m_Group)) {
+				// 初始化动画
+				var ani = this.ImageAni;
+				if (ani != null) {
+					ani.Type = ImageAnimation.ImageAnimationType.Scene;
+					if (ani.PlayerPlayerAni ((PlayerState)m_Group, true))
+						RefreshCurFrame (ani);
+				}
+			}
+		}
+	}
+
 	public void InitStatic(BgStaticInfo bgInfo)
     {
 		if (bgInfo == null)
@@ -202,12 +251,16 @@ public class SceneLayerDisplay : BaseResLoader {
         var imageRes = StageMgr.GetInstance().ImageRes;
         if (imageRes != null && imageRes.LoadOk)
         {
+			m_Group = bgInfo.srpiteno_Group;
+			m_Image = bgInfo.spriteno_Image;
+			m_MaskType = bgInfo.mask;
+			m_SceneType = SceneLayerType.Static;
+
 			var frame = imageRes.GetImageFrame ((PlayerState)bgInfo.srpiteno_Group, bgInfo.spriteno_Image);
 			InitFrameInfo (frame);
-			UpdateImageFrame(bgInfo.srpiteno_Group, frame, bgInfo.mask == MaskType.none);
-            m_Group = bgInfo.srpiteno_Group;
-            m_Image = bgInfo.spriteno_Image;
-			m_SceneType = SceneLayerType.Static;
+			UpdateImageFrame(frame, ActionFlip.afNone, bgInfo.mask == MaskType.none);
+            
+
             m_IsInited = true;
         }
     }

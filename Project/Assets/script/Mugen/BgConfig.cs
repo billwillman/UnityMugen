@@ -38,8 +38,7 @@ namespace Mugen
 		public Vector2 delta;
         public MaskType mask;
 		public Vector2 velocity;
-		public int tile_x;
-		public int tile_y;
+		public int tile;
 		public int tilespacing_x;
 		public int tilespacing_y;
 		public int zoffset;
@@ -159,46 +158,38 @@ namespace Mugen
                     if (bgType == BgType.normal)
                     {
                         string[] arr = null;
-                        if (string.Compare(key, "spriteno", true) == 0)
-                        {
-                            arr = value.Split(ConfigSection._cContentArrSplit, System.StringSplitOptions.RemoveEmptyEntries);
-                            if (arr != null && arr.Length >= 2)
-                            {
-                                staticInfo.srpiteno_Group = int.Parse(arr[0]);
-                                staticInfo.spriteno_Image = int.Parse(arr[1]);
-                            }
-                        } else if (string.Compare(key, "layerno", true) == 0)
-                        {
-                            staticInfo.layerno = int.Parse(value);
-                        } else if (string.Compare(key, "start", true) == 0)
-                        {
-                            arr = value.Split(ConfigSection._cContentArrSplit, System.StringSplitOptions.RemoveEmptyEntries);
-                            if (arr != null && arr.Length >= 2)
-                            {
-                                staticInfo.start_x = int.Parse(arr[0]);
-                                staticInfo.start_y = int.Parse(arr[1]);
-                            }
-                        } else if (string.Compare(key, "delta", true) == 0)
-                        {
-                            arr = value.Split(ConfigSection._cContentArrSplit, System.StringSplitOptions.RemoveEmptyEntries);
-                            if (arr != null && arr.Length >= 2)
-                            {
-                                float x1 = float.Parse(arr[0]);
-                                float y1 = float.Parse(arr[1]);
-                                staticInfo.delta = new Vector2(x1, y1);
-                            }
-                        }
-                        else if (string.Compare(key, "trans", true) == 0)
-                        {
-                            if (string.Compare(value, "none", true) == 0)
-                            {
-                                staticInfo.transType = TransType.none;
-                            }
-                        } else if (string.Compare(key, "mask", true) == 0)
-                        {
-                            int i1 = int.Parse(value);
-                            staticInfo.mask = (MaskType)i1;
-                        }
+						if (string.Compare (key, "spriteno", true) == 0) {
+							arr = value.Split (ConfigSection._cContentArrSplit, System.StringSplitOptions.RemoveEmptyEntries);
+							if (arr != null && arr.Length >= 2) {
+								staticInfo.srpiteno_Group = int.Parse (arr [0]);
+								staticInfo.spriteno_Image = int.Parse (arr [1]);
+							}
+						} else if (string.Compare (key, "layerno", true) == 0) {
+							staticInfo.layerno = int.Parse (value);
+						} else if (string.Compare (key, "start", true) == 0) {
+							arr = value.Split (ConfigSection._cContentArrSplit, System.StringSplitOptions.RemoveEmptyEntries);
+							if (arr != null && arr.Length >= 2) {
+								staticInfo.start_x = int.Parse (arr [0]);
+								staticInfo.start_y = int.Parse (arr [1]);
+							}
+						} else if (string.Compare (key, "delta", true) == 0) {
+							arr = value.Split (ConfigSection._cContentArrSplit, System.StringSplitOptions.RemoveEmptyEntries);
+							if (arr != null && arr.Length >= 2) {
+								float x1 = float.Parse (arr [0]);
+								float y1 = float.Parse (arr [1]);
+								staticInfo.delta = new Vector2 (x1, y1);
+							}
+						} else if (string.Compare (key, "trans", true) == 0) {
+							if (string.Compare (value, "none", true) == 0) {
+								staticInfo.transType = TransType.none;
+							}
+						} else if (string.Compare (key, "mask", true) == 0) {
+							int i1 = int.Parse (value);
+							staticInfo.mask = (MaskType)i1;
+						} else if (string.Compare (key, "tile", true) == 0) {
+							int i2 = int.Parse (value);
+							staticInfo.tile = i2;
+						}
                     }
                     else if (bgType == BgType.anim)
                     {

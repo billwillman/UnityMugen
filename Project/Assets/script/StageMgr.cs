@@ -90,6 +90,18 @@ public class StageMgr : MonoSingleton<StageMgr> {
         }
     }
 
+	public bool HasBeginAction(int actionno)
+	{
+		return GetBeginAction (actionno) != null;
+	}
+
+	public BeginAction GetBeginAction(int actionno)
+	{
+		if (m_Config == null || m_Config.AirCfg == null)
+			return null;
+		return m_Config.AirCfg.GetBeginAction((PlayerState)actionno);
+	}
+
 	void LoadConfig(string fileName)
 	{
 		Clear ();
@@ -114,6 +126,8 @@ public class StageMgr : MonoSingleton<StageMgr> {
         dislpay.layerno = bg.layerno;
 		if (bg.bgType == BgType.normal)
 			dislpay.InitStatic (bg as BgStaticInfo);
+		else if (bg.bgType == BgType.anim)
+			dislpay.InitAnimated (bg as BgAniInfo);
     }
 
     // 創建場景
@@ -161,7 +175,7 @@ public class StageMgr : MonoSingleton<StageMgr> {
             sceneRoot = string.Format("{0}{1}/@{2}/{3}", AppConfig.GetInstance().SceneRootDir, DefaultSceneRoot, DefaultSceneName, name);
         }
         string fileName = string.Format("{0}.sff.bytes", sceneRoot);
-        if (!imgRes.LoadScene(fileName, bgCfg))
+		if (!imgRes.LoadScene(fileName, m_Config))
             return false;
 
         m_LoadedSceneName = this.DefaultSceneName;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace Mugen
 {
@@ -331,6 +332,33 @@ namespace Mugen
 			string str = AppConfig.GetInstance ().Loader.LoadText (fileName);
 			return LoadFromStr(str);
 		}
+
+		/*
+		private static readonly string _cBeginActionTitle = "Begin action";
+		private void LoadBeginActions(ConfigReader reader)
+		{
+			if (m_BeginActionMap != null)
+				m_BeginActionMap.Clear ();
+			for (int i = 0; i < reader.SectionCount; ++i) {
+				var section = reader.GetSections (i);
+				if (section != null && !string.IsNullOrEmpty(section.Tile)) {
+					if (section.Tile.StartsWith (_cBeginActionTitle, StringComparison.CurrentCultureIgnoreCase)) {
+						string actionnoStr = section.Tile.Substring (_cBeginActionTitle.Length);
+						if (!string.IsNullOrEmpty (actionnoStr)) {
+							actionnoStr = actionnoStr.Trim ();
+							if (!string.IsNullOrEmpty (actionnoStr)) {
+								int actionno;
+								if (int.TryParse (actionnoStr, out actionno)) {
+									BeginAction action = new BeginAction (section);
+									this.AddBeginAction (actionno, action);
+								}
+							}
+						}
+					}
+				}
+			}	
+		}
+		*/
 
 		private bool LoadFromStr(string str)
 		{

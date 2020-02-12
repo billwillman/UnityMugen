@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using Mugen;
 
 public class SceneImageRes : MonoBehaviour {
@@ -14,14 +15,14 @@ public class SceneImageRes : MonoBehaviour {
 
     public bool LoadOk = false;
 
-    public bool LoadScene(string fileName, BgConfig config)
+	public bool LoadScene(string fileName, SceneConfig config)
     {
         Clear();
-        if (string.IsNullOrEmpty(fileName) || config == null)
+		if (string.IsNullOrEmpty(fileName) || config == null || config.BgCfg == null)
             return false;
 
         m_ImgLib = new ImageLibrary(Is32BitPallet);
-        if (!m_ImgLib.LoadScene(fileName, config))
+		if (!m_ImgLib.LoadScene(fileName, config))
             return false;
         LoadOk = true;
         return true;
@@ -34,6 +35,13 @@ public class SceneImageRes : MonoBehaviour {
 		//PlayerState saveGroup = ImageLibrary.SceneGroupToSaveGroup (group);
 		//return m_ImgLib.GetImageFrame (saveGroup, image);
         return m_ImgLib.GetImageFrame(group, image);
+	}
+
+	public List<ImageAnimateNode> GetAnimationNodeList(PlayerState group)
+	{
+		if (m_ImgLib == null)
+			return null;
+		return m_ImgLib.GetAnimationNodeList (group);
 	}
 
     void OnDestroy()
