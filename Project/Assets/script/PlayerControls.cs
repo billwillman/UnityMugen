@@ -73,7 +73,7 @@ public class PlayerControls: MonoSingleton<PlayerControls>
                 break;
         }
 
-		var cam = Camera.main;
+		var cam = AppConfig.GetInstance ().m_Camera;
 		if (display != null && cam != null) {
 			var stage = StageMgr.GetInstance ();
 			Vector2 stayPos;

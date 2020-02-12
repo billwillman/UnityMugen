@@ -15,6 +15,7 @@ public class AppConfig : MonoSingleton<AppConfig> {
 	public string SceneRootDir = "resources/mugen/scene/";
 	public string PalleetMatFileName = "resources/mugen/@mat/palleetmaterial.mat";
 	public bool IsUsePhysixUpdate = true;
+	public Camera m_Camera = null;
 
 	public IMugenLoader Loader = null;
 
@@ -186,6 +187,9 @@ public class AppConfig : MonoSingleton<AppConfig> {
 	protected override void Awake()
 	{
 		base.Awake();
+
+		if (m_Camera == null)
+			m_Camera = Camera.main;
 
 		//Time.timeScale = 1.5f;
 		Time.fixedDeltaTime = ImageAnimation._cImageAnimationScale;
