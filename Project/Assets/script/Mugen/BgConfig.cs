@@ -27,14 +27,14 @@ namespace Mugen
         public BgType bgType = BgType.none;
         public int layerno = -1;
         public string name;
+		public int start_x;
+		public int start_y;
     }
 
     public class BgStaticInfo : IBg
 	{
 		public int srpiteno_Group = -1;
 		public int spriteno_Image = -1;
-		public int start_x;
-		public int start_y;
 		public Vector2 delta;
         public MaskType mask;
 		public Vector2 velocity;
@@ -49,8 +49,6 @@ namespace Mugen
     public class BgAniInfo : IBg
     {
         public int actionno = -1;
-        public int start_x;
-        public int start_y;
         public Vector2 delta;
         public TransType transType;
         public MaskType mask;

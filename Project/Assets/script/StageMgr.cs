@@ -118,7 +118,17 @@ public class StageMgr : MonoSingleton<StageMgr> {
         GameObject obj = new GameObject(bg.name, typeof(SceneLayerDisplay));
         var trans = obj.transform;
         trans.SetParent(this.transform, false);
-        trans.localPosition = Vector3.zero;
+		var cam = AppConfig.GetInstance ().m_Camera;
+		if (cam != null) {
+			Vector3 pt = new Vector3 (bg.start_x, bg.start_y, 0);
+			pt = cam.ScreenToWorldPoint (pt);
+			Vector3 p = trans.localPosition;
+			p.x = pt.x;
+			p.y = pt.y;
+			trans.localPosition = p;
+		} else {
+			trans.localPosition = Vector3.zero;
+		}
         trans.localScale = Vector3.one;
         trans.localRotation = Quaternion.identity;
 
@@ -128,6 +138,7 @@ public class StageMgr : MonoSingleton<StageMgr> {
 			dislpay.InitStatic (bg as BgStaticInfo);
 		else if (bg.bgType == BgType.anim)
 			dislpay.InitAnimated (bg as BgAniInfo);
+
     }
 
     // 創建場景
