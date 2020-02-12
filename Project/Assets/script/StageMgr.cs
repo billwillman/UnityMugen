@@ -20,19 +20,21 @@ public class StageMgr : MonoSingleton<StageMgr> {
 			ret = Vector2.zero;
 			return false;
 		}
+		float h = ((float)Screen.height)/2.0f;
+		float w = ((float)Screen.width)/2.0f;
 		var players = m_Config.Players;
 		switch (playerType) {
 		case InputPlayerType._1p:
-			ret = new Vector2 (players.p1startx, -players.p1starty);
+			ret = new Vector2 (-players.p1startx, h-players.p1starty);
 			return true;
 		case InputPlayerType._2p:
-			ret = new Vector2 (players.p2startx, -players.p2starty);
+			ret = new Vector2 (-players.p2startx, h-players.p2starty);
 			return true;
 		case InputPlayerType._3p:
-			ret = new Vector2 (players.p3startx, -players.p3starty);
+			ret = new Vector2 (-players.p3startx, h-players.p3starty);
 			return true;
 		case InputPlayerType._4p:
-			ret = new Vector2 (players.p4startx, -players.p4starty);
+			ret = new Vector2 (-players.p4startx, -players.p4starty);
 			return true;
 		}
 		ret = Vector2.zero;
