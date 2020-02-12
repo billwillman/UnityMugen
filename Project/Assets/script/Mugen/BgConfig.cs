@@ -235,6 +235,6 @@ namespace Mugen
             return true;
         }
 
-        private static readonly string _cBG = "BG";
+        private static readonly string _cBG = "BG ";
     }
 }
