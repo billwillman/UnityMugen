@@ -6,7 +6,8 @@ public enum SceneLayerType
 {
 	None,
 	Static,
-	Animation
+	Animation,
+	Parallax
 }
 
 

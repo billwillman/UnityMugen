@@ -75,8 +75,16 @@ public class PlayerControls: MonoSingleton<PlayerControls>
 
 		var cam = Camera.main;
 		if (display != null && cam != null) {
-			var pt = cam.ScreenToWorldPoint (new Vector3 (x, 0, 0)); 
-			display.m_OffsetPos.x = pt.x;
+			var stage = StageMgr.GetInstance ();
+			Vector2 stayPos;
+			if (stage.GetStayPos (playerType, out stayPos)) {
+				var pt = cam.ScreenToWorldPoint (new Vector3 (stayPos.x, stayPos.y, 0));
+				display.m_OffsetPos.x = pt.x;
+				display.m_OffsetPos.y = pt.y;
+			} else {
+				var pt = cam.ScreenToWorldPoint (new Vector3 (x, 0, 0)); 
+				display.m_OffsetPos.x = pt.x;
+			}
 			display.InternalUpdatePos ();
 		}
 

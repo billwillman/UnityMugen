@@ -156,6 +156,46 @@ namespace Mugen
 			protected set;
 		}
 
+		public int p3startx {
+			get;
+			protected set;
+		}
+
+		public int p3starty {
+			get;
+			protected set;
+		}
+
+		public int p3startz {
+			get;
+			protected set;
+		}
+
+		public int p3facing {
+			get;
+			protected set;
+		}
+
+		public int p4startx {
+			get;
+			protected set;
+		}
+
+		public int p4starty {
+			get;
+			protected set;
+		}
+
+		public int p4startz {
+			get;
+			protected set;
+		}
+
+		public int p4facing {
+			get;
+			protected set;
+		}
+
 		public int leftbound {
 			get;
 			protected set;

@@ -14,6 +14,31 @@ public class StageMgr : MonoSingleton<StageMgr> {
     private int m_LastPalletGroupLink = -1;
     private int m_LastpalletImageLink = -1;
 
+	public bool GetStayPos(InputPlayerType playerType, out Vector2 ret)
+	{
+		if (playerType == InputPlayerType.none || m_Config == null || m_Config.Players == null) {
+			ret = Vector2.zero;
+			return false;
+		}
+		var players = m_Config.Players;
+		switch (playerType) {
+		case InputPlayerType._1p:
+			ret = new Vector2 (players.p1startx, -players.p1starty);
+			return true;
+		case InputPlayerType._2p:
+			ret = new Vector2 (players.p2startx, -players.p2starty);
+			return true;
+		case InputPlayerType._3p:
+			ret = new Vector2 (players.p3startx, -players.p3starty);
+			return true;
+		case InputPlayerType._4p:
+			ret = new Vector2 (players.p4startx, -players.p4starty);
+			return true;
+		}
+		ret = Vector2.zero;
+		return false;
+	}
+
 	public bool LoadOk = false;
 
     public void SetLastPalletLink(int palletGroupLink, int palletImageLink)
