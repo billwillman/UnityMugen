@@ -64,7 +64,7 @@ public class SceneLayerDisplay : BaseResLoader {
 		InitSpriteRender ();
 	}
 
-	private void UpdateImageFrame(int group, ImageFrame frame)
+	private void UpdateImageFrame(int group, ImageFrame frame, bool isNoMask)
 	{
 		SpriteRenderer r = this.SpriteRender;
 		if (r == null)
@@ -76,6 +76,19 @@ public class SceneLayerDisplay : BaseResLoader {
 			if (m1 != null) {
 				m1.SetTexture ("_PalletTex", null);
 				m1.SetTexture ("_MainTex", null);
+
+				if (isNoMask) {
+					if (m1.IsKeywordEnabled ("_RGB_A"))
+						m1.DisableKeyword ("_RGB_A");
+					if (!m1.IsKeywordEnabled ("_NO_RGB_A"))
+						m1.EnableKeyword ("_NO_RGB_A");
+				} else {
+					if (!m1.IsKeywordEnabled ("_RGB_A"))
+						m1.EnableKeyword ("_RGB_A");
+					if (m1.IsKeywordEnabled ("_NO_RGB_A"))
+						m1.DisableKeyword ("_NO_RGB_A");
+				}
+
                 m_IsPalletNull = true;
 			}
 			return;
@@ -172,7 +185,7 @@ public class SceneLayerDisplay : BaseResLoader {
         if (imageRes != null && imageRes.LoadOk)
         {
 			var frame = imageRes.GetImageFrame ((PlayerState)bgInfo.srpiteno_Group, bgInfo.spriteno_Image);
-            UpdateImageFrame(bgInfo.srpiteno_Group, frame);
+			UpdateImageFrame(bgInfo.srpiteno_Group, frame, bgInfo.mask == MaskType.none);
             m_Group = bgInfo.srpiteno_Group;
             m_Image = bgInfo.spriteno_Image;
 			m_SceneType = SceneLayerType.Static;
