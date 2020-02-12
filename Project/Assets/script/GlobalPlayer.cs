@@ -250,6 +250,12 @@ public class GlobalPlayer
 			Debug.LogError ("[CreatePlayerDisplay] InputPlayerType is None");
 			return null;
 		}
+
+		if (PlayerControls.GetInstance ().GetPlayer (playerType) != null) {
+			Debug.LogError ("[CreatePlayerDisplay] InputPlayerType is Exists");
+			return null;
+		}
+
 		GameObject obj = new GameObject (m_PlayerName, typeof(PlayerDisplay), typeof(PlayerPartMgr));
         PlayerDisplay displayer = obj.GetComponent<PlayerDisplay>();
 		displayer.Init(loaderPlayer, playerType, Shader_RGB_Zero_Alpha_One);
