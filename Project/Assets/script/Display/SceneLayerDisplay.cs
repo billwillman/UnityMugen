@@ -89,6 +89,7 @@ public class SceneLayerDisplay : BaseResLoader {
 
 	private void UpdateImageFrame(ImageFrame frame, ActionFlip flip, bool isNoMask)
 	{
+		InitFrameInfo (frame);
 		SpriteRenderer r = this.SpriteRender;
 		if (r == null)
 			return;
@@ -205,7 +206,6 @@ public class SceneLayerDisplay : BaseResLoader {
 		var frame = target.GetCurImageFrame(out flip);
 		if (frame == null)
 			return;
-		InitFrameInfo (frame);
 		UpdateImageFrame(frame, flip, m_MaskType == MaskType.none);
 	}
 
@@ -257,7 +257,6 @@ public class SceneLayerDisplay : BaseResLoader {
 			m_SceneType = SceneLayerType.Static;
 
 			var frame = imageRes.GetImageFrame ((PlayerState)bgInfo.srpiteno_Group, bgInfo.spriteno_Image);
-			InitFrameInfo (frame);
 			UpdateImageFrame(frame, ActionFlip.afNone, bgInfo.mask == MaskType.none);
             
 
