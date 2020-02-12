@@ -125,9 +125,10 @@ public class StageMgr : MonoSingleton<StageMgr> {
 			Vector3 p = trans.localPosition;
 			p.x = pt.x;
 			p.y = pt.y;
+			p.z = bg.layerno > 0 ? -9.9f : 9.9f;
 			trans.localPosition = p;
 		} else {
-			trans.localPosition = Vector3.zero;
+			trans.localPosition = new Vector3 (0, 0, bg.layerno > 0 ? -9.9f : 9.9f);
 		}
         trans.localScale = Vector3.one;
         trans.localRotation = Quaternion.identity;
@@ -138,7 +139,6 @@ public class StageMgr : MonoSingleton<StageMgr> {
 			dislpay.InitStatic (bg as BgStaticInfo);
 		else if (bg.bgType == BgType.anim)
 			dislpay.InitAnimated (bg as BgAniInfo);
-
     }
 
     // 創建場景

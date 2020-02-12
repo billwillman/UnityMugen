@@ -24,6 +24,7 @@ namespace Mugen
 
     public class IBg
     {
+		public int GenId = -1;
         public BgType bgType = BgType.none;
         public int layerno = -1;
         public string name;
@@ -88,7 +89,10 @@ namespace Mugen
 
         private static int OnBgSort(IBg b1, IBg b2)
         {
-            return b1.layerno - b2.layerno;
+			int ret = b1.layerno - b2.layerno;
+			if (ret == 0)
+				ret = b1.GenId - b2.GenId;
+			return ret;
         }
 
         public void SortBg()
@@ -103,6 +107,7 @@ namespace Mugen
             if (reader == null)
                 return false;
 
+			int genId = -1;
             for (int i = 0; i < reader.SectionCount; ++i)
             {
                 var section = reader.GetSections(i);
@@ -130,6 +135,7 @@ namespace Mugen
                         {
                             bgType = BgType.normal;
                             staticInfo = new BgStaticInfo();
+							staticInfo.GenId == ++genId;
                             staticInfo.name = name;
                             staticInfo.bgType = bgType;
                             if (m_BgList == null)
@@ -141,6 +147,7 @@ namespace Mugen
                         {
                             bgType = BgType.anim;
                             aniInfo = new BgAniInfo();
+							aniInfo.GenId = ++genId;
                             aniInfo.name = name;
                             aniInfo.bgType = bgType;
                             if (m_BgList == null)
