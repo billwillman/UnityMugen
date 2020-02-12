@@ -64,6 +64,27 @@ public class SceneLayerDisplay : BaseResLoader {
 		InitSpriteRender ();
 	}
 
+	private void CheckMaskKey(bool isNoMask)
+	{
+		SpriteRenderer r = this.SpriteRender;
+		if (r == null)
+			return;
+		var m1 = r.sharedMaterial;
+		if (m1 != null) {
+			if (isNoMask) {
+				if (m1.IsKeywordEnabled ("_RGB_A"))
+					m1.DisableKeyword ("_RGB_A");
+				if (!m1.IsKeywordEnabled ("_NO_RGB_A"))
+					m1.EnableKeyword ("_NO_RGB_A");
+			} else {
+				if (!m1.IsKeywordEnabled ("_RGB_A"))
+					m1.EnableKeyword ("_RGB_A");
+				if (m1.IsKeywordEnabled ("_NO_RGB_A"))
+					m1.DisableKeyword ("_NO_RGB_A");
+			}
+		}
+	}
+
 	private void UpdateImageFrame(int group, ImageFrame frame, bool isNoMask)
 	{
 		SpriteRenderer r = this.SpriteRender;
@@ -76,19 +97,6 @@ public class SceneLayerDisplay : BaseResLoader {
 			if (m1 != null) {
 				m1.SetTexture ("_PalletTex", null);
 				m1.SetTexture ("_MainTex", null);
-
-				if (isNoMask) {
-					if (m1.IsKeywordEnabled ("_RGB_A"))
-						m1.DisableKeyword ("_RGB_A");
-					if (!m1.IsKeywordEnabled ("_NO_RGB_A"))
-						m1.EnableKeyword ("_NO_RGB_A");
-				} else {
-					if (!m1.IsKeywordEnabled ("_RGB_A"))
-						m1.EnableKeyword ("_RGB_A");
-					if (m1.IsKeywordEnabled ("_NO_RGB_A"))
-						m1.DisableKeyword ("_NO_RGB_A");
-				}
-
                 m_IsPalletNull = true;
 			}
 			return;
@@ -141,6 +149,7 @@ public class SceneLayerDisplay : BaseResLoader {
 			mat.SetTexture("_PalletTex", palletTex);
 			mat.SetTexture ("_MainTex", frame.Data.texture);
             m_IsPalletNull = palletTex == null;
+			CheckMaskKey (isNoMask);
 		}
 	}
 
