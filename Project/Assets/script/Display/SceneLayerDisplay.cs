@@ -188,7 +188,7 @@ public class SceneLayerDisplay : BaseResLoader {
 	{
 		if (frame == null)
 			return;
-		if (frame.Data != null && frame.Data.texture != null) {
+		if (frame.Data != null && frame.Data.texture != null && frame.Data.texture.wrapMode != TextureWrapMode.Repeat) {
 			frame.Data.texture.wrapMode = TextureWrapMode.Repeat;
 		}
 	}
