@@ -135,7 +135,7 @@ namespace Mugen
                         {
                             bgType = BgType.normal;
                             staticInfo = new BgStaticInfo();
-							staticInfo.GenId == ++genId;
+							staticInfo.GenId = ++genId;
                             staticInfo.name = name;
                             staticInfo.bgType = bgType;
                             if (m_BgList == null)
