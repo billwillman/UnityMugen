@@ -425,6 +425,26 @@ namespace Mugen
 					ClearAll ();
 					return false;
 				}
+
+				for (int i = 0; i < config.AirCfg.GetStateCount(); ++i)
+				{
+					var key = config.AirCfg.GetStateByIndex(i);
+					var value = config.AirCfg.GetBeginAction(key);
+					if (value != null)
+					{
+						for (int j = 0; j < value.ActionFrameListCount; ++j)
+						{
+							ActionFrame frame;
+							if (value.GetFrame(j, out frame))
+							{
+								if (!HasLoadImageFrame (frame.Group, frame.Index)) {
+									string name = string.Format ("Scene_{0:D}_{1:D}", frame.Group, frame.Index);
+									LoadCharState (sf, (PlayerState)frame.Group, name, frame.Index);
+								}
+							}
+						}
+					}
+				}
 				
 			}
 
