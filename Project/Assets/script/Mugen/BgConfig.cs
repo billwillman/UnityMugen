@@ -194,9 +194,15 @@ namespace Mugen
 							staticInfo.mask = (MaskType)i1;
 						} else if (string.Compare (key, "tile", true) == 0) {
 							//int i2 = int.Parse (value.Trim());
-							arr = value.Split (ConfigSection._cContentArrSplit, System.StringSplitOptions.RemoveEmptyEntries);
-							staticInfo.tile_x = int.Parse(arr[0].Trim());
-							staticInfo.tile_y = int.Parse (arr [1].Trim ());
+							if (value.IndexOf (ConfigSection._cContentArrSplit [0]) >= 0) {
+								arr = value.Split (ConfigSection._cContentArrSplit, System.StringSplitOptions.RemoveEmptyEntries);
+								staticInfo.tile_x = int.Parse (arr [0].Trim ());
+								staticInfo.tile_y = int.Parse (arr [1].Trim ());
+							} else {
+								int i2 = int.Parse (value.Trim ());
+								staticInfo.tile_x = i2;
+								staticInfo.tile_y = 0;
+							}
 						}
                     }
                     else if (bgType == BgType.anim)
