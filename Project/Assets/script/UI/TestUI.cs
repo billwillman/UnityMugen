@@ -27,7 +27,7 @@ public class TestUI : MonoBehaviour {
 	void OnBtnSkill1Click(GameObject target, bool isState)
 	{
 		var player = PlayerControls.GetInstance ().GetPlayer (InputPlayerType._1p);
-		if (player != null) {
+		if (player != null && player.Attribe.Ctrl != 0) {
 			var gplayer = player.GPlayer;
 			if (gplayer != null && gplayer.CmdCfg != null) {
 				var cmd = gplayer.CmdCfg.GetCommand ("升龙");
@@ -40,7 +40,7 @@ public class TestUI : MonoBehaviour {
 	void OnBtnSkill2Click(GameObject target, bool isState)
 	{
 		var player = PlayerControls.GetInstance ().GetPlayer (InputPlayerType._1p);
-		if (player != null) {
+		if (player != null && player.Attribe.Ctrl != 0) {
 			var gplayer = player.GPlayer;
 			if (gplayer != null && gplayer.CmdCfg != null) {
 				var cmd = gplayer.CmdCfg.GetCommand ("气功波");
@@ -54,7 +54,7 @@ public class TestUI : MonoBehaviour {
 	public void OnBtnLeftClick(GameObject target, bool isState)
 	{
 		var player = PlayerControls.GetInstance ().GetPlayer (InputPlayerType._1p);
-		if (player != null) {
+		if (player != null && player.Attribe.Ctrl != 0) {
 			player.IsFlipX = false;
 			var gplayer = player.GPlayer;
 			if (gplayer != null && gplayer.CmdCfg != null) {
@@ -68,7 +68,7 @@ public class TestUI : MonoBehaviour {
 	public void OnBtnRightClick(GameObject target, bool isState)
 	{
 		var player = PlayerControls.GetInstance ().GetPlayer (InputPlayerType._1p);
-		if (player != null) {
+		if (player != null && player.Attribe.Ctrl != 0) {
 			player.IsFlipX = true;
 			var gplayer = player.GPlayer;
 			if (gplayer != null && gplayer.CmdCfg != null) {
