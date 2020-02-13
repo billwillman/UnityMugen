@@ -257,8 +257,9 @@ public class GlobalPlayer
 		}
 
 		GameObject obj = new GameObject (m_PlayerName, typeof(PlayerDisplay), typeof(PlayerPartMgr));
+		obj.transform.SetParent (AppConfig.GetInstance ().PlayerRoot, false);
         PlayerDisplay displayer = obj.GetComponent<PlayerDisplay>();
-		displayer.Init(loaderPlayer, playerType, Shader_RGB_Zero_Alpha_One, scale);
+		displayer.Init(loaderPlayer, playerType, Shader_RGB_Zero_Alpha_One);
 		return obj;
 	}
 }

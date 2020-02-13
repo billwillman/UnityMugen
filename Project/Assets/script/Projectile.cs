@@ -15,7 +15,7 @@ public class Projectile : MonoBehaviour {
 			return m_Display;
 		}
 	}
-
+		
 	void Awake()
 	{
 		var display = this.Display;

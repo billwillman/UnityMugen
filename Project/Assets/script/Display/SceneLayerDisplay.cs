@@ -24,6 +24,26 @@ public class SceneLayerDisplay : BaseResLoader {
     private int m_Image = -1;
     private bool m_IsPalletNull = true;
     private bool m_IsInited = false;
+	#if UNITY_EDITOR
+	public Vector2 m_CfgSize = Vector2.zero;
+	public bool m_CfgFirstFrame = false;
+
+	private void UpdateCfgSize()
+	{
+		if (!m_IsInited)
+			return;
+		
+		var pt = this.CachedTransform.localPosition;
+		var cam = AppConfig.GetInstance ().m_Camera;
+		var sp = this.SpriteRender;
+		if (sp != null && sp.sprite != null) {
+			pt -= new Vector3 (sp.sprite.bounds.size.x/2.0f, sp.sprite.bounds.size.y/2.0f, 0);
+		}
+		//pt = cam.WorldToScreenPoint (pt);
+		pt = pt * 100.0f;
+		m_CfgSize = new Vector2 (pt.x, -pt.y) * PlayerDisplay._cScenePerUnit;
+	}
+	#endif
 
 	public SceneLayerType m_SceneType = SceneLayerType.None;
 
@@ -41,9 +61,9 @@ public class SceneLayerDisplay : BaseResLoader {
 			var dst = orgPt + offset;
 			trans.position = cam.ScreenToWorldPoint(dst);
 			*/
-			var orgPt = trans.position;
+			var orgPt = trans.localPosition;
 			var dst = orgPt + new Vector3 (sp.sprite.bounds.size.x/2.0f, sp.sprite.bounds.size.y/2.0f, 0);
-			trans.position = dst;
+			trans.localPosition = dst;
 		}
 	}
 
@@ -203,6 +223,26 @@ public class SceneLayerDisplay : BaseResLoader {
         {
             RefreshPallet();
         }
+		#if UNITY_EDITOR
+		if (m_SceneType == SceneLayerType.Animation)
+		{
+			if (m_CfgFirstFrame)
+			{
+				var ani = this.ImageAni;
+				if (ani != null)
+				{
+					ani.ResetFirstFrame(false);
+
+				}
+			} else
+			{
+				var ani = this.ImageAni;
+				if (ani != null && !ani.IsPlaying)
+					ani.PlayerPlayerAni((PlayerState)m_Group, true);
+			}
+		}
+		UpdateCfgSize();
+		#endif
     }
 
 	private void InitFrameInfo(ImageFrame frame)

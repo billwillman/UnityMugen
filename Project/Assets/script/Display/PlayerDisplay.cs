@@ -35,7 +35,6 @@ public class PlayerDisplay : BaseResLoader {
 
 	private SndSound m_SndSound = null;
 	private bool m_IsDestroy = false;
-	private float m_Scale = 1.0f;
 
 	[NoToLua]
 	public DisplayType ShowType = DisplayType.Player;
@@ -53,22 +52,6 @@ public class PlayerDisplay : BaseResLoader {
 		get
 		{
 			return m_IsDestroy;
-		}
-	}
-
-	public float Scale
-	{
-		get
-		{
-			return m_Scale;
-		}
-	}
-
-	public void SetScale(float scale)
-	{
-		if (m_Scale != scale) {
-			m_Scale = scale;
-			InternalUpdatePos ();
 		}
 	}
 
@@ -629,7 +612,7 @@ public class PlayerDisplay : BaseResLoader {
     }
 
 	[NoToLuaAttribute]
-	public void Init(DefaultLoaderPlayer loaderPlayer, InputPlayerType playerType, bool Shader_RGB_Zero_Alpha_One = true, float scale = 1.0f)
+	public void Init(DefaultLoaderPlayer loaderPlayer, InputPlayerType playerType, bool Shader_RGB_Zero_Alpha_One = true)
     {
         if (m_LoaderPlayer != null)
             Clear();
@@ -652,8 +635,7 @@ public class PlayerDisplay : BaseResLoader {
 					mat.EnableKeyword ("_NO_RGB_A");
 			}
 		}
-
-		this.m_Scale = scale;
+			
 		PlayerControls.GetInstance().SwitchPlayer(playerType, this);
     }
 
@@ -1297,7 +1279,7 @@ public class PlayerDisplay : BaseResLoader {
 				if (IsFlipX)
 					frameOffset.x = -frameOffset.x;
 				var trans = this.CachedTransform;
-				trans.localScale = new Vector3 (m_Scale, m_Scale, m_Scale);
+				trans.localScale = Vector3.one;
 				trans.localPosition = frameOffset + m_OffsetPos;
 				UpdateClsnRootOffsetPos(frame.OffsetPos);
 
@@ -1315,8 +1297,9 @@ public class PlayerDisplay : BaseResLoader {
 		} else
 			helper = null;
 		var trans = gameObj.transform;
+		trans.SetParent (AppConfig.GetInstance ().PlayerRoot, false);
 		trans.localPosition = Vector3.zero;
-		trans.localScale = new Vector3 (m_Scale, m_Scale, m_Scale);
+		trans.localScale = Vector3.one;
 		trans.localRotation = Quaternion.identity;
 		Projectile ret = gameObj.GetComponent<Projectile> ();
 		ret.OwnerCtl = m_PlayerType;
@@ -1329,8 +1312,9 @@ public class PlayerDisplay : BaseResLoader {
 		GameObject gameObj = new GameObject ("Explod", typeof(PlayerDisplay), typeof(Explod));
 		var trans = gameObj.transform;
 		//trans.parent = this.CachedTransform;
+		trans.SetParent(AppConfig.GetInstance().PlayerRoot, false);
 		trans.localPosition = Vector3.zero;
-		trans.localScale = new Vector3 (m_Scale, m_Scale, m_Scale);
+		trans.localScale = Vector3.one;
 		trans.localRotation = Quaternion.identity;
 		Explod ret = gameObj.GetComponent<Explod> ();
 		ret.OwnerCtl = m_PlayerType;

@@ -335,7 +335,7 @@ public class ImageAnimation : MonoBehaviour {
         return true;
     }
 
-	public void ResetFirstFrame()
+	public void ResetFirstFrame(bool isDoPlay = true)
 	{
 		Animation ctl = this.CacheAnimation;
 		ctl.Stop ();
@@ -345,7 +345,8 @@ public class ImageAnimation : MonoBehaviour {
 		}
 		m_CurFrame = 0;
         DoChangeFrame();
-		ctl.Play ();
+		if (isDoPlay)
+			ctl.Play ();
 	}
 
     public int AniNodeCount

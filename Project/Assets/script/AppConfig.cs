@@ -16,6 +16,7 @@ public class AppConfig : MonoSingleton<AppConfig> {
 	public string PalleetMatFileName = "resources/mugen/@mat/palleetmaterial.mat";
 	public bool IsUsePhysixUpdate = true;
 	public Camera m_Camera = null;
+	public float m_PlayerScale = 1.0f;
 
 	public IMugenLoader Loader = null;
 
@@ -24,6 +25,7 @@ public class AppConfig : MonoSingleton<AppConfig> {
 	private LuaLoader m_LuaLoader = null;
 	private LuaState m_LuaState = null;
 	private LuaLooper m_LuaLoop = null;
+	private Transform m_PlayerRoot = null;
 
 	public float DeltaTime {
 		get {
@@ -184,6 +186,22 @@ public class AppConfig : MonoSingleton<AppConfig> {
 		new GameObject("DefaultLoader", typeof(DefaultLoader));
 	}
 
+	private void InitPlayerRoot()
+	{
+		GameObject obj = new GameObject ("PlayerRoot");
+		m_PlayerRoot = obj.transform;
+		m_PlayerRoot.localPosition = Vector3.zero;
+		m_PlayerRoot.localScale = new Vector3 (m_PlayerScale, m_PlayerScale, 1);
+		m_PlayerRoot.localRotation = Quaternion.identity;
+	}
+
+	public Transform PlayerRoot
+	{
+		get {
+			return m_PlayerRoot;
+		}
+	}
+
 	protected override void Awake()
 	{
 		base.Awake();
@@ -195,6 +213,7 @@ public class AppConfig : MonoSingleton<AppConfig> {
 		Time.fixedDeltaTime = ImageAnimation._cImageAnimationScale;
 
 		InitDefaultLoader ();
+		InitPlayerRoot ();
 		InitLuaEnv();
 		InitStart();
 	}

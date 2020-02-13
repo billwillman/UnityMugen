@@ -121,15 +121,16 @@ public class StageMgr : MonoSingleton<StageMgr> {
         var trans = obj.transform;
         trans.SetParent(this.transform, false);
 
-		var cam = AppConfig.GetInstance ().m_Camera;
+		//var cam = AppConfig.GetInstance ().m_Camera;
 		Vector3 pt = new Vector3 (bg.start_x, -bg.start_y, 0)/PlayerDisplay._cScenePerUnit;
-		pt = cam.ScreenToWorldPoint (pt);
-		Vector3 p = trans.position;
+		//pt = cam.ScreenToWorldPoint (pt);
+		pt = pt / 100.0f;
+		Vector3 p = trans.localPosition;
 		p.x = pt.x;
 		p.y = pt.y;
 		float offz = ((float)bg.GenId) / 100.0f;
 		p.z = bg.layerno > 0 ? -9.9f + offz: 9.9f - offz;
-		trans.position = p;
+		trans.localPosition = p;
 		
         trans.localScale = Vector3.one;
         trans.localRotation = Quaternion.identity;
@@ -161,6 +162,14 @@ public class StageMgr : MonoSingleton<StageMgr> {
                 continue;
             CreateSceneLayer(bg);
         }
+
+		var cam = AppConfig.GetInstance().m_Camera;
+		if (cam != null)
+		{
+			var pt = cam.ScreenToWorldPoint (Vector3.zero);
+			pt.z = 0f;
+			this.transform.position = pt;
+		}
     }
 
     // 进入当前场景
