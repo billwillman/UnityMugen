@@ -85,8 +85,10 @@ public class DefaultLoaderPlayer : MonoBehaviour {
 	public string GetPlayerName()
 	{
 		string playerName = this.PlayerName;
-		if (string.IsNullOrEmpty (playerName))
+		if (string.IsNullOrEmpty (playerName)) {
 			playerName = gameObject.name;
+			this.PlayerName = playerName;
+		}
 		return playerName;
 	}
 
