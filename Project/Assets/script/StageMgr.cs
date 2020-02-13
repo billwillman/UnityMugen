@@ -206,7 +206,7 @@ public class StageMgr : MonoSingleton<StageMgr> {
         m_LoadedSceneFileName = sceneRoot;
         // 創建場景
         CreateScene();
-
+		AppConfig.GetInstance ().StartFollow ();
         
 
         return true;

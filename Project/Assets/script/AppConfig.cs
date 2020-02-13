@@ -17,6 +17,24 @@ public class AppConfig : MonoSingleton<AppConfig> {
 	public bool IsUsePhysixUpdate = true;
 	public Camera m_Camera = null;
 	public float m_PlayerScale = 1.0f;
+	public CameraFollowMode m_CameraFollowTarget = CameraFollowMode._1p;
+
+	public void StartFollow()
+	{
+		if (m_Camera == null)
+			return;
+		var follow = m_Camera.GetComponent<CameraFollow> ();
+		if (follow != null && !follow.enabled)
+			follow.enabled = true;
+	}
+	public void StopFollow()
+	{
+		if (m_Camera == null)
+			return;
+		var follow = m_Camera.GetComponent<CameraFollow> ();
+		if (follow != null && !follow.enabled)
+			follow.enabled = false;
+	}
 
 	public IMugenLoader Loader = null;
 
@@ -202,12 +220,24 @@ public class AppConfig : MonoSingleton<AppConfig> {
 		}
 	}
 
+	private void InitCamera()
+	{
+		if (m_Camera == null)
+			return;
+		CameraFollow follow = m_Camera.GetComponent<CameraFollow> ();
+		if (follow == null) {
+			follow = m_Camera.gameObject.AddComponent<CameraFollow> ();
+			follow.enabled = false;
+		}
+	}
+
 	protected override void Awake()
 	{
 		base.Awake();
 
 		if (m_Camera == null)
 			m_Camera = Camera.main;
+		InitCamera ();
 
 		//Time.timeScale = 1.5f;
 		Time.fixedDeltaTime = ImageAnimation._cImageAnimationScale;
