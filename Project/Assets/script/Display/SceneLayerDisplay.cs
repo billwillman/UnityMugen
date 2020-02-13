@@ -29,14 +29,21 @@ public class SceneLayerDisplay : BaseResLoader {
 
 	internal void AdjustPos()
 	{
-		return;
+		//return;
 		var sp = this.SpriteRender;
 		if (sp != null && sp.sprite != null) {
-			var sz = new Vector2 (sp.sprite.bounds.size.x, sp.sprite.bounds.size.y);
-			Vector3 offset = new Vector3(sp.sprite.pivot.x * sz.x, -sp.sprite.pivot.y * sz.y, 0)/sp.sprite.pixelsPerUnit;
 			var trans = this.CachedTransform;
-			var orgPt = trans.localPosition;
-			trans.localPosition = orgPt + offset;
+			/*
+			var cam = AppConfig.GetInstance ().m_Camera;
+			Vector3 offset = new Vector3 (sp.sprite.pivot.x, sp.sprite.pivot.y, 0);
+			var orgPt = trans.position;
+			orgPt = cam.WorldToScreenPoint (orgPt);
+			var dst = orgPt + offset;
+			trans.position = cam.ScreenToWorldPoint(dst);
+			*/
+			var orgPt = trans.position;
+			var dst = orgPt + new Vector3 (sp.sprite.bounds.size.x/2.0f, sp.sprite.bounds.size.y/2.0f, 0);
+			trans.position = dst;
 		}
 	}
 

@@ -35,6 +35,7 @@ public class PlayerDisplay : BaseResLoader {
 
 	private SndSound m_SndSound = null;
 	private bool m_IsDestroy = false;
+	private float m_Scale = 1.0f;
 
 	[NoToLua]
 	public DisplayType ShowType = DisplayType.Player;
@@ -52,6 +53,22 @@ public class PlayerDisplay : BaseResLoader {
 		get
 		{
 			return m_IsDestroy;
+		}
+	}
+
+	public float Scale
+	{
+		get
+		{
+			return m_Scale;
+		}
+	}
+
+	public void SetScale(float scale)
+	{
+		if (m_Scale != scale) {
+			m_Scale = scale;
+			InternalUpdatePos ();
 		}
 	}
 
@@ -140,6 +157,7 @@ public class PlayerDisplay : BaseResLoader {
 	public static float _cVelPerUnit = 1f;
 	public static float _cAPerUnit = 100f;
 	public static float _cPerUnit = 1f;
+	public static float _cScenePerUnit = 1f;
 
 	[NoToLuaAttribute]
 	public SndSound Sound
@@ -611,7 +629,7 @@ public class PlayerDisplay : BaseResLoader {
     }
 
 	[NoToLuaAttribute]
-	public void Init(DefaultLoaderPlayer loaderPlayer, InputPlayerType playerType, bool Shader_RGB_Zero_Alpha_One = true)
+	public void Init(DefaultLoaderPlayer loaderPlayer, InputPlayerType playerType, bool Shader_RGB_Zero_Alpha_One = true, float scale = 1.0f)
     {
         if (m_LoaderPlayer != null)
             Clear();
@@ -635,6 +653,7 @@ public class PlayerDisplay : BaseResLoader {
 			}
 		}
 
+		this.m_Scale = scale;
 		PlayerControls.GetInstance().SwitchPlayer(playerType, this);
     }
 
@@ -1278,6 +1297,7 @@ public class PlayerDisplay : BaseResLoader {
 				if (IsFlipX)
 					frameOffset.x = -frameOffset.x;
 				var trans = this.CachedTransform;
+				trans.localScale = new Vector3 (m_Scale, m_Scale, m_Scale);
 				trans.localPosition = frameOffset + m_OffsetPos;
 				UpdateClsnRootOffsetPos(frame.OffsetPos);
 
@@ -1296,7 +1316,7 @@ public class PlayerDisplay : BaseResLoader {
 			helper = null;
 		var trans = gameObj.transform;
 		trans.localPosition = Vector3.zero;
-		trans.localScale = Vector3.one;
+		trans.localScale = new Vector3 (m_Scale, m_Scale, m_Scale);
 		trans.localRotation = Quaternion.identity;
 		Projectile ret = gameObj.GetComponent<Projectile> ();
 		ret.OwnerCtl = m_PlayerType;
@@ -1310,7 +1330,7 @@ public class PlayerDisplay : BaseResLoader {
 		var trans = gameObj.transform;
 		//trans.parent = this.CachedTransform;
 		trans.localPosition = Vector3.zero;
-		trans.localScale = Vector3.one;
+		trans.localScale = new Vector3 (m_Scale, m_Scale, m_Scale);
 		trans.localRotation = Quaternion.identity;
 		Explod ret = gameObj.GetComponent<Explod> ();
 		ret.OwnerCtl = m_PlayerType;

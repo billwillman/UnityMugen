@@ -80,7 +80,7 @@ public class PlayerControls: MonoSingleton<PlayerControls>
 			if (stage.GetStayPos (playerType, out stayPos)) {
 				var pt = cam.ScreenToWorldPoint (new Vector3 (stayPos.x, stayPos.y, 0));
 				display.m_OffsetPos.x = pt.x;
-				display.m_OffsetPos.y = pt.y - 0.5f;
+				//display.m_OffsetPos.y = pt.y - 0.5f;
 			} else {
 				var pt = cam.ScreenToWorldPoint (new Vector3 (x, 0, 0)); 
 				display.m_OffsetPos.x = pt.x;

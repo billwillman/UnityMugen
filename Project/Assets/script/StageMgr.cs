@@ -115,21 +115,22 @@ public class StageMgr : MonoSingleton<StageMgr> {
     {
 		if (bg == null || bg.bgType == BgType.none)
             return;
+	//	if (bg.name != "10" && bg.name != "20")
+	//		return;
         GameObject obj = new GameObject(bg.name, typeof(SceneLayerDisplay));
         var trans = obj.transform;
         trans.SetParent(this.transform, false);
-		//var cam = AppConfig.GetInstance ().m_Camera;
-		//if (cam != null) {
-			Vector3 pt = new Vector3 (bg.start_x, bg.start_y, 0)/PlayerDisplay._cPerUnit;
-			//pt = cam.ScreenToWorldPoint (pt);
-			Vector3 p = trans.localPosition;
-			p.x = pt.x;
-			p.y = pt.y;
-			p.z = bg.layerno > 0 ? -9.9f : 9.9f;
-			trans.localPosition = p;
-		//} else {
-		//	trans.localPosition = new Vector3 (0, 0, bg.layerno > 0 ? -9.9f : 9.9f);
-		//}
+
+		var cam = AppConfig.GetInstance ().m_Camera;
+		Vector3 pt = new Vector3 (bg.start_x, -bg.start_y, 0)/PlayerDisplay._cScenePerUnit;
+		pt = cam.ScreenToWorldPoint (pt);
+		Vector3 p = trans.position;
+		p.x = pt.x;
+		p.y = pt.y;
+		float offz = ((float)bg.GenId) / 100.0f;
+		p.z = bg.layerno > 0 ? -9.9f + offz: 9.9f - offz;
+		trans.position = p;
+		
         trans.localScale = Vector3.one;
         trans.localRotation = Quaternion.identity;
 

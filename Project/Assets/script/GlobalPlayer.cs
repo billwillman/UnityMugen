@@ -242,7 +242,7 @@ public class GlobalPlayer
 	}
 
 	// 创建角色显示
-	public GameObject CreatePlayerDisplay(DefaultLoaderPlayer loaderPlayer, InputPlayerType playerType, bool Shader_RGB_Zero_Alpha_One = true)
+	public GameObject CreatePlayerDisplay(DefaultLoaderPlayer loaderPlayer, InputPlayerType playerType, bool Shader_RGB_Zero_Alpha_One = true, float scale = 1.0f)
 	{
 		if (m_PlayerConfig == null || !m_PlayerConfig.IsVaild || m_AirConfig == null || !m_AirConfig.IsVaild)
 			return null;
@@ -258,7 +258,7 @@ public class GlobalPlayer
 
 		GameObject obj = new GameObject (m_PlayerName, typeof(PlayerDisplay), typeof(PlayerPartMgr));
         PlayerDisplay displayer = obj.GetComponent<PlayerDisplay>();
-		displayer.Init(loaderPlayer, playerType, Shader_RGB_Zero_Alpha_One);
+		displayer.Init(loaderPlayer, playerType, Shader_RGB_Zero_Alpha_One, scale);
 		return obj;
 	}
 }

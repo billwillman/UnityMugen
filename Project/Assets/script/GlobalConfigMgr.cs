@@ -400,8 +400,9 @@ public class GlobalConfigMgr : MonoSingleton<GlobalConfigMgr> {
 					AddCnsList (defaultPlayer, player);
 					AttachPals (defaultPlayer, player);
 					#endif
-					if (player != null)
-						player.CreatePlayerDisplay (defaultPlayer, create.playerType, defaultPlayer.Shader_RGB_Zero_Alpha_One);
+					if (player != null) {
+						player.CreatePlayerDisplay (defaultPlayer, create.playerType, defaultPlayer.Shader_RGB_Zero_Alpha_One, defaultPlayer.Scale);
+					}
 				}
 			}
 		}

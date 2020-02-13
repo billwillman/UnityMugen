@@ -11,6 +11,7 @@ public class DefaultLoaderPlayer : MonoBehaviour {
 	public string CnsName = string.Empty;
     //public InputPlayerType PlayerType = InputPlayerType.none;
 	public bool Shader_RGB_Zero_Alpha_One = true;
+	public float Scale = 1.0f;
 
     private PlayerImageRes m_ImageLibrary = null;
     private SndLoader m_SndLoader = null;
