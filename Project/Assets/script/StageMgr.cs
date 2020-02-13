@@ -167,6 +167,7 @@ public class StageMgr : MonoSingleton<StageMgr> {
 		if (cam != null)
 		{
 			var pt = cam.ScreenToWorldPoint (Vector3.zero);
+			pt.y = 0f;
 			pt.z = 0f;
 			this.transform.position = pt;
 		}

@@ -4,6 +4,7 @@ using Utils;
 
 public enum CameraFollowMode
 {
+	none,
 	_1p,
 	_2p,
 	_3p,
