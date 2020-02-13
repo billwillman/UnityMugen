@@ -25,8 +25,20 @@ public class SceneLayerDisplay : BaseResLoader {
     private bool m_IsPalletNull = true;
     private bool m_IsInited = false;
 
-
 	public SceneLayerType m_SceneType = SceneLayerType.None;
+
+	internal void AdjustPos()
+	{
+		return;
+		var sp = this.SpriteRender;
+		if (sp != null && sp.sprite != null) {
+			var sz = new Vector2 (sp.sprite.bounds.size.x, sp.sprite.bounds.size.y);
+			Vector3 offset = new Vector3(sp.sprite.pivot.x * sz.x, -sp.sprite.pivot.y * sz.y, 0)/sp.sprite.pixelsPerUnit;
+			var trans = this.CachedTransform;
+			var orgPt = trans.localPosition;
+			trans.localPosition = orgPt + offset;
+		}
+	}
 
     public SpriteRenderer SpriteRender
     {

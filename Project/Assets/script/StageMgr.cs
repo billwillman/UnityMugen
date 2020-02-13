@@ -118,27 +118,30 @@ public class StageMgr : MonoSingleton<StageMgr> {
         GameObject obj = new GameObject(bg.name, typeof(SceneLayerDisplay));
         var trans = obj.transform;
         trans.SetParent(this.transform, false);
-		var cam = AppConfig.GetInstance ().m_Camera;
-		if (cam != null) {
-			Vector3 pt = new Vector3 (bg.start_x, bg.start_y, 0);
-			pt = cam.ScreenToWorldPoint (pt);
+		//var cam = AppConfig.GetInstance ().m_Camera;
+		//if (cam != null) {
+			Vector3 pt = new Vector3 (bg.start_x, bg.start_y, 0)/PlayerDisplay._cPerUnit;
+			//pt = cam.ScreenToWorldPoint (pt);
 			Vector3 p = trans.localPosition;
 			p.x = pt.x;
 			p.y = pt.y;
 			p.z = bg.layerno > 0 ? -9.9f : 9.9f;
 			trans.localPosition = p;
-		} else {
-			trans.localPosition = new Vector3 (0, 0, bg.layerno > 0 ? -9.9f : 9.9f);
-		}
+		//} else {
+		//	trans.localPosition = new Vector3 (0, 0, bg.layerno > 0 ? -9.9f : 9.9f);
+		//}
         trans.localScale = Vector3.one;
         trans.localRotation = Quaternion.identity;
 
         var dislpay = obj.GetComponent<SceneLayerDisplay>();
         dislpay.layerno = bg.layerno;
-		if (bg.bgType == BgType.normal)
+		if (bg.bgType == BgType.normal) {
 			dislpay.InitStatic (bg as BgStaticInfo);
-		else if (bg.bgType == BgType.anim)
+			dislpay.AdjustPos ();
+		} else if (bg.bgType == BgType.anim) {
 			dislpay.InitAnimated (bg as BgAniInfo);
+			dislpay.AdjustPos ();
+		}
     }
 
     // 創建場景

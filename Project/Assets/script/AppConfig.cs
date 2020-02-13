@@ -223,6 +223,10 @@ public class AppConfig : MonoSingleton<AppConfig> {
 			m_LuaLoop = gameObject.AddComponent<LuaLooper>();
 			m_LuaLoop.luaState = m_LuaState;
 		}
+
+		if (m_LuaState != null) {
+			m_LuaState.Require ("Const");
+		}
         /*
 		m_LuaState.DoString("testVar = 123", "@AppConst.cs");
 		m_LuaState.DoFile("test.lua");
