@@ -146,6 +146,20 @@ public class StageMgr : MonoSingleton<StageMgr> {
 		}
     }
 
+	private void InitCamera()
+	{
+		var cam = AppConfig.GetInstance ().m_Camera;
+		if (cam != null) {
+			if (!cam.orthographic)
+				cam.orthographic = true;
+			var worldPt = cam.ViewportToWorldPoint(Vector3.zero);
+			var trans = cam.transform;
+			var pt = trans.position;
+			pt.y -= worldPt.y;
+			trans.position = pt;
+		}
+	}
+
     // 創建場景
     private void CreateScene()
     {
@@ -155,6 +169,7 @@ public class StageMgr : MonoSingleton<StageMgr> {
 		var bgCfg = m_Config.BgCfg;
         if (bgCfg == null)
             return;
+		InitCamera ();
         for (int i = 0; i < bgCfg.BgCount; ++i)
         {
             IBg bg = bgCfg.GetBg(i);
@@ -167,8 +182,8 @@ public class StageMgr : MonoSingleton<StageMgr> {
 		if (cam != null)
 		{
 			var pt = cam.ScreenToWorldPoint (Vector3.zero);
-			pt.y = 0f;
-			pt.z = 0f;
+			pt.y = 0;
+			pt.z = 0;
 			this.transform.position = pt;
 		}
     }
