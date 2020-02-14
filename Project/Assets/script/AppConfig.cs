@@ -14,6 +14,7 @@ public class AppConfig : MonoSingleton<AppConfig> {
 	public string PlayerRootDir = "resources/mugen/char/";
 	public string SceneRootDir = "resources/mugen/scene/";
 	public string PalleetMatFileName = "resources/mugen/@mat/palleetmaterial.mat";
+	public string PalleetAddMatFileName = "resources/mugen/@mat/palleetaddmaterial.mat";
 	public bool IsUsePhysixUpdate = true;
 	public Camera m_Camera = null;
 	public float m_PlayerScale = 1.0f;

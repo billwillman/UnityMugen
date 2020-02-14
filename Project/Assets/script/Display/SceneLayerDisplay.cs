@@ -17,6 +17,7 @@ public class SceneLayerDisplay : BaseResLoader {
     public int layerno = -1;
 	public MaskType m_MaskType = MaskType.alpha;
 	public int m_Group = (int)PlayerState.psNone;
+	public TransType m_TransType = TransType.none;
 
     private SpriteRenderer m_SpriteRender = null;
     private ImageAnimation m_Anim = null;
@@ -87,22 +88,20 @@ public class SceneLayerDisplay : BaseResLoader {
         }
     }
 
-	private void InitSpriteRender()
+	private void InitSpriteRender(TransType transType)
 	{
 		var sp = this.SpriteRender;
 		if (sp != null) {
-			LoadMaterial(ref m_OrgSpMat, AppConfig.GetInstance ().PalleetMatFileName);
+			if (transType == TransType.Add) {
+				LoadMaterial(ref m_OrgSpMat, AppConfig.GetInstance ().PalleetAddMatFileName);
+			} else
+				LoadMaterial(ref m_OrgSpMat, AppConfig.GetInstance ().PalleetMatFileName);
 			if (m_OrgSpMat != null) {
 				Material mat = GameObject.Instantiate (m_OrgSpMat);
 				AddOrSetInstanceMaterialMap (sp.GetInstanceID (), mat);
 				sp.sharedMaterial = mat;
 			}
 		}
-	}
-
-	void Awake()
-	{
-		InitSpriteRender ();
 	}
 
 	private void CheckMaskKey(bool isNoMask)
@@ -287,6 +286,8 @@ public class SceneLayerDisplay : BaseResLoader {
 			m_MaskType = anInfo.mask;
 
 			m_SceneType = SceneLayerType.Animation;
+			m_TransType = anInfo.transType;
+			InitSpriteRender (anInfo.transType);
 			m_IsInited = true;
 
 			if (StageMgr.GetInstance ().HasBeginAction (m_Group)) {
@@ -314,6 +315,8 @@ public class SceneLayerDisplay : BaseResLoader {
 			m_Image = bgInfo.spriteno_Image;
 			m_MaskType = bgInfo.mask;
 			m_SceneType = SceneLayerType.Static;
+			m_TransType = bgInfo.transType;
+			InitSpriteRender (bgInfo.transType);
 
 			var frame = imageRes.GetImageFrame ((PlayerState)bgInfo.srpiteno_Group, bgInfo.spriteno_Image);
 			UpdateImageFrame(frame, ActionFlip.afNone, bgInfo.mask == MaskType.none);

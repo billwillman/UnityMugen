@@ -13,7 +13,8 @@ namespace Mugen
 
     public enum TransType
     {
-        none
+        none,
+		Add
     }
 
     public enum MaskType
@@ -30,6 +31,7 @@ namespace Mugen
         public string name;
 		public int start_x;
 		public int start_y;
+		public TransType transType;
     }
 
     public class BgStaticInfo : IBg
@@ -45,14 +47,13 @@ namespace Mugen
 		public int tilespacing_y;
 		public int zoffset;
 		
-        public TransType transType;
+        
 	}
 
     public class BgAniInfo : IBg
     {
         public int actionno = -1;
         public Vector2 delta;
-        public TransType transType;
         public MaskType mask;
     }
 
@@ -188,6 +189,8 @@ namespace Mugen
 						} else if (string.Compare (key, "trans", true) == 0) {
 							if (string.Compare (value, "none", true) == 0) {
 								staticInfo.transType = TransType.none;
+							} else if (string.Compare (value, "add", true) == 0) {
+								staticInfo.transType = TransType.Add;
 							}
 						} else if (string.Compare (key, "mask", true) == 0) {
 							int i1 = int.Parse (value.Trim());
@@ -233,8 +236,12 @@ namespace Mugen
                             }
                         } else if (string.Compare(key, "trans", true) == 0)
                         {
-                            if (string.Compare(value, "none", true) == 0)
-                                aniInfo.transType = TransType.none;
+							if (string.Compare (value, "none", true) == 0) {
+								aniInfo.transType = TransType.none;
+							}
+							else if (string.Compare (value, "add", true) == 0) {
+								staticInfo.transType = TransType.Add;
+							}
                         } else if (string.Compare(key, "mask", true) == 0)
                         {
 							int i1 = int.Parse(value.Trim());
