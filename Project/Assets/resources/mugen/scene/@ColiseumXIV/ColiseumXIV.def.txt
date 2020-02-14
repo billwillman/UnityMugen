@@ -1,0 +1,106 @@
+;=============================================================
+;author = "一方王者"
+;=============================================================
+[Info]
+name 		= "ColiseumXIV"
+displayname 	= "Coliseum"
+
+
+;--------------------------------------------------------
+[Camera]
+boundleft = -450
+boundright = 450
+boundhigh = 0;-175
+verticalfollow = .95
+boundlow = 0
+tension = 500
+floortension =400
+
+
+;--------------------------------------------------------
+[PlayerInfo]
+;--- Player 1 ---
+ ;Player 1 starting coordinates.
+p1startx = -200        ;Starting x coordinates
+p1starty = 0            ;Starting y coordinates
+p1facing = 1            ;Direction player faces: 1=right, -1=left
+
+;--- Player 2 ---
+p2startx = 200
+p2starty = 0
+p2facing = -1
+
+;--- Player 3 ---
+p3startx = -236
+p3starty = 0
+p3facing = 1
+
+;--- Player 4 ---
+p4startx = 236
+p4starty = 0
+p4facing = -1
+
+
+;--- Common ---
+leftbound  = -4000
+rightbound =  4000
+topbound  =  0
+botbound  =  0
+
+;--------------------------------------------------------
+[Scaling]
+topz     = 0
+botz     = 50
+topscale = 1
+botscale = 1.2
+
+;--------------------------------------------------------
+[Bound]
+screenleft = 75
+screenright = 75
+
+[StageInfo]
+zoffset = 650
+autoturn = 1
+resetBG = 0
+localcoord = 960,720
+
+;--------------------------------------------------------
+[Shadow]
+intensity = 80
+color = 0,0,0
+yscale = .5
+fade.range = 0,-5
+
+;--------------------------------------------------------
+[Reflection]
+intensity = 0
+
+[Music]
+bgmusic 	= sound/4-23 Geese Ni Katakori -Arranged-.mp3
+bgvolume 	= 255
+
+[BGdef]
+spr 		= ColiseumXIV.sff
+debugbg 	= 0
+
+[BG image]
+type  		= normal
+spriteno 	= 0, 0
+start 		= 0,-25
+delta 		= 1,1
+
+[BG image]
+type  		= normal
+spriteno 	= 0, 1
+start 		= 0,-25
+delta 		= 1,1
+trans		= add
+
+[BG image]
+type  		= normal
+spriteno 	= 0, 2
+start 		= 0,-25
+delta 		= 1,1
+trans		= add
+
