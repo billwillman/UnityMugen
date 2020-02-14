@@ -70,7 +70,7 @@ Shader "Hidden/Unlit/Transparent Packed 3"
 
 			v2f vert (appdata_t v)
 			{
-				o.vertex = UnityObjectToClipPos(v.vertex);
+				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
 				o.color = v.color;
 				o.texcoord = v.texcoord;
 				o.worldPos.xy = v.vertex.xy * _ClipRange0.zw + _ClipRange0.xy;

@@ -4,6 +4,14 @@ using System.Collections.Generic;
 using Mugen;
 using LuaInterface;
 
+public enum DisplayType
+{
+	None = -1,
+	Player,
+	Explod,
+	Projectile
+}
+
 [RequireComponent(typeof(SndSound))]
 [RequireComponent(typeof(ImageAnimation))]
 [RequireComponent(typeof(SpriteRenderer))]
@@ -26,11 +34,30 @@ public class PlayerDisplay : BaseResLoader {
     private bool m_IsFlipX = false;
 
 	private SndSound m_SndSound = null;
+	private bool m_IsDestroy = false;
 
+	[NoToLua]
+	public DisplayType ShowType = DisplayType.Player;
+	[NoToLua]
+	public bool IsAutoRunCmd = true;
+
+	void Update()
+	{
+		if (IsAutoRunCmd)
+			RunAutoCmd ();
+	}
+
+	public bool IsDestroying
+	{
+		get
+		{
+			return m_IsDestroy;
+		}
+	}
 
 
 	[NoToLuaAttribute]
-    public Vector2 m_OffsetPos = Vector2.zero;
+    public Vector3 m_OffsetPos = Vector2.zero;
 
 	public float PosY
 	{
@@ -80,7 +107,40 @@ public class PlayerDisplay : BaseResLoader {
         return string.Empty;
     }
 
-	public static float _cVelPerUnit = 1;
+	public float DistanceX(PlayerDisplay other)
+	{
+		if (other == null)
+			return 0;
+		var s = this.CachedTransform.position;
+		var o = other.CachedTransform.position;
+		float ret = o.x - s.x;
+		return ret;
+	}
+
+	public float DistanceY(PlayerDisplay other)
+	{
+		if (other == null)
+			return 0;
+		var s = this.CachedTransform.position;
+		var o = other.CachedTransform.position;
+		float ret = o.y - s.y;
+		return ret;
+	}
+
+	public static LuaTable GetPlayer(InputPlayerType playerType)
+	{
+		if (playerType == InputPlayerType.none || AppConfig.IsAppQuit)
+			return null;
+		var display = PlayerControls.GetInstance ().GetPlayer (playerType);
+		if (display == null)
+			return null;
+		return display.LuaPly;
+	}
+
+	public static float _cVelPerUnit = 1f;
+	public static float _cAPerUnit = 100f;
+	public static float _cPerUnit = 1f;
+	public static float _cScenePerUnit = 1f;
 
 	[NoToLuaAttribute]
 	public SndSound Sound
@@ -168,10 +228,10 @@ public class PlayerDisplay : BaseResLoader {
 			return;
 		movement.StartVec = attribe.StateStartVec;
 
-		//if (isVaildX)
-			movement.Vec.x = 0;
-		//if (isVaildY)
-			movement.Vec.y = 0;
+		if (isVaildX)
+			movement.Vec.x = movement.StartVec.x;
+		if (isVaildY)
+			movement.Vec.y = movement.StartVec.y;
 	}
 
 	private void AttachAttribeFromStateDef(CNSStateDef def)
@@ -183,11 +243,14 @@ public class PlayerDisplay : BaseResLoader {
 		*/
 		if (this.StateMgr.CurrentCnsDef == def)
 			return;
-		
+		m_OffsetPos.z = m_IsFlipX ? def.Sprpriority : -def.Sprpriority;
+		//Debug.LogError (def.Sprpriority.ToString ());
 		PlayerAttribe attribe = this.Attribe;
 		if (attribe != null) {
 			if (def.Type != Cns_Type.none)
 				attribe.StandType = def.Type;
+			if (def.PhysicsType != Cns_PhysicsType.none)
+				attribe.PhysicsType = def.PhysicsType;
 			attribe.Power += def.PowerAdd;
 			//if (def.Ctrl != CNSStateDef._cNoVaildCtrl)
 			attribe.Ctrl = def.Ctrl;
@@ -205,6 +268,8 @@ public class PlayerDisplay : BaseResLoader {
 
 	public bool PlayCnsAnimateByName(string stateDefName, bool isLoop = true)
 	{
+		if (m_IsDestroy)
+			return false;
 		var player = this.GPlayer;
 		if (player == null)
 			return false;
@@ -216,8 +281,29 @@ public class PlayerDisplay : BaseResLoader {
 		return PlayCnsAnimate(stateDefId, isLoop);
 	}
 
+	private Dictionary<int, bool> m_StatePersistentMap = new Dictionary<int, bool> ();
+
+	public void RegStatePersistent(CNSState state, bool isPersistent)
+	{
+		if (state == null || AppConfig.IsAppQuit || IsDestroying)
+			return;
+		m_StatePersistentMap [state.GenId] = isPersistent;
+	}
+
+	public bool IsStatePersistent(CNSState state)
+	{
+		if (state == null)
+			return true;
+		bool ret;
+		if (!m_StatePersistentMap.TryGetValue (state.GenId, out ret))
+			ret = true;
+		return ret;
+	}
+
 	public bool PlayCnsAnimate(int stateDefId, bool isLoop = true)
 	{
+		if (m_IsDestroy)
+			return false;
 		var player = this.GPlayer;
 		if (player == null)
 			return false;
@@ -226,13 +312,15 @@ public class PlayerDisplay : BaseResLoader {
 		var def = player.CnsCfg.GetStateDef (stateDefId);
 		if (def == null)
 			return false;
+		if (StateMgr.CurrentCnsDef == def)
+			return true;
 
 		AttachAttribeFromStateDef (def);
 
 		if (StateMgr.CurrentCnsDef != def) {
 			// 重置动画属性
 			ImageAni.ResetCns();
-			def.ResetStatesPersistent ();
+			def.ResetStatesPersistent (this);
 		}
 
 		bool ret;
@@ -262,6 +350,14 @@ public class PlayerDisplay : BaseResLoader {
 		}
 	}
 
+	public void DestroySelf()
+	{
+		if (m_IsDestroy)
+			return;
+		m_IsDestroy = true;
+		GameObject.Destroy (this.gameObject);
+	}
+
 	public bool IsFlipX
 	{
 		get {
@@ -285,6 +381,8 @@ public class PlayerDisplay : BaseResLoader {
                     Quaternion quat = Quaternion.identity;
                     trans.localRotation = quat;
                 }
+				// 因为翻转了，需要调整前后关系
+				//SendPartUpdatePos ();
             }
         }
 	}
@@ -292,6 +390,11 @@ public class PlayerDisplay : BaseResLoader {
 	public void Trigger_SuperPause(int pauseTime, int moveTime)
 	{
 		
+	}
+
+	public void CtlPause(float time)
+	{
+		AniCtlPauseTime (time);
 	}
 
 	protected void AniCtlPauseTime(float pauseTime)
@@ -312,6 +415,40 @@ public class PlayerDisplay : BaseResLoader {
 		}
 	}
 
+	public Cns_PhysicsType PhysicsType
+	{
+		get {
+			var attr = this.Attribe;
+			if (attr == null)
+				return Cns_PhysicsType.none;
+			return attr.PhysicsType;
+		}
+		set
+		{
+			var attr = this.Attribe;
+			if (attr == null)
+				return;
+			attr.PhysicsType = value;
+		}
+	}
+
+	public Cns_Type StateType
+	{
+		get {
+			var attr = this.Attribe;
+			if (attr == null)
+				return Cns_Type.none;
+			return attr.StandType;
+		}
+
+		set {
+			var attr = this.Attribe;
+			if (attr == null)
+				return;
+			attr.StandType = value;
+		}
+	}
+
 	public PlayerAttribe Attribe
 	{
 		get
@@ -328,6 +465,12 @@ public class PlayerDisplay : BaseResLoader {
 		get {
 			return m_PlayerType;
 		}
+	}
+
+	[NoToLuaAttribute]
+	internal void _SetLoaderPlayer(DefaultLoaderPlayer player)
+	{
+		m_LoaderPlayer = player;
 	}
 
 	[NoToLuaAttribute]
@@ -356,25 +499,17 @@ public class PlayerDisplay : BaseResLoader {
 		return ani.GetMugenAnimateTime();
 	}
 
-	public bool ResetStateAndCtrlOne(int state = (int)PlayerState.psStand1)
-	{
-		bool ret = ChangeState(state, false);
-		if (ret)
-		{
-			var attr = this.Attribe;
-			if (attr != null)
-				attr.Ctrl = 1;
-		}
-		return ret;
-	}
-
 	public bool ChangeState(int state, bool isCns = false)
 	{
+		if (m_IsDestroy)
+			return false;
 		return ChangeState ((PlayerState)state, isCns);
 	}
 
 	public bool ChangeState(PlayerState state, bool isCns = false)
     {
+		if (m_IsDestroy)
+			return false;
 		var mgr = this.StateMgr;
 		if (mgr == null)
             return false;
@@ -432,7 +567,7 @@ public class PlayerDisplay : BaseResLoader {
 
 	void Awake()
 	{
-		InitSpriteRender ();
+		InitSpriteRender ();	
 	}
 
     private void DestroyLuaPlayer()
@@ -500,14 +635,28 @@ public class PlayerDisplay : BaseResLoader {
 					mat.EnableKeyword ("_NO_RGB_A");
 			}
 		}
-
+			
 		PlayerControls.GetInstance().SwitchPlayer(playerType, this);
     }
+
+	public int Anim
+	{
+		get {
+			return (int)this.AnimationState;
+		}
+	}
+
+	public int PrevAnim
+	{
+		get {
+			return (int)this.PrevAnimationState;
+		}
+	}
 
 	public int Stateno
 	{
 		get {
-			return (int)this.AnimationState;
+			return this.StateMgr.StateNo;
 		}
 	}
 
@@ -515,7 +664,7 @@ public class PlayerDisplay : BaseResLoader {
 	{
 		get
 		{
-			return (int)this.PrevAnimationState;
+			return this.StateMgr.PrevStateNo;
 		}
 	}
 
@@ -629,6 +778,7 @@ public class PlayerDisplay : BaseResLoader {
 				stateMgr.ClearCurrentCnsDef ();
 			}
 		}
+			
 
 
         var playerName = this.PlayerName;
@@ -637,6 +787,12 @@ public class PlayerDisplay : BaseResLoader {
         var ani = this.ImageAni;
         if (ani == null)
             return false;
+
+		if (ani.State != state) {
+			if (m_PartMgr != null)
+				m_PartMgr.ResetChangeStatePart ();
+		}
+
         bool ret = ani.PlayerPlayerAni(state, isLoop);
 		m_DefaultClsn2 = null;
         if (ret)
@@ -667,7 +823,7 @@ public class PlayerDisplay : BaseResLoader {
 		return ret;
 	}
 
-#if UNITY_EDITOR
+//#if UNITY_EDITOR
 	[NoToLuaAttribute]
 	public bool IsCmdEditorActive(string cmdName)
 	{
@@ -697,7 +853,7 @@ public class PlayerDisplay : BaseResLoader {
 			return;
 		ccmd.isEditorActive = isActive;
 	}
-#endif
+//#endif
 
 	public LuaCnsConfig LuaCfg
 	{
@@ -721,9 +877,20 @@ public class PlayerDisplay : BaseResLoader {
 		return string.Empty;
 	}
 
+	protected bool IsCanRunAutoCmd
+	{
+		get
+		{
+			return (!IsDestroying) && (ShowType == DisplayType.Player);
+		}
+	}
+
 	[NoToLuaAttribute]
 	public bool RunAutoCmd()
 	{
+		if (!IsCanRunAutoCmd)
+			return false;
+		
 		GlobalPlayer ply = this.GPlayer;
 		if (ply == null || ply.CmdCfg == null)
 			return false;
@@ -878,12 +1045,6 @@ public class PlayerDisplay : BaseResLoader {
 		}
 	}
 
-	// 创建爆炸效果
-	public bool Trigger_CreateExplode()
-	{
-		return true;
-	}
-
 	public int Trigger_Time()
 	{
 		/*
@@ -926,7 +1087,7 @@ public class PlayerDisplay : BaseResLoader {
 		var movement = this.Movement;
 		if (movement == null)
 			return;
-		movement.Vec.x = y;
+		movement.Vec.y = y;
 	}
 
 	public void SetVelSet(float x, float y)
@@ -944,7 +1105,7 @@ public class PlayerDisplay : BaseResLoader {
 			dir = -1;
 		else
 			dir = 1;
-		m_OffsetPos += new Vector2(x * dir, y);
+		m_OffsetPos += new Vector3(x * dir, y, 0);
 	}
 
 	public void VelAdd(float x, float y)
@@ -1055,11 +1216,13 @@ public class PlayerDisplay : BaseResLoader {
                     break;
             }
 
-            Vector2 frameOffset = frame.OffsetPos;
+            Vector3 frameOffset = frame.OffsetPos;
             if (IsFlipX)
                 frameOffset.x = -frameOffset.x;
             trans.localPosition = frameOffset + m_OffsetPos;
             UpdateClsnRootOffsetPos(frame.OffsetPos);
+
+			SendPartUpdatePos ();
 		}
 
 		Material mat = r.sharedMaterial;
@@ -1096,6 +1259,70 @@ public class PlayerDisplay : BaseResLoader {
 
             CreateClsn(aniNode.localCls1Arr, false, m_ShowClsnDebug);
         }
+	}
+
+	private void SendPartUpdatePos()
+	{
+		if (m_PartMgr != null) {
+			m_PartMgr.OnFramePosUpdate (this.ImageAni);
+		}
+	}
+
+	internal void InternalUpdatePos()
+	{
+		var img = this.ImageAni;
+		if (img != null) {
+			ActionFlip flip;
+			var frame = img.GetCurImageFrame(out flip);
+			if (frame != null) {
+				Vector3 frameOffset = frame.OffsetPos;
+				if (IsFlipX)
+					frameOffset.x = -frameOffset.x;
+				var trans = this.CachedTransform;
+				trans.localScale = Vector3.one;
+				trans.localPosition = frameOffset + m_OffsetPos;
+				UpdateClsnRootOffsetPos(frame.OffsetPos);
+
+				SendPartUpdatePos ();
+			}
+		}
+	}
+
+	// 创建飞行道具
+	public Projectile CreateProjectile(out Helper helper, bool isCreateHelper = false)
+	{
+		GameObject gameObj = new GameObject ("Projectile", typeof(PlayerDisplay), typeof(Projectile));
+		if (isCreateHelper) {
+			helper = gameObj.AddComponent<Helper> ();
+		} else
+			helper = null;
+		var trans = gameObj.transform;
+		trans.SetParent (AppConfig.GetInstance ().PlayerRoot, false);
+		trans.localPosition = Vector3.zero;
+		trans.localScale = Vector3.one;
+		trans.localRotation = Quaternion.identity;
+		Projectile ret = gameObj.GetComponent<Projectile> ();
+		ret.OwnerCtl = m_PlayerType;
+		return ret;
+	}
+
+	// 创建爆炸
+	public Explod CreateExplod()
+	{
+		GameObject gameObj = new GameObject ("Explod", typeof(PlayerDisplay), typeof(Explod));
+		var trans = gameObj.transform;
+		//trans.parent = this.CachedTransform;
+		trans.SetParent(AppConfig.GetInstance().PlayerRoot, false);
+		trans.localPosition = Vector3.zero;
+		trans.localScale = Vector3.one;
+		trans.localRotation = Quaternion.identity;
+		Explod ret = gameObj.GetComponent<Explod> ();
+		ret.OwnerCtl = m_PlayerType;
+
+		InitPartMgr ();
+		m_PartMgr.AddPart (ret);
+	
+		return ret;
 	}
 
 	private void CreateClsn(Rect[] r, bool isCls2, bool showSprite)
@@ -1135,7 +1362,7 @@ public class PlayerDisplay : BaseResLoader {
                     m_ClsnBoxRoot.localRotation = Quaternion.identity;
                     m_ClsnBoxRoot.localScale = Vector3.one;
                 }
-                mgr.CreateClsnBox(m_LoaderPlayer.PlayerType, name, m_ClsnBoxRoot, s.min.x, s.min.y, s.width, s.height, isCls2);
+				mgr.CreateClsnBox(m_PlayerType, name, m_ClsnBoxRoot, s.min.x, s.min.y, s.width, s.height, isCls2);
             }
 		}
 	}
@@ -1172,11 +1399,19 @@ public class PlayerDisplay : BaseResLoader {
 
 	void OnDestroy()
 	{
+		m_IsDestroy = true;
 		if (!AppConfig.IsAppQuit) {
 			m_DefaultClsn2 = null;
 			DestroyAllClsn ();
             DestroyLuaPlayer();
 		}
+	}
+
+	internal void _OnPlayerPartDestroy(PlayerPart part)
+	{
+		if (part == null || m_PartMgr == null)
+			return;
+		m_PartMgr.RemovePart (part);
 	}
 
     private void RefreshCurPallet()
@@ -1205,7 +1440,7 @@ public class PlayerDisplay : BaseResLoader {
             palletTex = GetPalletTexture();
             // 只能刷新用公用調色版的
             m1.SetTexture("_PalletTex", palletTex);
-        }
+		}
     }
 
     protected Texture2D GetPalletTexture()
@@ -1260,6 +1495,13 @@ public class PlayerDisplay : BaseResLoader {
 	private PlayerPartMgr m_PartMgr = null;
 	private bool m_IsInitedPartMgr = false;
 
+	public void RemoveExplod(int explodId)
+	{
+		if (explodId < 0 || AppConfig.IsAppQuit || IsDestroying || m_PartMgr == null)
+			return;
+		m_PartMgr.RemoveExplod (explodId);
+	}
+
 	void InitPartMgr()
 	{
 		if (m_IsInitedPartMgr)
@@ -1276,23 +1518,50 @@ public class PlayerDisplay : BaseResLoader {
 		m_PartMgr.OnUpdateFrame (target);
 	}
 
-	
+	[NoToLua]
+	internal void InteralRefreshCurFrame(ImageAnimation target)
+	{
+		SpriteRenderer r = this.SpriteRender;
+		if (r == null)
+			return;
+		ActionFlip flip;
+		var frame = target.GetCurImageFrame(out flip);
+		if (frame == null)
+			return;
+		UpdateRenderer(frame, flip, target);
+	}
 
     protected void RefreshCurFrame(ImageAnimation target)
     {
-        SpriteRenderer r = this.SpriteRender;
-        if (r == null)
-            return;
-        ActionFlip flip;
-        var frame = target.GetCurImageFrame(out flip);
-        if (frame == null)
-            return;
-		UpdateRenderer(frame, flip, target);
+		InteralRefreshCurFrame (target);
+
+		//Debug.LogError (target.CurFrame.ToString ());
 
 		CallCnsTriggerEvent (CnsStateTriggerType.AnimElem);
 
 		SendPartMgrFrame (target);
     }
+
+	internal void ResetPlayerPart()
+	{
+		//var img = this.ImageAni;
+		//if (img != null && img.enabled)
+		//	img.enabled = false;
+		var attr = this.Attribe;
+		if (attr != null && attr.enabled)
+			attr.enabled = false;
+		var snd = this.Sound;
+		if (snd != null && snd.enabled)
+			snd.enabled = false;
+		var move = this.Movement;
+		if (move != null && move.enabled)
+			move.enabled = false;
+		var state = this.StateMgr;
+		if (state != null && state.enabled)
+			state.enabled = false;
+		if (this.enabled)
+			this.enabled = false;
+	}
 
 	[NoToLua]
 	public void CallCnsTriggerEvent(params CnsStateTriggerType[] triggerTypes)
@@ -1330,6 +1599,8 @@ public class PlayerDisplay : BaseResLoader {
 		if (mgr != null) {
 			mgr.CurStateOnAnimateEndFrame ();
 		}
+		if (m_PartMgr != null)
+			m_PartMgr.OnFrameEnd (this.ImageAni);
 	}
 
     // 调色板名字更换
@@ -1337,6 +1608,21 @@ public class PlayerDisplay : BaseResLoader {
     {
         RefreshCurPallet();
     }
+
+	// 切换调色板，根据索引
+	public bool SwitchPallet(int idx)
+	{
+		if (idx < 0)
+			return false;
+		var loaderPlayer = this.LoaderPlayer;
+		if (loaderPlayer == null || loaderPlayer.PalNameList == null || idx >= loaderPlayer.PalNameList.Count)
+			return false;
+		var name = loaderPlayer.PalNameList [idx];
+		if (string.IsNullOrEmpty (name))
+			return false;
+		this.PalletName = name;
+		return true;
+	}
 
 	[NoToLuaAttribute]
     public string PalletName

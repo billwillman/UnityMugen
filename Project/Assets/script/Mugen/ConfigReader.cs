@@ -433,6 +433,11 @@ namespace Mugen
 			if ((match == null) || (match.Index < 0) || string.IsNullOrEmpty(match.Value))
 				return null;
 			string tile = match.Value.Trim();
+			if ((!string.IsNullOrEmpty (tile))) {
+				var idx = tile.IndexOf (';');
+				if (idx >= 0)
+					tile = tile.Substring (0, idx);
+			}
 			str = str.Substring(match.Index + match.Value.Length);
 			match = TileReg.Match(str);
 			if ((match == null) || (match.Index < 0) || string.IsNullOrEmpty(match.Value))

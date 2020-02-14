@@ -15,6 +15,26 @@ public class AppConfig : MonoSingleton<AppConfig> {
 	public string SceneRootDir = "resources/mugen/scene/";
 	public string PalleetMatFileName = "resources/mugen/@mat/palleetmaterial.mat";
 	public bool IsUsePhysixUpdate = true;
+	public Camera m_Camera = null;
+	public float m_PlayerScale = 1.0f;
+	public CameraFollowMode m_CameraFollowTarget = CameraFollowMode._1p;
+
+	public void StartFollow()
+	{
+		if (m_Camera == null)
+			return;
+		var follow = m_Camera.GetComponent<CameraFollow> ();
+		if (follow != null && !follow.enabled)
+			follow.enabled = true;
+	}
+	public void StopFollow()
+	{
+		if (m_Camera == null)
+			return;
+		var follow = m_Camera.GetComponent<CameraFollow> ();
+		if (follow != null && !follow.enabled)
+			follow.enabled = false;
+	}
 
 	public IMugenLoader Loader = null;
 
@@ -23,6 +43,7 @@ public class AppConfig : MonoSingleton<AppConfig> {
 	private LuaLoader m_LuaLoader = null;
 	private LuaState m_LuaState = null;
 	private LuaLooper m_LuaLoop = null;
+	private Transform m_PlayerRoot = null;
 
 	public float DeltaTime {
 		get {
@@ -30,6 +51,13 @@ public class AppConfig : MonoSingleton<AppConfig> {
 				return Time.fixedDeltaTime;
 			else
 				return Time.deltaTime;
+		}
+	}
+
+	public float DeltaTick
+	{
+		get {
+			return DeltaTime / ImageAnimation._cImageAnimationScale;
 		}
 	}
 
@@ -176,14 +204,46 @@ public class AppConfig : MonoSingleton<AppConfig> {
 		new GameObject("DefaultLoader", typeof(DefaultLoader));
 	}
 
+	private void InitPlayerRoot()
+	{
+		GameObject obj = new GameObject ("PlayerRoot");
+		m_PlayerRoot = obj.transform;
+		m_PlayerRoot.localPosition = Vector3.zero;
+		m_PlayerRoot.localScale = new Vector3 (m_PlayerScale, m_PlayerScale, 1);
+		m_PlayerRoot.localRotation = Quaternion.identity;
+	}
+
+	public Transform PlayerRoot
+	{
+		get {
+			return m_PlayerRoot;
+		}
+	}
+
+	private void InitCamera()
+	{
+		if (m_Camera == null)
+			return;
+		CameraFollow follow = m_Camera.GetComponent<CameraFollow> ();
+		if (follow == null) {
+			follow = m_Camera.gameObject.AddComponent<CameraFollow> ();
+			follow.enabled = false;
+		}
+	}
+
 	protected override void Awake()
 	{
 		base.Awake();
+
+		if (m_Camera == null)
+			m_Camera = Camera.main;
+		InitCamera ();
 
 		//Time.timeScale = 1.5f;
 		Time.fixedDeltaTime = ImageAnimation._cImageAnimationScale;
 
 		InitDefaultLoader ();
+		InitPlayerRoot ();
 		InitLuaEnv();
 		InitStart();
 	}
@@ -211,6 +271,10 @@ public class AppConfig : MonoSingleton<AppConfig> {
 		{
 			m_LuaLoop = gameObject.AddComponent<LuaLooper>();
 			m_LuaLoop.luaState = m_LuaState;
+		}
+
+		if (m_LuaState != null) {
+			m_LuaState.Require ("Const");
 		}
         /*
 		m_LuaState.DoString("testVar = 123", "@AppConst.cs");

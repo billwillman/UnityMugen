@@ -242,11 +242,22 @@ public class GlobalPlayer
 	}
 
 	// 创建角色显示
-	public GameObject CreatePlayerDisplay(DefaultLoaderPlayer loaderPlayer, InputPlayerType playerType, bool Shader_RGB_Zero_Alpha_One = true)
+	public GameObject CreatePlayerDisplay(DefaultLoaderPlayer loaderPlayer, InputPlayerType playerType, bool Shader_RGB_Zero_Alpha_One = true, float scale = 1.0f)
 	{
 		if (m_PlayerConfig == null || !m_PlayerConfig.IsVaild || m_AirConfig == null || !m_AirConfig.IsVaild)
 			return null;
+		if (playerType == InputPlayerType.none) {
+			Debug.LogError ("[CreatePlayerDisplay] InputPlayerType is None");
+			return null;
+		}
+
+		if (PlayerControls.GetInstance ().GetPlayer (playerType) != null) {
+			Debug.LogError ("[CreatePlayerDisplay] InputPlayerType is Exists");
+			return null;
+		}
+
 		GameObject obj = new GameObject (m_PlayerName, typeof(PlayerDisplay), typeof(PlayerPartMgr));
+		obj.transform.SetParent (AppConfig.GetInstance ().PlayerRoot, false);
         PlayerDisplay displayer = obj.GetComponent<PlayerDisplay>();
 		displayer.Init(loaderPlayer, playerType, Shader_RGB_Zero_Alpha_One);
 		return obj;

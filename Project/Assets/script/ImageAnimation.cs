@@ -51,27 +51,32 @@ public class ImageAnimation : MonoBehaviour {
         if (group == PlayerState.psNone)
             return false;
 
-        PlayerDisplay displayer = this.CacheDisplayer;
-        if (displayer == null)
-            return false;
-        var loaderPlayer = displayer.LoaderPlayer;
-        if (loaderPlayer == null)
-            return false;
-        var imgRes = loaderPlayer.ImageRes;
-        if (imgRes == null)
-            return false;
-        var imgLib = imgRes.ImgLib;
-        if (imgLib == null)
-        {
-            imgRes.Init();
-            imgLib = imgRes.ImgLib;
-            if (imgLib == null)
-                return false;
-        }
+		if (Type == ImageAnimationType.Player) {
+			PlayerDisplay displayer = this.CacheDisplayer;
+			if (displayer == null)
+				return false;
+			var loaderPlayer = displayer.LoaderPlayer;
+			if (loaderPlayer == null)
+				return false;
+			var imgRes = loaderPlayer.ImageRes;
+			if (imgRes == null)
+				return false;
+			var imgLib = imgRes.ImgLib;
+			if (imgLib == null) {
+				imgRes.Init ();
+				imgLib = imgRes.ImgLib;
+				if (imgLib == null)
+					return false;
+			}
 
-        var frame = imgLib.GetImageFrame(group, index);
-        if (frame != null && frame.Data != null)
-            return true;
+			var frame = imgLib.GetImageFrame (group, index);
+			if (frame != null && frame.Data != null)
+				return true;
+		} else if (Type == ImageAnimationType.Scene) {
+			var frame = StageMgr.GetInstance ().ImageRes.GetImageFrame (group, index);
+			if (frame != null && frame.Data != null)
+				return true;
+		}
 
         return false;
     }
@@ -159,6 +164,45 @@ public class ImageAnimation : MonoBehaviour {
 		}
 	}
 
+	internal bool _SetStateFrameList(PlayerState state, int curFrame)
+	{
+		bool ret = SetStateFrameList (state);
+		if (ret)
+			m_CurFrame = curFrame;
+		return ret;
+	}
+
+	internal bool SetStateFrameList(PlayerState state)
+	{
+		if (Type == ImageAnimationType.Player) {
+			PlayerDisplay displayer = this.CacheDisplayer;
+			if (displayer == null)
+				return false;
+
+			var loaderPlayer = displayer.LoaderPlayer;
+			if (loaderPlayer == null)
+				return false;
+
+			var imgRes = loaderPlayer.ImageRes;
+			if (imgRes == null)
+				return false;
+
+			var imgLib = imgRes.ImgLib;
+			if (imgLib == null) {
+				imgRes.Init ();
+				imgLib = imgRes.ImgLib;
+				if (imgLib == null)
+					return false;
+			}
+			m_FrameList = imgLib.GetAnimationNodeList (state);
+			return true;
+		} else if (Type == ImageAnimationType.Scene) {
+			m_FrameList = StageMgr.GetInstance ().ImageRes.GetAnimationNodeList (state);
+			return true;
+		} else
+			return false;
+	}
+
 	public bool PlayerPlayerAni(PlayerState state, int startFrame, int endFrame, bool isLoop = true)
 	{
 		SetLimitFrame (startFrame, endFrame, false);
@@ -172,27 +216,9 @@ public class ImageAnimation : MonoBehaviour {
 
 		ResetAnimation();
 
-		PlayerDisplay displayer = this.CacheDisplayer;
-		if (displayer == null)
+		if (!SetStateFrameList (state))
 			return false;
-		var loaderPlayer = displayer.LoaderPlayer;
-		if (loaderPlayer == null)
-			return false;
-
-		var imgRes = loaderPlayer.ImageRes;
-		if (imgRes == null)
-			return false;
-		var imgLib = imgRes.ImgLib;
-		if (imgLib == null)
-		{
-			imgRes.Init();
-			imgLib = imgRes.ImgLib;
-			if (imgLib == null)
-				return false;
-		}
-
-
-		m_FrameList = imgLib.GetAnimationNodeList(state);
+		
 		bool ret = DoInitAnimation();
 		if (ret)
 		{
@@ -237,8 +263,27 @@ public class ImageAnimation : MonoBehaviour {
         return frame;
 	}
 
+	public enum ImageAnimationType
+	{
+		Player,
+		Scene
+	}
+
+	public ImageAnimationType Type = ImageAnimationType.Player; 
+
+	/*
+	private SceneLayerDisplay m_CacheLayerDisplay = null;
+	public SceneLayerDisplay CacheLayerDisplay
+	{
+		get {
+			if (m_CacheLayerDisplay == null)
+				m_CacheLayerDisplay = GetComponent<SceneLayerDisplay> ();
+			return m_CacheLayerDisplay;
+		}
+	}*/
+
     private PlayerDisplay m_CacheDisplayer = null;
-    protected PlayerDisplay CacheDisplayer
+    public PlayerDisplay CacheDisplayer
     {
         get
         {
@@ -250,25 +295,29 @@ public class ImageAnimation : MonoBehaviour {
 
     public ImageFrame GetImageFrame(int group, int image)
     {
-        PlayerDisplay displayer = this.CacheDisplayer;
-        if (displayer == null)
-            return null;
-        var loaderPlayer = displayer.LoaderPlayer;
-        if (loaderPlayer == null)
-            return null;
-        var imgRes = loaderPlayer.ImageRes;
-        if (imgRes == null)
-            return null;
-        var imgLib = imgRes.ImgLib;
-        if (imgLib == null)
-        {
-            imgRes.Init();
-            imgLib = imgRes.ImgLib;
-            if (imgLib == null)
-                return null;
-        }
+		if (Type == ImageAnimationType.Player) {
+			PlayerDisplay displayer = this.CacheDisplayer;
+			if (displayer == null)
+				return null;
+			var loaderPlayer = displayer.LoaderPlayer;
+			if (loaderPlayer == null)
+				return null;
+			var imgRes = loaderPlayer.ImageRes;
+			if (imgRes == null)
+				return null;
+			var imgLib = imgRes.ImgLib;
+			if (imgLib == null) {
+				imgRes.Init ();
+				imgLib = imgRes.ImgLib;
+				if (imgLib == null)
+					return null;
+			}
 
-        return imgLib.GetImageFrame((PlayerState)group, image);
+			return imgLib.GetImageFrame ((PlayerState)group, image);
+		} else if (Type == ImageAnimationType.Scene) {
+			return StageMgr.GetInstance ().ImageRes.GetImageFrame ((PlayerState)group, image);
+		} else
+			return null;
     }
 
     private bool DoInitAnimation()
@@ -286,7 +335,7 @@ public class ImageAnimation : MonoBehaviour {
         return true;
     }
 
-	public void ResetFirstFrame()
+	public void ResetFirstFrame(bool isDoPlay = true)
 	{
 		Animation ctl = this.CacheAnimation;
 		ctl.Stop ();
@@ -296,7 +345,8 @@ public class ImageAnimation : MonoBehaviour {
 		}
 		m_CurFrame = 0;
         DoChangeFrame();
-		ctl.Play ();
+		if (isDoPlay)
+			ctl.Play ();
 	}
 
     public int AniNodeCount

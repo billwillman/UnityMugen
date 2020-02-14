@@ -22,6 +22,13 @@ public enum GlobalPlayerLoaderResult
 	LUAAndCmdError = (int)CmdConfigError | (int)LUAConfigError,
 }
 
+[Serializable]
+public struct DefaultLoaderPlayerCreate
+{
+	public DefaultLoaderPlayer loaderPlayer;
+	public InputPlayerType playerType;
+}
+
 [RequireComponent(typeof(PlayerStateCtl))]
 [RequireComponent(typeof(CnsPlayerStateCtl))]
 public class GlobalConfigMgr : MonoSingleton<GlobalConfigMgr> {
@@ -227,7 +234,7 @@ public class GlobalConfigMgr : MonoSingleton<GlobalConfigMgr> {
 		
 	// 默认加载的PlayerName, 可用于测试
 	[NoToLuaAttribute]
-	public List<DefaultLoaderPlayer> m_DefaultLoaderPlayers = null;
+	public List<DefaultLoaderPlayerCreate> m_DefaultLoaderPlayers = null;
 
 	[NoToLuaAttribute]
     public bool HasLoadPlayer(DefaultLoaderPlayer loaderPlayer)
@@ -382,7 +389,8 @@ public class GlobalConfigMgr : MonoSingleton<GlobalConfigMgr> {
 	{
 		if (m_DefaultLoaderPlayers != null) {
 			for (int i = 0; i < m_DefaultLoaderPlayers.Count; ++i) {
-				var defaultPlayer = m_DefaultLoaderPlayers [i];
+				var create = m_DefaultLoaderPlayers [i];
+				var defaultPlayer = create.loaderPlayer;
 				if (defaultPlayer != null) {
 					GlobalPlayerLoaderResult result;
 					var player = LoadPlayer (defaultPlayer, out result);
@@ -392,8 +400,9 @@ public class GlobalConfigMgr : MonoSingleton<GlobalConfigMgr> {
 					AddCnsList (defaultPlayer, player);
 					AttachPals (defaultPlayer, player);
 					#endif
-					if (player != null)
-						player.CreatePlayerDisplay (defaultPlayer, defaultPlayer.PlayerType, defaultPlayer.Shader_RGB_Zero_Alpha_One);
+					if (player != null) {
+						player.CreatePlayerDisplay (defaultPlayer, create.playerType, defaultPlayer.Shader_RGB_Zero_Alpha_One, defaultPlayer.Scale);
+					}
 				}
 			}
 		}

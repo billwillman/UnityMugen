@@ -24,17 +24,18 @@ namespace Mugen
 
     public class IBg
     {
+		public int GenId = -1;
         public BgType bgType = BgType.none;
         public int layerno = -1;
         public string name;
+		public int start_x;
+		public int start_y;
     }
 
     public class BgStaticInfo : IBg
 	{
 		public int srpiteno_Group = -1;
 		public int spriteno_Image = -1;
-		public int start_x;
-		public int start_y;
 		public Vector2 delta;
         public MaskType mask;
 		public Vector2 velocity;
@@ -50,8 +51,6 @@ namespace Mugen
     public class BgAniInfo : IBg
     {
         public int actionno = -1;
-        public int start_x;
-        public int start_y;
         public Vector2 delta;
         public TransType transType;
         public MaskType mask;
@@ -91,7 +90,10 @@ namespace Mugen
 
         private static int OnBgSort(IBg b1, IBg b2)
         {
-            return b1.layerno - b2.layerno;
+			int ret = b1.layerno - b2.layerno;
+			if (ret == 0)
+				ret = b1.GenId - b2.GenId;
+			return ret;
         }
 
         public void SortBg()
@@ -106,6 +108,7 @@ namespace Mugen
             if (reader == null)
                 return false;
 
+			int genId = -1;
             for (int i = 0; i < reader.SectionCount; ++i)
             {
                 var section = reader.GetSections(i);
@@ -133,6 +136,7 @@ namespace Mugen
                         {
                             bgType = BgType.normal;
                             staticInfo = new BgStaticInfo();
+							staticInfo.GenId = ++genId;
                             staticInfo.name = name;
                             staticInfo.bgType = bgType;
                             if (m_BgList == null)
@@ -144,6 +148,7 @@ namespace Mugen
                         {
                             bgType = BgType.anim;
                             aniInfo = new BgAniInfo();
+							aniInfo.GenId = ++genId;
                             aniInfo.name = name;
                             aniInfo.bgType = bgType;
                             if (m_BgList == null)
@@ -159,63 +164,63 @@ namespace Mugen
                     if (bgType == BgType.normal)
                     {
                         string[] arr = null;
-                        if (string.Compare(key, "spriteno", true) == 0)
-                        {
-                            arr = value.Split(ConfigSection._cContentArrSplit, System.StringSplitOptions.RemoveEmptyEntries);
-                            if (arr != null && arr.Length >= 2)
-                            {
-                                staticInfo.srpiteno_Group = int.Parse(arr[0]);
-                                staticInfo.spriteno_Image = int.Parse(arr[1]);
-                            }
-                        } else if (string.Compare(key, "layerno", true) == 0)
-                        {
-                            staticInfo.layerno = int.Parse(value);
-                        } else if (string.Compare(key, "start", true) == 0)
-                        {
-                            arr = value.Split(ConfigSection._cContentArrSplit, System.StringSplitOptions.RemoveEmptyEntries);
-                            if (arr != null && arr.Length >= 2)
-                            {
-                                staticInfo.start_x = int.Parse(arr[0]);
-                                staticInfo.start_y = int.Parse(arr[1]);
-                            }
-                        } else if (string.Compare(key, "delta", true) == 0)
-                        {
-                            arr = value.Split(ConfigSection._cContentArrSplit, System.StringSplitOptions.RemoveEmptyEntries);
-                            if (arr != null && arr.Length >= 2)
-                            {
-                                float x1 = float.Parse(arr[0]);
-                                float y1 = float.Parse(arr[1]);
-                                staticInfo.delta = new Vector2(x1, y1);
-                            }
-                        }
-                        else if (string.Compare(key, "trans", true) == 0)
-                        {
-                            if (string.Compare(value, "none", true) == 0)
-                            {
-                                staticInfo.transType = TransType.none;
-                            }
-                        } else if (string.Compare(key, "mask", true) == 0)
-                        {
-                            int i1 = int.Parse(value);
-                            staticInfo.mask = (MaskType)i1;
-                        }
+						if (string.Compare (key, "spriteno", true) == 0) {
+							arr = value.Split (ConfigSection._cContentArrSplit, System.StringSplitOptions.RemoveEmptyEntries);
+							if (arr != null && arr.Length >= 2) {
+								staticInfo.srpiteno_Group = int.Parse (arr [0].Trim());
+								staticInfo.spriteno_Image = int.Parse (arr [1].Trim());
+							}
+						} else if (string.Compare (key, "layerno", true) == 0) {
+							staticInfo.layerno = int.Parse (value.Trim());
+						} else if (string.Compare (key, "start", true) == 0) {
+							arr = value.Split (ConfigSection._cContentArrSplit, System.StringSplitOptions.RemoveEmptyEntries);
+							if (arr != null && arr.Length >= 2) {
+								staticInfo.start_x = int.Parse (arr [0].Trim());
+								staticInfo.start_y = int.Parse (arr [1].Trim());
+							}
+						} else if (string.Compare (key, "delta", true) == 0) {
+							arr = value.Split (ConfigSection._cContentArrSplit, System.StringSplitOptions.RemoveEmptyEntries);
+							if (arr != null && arr.Length >= 2) {
+								float x1 = float.Parse (arr [0].Trim());
+								float y1 = float.Parse (arr [1].Trim());
+								staticInfo.delta = new Vector2 (x1, y1);
+							}
+						} else if (string.Compare (key, "trans", true) == 0) {
+							if (string.Compare (value, "none", true) == 0) {
+								staticInfo.transType = TransType.none;
+							}
+						} else if (string.Compare (key, "mask", true) == 0) {
+							int i1 = int.Parse (value.Trim());
+							staticInfo.mask = (MaskType)i1;
+						} else if (string.Compare (key, "tile", true) == 0) {
+							//int i2 = int.Parse (value.Trim());
+							if (value.IndexOf (ConfigSection._cContentArrSplit [0]) >= 0) {
+								arr = value.Split (ConfigSection._cContentArrSplit, System.StringSplitOptions.RemoveEmptyEntries);
+								staticInfo.tile_x = int.Parse (arr [0].Trim ());
+								staticInfo.tile_y = int.Parse (arr [1].Trim ());
+							} else {
+								int i2 = int.Parse (value.Trim ());
+								staticInfo.tile_x = i2;
+								staticInfo.tile_y = 0;
+							}
+						}
                     }
                     else if (bgType == BgType.anim)
                     {
                         string[] arr = null;
                         if (string.Compare(key, "actionno", true) == 0)
                         {
-                            aniInfo.actionno = int.Parse(value);
+							aniInfo.actionno = int.Parse(value.Trim());
                         } else if (string.Compare(key, "layerno", true) == 0)
                         {
-                            aniInfo.layerno = int.Parse(value);
+							aniInfo.layerno = int.Parse(value.Trim());
                         } else if (string.Compare(key, "start", true) == 0)
                         {
                             arr = value.Split(ConfigSection._cContentArrSplit, System.StringSplitOptions.RemoveEmptyEntries);
                             if (arr != null && arr.Length >= 2)
                             {
-                                aniInfo.start_x = int.Parse(arr[0]);
-                                aniInfo.start_y = int.Parse(arr[1]);
+								aniInfo.start_x = int.Parse(arr[0].Trim());
+								aniInfo.start_y = int.Parse(arr[1].Trim());
                             }
                         } else if (string.Compare(key, "delta", true) == 0)
                         {
@@ -232,7 +237,7 @@ namespace Mugen
                                 aniInfo.transType = TransType.none;
                         } else if (string.Compare(key, "mask", true) == 0)
                         {
-                            int i1 = int.Parse(value);
+							int i1 = int.Parse(value.Trim());
                             aniInfo.mask = (MaskType)i1;
                         }
                     }
@@ -244,6 +249,6 @@ namespace Mugen
             return true;
         }
 
-        private static readonly string _cBG = "BG";
+        private static readonly string _cBG = "BG ";
     }
 }

@@ -9,9 +9,7 @@ end
 trigger = {}
 mugen.trigger = trigger
 
-local _cPerUnit = 10000.0 
-local _cPerVelUnit = _cPerUnit/6.5
-PlayerDisplay._cVelPerUnit = _cPerVelUnit
+require("Const")
 
 local GlobaConfigMgr = MonoSingleton_GlobalConfigMgr.GetInstance()
 
@@ -46,6 +44,28 @@ end
 function trigger:ACos(angle)
   local ret = math.acos(angle)
   return ret
+end
+
+function trigger:StateTypeSet(luaPlayer, stateType)
+	if luaPlayer == nil or stateType == nil then
+		return
+	end
+	local display = luaPlayer.PlayerDisplay;
+   if display == nil then
+	  return
+   end
+   display.StateType = stateType 
+end
+
+function trigger:PhysicsTypeSet(luaPlayer, stateType)
+	if luaPlayer == nil or stateType == nil then
+		return
+	end
+	local display = luaPlayer.PlayerDisplay;
+   if display == nil then
+	  return
+   end
+   display.PhysicsType = stateType 
 end
 
 function trigger:AnimElem(luaPlayer)
@@ -119,7 +139,7 @@ function trigger:Anim(luaPlayer)
 	if display == nil then
 		return nil 
 	end
-	local ret = display.Stateno
+	local ret = display.Anim
 	return ret
 end
 
@@ -398,6 +418,87 @@ function trigger:PosSet(luaPlayer, x, y)
 	end
 end
 
+function trigger:GetPlayer(playerType)
+	if playerType == nil then
+		return nil
+	end
+	local ret = PlayerDisplay.GetPlayer(playerType)
+	return ret
+end
+
+function trigger:Dist_X(luaPlayer, ohterPlayer)
+	if luaPlayer == nil or ohterPlayer == nil then
+		return nil
+	end
+	local s = luaPlayer.PlayerDisplay
+	local o = ohterPlayer.PlayerDisplay
+	if s == nil or o == nil then
+		return nil
+	end
+	local ret = s:DistanceX(o)
+	return ret
+end
+
+function trigger:IsPersistent(luaPlayer, state)
+	if luaPlayer == nil or state == nil then
+		return nil
+	end
+	local display = luaPlayer.PlayerDisplay
+	if display == nil then
+		return nil
+	end
+	local ret = display:IsStatePersistent(state)
+	return ret
+end
+
+function trigger:Persistent(luaPlayer, state, isPersistent)
+	if luaPlayer == nil or state == nil or isPersistent then
+		return
+	end
+	local display = luaPlayer.PlayerDisplay
+	if display == nil then
+		return
+	end
+	display:RegStatePersistent(luaPlayer, state, isPersistent)
+end
+
+function trigger:Dist_Y(luaPlayer, ohterPlayer)
+	if luaPlayer == nil or ohterPlayer == nil then
+		return nil
+	end
+	local s = luaPlayer.PlayerDisplay
+	local o = ohterPlayer.PlayerDisplay
+	if s == nil or o == nil then
+		return nil
+	end
+	-- Unity和MUGEN的Y坐标相反
+	local ret = -s:DistanceY(o)
+	return ret
+end
+
+function trigger:DestroySelf(luaPlayer)
+	if luaPlayer == nil then
+		return
+	end
+	local display = luaPlayer.PlayerDisplay;
+	if display == nil then
+		return nil
+	end
+	return display:DestroySelf()
+end
+
+function trigger:CreateExplod(luaPlayer)
+	if luaPlayer == nil then
+		return nil
+	end
+	local display = luaPlayer.PlayerDisplay;
+	if display == nil then
+		return nil
+	end
+	local ret = display:CreateExplod()
+	return ret
+end
+
 function trigger:PosAdd(luaPlayer, x, y)
 	if luaPlayer == nil or (x == nil and y == nil) then
 		return nil
@@ -412,18 +513,6 @@ function trigger:PosAdd(luaPlayer, x, y)
 	y = -y / _cPerUnit
 	display:PosAdd(x, y)
 	return true
-end
-
-function trigger:ResetStateAndCtrl(luaPlayer, state)
-	if luaPlayer == nil then
-		return false
-	end
-	local display = luaPlayer.PlayerDisplay;
-	if display == nil then
-		return false 
-	end
-	state = state or 0
-	return display:ResetStateAndCtrlOne(state)
 end
 
 function trigger:VelX(luaPlayer)
@@ -520,6 +609,17 @@ function trigger:PrevStateNo(luaPlayer)
 	return ret
 end
 
+function trigger:Pause(luaPlayer, time)
+	if luaPlayer == nil or time == nil then
+		return
+	end
+	local display = luaPlayer.PlayerDisplay;
+	if display == nil then
+		return
+	end
+	display:CtlPause(time)
+end
+
 function trigger:Var(luaPlayer, index)
 	if luaPlayer == nil or index == nil then
 		return nil
@@ -600,6 +700,29 @@ function trigger:Command(luaPlayer, cmdName)
 	return ret
 end
 
+function trigger:SwitchPallet(luaPlayer, idx)
+	if luaPlayer == nil or idx == nil then
+		return nil
+	end
+	local display = luaPlayer.PlayerDisplay;
+	if display == nil then
+		return nil 
+	end
+	local ret = display:SwitchPallet(idx)
+	return ret
+end
+
+function trigger:RemoveExplod(luaPlayer, id)
+	if luaPlayer == nil or id == nil then
+		return
+	end
+	local display = luaPlayer.PlayerDisplay;
+	if display == nil then
+		return 
+	end
+	display:RemoveExplod(id)
+end
+
 -- 处理模块
 
 function trigger:PlaySnd(luaPlayer, group, index)
@@ -622,6 +745,20 @@ function trigger:Do_StatePlaySnd(luaPlayer, state)
 		return
 	end
 	self:Do_PlaySnd(luaPlayer, state.value1, state.value2)
+end
+
+-- 创建飞行道具
+function trigger:CreateProj(luaPlayer, isCreateHelper)
+	if luaPlayer == nil then
+		return nil
+	end
+	local display = luaPlayer.PlayerDisplay;
+	if display == nil then
+		return nil
+	end
+	isCreateHelper = isCreateHelper or false
+	local proj, helper = display:CreateProjectile(isCreateHelper)
+	return proj, helper
 end
 
 -- 帮助模块

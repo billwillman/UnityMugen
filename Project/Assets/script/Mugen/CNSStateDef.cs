@@ -53,9 +53,9 @@ namespace Mugen
 		public static readonly int _cNoVaildAnim = (int)PlayerState.psNone;
 
 		[NoToLuaAttribute]
-		public void ResetStatesPersistent()
+		public void ResetStatesPersistent(PlayerDisplay display)
 		{
-			if (m_StateEventsMap != null) {
+			if (display != null && m_StateEventsMap != null) {
 				var iter = m_StateEventsMap.GetEnumerator ();
 				while (iter.MoveNext ()) {
 					var list = iter.Current.Value;
@@ -63,7 +63,7 @@ namespace Mugen
 						for (int i = 0; i < list.Count; ++i) {
 							var state = list [i];
 							if (state != null)
-								state.persistent = false;
+								display.RegStatePersistent (state, false);
 						}
 					}
 				}
@@ -84,7 +84,7 @@ namespace Mugen
 				if (m_StateEventsMap.TryGetValue (key, out list)) {
 					for (int i = 0; i < list.Count; ++i) {
 						CNSState state = list [i];
-						if (state != null && (!state.persistent))
+						if (state != null && (!display.IsStatePersistent(state)))
 							state.Call_TriggerEvent (display);
 					}
 				}
@@ -237,6 +237,11 @@ namespace Mugen
 		}
 
 		internal int id {
+			get;
+			set;
+		}
+
+		internal int StateNo {
 			get;
 			set;
 		}

@@ -10,6 +10,7 @@ public class PlayerStateMgr : MonoBehaviour {
     private bool m_HasFirstChangedStated = false;
     private bool m_IsCnsState = false;
 	private CNSStateDef m_CurrentCnsDef = null;
+	private CNSStateDef m_PrevCnsDef = null;
 
     public void SetCnsState(bool isUseCns)
     {
@@ -36,6 +37,11 @@ public class PlayerStateMgr : MonoBehaviour {
 				return false;
 			return player.HasCnsFiles;
 		}
+	}
+
+	private void ApplyPrevCnsDef()
+	{
+		m_PrevCnsDef = m_CurrentCnsDef;
 	}
 
 	public bool ChangeState(PlayerState state, bool isCns  = false)
@@ -78,6 +84,7 @@ public class PlayerStateMgr : MonoBehaviour {
 			selDef = def;
 		}
 
+		ApplyPrevCnsDef ();
 		m_CurrentCnsDef = selDef;
 
         m_IsCnsState = isCns;
@@ -91,7 +98,27 @@ public class PlayerStateMgr : MonoBehaviour {
 
 	public void ClearCurrentCnsDef()
 	{
+		m_PrevCnsDef = null;
 		m_CurrentCnsDef = null;
+	}
+
+	public int PrevStateNo
+	{
+		get {
+			if (m_PrevCnsDef == null)
+				return (int)PlayerState.psNone;
+			return m_PrevCnsDef.StateNo;
+		}
+	}
+
+	public int StateNo
+	{
+		get
+		{
+			if (m_CurrentCnsDef == null)
+				return (int)PlayerState.psNone;
+			return m_CurrentCnsDef.StateNo;
+		}
 	}
 
 	public CNSStateDef CurrentCnsDef
@@ -101,7 +128,10 @@ public class PlayerStateMgr : MonoBehaviour {
 		}
 		set
 		{
-			m_CurrentCnsDef = value;
+			if (m_CurrentCnsDef != value) {
+				ApplyPrevCnsDef ();
+				m_CurrentCnsDef = value;
+			}
 		}
 	}
 

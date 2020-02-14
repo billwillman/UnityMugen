@@ -52,7 +52,10 @@ public class SpriteMovement : MonoBehaviour {
 		{
 			if (m_Display == null)
 				return;
+			float z = m_Display.m_OffsetPos.z;
+			//Debug.LogError (z.ToString ());
 			m_Display.m_OffsetPos = value;
+			m_Display.m_OffsetPos.z = z;
 		}
 	}
 
@@ -99,7 +102,7 @@ public class SpriteMovement : MonoBehaviour {
 			return;
 		// 按照毫秒算速度
 		float d = deltaTime * 1000f;
-		float gg = -g/(PlayerDisplay._cVelPerUnit * 100f);
+		float gg = -g/(PlayerDisplay._cVelPerUnit * PlayerDisplay._cAPerUnit);
 		//float gg = -g/1000000f * 6.5f;
 		Vec.y += gg * d;
 		Vector2 vv = new Vector2(Vec.x * (IsFlipX? -1:1), Vec.y);
@@ -110,6 +113,10 @@ public class SpriteMovement : MonoBehaviour {
 			org.y = 0;
 		}
 		this.OffsetPos = org;
+		if (m_Display != null) {
+			m_Display.InternalUpdatePos ();
+			//Debug.LogError (m_Display.transform.localPosition.z.ToString ());
+		}
 	}
 
 	public void AniCtlPause(float pauseTime)

@@ -9,8 +9,9 @@ using Mugen;
 public class DefaultLoaderPlayer : MonoBehaviour {
 	public string PlayerName = string.Empty;
 	public string CnsName = string.Empty;
-    public InputPlayerType PlayerType = InputPlayerType.none;
+    //public InputPlayerType PlayerType = InputPlayerType.none;
 	public bool Shader_RGB_Zero_Alpha_One = true;
+	public float Scale = 1.0f;
 
     private PlayerImageRes m_ImageLibrary = null;
     private SndLoader m_SndLoader = null;
@@ -84,8 +85,10 @@ public class DefaultLoaderPlayer : MonoBehaviour {
 	public string GetPlayerName()
 	{
 		string playerName = this.PlayerName;
-		if (string.IsNullOrEmpty (playerName))
+		if (string.IsNullOrEmpty (playerName)) {
 			playerName = gameObject.name;
+			this.PlayerName = playerName;
+		}
 		return playerName;
 	}
 
@@ -103,11 +106,6 @@ public class DefaultLoaderPlayer : MonoBehaviour {
 	public List<string> CnsNameList = null;
 	public List<string> PalNameList = null;
 	public string LoadAnim = string.Empty;
-
-    public void _OnLoadCns()
-    {
-        
-    }
 
 	public void AddCnsName(string name)
 	{

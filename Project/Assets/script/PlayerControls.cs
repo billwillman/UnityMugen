@@ -50,26 +50,54 @@ public class PlayerControls: MonoSingleton<PlayerControls>
 
     public void SwitchPlayer(InputPlayerType playerType, PlayerDisplay display)
     {
+		float x = 0f;
         switch (playerType)
         {
             case InputPlayerType._1p:
                 m_1P = display;
+				x  = 100.0f;
                 break;
-            case InputPlayerType._2p:
-                m_2P = display;
+		case InputPlayerType._2p:
+				m_2P = display;
+				x = ((float)Screen.width) - 100.0f;
+				if (m_2P != null)
+					m_2P.IsFlipX = true;
                 break;
-            case InputPlayerType._3p:
-                m_3P = display;
+			case InputPlayerType._3p:
+				m_3P = display;
+				x = 0f;
                 break;
             case InputPlayerType._4p:
                 m_4P = display;
+				x = 0f;
                 break;
         }
+
+		var cam = AppConfig.GetInstance ().m_Camera;
+		if (display != null && cam != null) {
+			var stage = StageMgr.GetInstance ();
+			Vector2 stayPos;
+			if (stage.GetStayPos (playerType, out stayPos)) {
+				var pt = cam.ScreenToWorldPoint (new Vector3 (stayPos.x, stayPos.y, 0));
+				display.m_OffsetPos.x = pt.x;
+				//display.m_OffsetPos.y = pt.y - 0.5f;
+			} else {
+				var pt = cam.ScreenToWorldPoint (new Vector3 (x, 0, 0)); 
+				display.m_OffsetPos.x = pt.x;
+			}
+			display.InternalUpdatePos ();
+		}
+
+		if (display != null) {
+			display.SwitchPallet ((int)playerType - 1);
+		}
 
         if (display != null && display.AnimationState == PlayerState.psNone)
         {
             if (display.LuaPly == null)
-                display.ChangeState(PlayerState.psStand1);
+				display.PlayAni(PlayerState.psStand1);
         }
+
+
     }
 }

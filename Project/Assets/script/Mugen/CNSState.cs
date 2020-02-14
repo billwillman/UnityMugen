@@ -43,15 +43,27 @@ namespace Mugen
 
     public class CNSState
     {
+		private static int m_GlobalId = 0;
+
         private string m_Name = string.Empty;
 		private CnsStateTriggerType m_TriggeType = CnsStateTriggerType.none;
 		private CnsStateType m_Type = CnsStateType.none;
+		private int m_GenId = 0;
+
+		[NoToLua]
+		public int GenId
+		{
+			get {
+				return m_GenId;
+			}
+		}
         
         [NoToLuaAttribute]
 		public CNSState(CnsStateTriggerType triggeType, CnsStateType type)
         {
             m_TriggeType = triggeType;
 			m_Type = type;
+			m_GenId = ++m_GlobalId;
         }
 
 		public int value1
@@ -119,11 +131,6 @@ namespace Mugen
             get;
             set;
         }
-			
-		public bool persistent {
-			get;
-			set;
-		}
 
 		public System.Action<LuaTable, CNSState> OnTriggerEvent {
 			get;

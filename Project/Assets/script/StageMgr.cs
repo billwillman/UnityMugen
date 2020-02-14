@@ -14,6 +14,33 @@ public class StageMgr : MonoSingleton<StageMgr> {
     private int m_LastPalletGroupLink = -1;
     private int m_LastpalletImageLink = -1;
 
+	public bool GetStayPos(InputPlayerType playerType, out Vector2 ret)
+	{
+		if (playerType == InputPlayerType.none || m_Config == null || m_Config.Players == null) {
+			ret = Vector2.zero;
+			return false;
+		}
+		float h = ((float)Screen.height)/2.0f;
+		float w = ((float)Screen.width)/2.0f;
+		var players = m_Config.Players;
+		switch (playerType) {
+		case InputPlayerType._1p:
+			ret = new Vector2 (-players.p1startx, h-players.p1starty);
+			return true;
+		case InputPlayerType._2p:
+			ret = new Vector2 (-players.p2startx, h-players.p2starty);
+			return true;
+		case InputPlayerType._3p:
+			ret = new Vector2 (-players.p3startx, h-players.p3starty);
+			return true;
+		case InputPlayerType._4p:
+			ret = new Vector2 (-players.p4startx, -players.p4starty);
+			return true;
+		}
+		ret = Vector2.zero;
+		return false;
+	}
+
 	public bool LoadOk = false;
 
     public void SetLastPalletLink(int palletGroupLink, int palletImageLink)
@@ -63,6 +90,18 @@ public class StageMgr : MonoSingleton<StageMgr> {
         }
     }
 
+	public bool HasBeginAction(int actionno)
+	{
+		return GetBeginAction (actionno) != null;
+	}
+
+	public BeginAction GetBeginAction(int actionno)
+	{
+		if (m_Config == null || m_Config.AirCfg == null)
+			return null;
+		return m_Config.AirCfg.GetBeginAction((PlayerState)actionno);
+	}
+
 	void LoadConfig(string fileName)
 	{
 		Clear ();
@@ -76,18 +115,50 @@ public class StageMgr : MonoSingleton<StageMgr> {
     {
 		if (bg == null || bg.bgType == BgType.none)
             return;
+	//	if (bg.name != "10" && bg.name != "20")
+	//		return;
         GameObject obj = new GameObject(bg.name, typeof(SceneLayerDisplay));
         var trans = obj.transform;
         trans.SetParent(this.transform, false);
-        trans.localPosition = Vector3.zero;
+
+		//var cam = AppConfig.GetInstance ().m_Camera;
+		Vector3 pt = new Vector3 (bg.start_x, -bg.start_y, 0)/PlayerDisplay._cScenePerUnit;
+		//pt = cam.ScreenToWorldPoint (pt);
+		pt = pt / 100.0f;
+		Vector3 p = trans.localPosition;
+		p.x = pt.x;
+		p.y = pt.y;
+		float offz = ((float)bg.GenId) / 100.0f;
+		p.z = bg.layerno > 0 ? -9.9f + offz: 9.9f - offz;
+		trans.localPosition = p;
+		
         trans.localScale = Vector3.one;
         trans.localRotation = Quaternion.identity;
 
         var dislpay = obj.GetComponent<SceneLayerDisplay>();
         dislpay.layerno = bg.layerno;
-		if (bg.bgType == BgType.normal)
+		if (bg.bgType == BgType.normal) {
 			dislpay.InitStatic (bg as BgStaticInfo);
+			dislpay.AdjustPos ();
+		} else if (bg.bgType == BgType.anim) {
+			dislpay.InitAnimated (bg as BgAniInfo);
+			dislpay.AdjustPos ();
+		}
     }
+
+	private void InitCamera()
+	{
+		var cam = AppConfig.GetInstance ().m_Camera;
+		if (cam != null) {
+			if (!cam.orthographic)
+				cam.orthographic = true;
+			var worldPt = cam.ViewportToWorldPoint(Vector3.zero);
+			var trans = cam.transform;
+			var pt = trans.position;
+			pt.y -= worldPt.y;
+			trans.position = pt;
+		}
+	}
 
     // 創建場景
     private void CreateScene()
@@ -98,6 +169,7 @@ public class StageMgr : MonoSingleton<StageMgr> {
 		var bgCfg = m_Config.BgCfg;
         if (bgCfg == null)
             return;
+		InitCamera ();
         for (int i = 0; i < bgCfg.BgCount; ++i)
         {
             IBg bg = bgCfg.GetBg(i);
@@ -105,6 +177,15 @@ public class StageMgr : MonoSingleton<StageMgr> {
                 continue;
             CreateSceneLayer(bg);
         }
+
+		var cam = AppConfig.GetInstance().m_Camera;
+		if (cam != null)
+		{
+			var pt = cam.ScreenToWorldPoint (Vector3.zero);
+			pt.y = 0;
+			pt.z = 0;
+			this.transform.position = pt;
+		}
     }
 
     // 进入当前场景
@@ -134,14 +215,14 @@ public class StageMgr : MonoSingleton<StageMgr> {
             sceneRoot = string.Format("{0}{1}/@{2}/{3}", AppConfig.GetInstance().SceneRootDir, DefaultSceneRoot, DefaultSceneName, name);
         }
         string fileName = string.Format("{0}.sff.bytes", sceneRoot);
-        if (!imgRes.LoadScene(fileName, bgCfg))
+		if (!imgRes.LoadScene(fileName, m_Config))
             return false;
 
         m_LoadedSceneName = this.DefaultSceneName;
         m_LoadedSceneFileName = sceneRoot;
         // 創建場景
         CreateScene();
-
+		AppConfig.GetInstance ().StartFollow ();
         
 
         return true;

@@ -84,11 +84,20 @@ local function _InitStatedef_100(luaPlayer, luaCfg)
 	def.PhysicsType = Mugen.Cns_PhysicsType.S
 	def.Animate = 100
 	def.Sprpriority = 1
+	def.Ctrl = 0
 
 	local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
 	state.OnTriggerEvent = 
 		function (luaPlayer, state)
 			trigger:VelSet(luaPlayer, luaPlayer.velocity.run.fwd.x, nil)
+		end
+
+	local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+	state.OnTriggerEvent = 
+		function (luaPlayer, state)
+			if trigger:AnimTime(luaPlayer) == 0 then
+				trigger:CtrlSet(luaPlayer, 1)
+			end
 		end
 	return id
 end
