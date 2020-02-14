@@ -215,8 +215,11 @@ public class StageMgr : MonoSingleton<StageMgr> {
             sceneRoot = string.Format("{0}{1}/@{2}/{3}", AppConfig.GetInstance().SceneRootDir, DefaultSceneRoot, DefaultSceneName, name);
         }
         string fileName = string.Format("{0}.sff.bytes", sceneRoot);
-		if (!imgRes.LoadScene(fileName, m_Config))
+        if (!imgRes.LoadScene(fileName, m_Config))
+        {
+            Debug.LogErrorFormat("[sff] {0} is not found~!!!", fileName);
             return false;
+        }
 
         m_LoadedSceneName = this.DefaultSceneName;
         m_LoadedSceneFileName = sceneRoot;
