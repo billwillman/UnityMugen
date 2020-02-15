@@ -1,0 +1,39 @@
+;***************************************************************************;
+;******************* Created in Fighter Factory Ultimate *******************;
+;*******************      http://www.virtualltek.com     *******************;
+;***************************************************************************;
+
+[Info]
+name = "AshXIII"
+displayname = "Ash Crimson"
+versiondate = 25,02,2012
+MugenVersion =1.1
+author = "king227"
+pal.defaults = 1,2,3,4,5,6
+localcoord = 427,240
+[Files]
+sprite = AshXIII.sff
+anim = AshXIII.air
+sound = AshXIII.snd
+cmd = AshXIII.cmd
+cns = AshXIII.cns
+stcommon = ..\..\data\common1.cns
+st = AshXIII.cns
+st1 = AshXIII1.cns
+st2 = AshXIII2.cns
+[Palette Keymap]
+a = 4
+b = 5
+c = 6
+x = 1
+y = 2
+z = 3
+a2 = 7
+b2 = 7
+c2 = 7
+x2 = 7
+y2 = 7
+z2 = 7
+[Arcade]
+intro.storyboard = 
+ending.storyboard = 
