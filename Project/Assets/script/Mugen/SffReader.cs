@@ -418,7 +418,7 @@ namespace sff
 
 	}
 
-	unsafe class sffReader
+	public unsafe class sffReader
 	{
 		private FileStream fs;
 		private MemoryStream ms;
