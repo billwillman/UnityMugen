@@ -2,7 +2,7 @@
 using System.Collections;
 using Mugen;
 
-[RequireComponent(typeof(SceneImageRes), typeof(AudioSource))]
+[RequireComponent(typeof(SceneImageRes), typeof(AudioSource), typeof(BaseResLoader))]
 public class StageMgr : MonoSingleton<StageMgr> {
 
 	public string DefaultSceneRoot= string.Empty;
@@ -14,6 +14,18 @@ public class StageMgr : MonoSingleton<StageMgr> {
     private int m_LastPalletGroupLink = -1;
     private int m_LastpalletImageLink = -1;
 	private AudioSource m_Audio = null;
+	private BaseResLoader m_Loader = null;
+	private AudioClip m_BgClip = null;
+
+	protected BaseResLoader Loader
+	{
+		get
+		{
+			if (m_Loader == null)
+				m_Loader = GetComponent<BaseResLoader> ();
+			return m_Loader;
+		}
+	}
 
 	public bool GetStayPos(InputPlayerType playerType, out Vector2 ret)
 	{
@@ -67,6 +79,7 @@ public class StageMgr : MonoSingleton<StageMgr> {
 
 	public void Clear()
 	{
+		ClearAudio ();
         DestroyScene();
 
 		m_Config = null;
@@ -198,11 +211,42 @@ public class StageMgr : MonoSingleton<StageMgr> {
 		}
     }
 
+	private void ClearAudio()
+	{
+		var audio = this.Audio;
+		if (audio != null) {
+			if (audio.isPlaying)
+				audio.Stop ();
+			audio.clip = null;
+		}
+		var loader = this.Loader;
+		if (loader != null) {
+			loader.ClearAudioClip (ref m_BgClip);
+			m_BgClip = null;
+		}
+	}
+
 	private void PlayCurrSceneAudio()
 	{
-		if (m_Config == null || m_Config.Music == null)
+		ClearAudio ();
+		if (m_Config == null || m_Config.Music == null || string.IsNullOrEmpty(m_LoadedSceneFileName))
 			return;
 		
+		var audio = this.Audio;
+		var loader = this.Loader;
+		if (!string.IsNullOrEmpty (m_Config.Music.bgmusic)) {
+			if (audio != null && loader != null) {
+				string fileName = string.Format ("{0}/{1}", System.IO.Path.GetDirectoryName (m_LoadedSceneFileName), m_Config.Music.bgmusic);
+				if (loader.LoadAudioClip (ref m_BgClip, fileName)) {
+					if (audio.isPlaying)
+						audio.Stop ();
+					if (m_BgClip != null) {
+						audio.clip = m_BgClip;
+						audio.Play ();
+					}
+				}
+			}
+		}
 	}
 
     // 进入当前场景
@@ -243,7 +287,7 @@ public class StageMgr : MonoSingleton<StageMgr> {
         // 創建場景
         CreateScene();
 		AppConfig.GetInstance ().StartFollow ();
-        
+		PlayCurrSceneAudio ();
 
         return true;
     }
