@@ -143,20 +143,26 @@ namespace Mugen
 			string s = mContentList[index];
 			if (string.IsNullOrEmpty(s))
 				return false;
-			string[] s1 = s.Split(_cContentArrSplit, StringSplitOptions.RemoveEmptyEntries);
+			string[] s1 = s.Split(_cContentArrSplit, StringSplitOptions.None);
 			if (s1 == null)
 				return false;
+
+			arr.AddRange (s1);
+			return true;
+			/*
 			bool ret = false;
 			for (int i = 0; i < s1.Length; ++i)
 			{
 				string item = s1[i].Trim();
-				if (string.IsNullOrEmpty(item))
+				if (string.IsNullOrEmpty (item)) {
+					arr.Add (string.Empty);
 					continue;
+				}
 				arr.Add(item);
 				ret = true;
 			}
 
-			return ret;
+			return ret;*/
 		}
 
 		public static string[] Split(string value)
