@@ -83,6 +83,28 @@ namespace Mugen
 		}
 	}
 
+	public class SceneMusic: IConfigPropertys
+	{
+		public string ConfigName
+		{
+			get
+			{
+				return string.Empty;
+			}
+		}
+
+		public string bgmusic {
+			get;
+			protected set;
+		}
+
+		public int bgvolume
+		{
+			get;
+			protected set;
+		}
+	}
+
     public class BgDef : IConfigPropertys
     {
         public string ConfigName
@@ -259,6 +281,14 @@ namespace Mugen
         private AirConfig m_AirConfig = null;
         private BgDef m_BgDef = null;
         private BgConfig m_BgCfg = null;
+		private SceneMusic m_Music = null;
+
+		public SceneMusic Music
+		{
+			get {
+				return m_Music;
+			}
+		}
 
         public BgConfig BgCfg
         {
@@ -449,6 +479,18 @@ namespace Mugen
                 Clear();
                 return false;
             }
+
+
+			section = reader.GetSection("Music");
+			if (section != null) {
+				m_Music = new SceneMusic ();
+				if (!section.GetPropertysValues (m_Music)) {
+					Clear ();
+					return false;
+				}
+			} else {
+				m_Music = new SceneMusic ();
+			}
 
 			return IsVaild;
 		}

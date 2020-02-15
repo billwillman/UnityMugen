@@ -2,7 +2,7 @@
 using System.Collections;
 using Mugen;
 
-[RequireComponent(typeof(SceneImageRes))]
+[RequireComponent(typeof(SceneImageRes), typeof(AudioSource))]
 public class StageMgr : MonoSingleton<StageMgr> {
 
 	public string DefaultSceneRoot= string.Empty;
@@ -13,6 +13,7 @@ public class StageMgr : MonoSingleton<StageMgr> {
     private string m_LoadedSceneFileName = string.Empty;
     private int m_LastPalletGroupLink = -1;
     private int m_LastpalletImageLink = -1;
+	private AudioSource m_Audio = null;
 
 	public bool GetStayPos(InputPlayerType playerType, out Vector2 ret)
 	{
@@ -89,6 +90,15 @@ public class StageMgr : MonoSingleton<StageMgr> {
             return m_ImageRes;
         }
     }
+
+	public AudioSource Audio
+	{
+		get {
+			if (m_Audio == null)
+				m_Audio = GetComponent<AudioSource> ();
+			return m_Audio;
+		}
+	}
 
 	public bool HasBeginAction(int actionno)
 	{
@@ -187,6 +197,13 @@ public class StageMgr : MonoSingleton<StageMgr> {
 			this.transform.position = pt;
 		}
     }
+
+	private void PlayCurrSceneAudio()
+	{
+		if (m_Config == null || m_Config.Music == null)
+			return;
+		
+	}
 
     // 进入当前场景
     public bool EnterCurrentScene()
