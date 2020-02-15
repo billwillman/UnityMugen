@@ -244,6 +244,8 @@ public class StageMgr : MonoSingleton<StageMgr> {
 						audio.clip = m_BgClip;
 						audio.Play ();
 					}
+				} else {
+					Debug.LogErrorFormat ("[Bg Audio] Scene BgAudio not found: {0}", fileName);
 				}
 			}
 		}
