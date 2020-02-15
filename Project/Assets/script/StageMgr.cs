@@ -152,7 +152,7 @@ public class StageMgr : MonoSingleton<StageMgr> {
 		p.x = pt.x;
 		p.y = pt.y;
 		float offz = ((float)bg.GenId) / 100.0f;
-		p.z = bg.layerno > 0 ? -9.9f + offz: 9.9f - offz;
+		p.z = bg.layerno > 0 ? -8.9f + offz: 9.9f - offz;
 		trans.localPosition = p;
 		
         trans.localScale = Vector3.one;
