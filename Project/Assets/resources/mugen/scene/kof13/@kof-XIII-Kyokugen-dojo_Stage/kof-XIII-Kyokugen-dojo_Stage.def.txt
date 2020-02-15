@@ -77,7 +77,7 @@ intensity = 0
 
 ;--------------------------------------------------------
 [Music]
-bgmusic = stages/kof-XIII-Kyokugen-dojo_Stage.mp3
+bgmusic = kof-XIII-Kyokugen-dojo_Stage.mp3
 bgvolume = 250
 
 ;-------------------------------------
