@@ -168,7 +168,7 @@ namespace FreeImage
 
 namespace sff
 {
-	class sffMsgV1
+	public class sffMsgV1
 	{
 		//SFFV1
 		public int groupNum;//组的数量
@@ -177,7 +177,7 @@ namespace sff
 		public int sprHeadSize;//子节点大小
 		public byte firstSprPalType;//第一个图像的色表类型
 	}
-	class sffMsgV2
+	public class sffMsgV2
 	{
 		//SFFV2
 		public int sprOffset;//第一个图像子节点位置
@@ -189,7 +189,7 @@ namespace sff
 		public int tdataOffset;
 		public int tdataLen;
 	}
-	class sprMsgV1
+	public class sprMsgV1
 	{
 		public int pcxDataLen;
 		public short x;
@@ -201,7 +201,7 @@ namespace sff
 		public int offset;
 
 	}
-	class sprMsgV2
+	public class sprMsgV2
 	{
 		public ushort group;
 		public ushort index;
@@ -217,7 +217,7 @@ namespace sff
 		public ushort palIndex;
 		public ushort flags;
 	}
-	class palMsg
+	public class palMsg
 	{
 		public ushort group;
 		public ushort index;
