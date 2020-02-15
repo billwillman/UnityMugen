@@ -250,16 +250,19 @@ public class ImageAnimation : MonoBehaviour {
 		return PlayerPlayerAni (state, -1, -1, isLoop);
     }
 
-	public ImageFrame GetCurImageFrame(out ActionFlip flip)
+	public ImageFrame GetCurImageFrame(out ActionFlip flip, out ActionDrawMode drawMode)
 	{
 		flip = ActionFlip.afNone;
+		drawMode = ActionDrawMode.adNone;
         var aniNode = CurAniNode;
         if (aniNode.frameGroup < 0 || aniNode.frameIndex < 0)
             return null;
 
         var frame = GetImageFrame(aniNode.frameGroup, aniNode.frameIndex);
-        if (frame != null)
-            flip = aniNode.flipTag;
+		if (frame != null) {
+			flip = aniNode.flipTag;
+			drawMode = aniNode.drawMode;
+		}
         return frame;
 	}
 

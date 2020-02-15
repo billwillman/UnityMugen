@@ -169,6 +169,7 @@ namespace Mugen
 		public int frameIndex;
 		public float AniTick;
 		public ActionFlip flipTag;
+		public ActionDrawMode drawMode;
         public bool isLoopStart;
         public Rect[] localClsn2Arr;
         public Rect[] defaultClsn2Arr;
@@ -307,6 +308,7 @@ namespace Mugen
                             ImageAnimateNode aniNode = new ImageAnimateNode();
                             aniNode.AniTick = actFrame.Tick;
                             aniNode.flipTag = actFrame.Flip;
+							aniNode.drawMode = actFrame.DrawMode;
                             //aniNode.flipTag = lastFlip;
                             lastFlip = actFrame.Flip;
                             aniNode.frameIndex = frameIndex;

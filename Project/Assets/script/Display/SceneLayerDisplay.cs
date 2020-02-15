@@ -17,7 +17,8 @@ public class SceneLayerDisplay : BaseResLoader {
     public int layerno = -1;
 	public MaskType m_MaskType = MaskType.alpha;
 	public int m_Group = (int)PlayerState.psNone;
-	public TransType m_TransType = TransType.none;
+	private TransType m_TransType = TransType.none;
+	public TransType m_CurTransType = TransType.none;
 
     private SpriteRenderer m_SpriteRender = null;
     private ImageAnimation m_Anim = null;
@@ -92,14 +93,17 @@ public class SceneLayerDisplay : BaseResLoader {
 	{
 		var sp = this.SpriteRender;
 		if (sp != null) {
-			if (transType == TransType.Add) {
-				LoadMaterial(ref m_OrgSpMat, AppConfig.GetInstance ().PalleetAddMatFileName);
-			} else
-				LoadMaterial(ref m_OrgSpMat, AppConfig.GetInstance ().PalleetMatFileName);
-			if (m_OrgSpMat != null) {
-				Material mat = GameObject.Instantiate (m_OrgSpMat);
-				AddOrSetInstanceMaterialMap (sp.GetInstanceID (), mat);
-				sp.sharedMaterial = mat;
+			if (m_OrgSpMat == null || m_CurTransType != transType) {
+				m_CurTransType = transType;
+				if (transType == TransType.Add) {
+					LoadMaterial (ref m_OrgSpMat, AppConfig.GetInstance ().PalleetAddMatFileName);
+				} else
+					LoadMaterial (ref m_OrgSpMat, AppConfig.GetInstance ().PalleetMatFileName);
+				if (m_OrgSpMat != null) {
+					Material mat = GameObject.Instantiate (m_OrgSpMat);
+					AddOrSetInstanceMaterialMap (sp.GetInstanceID (), mat);
+					sp.sharedMaterial = mat;
+				}
 			}
 		}
 	}
@@ -125,7 +129,14 @@ public class SceneLayerDisplay : BaseResLoader {
 		}
 	}
 
-	private void UpdateImageFrame(ImageFrame frame, ActionFlip flip, bool isNoMask)
+	private TransType GetTransType(ActionDrawMode drawMode)
+	{
+		if (drawMode == ActionDrawMode.adNone)
+			return m_TransType;
+		return (TransType)drawMode;
+	}
+
+	private void UpdateImageFrame(ImageFrame frame, ActionFlip flip, ActionDrawMode drawMode, bool isNoMask)
 	{
 		InitFrameInfo (frame);
 		SpriteRenderer r = this.SpriteRender;
@@ -143,6 +154,7 @@ public class SceneLayerDisplay : BaseResLoader {
 			return;
 		}
 			
+		InitSpriteRender (GetTransType(drawMode));
 		r.sprite = frame.Data;
 		if (r.sprite != null)
 		{
@@ -261,10 +273,11 @@ public class SceneLayerDisplay : BaseResLoader {
 		if (r == null)
 			return;
 		ActionFlip flip;
-		var frame = target.GetCurImageFrame(out flip);
+		ActionDrawMode drawMode;
+		var frame = target.GetCurImageFrame(out flip, out drawMode);
 		if (frame == null)
 			return;
-		UpdateImageFrame(frame, flip, m_MaskType == MaskType.none);
+		UpdateImageFrame(frame, flip, drawMode, m_MaskType == MaskType.none);
 	}
 
 	void OnImageAnimationFrame(ImageAnimation target)
@@ -286,7 +299,6 @@ public class SceneLayerDisplay : BaseResLoader {
 			m_MaskType = anInfo.mask;
 
 			m_SceneType = SceneLayerType.Animation;
-			m_TransType = anInfo.transType;
 			InitSpriteRender (anInfo.transType);
 			m_IsInited = true;
 
@@ -319,7 +331,7 @@ public class SceneLayerDisplay : BaseResLoader {
 			InitSpriteRender (bgInfo.transType);
 
 			var frame = imageRes.GetImageFrame ((PlayerState)bgInfo.srpiteno_Group, bgInfo.spriteno_Image);
-			UpdateImageFrame(frame, ActionFlip.afNone, bgInfo.mask == MaskType.none);
+			UpdateImageFrame(frame, ActionFlip.afNone, ActionDrawMode.adNone, bgInfo.mask == MaskType.none);
             
 
             m_IsInited = true;

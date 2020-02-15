@@ -14,12 +14,21 @@ namespace Mugen
 		afHV
 	}
 
+	public enum ActionDrawMode
+	{
+		adNone,
+		ad_A,
+		ad_S,
+		ad_A1
+	}
+
 	public struct ActionFrame
 	{
 		public int Group;
 		public int Index;
 		public int Tick;
 		public ActionFlip Flip;
+		public ActionDrawMode DrawMode;
         public bool IsLoopStart;
         // 防御盒
         public Rect[] localClsn2Arr;
@@ -231,12 +240,24 @@ namespace Mugen
 									         string.Compare(flipStr, "VH", true) == 0)
 										flipMode = ActionFlip.afHV;
 								}
+								bool hasDrawMode = arr.Count >= 7;
+								ActionDrawMode drawMode = ActionDrawMode.adNone;
+								if (hasDrawMode) {
+									string drawStr = arr [6].Trim ();
+									if (string.Compare (drawStr, "A", true) == 0)
+										drawMode = ActionDrawMode.ad_A;
+									else if (string.Compare (drawStr, "S", true) == 0)
+										drawMode = ActionDrawMode.ad_S;
+									else if (string.Compare (drawStr, "A1", true) == 0)
+										drawMode = ActionDrawMode.ad_A1;
+								}
 
 								ActionFrame frame = new ActionFrame();
 								frame.Group = ImageGroup;
 								frame.Index = ImageIndex;
 								frame.Tick = Tick;
 								frame.Flip = flipMode;
+								frame.DrawMode = drawMode;
                                 if (aniStartIdx > 0 && clsn2DefaultArr != null)
                                 {
                                     frame.defaultClsn2Arr = clsn2DefaultArr;

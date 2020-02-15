@@ -552,15 +552,30 @@ public class PlayerDisplay : BaseResLoader {
         }
     }
 
-	void InitSpriteRender()
+	void InitSpriteRender(ActionDrawMode drawMode = ActionDrawMode.adNone)
 	{
 		var sp = this.SpriteRender;
 		if (sp != null) {
-			LoadMaterial(ref m_OrgSpMat, AppConfig.GetInstance ().PalleetMatFileName);
-			if (m_OrgSpMat != null) {
-				Material mat = GameObject.Instantiate (m_OrgSpMat);
-				AddOrSetInstanceMaterialMap (sp.GetInstanceID (), mat);
-				sp.sharedMaterial = mat;
+			if (m_OrgSpMat == null || m_DrawMode != drawMode) {
+				m_DrawMode = drawMode;
+				switch (m_DrawMode) {
+				case ActionDrawMode.ad_A:
+					{
+						LoadMaterial (ref m_OrgSpMat, AppConfig.GetInstance ().PalleetAddMatFileName);
+						break;
+					}
+				default:
+					{
+						LoadMaterial (ref m_OrgSpMat, AppConfig.GetInstance ().PalleetMatFileName);
+						break;
+					}
+				}
+					
+				if (m_OrgSpMat != null) {
+					Material mat = GameObject.Instantiate (m_OrgSpMat);
+					AddOrSetInstanceMaterialMap (sp.GetInstanceID (), mat);
+					sp.sharedMaterial = mat;
+				}
 			}
 		}
 	}
@@ -804,7 +819,7 @@ public class PlayerDisplay : BaseResLoader {
         } else
         {
             ani.ResetState();
-			UpdateRenderer(null, ActionFlip.afNone, this.ImageAni);
+			UpdateRenderer(null, ActionFlip.afNone, ActionDrawMode.adNone, this.ImageAni);
         }
         return ret;
     }
@@ -1156,7 +1171,8 @@ public class PlayerDisplay : BaseResLoader {
             m_ClsnBoxRoot.localPosition = -localPos;
     }
 
-	void UpdateRenderer(ImageFrame frame, ActionFlip flip, ImageAnimation imageAni)
+	private ActionDrawMode m_DrawMode = ActionDrawMode.adNone;
+	void UpdateRenderer(ImageFrame frame, ActionFlip flip, ActionDrawMode drawMode, ImageAnimation imageAni)
 	{
 		SpriteRenderer r = this.SpriteRender;
 		if (r == null)
@@ -1173,6 +1189,7 @@ public class PlayerDisplay : BaseResLoader {
             return;
         }
 
+		InitSpriteRender (drawMode);
 		r.sprite = frame.Data;
 		if (r.sprite != null)
 		{
@@ -1273,7 +1290,8 @@ public class PlayerDisplay : BaseResLoader {
 		var img = this.ImageAni;
 		if (img != null) {
 			ActionFlip flip;
-			var frame = img.GetCurImageFrame(out flip);
+			ActionDrawMode drawMode;
+			var frame = img.GetCurImageFrame(out flip, out drawMode);
 			if (frame != null) {
 				Vector3 frameOffset = frame.OffsetPos;
 				if (IsFlipX)
@@ -1426,7 +1444,8 @@ public class PlayerDisplay : BaseResLoader {
         if (ani == null)
             return;
         ActionFlip flip;
-        var frame = ani.GetCurImageFrame(out flip);
+		ActionDrawMode drawMode;
+		var frame = ani.GetCurImageFrame(out flip, out drawMode);
         if (frame == null)
             return;
         var palletTex = frame.LocalPalletTex;
@@ -1525,10 +1544,11 @@ public class PlayerDisplay : BaseResLoader {
 		if (r == null)
 			return;
 		ActionFlip flip;
-		var frame = target.GetCurImageFrame(out flip);
+		ActionDrawMode drawMode;
+		var frame = target.GetCurImageFrame(out flip, out drawMode);
 		if (frame == null)
 			return;
-		UpdateRenderer(frame, flip, target);
+		UpdateRenderer(frame, flip, drawMode, target);
 	}
 
     protected void RefreshCurFrame(ImageAnimation target)
