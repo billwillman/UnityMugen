@@ -621,8 +621,10 @@ namespace Mugen
 			PCXHEADER header = new PCXHEADER();
 			header.widht = spr.width;
 			header.height = spr.height;
-			header.x = (ushort)spr.x;
-			header.y = (ushort)spr.y;
+			//	header.x = (ushort)spr.x;
+			//header.y = (ushort)spr.y;
+			header.x = 0;
+			header.y = 0;
 			header.NPlanes = 1;
 
 			//header.widht = (ushort)(header.widht - header.x + 1);
@@ -657,6 +659,22 @@ namespace Mugen
 
 			KeyValuePair<PCXHEADER, PCXDATA> value = new KeyValuePair<PCXHEADER, PCXDATA>(header, data);
 			mPcxDataMap.Add(key, value);
+
+			SFFSUBHEADER subHeader = new SFFSUBHEADER();
+			subHeader.GroubNumber = (short)key.Key;
+			subHeader.ImageNumber = (short)key.Value;
+			subHeader.x = spr.x;
+			subHeader.y = spr.y;
+
+
+			if (value.Value.IsVaildPalletLink)
+			{
+				subHeader.IndexOfPrevious = (short)GetSubHeaderIndex(value.Value.palletLink.Key, value.Value.palletLink.Value);
+			}
+			else
+				subHeader.IndexOfPrevious = -1;
+
+			SubHeaders.Add(subHeader);
 		}
 
 		protected sff.sffReader.TOnRawForeachV2 OnSffReaderV2Evt
@@ -693,6 +711,7 @@ namespace Mugen
 			{
 				m_lineBuffer = null;
 			}
+			/*
 			if (ret)
 			{
 				var iter = mPcxDataMap.GetEnumerator();
@@ -706,6 +725,7 @@ namespace Mugen
 					header.x = (short)v.Key.x;
 					header.y = (short)v.Key.y;
 
+
 					if (v.Value.IsVaildPalletLink)
 					{
 						header.IndexOfPrevious = (short)GetSubHeaderIndex(v.Value.palletLink.Key, v.Value.palletLink.Value);	
@@ -715,7 +735,7 @@ namespace Mugen
 					SubHeaders.Add(header);
 				}
 				iter.Dispose();
-			}
+			}*/
 			return ret;
 		}
 
