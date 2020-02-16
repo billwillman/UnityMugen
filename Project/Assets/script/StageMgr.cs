@@ -69,6 +69,13 @@ public class StageMgr : MonoSingleton<StageMgr> {
         frame._SetLocalPalletLink(m_LastPalletGroupLink, m_LastpalletImageLink);
     }
 
+	public void LinkImageFramePalletFirstLink(ImageFrame frame)
+	{
+		if (frame == null)
+			return;
+		frame._SetLocalPalletLink (m_LastPalletGroupLink, 0);
+	}
+
     public string LoadedSceneFileName
     {
         get
