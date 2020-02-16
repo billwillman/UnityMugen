@@ -611,6 +611,7 @@ namespace Mugen
 		*/
 
 		private sff.sffReader.TOnRawForeachV2 m_OnSffReaderV2 = null;
+		private byte[] m_lineBuffer = null;
 		private void OnSffReaderV2(sff.sprMsgV2 spr, int linkGoup, int linkIndex, byte[] rawData, byte[] pal)
 		{
 			KeyValuePair<uint, uint> key = new KeyValuePair<uint, uint>((uint)spr.group, (uint)spr.index);
@@ -622,9 +623,29 @@ namespace Mugen
 			header.height = spr.height;
 			header.x = (ushort)spr.x;
 			header.y = (ushort)spr.y;
+			header.NPlanes = 1;
 
 			//header.widht = (ushort)(header.widht - header.x + 1);
 			//header.height = (ushort)(header.height - header.y + 1);
+
+			int chgSize = header.NPlanes * header.widht;
+			byte[] temp = null;
+			if (m_lineBuffer != null && m_lineBuffer.Length >= chgSize)
+				temp = m_lineBuffer;
+			else
+			{
+				temp = new byte[chgSize];
+				m_lineBuffer = temp;
+			}
+			for (int y = 0; y < (int)header.height / 2; ++y)
+			{
+				int x = ((int)header.height - 1 - y);
+				int s = y * chgSize;
+				int d = x * chgSize;
+				Buffer.BlockCopy(rawData, d, temp, 0, chgSize);
+				Buffer.BlockCopy(rawData, s, rawData, d, chgSize);
+				Buffer.BlockCopy(temp, 0, rawData, s, chgSize);
+			}
 
 			PCXDATA data = new PCXDATA();
 			data.data = rawData;
@@ -659,8 +680,16 @@ namespace Mugen
 				mSubHeaders.Clear();
 			if (bytes == null || bytes.Length <= 0)
 				return false;
-			sff.sffReader reader = new sff.sffReader(bytes);
-			bool ret = reader.RawForeachV2(OnSffReaderV2Evt);
+			bool ret = false;
+			try
+			{
+				sff.sffReader reader = new sff.sffReader(bytes);
+				ret = reader.RawForeachV2(OnSffReaderV2Evt);
+			}
+			finally
+			{
+				m_lineBuffer = null;
+			}
 			if (ret)
 			{
 				var iter = mPcxDataMap.GetEnumerator();
