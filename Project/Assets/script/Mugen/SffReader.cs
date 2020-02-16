@@ -559,7 +559,7 @@ namespace sff
 		}
 
 		//SFFV1 从索引获取指定图像数据
-		public byte[] getSprDataV1(int index, FI_FORMAT type)
+		public byte[] getSprDataV1(int index, out byte[] pp, FI_FORMAT type)
 		{
 			int offset = msgV1.sprOffset;
 			sprMsgV1 spr = new sprMsgV1();
@@ -593,25 +593,31 @@ namespace sff
 					if(spr.pcxDataLen == 0)
 					{
 						//链接型图像
-						return getSprDataV1(spr.linkIndex,type);
+						return getSprDataV1(spr.linkIndex, out pp, type);
 					}
 
 					sprData = br.ReadBytes(spr.pcxDataLen);
-					IntPtr dib = FI.LoadFromMemory(sprData, FI_FORMAT.FIF_PCX);
-					if (spr.palType == 1)
+					if (type != FI_FORMAT.FIF_UNKNOWN)
 					{
-						RGBQUAD *pal = FI.GetPalette(dib);
-						for(int n = 0; n < 256; n++)
+						IntPtr dib = FI.LoadFromMemory(sprData, FI_FORMAT.FIF_PCX);
+						if (spr.palType == 1)
 						{
-							pal[n].Red = palData[n * 3];
-							pal[n].Green = palData[n * 3 + 1];
-							pal[n].Blue = palData[n * 3 + 2];
+							RGBQUAD* pal = FI.GetPalette(dib);
+							for (int n = 0; n < 256; n++)
+							{
+								pal[n].Red = palData[n * 3];
+								pal[n].Green = palData[n * 3 + 1];
+								pal[n].Blue = palData[n * 3 + 2];
+							}
 						}
-					}
-					FI.SaveToMemory(dib, ref sprData, type);
+						FI.SaveToMemory(dib, ref sprData, type);
 
-					//释放图像流
-					FI.Free(dib);
+
+						//释放图像流
+						FI.Free(dib);
+					}
+
+					pp = palData;
 					return sprData;
 				}
 				else
@@ -630,6 +636,8 @@ namespace sff
 					}
 				}
 			}
+
+			pp = null;
 			return null;
 		}
 
@@ -645,7 +653,8 @@ namespace sff
 				if (br.ReadUInt16() == group && br.ReadUInt16() == index)
 				{
 					//转移事件
-					return getSprDataV1(i, type);
+					byte[] pal;
+					return getSprDataV1(i, out pal, type);
 				}
 
 			}
@@ -772,7 +781,37 @@ namespace sff
 		}
 
 		public delegate void TOnRawForeachV2(sprMsgV2 spr, int linkGoup, int linkIndex, byte[] rawData, byte[] pal);
-		public delegate void TOnRawForeachV1(sprMsgV2 spr, int linkGoup, int linkIndex, byte[] rawData, byte[] pal);
+		public delegate void TOnRawForeachV1(sprMsgV1 spr, int linkGoup, int linkIndex, byte[] rawData, byte[] pal);
+
+		public bool RawForeachV1(TOnRawForeachV1 OnRawForeachV1)
+		{
+			if (ver != 1 || OnRawForeachV1 == null)
+				return false;
+
+			for (int i = 0; i < getSprNum(); ++i)
+			{
+				sprMsgV1 spr = getSprMsgV1(i);
+				if (spr.pcxDataLen == 0)
+				{
+					sprMsgV1 linkSpr = spr;
+					while (linkSpr.pcxDataLen == 0)
+					{
+						linkSpr = getSprMsgV1(linkSpr.linkIndex);
+					}
+
+					OnRawForeachV1(spr, linkSpr.group, linkSpr.index, null, null);
+				} else
+				{
+					byte[] pal;
+					byte[] colors = getSprDataV1(i, out pal, FI_FORMAT.FIF_UNKNOWN);
+					if (colors == null || colors.Length <= 0)
+						return false;
+					OnRawForeachV1(spr, -1, -1, colors, pal);
+				}
+			}
+
+			return true;
+		}
 
 		public bool RawForeachV2(TOnRawForeachV2 OnRawForeachV2)
 		{
@@ -851,7 +890,8 @@ namespace sff
 			sffReader sf = new sffReader("kfm.sff");
 			for(int i = 0; i < sf.getSprNum(); i++)
 			{
-				byte[] spr = sf.getSprDataV1(i, FI_FORMAT.FIF_PNG);
+				byte[] pal;
+				byte[] spr = sf.getSprDataV1(i, out pal, FI_FORMAT.FIF_PNG);
 				FileStream fs = new FileStream(@"out\" + i.ToString() + ".png",FileMode.Create);
 				BinaryWriter bw = new BinaryWriter(fs);
 				bw.Write(spr);
