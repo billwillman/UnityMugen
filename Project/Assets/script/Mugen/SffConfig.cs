@@ -623,8 +623,8 @@ namespace Mugen
 			header.x = (ushort)spr.x;
 			header.y = (ushort)spr.y;
 
-			header.widht = (ushort)(header.widht - header.x + 1);
-			header.height = (ushort)(header.height - header.y + 1);
+			//header.widht = (ushort)(header.widht - header.x + 1);
+			//header.height = (ushort)(header.height - header.y + 1);
 
 			PCXDATA data = new PCXDATA();
 			data.data = rawData;
