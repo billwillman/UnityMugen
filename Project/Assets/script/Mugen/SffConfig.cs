@@ -628,23 +628,26 @@ namespace Mugen
 			//header.widht = (ushort)(header.widht - header.x + 1);
 			//header.height = (ushort)(header.height - header.y + 1);
 
-			int chgSize = header.NPlanes * header.widht;
-			byte[] temp = null;
-			if (m_lineBuffer != null && m_lineBuffer.Length >= chgSize)
-				temp = m_lineBuffer;
-			else
+			if (rawData != null && rawData.Length > 0)
 			{
-				temp = new byte[chgSize];
-				m_lineBuffer = temp;
-			}
-			for (int y = 0; y < (int)header.height / 2; ++y)
-			{
-				int x = ((int)header.height - 1 - y);
-				int s = y * chgSize;
-				int d = x * chgSize;
-				Buffer.BlockCopy(rawData, d, temp, 0, chgSize);
-				Buffer.BlockCopy(rawData, s, rawData, d, chgSize);
-				Buffer.BlockCopy(temp, 0, rawData, s, chgSize);
+				int chgSize = header.NPlanes * header.widht;
+				byte[] temp = null;
+				if (m_lineBuffer != null && m_lineBuffer.Length >= chgSize)
+					temp = m_lineBuffer;
+				else
+				{
+					temp = new byte[chgSize];
+					m_lineBuffer = temp;
+				}
+				for (int y = 0; y < (int)header.height / 2; ++y)
+				{
+					int x = ((int)header.height - 1 - y);
+					int s = y * chgSize;
+					int d = x * chgSize;
+					Buffer.BlockCopy(rawData, d, temp, 0, chgSize);
+					Buffer.BlockCopy(rawData, s, rawData, d, chgSize);
+					Buffer.BlockCopy(temp, 0, rawData, s, chgSize);
+				}
 			}
 
 			PCXDATA data = new PCXDATA();
