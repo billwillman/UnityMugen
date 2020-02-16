@@ -1321,6 +1321,10 @@ public class PlayerDisplay : BaseResLoader {
 		trans.localRotation = Quaternion.identity;
 		Projectile ret = gameObj.GetComponent<Projectile> ();
 		ret.OwnerCtl = m_PlayerType;
+		var display = ret.Display;
+		if (display != null) {
+			display.ShowClsn (this.IsShowCns);
+		}
 		return ret;
 	}
 
@@ -1336,6 +1340,10 @@ public class PlayerDisplay : BaseResLoader {
 		trans.localRotation = Quaternion.identity;
 		Explod ret = gameObj.GetComponent<Explod> ();
 		ret.OwnerCtl = m_PlayerType;
+		var display = ret.Display;
+		if (display != null) {
+			display.ShowClsn (this.IsShowCns);
+		}
 
 		InitPartMgr ();
 		m_PartMgr.AddPart (ret);
@@ -1660,6 +1668,14 @@ public class PlayerDisplay : BaseResLoader {
             OnPalletNameChanged();
         }
     }
+
+	[NoToLua]
+	public bool IsShowCns
+	{
+		get {
+			return m_ShowClsnDebug;
+		}
+	}
 
 	[NoToLuaAttribute]
 	public void ShowClsn(bool isShow)

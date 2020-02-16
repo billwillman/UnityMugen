@@ -7,7 +7,7 @@ public class Projectile : MonoBehaviour {
 
 	private PlayerDisplay m_Display = null;
 
-	protected PlayerDisplay Display
+	public PlayerDisplay Display
 	{
 		get {
 			if (m_Display == null)
@@ -67,7 +67,7 @@ public class Projectile : MonoBehaviour {
 			UpdateRemoveTime ();
 	}
 
-	protected PlayerDisplay Owner
+	public PlayerDisplay Owner
 	{
 		get
 		{

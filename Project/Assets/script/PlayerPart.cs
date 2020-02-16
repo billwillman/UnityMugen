@@ -38,7 +38,7 @@ public abstract class PlayerPart : MonoBehaviour {
 	/*
 	public PlayerState m_State = PlayerState.psNone;
 */
-	protected PlayerDisplay Display {
+	public PlayerDisplay Display {
 		get {
 			if (m_Display == null)
 				m_Display = GetComponent<PlayerDisplay> ();
