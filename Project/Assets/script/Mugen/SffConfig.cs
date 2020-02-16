@@ -571,13 +571,16 @@ namespace Mugen
 			if (pal == null || pal.Length <= 0)
 				return null;
 
-			Color32[] pallet = new Color32[256];
+			int cnt = (int)(pal.Length / 4);
+
+			Color32[] pallet = new Color32[cnt];
 			int offset = 0;
-			for (int i = 0; i < 256; ++i) {
+			for (int i = 0; i < cnt; ++i) {
 				byte r = pal [offset++];
 				byte g = pal [offset++];
 				byte b = pal [offset++];
-				byte a;
+				byte a = pal[offset++];
+				/*
 				if (i == 0)
 					a = 0;
 				else {
@@ -585,7 +588,7 @@ namespace Mugen
 						a = 0;
 					else
 						a = 0xFF;
-				}
+				}*/
 				pallet [i] = new Color32 (r, g, b, a);
 			}
 			return pallet;
@@ -611,6 +614,8 @@ namespace Mugen
 		private void OnSffReaderV2(sff.sprMsgV2 spr, int linkGoup, int linkIndex, byte[] rawData, byte[] pal)
 		{
 			KeyValuePair<uint, uint> key = new KeyValuePair<uint, uint> ((uint)spr.group, (uint)spr.index);
+			if (mPcxDataMap.ContainsKey(key))
+				return;
 
 			PCXHEADER header = new PCXHEADER ();
 			header.widht = spr.width;
@@ -647,10 +652,30 @@ namespace Mugen
 
 		private bool Load_V2_FromSffReader(byte[] bytes)
 		{
+			if (mSubHeaders != null)
+				mSubHeaders.Clear();
 			if (bytes == null || bytes.Length <= 0)
 				return false;
 			sff.sffReader reader = new sff.sffReader (bytes);
-			return reader.RawForeachV2 (OnSffReaderV2Evt);
+			bool ret = reader.RawForeachV2 (OnSffReaderV2Evt);
+			if (ret)
+			{
+				var iter = mPcxDataMap.GetEnumerator();
+				while (iter.MoveNext())
+				{
+					var k = iter.Current.Key;
+					var v = iter.Current.Value;
+					SFFSUBHEADER header = new SFFSUBHEADER();
+					header.GroubNumber = (short)k.Key;
+					header.ImageNumber = (short)k.Value;
+					header.x = (short)v.Key.x;
+					header.y = (short)v.Key.y;
+
+					SubHeaders.Add(header);
+				}
+				iter.Dispose();
+			}
+			return ret;
 		}
 
 		private bool Load(byte[] bytes)

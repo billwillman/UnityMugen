@@ -192,14 +192,16 @@ public class GlobalPlayer
 					cnsName = GlobalConfigMgr.GetConfigFileNameNoExt(cnsName);
 				}
 			}
-			string fileName = string.Format("{0}@{1}/{2}.cns.txt", AppConfig.GetInstance().PlayerRootDir, playerName, cnsName);
+			//string fileName = string.Format("{0}@{1}/{2}.cns.txt", AppConfig.GetInstance().PlayerRootDir, playerName, cnsName);
 			m_CNSConfig = new CNSConfig();
+				// 统一走LUA
+			/*
 			if (!m_CNSConfig.LoadFromFile(fileName))
 			{
 				//Clear();
 				result = (GlobalPlayerLoaderResult)((int)result | (int)GlobalPlayerLoaderResult.CNSConfigError);
 				//return false;
-			}
+			}*/
 		} catch (Exception e) {
 			#if DEBUG
 			Debug.LogError(e.ToString());
