@@ -566,6 +566,93 @@ namespace Mugen
 			return Load(bytes);
 		}
 
+		private Color32[] GetPalletFromByteArr(byte[] pal)
+		{
+			if (pal == null || pal.Length <= 0)
+				return null;
+
+			Color32[] pallet = new Color32[256];
+			int offset = 0;
+			for (int i = 0; i < 256; ++i) {
+				byte r = pal [offset++];
+				byte g = pal [offset++];
+				byte b = pal [offset++];
+				byte a;
+				if (i == 0)
+					a = 0;
+				else {
+					if ((r == pallet [i - 1].r) && (g == pallet [i - 1].g) && (b == pallet [i - 1].b))
+						a = 0;
+					else
+						a = 0xFF;
+				}
+				pallet [i] = new Color32 (r, g, b, a);
+			}
+			return pallet;
+		}
+
+		/*
+		private sff.sffReader.TOnRawForeachV1 m_OnSffReaderV1 = null;
+		private void OnSffReaderV1(sff.sprMsgV1 spr, int linkGoup, int linkIndex, byte[] rawData, byte[] pal)
+		{
+			KeyValuePair<uint, uint> key = new KeyValuePair<uint, uint> ((uint)spr.group, (uint)spr.index);
+
+			PCXHEADER header = new PCXHEADER ();
+			header.widht = spr.;
+			header.height = spr.height;
+			header.x = (ushort)spr.x;
+			header.y = (ushort)spr.y;
+
+
+		}
+		*/
+
+		private sff.sffReader.TOnRawForeachV2 m_OnSffReaderV2 = null;
+		private void OnSffReaderV2(sff.sprMsgV2 spr, int linkGoup, int linkIndex, byte[] rawData, byte[] pal)
+		{
+			KeyValuePair<uint, uint> key = new KeyValuePair<uint, uint> ((uint)spr.group, (uint)spr.index);
+
+			PCXHEADER header = new PCXHEADER ();
+			header.widht = spr.width;
+			header.height = spr.height;
+			header.x = (ushort)spr.x;
+			header.y = (ushort)spr.y;
+
+			PCXDATA data = new PCXDATA ();
+			data.data = rawData;
+			data.pallet = GetPalletFromByteArr (pal);
+			data.palletLink = new KeyValuePair<short, short> ((short)linkGoup, (short)linkIndex);
+
+			KeyValuePair<PCXHEADER, PCXDATA> value = new KeyValuePair<PCXHEADER, PCXDATA> (header, data);
+			mPcxDataMap.Add (key, value);
+		}
+
+		protected sff.sffReader.TOnRawForeachV2 OnSffReaderV2Evt
+		{
+			get {
+				if (m_OnSffReaderV2 == null)
+					m_OnSffReaderV2 = new sff.sffReader.TOnRawForeachV2 (OnSffReaderV2);
+				return m_OnSffReaderV2;
+			}
+		}
+		/*
+		protected sff.sffReader.TOnRawForeachV1 OnSffReaderV1Evt
+		{
+			get {
+				if (m_OnSffReaderV1 == null)
+					m_OnSffReaderV1 = new sff.sffReader.TOnRawForeachV1 (OnSffReaderV1);
+				return m_OnSffReaderV1;
+			}
+		}*/
+
+		private bool Load_V2_FromSffReader(byte[] bytes)
+		{
+			if (bytes == null || bytes.Length <= 0)
+				return false;
+			sff.sffReader reader = new sff.sffReader (bytes);
+			return reader.RawForeachV2 (OnSffReaderV2Evt);
+		}
+
 		private bool Load(byte[] bytes)
 		{
 			mPcxDataMap.Clear();
@@ -591,6 +678,12 @@ namespace Mugen
             if (v1 == 2)
             {
 				
+				if (Load_V2_FromSffReader (bytes)) {
+					mIsVaild = true;
+					return true;
+				}
+
+				//----------------------------------------
                 SFFHEADERv2 header = new SFFHEADERv2();
                 int headerSize = Marshal.SizeOf(header);
                 IntPtr headerBuffer = Marshal.AllocHGlobal(headerSize);

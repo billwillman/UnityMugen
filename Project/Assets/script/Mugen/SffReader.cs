@@ -16,6 +16,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using FreeImage;
+using UnityEngine;
 
 namespace FreeImage
 {
@@ -677,7 +678,7 @@ namespace sff
 		}
 
 		//SFFV2 从索引获取图像数据
-		public byte[] getSprDataV2(int index, FI_FORMAT type)
+		public byte[] getSprDataV2(int index, out byte[] pp, FI_FORMAT type)
 		{
 			byte[] sprData,palData;
 			int sprSize;
@@ -686,7 +687,7 @@ namespace sff
 			if(spr.dataLen == 0)
 			{
 				//链接型图像
-				return getSprDataV2(spr.linkIndex, type);
+				return getSprDataV2(spr.linkIndex, out pp, type);
 			}
 			seek((spr.flags == 1 ? msgV2.tdataOffset : msgV2.ldataOffset) + spr.dataOffset);
 
@@ -711,54 +712,96 @@ namespace sff
 			{
 			case 0:
 				palData = getPalData(spr.palIndex);
+				pp = palData;
 				break;
 
 			case 2:
 				sprData = sffV2Decompress.unRle8(sprData);
 				palData = getPalData(spr.palIndex);
+				pp = palData;
 				break;
 
 			case 4:
 				sprData = sffV2Decompress.unLz5(sprData);
 				palData = getPalData(spr.palIndex);
+				pp = palData;
 				break;
 
 			case 10:
 				//压缩算法为PNG算法时读取的数据默认都是一个完整的PNG文件 可以直接载入
-				palData = getPalData(spr.palIndex);
-				dib = FI.LoadFromMemory(sprData, FI_FORMAT.FIF_PNG);
+				palData = getPalData (spr.palIndex);
+				dib = FI.LoadFromMemory (sprData, FI_FORMAT.FIF_PNG);
 				//PNG8调色板校正
-				RGBQUAD *pale = FI.GetPalette(dib);
-				for(int n = 0; n < 256; n++)
-				{
-					pale[n].Red = palData[n * 4];
-					pale[n].Green = palData[n * 4 + 1];
-					pale[n].Blue = palData[n * 4 + 2];
+				RGBQUAD* pale = FI.GetPalette (dib);
+				for (int n = 0; n < 256; n++) {
+					pale [n].Red = palData [n * 4];
+					pale [n].Green = palData [n * 4 + 1];
+					pale [n].Blue = palData [n * 4 + 2];
 				}
-				FI.SaveToMemory(dib, ref sprData, type);
+				FI.SaveToMemory (dib, ref sprData, type);
+				pp = palData;
 				return sprData;
 
 			case 11:
 			case 12:
+				pp = null;
 				return sprData;
 
 			default:	
 				sprData = new byte[0];
+				pp = new byte[0];
 				return sprData;
 			}
-			//对于无压缩、Rle8和Lz5压缩的图像读取的数据是原始的像素数据 不能直接载入
-			dib = FI.ConvertFromRawBits(sprData, spr.width, spr.height, spr.width, 8, 0, 0, 0, true);
-			RGBQUAD *pal = FI.GetPalette(dib);
-			int colorNum = palData.Length / 4;
-			for(int n = 0; n < colorNum; n++)
-			{
-				pal[n].Red = palData[n * 4];
-				pal[n].Green = palData[n * 4 + 1];
-				pal[n].Blue = palData[n * 4 + 2];
+
+			if (type != FI_FORMAT.FIF_UNKNOWN) {
+				//对于无压缩、Rle8和Lz5压缩的图像读取的数据是原始的像素数据 不能直接载入
+				dib = FI.ConvertFromRawBits (sprData, spr.width, spr.height, spr.width, 8, 0, 0, 0, true);
+				RGBQUAD* pal = FI.GetPalette (dib);
+				int colorNum = palData.Length / 4;
+				for (int n = 0; n < colorNum; n++) {
+					pal [n].Red = palData [n * 4];
+					pal [n].Green = palData [n * 4 + 1];
+					pal [n].Blue = palData [n * 4 + 2];
+				}
+				FI.SaveToMemory (dib, ref sprData, type);
+				FI.Free (dib);
+				return sprData;
+			} else {
+				return sprData;
 			}
-			FI.SaveToMemory(dib, ref sprData, type);
-			FI.Free(dib);
-			return sprData;
+		}
+
+		public delegate void TOnRawForeachV2(sprMsgV2 spr, int linkGoup, int linkIndex, byte[] rawData, byte[] pal);
+		public delegate void TOnRawForeachV1(sprMsgV2 spr, int linkGoup, int linkIndex, byte[] rawData, byte[] pal);
+
+		public bool RawForeachV2(TOnRawForeachV2 OnRawForeachV2)
+		{
+			if (ver != 2 || OnRawForeachV2 == null)
+				return false;
+			for (int i = 0; i < getSprNum (); ++i) {
+				sprMsgV2 spr = getSprMsgV2 (i);
+				if (spr.dataLen == 0) {
+					// 链接类型
+					sprMsgV2 linkSpr = spr;
+					while (linkSpr.dataLen == 0) {
+						linkSpr = getSprMsgV2 (linkSpr.linkIndex);
+					}
+					// 暂时不做PNG类型的支持
+					if (linkSpr.fmt == 10 || linkSpr.fmt == 11 || linkSpr.fmt == 12)
+						return false;
+					OnRawForeachV2 (spr, linkSpr.group, linkSpr.index, null, null); 
+				} else {
+					// 暂时不做PNG类型的支持
+					if (spr.fmt == 10 || spr.fmt == 11 || spr.fmt == 12)
+						return false;
+					byte[] pal;
+					byte[] colors = getSprDataV2 (i, out pal, FI_FORMAT.FIF_UNKNOWN); 
+					if (colors == null || colors.Length <= 0)
+						return false;
+					OnRawForeachV2 (spr, -1, -1, colors, pal);
+				}
+			}
+			return true;
 		}
 
 
@@ -766,13 +809,14 @@ namespace sff
 		public byte[] getSprDataV2(int group, int index, FI_FORMAT type)
 		{
 			sprMsgV2 spr;
+			byte[] pal;
 			for(int i = 0; i < msgV2.sprNum; i++)
 			{
 				spr = getSprMsgV2(i);
 				if(spr.group == group && spr.index == index)
 				{
 					//转移事件
-					return getSprDataV2(i,type);
+					return getSprDataV2(i, out pal, type);
 				}
 			}
 
