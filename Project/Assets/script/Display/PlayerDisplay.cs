@@ -1552,7 +1552,7 @@ public class PlayerDisplay : BaseResLoader {
 		if (ani != null) {
 			ActionFlip flip;
 			ActionDrawMode drawMode;
-			var frame = ani.GetCurImageFrame (flip, drawMode);
+			var frame = ani.GetCurImageFrame (out flip, out drawMode);
 			if (frame != null) {
 				frame.GetLocalPalletTexLink (out group, out index);
 			} else {
