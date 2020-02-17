@@ -660,6 +660,7 @@ namespace Mugen
 				if (!isPalletLink) {
 					byte[] pal = reader.GetPal (spr.group, spr.index);
 					data.pallet = GetPalletFromByteArr (pal);
+					data.palletLink = new KeyValuePair<short, short> (-1, -1);
 				} else {
 					data.palletLink = new KeyValuePair<short, short> ((short)linkPalGroup, (short)linkPalIndex);
 					data.pallet = null;
