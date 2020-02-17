@@ -21,6 +21,7 @@ stcommon = ..\..\data\common1.cns
 st = AshXIII.cns
 st1 = AshXIII1.cns
 st2 = AshXIII2.cns
+lua	= AshXIII
 [Palette Keymap]
 a = 4
 b = 5
