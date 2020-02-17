@@ -21,7 +21,7 @@ public class SceneImageRes : MonoBehaviour {
 		if (string.IsNullOrEmpty(fileName) || config == null || config.BgCfg == null)
             return false;
 
-        m_ImgLib = new ImageLibrary(Is32BitPallet);
+		m_ImgLib = new ImageLibrary(Is32BitPallet, true);
 		if (!m_ImgLib.LoadScene(fileName, config))
             return false;
         LoadOk = true;
