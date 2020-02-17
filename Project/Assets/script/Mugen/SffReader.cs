@@ -891,18 +891,21 @@ namespace sff
 					// 暂时不做PNG类型的支持
 					if (spr.fmt == 10 || spr.fmt == 11 || spr.fmt == 12)
 						return false;
+					/*
+					if (spr.group == 1005 && spr.index == 5) {
+						Debug.Log ("ok");
+					}*/
 
-					spr.AssignTo(ref linkSpr);
+					spr.AssignTo (ref linkSpr);
+					bool isFinded = false;
 					#if _USE_PAL_LINK
-					while (true)
+					if (spr.palIndex != i)
 					{
-						int palGroup = linkSpr.group;
-						int palIndex = linkSpr.index;
 						linkSpr = getSprMsgV2 (linkSpr.palIndex, linkSpr);
-						if (linkSpr.group == palGroup && linkSpr.index == palIndex)
-							break;
+						isFinded = true;
 					}
 					#endif
+
 
 					byte[] pal;
 					bool isHasPal = IsHasPalMap (linkSpr.group, linkSpr.index);
@@ -919,7 +922,7 @@ namespace sff
 
 					int linkPalGroup;
 					int linkPalIndex;
-					if (linkSpr.group == spr.group && linkSpr.index == spr.index) {
+					if (!isFinded) {
 						linkPalGroup = -1;
 						linkPalIndex = -1;
 					} else
