@@ -240,7 +240,7 @@ namespace Mugen
 								aniInfo.transType = TransType.none;
 							}
 							else if (string.Compare (value, "add", true) == 0) {
-								staticInfo.transType = TransType.Add;
+								aniInfo.transType = TransType.Add;
 							}
                         } else if (string.Compare(key, "mask", true) == 0)
                         {
