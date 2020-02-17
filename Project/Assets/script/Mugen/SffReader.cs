@@ -875,6 +875,9 @@ namespace sff
 				return false;
 			sprMsgV2 spr = null;
 			sprMsgV2 linkSpr = null;
+			#if _USE_PAL_LINK
+			Dictionary<int, KeyValuePair<ushort, ushort>> palIndexMap = null;
+			#endif
 			for (int i = 0; i < getSprNum (); ++i) {
 				spr = getSprMsgV2 (i, spr);
 				if (spr.dataLen == 0) {
@@ -894,21 +897,27 @@ namespace sff
 					/*
 					if (spr.group == 1005 && spr.index == 5) {
 						Debug.Log ("ok");
-					}*/
+					}
+					*/
 
-					spr.AssignTo (ref linkSpr);
-					bool isFinded = false;
+					int linkPalGroup = -1;
+					int linkPalIndex = -1;
+					bool isPattleLink = false;
 					#if _USE_PAL_LINK
-					if (spr.palIndex != i)
+					if (palIndexMap != null)
 					{
-						linkSpr = getSprMsgV2 (linkSpr.palIndex, linkSpr);
-						isFinded = true;
+						KeyValuePair<ushort, ushort> vvv;
+						isPattleLink  = palIndexMap.TryGetValue(spr.palIndex, out vvv);
+						if (isPattleLink)
+						{
+							linkPalGroup = vvv.Key;
+							linkPalIndex = vvv.Value;
+						}
 					}
 					#endif
 
-
 					byte[] pal;
-					bool isHasPal = IsHasPalMap (linkSpr.group, linkSpr.index);
+					bool isHasPal = isPattleLink || IsHasPalMap (spr.group, spr.index);
 
 					byte[] colors = getSprDataV2 (i, out pal, FI_FORMAT.FIF_UNKNOWN, !isHasPal); 
 					if (colors == null || colors.Length <= 0)
@@ -916,20 +925,16 @@ namespace sff
 					
 
 					if (!isHasPal && pal != null && pal.Length > 0) {
-						KeyValuePair<ushort, ushort> key = new KeyValuePair<ushort, ushort> (linkSpr.group, linkSpr.index);
+						KeyValuePair<ushort, ushort> key = new KeyValuePair<ushort, ushort> (spr.group, spr.index);
 						PalMap.Add (key, pal);
+						#if _USE_PAL_LINK
+						if (palIndexMap == null)
+							palIndexMap = new Dictionary<int, KeyValuePair<ushort, ushort>> ();
+						palIndexMap.Add(spr.palIndex, key);
+						#endif
 					}
 
-					int linkPalGroup;
-					int linkPalIndex;
-					if (!isFinded) {
-						linkPalGroup = -1;
-						linkPalIndex = -1;
-					} else
-					{
-						linkPalGroup = linkSpr.group;
-						linkPalIndex = linkSpr.index;
-					}
+
 					OnRawForeachV2 (this, spr, -1, -1, linkPalGroup, linkPalIndex, colors);
 				}
 			}
