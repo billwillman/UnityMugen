@@ -891,13 +891,8 @@ namespace sff
 					// 暂时不做PNG类型的支持
 					if (spr.fmt == 10 || spr.fmt == 11 || spr.fmt == 12)
 						return false;
-					byte[] pal;
-					bool isHasPal = IsHasPalMap (spr.palIndex);
-					byte[] colors = getSprDataV2 (i, out pal, FI_FORMAT.FIF_UNKNOWN, !isHasPal); 
-					if (colors == null || colors.Length <= 0)
-						return false;
-					spr.AssignTo(ref linkSpr);
 
+					spr.AssignTo(ref linkSpr);
 					while (true)
 					{
 						int palGroup = linkSpr.group;
@@ -906,11 +901,31 @@ namespace sff
 						if (linkSpr.group == palGroup && linkSpr.index == palIndex)
 							break;
 					}
+
+					byte[] pal;
+					bool isHasPal = IsHasPalMap (linkSpr.group, linkSpr.index);
+
+					byte[] colors = getSprDataV2 (i, out pal, FI_FORMAT.FIF_UNKNOWN, !isHasPal); 
+					if (colors == null || colors.Length <= 0)
+						return false;
+					
+
 					if (!isHasPal && pal != null && pal.Length > 0) {
 						KeyValuePair<ushort, ushort> key = new KeyValuePair<ushort, ushort> (linkSpr.group, linkSpr.index);
 						PalMap.Add (key, pal);
 					}
-					OnRawForeachV2 (this, spr, -1, -1, colors, linkSpr.group, linkSpr.index);
+
+					int linkPalGroup;
+					int linkPalIndex;
+					if (linkSpr.group == spr.group && linkSpr.index == spr.index) {
+						linkPalGroup = -1;
+						linkPalIndex = -1;
+					} else
+					{
+						linkPalGroup = linkSpr.group;
+						linkPalIndex = linkSpr.index;
+					}
+					OnRawForeachV2 (this, spr, -1, -1, linkPalGroup, linkPalIndex, colors);
 				}
 			}
 			return true;

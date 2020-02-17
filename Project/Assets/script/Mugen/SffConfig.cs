@@ -617,67 +617,71 @@ namespace Mugen
 
 		private sff.sffReader.TOnRawForeachV2 m_OnSffReaderV2 = null;
 		private byte[] m_lineBuffer = null;
-		private void OnSffReaderV2(sff.sprMsgV2 spr, int linkGoup, int linkIndex, byte[] rawData, byte[] pal)
+		private void OnSffReaderV2(sff.sffReader reader, sff.sprMsgV2 spr, int linkGoup, int linkIndex, int linkPalGroup, int linkPalIndex, byte[] rawData)
 		{
-			KeyValuePair<uint, uint> key = new KeyValuePair<uint, uint>((uint)spr.group, (uint)spr.index);
-			if (mPcxDataMap.ContainsKey(key))
-				return;
+			bool isImageLink = linkGoup >= 0 && linkIndex >= 0;
+			if (!isImageLink) {
 
-			PCXHEADER header = new PCXHEADER();
-			header.widht = spr.width;
-			header.height = spr.height;
-			//	header.x = (ushort)spr.x;
-			//header.y = (ushort)spr.y;
-			header.x = 0;
-			header.y = 0;
-			header.NPlanes = 1;
+				KeyValuePair<uint, uint> key = new KeyValuePair<uint, uint>((uint)spr.group, (uint)spr.index);
+				if (mPcxDataMap.ContainsKey(key))
+					return;
 
-			//header.widht = (ushort)(header.widht - header.x + 1);
-			//header.height = (ushort)(header.height - header.y + 1);
+				PCXHEADER header = new PCXHEADER ();
+				header.widht = spr.width;
+				header.height = spr.height;
+				//	header.x = (ushort)spr.x;
+				//header.y = (ushort)spr.y;
+				header.x = 0;
+				header.y = 0;
+				header.NPlanes = 1;
 
-			if (rawData != null && rawData.Length > 0)
-			{
-				int chgSize = header.NPlanes * header.widht;
-				byte[] temp = null;
-				if (m_lineBuffer != null && m_lineBuffer.Length >= chgSize)
-					temp = m_lineBuffer;
-				else
-				{
-					temp = new byte[chgSize];
-					m_lineBuffer = temp;
+				if (rawData != null && rawData.Length > 0) {
+					int chgSize = header.NPlanes * header.widht;
+					byte[] temp = null;
+					if (m_lineBuffer != null && m_lineBuffer.Length >= chgSize)
+						temp = m_lineBuffer;
+					else {
+						temp = new byte[chgSize];
+						m_lineBuffer = temp;
+					}
+					for (int y = 0; y < (int)header.height / 2; ++y) {
+						int x = ((int)header.height - 1 - y);
+						int s = y * chgSize;
+						int d = x * chgSize;
+						Buffer.BlockCopy (rawData, d, temp, 0, chgSize);
+						Buffer.BlockCopy (rawData, s, rawData, d, chgSize);
+						Buffer.BlockCopy (temp, 0, rawData, s, chgSize);
+					}
 				}
-				for (int y = 0; y < (int)header.height / 2; ++y)
-				{
-					int x = ((int)header.height - 1 - y);
-					int s = y * chgSize;
-					int d = x * chgSize;
-					Buffer.BlockCopy(rawData, d, temp, 0, chgSize);
-					Buffer.BlockCopy(rawData, s, rawData, d, chgSize);
-					Buffer.BlockCopy(temp, 0, rawData, s, chgSize);
+
+				PCXDATA data = new PCXDATA ();
+				data.data = rawData;
+				bool isPalletLink = (linkPalGroup >= 0 && linkPalIndex >= 0) && ((linkPalGroup != spr.group) || (linkPalIndex != spr.index));
+				if (!isPalletLink) {
+					byte[] pal = reader.GetPal (spr.group, spr.index);
+					data.pallet = GetPalletFromByteArr (pal);
+				} else {
+					data.palletLink = new KeyValuePair<short, short> ((short)linkPalGroup, (short)linkPalIndex);
+					data.pallet = null;
 				}
+
+				KeyValuePair<PCXHEADER, PCXDATA> value = new KeyValuePair<PCXHEADER, PCXDATA> (header, data);
+				mPcxDataMap.Add (key, value);
 			}
 
-			PCXDATA data = new PCXDATA();
-			data.data = rawData;
-			data.pallet = GetPalletFromByteArr(pal);
-			data.palletLink = new KeyValuePair<short, short>((short)linkGoup, (short)linkIndex);
 
-			KeyValuePair<PCXHEADER, PCXDATA> value = new KeyValuePair<PCXHEADER, PCXDATA>(header, data);
-			mPcxDataMap.Add(key, value);
-
-			SFFSUBHEADER subHeader = new SFFSUBHEADER();
-			subHeader.GroubNumber = (short)key.Key;
-			subHeader.ImageNumber = (short)key.Value;
+			SFFSUBHEADER subHeader = new SFFSUBHEADER ();
+			subHeader.GroubNumber = (short)spr.group;
+			subHeader.ImageNumber = (short)spr.index;
 			subHeader.x = spr.x;
 			subHeader.y = spr.y;
 
-
-			if (value.Value.IsVaildPalletLink)
-			{
-				subHeader.IndexOfPrevious = (short)GetSubHeaderIndex(value.Value.palletLink.Key, value.Value.palletLink.Value);
-			}
-			else
+			if (isImageLink) {
+				subHeader.IndexOfPrevious = (short)GetSubHeaderIndex (linkGoup, linkIndex);
+				subHeader.LenghtOfSubheader = 0;
+			} else {
 				subHeader.IndexOfPrevious = -1;
+			}
 
 			SubHeaders.Add(subHeader);
 		}
@@ -1704,7 +1708,7 @@ namespace Mugen
                     {
                         if ((sub.subfileLength == 0) && (sub.IndexOfPrevious > 0) && (sub.IndexOfPrevious <= mSubHeadersV2.Count))
                         {
-                            sub = mSubHeadersV2[sub.IndexOfPrevious - 1];
+                            sub = mSubHeadersV2[sub.IndexOfPrevious];
                         }
                         else
                             break;
