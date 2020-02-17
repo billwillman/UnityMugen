@@ -50,5 +50,6 @@ public class PlayerImageRes : MonoBehaviour {
 		var player = loadPlayer.GetGlobalPayer ();
 		string spriteName = GlobalConfigMgr.GetConfigFileNameNoExt(player.PlayerCfg.Files.sprite);
         LoadOk = m_ImgLib.LoadChar(loadPlayer.GetPlayerName(), player.AirCfg, spriteName); 
+		Is32BitPallet = m_ImgLib.Is32BitPallet;
 	}
 }

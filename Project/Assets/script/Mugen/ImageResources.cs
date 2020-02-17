@@ -540,6 +540,10 @@ namespace Mugen
 				return false;
 			}
 
+			// v2版本强制32位色（原因：有优化）
+			if (sf.Version == SffVersion.v2)
+				mIs32BitPallet = true;
+
             if (airCfg == null)
             {
                 foreach (PlayerState group in PlayerStateEnumValues.GetValues())

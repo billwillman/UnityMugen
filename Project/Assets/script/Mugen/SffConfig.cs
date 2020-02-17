@@ -371,11 +371,27 @@ namespace Mugen
 	}
 
 
+	public enum SffVersion
+	{
+		none,
+		v1,
+		v2
+	}
+
 	public class SffFile
 	{
 		private static readonly string _cElecbyteSpr = "ElecbyteSpr";
 
 		private Color32[] mNormalPallet = null;
+		private SffVersion mVersion = SffVersion.none;
+
+		public SffVersion Version
+		{
+			get
+			{
+				return mVersion;
+			}
+		}
 
 		// Load Normal Pallet
 		private bool LoadActToSff(byte[] actSource)
@@ -495,7 +511,50 @@ namespace Mugen
 			return GeneratorPalletTexture(pallet, is32Bit);
 		}
 
-		public static Texture2D GeneratorPalletTexture(Color32[] pallet, bool is32Bit)
+		// pallet: RGBA32
+		unsafe public static Texture2D GeneratorPalletTexture(byte[] pallet, bool is32Bit)
+		{
+			if ((pallet == null) || (pallet.Length <= 0))
+				return null;
+			TextureFormat fmt;
+			if (is32Bit)
+				fmt = TextureFormat.RGBA32;
+			else
+				fmt = TextureFormat.ARGB4444;
+
+			int palLen = (int)(pallet.Length/4);
+			byte[] raw;
+			if (!is32Bit)
+			{
+				raw = new byte[pallet.Length * 2];
+
+				for (int idx = 0; idx < palLen; ++idx)
+				{
+					int srcIdx = idx * 4;
+					int rawIdx = idx * 2;
+					int r = pallet[srcIdx++];
+					int g = pallet[srcIdx++];
+					int b = pallet[srcIdx++];
+					int a = pallet[srcIdx++];
+
+					byte v = (byte)(((b & 0xF0) >> 4) & ((g & 0xF0)));
+					raw [rawIdx++] = v;
+					v = (byte)(((r & 0xF0) >> 4) & ((a & 0xF0)));
+					raw [rawIdx++] = v;
+				}
+			} else
+				raw = pallet;
+
+			Texture2D ret = new Texture2D(palLen, 1, fmt, false, false);
+			ret.filterMode = FilterMode.Point;
+			ret.wrapMode = TextureWrapMode.Clamp;
+			ret.LoadRawTextureData (raw);
+			ret.Apply();
+
+			return ret;
+		}
+
+		unsafe public static Texture2D GeneratorPalletTexture(Color32[] pallet, bool is32Bit)
 		{
 			if ((pallet == null) || (pallet.Length <= 0))
 				return null;
@@ -504,37 +563,44 @@ namespace Mugen
 				fmt = TextureFormat.ARGB32;
 			else
 				fmt = TextureFormat.ARGB4444;
-			Texture2D ret = new Texture2D(pallet.Length, 1, fmt, false, false);
-			ret.filterMode = FilterMode.Point;
-			ret.wrapMode = TextureWrapMode.Clamp;
 
 			byte[] raw;
 			if (is32Bit)
 				raw = new byte[pallet.Length * 4];
 			else
 				raw = new byte[pallet.Length * 2];
-
-			for (int idx = 0; idx < pallet.Length; ++idx)
-			{
-				Color32 color = pallet[idx];
-				if (is32Bit)
+			
+			if (!is32Bit) {
+				fmt = TextureFormat.RGBA32;
+				fixed(Color32* src = pallet)
 				{
-					int rawIdx = idx * 4;
-					raw[rawIdx++] = color.a;
-					raw[rawIdx++] = color.r;
-					raw[rawIdx++] = color.g;
-					raw[rawIdx++] = color.b;
-				} else
-				{
-					int rawIdx = idx * 2;
-					byte v = (byte)(((color.b & 0xF0) >> 4) & ((color.g & 0xF0)));
-					raw[rawIdx++] = v;
-					v = (byte)(((color.r & 0xF0) >> 4) & ((color.a & 0xF0)));
-					raw[rawIdx++] = v;
+					Marshal.Copy((IntPtr)src, raw, 0, raw.Length);
 				}
+			} else {
+				for (int idx = 0; idx < pallet.Length; ++idx) {
+					Color32 color = pallet [idx];
+					if (is32Bit) {
+						int rawIdx = idx * 4;
+						raw [rawIdx++] = color.a;
+						raw [rawIdx++] = color.r;
+						raw [rawIdx++] = color.g;
+						raw [rawIdx++] = color.b;
+					} else {
+						int rawIdx = idx * 2;
+						byte v = (byte)(((color.b & 0xF0) >> 4) & ((color.g & 0xF0)));
+						raw [rawIdx++] = v;
+						v = (byte)(((color.r & 0xF0) >> 4) & ((color.a & 0xF0)));
+						raw [rawIdx++] = v;
+					}
+				}
+
+
 			}
 
-			ret.LoadRawTextureData(raw);
+			Texture2D ret = new Texture2D(pallet.Length, 1, fmt, false, false);
+			ret.filterMode = FilterMode.Point;
+			ret.wrapMode = TextureWrapMode.Clamp;
+			ret.LoadRawTextureData (raw);
 			ret.Apply();
 
 			return ret;
@@ -773,6 +839,7 @@ namespace Mugen
 			byte v4;
 			if (v1 == 2)
 			{
+				mVersion = SffVersion.v2;
 
 				if (Load_V2_FromSffReader(bytes)) {
 					mIsVaild = true;
@@ -815,6 +882,7 @@ namespace Mugen
 			}
 			else if (v1 == 1)
 			{
+				mVersion = SffVersion.v1;
 
 				SFFHEADER header = new SFFHEADER();
 				int headerSize = Marshal.SizeOf(header);
