@@ -335,7 +335,7 @@ namespace Mugen
 	public struct PCXDATA
 	{
 		public byte[] data;
-		public Color32[] pallet;
+		public byte[] pallet;
 
 		public bool Is24Bit
 		{
@@ -344,14 +344,7 @@ namespace Mugen
 			}
 		}
 
-		public Color32[] Get24BitColorData()
-		{
-			if (!Is24Bit)
-				return null;
-			return pallet;
-		}
-
-		public static Texture2D GetPalletTexture(Color32[] pallet, bool is32Bit)
+		public static Texture2D GetPalletTexture(byte[] pallet, bool is32Bit)
 		{
 			return SffFile.GeneratorPalletTexture(pallet, is32Bit);
 		}
@@ -725,7 +718,8 @@ namespace Mugen
 				bool isPalletLink = (linkPalGroup >= 0 && linkPalIndex >= 0) && ((linkPalGroup != spr.group) || (linkPalIndex != spr.index));
 				if (!isPalletLink) {
 					byte[] pal = reader.GetPal (spr.group, spr.index);
-					data.pallet = GetPalletFromByteArr (pal);
+					//data.pallet = GetPalletFromByteArr (pal);
+					data.pallet = pal;
 					data.palletLink = new KeyValuePair<short, short> (-1, -1);
 				} else {
 					data.palletLink = new KeyValuePair<short, short> ((short)linkPalGroup, (short)linkPalIndex);
@@ -1220,7 +1214,7 @@ namespace Mugen
 					{
 						if (stream.Position + 256 * 3 <= stream.Length)
 						{
-							pcxData.pallet = new Color32[256];
+							pcxData.pallet = new byte[256 * 4];
 							for (int i = 0; i != 256; ++i)
 							{
 								byte r = (byte)stream.ReadByte();
@@ -1232,13 +1226,19 @@ namespace Mugen
 									a = 0;
 								else
 								{
-									if ((r == pcxData.pallet[i - 1].r) && (g == pcxData.pallet[i - 1].g) && (b == pcxData.pallet[i - 1].b))
+									int lastPalIdx = (i - 1) * 4;
+									// r, g, b, a
+									if ((r == pcxData.pallet[lastPalIdx++]) && (g == pcxData.pallet[lastPalIdx++]) && (b == pcxData.pallet[lastPalIdx++]))
 										a = 0;
 									else
 										a = 0xFF;
 								}
 
-								pcxData.pallet[i] = new Color32(r, g, b, a);
+								int palIdx = i * 4;
+								pcxData.pallet[palIdx++] = r;
+								pcxData.pallet[palIdx++] = g;
+								pcxData.pallet[palIdx++] = b;
+								pcxData.pallet[palIdx++] = a;
 							}
 							m_currentLink = new KeyValuePair<short, short>(subHeader.GroubNumber, subHeader.ImageNumber);
 						}
@@ -1349,7 +1349,7 @@ namespace Mugen
 				if ((s == 12) && !subHeader.PalletSame && !HasNormalPallet && header.NPlanes <= 1)
 				{           // if (!subHeader.PalletSame && !HasNormalPallet && header.NPlanes <= 1)
 							// load pallet
-					pcxData.pallet = new Color32[256];
+					pcxData.pallet = new byte[256 * 4];
 					for (int i = 0; i < 256; ++i) {
 						byte r = source[offset++];
 						byte g = source[offset++];
@@ -1358,12 +1358,19 @@ namespace Mugen
 						if (i == 0)
 							a = 0;
 						else {
-							if ((r == pcxData.pallet[i - 1].r) && (g == pcxData.pallet[i - 1].g) && (b == pcxData.pallet[i - 1].b))
+							int lastPalIdx = (i - 1) * 4;
+							// r, g, b, a
+							if ((r == pcxData.pallet[lastPalIdx++]) && (g == pcxData.pallet[lastPalIdx++]) && (b == pcxData.pallet[lastPalIdx++]))
 								a = 0;
 							else
 								a = 0xFF;
 						}
-						pcxData.pallet[i] = new Color32(r, g, b, a);
+
+						int palIdx = i * 4;
+						pcxData.pallet [palIdx++] = r;
+						pcxData.pallet [palIdx++] = g;
+						pcxData.pallet [palIdx++] = b;
+						pcxData.pallet [palIdx++] = a;
 					}
 					m_currentLink = new KeyValuePair<short, short>(subHeader.GroubNumber, subHeader.ImageNumber);
 				} else

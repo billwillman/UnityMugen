@@ -11,7 +11,7 @@ namespace Mugen
 	class ImageFrameData
 	{
 		public byte[] data;
-		public Color32[] pallet;
+		public byte[] pallet;
 		public int width;
 		public int height;
 		public float offX;
@@ -33,7 +33,7 @@ namespace Mugen
 		}
 
 		public ImageFrame(ImageLibrary parentLib, int image, int width, int height, float offsetX, float offsetY, string name, 
-			KeyValuePair<short, short> palletLink, byte[] indexs, Color32[] pallet)
+			KeyValuePair<short, short> palletLink, byte[] indexs, byte[] pallet)
 		{
 			mParentLib = parentLib;
 			m_Image = image;
@@ -539,10 +539,6 @@ namespace Mugen
 				ClearAll ();
 				return false;
 			}
-
-			// v2版本强制32位色（原因：有优化）
-			if (sf.Version == SffVersion.v2)
-				mIs32BitPallet = true;
 
             if (airCfg == null)
             {
