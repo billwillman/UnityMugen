@@ -375,7 +375,7 @@ namespace Mugen
 	{
 		private static readonly string _cElecbyteSpr = "ElecbyteSpr";
 
-		private Color32[] mNormalPallet = null;
+		private byte[] mNormalPallet = null;
 		private SffVersion mVersion = SffVersion.none;
 
 		public SffVersion Version
@@ -395,7 +395,7 @@ namespace Mugen
 			int n = (int)(actSource.Length / 3);
 			if (n <= 0)
 				return false;
-			mNormalPallet = new Color32[n];
+			mNormalPallet = new byte[n * 4];
 			int offset = 0;
 			for (int j = n - 1; j >= 0; --j)
 			{
@@ -407,13 +407,19 @@ namespace Mugen
 					a = 0;
 				else
 				{
-
-					if ((r == mNormalPallet[j - 1].r) && (g == mNormalPallet[j - 1].g) && (b == mNormalPallet[j - 1].b))
+					int lastPalIdx = (j - 1) * 4;
+					// r, g, b, a
+					if ((r == mNormalPallet[lastPalIdx++]) && (g == mNormalPallet[lastPalIdx++]) && (b == mNormalPallet[lastPalIdx++]))
 						a = 0;
 					else
 						a = 0xFF;
 				}
-				mNormalPallet[j] = new Color32(r, g, b, a);
+
+				int palIdx = j * 4;
+				mNormalPallet [palIdx] = r;
+				mNormalPallet [palIdx] = g;
+				mNormalPallet [palIdx] = b;
+				mNormalPallet [palIdx] = a;
 			}
 
 			return true;
@@ -480,7 +486,7 @@ namespace Mugen
 			if (n <= 0)
 				return null;
 
-			Color32[] pallet = new Color32[n];
+			byte[] pallet = new byte[n * 4];
 			int offset = 0;
 			for (int j = n - 1; j >= 0; --j)
 			{
@@ -492,13 +498,19 @@ namespace Mugen
 					a = 0;
 				else
 				{
-
-					if ((r == pallet[j - 1].r) && (g == pallet[j - 1].g) && (b == pallet[j - 1].b))
+					int lastPalIdx = (j - 1) * 4;
+					// r, g, b, a
+					if ((r == pallet[lastPalIdx++]) && (g == pallet[lastPalIdx++]) && (b == pallet[lastPalIdx++]))
 						a = 0;
 					else
 						a = 0xFF;
 				}
-				pallet[j] = new Color32(r, g, b, a);
+
+				int palIdx = j * 4;
+				pallet [palIdx++] = r;
+				pallet [palIdx++] = g;
+				pallet [palIdx++] = b;
+				pallet [palIdx++] = a;
 			}
 
 			return GeneratorPalletTexture(pallet, is32Bit);
@@ -547,6 +559,7 @@ namespace Mugen
 			return ret;
 		}
 
+		/*
 		unsafe public static Texture2D GeneratorPalletTexture(Color32[] pallet, bool is32Bit)
 		{
 			if ((pallet == null) || (pallet.Length <= 0))
@@ -597,7 +610,7 @@ namespace Mugen
 			ret.Apply();
 
 			return ret;
-		}
+		}*/
 
 		public bool ChangeNormalPallet(string playerName, string name)
 		{
