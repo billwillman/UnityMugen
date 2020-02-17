@@ -57,7 +57,7 @@ namespace Mugen
 			if (mLocalPalletTex == null)
 				mLocalPalletTex = SffFile.GeneratorPalletTexture (m_TempData.pallet, mParentLib.Is32BitPallet); 
 
-			if (Data == null || Data.texture == null) {
+			if (m_Sprite == null || m_Sprite.texture == null) {
 				Texture2D tex = SffFile.GetIndexTexture (m_TempData.width, m_TempData.height, m_TempData.data);
 				SetTexture2D (tex, m_TempData.offX, m_TempData.offY, m_TempData.name);
 			}
