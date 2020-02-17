@@ -52,7 +52,7 @@ namespace Mugen
 
 		private void GeneratorTempDataToTexture()
 		{
-			if (m_TempData == null)
+			if (m_TempData == null || AppConfig.IsAppQuit)
 				return;
 			if (mLocalPalletTex == null)
 				mLocalPalletTex = SffFile.GeneratorPalletTexture (m_TempData.pallet, mParentLib.Is32BitPallet); 
