@@ -1,6 +1,4 @@
-﻿#define _Use_TempData
-
-using System;
+﻿using System;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -242,9 +240,18 @@ namespace Mugen
 	}
 
 	public class ImageLibrary: DisposeObject {
-		public ImageLibrary(bool is32BitPallet = true)
+		public ImageLibrary(bool is32BitPallet = true, bool isLoadImageAll = false)
 		{
 			mIs32BitPallet = is32BitPallet;
+			mLoadImageAll = isLoadImageAll;
+		}
+
+		public bool IsLoadImageAll
+		{
+			get
+			{
+				return mLoadImageAll;
+			}
 		}
 
 		public bool Is32BitPallet
@@ -431,13 +438,16 @@ namespace Mugen
             float offX = ((float)(d.Key.x + h.x)) / d.Key.widht;//+ 1.0f;
             float offY = -((float)(d.Key.y + h.y)) / d.Key.height + 1.0f;
 
-		
-			#if !_Use_TempData
-            Texture2D tex = sf.GetIndexTexture((uint)h.GroubNumber, (uint)h.ImageNumber);
-            if (tex != null)
-			#else
-			if (d.Value.data != null && d.Value.data.Length > 0)
-			#endif
+			bool isVaild;
+			Texture2D tex = null;
+			if (IsLoadImageAll) {
+				tex = sf.GetIndexTexture ((uint)h.GroubNumber, (uint)h.ImageNumber);
+				isVaild = tex != null;
+			} else {
+				isVaild = d.Value.data != null && d.Value.data.Length > 0;
+			}
+				
+			if (isVaild)
             {
                 KeyValuePair<short, short> palletLink;
                 if (d.Value.IsVaildPalletLink)
@@ -445,13 +455,14 @@ namespace Mugen
                 else
                     palletLink = new KeyValuePair<short, short>(-1, -1);
 				// 优化按照要求再生成贴图
-				#if _Use_TempData
-				ImageFrame frame = new ImageFrame(this, h.ImageNumber, d.Key.widht, d.Key.height, offX, offY, 
-										charName, palletLink, d.Value.data, d.Value.pallet);
-				#else
-                ImageFrame frame = new ImageFrame(this, h.ImageNumber, tex, offX, offY, charName,
-                    palletLink, d.Value.GetPalletTexture(mIs32BitPallet));
-				#endif
+				ImageFrame frame;
+				if (!IsLoadImageAll) {
+					frame = new ImageFrame (this, h.ImageNumber, d.Key.widht, d.Key.height, offX, offY, 
+						                   charName, palletLink, d.Value.data, d.Value.pallet);
+				} else {
+					frame = new ImageFrame (this, h.ImageNumber, tex, offX, offY, charName,
+						                   palletLink, d.Value.GetPalletTexture (mIs32BitPallet));
+				}
 
                 AddImageFrame((PlayerState)h.GroubNumber, frame);
             }
@@ -747,6 +758,7 @@ namespace Mugen
         private Dictionary<KeyValuePair<int, int>, KeyValuePair<int, int>> mGroupImageLinkMap = new Dictionary<KeyValuePair<int, int>, KeyValuePair<int, int>>();
 
 		private bool mIs32BitPallet = true;
+		private bool mLoadImageAll = false;
 		private Dictionary<int, List<ImageAnimateNode>> mStateAniMap = new Dictionary<int, List<ImageAnimateNode>>();
 	}
 }

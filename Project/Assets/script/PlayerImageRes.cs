@@ -9,6 +9,7 @@ public class PlayerImageRes : MonoBehaviour {
 	private ImageLibrary m_ImgLib = null;
 
 	public bool Is32BitPallet = true;
+	public bool LoadImageAll = false;
 
 	public bool LoadOk = false;
 
@@ -45,11 +46,12 @@ public class PlayerImageRes : MonoBehaviour {
 	{
 		Clear ();
 
-		m_ImgLib = new ImageLibrary (Is32BitPallet);
+		m_ImgLib = new ImageLibrary (Is32BitPallet, LoadImageAll);
 		DefaultLoaderPlayer loadPlayer = GetComponent<DefaultLoaderPlayer> ();
 		var player = loadPlayer.GetGlobalPayer ();
 		string spriteName = GlobalConfigMgr.GetConfigFileNameNoExt(player.PlayerCfg.Files.sprite);
         LoadOk = m_ImgLib.LoadChar(loadPlayer.GetPlayerName(), player.AirCfg, spriteName); 
 		Is32BitPallet = m_ImgLib.Is32BitPallet;
+		LoadImageAll = m_ImgLib.IsLoadImageAll; 
 	}
 }

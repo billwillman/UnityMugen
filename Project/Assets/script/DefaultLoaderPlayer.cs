@@ -11,8 +11,6 @@ public class DefaultLoaderPlayer : MonoBehaviour {
 	public string CnsName = string.Empty;
     //public InputPlayerType PlayerType = InputPlayerType.none;
 	public bool Shader_RGB_Zero_Alpha_One = true;
-	// 所有贴图一次性加载
-	public bool LoadImageAll = false;
 	public float Scale = 1.0f;
 
     private PlayerImageRes m_ImageLibrary = null;
