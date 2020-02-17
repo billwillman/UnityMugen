@@ -299,6 +299,7 @@ public class SceneLayerDisplay : BaseResLoader {
 			m_MaskType = anInfo.mask;
 
 			m_SceneType = SceneLayerType.Animation;
+			m_TransType = anInfo.transType;
 			InitSpriteRender (anInfo.transType);
 			m_IsInited = true;
 
