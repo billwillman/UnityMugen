@@ -1,4 +1,6 @@
-﻿using System;
+﻿#define _Use_TempData
+
+using System;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,6 +8,17 @@ using Utils;
 
 namespace Mugen
 {
+	class ImageFrameData
+	{
+		public byte[] data;
+		public Color32[] pallet;
+		public int width;
+		public int height;
+		public float offX;
+		public float offY;
+		public string name;
+	}
+
 	public class ImageFrame: DisposeObject
 	{
 		public ImageFrame(ImageLibrary parentLib, int image, Texture2D tex, float offsetX, 
@@ -15,13 +28,53 @@ namespace Mugen
             m_Image = image;
 			mLocalPalletTex = localPalletTex;
 			mLoaclPalletTexLink = palletLink;
+			m_TempData = null;
 			SetTexture2D(tex, offsetX, offsetY, name);
+		}
+
+		public ImageFrame(ImageLibrary parentLib, int image, int width, int height, float offsetX, float offsetY, string name, 
+			KeyValuePair<short, short> palletLink, byte[] indexs, Color32[] pallet)
+		{
+			mParentLib = parentLib;
+			m_Image = image;
+			mLocalPalletTex = null;
+			mLoaclPalletTexLink = palletLink;
+
+			m_TempData = new ImageFrameData ();
+			m_TempData.data = indexs;
+			m_TempData.pallet = pallet;
+			m_TempData.width = width;
+			m_TempData.height = height;
+			m_TempData.offX = offsetX;
+			m_TempData.offY = offsetY;
+			m_TempData.name = name;
+		}
+
+		private void GeneratorTempDataToTexture()
+		{
+			if (m_TempData == null)
+				return;
+			if (mLocalPalletTex == null)
+				mLocalPalletTex = SffFile.GeneratorPalletTexture (m_TempData.pallet, mParentLib.Is32BitPallet); 
+
+			if (Data == null || Data.texture == null) {
+				Texture2D tex = SffFile.GetIndexTexture (m_TempData.width, m_TempData.height, m_TempData.data);
+				SetTexture2D (tex, m_TempData.offX, m_TempData.offY, m_TempData.name);
+			}
+
+			m_TempData = null;
 		}
 
 		public Sprite Data
 		{
-			get;
-			protected set;
+			get {
+				if (m_Sprite == null || m_Sprite.texture == null)
+					GeneratorTempDataToTexture ();
+				return m_Sprite;
+			}
+			protected set {
+				m_Sprite = value;
+			}
 		}
 
 		private void SetTexture2D(Texture2D tex,  float offsetX, float offsetY, string name)
@@ -121,6 +174,10 @@ namespace Mugen
 							return frame.LocalPalletTex;
 						}
 					}
+				} else {
+					GeneratorTempDataToTexture ();
+					if (mLocalPalletTex != null)
+						return mLocalPalletTex;
 				}
 				return null;
 			}
@@ -160,6 +217,8 @@ namespace Mugen
 		private KeyValuePair<short, short> mLoaclPalletTexLink = new KeyValuePair<short, short>(-1, -1);
         private int m_Image = 0;
         private Vector2 m_OffsetPos = Vector2.zero;
+		private ImageFrameData m_TempData = null;
+		private Sprite m_Sprite = null;
 	}
 
 	public struct ImageAnimateNode
@@ -366,17 +425,27 @@ namespace Mugen
             float offX = ((float)(d.Key.x + h.x)) / d.Key.widht;//+ 1.0f;
             float offY = -((float)(d.Key.y + h.y)) / d.Key.height + 1.0f;
 
+		
+			#if !_Use_TempData
             Texture2D tex = sf.GetIndexTexture((uint)h.GroubNumber, (uint)h.ImageNumber);
-
             if (tex != null)
+			#else
+			if (d.Value.data != null && d.Value.data.Length > 0)
+			#endif
             {
                 KeyValuePair<short, short> palletLink;
                 if (d.Value.IsVaildPalletLink)
                     palletLink = d.Value.palletLink;
                 else
                     palletLink = new KeyValuePair<short, short>(-1, -1);
+				// 优化按照要求再生成贴图
+				#if _Use_TempData
+				ImageFrame frame = new ImageFrame(this, h.ImageNumber, d.Key.widht, d.Key.height, offX, offY, 
+										charName, palletLink, d.Value.data, d.Value.pallet);
+				#else
                 ImageFrame frame = new ImageFrame(this, h.ImageNumber, tex, offX, offY, charName,
                     palletLink, d.Value.GetPalletTexture(mIs32BitPallet));
+				#endif
 
                 AddImageFrame((PlayerState)h.GroubNumber, frame);
             }

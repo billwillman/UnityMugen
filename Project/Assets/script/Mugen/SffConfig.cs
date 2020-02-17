@@ -351,9 +351,14 @@ namespace Mugen
 			return pallet;
 		}
 
-		public Texture2D GetPalletTexture(bool is32Bit)
+		public static Texture2D GetPalletTexture(Color32[] pallet, bool is32Bit)
 		{
 			return SffFile.GeneratorPalletTexture(pallet, is32Bit);
+		}
+
+		public Texture2D GetPalletTexture(bool is32Bit)
+		{
+			return GetPalletTexture(pallet, is32Bit);
 		}
 		public KeyValuePair<short, short> palletLink;
 		public bool IsVaildPalletLink
@@ -964,6 +969,22 @@ namespace Mugen
 			return ret;
 		}
 
+		public static Texture2D GetIndexTexture(int width, int height, byte[] data)
+		{
+			if (width <= 0 || height <= 0 || data == null || data.Length <= 0)
+				return null;
+
+			Texture2D ret = new Texture2D(width, height, TextureFormat.Alpha8, false, false);
+			ret.filterMode = FilterMode.Point;
+			ret.wrapMode = TextureWrapMode.Clamp;
+
+			ret.LoadRawTextureData(data);
+			ret.Apply();
+
+			return ret;
+
+		}
+
 		public Texture2D GetIndexTexture(uint group, uint image)
 		{
 			KeyValuePair<PCXHEADER, PCXDATA> data;
@@ -981,14 +1002,7 @@ namespace Mugen
 			if (curPattle == null)
 				return null;*/
 
-			Texture2D ret = new Texture2D(data.Key.widht, data.Key.height, TextureFormat.Alpha8, false, false);
-			ret.filterMode = FilterMode.Point;
-			ret.wrapMode = TextureWrapMode.Clamp;
-
-			ret.LoadRawTextureData(data.Value.data);
-			ret.Apply();
-
-			return ret;
+			return GetIndexTexture (data.Key.widht, data.Key.height, data.Value.data);
 		}
 
 		public Texture2D GetTexture(uint group, uint image, bool is32Bit)
