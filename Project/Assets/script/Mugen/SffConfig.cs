@@ -425,18 +425,6 @@ namespace Mugen
 			return true;
 		}
 
-		private byte GetPalletAlpha(byte r, byte g, byte b, Color32[] pallet)
-		{
-			if ((pallet == null) || (pallet.Length <= 0))
-				return 0;
-			byte a;
-			if ((r == pallet[0].r) && (g == pallet[0].g) && (b == pallet[0].b))
-				a = 0;
-			else
-				a = 0xFF;
-			return a;
-		}
-
 		protected bool HasNormalPallet
 		{
 			get
@@ -641,34 +629,6 @@ namespace Mugen
 			string fileName = string.Format("{0}@{1}/{2}.sff.bytes", AppConfig.GetInstance().PlayerRootDir, charName, customSpriteName);
 			byte[] bytes = AppConfig.GetInstance().Loader.LoadBytes(fileName);
 			return Load(bytes);
-		}
-
-		private Color32[] GetPalletFromByteArr(byte[] pal)
-		{
-			if (pal == null || pal.Length <= 0)
-				return null;
-
-			int cnt = (int)(pal.Length / 4);
-
-			Color32[] pallet = new Color32[cnt];
-			int offset = 0;
-			for (int i = 0; i < cnt; ++i) {
-				byte r = pal[offset++];
-				byte g = pal[offset++];
-				byte b = pal[offset++];
-				byte a = pal[offset++];
-				/*
-				if (i == 0)
-					a = 0;
-				else {
-					if ((r == pallet [i - 1].r) && (g == pallet [i - 1].g) && (b == pallet [i - 1].b))
-						a = 0;
-					else
-						a = 0xFF;
-				}*/
-				pallet[i] = new Color32(r, g, b, a);
-			}
-			return pallet;
 		}
 
 		/*
@@ -1072,15 +1032,6 @@ namespace Mugen
 				return null;
 			if ((data.Value.data == null) || (data.Value.data.Length <= 0))
 				return null;
-			/*Color32[] curPattle;
-
-			if (data.Value.pallet == null)
-				curPattle = mNormalPallet;
-			else
-				curPattle = data.Value.pallet;
-			
-			if (curPattle == null)
-				return null;*/
 
 			return GetIndexTexture (data.Key.widht, data.Key.height, data.Value.data);
 		}
