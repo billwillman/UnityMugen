@@ -217,6 +217,25 @@ namespace sff
 		public int dataLen;
 		public ushort palIndex;
 		public ushort flags;
+
+		public void AssignTo(ref sprMsgV2 other)
+		{
+			if (other == null)
+				other = new sprMsgV2 ();
+			other.group = group;
+			other.index = index;
+			other.width = width;
+			other.height = height;
+			other.x = x;
+			other.y = y;
+			other.linkIndex = linkIndex;
+			other.fmt = fmt;
+			other.depth = depth;
+			other.dataOffset = dataOffset;
+			other.dataLen = dataLen;
+			other.palIndex = palIndex;
+			other.flags = flags;
+		}
 	}
 	public class palMsg
 	{
@@ -538,9 +557,13 @@ namespace sff
 		}
 
 		//SFFV2 获取指定图像信息
-		public sprMsgV2 getSprMsgV2(int index)
+		public sprMsgV2 getSprMsgV2(int index, sprMsgV2 sp = null)
 		{
-			sprMsgV2 spr = new sprMsgV2();
+			sprMsgV2 spr;
+			if (sp == null)
+				spr = new sprMsgV2 ();
+			else
+				spr = sp;
 			seek(msgV2.sprOffset + 28 * index);
 			spr.group = br.ReadUInt16();
 			spr.index = br.ReadUInt16();
@@ -687,9 +710,10 @@ namespace sff
 		}
 
 		//SFFV2 从索引获取图像数据
-		public byte[] getSprDataV2(int index, out byte[] pp, FI_FORMAT type)
+		public byte[] getSprDataV2(int index, out byte[] pp, FI_FORMAT type, bool loadPal = true)
 		{
-			byte[] sprData,palData;
+			byte[] sprData;
+			byte[] palData = null;
 			int sprSize;
 			IntPtr dib;
 			sprMsgV2 spr = getSprMsgV2(index);
@@ -720,19 +744,22 @@ namespace sff
 			switch(spr.fmt)
 			{
 			case 0:
-				palData = getPalData(spr.palIndex);
+				if (loadPal)
+					palData = getPalData(spr.palIndex);
 				pp = palData;
 				break;
 
 			case 2:
 				sprData = sffV2Decompress.unRle8(sprData);
-				palData = getPalData(spr.palIndex);
+				if (loadPal)
+					palData = getPalData(spr.palIndex);
 				pp = palData;
 				break;
 
 			case 4:
 				sprData = sffV2Decompress.unLz5(sprData);
-				palData = getPalData(spr.palIndex);
+				if (loadPal)
+					palData = getPalData(spr.palIndex);
 				pp = palData;
 				break;
 
@@ -780,7 +807,7 @@ namespace sff
 			}
 		}
 
-		public delegate void TOnRawForeachV2(sprMsgV2 spr, int linkGoup, int linkIndex, byte[] rawData, byte[] pal);
+		public delegate void TOnRawForeachV2(sffReader reader, sprMsgV2 spr, int linkGoup, int linkIndex, int linkPalGroup, int linkPalIndex, byte[] rawData);
 		public delegate void TOnRawForeachV1(sprMsgV1 spr, int linkGoup, int linkIndex, byte[] rawData, byte[] pal);
 
 		public bool RawForeachV1(TOnRawForeachV1 OnRawForeachV1)
@@ -813,31 +840,77 @@ namespace sff
 			return true;
 		}
 
+
+		private Dictionary<KeyValuePair<ushort, ushort>, byte[]> m_PalMap = null;
+		protected Dictionary<KeyValuePair<ushort, ushort>, byte[]> PalMap
+		{
+			get {
+				if (m_PalMap == null)
+					m_PalMap = new Dictionary<KeyValuePair<ushort, ushort>, byte[]> ();
+				return m_PalMap;
+			}
+		}
+
+		public byte[] GetPal(ushort group, ushort index)
+		{
+			if (m_PalMap == null)
+				return null;
+			KeyValuePair<ushort, ushort> key = new KeyValuePair<ushort, ushort> (group, index);
+			byte[] ret;
+			if (m_PalMap.TryGetValue (key, out ret))
+				return ret;
+			return  null;
+		}
+
+		private bool IsHasPalMap(ushort group, ushort index)
+		{
+			if (m_PalMap == null)
+				return false;
+			KeyValuePair<ushort, ushort> key = new KeyValuePair<ushort, ushort> (group, index);
+			return m_PalMap.ContainsKey (key);
+		}
 		public bool RawForeachV2(TOnRawForeachV2 OnRawForeachV2)
 		{
 			if (ver != 2 || OnRawForeachV2 == null)
 				return false;
+			sprMsgV2 spr = null;
+			sprMsgV2 linkSpr = null;
 			for (int i = 0; i < getSprNum (); ++i) {
-				sprMsgV2 spr = getSprMsgV2 (i);
+				spr = getSprMsgV2 (i, spr);
 				if (spr.dataLen == 0) {
 					// 链接类型
-					sprMsgV2 linkSpr = spr;
+					spr.AssignTo(ref linkSpr);
 					while (linkSpr.dataLen == 0) {
-						linkSpr = getSprMsgV2 (linkSpr.linkIndex);
+						linkSpr = getSprMsgV2 (linkSpr.linkIndex, linkSpr);
 					}
 					// 暂时不做PNG类型的支持
 					if (linkSpr.fmt == 10 || linkSpr.fmt == 11 || linkSpr.fmt == 12)
 						return false;
-					OnRawForeachV2 (spr, linkSpr.group, linkSpr.index, null, null); 
+					OnRawForeachV2 (this, spr, linkSpr.group, linkSpr.index, -1, -1, null); 
 				} else {
 					// 暂时不做PNG类型的支持
 					if (spr.fmt == 10 || spr.fmt == 11 || spr.fmt == 12)
 						return false;
 					byte[] pal;
-					byte[] colors = getSprDataV2 (i, out pal, FI_FORMAT.FIF_UNKNOWN); 
+					bool isHasPal = IsHasPalMap (spr.palIndex);
+					byte[] colors = getSprDataV2 (i, out pal, FI_FORMAT.FIF_UNKNOWN, !isHasPal); 
 					if (colors == null || colors.Length <= 0)
 						return false;
-					OnRawForeachV2 (spr, -1, -1, colors, pal);
+					spr.AssignTo(ref linkSpr);
+
+					while (true)
+					{
+						int palGroup = linkSpr.group;
+						int palIndex = linkSpr.index;
+						linkSpr = getSprMsgV2 (linkSpr.palIndex, linkSpr);
+						if (linkSpr.group == palGroup && linkSpr.index == palIndex)
+							break;
+					}
+					if (!isHasPal && pal != null && pal.Length > 0) {
+						KeyValuePair<ushort, ushort> key = new KeyValuePair<ushort, ushort> (linkSpr.group, linkSpr.index);
+						PalMap.Add (key, pal);
+					}
+					OnRawForeachV2 (this, spr, -1, -1, colors, linkSpr.group, linkSpr.index);
 				}
 			}
 			return true;
