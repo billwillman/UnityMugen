@@ -509,10 +509,10 @@ public class PlayerDisplayEditor : Editor {
 
 			short palGroup, palIndex;
 			m_LastDisplay.GetCurFramePalletLink (out palGroup, out palIndex);
+			EditorGUILayout.Space ();
+			EditorGUILayout.Space ();
 			EditorGUILayout.BeginHorizontal ();
-			EditorGUILayout.PrefixLabel ("当前帧调色板链接：");
-			EditorGUILayout.LabelField(string.Format("组：{0:D}", palGroup));
-			EditorGUILayout.LabelField(string.Format("帧：{0:D}", palIndex));
+			EditorGUILayout.LabelField(string.Format("【当前帧调色板链接】组：{0:D} 帧：{0:D}", palGroup, palIndex));
 			EditorGUILayout.EndHorizontal ();
         }
     }
