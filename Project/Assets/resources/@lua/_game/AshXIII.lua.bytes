@@ -88,7 +88,7 @@ function AshXIII:_initSize()
 end
 
 function AshXIII:_initCmds()
-	local luaCfg = trigger:GetLuaCnsCfg("Iori-ROTD")
+	local luaCfg = trigger:GetLuaCnsCfg("AshXIII")
 	if luaCfg == nil then
 		return
 	end
