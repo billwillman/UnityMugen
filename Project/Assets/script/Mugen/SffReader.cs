@@ -1,4 +1,4 @@
-﻿
+﻿#define _USE_PAL_LINK
 /* MUGEN
 SFF文件读取 SFF File Decode
 Date:2019-8-9
@@ -893,6 +893,7 @@ namespace sff
 						return false;
 
 					spr.AssignTo(ref linkSpr);
+					#if _USE_PAL_LINK
 					while (true)
 					{
 						int palGroup = linkSpr.group;
@@ -901,6 +902,7 @@ namespace sff
 						if (linkSpr.group == palGroup && linkSpr.index == palIndex)
 							break;
 					}
+					#endif
 
 					byte[] pal;
 					bool isHasPal = IsHasPalMap (linkSpr.group, linkSpr.index);
