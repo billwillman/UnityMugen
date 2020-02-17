@@ -79,9 +79,9 @@ namespace Mugen
 
 		private void SetTexture2D(Texture2D tex,  float offsetX, float offsetY, string name)
 		{
-			if (Data != null)
+			if (m_Sprite != null)
 			{
-				if (Data.texture == tex)
+				if (m_Sprite.texture == tex)
 					return;
 
                 DestroyRes();
@@ -93,11 +93,11 @@ namespace Mugen
 			//Vector2 offset = new Vector2(offsetX, offsetY);
 			//Data = Sprite.Create(tex, r, offset);  
             Vector2 center = new Vector2(0.5f, 0.5f);
-            Data = Sprite.Create(tex, r, center);
+			m_Sprite = Sprite.Create(tex, r, center);
             float w = ((float)tex.width) / 100f;
             float h = ((float)tex.height) / 100f;
             m_OffsetPos = new Vector2(center.x * w - offsetX * w, center.y * h - offsetY * h);
-			Data.name = name;
+			m_Sprite.name = name;
 		}
 
         public Vector2 OffsetPos
@@ -110,10 +110,10 @@ namespace Mugen
 
 		protected void DestroyTexture()
 		{
-			if (Data != null)
+			if (m_Sprite != null)
 			{
-				Texture2D tex = Data.texture;
-				//	Data.texture = null;
+				Texture2D tex = m_Sprite.texture;
+				//	m_Sprite.texture = null;
 				if (tex != null)
 				{
 					AppConfig.GetInstance().Loader.DestroyObject(tex);
