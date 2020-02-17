@@ -212,6 +212,12 @@ namespace Mugen
             }
         }
 
+		public void GetLocalPalletTexLink(out short group, out short index)
+		{
+			group = mLoaclPalletTexLink.Key;
+			index = mLoaclPalletTexLink.Value;
+		}
+
 		private ImageLibrary mParentLib = null;
 		private Texture2D mLocalPalletTex = null;
 		private KeyValuePair<short, short> mLoaclPalletTexLink = new KeyValuePair<short, short>(-1, -1);

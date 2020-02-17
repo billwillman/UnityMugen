@@ -1546,6 +1546,26 @@ public class PlayerDisplay : BaseResLoader {
 	}
 
 	[NoToLua]
+	public void GetCurFramePalletLink(out short group, out short index)
+	{
+		var ani = this.ImageAni;
+		if (ani != null) {
+			ActionFlip flip;
+			ActionDrawMode drawMode;
+			var frame = ani.GetCurImageFrame (flip, drawMode);
+			if (frame != null) {
+				frame.GetLocalPalletTexLink (out group, out index);
+			} else {
+				group = -1;
+				index = -1;
+			}
+		} else {
+			group = -1;
+			index = -1;
+		}
+	}
+
+	[NoToLua]
 	internal void InteralRefreshCurFrame(ImageAnimation target)
 	{
 		SpriteRenderer r = this.SpriteRender;
