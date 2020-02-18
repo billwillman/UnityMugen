@@ -527,6 +527,9 @@ public class PlayerDisplayEditor : Editor {
 
 	void ShowReloadLua()
 	{
+		if (!EditorApplication.isPlaying)
+			return;
+		
 		if (m_LastDisplay == null)
 			return;
 		var gply = m_LastDisplay.GPlayer;
