@@ -514,8 +514,60 @@ public class PlayerDisplayEditor : Editor {
 			EditorGUILayout.BeginHorizontal ();
 			EditorGUILayout.LabelField(string.Format("【当前帧调色板链接】组：{0:D} 帧：{0:D}", palGroup, palIndex));
 			EditorGUILayout.EndHorizontal ();
+
+			EditorGUILayout.Space ();
+			EditorGUILayout.Space ();
+			EditorGUILayout.Space ();
+			EditorGUILayout.Space ();
+
+			ShowReloadLua ();
+
         }
     }
+
+	void ShowReloadLua()
+	{
+		if (m_LastDisplay == null)
+			return;
+		var gply = m_LastDisplay.GPlayer;
+		if (gply != null && gply.PlayerCfg != null && gply.PlayerCfg.HasFilesConfig) {
+			// 重新加载LUA
+			if (GUILayout.Button ("重新加载LUA")) {
+				// 删除引用的所有LUA对象
+				List<PlayerDisplay> plyList = new List<PlayerDisplay>();
+				var playerRoot = AppConfig.GetInstance().PlayerRoot;
+				if (playerRoot != null) {
+					PlayerDisplay[] players = playerRoot.GetComponentsInChildren<PlayerDisplay> ();
+					if (players != null && players.Length > 0) {
+						for (int i = 0; i < players.Length; ++i) {
+							var player = players [i];
+							if (player != null && player.ShowType == DisplayType.Player && 
+								player.LuaCfg == m_LastDisplay.LuaCfg) {
+								plyList.Add (player);
+							}
+						}
+					}
+				}
+
+				for (int i = 0; i < plyList.Count; ++i) {
+					var ply = plyList [i];
+					if (ply != null)
+						ply.DestroyLuaPlayer ();
+				}
+
+				if (gply.ReloadLua ()) {
+					for (int i = 0; i < plyList.Count; ++i) {
+						var ply = plyList [i];
+						if (ply != null)
+							ply.CreateLuaPlayer ();
+					}
+					Debug.LogError ("重载LUA配置失败~！");
+				} else {
+					Debug.Log ("重载LUA配置成功~！");
+				}
+			}
+		}
+	}
 
 	void ShowClsn(bool isShow)
 	{

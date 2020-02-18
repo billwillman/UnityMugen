@@ -585,7 +585,8 @@ public class PlayerDisplay : BaseResLoader {
 		InitSpriteRender ();	
 	}
 
-    private void DestroyLuaPlayer()
+	[NoToLua]
+	public void DestroyLuaPlayer()
     {
         try
         {
@@ -603,7 +604,8 @@ public class PlayerDisplay : BaseResLoader {
         }
     }
 
-    private void CreateLuaPlayer()
+	[NoToLua]
+	public void CreateLuaPlayer()
     {
         DestroyLuaPlayer();
         if (m_LoaderPlayer != null)

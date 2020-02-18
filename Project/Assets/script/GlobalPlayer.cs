@@ -69,6 +69,21 @@ public class GlobalPlayer
 		}
 	}
 
+	public bool ReloadLua()
+	{
+		if (m_PlayerConfig != null && m_PlayerConfig.Files != null && m_PlayerConfig.Files.HasLuaFile) {
+			if (m_LuaConfig != null) {
+				m_LuaConfig.Dispose ();
+				m_LuaConfig = new LuaCnsConfig ();
+				if (!m_LuaConfig.LoadFromFile (m_PlayerConfig.Files.lua)) {
+					return false;
+				}
+				return true;
+			}
+		}
+		return false;
+	}
+
 	private bool Init(string playerName, out GlobalPlayerLoaderResult result, string cnsName = "")
 	{
 		Clear ();
