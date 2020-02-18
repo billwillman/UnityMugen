@@ -564,9 +564,9 @@ public class PlayerDisplayEditor : Editor {
 						if (ply != null)
 							ply.CreateLuaPlayer ();
 					}
-					Debug.LogError ("重载LUA配置失败~！");
-				} else {
 					Debug.Log ("重载LUA配置成功~！");
+				} else {
+					Debug.LogError ("重载LUA配置失败~！");
 				}
 			}
 		}
