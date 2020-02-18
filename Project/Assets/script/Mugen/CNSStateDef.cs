@@ -31,6 +31,7 @@ namespace Mugen
         N
 	}
 
+	[Serializable]
 	public class CNSStateDef
 	{
 		private Cns_Type m_Type = Cns_Type.none;
