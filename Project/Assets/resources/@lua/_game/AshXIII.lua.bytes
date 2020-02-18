@@ -69,8 +69,8 @@ function AshXIII:_initData()
   self.Data.KO.echo = 0
   
   self.Data.volume = 50
-  self.Data.IntPersistIndex = 0
-  self.Data.FloatPersistIndex = 0
+  self.Data.IntPersistIndex = 60
+  self.Data.FloatPersistIndex = 40
 
   	self.velocity = {}
 	self.velocity.run = {}
