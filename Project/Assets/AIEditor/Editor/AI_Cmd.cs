@@ -217,6 +217,16 @@ public abstract class AI_CreateStateEvent: Node
 
 	public CnsStateTriggerType triggleType = CnsStateTriggerType.AnimElem;
 
+	public override void OnCreateConnection(NodePort from, NodePort to)
+	{
+		if (from != null && (from.ValueType == typeof(AI_Cond_PlayerTime) ||
+		    from.ValueType == typeof(AI_Cond_PlayerAniTime))) {
+			triggleType = CnsStateTriggerType.AnimTime;
+		} else if ((from != null) && (from.ValueType == typeof(AI_Cond_PlayerAniElem))) {
+			triggleType = CnsStateTriggerType.AnimElem;
+		}
+	}
+
 	public override object GetValue(NodePort port)
 	{
 		if (port.fieldName == "parent")
