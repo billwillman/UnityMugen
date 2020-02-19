@@ -193,7 +193,7 @@ public class AI_CreateStateDef: Node
 	}
 
 	public override void OnCreateConnection(NodePort from, NodePort to) { 
-		if (from != null && from.ValueType == typeof(AI_Cmd)) {
+		if (from != null && from.node.GetType() == typeof(AI_Cmd)) {
 			AI_Cmd aiCmd = (AI_Cmd)from.node;
 			if (aiCmd.aiType != AI_Type.ChangeState) {
 				var port = GetInputPort("input");
@@ -219,10 +219,10 @@ public abstract class AI_CreateStateEvent: Node
 
 	public override void OnCreateConnection(NodePort from, NodePort to)
 	{
-		if (from != null && (from.ValueType == typeof(AI_Cond_PlayerTime) ||
-		    from.ValueType == typeof(AI_Cond_PlayerAniTime))) {
+		if (from != null && (from.node.GetType() == typeof(AI_Cond_PlayerTime) ||
+			from.node.GetType() == typeof(AI_Cond_PlayerAniTime))) {
 			triggleType = CnsStateTriggerType.AnimTime;
-		} else if ((from != null) && (from.ValueType == typeof(AI_Cond_PlayerAniElem))) {
+		} else if ((from != null) && (from.node.GetType() == typeof(AI_Cond_PlayerAniElem))) {
 			triggleType = CnsStateTriggerType.AnimElem;
 		}
 	}
