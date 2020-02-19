@@ -124,11 +124,49 @@ public class AI_Cond_PlayerAniTime: AI_BaseCondition
 	public AI_Cond_Op op = AI_Cond_Op.Equal;
 }
 
+[CreateNodeMenu("AI/条件/角色Time")]
+public class AI_Cond_PlayerTime: AI_BaseCondition
+{
+	public int time;
+	public AI_Cond_Op op = AI_Cond_Op.Equal;
+}
+
+[CreateNodeMenu("AI/条件/角色 VelX")]
+public class AI_Cond_Player_VelX: AI_BaseCondition
+{
+	public float velX;
+	public AI_Cond_Op op = AI_Cond_Op.Equal;
+}
+
+[CreateNodeMenu("AI/条件/角色 VelY")]
+public class AI_Cond_Player_VelY: AI_BaseCondition
+{
+	public float velY;
+	public AI_Cond_Op op = AI_Cond_Op.Equal;
+}
+
+[CreateNodeMenu("AI/条件/角色 PosX")]
+public class AI_Cond_Player_PosX: AI_BaseCondition
+{
+	public float posX;
+	public AI_Cond_Op op = AI_Cond_Op.Equal;
+}
+
+[CreateNodeMenu("AI/条件/角色 PosY")]
+public class AI_Cond_Player_PosY: AI_BaseCondition
+{
+	public float posY;
+	public AI_Cond_Op op = AI_Cond_Op.Equal;
+}
+
+
 [CreateNodeMenu("AI/创建StateDef")]
 public class AI_CreateStateDef: Node
 {
 	[Input(ShowBackingValue.Never)]
 	public AI_Cmd input;
+	[Input(ShowBackingValue.Never)]
+	public AI_StateEvent_PlayCns prevCns;
 	[Output(ShowBackingValue.Never)]
 	public AI_CreateStateDef output;
 
@@ -149,6 +187,8 @@ public class AI_CreateStateDef: Node
 			return input;
 		else if (port.fieldName == "output")
 			return output;
+		else if (port.fieldName == "prevCns")
+			return prevCns;
 		return null;
 	}
 
@@ -172,6 +212,8 @@ public abstract class AI_CreateStateEvent: Node
 
 	[Input(ShowBackingValue.Never)]
 	public AI_BaseCondition conditions;
+
+	public bool setPersistent = false;
 
 	public CnsStateTriggerType triggleType = CnsStateTriggerType.AnimElem;
 
@@ -213,3 +255,66 @@ public class AI_StateEvent_PosAdd: AI_CreateStateEvent
 	public int y = CNSStateDef._cNoVaildVelset;
 }
 
+[CreateNodeMenu("AI/创建StateEvent/设置位置")]
+public class AI_StateEvent_PosSet: AI_CreateStateEvent
+{
+	public int x = CNSStateDef._cNoVaildVelset;
+	public int y = CNSStateDef._cNoVaildVelset;
+}
+
+[CreateNodeMenu("AI/创建StateEvent/StateType设置")]
+public class AI_StateEvent_StateTypeSet: AI_CreateStateEvent
+{
+	public Cns_Type stateType = Cns_Type.S;
+}
+
+[CreateNodeMenu("AI/创建StateEvent/Ctrl设置")]
+public class AI_StateEvent_CtrlSet: AI_CreateStateEvent
+{
+	public int ctrl = 1;
+}
+
+[CreateNodeMenu("AI/创建StateEvent/创建爆炸")]
+public class AI_StateEvent_CreateExplod: AI_CreateStateEvent
+{
+	public int anim = CNSStateDef._cNoVaildAnim;
+	public int id = 0;
+	public int pos_x = 0;
+	public int pos_y = 0;
+	public ExplodPosType explodPosType = ExplodPosType.p1;
+	public int bindtime = 0;
+	public int removetime = -2;
+	public int sprpriority = 0;
+	public int removeongethit = 0;
+	public int ignorehitpause = 1;
+	public bool isChangeStateRemove = true;
+	public bool IsUseParentUpdate = true;
+}
+
+[CreateNodeMenu("AI/创建StateEvent/播放动画")]
+public class AI_StateEvent_PlayAni: AI_CreateStateEvent
+{
+	public int anim = CNSStateDef._cNoVaildAnim;
+	public bool isLoop = false;
+	public bool isCleanStateDef = true;
+}
+
+[CreateNodeMenu("AI/创建StateEvent/切换Cns状态")]
+public class AI_StateEvent_PlayCns: AI_CreateStateEvent
+{
+	[Output(ShowBackingValue.Never)]
+	public AI_CreateStateDef nextStateDef;
+
+	public string Animate;
+
+	public override object GetValue(NodePort port)
+	{
+		if (port.fieldName == "nextStateDef")
+			return nextStateDef;
+		return null;
+	}
+}
+
+[CreateNodeMenu("AI/创建StateEvent/切换Stand状态")]
+public class AI_StateEvent_PlayStandCns: AI_CreateStateEvent
+{}
