@@ -318,3 +318,24 @@ public class AI_StateEvent_PlayCns: AI_CreateStateEvent
 [CreateNodeMenu("AI/创建StateEvent/切换Stand状态")]
 public class AI_StateEvent_PlayStandCns: AI_CreateStateEvent
 {}
+
+[CreateNodeMenu("AI/创建StateEvent/创建飞行物")]
+public class AI_StateEvent_CreateProj: AI_CreateStateEvent
+{
+	public int projid = -1;
+	public int projanim = CNSStateDef._cNoVaildAnim;
+	public int projhitanim = CNSStateDef._cNoVaildAnim;
+	public int projremove = 1;
+	public int projcancelanim = CNSStateDef._cNoVaildAnim;
+	public int projremanim = CNSStateDef._cNoVaildAnim;
+	public float projremovetime = -1;
+	public int offset_x = 0;
+	public int offset_y = 0;
+	public float velocity_x = 0;
+	public float velocity_y = 0;
+	public ExplodPosType Postype = ExplodPosType.p1;
+	public int projshadow = 0;
+	public int projpriority = 0;
+	public int projsprpriority = 0;
+
+}
