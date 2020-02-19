@@ -1,0 +1,3289 @@
+ ;-| Button Remapping |-----------------------------------------------------
+; This section lets you remap the player's buttons (to easily change the
+; button configuration). The format is:
+;   old_button = new_button
+; If new_button is left blank, the button cannot be pressed.
+[Remap]
+x = x
+y = y
+z = z
+a = a
+b = b
+c = c
+s = s
+
+;-| Default Values |-------------------------------------------------------
+[Defaults]
+; Default value for the "time" parameter of a Command. Minimum 1.
+command.time = 15
+
+; Default value for the "buffer.time" parameter of a Command. Minimum 1,
+; maximum 30.
+command.buffer.time = 1
+;挻昁嶦媄--------------------------------------------------------
+
+[Command]
+name = "嬛愮擉昐廍敧幃丒敧欯塆"
+command = ~$D,  F, $D, F, a+b
+time = 20
+
+[command]
+name = "NeoMAx Shiki Homurahotogi"
+command = ~$D, B, $D,  F, a+b
+time = 20
+
+;昁嶦媄------------------------------------------------------
+[command]
+name = "EX八酿"
+command = ~$D, B, $D,  F, x+y
+time = 20
+
+[command]
+name = "八酿"
+command = ~$D, B, $D,  F, x
+time = 20
+
+[command]
+name = "八酿"
+command = ~$D, B, $D,  F, y
+time = 20
+
+[command]
+name = "EX Shiki Yaotome"
+command = ~$D, F, $D,  B, x+y
+time = 20
+
+[command]
+name = "Shiki Yaotome"
+command = ~$D, F, $D,  B, x
+time = 20
+
+[command]
+name = "Shiki Yaotome1"
+command = ~$D, F, $D,  B, y
+time = 20
+
+[command]
+name = "Shiki Yamisogi"
+command = ~$D, F, $D,  F, x
+time = 20
+
+[command]
+name = "Shiki Yamisogi"
+command = ~$D, F, $D,  F,y
+time = 20
+
+[command]
+name = "Shiki Saika"
+command = ~$D, F, $D,  F, $D, F,$D, F, x+y
+time = 40
+buffer.time = 10
+;----------------------------------------------------
+[Command]
+name = "EX擉昐嶲幃丒捚捴"
+command = ~B, $D,  F, x+y
+
+[Command]
+name = "擉昐嶲幃丒捚捴"
+command = ~B,  $D, F, y
+
+[Command]
+name = "擉昐嶲幃丒捚捴"
+command = ~B,  $D, F, x
+
+
+[Command]
+name = "EX昐擉廍嬨幃丒柧塆"
+command = ~D, DB, B, a+b
+
+[Command]
+name = "昐擉廍嬨幃丒柧塆1"
+command = ~D, DB, B, b
+
+[Command]
+name = "昐擉廍嬨幃丒柧塆"
+command = ~D, DB, B, a
+
+[command]
+name = "EX Kuzukaze"
+command = ~F, $D, B, F, x+y
+time = 20
+
+[command]
+name = "Kuzukaze"
+command = ~F, $D, B, F, x
+time = 20
+
+[command]
+name = "Kuzukaze1"
+command = ~F, $D, B, F, y
+time = 20
+
+[command]
+name = "EX Shiki Kototsuki In"
+command = ~F, $D,  B, a+b
+
+[command]
+name = "Shiki Kototsuki In"
+command = ~F, $D, B, a
+
+[command]
+name = "Shiki Kototsuki In1"
+command = ~F,  $D, B, b
+
+[command]
+name = "EX Shiki Aoibana"
+command = ~D, DB, B, x+y
+
+[command]
+name = "Shiki Aoibana1"
+command = ~D, DB, B, y
+
+[command]
+name = "Shiki Aoibana"
+command = ~D, DB, B, x
+
+[Command]
+name = "EX Shiki Oniyaki"
+command = ~F, D, DF, x+y
+;time = 32
+
+[Command]
+name = "Shiki Oniyaki1"
+command = ~F, D, DF, y
+;time = 28
+
+[Command]
+name = "Shiki Oniyaki"
+command = ~F, D, DF, x
+;time = 28
+
+[Command]
+name = "EX Shiki Yamiraiba"
+command = ~D, DF, F, x+y
+;time = 32
+
+[Command]
+name = "Shiki Yamiraiba1"
+command = ~D, DF, F, y
+
+[Command]
+name = "Shiki Yamiraiba"
+command = ~D, DF, F, x
+
+
+
+
+;俀夞墴偟媄-----------------------------------------------------------
+[Command]
+name = "傆偭旘偽偟"
+command = c
+time = 1
+
+[Command]
+name = "傆偭旘偽偟"
+command = y+b
+time = 1
+
+[Command]
+name = "夞旔"
+command = x+a
+time = 1
+
+[Command]
+name = "夞旔"
+command = z
+time = 1
+
+[Command]
+name = "HD儌乕僪"
+command = y+a
+time = 1
+
+[Command]
+name = "HD儌乕僪"
+command = s
+time = 1
+
+[Command]
+Name = "FF"     
+Command = F, F
+Time = 10
+
+[Command]
+Name = "BB"     
+Command = B, B
+Time = 10
+
+[Command]
+Name = "longjump"
+Command = D, $U
+Time = 18
+
+;摨帪墴偟-----------------------------------------------
+
+[Command]
+Name = "a+b+c"
+Command = x+a+y
+Time = 1
+
+[Command]
+Name = "a+b"
+Command = x+a
+Time = 1
+
+[Command]
+Name = "a+b"
+Command = z
+Time = 1
+
+[Command]
+Name = "c+d"
+Command = y+b
+Time = 1
+
+[Command]
+Name = "c+d"
+Command = c
+Time = 1
+
+;儃僞儞愝掕---------------------------------------------------------
+
+[Command]
+Name = "a"
+Command = a
+Time = 1
+
+[Command]
+Name = "b"
+Command = b
+Time = 1
+
+[Command]
+Name = "c"
+Command = c
+Time = 1
+
+[Command]
+Name = "x"
+Command = x
+Time = 1
+
+[Command]
+Name = "y"
+Command = y
+Time = 1
+
+[Command]
+Name = "z"
+Command = z
+Time = 1
+
+[Command]
+Name = "start"
+Command = s
+Time = 1
+
+;墴偟偭傁側偟-------------------------------------------------------
+[Command]
+name = "recovery";Required (do not remove)
+command = x+y
+time = 1
+
+[Command]
+Name = "holdfwd"
+Command = /$F
+Time = 1
+
+[Command]
+Name = "holdback"
+Command = /$B
+Time = 1
+
+[Command]
+Name = "holdup"
+Command = /$U
+Time = 1
+
+[Command]
+Name = "holddown"
+Command = /$D
+Time = 1
+
+[Command]
+Name = "holdx"
+Command = /$x
+Time = 1
+
+[Command]
+Name = "holdy"
+Command = /$y
+Time = 1
+
+[Command]
+Name = "hold倸"
+Command = /$z
+Time = 1
+
+[Command]
+Name = "holda"
+Command = /$a
+Time = 1
+
+[Command]
+Name = "holdb"
+Command = /$b
+Time = 1
+
+[Command]
+Name = "holdc"
+Command = /$c
+Time = 1
+
+[Command]
+Name = "fwd"
+Command = F
+Time = 1
+
+[Command]
+Name = "back"
+Command = B
+Time = 1
+
+[Command]
+Name = "up"
+Command = U
+Time = 1
+
+[Command]
+Name = "down"
+Command = D
+Time = 1
+
+;===========================================================================
+;僾儗僀儎乕梡僐儅儞僪
+;---------------------------------------------------------------------------
+
+[Statedef -1]
+
+;孄晽--------------------------------------------------------
+;"Kuzukaze"
+[State Kuzukaze]
+type = ChangeState
+value = 1450
+triggerall = fvar(39) = 0
+triggerall = var(59) = 0
+triggerall = fvar(11) = 0
+triggerall = power >= 1000
+triggerall = (command = "EX Kuzukaze") || (var(38) = 55 && var(40) > 0)
+triggerall = statetype != A
+;triggerall = enemy,statetype != A
+trigger1 = ctrl
+trigger2 = stateno = 200 && movecontact
+trigger3 = stateno = 205 && movecontact
+trigger4 = stateno = 235 && movecontact
+trigger5 = stateno = 210 && movecontact
+trigger6 = stateno = 215 && movecontact
+trigger7 = stateno = 245 && movecontact
+trigger8 = stateno = 400 && movecontact
+trigger9 = stateno = 410 && animelem = 5,>=0
+trigger10= stateno = 250 && movecontact
+trigger11= stateno = 251 && movecontact
+trigger12= stateno = 261 && movecontact
+trigger13= stateno = 290 && animelem = 7,>=0&&animelem = 9 ,<=0
+;僗乕僷乕僉儍儞僙儖
+trigger14= (stateno = 1000 || stateno = 1001) && animelem = 6,>=0 && animelem = 9,<=0  && ((fvar(21) > 0) || (fvar(21) = 0 && var(20) >= 500))
+trigger15= stateno = 1050 && animelem = 6,>=0  && ((fvar(21) > 0) || (fvar(21) = 0 && var(20) >= 500))
+trigger16= (stateno = 1100 || stateno = 1101)  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger17= stateno = 1150  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger18= (stateno = 1200 || stateno = 1201)  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger19= stateno = 1210  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger20= stateno = 1250  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger21= stateno = 1255  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger22= stateno = 1305  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+;HD捠忢媄柍忦審僉儍儞僙儖
+trigger23= stateno = [200,499]
+trigger23= movecontact
+trigger23= fvar(21) > 0
+
+;MAX僉儍儞僙儖嬛愮擉昐廍敧幃丒敧欯塆
+[State negathibu anngisshu]
+type = null;ChangeState
+value = 2600
+triggerall = var(59) = 0
+triggerall = fvar(11) = 0
+triggerall = (command = "嬛愮擉昐廍敧幃丒敧欯塆") || (var(38) = 80 && var(40) > 0)
+triggerall = power >= 3000-(fvar(21)>0)*1000
+trigger1 = stateno = 2010 && animelem = 57,>0 && animelem = 58,<0
+trigger2 = stateno = 2060 && animelem = 57,>0 && animelem = 58,<0
+
+;---------------------------------------------------------------------------
+;嬛愮擉昐廍敧幃丒敧欯塆
+[State negathibu anngisshu]
+type = ChangeState
+value = 2600
+triggerall = fvar(36) = 0
+triggerall = var(59) = 0
+triggerall = fvar(11) = 0
+triggerall = (command = "嬛愮擉昐廍敧幃丒敧欯塆") || (var(38) = 80 && var(40) > 0)
+triggerall = statetype != A
+triggerall = (power >= 3000 && var(20) >= 1000) || (power >= 2000 && fvar(21) > 0)
+trigger1 = ctrl
+trigger2 = stateno = 200 && movecontact
+trigger3 = stateno = 205 && movecontact
+trigger4 = stateno = 235 && movecontact
+trigger5 = stateno = 210 && movecontact
+trigger6 = stateno = 215 && movecontact
+trigger7 = stateno = 245 && movecontact
+trigger8 = stateno = 400 && movecontact
+trigger9 = stateno = 410 && animelem = 5,>=0
+trigger10= stateno = 250 && movecontact
+trigger11= stateno = 251 && movecontact
+trigger12= (stateno = 260 ||stateno = 261) && movecontact
+trigger13= stateno = 290 && animelem = 7,>=0 &&animelem = 9 ,<=0
+;僗乕僷乕僉儍儞僙儖
+trigger14= (stateno = 1000 || stateno = 1001) && animelem = 6,>=0 && animelem = 9,<=0 &&  fvar(21) > 0
+trigger15= stateno = 1150 && animelem = 6,>=0 && movecontact &&  fvar(21) > 0
+trigger16= (stateno = 1100 || stateno = 1101) && movecontact &&  fvar(21) > 0
+trigger17= stateno = 1150 && movecontact  &&  fvar(21) > 0
+trigger18= (stateno = 1200 || stateno = 1201) && movecontact&&  fvar(21) > 0
+trigger19= stateno = 1210 && movecontact &&  fvar(21) > 0
+trigger20= stateno = 1250 && movecontact &&  fvar(21) > 0
+trigger21= stateno = 1255 && movecontact  &&  fvar(21) > 0
+trigger22= stateno = 1305 && movecontact &&  fvar(21) > 0
+;HD捠忢媄柍忦審僉儍儞僙儖
+trigger23= stateno = [200,499]
+trigger23= movecontact
+trigger23= fvar(21) > 0
+
+;HD僉儍儞僙儖
+trigger24= stateno = (stateno = 1500 || stateno = 1501) && movecontact &&  fvar(21) > 0
+trigger25= stateno = 1550 && movecontact &&  fvar(21) > 0
+trigger26= (stateno = 1600 || stateno = 1601) && movecontact &&  fvar(21) > 0
+trigger27= stateno = 1650 && movecontact &&  fvar(21) > 0
+trigger28= stateno = 1710 && movecontact &&  fvar(21) > 0
+trigger29= stateno = 1760 && movecontact &&  fvar(21) > 0
+
+trigger30 = stateno = 2010 && animelem = 57,>0 && animelem = 58,<0  && (fvar(21) > 0)
+trigger31 = stateno = 2060 && animelem = 57,>0 && animelem = 58,<0 &&  fvar(21) > 0
+trigger32 = stateno = 2011 && animelem = 64,>0 && animelem = 69,<0 &&  fvar(21) > 0
+trigger33 = stateno = 2061 && animelem = 94,>0 && animelem = 99,<0 &&  fvar(21) > 0
+;===========================================================================
+;---------------------------------------------------------------------------
+;---------------------------------------------------------------------------
+;MAX僉儍儞僙儖嬛愮擉昐廍敧幃丒敧欯塆
+[State negathibu anngisshu]
+type = null;ChangeState
+value = 2500
+triggerall = fvar(39) = 0
+triggerall = var(59) = 0
+triggerall = fvar(11) = 0
+triggerall = (command = "NeoMAx Shiki Homurahotogi") || (var(38) = 75 && var(40) > 0)
+triggerall = power >= 2000 && fvar(21) > 0
+trigger1 = stateno = 2010 && animelem = 57,>0 && animelem = 58,<0
+trigger2 = stateno = 2060 && animelem = 57,>0 && animelem = 58,<0
+
+;---------------------------------------------------------------------------
+;嬛愮擉昐廍敧幃丒敧欯塆
+[State negathibu anngisshu]
+type = ChangeState
+value = 2500
+triggerall = fvar(36) = 1
+triggerall = var(59) = 0
+triggerall = fvar(11) = 0
+triggerall = (command = "NeoMAx Shiki Homurahotogi") || (var(38) = 75 && var(40) > 0)
+triggerall = statetype != A
+triggerall = (power >= 3000 && var(20) >= 1000) || (power >= 2000 && fvar(21) > 0)
+trigger1 = ctrl
+trigger2 = stateno = 200 && movecontact
+trigger3 = stateno = 205 && movecontact
+trigger4 = stateno = 235 && movecontact
+trigger5 = stateno = 210 && movecontact
+trigger6 = stateno = 215 && movecontact
+trigger7 = stateno = 245 && movecontact
+trigger8 = stateno = 400 && movecontact
+trigger9 = stateno = 410 && animelem = 5,>=0
+trigger10= stateno = 250 && movecontact
+trigger11= stateno = 251 && movecontact
+trigger12= (stateno = 260 ||stateno = 261) && movecontact
+trigger13= stateno = 290 && animelem = 7,>=0&&animelem = 9 ,<=0
+;僗乕僷乕僉儍儞僙儖
+trigger14= (stateno = 1000 || stateno = 1001) && animelem = 6,>=0 && animelem = 9,<=0 &&  fvar(21) > 0
+trigger15= stateno = 1150 && animelem = 6,>=0 && movecontact &&  fvar(21) > 0
+trigger16= (stateno = 1100 || stateno = 1101) && movecontact &&  fvar(21) > 0
+trigger17= stateno = 1150 && movecontact  &&  fvar(21) > 0
+trigger18= (stateno = 1200 || stateno = 1201) && movecontact&&  fvar(21) > 0
+trigger19= stateno = 1210 && movecontact &&  fvar(21) > 0
+trigger20= stateno = 1250 && movecontact &&  fvar(21) > 0
+trigger21= stateno = 1255 && movecontact  &&  fvar(21) > 0
+trigger22= stateno = 1305 && movecontact &&  fvar(21) > 0
+;HD捠忢媄柍忦審僉儍儞僙儖
+trigger23= stateno = [200,499]
+trigger23= movecontact
+trigger23= fvar(21) > 0
+
+trigger24 = stateno = 2010 && animelem = 57,>0 && animelem = 58,<0 &&  fvar(21) > 0
+trigger25 = stateno = 2060 && animelem = 57,>0 && animelem = 58,<0 &&  fvar(21) > 0
+;---------------------------------------------------------------------------
+;"EX Shiki Yaotome"
+[State negathibu anngisshu]
+type = ChangeState
+value = 2350
+triggerall = numhelper(2310) = 0
+triggerall = numhelper(2360) = 0
+triggerall = fvar(39) = 0
+triggerall = fvar(36) = 0
+triggerall = var(59) = 0
+triggerall = fvar(11) = 0
+triggerall = (command = "EX八酿") || (var(38) = 95 && var(40) > 0)
+triggerall = statetype != A
+triggerall = power >= 2000;-(fvar(21)>0)*1000
+trigger1 = ctrl
+trigger2 = stateno = 200 && movecontact
+trigger3 = stateno = 205 && movecontact
+trigger4 = stateno = 235 && movecontact
+trigger5 = stateno = 210 && movecontact
+trigger6 = stateno = 215 && movecontact
+trigger7 = stateno = 245 && movecontact
+trigger8 = stateno = 400 && movecontact
+trigger9 = stateno = 410 && animelem = 5,>=0
+trigger10= stateno = 250 && movecontact
+trigger11= stateno = 251 && movecontact
+trigger12= (stateno = 260 ||stateno = 261) && movecontact
+trigger13= stateno = 290 && animelem = 7,>=0&&animelem = 9 ,<=0
+;僗乕僷乕僉儍儞僙儖
+trigger14= (stateno = 1000 || stateno = 1001) && animelem = 6,>=0 && animelem = 9,<=0  && ((fvar(21) > 0) || (fvar(21) = 0 && var(20) >= 500))
+trigger15= stateno = 1050 && animelem = 6,>=0  && ((fvar(21) > 0) || (fvar(21) = 0 && var(20) >= 500))
+trigger16= (stateno = 1100 || stateno = 1101)  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger17= stateno = 1150  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger18= (stateno = 1200 || stateno = 1201)  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger19= stateno = 1210  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger20= stateno = 1250  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger21= stateno = 1255  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger22= stateno = 1305  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+;HD捠忢媄柍忦審僉儍儞僙儖
+trigger23= stateno = [200,499]
+trigger23= movecontact
+trigger23= fvar(21) > 0
+
+;trigger24 = stateno = 2010 && animelem = 57,>0 && animelem = 58,<0  && ((fvar(21) > 0) || (fvar(21) = 0 && var(20) >= 500))
+
+;----------------------------------------------------------------------------
+;"Shiki Yaotome"
+[State negathibu anngisshu]
+type = ChangeState
+value = 2300
+triggerall = numhelper(2310) = 0
+triggerall = numhelper(2360) = 0
+triggerall = fvar(39) = 0
+triggerall = fvar(36) = 0
+triggerall = var(59) = 0
+triggerall = fvar(11) = 0
+triggerall = (command = "八酿") || (var(38) = 90 && var(40) > 0)
+triggerall = statetype != A
+triggerall = power >= 1000
+trigger1 = ctrl
+trigger2 = stateno = 200 && movecontact
+trigger3 = stateno = 205 && movecontact
+trigger4 = stateno = 235 && movecontact
+trigger5 = stateno = 210 && movecontact
+trigger6 = stateno = 215 && movecontact
+trigger7 = stateno = 245 && movecontact
+trigger8 = stateno = 400 && movecontact
+trigger9 = stateno = 410 && animelem = 5,>=0
+trigger10= stateno = 250 && movecontact
+trigger11= stateno = 251 && movecontact
+trigger12= (stateno = 260 ||stateno = 261) && movecontact
+trigger13= stateno = 290 && animelem = 7,>=0&&animelem = 9 ,<=0
+;僗乕僷乕僉儍儞僙儖
+trigger14= (stateno = 1000 || stateno = 1001) && animelem = 6,>=0 && animelem = 9,<=0  && ((fvar(21) > 0) || (fvar(21) = 0 && var(20) >= 500))
+trigger15= stateno = 1050 && animelem = 6,>=0  && ((fvar(21) > 0) || (fvar(21) = 0 && var(20) >= 500))
+trigger16= (stateno = 1100 || stateno = 1101)  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger17= stateno = 1150  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger18= (stateno = 1200 || stateno = 1201)  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger19= stateno = 1210  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger20= stateno = 1250  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger21= stateno = 1255  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger22= stateno = 1305  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+;HD捠忢媄柍忦審僉儍儞僙儖
+trigger23= stateno = [200,499]
+trigger23= movecontact
+trigger23= fvar(21) > 0
+
+;---------------------------------------------------------------------------
+;"EX Shiki Yaotome"
+[State negathibu anngisshu]
+type = ChangeState
+value = 2050
+triggerall = var(59) = 0
+triggerall = fvar(11) = 0
+triggerall = fvar(36) = 0
+triggerall = (command = "EX Shiki Yaotome") || (var(38) = 65 && var(40) > 0)
+triggerall = statetype != A
+triggerall = power >= 2000;-(fvar(21)>0)*1000
+trigger1 = ctrl
+trigger2 = stateno = 200 && movecontact
+trigger3 = stateno = 205 && movecontact
+trigger4 = stateno = 235 && movecontact
+trigger5 = stateno = 210 && movecontact
+trigger6 = stateno = 215 && movecontact
+trigger7 = stateno = 245 && movecontact
+trigger8 = stateno = 400 && movecontact
+trigger9 = stateno = 410 && animelem = 5,>=0
+trigger10= stateno = 250 && movecontact
+trigger11= stateno = 251 && movecontact
+trigger12= (stateno = 260 ||stateno = 261) && movecontact
+trigger13= stateno = 290 && animelem = 7,>=0&&animelem = 9 ,<=0
+;僗乕僷乕僉儍儞僙儖
+trigger14= (stateno = 1000 || stateno = 1001) && animelem = 6,>=0 && animelem = 9,<=0  && ((fvar(21) > 0) || (fvar(21) = 0 && var(20) >= 500))
+trigger15= stateno = 1050 && animelem = 6,>=0  && ((fvar(21) > 0) || (fvar(21) = 0 && var(20) >= 500))
+trigger16= (stateno = 1100 || stateno = 1101)  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger17= stateno = 1150  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger18= (stateno = 1200 || stateno = 1201)  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger19= stateno = 1210  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger20= stateno = 1250  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger21= stateno = 1255  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger22= stateno = 1305  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+;HD捠忢媄柍忦審僉儍儞僙儖
+trigger23= stateno = [200,499]
+trigger23= movecontact
+trigger23= fvar(21) > 0
+
+;HD僉儍儞僙儖
+trigger24= stateno = (stateno = 1500 || stateno = 1501)   && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger25= stateno = 1550  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger26= (stateno = 1600 || stateno = 1601) && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger27= stateno = 1650 && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger28= stateno = 1710 && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger29= stateno = 1760 && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+
+;trigger30 = stateno = 2010 && animelem = 57,>0 && animelem = 58,<0  && ((fvar(21) > 0) || (fvar(21) = 0 && var(20) >= 500))
+
+;trigger31 = stateno = 2011 && animelem = 58,<0  && ((fvar(21) > 0) || (fvar(21) = 0 && var(20) >= 500))
+
+
+;----------------------------------------------------------------------------
+;"Shiki Yaotome"
+[State negathibu anngisshu]
+type = ChangeState
+value = 2000
+triggerall = var(59) = 0
+triggerall = fvar(11) = 0
+triggerall = (command = "Shiki Yaotome") || (var(38) = 60 && var(40) > 0)
+triggerall = statetype != A
+triggerall = power >= 1000
+trigger1 = ctrl
+trigger2 = stateno = 200 && movecontact
+trigger3 = stateno = 205 && movecontact
+trigger4 = stateno = 235 && movecontact
+trigger5 = stateno = 210 && movecontact
+trigger6 = stateno = 215 && movecontact
+trigger7 = stateno = 245 && movecontact
+trigger8 = stateno = 400 && movecontact
+trigger9 = stateno = 410 && animelem = 5,>=0
+trigger10= stateno = 250 && movecontact
+trigger11= stateno = 251 && movecontact
+trigger12= (stateno = 260 ||stateno = 261) && movecontact
+trigger13= stateno = 290 && animelem = 7,>=0&&animelem = 9 ,<=0
+;僗乕僷乕僉儍儞僙儖
+trigger14= (stateno = 1000 || stateno = 1001) && animelem = 6,>=0 && animelem = 9,<=0  && ((fvar(21) > 0) || (fvar(21) = 0 && var(20) >= 500))
+trigger15= stateno = 1050 && animelem = 6,>=0  && ((fvar(21) > 0) || (fvar(21) = 0 && var(20) >= 500))
+trigger16= (stateno = 1100 || stateno = 1101)  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger17= stateno = 1150  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger18= (stateno = 1200 || stateno = 1201)  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger19= stateno = 1210  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger20= stateno = 1250  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger21= stateno = 1255  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger22= stateno = 1305  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+;HD捠忢媄柍忦審僉儍儞僙儖
+trigger23= stateno = [200,499]
+trigger23= movecontact
+trigger23= fvar(21) > 0
+
+;HD僉儍儞僙儖
+trigger24= stateno = (stateno = 1500 || stateno = 1501)   && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger25= stateno = 1550  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger26= (stateno = 1600 || stateno = 1601) && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger27= stateno = 1650 && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger28= stateno = 1710 && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger29= stateno = 1760 && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+;----------------------------------------------------------------------------
+;"Shiki Yaotome"
+[State negathibu anngisshu]
+type = ChangeState
+value = 2001
+triggerall = var(59) = 0
+triggerall = fvar(11) = 0
+triggerall = (command = "Shiki Yaotome1") || (var(38) = 61 && var(40) > 0)
+triggerall = statetype != A
+triggerall = power >= 1000
+trigger1 = ctrl
+trigger2 = stateno = 200 && movecontact
+trigger3 = stateno = 205 && movecontact
+trigger4 = stateno = 235 && movecontact
+trigger5 = stateno = 210 && movecontact
+trigger6 = stateno = 215 && movecontact
+trigger7 = stateno = 245 && movecontact
+trigger8 = stateno = 400 && movecontact
+trigger9 = stateno = 410 && animelem = 5,>=0
+trigger10= stateno = 250 && movecontact
+trigger11= stateno = 251 && movecontact
+trigger12= (stateno = 260 ||stateno = 261) && movecontact
+trigger13= stateno = 290 && animelem = 7,>=0&&animelem = 9 ,<=0
+;僗乕僷乕僉儍儞僙儖
+trigger14= (stateno = 1000 || stateno = 1001) && animelem = 6,>=0 && animelem = 9,<=0  && ((fvar(21) > 0) || (fvar(21) = 0 && var(20) >= 500))
+trigger15= stateno = 1050 && animelem = 6,>=0  && ((fvar(21) > 0) || (fvar(21) = 0 && var(20) >= 500))
+trigger16= (stateno = 1100 || stateno = 1101)  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger17= stateno = 1150  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger18= (stateno = 1200 || stateno = 1201)  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger19= stateno = 1210  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger20= stateno = 1250  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger21= stateno = 1255  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger22= stateno = 1305  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+;HD捠忢媄柍忦審僉儍儞僙儖
+trigger23= stateno = [200,499]
+trigger23= movecontact
+trigger23= fvar(21) > 0
+
+;HD僉儍儞僙儖
+trigger24= stateno = (stateno = 1500 || stateno = 1501)   && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger25= stateno = 1550  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger26= (stateno = 1600 || stateno = 1601) && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger27= stateno = 1650 && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger28= stateno = 1710 && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger29= stateno = 1760 && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+
+;----------------------------------------------------------------------------
+;"Shiki Yaotome"
+[State negathibu anngisshu]
+type = null;ChangeState
+value = 0
+triggerall = var(59) = 0
+triggerall = (command = "Shiki Yaotome1") || (var(38) = 61 && var(40) > 0)
+triggerall = statetype != A
+;僗乕僷乕僉儍儞僙儖
+trigger1= stateno = 1210 && animelem = 6,>=0
+trigger2= stateno = 1255 && animelem = 6,>=0
+;----------------------------------------------------------------------
+;Shiki Yamisogi
+[State -1, Shiki Yamisogi]
+type = null;ChangeState
+value = 2200
+triggerall = var(59) = 0
+triggerall = fvar(11) = 0
+triggerall = (command = "Shiki Yamisogi") || (var(38) = 70 && var(40) > 0)
+triggerall = power >= 1000
+triggerall = statetype != A
+trigger1 = ctrl
+trigger2 = stateno = 200 && movecontact
+trigger3 = stateno = 205 && movecontact
+trigger4 = stateno = 235 && movecontact
+trigger5 = stateno = 210 && movecontact
+trigger6 = stateno = 215 && movecontact
+trigger7 = stateno = 245 && movecontact
+trigger8 = stateno = 400 && movecontact
+trigger9 = stateno = 410 && animelem = 5,>=0
+trigger10= stateno = 250 && movecontact
+trigger11= stateno = 251 && movecontact
+trigger12= stateno = 261 && movecontact
+trigger13= stateno = 290 && animelem = 7,>=0&&animelem = 9 ,<=0
+;僗乕僷乕僉儍儞僙儖
+trigger14= (stateno = 1000 || stateno = 1001) && animelem = 6,>=0 && animelem = 9,<=0  && ((fvar(21) > 0) || (fvar(21) = 0 && var(20) >= 500))
+trigger15= stateno = 1050 && animelem = 6,>=0  && ((fvar(21) > 0) || (fvar(21) = 0 && var(20) >= 500))
+trigger16= (stateno = 1100 || stateno = 1101)  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger17= stateno = 1150  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger18= (stateno = 1200 || stateno = 1201)  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger19= stateno = 1210  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger20= stateno = 1250  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger21= stateno = 1255  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger22= stateno = 1305  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+;HD捠忢媄柍忦審僉儍儞僙儖
+trigger23= stateno = [200,499]
+trigger23= movecontact
+trigger23= fvar(21) > 0
+
+;===========================================================================
+;---------------------------------------------------------------------------
+;---------------------------------------------------------------------------
+;EX擉昐嶲幃丒捚捴
+[State negathibu anngisshu]
+type = ChangeState
+value = 1850
+triggerall = fvar(39) = 1
+triggerall = var(59) = 0
+triggerall = fvar(11) = 0
+triggerall = (command = "EX擉昐嶲幃丒捚捴") || (var(38) = 115 && var(40) > 0)
+triggerall = statetype != A
+triggerall = power >= 1000
+trigger1 = ctrl
+trigger2 = stateno = 200 && movecontact
+trigger3 = stateno = 205 && movecontact
+trigger4 = stateno = 235 && movecontact
+trigger5 = stateno = 210 && movecontact
+trigger6 = stateno = 215 && movecontact
+trigger7 = stateno = 245 && movecontact
+trigger8 = stateno = 400 && movecontact
+trigger9 = stateno = 410 && animelem = 5,>=0
+trigger10= stateno = 250 && movecontact
+trigger11= stateno = 251 && movecontact
+trigger12= stateno = 261 && movecontact
+trigger13= stateno = 290 && animelem = 7,>=0
+
+;僪儔僀僽僉儍儞僙儖
+trigger14= (stateno = 1500 || stateno = 1501)  && movehit
+trigger14= var(20) >= 500
+trigger14= fvar(21) = 0
+trigger15= stateno = 1550 && movehit
+trigger15= var(20) >= 500
+trigger15= fvar(21) = 0
+trigger16= (stateno = 1600 || stateno = 1601)&& movehit
+trigger16= var(20) >= 500
+trigger16= fvar(21) = 0
+trigger17= stateno = 1650 && movehit
+trigger17= var(20) >= 500
+trigger17= fvar(21) = 0
+trigger18= stateno = 1710 && movehit
+trigger18= var(20) >= 500
+trigger18= fvar(21) = 0
+trigger19= stateno = 1760 && movehit
+trigger19= var(20) >= 500
+trigger19= fvar(21) = 0
+
+;HD僉儍儞僙儖
+trigger20= stateno = (stateno = 1500 || stateno = 1501)  && movecontact
+trigger20= fvar(21) > 0
+trigger21= stateno = 1550 && movecontact
+trigger21= fvar(21) > 0
+trigger22= (stateno = 1600 || stateno = 1601)&& movecontact
+trigger22= fvar(21) > 0
+trigger23= stateno = 1650 && movecontact
+trigger23= fvar(21) > 0
+trigger24= stateno = 1710 && movecontact
+trigger24= fvar(21) > 0
+trigger25= stateno = 1760 && movecontact
+trigger25= fvar(21) > 0
+
+;HD捠忢媄柍忦審僉儍儞僙儖
+trigger26= stateno = [200,499]
+trigger26= movecontact
+trigger26= fvar(21) > 0
+;---------------------------------------------------------------------------
+;擉昐嶲幃丒捚捴
+[State negathibu anngisshu]
+type = ChangeState
+value = 1800
+triggerall = fvar(39) = 1
+triggerall = var(59) = 0
+triggerall = fvar(11) = 0
+triggerall = (command = "擉昐嶲幃丒捚捴") || (var(38) = 110 && var(40) > 0)
+triggerall = statetype != A
+trigger1 = ctrl
+trigger2 = stateno = 200 && movecontact
+trigger3 = stateno = 205 && movecontact
+trigger4 = stateno = 235 && movecontact
+trigger5 = stateno = 210 && movecontact
+trigger6 = stateno = 215 && movecontact
+trigger7 = stateno = 245 && movecontact
+trigger8 = stateno = 400 && movecontact
+trigger9 = stateno = 410 && animelem = 5,>=0
+trigger10= stateno = 250 && movecontact
+trigger11= stateno = 251 && movecontact
+trigger12= stateno = 261 && movecontact
+trigger13= stateno = 290 && animelem = 7,>=0
+
+;僪儔僀僽僉儍儞僙儖
+trigger14= (stateno = 1500 || stateno = 1501)  && movehit
+trigger14= var(20) >= 500
+trigger14= fvar(21) = 0
+trigger15= stateno = 1550 && movehit
+trigger15= var(20) >= 500
+trigger15= fvar(21) = 0
+trigger16= (stateno = 1600 || stateno = 1601)&& movehit
+trigger16= var(20) >= 500
+trigger16= fvar(21) = 0
+trigger17= stateno = 1650 && movehit
+trigger17= var(20) >= 500
+trigger17= fvar(21) = 0
+trigger18= stateno = 1710 && movehit
+trigger18= var(20) >= 500
+trigger18= fvar(21) = 0
+trigger19= stateno = 1760 && movehit
+trigger19= var(20) >= 500
+trigger19= fvar(21) = 0
+
+;HD僉儍儞僙儖
+trigger20= stateno = (stateno = 1500 || stateno = 1501)  && movecontact
+trigger20= fvar(21) > 0
+trigger21= stateno = 1550 && movecontact
+trigger21= fvar(21) > 0
+trigger22= (stateno = 1600 || stateno = 1601)&& movecontact
+trigger22= fvar(21) > 0
+trigger23= stateno = 1650 && movecontact
+trigger23= fvar(21) > 0
+trigger24= stateno = 1710 && movecontact
+trigger24= fvar(21) > 0
+trigger25= stateno = 1760 && movecontact
+trigger25= fvar(21) > 0
+
+;HD捠忢媄柍忦審僉儍儞僙儖
+trigger26= stateno = [200,499]
+trigger26= movecontact
+trigger26= fvar(21) > 0
+
+
+
+;---------------------------------------------------------------------------
+;EX昐擉廍嬨幃丒柧塆
+[State negathibu anngisshu]
+type = ChangeState
+value = 1750
+triggerall = fvar(39) = 1
+triggerall = var(59) = 0
+triggerall = fvar(11) = 0
+triggerall = (command = "EX昐擉廍嬨幃丒柧塆") || (var(38) = 105 && var(40) > 0)
+triggerall = statetype != A
+triggerall = power >= 1000
+trigger1 = ctrl
+trigger2 = stateno = 200 && movecontact
+trigger3 = stateno = 205 && movecontact
+trigger4 = stateno = 235 && movecontact
+trigger5 = stateno = 210 && movecontact
+trigger6 = stateno = 215 && movecontact
+trigger7 = stateno = 245 && movecontact
+trigger8 = stateno = 400 && movecontact
+trigger9 = stateno = 410 && animelem = 5,>=0
+trigger10= stateno = 250 && movecontact
+trigger11= stateno = 251 && movecontact
+trigger12= stateno = 261 && movecontact
+trigger13= stateno = 290 && animelem = 7,>=0
+
+;僪儔僀僽僉儍儞僙儖
+trigger14= (stateno = 1500 || stateno = 1501)  && movehit
+trigger14= var(20) >= 500
+trigger14= fvar(21) = 0
+trigger15= stateno = 1550 && movehit
+trigger15= var(20) >= 500
+trigger15= fvar(21) = 0
+trigger16= (stateno = 1600 || stateno = 1601)&& movehit
+trigger16= var(20) >= 500
+trigger16= fvar(21) = 0
+trigger17= stateno = 1650 && movehit
+trigger17= var(20) >= 500
+trigger17= fvar(21) = 0
+trigger18= stateno = 1710 && movehit
+trigger18= var(20) >= 500
+trigger18= fvar(21) = 0
+trigger19= stateno = 176000 && movehit
+trigger19= var(20) >= 500
+trigger19= fvar(21) = 0
+
+;HD僉儍儞僙儖
+trigger20= stateno = (stateno = 1500 || stateno = 1501)  && movecontact
+trigger20= fvar(21) > 0
+trigger21= stateno = 1550 && movecontact
+trigger21= fvar(21) > 0
+trigger22= (stateno = 1600 || stateno = 1601)&& movecontact
+trigger22= fvar(21) > 0
+trigger23= stateno = 1650 && movecontact
+trigger23= fvar(21) > 0
+trigger24= stateno = 1710 && movecontact
+trigger24= fvar(21) > 0
+trigger25= stateno = 176000 && movecontact
+trigger25= fvar(21) > 0
+
+;HD捠忢媄柍忦審僉儍儞僙儖
+trigger26= stateno = [200,499]
+trigger26= movecontact
+trigger26= fvar(21) > 0
+
+;---------------------------------------------------------------------------
+;昐擉廍嬨幃丒柧塆
+[State negathibu anngisshu]
+type = ChangeState
+value = 1701
+triggerall = fvar(39) = 1
+triggerall = var(59) = 0
+triggerall = fvar(11) = 0
+triggerall = (command = "昐擉廍嬨幃丒柧塆1") || (var(38) = 101 && var(40) > 0)
+triggerall = statetype != A
+trigger1 = ctrl
+trigger2 = stateno = 200 && movecontact
+trigger3 = stateno = 205 && movecontact
+trigger4 = stateno = 235 && movecontact
+trigger5 = stateno = 210 && movecontact
+trigger6 = stateno = 215 && movecontact
+trigger7 = stateno = 245 && movecontact
+trigger8 = stateno = 400 && movecontact
+trigger9 = stateno = 410 && animelem = 5,>=0
+trigger10= stateno = 250 && movecontact
+trigger11= stateno = 251 && movecontact
+trigger12= stateno = 261 && movecontact
+trigger13= stateno = 290 && animelem = 7,>=0
+
+;僪儔僀僽僉儍儞僙儖
+trigger14= (stateno = 1500 || stateno = 1501)  && movehit
+trigger14= var(20) >= 500
+trigger14= fvar(21) = 0
+trigger15= stateno = 1550 && movehit
+trigger15= var(20) >= 500
+trigger15= fvar(21) = 0
+trigger16= (stateno = 1600 || stateno = 1601)&& movehit
+trigger16= var(20) >= 500
+trigger16= fvar(21) = 0
+trigger17= stateno = 1650 && movehit
+trigger17= var(20) >= 500
+trigger17= fvar(21) = 0
+trigger18= stateno = 171000 && movehit
+trigger18= var(20) >= 500
+trigger18= fvar(21) = 0
+trigger19= stateno = 176000 && movehit
+trigger19= var(20) >= 500
+trigger19= fvar(21) = 0
+
+;HD僉儍儞僙儖
+trigger20= stateno = (stateno = 1500 || stateno = 1501)  && movecontact
+trigger20= fvar(21) > 0
+trigger21= stateno = 1550 && movecontact
+trigger21= fvar(21) > 0
+trigger22= (stateno = 1600 || stateno = 1601)&& movecontact
+trigger22= fvar(21) > 0
+trigger23= stateno = 1650 && movecontact
+trigger23= fvar(21) > 0
+trigger24= stateno = 171000 && movecontact
+trigger24= fvar(21) > 0
+trigger25= stateno = 176000 && movecontact
+trigger25= fvar(21) > 0
+
+;HD捠忢媄柍忦審僉儍儞僙儖
+trigger26= stateno = [200,499]
+trigger26= movecontact
+trigger26= fvar(21) > 0
+
+;---------------------------------------------------------------------------
+;昐擉廍嬨幃丒柧塆
+[State negathibu anngisshu]
+type = ChangeState
+value = 1700
+triggerall = fvar(39) = 1
+triggerall = var(59) = 0
+triggerall = fvar(11) = 0
+triggerall = (command = "昐擉廍嬨幃丒柧塆") || (var(38) = 100 && var(40) > 0)
+triggerall = statetype != A
+trigger1 = ctrl
+trigger2 = stateno = 200 && movecontact
+trigger3 = stateno = 205 && movecontact
+trigger4 = stateno = 235 && movecontact
+trigger5 = stateno = 210 && movecontact
+trigger6 = stateno = 215 && movecontact
+trigger7 = stateno = 245 && movecontact
+trigger8 = stateno = 400 && movecontact
+trigger9 = stateno = 410 && animelem = 5,>=0
+trigger10= stateno = 250 && movecontact
+trigger11= stateno = 251 && movecontact
+trigger12= stateno = 261 && movecontact
+trigger13= stateno = 290 && animelem = 7,>=0
+
+;僪儔僀僽僉儍儞僙儖
+trigger14= (stateno = 1500 || stateno = 1501)  && movehit
+trigger14= var(20) >= 500
+trigger14= fvar(21) = 0
+trigger15= stateno = 1550 && movehit
+trigger15= var(20) >= 500
+trigger15= fvar(21) = 0
+trigger16= (stateno = 1600 || stateno = 1601)&& movehit
+trigger16= var(20) >= 500
+trigger16= fvar(21) = 0
+trigger17= stateno = 1650 && movehit
+trigger17= var(20) >= 500
+trigger17= fvar(21) = 0
+trigger18= stateno = 171000 && movehit
+trigger18= var(20) >= 500
+trigger18= fvar(21) = 0
+trigger19= stateno = 176000 && movehit
+trigger19= var(20) >= 500
+trigger19= fvar(21) = 0
+
+;HD僉儍儞僙儖
+trigger20= stateno = (stateno = 1500 || stateno = 1501)  && movecontact
+trigger20= fvar(21) > 0
+trigger21= stateno = 1550 && movecontact
+trigger21= fvar(21) > 0
+trigger22= (stateno = 1600 || stateno = 1601)&& movecontact
+trigger22= fvar(21) > 0
+trigger23= stateno = 1650 && movecontact
+trigger23= fvar(21) > 0
+trigger24= stateno = 171000 && movecontact
+trigger24= fvar(21) > 0
+trigger25= stateno = 176000 && movecontact
+trigger25= fvar(21) > 0
+
+;HD捠忢媄柍忦審僉儍儞僙儖
+trigger26= stateno = [200,499]
+trigger26= movecontact
+trigger26= fvar(21) > 0
+;孄晽--------------------------------------------------------
+;"Kuzukaze"
+[State Kuzukaze]
+type = ChangeState
+value = 1401
+triggerall = fvar(39) = 0
+triggerall = var(59) = 0
+triggerall = fvar(11) = 0
+triggerall = (command = "Kuzukaze1") || (var(38) = 51 && var(40) > 0)
+triggerall = statetype != A
+;triggerall = enemy,statetype != A
+trigger1 = ctrl
+trigger2 = stateno = 200 && movecontact
+trigger3 = stateno = 205 && movecontact
+trigger4 = stateno = 235 && movecontact
+trigger5 = stateno = 210 && movecontact
+trigger6 = stateno = 215 && movecontact
+trigger7 = stateno = 245 && movecontact
+trigger8 = stateno = 400 && movecontact
+trigger9 = stateno = 410 && animelem = 5,>=0
+trigger10= stateno = 250 && movecontact
+trigger11= stateno = 251 && movecontact
+trigger12= stateno = 261 && movecontact
+trigger13= stateno = 290 && animelem = 7,>=0&&animelem = 9 ,<=0
+;僗乕僷乕僉儍儞僙儖
+trigger14= (stateno = 1000 || stateno = 1001) && animelem = 6,>=0 && animelem = 9,<=0  && ((fvar(21) > 0) || (fvar(21) = 0 && var(20) >= 500))
+trigger15= stateno = 1050 && animelem = 6,>=0  && ((fvar(21) > 0) || (fvar(21) = 0 && var(20) >= 500))
+trigger16= (stateno = 1100 || stateno = 1101)  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger17= stateno = 1150  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger18= (stateno = 1200 || stateno = 1201)  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger19= stateno = 1210  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger20= stateno = 1250  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger21= stateno = 1255  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger22= stateno = 1305  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+;HD捠忢媄柍忦審僉儍儞僙儖
+trigger23= stateno = [200,499]
+trigger23= movecontact
+trigger23= fvar(21) > 0
+
+
+;孄晽--------------------------------------------------------
+;"Kuzukaze"
+[State Kuzukaze]
+type = ChangeState
+value = 1400
+triggerall = fvar(39) = 0
+triggerall = var(59) = 0
+triggerall = fvar(11) = 0
+triggerall = (command = "Kuzukaze") || (var(38) = 50 && var(40) > 0)
+triggerall = statetype != A
+;triggerall = enemy,statetype != A
+trigger1 = ctrl
+trigger2 = stateno = 200 && movecontact
+trigger3 = stateno = 205 && movecontact
+trigger4 = stateno = 235 && movecontact
+trigger5 = stateno = 210 && movecontact
+trigger6 = stateno = 215 && movecontact
+trigger7 = stateno = 245 && movecontact
+trigger8 = stateno = 400 && movecontact
+trigger9 = stateno = 410 && animelem = 5,>=0
+trigger10= stateno = 250 && movecontact
+trigger11= stateno = 251 && movecontact
+trigger12= stateno = 261 && movecontact
+trigger13= stateno = 290 && animelem = 7,>=0&&animelem = 9 ,<=0
+;僗乕僷乕僉儍儞僙儖
+trigger14= (stateno = 1000 || stateno = 1001) && animelem = 6,>=0 && animelem = 9,<=0  && ((fvar(21) > 0) || (fvar(21) = 0 && var(20) >= 500))
+trigger15= stateno = 1050 && animelem = 6,>=0  && ((fvar(21) > 0) || (fvar(21) = 0 && var(20) >= 500))
+trigger16= (stateno = 1100 || stateno = 1101)  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger17= stateno = 1150  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger18= (stateno = 1200 || stateno = 1201)  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger19= stateno = 1210  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger20= stateno = 1250  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger21= stateno = 1255  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger22= stateno = 1305  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+;HD捠忢媄柍忦審僉儍儞僙儖
+trigger23= stateno = [200,499]
+trigger23= movecontact
+trigger23= fvar(21) > 0
+
+
+;---------------------------------------------------------------------------
+;"EX Shiki Kototsuki In"
+[State Nihyakujuunishiki Kototsuki In DC]
+type = ChangeState
+value = 1350
+triggerall = fvar(39) = 0
+triggerall = var(59) = 0
+triggerall = fvar(11) = 0
+triggerall = (command = "EX Shiki Kototsuki In") || (var(38) = 45 && var(40) > 0)
+triggerall = statetype != A
+triggerall = power >= 1000
+trigger1 = ctrl
+trigger2 = stateno = 200 && movecontact
+trigger3 = stateno = 205 && movecontact
+trigger4 = stateno = 235 && movecontact
+trigger5 = stateno = 210 && movecontact
+trigger6 = stateno = 215 && movecontact
+trigger7 = stateno = 245 && movecontact
+trigger8 = stateno = 400 && movecontact
+trigger9 = stateno = 410 && animelem = 5,>=0
+trigger10= stateno = 250 && movecontact
+trigger11= stateno = 251 && movecontact
+trigger12= stateno = 261 && movecontact
+trigger13= stateno = 290 && animelem = 7,>=0&&animelem = 9 ,<=0
+;僗乕僷乕僉儍儞僙儖
+trigger14= (stateno = 1000 || stateno = 1001) && animelem = 6,>=0 && animelem = 9,<=0  && ((fvar(21) > 0) || (fvar(21) = 0 && var(20) >= 500))
+trigger15= stateno = 1050 && animelem = 6,>=0  && ((fvar(21) > 0) || (fvar(21) = 0 && var(20) >= 500))
+trigger16= (stateno = 1100 || stateno = 1101)  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger17= stateno = 1150  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger18= (stateno = 1200 || stateno = 1201)  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger19= stateno = 1210  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger20= stateno = 1250  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger21= stateno = 1255  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger22= stateno = 1305  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+;HD捠忢媄柍忦審僉儍儞僙儖
+trigger23= stateno = [200,499]
+trigger23= movecontact
+trigger23= fvar(21) > 0
+
+;---------------------------------------------------------------------------
+;"Shiki Kototsuki In"
+[State Nihyakujuunishiki Kototsuki In DC]
+type = ChangeState
+value = 1300
+triggerall = fvar(39) = 0
+triggerall = var(59) = 0
+triggerall = fvar(11) = 0
+triggerall = (command = "Shiki Kototsuki In") || (var(38) = 40 && var(40) > 0)
+triggerall = statetype != A
+trigger1 = ctrl
+trigger2 = stateno = 200 && movecontact
+trigger3 = stateno = 205 && movecontact
+trigger4 = stateno = 235 && movecontact
+trigger5 = stateno = 210 && movecontact
+trigger6 = stateno = 215 && movecontact
+trigger7 = stateno = 245 && movecontact
+trigger8 = stateno = 400 && movecontact
+trigger9 = stateno = 410 && animelem = 5,>=0
+trigger10= stateno = 250 && movecontact
+trigger11= stateno = 251 && movecontact
+trigger12= stateno = 261 && movecontact
+trigger13= stateno = 290 && animelem = 7,>=0&&animelem = 9 ,<=0
+;僗乕僷乕僉儍儞僙儖
+trigger14= (stateno = 1000 || stateno = 1001) && animelem = 6,>=0 && animelem = 9,<=0  && ((fvar(21) > 0) || (fvar(21) = 0 && var(20) >= 500))
+trigger15= stateno = 1050 && animelem = 6,>=0  && ((fvar(21) > 0) || (fvar(21) = 0 && var(20) >= 500))
+trigger16= (stateno = 1100 || stateno = 1101)  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger17= stateno = 1150  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger18= (stateno = 1200 || stateno = 1201)  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger19= stateno = 1210  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger20= stateno = 1250  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger21= stateno = 1255  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger22= stateno = 130500  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+;HD捠忢媄柍忦審僉儍儞僙儖
+trigger23= stateno = [200,499]
+trigger23= movecontact
+trigger23= fvar(21) > 0
+
+;---------------------------------------------------------------------------
+;"Shiki Kototsuki In"
+[State Nihyakujuunishiki Kototsuki In DC]
+type = ChangeState
+value = 1301
+triggerall = fvar(39) = 0
+triggerall = var(59) = 0
+triggerall = fvar(11) = 0
+triggerall = (command = "Shiki Kototsuki In1") || (var(38) = 41 && var(40) > 0)
+triggerall = statetype != A
+trigger1 = ctrl
+trigger2 = stateno = 200 && movecontact
+trigger3 = stateno = 205 && movecontact
+trigger4 = stateno = 235 && movecontact
+trigger5 = stateno = 210 && movecontact
+trigger6 = stateno = 215 && movecontact
+trigger7 = stateno = 245 && movecontact
+trigger8 = stateno = 400 && movecontact
+trigger9 = stateno = 410 && animelem = 5,>=0
+trigger10= stateno = 250 && movecontact
+trigger11= stateno = 251 && movecontact
+trigger12= stateno = 261 && movecontact
+trigger13= stateno = 290 && animelem = 7,>=0&&animelem = 9 ,<=0
+;僗乕僷乕僉儍儞僙儖
+trigger14= (stateno = 1000 || stateno = 1001) && animelem = 6,>=0 && animelem = 9,<=0  && ((fvar(21) > 0) || (fvar(21) = 0 && var(20) >= 500))
+trigger15= stateno = 1050 && animelem = 6,>=0  && ((fvar(21) > 0) || (fvar(21) = 0 && var(20) >= 500))
+trigger16= (stateno = 1100 || stateno = 1101)  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger17= stateno = 1150  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger18= (stateno = 1200 || stateno = 1201)  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger19= stateno = 1210  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger20= stateno = 1250  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger21= stateno = 1255  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger22= stateno = 130500  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+;HD捠忢媄柍忦審僉儍儞僙儖
+trigger23= stateno = [200,499]
+trigger23= movecontact
+trigger23= fvar(21) > 0
+
+;---------------------------------------------------------------------------
+;EX巐昐堧幃丒徴寧
+[State negathibu anngisshu]
+type = ChangeState
+value = 1650
+triggerall = fvar(39) = 1
+triggerall = var(59) = 0
+triggerall = fvar(11) = 0
+triggerall = (command = "EX Shiki Aoibana") || (var(38) = 35 && var(40) > 0)
+triggerall = statetype != A
+triggerall = power >= 1000
+trigger1 = ctrl
+trigger2 = stateno = 200 && movecontact
+trigger3 = stateno = 205 && movecontact
+trigger4 = stateno = 235 && movecontact
+trigger5 = stateno = 210 && movecontact
+trigger6 = stateno = 215 && movecontact
+trigger7 = stateno = 245 && movecontact
+trigger8 = stateno = 400 && movecontact
+trigger9 = stateno = 410 && animelem = 5,>=0
+trigger10= stateno = 250 && movecontact
+trigger11= stateno = 251 && movecontact
+trigger12= stateno = 261 && movecontact
+trigger13= stateno = 290 && animelem = 7,>=0
+
+;僪儔僀僽僉儍儞僙儖
+trigger14= (stateno = 1500 || stateno = 1501)  && movehit
+trigger14= var(20) >= 500
+trigger14= fvar(21) = 0
+trigger15= stateno = 1550 && movehit
+trigger15= var(20) >= 500
+trigger15= fvar(21) = 0
+trigger16= (stateno = 1600 || stateno = 1601)&& movehit
+trigger16= var(20) >= 500
+trigger16= fvar(21) = 0
+trigger17= stateno = 165000 && movehit
+trigger17= var(20) >= 500
+trigger17= fvar(21) = 0
+trigger18= stateno = 1710 && movehit
+trigger18= var(20) >= 500
+trigger18= fvar(21) = 0
+trigger19= stateno = 1760 && movehit
+trigger19= var(20) >= 500
+trigger19= fvar(21) = 0
+
+;HD僉儍儞僙儖
+trigger20= stateno = (stateno = 1500 || stateno = 1501)  && movecontact
+trigger20= fvar(21) > 0
+trigger21= stateno = 1550 && movecontact
+trigger21= fvar(21) > 0
+trigger22= (stateno = 1600 || stateno = 1601)&& movecontact
+trigger22= fvar(21) > 0
+trigger23= stateno = 165000 && movecontact
+trigger23= fvar(21) > 0
+trigger24= stateno = 1710 && movecontact
+trigger24= fvar(21) > 0
+trigger25= stateno = 1760 && movecontact
+trigger25= fvar(21) > 0
+
+;HD捠忢媄柍忦審僉儍儞僙儖
+trigger26= stateno = [200,499]
+trigger26= movecontact
+trigger26= fvar(21) > 0
+;---------------------------------------------------------------------------
+;巐昐堧幃丒徴寧
+[State negathibu anngisshu]
+type = ChangeState
+value = 1601
+triggerall = fvar(39) = 1
+triggerall = var(59) = 0
+triggerall = fvar(11) = 0
+triggerall = (command = "Shiki Aoibana1") || (var(38) = 31 && var(40) > 0)
+triggerall = statetype != A
+trigger1 = ctrl
+trigger2 = stateno = 200 && movecontact
+trigger3 = stateno = 205 && movecontact
+trigger4 = stateno = 235 && movecontact
+trigger5 = stateno = 210 && movecontact
+trigger6 = stateno = 215 && movecontact
+trigger7 = stateno = 245 && movecontact
+trigger8 = stateno = 400 && movecontact
+trigger9 = stateno = 410 && animelem = 5,>=0
+trigger10= stateno = 250 && movecontact
+trigger11= stateno = 251 && movecontact
+trigger12= stateno = 261 && movecontact
+trigger13= stateno = 290 && animelem = 7,>=0
+
+;僪儔僀僽僉儍儞僙儖
+trigger14= (stateno = 1500 || stateno = 1501)  && movehit
+trigger14= var(20) >= 500
+trigger14= fvar(21) = 0
+trigger15= stateno = 1550 && movehit
+trigger15= var(20) >= 500
+trigger15= fvar(21) = 0
+trigger16= (stateno = 160000 || stateno = 160100)&& movehit
+trigger16= var(20) >= 500
+trigger16= fvar(21) = 0
+trigger17= stateno = 165000 && movehit
+trigger17= var(20) >= 500
+trigger17= fvar(21) = 0
+trigger18= stateno = 1710 && movehit
+trigger18= var(20) >= 500
+trigger18= fvar(21) = 0
+trigger19= stateno = 1760 && movehit
+trigger19= var(20) >= 500
+trigger19= fvar(21) = 0
+
+;HD僉儍儞僙儖
+trigger20= stateno = (stateno = 1500 || stateno = 1501)  && movecontact
+trigger20= fvar(21) > 0
+trigger21= stateno = 1550 && movecontact
+trigger21= fvar(21) > 0
+trigger22= (stateno = 160000 || stateno = 160100)&& movecontact
+trigger22= fvar(21) > 0
+trigger23= stateno = 165000 && movecontact
+trigger23= fvar(21) > 0
+trigger24= stateno = 1710 && movecontact
+trigger24= fvar(21) > 0
+trigger25= stateno = 1760 && movecontact
+trigger25= fvar(21) > 0
+
+;HD捠忢媄柍忦審僉儍儞僙儖
+trigger26= stateno = [200,499]
+trigger26= movecontact
+trigger26= fvar(21) > 0
+;---------------------------------------------------------------------------
+;巐昐堧幃丒徴寧
+[State negathibu anngisshu]
+type = ChangeState
+value = 1600
+triggerall = fvar(39) = 1
+triggerall = var(59) = 0
+triggerall = fvar(11) = 0
+triggerall = (command = "Shiki Aoibana") || (var(38) = 30 && var(40) > 0)
+triggerall = statetype != A
+trigger1 = ctrl
+trigger2 = stateno = 200 && movecontact
+trigger3 = stateno = 205 && movecontact
+trigger4 = stateno = 235 && movecontact
+trigger5 = stateno = 210 && movecontact
+trigger6 = stateno = 215 && movecontact
+trigger7 = stateno = 245 && movecontact
+trigger8 = stateno = 400 && movecontact
+trigger9 = stateno = 410 && animelem = 5,>=0
+trigger10= stateno = 250 && movecontact
+trigger11= stateno = 251 && movecontact
+trigger12= stateno = 261 && movecontact
+trigger13= stateno = 290 && animelem = 7,>=0
+
+;僪儔僀僽僉儍儞僙儖
+trigger14= (stateno = 1500 || stateno = 1501)  && movehit
+trigger14= var(20) >= 500
+trigger14= fvar(21) = 0
+trigger15= stateno = 1550 && movehit
+trigger15= var(20) >= 500
+trigger15= fvar(21) = 0
+trigger16= (stateno = 160000 || stateno = 160100)&& movehit
+trigger16= var(20) >= 500
+trigger16= fvar(21) = 0
+trigger17= stateno = 165000 && movehit
+trigger17= var(20) >= 500
+trigger17= fvar(21) = 0
+trigger18= stateno = 1710 && movehit
+trigger18= var(20) >= 500
+trigger18= fvar(21) = 0
+trigger19= stateno = 1760 && movehit
+trigger19= var(20) >= 500
+trigger19= fvar(21) = 0
+
+;HD僉儍儞僙儖
+trigger20= stateno = (stateno = 1500 || stateno = 1501)  && movecontact
+trigger20= fvar(21) > 0
+trigger21= stateno = 1550 && movecontact
+trigger21= fvar(21) > 0
+trigger22= (stateno = 160000 || stateno = 160100)&& movecontact
+trigger22= fvar(21) > 0
+trigger23= stateno = 165000 && movecontact
+trigger23= fvar(21) > 0
+trigger24= stateno = 1710 && movecontact
+trigger24= fvar(21) > 0
+trigger25= stateno = 1760 && movecontact
+trigger25= fvar(21) > 0
+
+;HD捠忢媄柍忦審僉儍儞僙儖
+trigger26= stateno = [200,499]
+trigger26= movecontact
+trigger26= fvar(21) > 0
+
+;---------------------------------------------------------------------------
+;"EX Shiki Aoibana"
+[State Hyakunijunanashiki Aoibana]
+type = ChangeState
+value = 1250
+triggerall = fvar(39) = 0
+triggerall = var(59) = 0
+triggerall = fvar(11) = 0
+triggerall = (command = "EX Shiki Aoibana") || (var(38) = 35 && var(40) > 0)
+triggerall = statetype != A
+triggerall = power >= 1000
+trigger1 = ctrl
+trigger2 = stateno = 200 && movecontact
+trigger3 = stateno = 205 && movecontact
+trigger4 = stateno = 235 && movecontact
+trigger5 = stateno = 210 && movecontact
+trigger6 = stateno = 215 && movecontact
+trigger7 = stateno = 245 && movecontact
+trigger8 = stateno = 400 && movecontact
+trigger9 = stateno = 410 && animelem = 5,>=0
+trigger10= stateno = 250 && movecontact
+trigger11= stateno = 251 && movecontact
+trigger12= stateno = 261 && movecontact
+trigger13= stateno = 290 && animelem = 7,>=0&&animelem = 9 ,<=0
+;僗乕僷乕僉儍儞僙儖
+trigger14= (stateno = 1000 || stateno = 1001) && animelem = 6,>=0 && animelem = 9,<=0  && ((fvar(21) > 0) || (fvar(21) = 0 && var(20) >= 500))
+trigger15= stateno = 1050 && animelem = 6,>=0  && ((fvar(21) > 0) || (fvar(21) = 0 && var(20) >= 500))
+trigger16= (stateno = 1100 || stateno = 1101)  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger17= stateno = 1150  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger18= (stateno = 1200 || stateno = 1201)  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger19= stateno = 1210  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger20= stateno = 125000  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger21= stateno = 125500  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger22= stateno = 1305  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+;HD捠忢媄柍忦審僉儍儞僙儖
+trigger23= stateno = [200,499]
+trigger23= movecontact
+trigger23= fvar(21) > 0
+
+;----------------------------------------------------------------------------
+;"Shiki Aoibana"
+[State Hyakunijunanashiki Aoibana]
+type = ChangeState
+value = 1200
+triggerall = fvar(39) = 0
+triggerall = var(59) = 0
+triggerall = fvar(11) = 0
+triggerall = (command = "Shiki Aoibana") || (var(38) = 30 && var(40) > 0)
+triggerall = statetype != A
+trigger1 = ctrl
+trigger2 = stateno = 200 && movecontact
+trigger3 = stateno = 205 && movecontact
+trigger4 = stateno = 235 && movecontact
+trigger5 = stateno = 210 && movecontact
+trigger6 = stateno = 215 && movecontact
+trigger7 = stateno = 245 && movecontact
+trigger8 = stateno = 400 && movecontact
+trigger9 = stateno = 410 && animelem = 5,>=0
+trigger10= stateno = 250 && movecontact
+trigger11= stateno = 251 && movecontact
+trigger12= stateno = 261 && movecontact
+trigger13= stateno = 290 && animelem = 7,>=0&&animelem = 9 ,<=0
+;僗乕僷乕僉儍儞僙儖
+trigger14= (stateno = 1000 || stateno = 1001) && animelem = 6,>=0 && animelem = 9,<=0  && ((fvar(21) > 0) || (fvar(21) = 0 && var(20) >= 500))
+trigger15= stateno = 1050 && animelem = 6,>=0  && ((fvar(21) > 0) || (fvar(21) = 0 && var(20) >= 500))
+trigger16= (stateno = 1100 || stateno = 1101)  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger17= stateno = 1150  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger18= (stateno = 120000 || stateno = 120100)  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger19= stateno = 121000  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger20= stateno = 125000  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger21= stateno = 125500  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger22= stateno = 1305  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+;HD捠忢媄柍忦審僉儍儞僙儖
+trigger23= stateno = [200,499]
+trigger23= movecontact
+trigger23= fvar(21) > 0
+
+;----------------------------------------------------------------------------
+;"Shiki Aoibana"
+[State Hyakunijunanashiki Aoibana]
+type = ChangeState
+value = 1201
+triggerall = fvar(39) = 0
+triggerall = var(59) = 0
+triggerall = fvar(11) = 0
+triggerall = (command = "Shiki Aoibana1") || (var(38) = 31 && var(40) > 0)
+triggerall = statetype != A
+trigger1 = ctrl
+trigger2 = stateno = 200 && movecontact
+trigger3 = stateno = 205 && movecontact
+trigger4 = stateno = 235 && movecontact
+trigger5 = stateno = 210 && movecontact
+trigger6 = stateno = 215 && movecontact
+trigger7 = stateno = 245 && movecontact
+trigger8 = stateno = 400 && movecontact
+trigger9 = stateno = 410 && animelem = 5,>=0
+trigger10= stateno = 250 && movecontact
+trigger11= stateno = 251 && movecontact
+trigger12= stateno = 261 && movecontact
+trigger13= stateno = 290 && animelem = 7,>=0&&animelem = 9 ,<=0
+;僗乕僷乕僉儍儞僙儖
+trigger14= (stateno = 1000 || stateno = 1001) && animelem = 6,>=0 && animelem = 9,<=0  && ((fvar(21) > 0) || (fvar(21) = 0 && var(20) >= 500))
+trigger15= stateno = 1050 && animelem = 6,>=0  && ((fvar(21) > 0) || (fvar(21) = 0 && var(20) >= 500))
+trigger16= (stateno = 1100 || stateno = 1101)  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger17= stateno = 1150  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger18= (stateno = 120000 || stateno = 120100)  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger19= stateno = 121000 && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger20= stateno = 125000 && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger21= stateno = 125500 && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger22= stateno = 1305  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+;HD捠忢媄柍忦審僉儍儞僙儖
+trigger23= stateno = [200,499]
+trigger23= movecontact
+trigger23= fvar(21) > 0
+
+
+;---------------------------------------------------------------------------
+;EX昐巐幃丒闗摙偪
+[State negathibu anngisshu]
+type = ChangeState
+value = 1550
+triggerall = fvar(39) = 1
+triggerall = var(59) = 0
+triggerall = fvar(11) = 0
+triggerall = (command = "EX Shiki Oniyaki") || (var(38) = 25 && var(40) > 0)
+triggerall = statetype != A
+triggerall = power >= 1000
+trigger1 = ctrl
+trigger2 = stateno = 200 && movecontact
+trigger3 = stateno = 205 && movecontact
+trigger4 = stateno = 235 && movecontact
+trigger5 = stateno = 210 && movecontact
+trigger6 = stateno = 215 && movecontact
+trigger7 = stateno = 245 && movecontact
+trigger8 = stateno = 400 && movecontact
+trigger9 = stateno = 410 && animelem = 5,>=0
+trigger10= stateno = 250 && movecontact
+trigger11= stateno = 251 && movecontact
+trigger12= stateno = 261 && movecontact
+trigger13= stateno = 290 && animelem = 7,>=0
+
+;僪儔僀僽僉儍儞僙儖
+trigger14= (stateno = 1500 || stateno = 1501)  && movehit
+trigger14= var(20) >= 500
+trigger14= fvar(21) = 0
+trigger15= stateno = 155000 && movehit
+trigger15= var(20) >= 500
+trigger15= fvar(21) = 0
+trigger16= (stateno = 1600 || stateno = 1601)&& movehit
+trigger16= var(20) >= 500
+trigger16= fvar(21) = 0
+trigger17= stateno = 1650 && movehit
+trigger17= var(20) >= 500
+trigger17= fvar(21) = 0
+trigger18= stateno = 1710 && movehit
+trigger18= var(20) >= 500
+trigger18= fvar(21) = 0
+trigger19= stateno = 1760 && movehit
+trigger19= var(20) >= 500
+trigger19= fvar(21) = 0
+
+;HD僉儍儞僙儖
+trigger20= stateno = (stateno = 1500 || stateno = 1501)  && movecontact
+trigger20= fvar(21) > 0
+trigger21= stateno = 155000 && movecontact
+trigger21= fvar(21) > 0
+trigger22= (stateno = 1600 || stateno = 1601)&& movecontact
+trigger22= fvar(21) > 0
+trigger23= stateno = 1650 && movecontact
+trigger23= fvar(21) > 0
+trigger24= stateno = 1710 && movecontact
+trigger24= fvar(21) > 0
+trigger25= stateno = 1760 && movecontact
+trigger25= fvar(21) > 0
+
+;HD捠忢媄柍忦審僉儍儞僙儖
+trigger26= stateno = [200,499]
+trigger26= movecontact
+trigger26= fvar(21) > 0
+
+
+;---------------------------------------------------------------------------
+;昐巐幃丒闗摙偪
+[State negathibu anngisshu]
+type = ChangeState
+value = 1501
+triggerall = fvar(39) = 1
+triggerall = var(59) = 0
+triggerall = fvar(11) = 0
+triggerall = (command = "Shiki Oniyaki1") || (var(38) = 21 && var(40) > 0)
+triggerall = statetype != A
+trigger1 = ctrl
+trigger2 = stateno = 200 && movecontact
+trigger3 = stateno = 205 && movecontact
+trigger4 = stateno = 235 && movecontact
+trigger5 = stateno = 210 && movecontact
+trigger6 = stateno = 215 && movecontact
+trigger7 = stateno = 245 && movecontact
+trigger8 = stateno = 400 && movecontact
+trigger9 = stateno = 410 && animelem = 5,>=0
+trigger10= stateno = 250 && movecontact
+trigger11= stateno = 251 && movecontact
+trigger12= stateno = 261 && movecontact
+trigger13= stateno = 290 && animelem = 7,>=0
+
+;僪儔僀僽僉儍儞僙儖
+trigger14= (stateno = 150000 || stateno = 150100) && movehit
+trigger14= var(20) >= 500
+trigger14= fvar(21) = 0
+trigger15= stateno = 155000 && movehit
+trigger15= var(20) >= 500
+trigger15= fvar(21) = 0
+trigger16= (stateno = 1600 || stateno = 1601)&& movehit
+trigger16= var(20) >= 500
+trigger16= fvar(21) = 0
+trigger17= stateno = 1650 && movehit
+trigger17= var(20) >= 500
+trigger17= fvar(21) = 0
+trigger18= stateno = 1710 && movehit
+trigger18= var(20) >= 500
+trigger18= fvar(21) = 0
+trigger19= stateno = 1760 && movehit
+trigger19= var(20) >= 500
+trigger19= fvar(21) = 0
+
+;HD僉儍儞僙儖
+trigger20= (stateno = 150000|| stateno = 150100)  && movecontact
+trigger20= fvar(21) > 0
+trigger21= stateno = 155000 && movecontact
+trigger21= fvar(21) > 0
+trigger22= (stateno = 1600 || stateno = 1601)&& movecontact
+trigger22= fvar(21) > 0
+trigger23= stateno = 1650 && movecontact
+trigger23= fvar(21) > 0
+trigger24= stateno = 1710 && movecontact
+trigger24= fvar(21) > 0
+trigger25= stateno = 1760 && movecontact
+trigger25= fvar(21) > 0
+
+;HD捠忢媄柍忦審僉儍儞僙儖
+trigger26= stateno = [200,499]
+trigger26= movecontact
+trigger26= fvar(21) > 0
+
+;---------------------------------------------------------------------------
+;昐巐幃丒闗摙偪
+[State negathibu anngisshu]
+type = ChangeState
+value = 1500
+triggerall = var(59) = 0
+triggerall = fvar(39) = 1
+triggerall = fvar(11) = 0
+triggerall = (command = "Shiki Oniyaki") || (var(38) = 20 && var(40) > 0)
+triggerall = statetype != A
+trigger1 = ctrl
+trigger2 = stateno = 200 && movecontact
+trigger3 = stateno = 205 && movecontact
+trigger4 = stateno = 235 && movecontact
+trigger5 = stateno = 210 && movecontact
+trigger6 = stateno = 215 && movecontact
+trigger7 = stateno = 245 && movecontact
+trigger8 = stateno = 400 && movecontact
+trigger9 = stateno = 410 && animelem = 5,>=0
+trigger10= stateno = 250 && movecontact
+trigger11= stateno = 251 && movecontact
+trigger12= stateno = 261 && movecontact
+trigger13= stateno = 290 && animelem = 7,>=0
+
+;僪儔僀僽僉儍儞僙儖
+trigger14= (stateno = 150000 || stateno = 150100)  && movehit
+trigger14= var(20) >= 500
+trigger14= fvar(21) = 0
+trigger15= stateno = 155000 && movehit
+trigger15= var(20) >= 500
+trigger15= fvar(21) = 0
+trigger16= (stateno = 1600 || stateno = 1601)&& movehit
+trigger16= var(20) >= 500
+trigger16= fvar(21) = 0
+trigger17= stateno = 1650 && movehit
+trigger17= var(20) >= 500
+trigger17= fvar(21) = 0
+trigger18= stateno = 1710 && movehit
+trigger18= var(20) >= 500
+trigger18= fvar(21) = 0
+trigger19= stateno = 1760 && movehit
+trigger19= var(20) >= 500
+trigger19= fvar(21) = 0
+
+;HD僉儍儞僙儖
+trigger20= stateno = (stateno = 150000 || stateno = 150100)  && movecontact
+trigger20= fvar(21) > 0
+trigger21= stateno = 155000 && movecontact
+trigger21= fvar(21) > 0
+trigger22= (stateno = 1600 || stateno = 1601)&& movecontact
+trigger22= fvar(21) > 0
+trigger23= stateno = 1650 && movecontact
+trigger23= fvar(21) > 0
+trigger24= stateno = 1710 && movecontact
+trigger24= fvar(21) > 0
+trigger25= stateno = 1760 && movecontact
+trigger25= fvar(21) > 0
+
+;HD捠忢媄柍忦審僉儍儞僙儖
+trigger26= stateno = [200,499]
+trigger26= movecontact
+trigger26= fvar(21) > 0
+
+
+;//////////////////////////////////////////////////////////////////////
+;"EX Shiki Oniyaki"
+[State negathibu anngisshu]
+type = ChangeState
+value = 1150
+triggerall = fvar(39) = 0
+triggerall = var(59) = 0
+triggerall = fvar(11) = 0
+triggerall = (command = "EX Shiki Oniyaki") || (var(38) = 25 && var(40) > 0)
+triggerall = statetype != A
+triggerall = power >= 1000
+trigger1 = ctrl
+trigger2 = stateno = 200 && movecontact
+trigger3 = stateno = 205 && movecontact
+trigger4 = stateno = 235 && movecontact
+trigger5 = stateno = 210 && movecontact
+trigger6 = stateno = 215 && movecontact
+trigger7 = stateno = 245 && movecontact
+trigger8 = stateno = 400 && movecontact
+trigger9 = stateno = 410 && animelem = 5,>=0
+trigger10= stateno = 250 && movecontact
+trigger11= stateno = 251 && movecontact
+trigger12= stateno = 261 && movecontact
+trigger13= stateno = 290 && animelem = 7,>=0&&animelem = 9 ,<=0
+;僗乕僷乕僉儍儞僙儖
+trigger14= (stateno = 1000 || stateno = 1001) && animelem = 6,>=0 && animelem = 9,<=0  && ((fvar(21) > 0) || (fvar(21) = 0 && var(20) >= 500))
+trigger15= stateno = 1050 && animelem = 6,>=0  && ((fvar(21) > 0) || (fvar(21) = 0 && var(20) >= 500))
+trigger16= (stateno = 1100 || stateno = 1101)  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger17= stateno = 115000  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger18= (stateno = 1200 || stateno = 1201)  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger19= stateno = 1210  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger20= stateno = 1250  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger21= stateno = 1255  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger22= stateno = 1305  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+;HD捠忢媄柍忦審僉儍儞僙儖
+trigger23= stateno = [200,499]
+trigger23= movecontact
+trigger23= fvar(21) > 0
+
+;---------------------------------------------------------------------------
+;"Shiki Oniyaki"
+[State negathibu anngisshu]
+type = ChangeState
+value = 1101
+triggerall = fvar(39) = 0
+triggerall = var(59) = 0
+triggerall = fvar(11) = 0
+triggerall = (command = "Shiki Oniyaki1") || (var(38) = 21 && var(40) > 0)
+triggerall = statetype != A
+trigger1 = ctrl
+trigger2 = stateno = 200 && movecontact
+trigger3 = stateno = 205 && movecontact
+trigger4 = stateno = 235 && movecontact
+trigger5 = stateno = 210 && movecontact
+trigger6 = stateno = 215 && movecontact
+trigger7 = stateno = 245 && movecontact
+trigger8 = stateno = 400 && movecontact
+trigger9 = stateno = 410 && animelem = 5,>=0
+trigger10= stateno = 250 && movecontact
+trigger11= stateno = 251 && movecontact
+trigger12= stateno = 261 && movecontact
+trigger13= stateno = 290 && animelem = 7,>=0&&animelem = 9 ,<=0
+;僗乕僷乕僉儍儞僙儖
+trigger14= (stateno = 1000 || stateno = 1001) && animelem = 6,>=0 && animelem = 9,<=0  && ((fvar(21) > 0) || (fvar(21) = 0 && var(20) >= 500))
+trigger15= stateno = 1050 && animelem = 6,>=0  && ((fvar(21) > 0) || (fvar(21) = 0 && var(20) >= 500))
+trigger16= (stateno = 110000 || stateno = 110100)  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger17= stateno = 115000  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger18= (stateno = 1200 || stateno = 1201)  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger19= stateno = 1210  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger20= stateno = 1250  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger21= stateno = 1255  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger22= stateno = 1305  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+;HD捠忢媄柍忦審僉儍儞僙儖
+trigger23= stateno = [200,499]
+trigger23= movecontact
+trigger23= fvar(21) > 0
+
+;---------------------------------------------------------------------------
+;"Shiki Oniyaki"
+[State negathibu anngisshu]
+type = ChangeState
+value = 1100
+triggerall = fvar(39) = 0
+triggerall = var(59) = 0
+triggerall = fvar(11) = 0
+triggerall = (command = "Shiki Oniyaki") || (var(38) = 20 && var(40) > 0)
+triggerall = statetype != A
+trigger1 = ctrl
+trigger2 = stateno = 200 && movecontact
+trigger3 = stateno = 205 && movecontact
+trigger4 = stateno = 235 && movecontact
+trigger5 = stateno = 210 && movecontact
+trigger6 = stateno = 215 && movecontact
+trigger7 = stateno = 245 && movecontact
+trigger8 = stateno = 400 && movecontact
+trigger9 = stateno = 410 && animelem = 5,>=0
+trigger10= stateno = 250 && movecontact
+trigger11= stateno = 251 && movecontact
+trigger12= stateno = 261 && movecontact
+trigger13= stateno = 290 && animelem = 7,>=0&&animelem = 9 ,<=0
+;僗乕僷乕僉儍儞僙儖
+trigger14= (stateno = 1000 || stateno = 1001) && animelem = 6,>=0 && animelem = 9,<=0  && ((fvar(21) > 0) || (fvar(21) = 0 && var(20) >= 500))
+trigger15= stateno = 1050 && animelem = 6,>=0  && ((fvar(21) > 0) || (fvar(21) = 0 && var(20) >= 500))
+trigger16= (stateno = 110000 || stateno = 110100)  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger17= stateno = 115000  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger18= (stateno = 1200 || stateno = 1201)  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger19= stateno = 1210  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger20= stateno = 1250  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger21= stateno = 1255  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger22= stateno = 1305  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+;HD捠忢媄柍忦審僉儍儞僙儖
+trigger23= stateno = [200,499]
+trigger23= movecontact
+trigger23= fvar(21) > 0
+
+;---------------------------------------------------------------------------
+;"EX Shiki Yamiraiba"
+[State negathibu anngisshu]
+type = ChangeState
+value = 1050
+triggerall = fvar(39) = 0
+triggerall = var(59) = 0
+triggerall = fvar(11) = 0
+triggerall = (command = "EX Shiki Yamiraiba") || (var(38) = 15 && var(40) > 0)
+triggerall = statetype != A
+triggerall = numhelper(1060) = 0
+triggerall = enemy,stateno != [1061,1064]
+triggerall = power >= 1000
+trigger1 = ctrl
+trigger2 = stateno = 200 && movecontact
+trigger3 = stateno = 205 && movecontact
+trigger4 = stateno = 235 && movecontact
+trigger5 = stateno = 210 && movecontact
+trigger6 = stateno = 215 && movecontact
+trigger7 = stateno = 245 && movecontact
+trigger8 = stateno = 400 && movecontact
+trigger9 = stateno = 410 && animelem = 5,>=0
+trigger10= stateno = 250 && movecontact
+trigger11= stateno = 251 && movecontact
+trigger12= stateno = 261 && movecontact
+trigger13= stateno = 290 && animelem = 7,>=0&&animelem = 9 ,<=0
+;僗乕僷乕僉儍儞僙儖
+trigger14= (stateno = 1000 || stateno = 1001) && animelem = 6,>=0 && animelem = 9,<=0  && ((fvar(21) > 0) || (fvar(21) = 0 && var(20) >= 500))
+trigger15= stateno = 105000 && animelem = 6,>=0  && ((fvar(21) > 0) || (fvar(21) = 0 && var(20) >= 500))
+trigger16= (stateno = 1100 || stateno = 1101)  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger17= stateno = 1150  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger18= (stateno = 1200 || stateno = 1201)  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger19= stateno = 1210  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger20= stateno = 1250  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger21= stateno = 1255  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger22= stateno = 1305  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+;HD捠忢媄柍忦審僉儍儞僙儖
+trigger23= stateno = [200,499]
+trigger23= movecontact
+trigger23= fvar(21) > 0
+
+;---------------------------------------------------------------------------
+;"Shiki Yamiraiba"
+[State negathibu anngisshu]
+type = ChangeState
+value = 1001
+triggerall = fvar(39) = 0
+triggerall = var(59) = 0
+triggerall = fvar(11) = 0
+triggerall = (command = "Shiki Yamiraiba1") || (var(38) = 11 && var(40) > 0)
+triggerall = statetype != A
+triggerall = numhelper(1010) = 0
+trigger1 = ctrl
+trigger2 = stateno = 200 && movecontact
+trigger3 = stateno = 205 && movecontact
+trigger4 = stateno = 235 && movecontact
+trigger5 = stateno = 210 && movecontact
+trigger6 = stateno = 215 && movecontact
+trigger7 = stateno = 245 && movecontact
+trigger8 = stateno = 400 && movecontact
+trigger9 = stateno = 410 && animelem = 5,>=0
+trigger10= stateno = 250 && movecontact
+trigger11= stateno = 251 && movecontact
+trigger12= stateno = 261 && movecontact
+trigger13= stateno = 290 && animelem = 7,>=0&&animelem = 9 ,<=0
+
+;僗乕僷乕僉儍儞僙儖
+trigger14= (stateno = 100000 || stateno = 100100) && animelem = 6,>=0 && animelem = 9,<=0  && ((fvar(21) > 0) || (fvar(21) = 0 && var(20) >= 500))
+trigger15= stateno = 105000 && animelem = 6,>=0  && ((fvar(21) > 0) || (fvar(21) = 0 && var(20) >= 500))
+trigger16= (stateno = 1100 || stateno = 1101)  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger17= stateno = 1150  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger18= (stateno = 1200 || stateno = 1201)  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger19= stateno = 1210  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger20= stateno = 1250  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger21= stateno = 1255  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger22= stateno = 1305  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+;HD捠忢媄柍忦審僉儍儞僙儖
+trigger23= stateno = [200,499]
+trigger23= movecontact
+trigger23= fvar(21) > 0
+
+;---------------------------------------------------------------------------
+;"Shiki Yamiraiba"
+[State negathibu anngisshu]
+type = ChangeState
+value = 1000
+triggerall = fvar(39) = 0
+triggerall = var(59) = 0
+triggerall = fvar(11) = 0
+triggerall = (command = "Shiki Yamiraiba") || (var(38) = 10 && var(40) > 0)
+triggerall = statetype != A
+triggerall = numhelper(1010) = 0
+trigger1 = ctrl
+trigger2 = stateno = 200 && movecontact
+trigger3 = stateno = 205 && movecontact
+trigger4 = stateno = 235 && movecontact
+trigger5 = stateno = 210 && movecontact
+trigger6 = stateno = 215 && movecontact
+trigger7 = stateno = 245 && movecontact
+trigger8 = stateno = 400 && movecontact
+trigger9 = stateno = 410 && animelem = 5,>=0
+trigger10= stateno = 250 && movecontact
+trigger11= stateno = 251 && movecontact
+trigger12= stateno = 261 && movecontact
+trigger13= stateno = 290 && animelem = 7,>=0&&animelem = 9 ,<=0
+;僗乕僷乕僉儍儞僙儖
+trigger14= (stateno = 100000 || stateno = 100100) && animelem = 6,>=0 && animelem = 9,<=0  && ((fvar(21) > 0) || (fvar(21) = 0 && var(20) >= 500))
+trigger15= stateno = 105000 && animelem = 6,>=0  && ((fvar(21) > 0) || (fvar(21) = 0 && var(20) >= 500))
+trigger16= (stateno = 1100 || stateno = 1101)  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger17= stateno = 1150  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger18= (stateno = 1200 || stateno = 1201)  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger19= stateno = 1210  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger20= stateno = 1250  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger21= stateno = 1255  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+trigger22= stateno = 1305  && ((fvar(21) > 0 && movecontact) || (fvar(21) = 0 && var(20) >= 500 && movehit))
+;HD捠忢媄柍忦審僉儍儞僙儖
+trigger23= stateno = [200,499]
+trigger23= movecontact
+trigger23= fvar(21) > 0
+
+
+
+
+;---------------------------------------------------------------------------
+;Run Fwd
+;僟僢僔儏
+[State -1, Run Fwd]
+type = ChangeState
+value = 100
+triggerall = var(59) = 0
+trigger1 = command = "FF"
+trigger1 = statetype = S
+trigger1 = ctrl
+
+;---------------------------------------------------------------------------
+;Run Back
+;屻戅僟僢僔儏
+[State -1, Run Back]
+type = ChangeState
+value = 105
+triggerall = var(59) = 0
+trigger1 = command = "BB"
+trigger1 = statetype = S
+trigger1 = ctrl
+
+
+;---------------------------------------------------------------------------
+;僈乕僉儍儞傆偭旘偽偟峌寕
+[State ga-kyannhuttobasikougeki]
+type = ChangeState
+value = 299
+triggerall = var(59) = 0
+triggerall = command = "傆偭旘偽偟"
+triggerall = power >= 1000
+trigger1 = stateno = 150
+trigger2 = stateno = 151
+
+
+;---------------------------------------------------------------------------
+;嬻拞傆偭旘偽偟峌寕
+[State kuuchuuhuttobasikougeki]
+type = ChangeState
+value = 690
+triggerall = var(59) = 0
+triggerall = command = "傆偭旘偽偟"
+trigger1 = statetype = A
+trigger1 = ctrl = 1 || stateno = 50
+trigger2 = stateno = 901
+trigger2 = ctrl = 1
+
+;---------------------------------------------------------------------------
+;傆偭旘偽偟峌寕
+[State huttobasikougeki]
+type = ChangeState
+value = 290
+triggerall = var(59) = 0
+triggerall = command = "傆偭旘偽偟"
+triggerall = statetype != A
+trigger1 = ctrl
+
+;---------------------------------------------------------------------------
+;僈乕僉儍儞偐傢偟堏摦丒屻
+[State ga-kyannkawasiidou usiro]
+type = ChangeState
+value = 701
+triggerall = var(59) = 0
+triggerall = command = "夞旔"
+triggerall = command = "holdback"
+triggerall = power >= 1000
+trigger1 = stateno = 150
+trigger2 = stateno = 151
+
+;---------------------------------------------------------------------------
+;僈乕僉儍儞偐傢偟堏摦丒慜
+[State ga-kyannkawasiidou mae]
+type = ChangeState
+value = 700
+triggerall = var(59) = 0
+triggerall = command = "夞旔"
+triggerall = power >= 1000
+trigger1 = stateno = 150
+trigger2 = stateno = 151
+
+;---------------------------------------------------------------------------
+;偐傢偟堏摦丒屻
+[State kawasiidou usiro]
+type = ChangeState
+value = 701
+triggerall = var(59) = 0
+triggerall = command = "夞旔"
+triggerall = command = "holdback"
+trigger1 = statetype != A
+trigger1 = ctrl
+
+;---------------------------------------------------------------------------
+;偐傢偟堏摦丒慜
+[State kawasiidou mae]
+type = ChangeState
+value = 700
+triggerall = var(59) = 0
+triggerall = command = "夞旔"
+trigger1 = statetype != A
+trigger1 = ctrl
+
+;---------------------------------------------------------------------------
+;僟僂儞夞旔
+[State daunkaihi]
+type = ChangeState
+value = 702
+triggerall = var(59) = 0
+triggerall = var(9) >= 1
+triggerall = Canrecover
+triggerall = alive
+triggerall = pos y >= 0
+trigger1 = stateno = 5100
+
+;---------------------------------------------------------------------------
+;HD儌乕僪敪摦
+[State huttobasikougeki]
+type = ChangeState
+value = 900
+triggerall = fvar(11) = 0
+triggerall = var(59) = 0
+triggerall = command = "HD儌乕僪"
+triggerall = statetype != A
+triggerall = var(20) >= 1000
+triggerall = fvar(21) = 0
+trigger1 = ctrl
+
+;---------------------------------------------------------------------------
+;HD儌乕僪敪摦丒嬻拞
+[State huttobasikougeki]
+type = ChangeState
+value = 901
+triggerall = fvar(11) = 0
+triggerall = var(59) = 0
+triggerall = command = "HD儌乕僪"
+triggerall = statetype = A
+triggerall = var(20) >= 1000
+triggerall = fvar(21) = 0
+trigger1 = ctrl = 1 || stateno = 50
+
+;---------------------------------------------------------------------------
+;HD儌乕僪敪摦丒僉儍儞僙儖
+[State huttobasikougeki]
+type = ChangeState
+value = 902
+triggerall = fvar(11) = 0
+triggerall = var(59) = 0
+triggerall = command = "HD儌乕僪"
+triggerall = statetype != A
+triggerall = var(20) >= 1000
+triggerall = fvar(21) = 0
+triggerall = stateno = [200,499]
+trigger1 = movecontact=[1,6]
+
+
+;---------------------------------------------------------------------------
+;媡攳偓
+[State deddo fo-ru]
+type = ChangeState
+value = 800
+triggerall = var(59) = 0
+triggerall = command = "y" || command = "b"
+triggerall = command = "holdfwd" || command = "holdback"
+triggerall = command != "holddown"
+triggerall = statetype != A
+triggerall = ctrl
+triggerall = stateno != 100
+trigger1 = p2bodydist X < 5
+trigger1 = p2statetype != A
+trigger1 = p2movetype != H
+
+
+;===========================================================================
+;---------------------------------------------------------------------------
+;奜幃丒峐
+[State tachijakupanchi]
+type = ChangeState
+value = 261
+triggerall = fvar(39) = 1
+triggerall = var(59) = 0
+triggerall = command = "y"
+triggerall = command = "holdfwd"
+triggerall = command = "holddown"
+trigger1 = stateno = 200 && movecontact
+trigger2 = stateno = 205 && movecontact
+trigger3 = stateno = 235 && movecontact
+trigger4 = stateno = 210 && movecontact
+trigger5 = stateno = 215 && movecontact
+trigger6 = stateno = 245 && movecontact
+trigger7 = stateno = 400 && movecontact
+trigger8 = stateno = 410 && movecontact
+
+;---------------------------------------------------------------------------
+;奜幃丒峐
+[State tachijakupanchi]
+type = ChangeState
+value = 260
+triggerall = fvar(39) = 1
+triggerall = var(59) = 0
+triggerall = command = "y"
+triggerall = command = "holdfwd"
+triggerall = command = "holddown"
+trigger1 = statetype != A
+trigger1 = ctrl
+
+;---------------------------------------------------------------------------
+;奜幃丒柌抏
+[State tachijakupanchi]
+type = ChangeState
+value = 250
+triggerall = var(59) = 0
+triggerall = command = "x"
+triggerall = command = "holdfwd"
+triggerall = command != "holddown"
+trigger1 = statetype != A
+trigger1 = ctrl
+trigger2 = stateno = 200 && movecontact
+trigger3 = stateno = 205 && movecontact
+trigger4 = stateno = 235 && movecontact
+trigger5 = stateno = 210 && movecontact
+trigger6 = stateno = 215 && movecontact; >= 2
+trigger7 = stateno = 245 && movecontact
+trigger8 = stateno = 400 && movecontact
+trigger9 = stateno = 410 && movecontact
+;----------------------------------------------------------------------
+[State -1, 奜幃丒崒晙 堿乬巰恄乭]
+type = ChangeState
+value = 270
+triggerall = fvar(39) = 0
+triggerall = var(59) = 0
+TriggerAll = Command = "a" && Command = "holdfwd" && Command != "holddown"
+TriggerAll = RoundState = 2
+Trigger1 = StateType != A
+Trigger1 = Ctrl
+
+
+;----------------------------------------------------------------------
+[State -1, 奜幃丒崒晙 堿乬巰恄乭]
+type = ChangeState
+value = 271
+triggerall = fvar(39) = 0
+triggerall = var(59) = 0
+TriggerAll = Command = "a" && Command = "holdfwd" && Command != "holddown"
+TriggerAll = RoundState = 2
+Trigger1 = StateType != A
+Trigger1 = Ctrl
+trigger2 = stateno = 200 && movecontact
+trigger3 = stateno = 205 && movecontact
+trigger4 = stateno = 235 && movecontact
+trigger5 = stateno = 210 && movecontact
+trigger6 = stateno = 215 && movecontact
+trigger7 = stateno = 245 && movecontact
+trigger8 = stateno = 400 && movecontact
+trigger9 = stateno = 410 && movecontact
+
+;---------------------------------------------------------------------------
+;棫偪庛僷儞僠
+[State tachijakupanchi]
+type = ChangeState
+value = 205
+triggerall = var(59) = 0
+triggerall = command = "x"
+triggerall = command != "holddown"
+triggerall = p2bodydist x <= 40
+trigger1 = statetype != A
+trigger1 = ctrl
+trigger2 = stateno = 200 && animelem = 5,>=0
+trigger3 = stateno = 205 && animelem = 3,>=0
+trigger4 = stateno = 400 && animelem = 5,>=0
+trigger5 = stateno = 430 && animelem = 4,>0
+
+;---------------------------------------------------------------------------
+;棫偪庛僷儞僠
+[State tachijakupanchi]
+type = ChangeState
+value = 200
+triggerall = var(59) = 0
+triggerall = command = "x"
+triggerall = command != "holddown"
+trigger1 = statetype != A
+trigger1 = ctrl
+trigger2 = stateno = 200 && animelem = 5,>=0
+trigger3 = stateno = 205 && animelem = 3,>=0
+trigger4 = stateno = 400 && animelem = 5,>=0
+trigger5 = stateno = 430 && animelem = 4,>0
+
+;---------------------------------------------------------------------------
+;嬤嫍棧棫偪嫮僷儞僠
+[State tachikyoupanchi]
+type = ChangeState
+value = 215
+triggerall = var(59) = 0
+triggerall = command = "y"
+triggerall = command != "holddown"
+triggerall = p2bodydist x <= 40
+trigger1 = statetype != A
+trigger1 = ctrl
+
+;---------------------------------------------------------------------------
+;墦嫍棧棫偪嫮僷儞僠
+[State tachikyoupanchi]
+type = ChangeState
+value = 210
+triggerall = var(59) = 0
+triggerall = command = "y"
+triggerall = command != "holddown"
+trigger1 = statetype != A
+trigger1 = ctrl
+
+;---------------------------------------------------------------------------
+;棫偪庛僉僢僋
+[State tachijakukikku]
+type = ChangeState
+value = 235
+triggerall = var(59) = 0
+triggerall = command = "a"
+triggerall = command != "holddown"
+triggerall = p2bodydist x <= 37;40
+trigger1 = statetype != A
+trigger1 = ctrl
+trigger2 = stateno = 200 && animelem = 5,>=0
+trigger3 = stateno = 205 && animelem = 3,>=0
+trigger4 = stateno = 400 && animelem = 5,>=0
+trigger5 = stateno = 430 && animelem = 4,>0
+
+
+;---------------------------------------------------------------------------
+;棫偪庛僉僢僋
+[State tachijakukikku]
+type = ChangeState
+value = 230
+triggerall = var(59) = 0
+triggerall = command = "a"
+triggerall = command != "holddown"
+trigger1 = statetype != A
+trigger1 = ctrl
+trigger2 = stateno = 200 && animelem = 5,>=0
+trigger3 = stateno = 205 && animelem = 3,>=0
+trigger4 = stateno = 400 && animelem = 5,>=0
+trigger5 = stateno = 430 && animelem = 4,>0
+
+;---------------------------------------------------------------------------
+;嬤嫍棧棫偪嫮僉僢僋
+[State kinnkyoritachikyoukikku]
+type = ChangeState
+value = 245
+triggerall = var(59) = 0
+triggerall = command = "b"
+triggerall = command != "holddown"
+triggerall = p2bodydist x <= 38;40
+trigger1 = statetype != A
+trigger1 = ctrl
+
+;---------------------------------------------------------------------------
+;墦嫍棧棫偪嫮僉僢僋
+[State ennkyoritachikyoukikku]
+type = ChangeState
+value = 240
+triggerall = var(59) = 0
+triggerall = command = "b"
+triggerall = command != "holddown"
+trigger1 = statetype != A
+trigger1 = ctrl
+
+;---------------------------------------------------------------------------
+;挧敪
+[State chouhatu]
+type = null;ChangeState
+value = 199
+triggerall = stateno != 199
+triggerall = var(59) = 0
+triggerall = command = "start"
+trigger1 = statetype != A
+trigger1 = ctrl
+
+;---------------------------------------------------------------------------
+;偟傖偑傒庛僷儞僠
+[State tachijakupanchi]
+type = ChangeState
+value = 400
+triggerall = var(59) = 0
+triggerall = command = "x"
+triggerall = command = "holddown"
+trigger1 = statetype != A
+trigger1 = ctrl
+trigger2 = stateno = 200 && animelem = 5,>=0
+trigger3 = stateno = 205 && animelem = 3,>=0
+trigger4 = stateno = 400 && animelem = 5,>=0
+trigger5 = stateno = 430 && animelem = 4,>0
+
+;---------------------------------------------------------------------------
+;偟傖偑傒嫮僷儞僠
+[State tachijakupanchi]
+type = ChangeState
+value = 410
+triggerall = var(59) = 0
+triggerall = command = "y"
+triggerall = command = "holddown"
+trigger1 = statetype != A
+trigger1 = ctrl
+
+
+;---------------------------------------------------------------------------
+;偟傖偑傒庛僉僢僋
+[State shagamijakukikku]
+type = ChangeState
+value = 430
+triggerall = var(59) = 0
+triggerall = command = "a"
+triggerall = command = "holddown"
+trigger1 = statetype != A
+trigger1 = ctrl
+trigger2 = stateno = 200 && animelem = 5,>=0
+trigger3 = stateno = 205 && animelem = 3,>=0
+trigger4 = stateno = 400 && animelem = 5,>=0
+trigger5 = stateno = 430 && animelem = 4,>0;5
+
+;---------------------------------------------------------------------------
+;偟傖偑傒嫮僉僢僋
+[State shagamikyoukikku]
+type = ChangeState
+value = 440
+triggerall = var(59) = 0
+triggerall = command = "b"
+triggerall = command = "holddown"
+trigger1 = statetype != A
+trigger1 = ctrl
+
+
+;---------------------------------------------------------------------------
+;奜幃丒昐崌愜傝
+[State -1, Jump Strong Kick]
+type = ChangeState
+value = 650
+triggerall = var(59) = 0
+triggerall = p2dist x >= 0
+triggerall = command = "a"
+triggerall = command = "holdback"
+triggerall = statetype = A
+trigger1 = ctrl = 1 || stateno = 50
+trigger2 = stateno = 105
+
+;---------------------------------------------------------------------------
+;奜幃丒昐崌愜傝
+[State -1, Jump Strong Kick]
+type = ChangeState
+value = 650
+triggerall = var(59) = 0
+triggerall = p2dist x < 0
+triggerall = command = "a"
+triggerall = command = "holdfwd"
+triggerall = statetype = A
+trigger1 = ctrl = 1 || stateno = 50
+trigger2 = stateno = 105
+
+;---------------------------------------------------------------------------
+;嬻拞庛僷儞僠
+[State kuuchuujakupanchi]
+type = ChangeState
+value = 600
+triggerall = var(59) = 0
+triggerall = command = "x"
+trigger1 = statetype = A
+trigger1 = ctrl = 1 || stateno = 50
+trigger2 = stateno = 901
+trigger2 = ctrl = 1
+
+;---------------------------------------------------------------------------
+;嬻拞嫮僷儞僠
+[State kuuchuukyoupanchi]
+type = ChangeState
+value = 610
+triggerall = var(59) = 0
+triggerall = command = "y"
+trigger1 = statetype = A
+trigger1 = ctrl = 1 || stateno = 50
+trigger2 = stateno = 901
+trigger2 = ctrl = 1
+
+;---------------------------------------------------------------------------
+;Jump Light Kick
+[State -1, Jump Light Kick]
+type = ChangeState
+value = 630
+triggerall = var(59) = 0
+triggerall = command = "a"
+trigger1 = statetype = A
+trigger1 = ctrl = 1 || stateno = 50
+trigger2 = stateno = 901
+trigger2 = ctrl = 1
+
+;---------------------------------------------------------------------------
+;Jump Strong Kick
+;嬻拞嫮僉僢僋
+[State -1, Jump Strong Kick]
+type = ChangeState
+value = 640
+triggerall = var(59) = 0
+triggerall = command = "b"
+trigger1 = statetype = A
+trigger1 = ctrl = 1 || stateno = 50
+trigger2 = stateno = 901
+trigger2 = ctrl = 1
+
+
+
+
+
+
+;===================================================================
+
+[State -1, Neko]
+Type  = VarSet
+triggerall   = statetype != A
+Trigger1  = Var(59) = 1 && stateno != 20 && stateno != 50
+Trigger1 = P2BodyDist X <= 60
+var(53)  = 1
+
+[State -1, Neko]
+Type = VarSet
+triggerall  = statetype != A
+Trigger1  = Var(59) = 1
+Trigger1  = P2BodyDist X > 60
+var(53)  = 2
+
+[State -1, Neko]
+type = ChangeState
+value = 49
+TriggerAll = Var(59) = 1 && StateType != A && Ctrl && enemynear,StateType = C
+Trigger1 = EnemyNear,MoveType != A && P2StateNo != 40 && p2StateType != A && enemynear,MoveType = I
+Trigger1 = Var(53) = 1 && (P2BodyDist X) <= 60 && StateType != A && BackEdgeBodyDist > 20 && Random <= 90 
+Trigger2 = EnemyNear,MoveType != A && P2StateNo != 40 && p2StateType != A && enemynear,MoveType = I
+Trigger2 = Var(53) = 1 && (P2BodyDist X <= 60) && StateType != A && (power >= 2000)
+Trigger2 = BackEdgeBodyDist > 20 && Random = [200,300]
+Trigger3 = EnemyNear,MoveType != A && P2StateNo != 40 && p2StateType != A && enemynear,MoveType = I
+Trigger3 = Var(53) = 2 && (P2BodyDist X = [61,140]) && StateType != A && BackEdgeBodyDist > 20 && Random <= 130
+Trigger4 = EnemyNear,MoveType != A && P2StateNo != 40 && p2StateType != A && enemynear,MoveType = I
+Trigger4 = Var(53) = 2 && (P2BodyDist X >=141) && StateType != A && Random <= 20
+trigger5 = (Var(53) = 2 && Enemy,NumHelper > 0 || Enemy,NumProj > 0) && random < 70
+trigger5 = (abs(enemynear,Pos X - Pos X) > 200)
+
+[State -1, Neko]
+type = ChangeState
+value = 99
+TriggerAll = Var(59) = 1 && Ctrl && prevstateno = 49 && (stateno != 59 = time > 1) && stateno != 51 && stateno != 99 && prevstateno != 100
+Trigger1 = Var(53) = 1 && (P2BodyDist X <= 60);&& Var(53)! = 2  && Random <= 90
+Trigger2 = Var(53) = 2 && (P2BodyDist X = [61,130]);&& Var(53)! = 1
+
+[State -1, Neko]
+type = ChangeState
+value  = 610+(40*(random%2))
+triggerall = var(59) = 1
+triggerall = RoundState = 2
+triggerall = statetype = A
+triggerall = p2statetype != L
+triggerall = StateNo != 132
+triggerall = stateno != 5040
+Triggerall  = ctrl
+trigger1 = StateNo = 99 && Var(53) = 1 && Vel Y > 0 && (p2bodydist X = [-10,30]) && random <=400
+
+[State -1, Neko]
+type = ChangeState
+value = 640+(50*(random%2))
+triggerall = var(59) = 1
+triggerall = RoundState = 2
+triggerall = statetype = A
+triggerall = p2statetype != L
+triggerall  = StateNo != 132
+triggerall = stateno != 5040
+Triggerall = ctrl
+trigger1 = (abs(enemynear,Pos X - Pos X)= [0,80]) && (Pos Y - enemynear,Pos Y) =[-20,0]
+trigger1 = enemynear,statetype = A && enemynear,movetype != A && random <= 600
+trigger2 = StateNo = 59 && Var(53) = 2 && Vel Y > 0 && (p2bodydist X = [0,60])
+trigger2 = p2statetype != A && enemynear,statetype = A && random = [401,430]
+trigger3 = StateNo = 59 && Var(53) = 2 && Vel Y > 0 && (p2bodydist X = [0,60])
+trigger3 = p2statetype != A && enemynear,statetype! = A && random = [451,700]
+trigger4 = StateNo = 59 && Var(53) = 2 && Vel Y > 0 && (p2bodydist X = [0,60])
+trigger4 = p2statetype = A && enemynear,statetype != A && random = [0,500]
+
+[State Neko, 26a]
+Type = ChangeState
+Value = 1000
+triggerall = fvar(39) = 0
+triggerall = numhelper(1010) = 0
+Triggerall = aiLevel = [5,8]
+TriggerAll = var(59)
+TriggerAll = StateType != A
+trigger1 = random < 65
+Trigger1 = (Ctrl || StateNo = 100) && p2movetype !=H
+trigger1 = P2bodydist X = [230,287]
+
+[State Neko, 葵花]
+type = ChangeState
+value = 1201
+triggerall = fvar(39) = 0
+triggerall = aiLevel = [3,5]
+triggerall = !winko
+triggerall = Var(59)&& roundstate  = 2 
+triggerall = Statetype != A 
+triggerall = P2Statetype != A
+Trigger1 = (Ctrl || StateNo = 100) && p2movetype !=H
+trigger1 = P2bodydist X = [40,125]
+
+[State Neko, qinyueyin]
+type = ChangeState
+value = 1301
+triggerall = fvar(39) = 0
+triggerall = aiLevel = [3,5]
+triggerall = !winko
+triggerall = Var(59)&& roundstate  = 2 
+triggerall = Statetype != A 
+triggerall = P2Statetype != A
+Trigger1 = (Ctrl || StateNo = 100) && p2movetype !=H
+trigger1 = P2bodydist X = [110,130]
+
+[State -3, Neko]
+type = ChangeState
+value = 100;-(71*(random%2))*(fvar(21) = 0)
+triggerall = !winko
+triggerall = var(59)
+triggerall = aiLevel = [6,8]
+triggerall = statetype != A
+triggerall = frontedgebodydist >= 31
+triggerall = !inguarddist
+triggerall = ctrl
+triggerall = !enemy,numproj
+triggerall = p2stateno != [2000,3999]
+trigger1 = P2BodyDist X >= 19
+trigger1 = random < 30
+trigger2 = enemynear,movetype = H
+trigger2 = P2BodyDist X >= 19
+trigger2 = fvar(21) != 0
+
+[State Neko, jCD]
+Type = ChangeState
+Value = 640+(50*(random%2))
+TriggerAll = var(59)
+triggerall = aiLevel = [6,8]
+TriggerAll = StateType = A
+TriggerAll = P2StateType = A
+Trigger1 = Ctrl || StateNo = 100
+trigger1 = P2bodydist X = [-9,53]
+trigger1 = random < 120 
+
+[State Neko, j2c]
+Type = ChangeState
+Value = 650
+triggerall = var(59)
+triggerall = aiLevel = [6,8]
+TriggerAll = StateType = A
+trigger1 = stateno = 105
+
+[State Neko,2b]
+type = ChangeState
+;value = 430-(215*(random%2))
+value = 215+(215*(random%2))*(fvar(21) = 0)
+triggerall = !winko
+triggerall = aiLevel = [6,8]
+triggerall = Var(59) && roundstate  = 2 
+triggerall = Statetype != A 
+triggerall = P2Statetype != L
+triggerall = P2Statetype != A
+triggerall = P2Statetype != C
+triggerall = ctrl 
+trigger1 = P2bodydist X = [-10,43]
+trigger1 = random < 75
+trigger2 = stateno = 100
+trigger2 = P2bodydist X = [-10,43]
+trigger2 = random < 75
+trigger3 = p2movetype = H
+trigger3 = P2bodydist X = [-10,43]
+
+[State Neko,2b]
+type = ChangeState
+value = 215
+triggerall = aiLevel = [6,8]
+triggerall = !winko
+triggerall = Var(59) && roundstate  = 2 
+triggerall = Statetype != A 
+triggerall = P2Statetype != L
+triggerall = P2Statetype != A
+triggerall = P2Statetype = C
+triggerall = ctrl 
+trigger1 = P2bodydist X = [-10,43]
+trigger1 = random < 90
+trigger2 = stateno = 100
+trigger2 = P2bodydist X = [-10,43]
+trigger2 = random < 90
+trigger3 = p2movetype = H
+trigger3 = P2bodydist X = [-10,43]
+
+[State Neko,2b]
+type = ChangeState
+value = 800
+triggerall = aiLevel = [6,8]
+triggerall = !winko
+triggerall = Var(59) && roundstate  = 2 
+triggerall = Statetype != A 
+triggerall = P2Statetype != L
+triggerall = P2Statetype != A
+triggerall = p2movetype != H
+triggerall = ctrl 
+triggerall = fvar(21) = 0
+trigger1 = P2bodydist X = [-5,5]
+trigger1 = random < 85
+
+[State Neko,2A]
+type = ChangeState
+value = 400
+triggerall = !winko
+triggerall = aiLevel = [6,8]
+triggerall = Var(59) && roundstate  = 2 
+triggerall = Statetype != A 
+triggerall = P2Statetype != A
+trigger1 = stateno = 430 && movehit 
+
+[State NekoMAX]
+type = ChangeState
+value = 902
+triggerall = aiLevel = [6,8]
+triggerall = !winko
+triggerall = Var(59)&& roundstate  = 2 
+triggerall = statetype != A
+triggerall = var(20) >= 1000
+triggerall = fvar(21) = 0
+trigger1 = stateno = 261 && movecontact
+trigger2 = stateno = 250 && movecontact
+
+[State Neko,6B3B]
+type = ChangeState
+value = 250
+triggerall = fvar(39) = 0
+triggerall = aiLevel = [6,8]
+triggerall = !winko
+triggerall = Var(59)&& roundstate  = 2 
+triggerall = Statetype != A 
+triggerall = P2Statetype != A
+trigger1 = stateno = 215 && movecontact 
+trigger2 = stateno = 400 && movecontact 
+
+[State Neko, 26A]
+type = ChangeState
+value = 1001
+triggerall = fvar(39) = 0
+triggerall = aiLevel = 6
+triggerall = !winko
+triggerall = Var(59)&& roundstate  = 2 
+triggerall = Statetype != A 
+triggerall = P2Statetype != A
+triggerall = fvar(21) = 0
+trigger1 = stateno = 250 && movehit
+
+[State Neko, 葵花+26C]
+type = ChangeState
+value = 1201-(200*(random%2))
+triggerall = fvar(39) = 0
+triggerall = aiLevel = [6,8]
+triggerall = !winko
+triggerall = Var(59)&& roundstate  = 2 
+triggerall = Statetype != A 
+triggerall = P2Statetype != A
+triggerall = fvar(21) = 0
+trigger1 = stateno = 250 && movecontact  
+trigger2 = stateno = 261 && movecontact 
+
+[State Neko, 八稚女]
+type = ChangeState
+value = 2000+(random%3>1)*(50-(random%2)*800);2000+(random%2=1)*50
+triggerall = fvar(39) = 0
+triggerall = aiLevel = [6,8]
+triggerall = !winko
+triggerall = Var(59)&& roundstate  = 2 
+triggerall = Statetype != A 
+triggerall = P2Statetype != A
+triggerall = fvar(21) != 0
+triggerall = power >= 1000
+trigger1 = stateno = 1101 && movehit 
+trigger1 = time = [9,11]
+trigger1 = fvar(21) <= 375
+
+[State Neko, 八稚女]
+type = ChangeState
+value = 2001+(random%2=1)*49
+triggerall = fvar(39) = 0
+triggerall = aiLevel = [6,8]
+triggerall = !winko
+triggerall = Var(59)&& roundstate  = 2 
+triggerall = Statetype != A 
+triggerall = P2Statetype != A
+triggerall = power >= 1000
+triggerall = fvar(21) = 0 && var(20) >= 500
+trigger1 = p2StateNo = 1499
+trigger1 = time = [47,60]
+trigger2 = stateno = 1101 && movehit 
+trigger2 = time = [9,11]
+
+[State Neko, 八稚女]
+type = ChangeState
+value = 2001+(random%2=1)*49
+triggerall = fvar(39) = 0
+triggerall = aiLevel = [6,8]
+triggerall = !winko
+triggerall = Var(59)&& roundstate  = 2 
+triggerall = Statetype != A 
+triggerall = power >= 1000
+triggerall = fvar(21) = 0 && var(20) >= 500
+trigger1 = P2bodydist Y = [-146,-128]
+trigger1 = p2movetype = H
+trigger1 = PrevStateNo = 1260
+
+[State Neko, 琴月阴+葵花]
+type = ChangeState
+triggerall = fvar(39) = 0
+value = 1300-(random%2=1)*99
+triggerall = aiLevel = [6,8]
+triggerall = !winko
+triggerall = Var(59)&& roundstate  = 2 
+triggerall = Statetype != A 
+triggerall = P2Statetype != A
+triggerall = fvar(21) != 0
+;triggerall = FrontEdgeDist >100
+trigger1 = stateno = 250 && movehit
+trigger2 = stateno = 261 && movehit 
+trigger3 = stateno = 1101 && movehit 
+trigger3 = time = [9,11]
+
+[State Neko, 琴月阴]
+type = ChangeState
+value = 1301
+triggerall = fvar(39) = 0
+triggerall = aiLevel = [6,8]
+triggerall = !winko
+triggerall = Var(59)&& roundstate  = 2 
+triggerall = Statetype != A 
+triggerall = P2Statetype != A
+triggerall = fvar(21) != 0
+;triggerall = FrontEdgeDist >100
+trigger1 = stateno = 1201 && movehit 
+
+[State Neko, 大鬼烧薛锋]
+type = ChangeState
+triggerall = fvar(39) = 0
+value = 1101+(random%2=1)*299
+triggerall = aiLevel = [6,8]
+triggerall = !winko
+triggerall = Var(59)&& roundstate  = 2 
+triggerall = Statetype != A 
+triggerall = P2Statetype != A
+triggerall = fvar(21) != 0
+trigger1 = stateno = 1305 && movehit 
+
+[State Neko,2c]
+type = ChangeState
+value = 410-(210*(random%2))
+triggerall = aiLevel = [6,8]
+triggerall = !winko
+triggerall = Var(59) && roundstate  = 2 
+triggerall = Statetype != A 
+triggerall = P2Statetype = A
+triggerall = ctrl 
+trigger1 =  fvar(21) = 0
+trigger1 = P2bodydist X = [-10,84]
+trigger1 = P2bodydist Y = [-73,-37]
+trigger1 = random < 180
+
+[State Neko,刚]
+type = ChangeState
+value = 299
+triggerall = !winko
+triggerall = RoundState = 2
+triggerall = var(59)
+triggerall = statetype != A
+triggerall = p2bodydist X <= 100
+triggerall = power >= 2000
+triggerall = aiLevel = [4,8]
+trigger1 = stateno = [150,153]
+trigger1 = inguarddist
+trigger1 = enemynear,movetype = A
+
+[state Neko,2626b凹]
+type = changestate
+value = 240+(160*(random%2))
+triggerall = aiLevel = [6,8]
+triggerall = roundstate = 2 && var(59) = 1 && statetype !=A
+triggerall = P2bodydist X <= 128
+trigger1 = ctrl && p2movetype = A
+trigger1 = random < 300
+
+[State Neko,回避]
+type = changestate
+value = 700
+triggerall = !winko
+triggerall = var(59)
+triggerall = aiLevel = [6,8]
+triggerall = ctrl || stateno = 100
+triggerall = statetype != A
+triggerall = p2statetype != A
+triggerall = prevstateno != [700,710]
+triggerall = facing !=enemy,facing
+trigger1 = inguarddist
+trigger1 = enemynear,movetype = A
+trigger1 = random <= 25
+trigger2 = inguarddist
+trigger2 = enemynear,numproj >=1 || (enemynear,numhelper >=1 && p2movetype = A && p2bodydist x > 120) 
+trigger2 = random <= 20
+
+[State Neko,站防]
+type = ChangeState
+value = 130
+triggerall = var(59) && statetype !=A
+triggerall = p2statetype != C
+triggerall = ctrl
+trigger1 = inguarddist
+trigger2 = p2bodydist x < 0 && p2movetype = A
+
+[State Neko, 急退]
+type = ChangeState
+value = 105   
+triggerall = aiLevel = [6,8]
+triggerall = var(59)
+TriggerAll = StateType != A
+triggerall = roundstate = 2 && ctrl
+triggerall = Backedgebodydist > 30
+trigger1 = P2stateno = [5100,5120]   
+trigger1 = random < 900
+
+[State daunkaihi]
+type = ChangeState
+value = 702
+triggerall = var(59) = 1
+triggerall = CanRecover
+triggerall = pos y >= 0
+trigger1 = stateno = 5100
+trigger1 = random < 500
+
+[State -3,jumpnull];NekoAI
+type = ChangeState
+value = 0
+triggerall = var(59)
+triggerall = aiLevel = [6,8]
+triggerall = statetype != A 
+triggerall = roundstate = 2
+triggerall = enemynear,hitdefattr != SC,AT
+trigger1 = stateno = 40
+ctrl = 1 
+IgnoreHitPause = 1 
+
+;----------------------AI-------------------------------------------------------
+;-----------------对空--AI-----------------------------------------------------
+[State AI]
+type = ChangeState
+value = 1000
+triggerall = fvar(39) = 1
+triggerall = AILevel >= 4
+triggerall = fvar(11) = 0
+triggerall = var(59) != 0
+triggerall = random <= 20*var(59)
+triggerall = roundstate = 2
+triggerall = p2statetype = A
+triggerall = ctrl && statetype != A
+triggerall = p2bodydist x = [0,70]
+triggerall = p2stateno != [5050,5122]
+triggerall = statetype = S
+trigger1 = ctrl && statetype != A
+trigger1 = p2movetype != H
+;trigger2 = movehit
+
+[State AI]
+type = ChangeState
+value = 1001
+triggerall = fvar(39) = 1
+triggerall = AILevel >= 4
+triggerall = fvar(11) = 0
+triggerall = var(59) != 0
+triggerall = random <= 20*var(59)
+triggerall = roundstate = 2
+triggerall = p2statetype = A
+triggerall = ctrl && statetype != A
+triggerall = p2bodydist x = [0,70]
+triggerall = p2stateno != [5050,5122]
+triggerall = statetype = S
+trigger1 = ctrl && statetype != A
+trigger1 = p2movetype != H
+;trigger2 = movehit
+;-------------------------近身以攻击打断对方攻击的技能--------------------------
+[State AI]
+type = ChangeState
+value = 1501
+triggerall = fvar(39) = 1
+triggerall = AILevel >= 4
+triggerall = fvar(11) = 0
+triggerall = var(59) != 0
+triggerall = random <= 20*var(59)
+triggerall = roundstate = 2
+triggerall = p2statetype != A
+triggerall = p2statetype != L
+triggerall = ctrl && statetype != A
+triggerall = p2bodydist x = [0,75]
+triggerall = p2movetype = A
+triggerall = statetype = S
+trigger1 = ctrl
+trigger1 = p2movetype != H
+
+[State AI]
+type = ChangeState
+value = 2600
+triggerall = fvar(39) = 1
+triggerall = AILevel >= 4
+triggerall = (power >= 3000 && var(20) >= 1000) || (power >= 2000 && fvar(21) > 0)
+triggerall = fvar(11) = 0
+triggerall = var(59) != 0
+triggerall = random <= 30*var(59)
+triggerall = roundstate = 2
+triggerall = p2statetype != A
+triggerall = p2statetype != L
+triggerall = ctrl && statetype != A
+triggerall = p2bodydist x = [0,75]
+triggerall = p2movetype = A
+triggerall = statetype = S
+trigger1 = ctrl
+trigger1 = p2movetype != H
+
+;-------------------拳脚攻击相关的AI--------------------------------------------
+[State AI]
+type = ChangeState
+value = 430
+triggerall = fvar(39) = 1
+triggerall = var(59) != 0
+triggerall = random <= 30*var(59)
+triggerall = ctrl && statetype != A
+triggerall = p2stateno != [5050,5122]
+triggerall = p2statetype != A
+triggerall = p2bodydist x = [1,40]
+trigger1 = ctrl
+
+[State AI]
+type = ChangeState
+value = 210
+triggerall = fvar(39) = 1
+triggerall = var(59) != 0
+triggerall = random <= 30*var(59)
+triggerall = statetype != A
+triggerall = p2stateno != [5050,5122]
+triggerall = p2statetype != A
+triggerall = p2bodydist x = [1,40]
+trigger1 = movehit
+trigger1 = stateno = 430
+trigger1 = animelem = 4,>=0
+
+[State -1]
+type = ChangeState
+value = 610
+triggerall = fvar(39) = 1
+triggerall = var(59) != 0
+triggerall = roundstate = 2
+triggerall = p2bodydist x <= 80
+triggerall = random <= 30*var(59)
+triggerall = statetype = A
+triggerall = prevstateno != 105
+triggerall = prevstateno != 106
+trigger1 = pos y < -35
+trigger1 = vel y > 0
+trigger1 = ctrl
+trigger2 = stateno = 50
+
+[State -1]
+type = ChangeState
+value = 640
+triggerall = fvar(39) = 1
+triggerall = var(59) != 0
+triggerall = roundstate = 2
+triggerall = random <= 30*var(59)
+triggerall = p2bodydist x <= 80
+triggerall = statetype = A
+triggerall = prevstateno != 105
+triggerall = prevstateno != 106
+trigger1 = pos y < -40
+trigger1 = vel y > 0
+trigger1 = ctrl
+trigger2 = stateno = 50
+
+[State -1]
+type = ChangeState
+value = 690
+triggerall = fvar(39) = 1
+triggerall = var(59) != 0
+triggerall = roundstate = 2
+triggerall = random <= 30*var(59)
+triggerall = p2bodydist x <= 80
+triggerall = statetype = A
+triggerall = prevstateno != 105
+triggerall = prevstateno != 106
+trigger1 = pos y < -40
+trigger1 = vel y > 0
+trigger1 = ctrl
+trigger2 = stateno = 50
+
+[State -1]
+type = ChangeState
+value = 650
+triggerall = fvar(39) = 1
+triggerall = var(59) != 0
+triggerall = random <= 30*var(59)
+triggerall = roundstate = 2
+triggerall = p2bodydist x <= 30
+triggerall = statetype = A
+triggerall = prevstateno != 105
+triggerall = prevstateno != 106
+triggerall = pos y < -35
+triggerall = vel y > 0
+trigger1 = ctrl
+trigger2 = stateno = 50
+
+;--------------连续技------参考xiii挑战模式-------------------------------------
+[State AI]
+type = ChangeState
+value = 1700
+triggerall = fvar(39) = 1
+triggerall = fvar(11) = 0
+triggerall = var(59) != 0
+triggerall = random <= 40*var(59)
+triggerall = statetype != A
+triggerall = p2stateno != [5050,5122]
+triggerall = p2statetype != A
+triggerall = p2bodydist x = [0,100]
+triggerall = movehit
+trigger1 = stateno = 210
+trigger2 = stateno = 215
+
+[State AI]
+type = ChangeState
+value = 1500
+triggerall = fvar(39) = 1
+triggerall = fvar(11) = 0
+triggerall = var(59) != 0
+triggerall = random <= 40*var(59)
+triggerall = statetype != A
+triggerall = p2stateno != [5050,5122]
+triggerall = p2statetype != A
+triggerall = p2bodydist x = [0,100]
+triggerall = movehit
+trigger1 = stateno = 400
+
+[State AI]
+type = ChangeState
+value = 1601
+triggerall = fvar(39) = 1
+triggerall = random <= 40*var(59)
+triggerall = fvar(11) = 0
+triggerall = var(59) != 0
+triggerall = statetype != A
+triggerall = p2stateno != [5050,5122]
+triggerall = p2statetype != A
+triggerall = p2bodydist x = [0,100]
+triggerall = movehit
+trigger1 = stateno = 430
+
+[State -1 , AI]
+type = ChangeState
+triggerall = fvar(39) = 1
+triggerall = fvar(11) = 0
+triggerall = var(59) != 0
+triggerall = StateType != A
+triggerall = p2stateno != [5080,5122]
+triggerall = p2statetype != A
+triggerall = p2statetype != L
+triggerall = p2movetype != H
+triggerall = p2movetype != A
+triggerall = random <= 40*var(59)
+triggerall = P2Life > 0
+triggerall = ctrl = 1
+triggerall = stateno != 191
+trigger1 = p2bodydist X < 5
+trigger2 = p2bodydist X = [10,15]
+value = 1800
+
+[State AI]
+type = ChangeState
+value = 2000
+triggerall = fvar(39) = 1
+triggerall = fvar(11) = 0
+triggerall = power >= 1000
+triggerall = var(59) != 0
+triggerall = random <= 50*var(59)||AILevel >= 8
+triggerall = statetype != A
+triggerall = fvar(21) > 0
+triggerall = fvar(21) <= 300
+triggerall = p2stateno != [5050,5122]
+;triggerall = p2statetype != A
+triggerall = p2bodydist x = [5,300]
+triggerall = movehit
+trigger1 = stateno = 1600
+trigger2 = stateno = 1601
+trigger3 = stateno = 1705
+
+[State AI]
+type = ChangeState
+value = 1601
+triggerall = fvar(39) = 1
+triggerall = fvar(11) = 0
+triggerall = var(59) != 0
+triggerall = random <= 40*var(59)||AILevel >= 8
+triggerall = statetype != A
+triggerall = fvar(21) >= 160
+triggerall = p2stateno != [5050,5122]
+triggerall = p2statetype != A
+triggerall = p2bodydist x = [25,70]
+triggerall = movehit
+trigger1 = stateno = 1710
+
+[State AI]
+type = ChangeState
+value = 1700
+triggerall = fvar(39) = 1
+triggerall = fvar(11) = 0
+triggerall = var(59) != 0
+triggerall = random <= 50*var(59) ||AILevel >= 8
+triggerall = statetype != A
+triggerall = fvar(21) >= 160
+triggerall = p2stateno != [5050,5122]
+triggerall = p2statetype != A
+triggerall = p2bodydist x = [25,70]
+triggerall = movehit
+trigger1 = stateno = 1601
+
+[State AI]
+type = ChangeState
+value = 1850
+triggerall = fvar(39) = 1
+triggerall = fvar(11) = 0
+triggerall = var(59) != 0
+triggerall = random <= 15*var(59)
+triggerall = power >= 1100
+triggerall = ctrl && statetype != A
+triggerall = p2stateno != [5050,5122]
+triggerall = p2statetype != A
+triggerall = p2bodydist x = [0,25]
+trigger1 = ctrl

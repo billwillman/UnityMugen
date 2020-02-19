@@ -1,0 +1,34 @@
+;***************************************************************************;
+;******************* Created in Fighter Factory Ultimate *******************;
+;*******************      http://www.virtualltek.com     *******************;
+;***************************************************************************;
+
+[Info]
+name = "N-KyoXIII"
+displayname = "Kyo Kusanagi"
+versiondate = 04,14,2002
+MugenVersion =1.1
+author = "King227";"一方王者"
+pal.defaults = 6,3,4,2
+localcoord = 427,240
+[Files]
+sprite = KyoXIII.sff
+anim = KyoXIII.air
+sound = KyoXIII.snd
+cmd = KyoXIII.cmd
+cns = KyoXIII.cns
+stcommon = ..\..\data\common1.cns
+st = KyoXIII.cns
+st1 = KyoXIII1.cns
+st2 = KyoXIII2.cns
+[Palette Keymap]
+a = 4
+b = 5
+c = 6
+x = 1
+y = 2
+z = 3
+
+[Arcade]
+intro.storyboard = 
+ending.storyboard = 

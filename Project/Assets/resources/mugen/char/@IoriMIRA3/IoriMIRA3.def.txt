@@ -1,0 +1,40 @@
+;***************************************************************************;
+;******************* Created in Fighter Factory Ultimate *******************;
+;*******************      http://www.virtualltek.com     *******************;
+;***************************************************************************;
+
+[Info]
+name = "F-IoriXIII"
+displayname = "IORI YAGAMI"
+versiondate = 04,14,2002
+mugenversion = 1.1
+author = "Darklos/or2=3/king227";£¨Flame£»Clow£»Orochi MODE)
+pal.defaults = 4,5,6
+localcoord = 427,240
+
+[Files]
+sprite = EX-IoriXIII.sff
+anim = EXIori_XIII.air
+sound = EXIori_XIII.snd
+cmd = EXIori_XIII.cmd
+cns = EXIori_XIII.cns
+stcommon = ..\..\data\common1.cns
+st = EXIori_XIII.cns
+st1 = EXIori_XIII1.cns
+st2 = EXIori_XIII2.cns
+[Palette Keymap]
+a = 4
+b = 5
+c = 6
+x = 1
+y = 2
+z = 3
+a2 = 10
+b2 = 11
+c2 = 12
+x2 = 7
+y2 = 8
+z2 = 9
+[Arcade]
+;intro.storyboard = 
+;ending.storyboard = 

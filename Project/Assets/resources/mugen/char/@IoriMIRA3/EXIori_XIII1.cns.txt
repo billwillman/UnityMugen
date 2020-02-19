@@ -1,0 +1,175 @@
+
+;\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+;---------------------------------------------------------------------------
+[Statedef 4000]
+type    = S
+movetype= A
+physics = N
+anim = 100
+poweradd = 0
+sprpriority = 1
+
+[State 0, VarAdd]
+type = parentVarAdd
+trigger1 = time = 0
+fv = 0
+value = 1
+
+[State 6000, 4]
+type = HitOverride
+trigger1 = 1
+attr = SCA, AA, AT, AP
+stateno = 4030
+time = -1
+forceair = 1
+;---------------------[効果音]
+[State 00]
+type = PlaySnd
+trigger1 = animelem = 6
+trigger2 = animelem = 10
+value = f100, 0
+;---------------------[演出]
+[State a];
+type = Width
+trigger1 = 1
+edge = 36,0
+
+;---------------------[移動]
+[State 100, 1]
+type = VelSet
+trigger1 = animelem = 2,>=0
+x = const(velocity.run.fwd.x)
+
+[State 200, 7]
+type = ChangeState
+trigger1 = time = 10
+value = 4002
+
+;\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+;---------------------------------------------------------------------------
+;EX Shiki Yamiraiba
+[Statedef 4002]
+type    = S
+movetype= A
+physics = N
+juggle  = 0
+velset = 0,0
+ctrl = 0
+anim = 1050
+poweradd = 0
+sprpriority = 1
+
+
+[State 6000, 4]
+type = HitOverride
+trigger1 = 1
+attr = SCA, AA, AT, AP
+stateno = 4030
+time = -1
+forceair = 1
+;---------------------[効果音]
+[State 00];
+type = PlaySnd
+trigger1 = animelem = 5
+value = 1000,random%2
+
+[State 01];
+type = PlaySnd
+trigger1 = animelem = 6
+value = 1000,2
+
+[State 01];
+type = PlaySnd
+trigger1 = animelem = 6
+value = 1000,3
+
+
+;---------------------[エフェクト]
+[State explod];エフェクト
+type = Explod
+trigger1 = animelem = 5
+anim = 1005
+id = 3000
+sprpriority = 5
+postype = p1
+pos = 0,0
+bindtime = 3
+ignorehitpause = 1
+under = 0
+ownpal = 1
+scale = 0.5,0.5
+
+[State explod];エフェクト
+type = Explod
+trigger1 = animelem = 6
+anim = 1006
+id = 3000
+sprpriority = 4
+postype = p1
+pos = 128/2,0
+bindtime = 1
+ignorehitpause = 1
+under = 0
+ownpal = 1
+scale = 0.5,0.5
+remappal = 1006,1
+trans = sub
+alpha = -255,-255
+[State explod];エフェクト
+type = Explod
+trigger1 = animelem = 6
+anim = 1006
+id = 3000
+sprpriority = 4
+postype = p1
+pos = 128/2,0
+bindtime = 1
+ignorehitpause = 1
+under = 0
+ownpal = 1
+scale = 0.5,0.5
+remappal = 1006,1
+trans = sub
+alpha = -255,-255
+[State explod];エフェクト
+type = Explod
+trigger1 = animelem = 6
+anim = 1006
+id = 3000
+sprpriority = 5
+postype = p1
+pos = 128/2,0
+bindtime = 1
+ignorehitpause = 1
+under = 0
+ownpal = 1
+scale = 0.5,0.5
+
+
+;---------------------[ヘルパー]
+[state a];
+type = Helper
+trigger1 = animelem = 6
+id = 1010
+name = "yamibarai"
+sprpriority = 5
+pos = 128/2,0
+postype = p1
+stateno = 1060
+helpertype = normal
+pausemovetime = 0
+keyctrl = 0
+ownpal = 1
+
+;---------------------[移動]
+[state a]
+type = null;posadd
+trigger1 = animelem = 5
+x = 12
+
+;---------------------[ステート移行]
+[State 200, 7]
+type = ChangeState
+trigger1 = animtime = 0
+value = 4005
+
