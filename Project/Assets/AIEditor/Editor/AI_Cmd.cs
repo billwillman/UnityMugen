@@ -159,6 +159,82 @@ public class AI_Cond_Player_PosY: AI_BaseCondition
 	public AI_Cond_Op op = AI_Cond_Op.Equal;
 }
 
+[CreateNodeMenu("AI/条件/角色StateNo")]
+public class AI_Cond_Player_StateNo: AI_BaseCondition
+{
+	public int stateNo;
+	public AI_Cond_Op op = AI_Cond_Op.Equal;
+}
+
+[CreateNodeMenu("AI/条件/float var")]
+public class AI_Cond_Player_FloatVar: AI_BaseCondition
+{
+	public int index;
+	public AI_Cond_Op op = AI_Cond_Op.Equal;
+}
+
+[CreateNodeMenu("AI/条件/int var")]
+public class AI_Cond_Player_IntVar: AI_BaseCondition
+{
+	public int index;
+	public AI_Cond_Op op = AI_Cond_Op.Equal;
+}
+
+[CreateNodeMenu("AI/条件/角色PrevStateNo")]
+public class AI_Cond_Player_PlayerPrevStateNo: AI_BaseCondition
+{
+	public int prevStateNo;
+	public AI_Cond_Op op = AI_Cond_Op.Equal;
+}
+
+[CreateNodeMenu("AI/条件/角色状态Persistent")]
+public class AI_Cond_PlayerState_Persistent: AI_BaseCondition
+{
+	public bool isNot = false;
+}
+
+[CreateNodeMenu("AI/条件/角色Power值")]
+public class AI_Cond_PlayerPower: AI_BaseCondition
+{
+	public int value;
+	public AI_Cond_Op op = AI_Cond_Op.Equal;
+}
+
+[CreateNodeMenu("AI/条件/角色Life值")]
+public class AI_Cond_PlayerLife: AI_BaseCondition
+{
+	public int value;
+	public AI_Cond_Op op = AI_Cond_Op.Equal;
+}
+
+[CreateNodeMenu("AI/条件/角色HitCount值")]
+public class AI_Cond_PlayerHitCount: AI_BaseCondition
+{
+	public int value;
+	public AI_Cond_Op op = AI_Cond_Op.Equal;
+}
+
+[CreateNodeMenu("AI/条件/角色动画Ani是否存在")]
+public class AI_Cond_PlayerAniExist: AI_BaseCondition
+{
+	public int value;
+	public bool isNot = false;
+}
+
+[CreateNodeMenu("AI/条件/角色是否Alive")]
+public class AI_Cond_PlayerIsAlive: AI_BaseCondition
+{
+	public bool isNot = false;
+}
+
+[CreateNodeMenu("AI/条件/角色AnimElemTime")]
+public class AI_Cond_PlayerAnimElemTime: AI_BaseCondition
+{
+	public int animElem;
+	public AI_Cond_Op op = AI_Cond_Op.Equal;
+}
+
+
 
 [CreateNodeMenu("AI/创建StateDef")]
 public class AI_CreateStateDef: Node
@@ -222,7 +298,8 @@ public abstract class AI_CreateStateEvent: Node
 		if (from != null && (from.node.GetType() == typeof(AI_Cond_PlayerTime) ||
 			from.node.GetType() == typeof(AI_Cond_PlayerAniTime))) {
 			triggleType = CnsStateTriggerType.AnimTime;
-		} else if ((from != null) && (from.node.GetType() == typeof(AI_Cond_PlayerAniElem))) {
+		} else if ((from != null) && (from.node.GetType() == typeof(AI_Cond_PlayerAniElem)) ||
+			(from.node.GetType() == typeof(AI_Cond_PlayerAnimElemTime))) {
 			triggleType = CnsStateTriggerType.AnimElem;
 		}
 	}
@@ -349,3 +426,46 @@ public class AI_StateEvent_CreateProj: AI_CreateStateEvent
 	public int projsprpriority = 0;
 
 }
+
+[CreateNodeMenu("AI/创建StateEvent/删除爆炸物")]
+public class AI_StateEvent_RemoveExplod: AI_CreateStateEvent
+{
+	public int id;
+}
+
+[CreateNodeMenu("AI/创建StateEvent/切换调色板")]
+public class AI_StateEvent_ChangePallet: AI_CreateStateEvent
+{
+	public int index;
+}
+
+[CreateNodeMenu("AI/创建StateEvent/设置float var")]
+public class AI_StateEvent_floatVarSet: AI_CreateStateEvent
+{
+	public int index;
+	public float value;
+}
+
+[CreateNodeMenu("AI/创建StateEvent/设置int var")]
+public class AI_StateEvent_intVarSet: AI_CreateStateEvent
+{
+	public int index;
+	public int value;
+}
+
+[CreateNodeMenu("AI/创建StateEvent/角色暂停")]
+public class AI_StateEvent_PlayerPause: AI_CreateStateEvent
+{
+	public float time;
+}
+
+[CreateNodeMenu("AI/创建StateEvent/速度乘法")]
+public class AI_StateEvent_VelMul: AI_CreateStateEvent
+{
+	public float velX = CNSStateDef._cNoVaildVelset;
+	public float velY = CNSStateDef._cNoVaildVelset;
+}
+
+[CreateNodeMenu("AI/创建StateEvent/删除角色自己")]
+public class AI_StateEvent_PlayerDestroySelf: AI_CreateStateEvent
+{}
