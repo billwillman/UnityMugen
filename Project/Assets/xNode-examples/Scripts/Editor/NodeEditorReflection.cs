@@ -87,9 +87,10 @@ namespace XNodeEditor {
 					try
 					{
 						isCheck = (bool)checkValidate.Value.Invoke(obj, null);
-					} catch
+					} catch (Exception e)
 					{
 						isCheck = false;
+						Debug.LogError(e.ToString());
 					}
 					if (!isCheck) {
 					#else
