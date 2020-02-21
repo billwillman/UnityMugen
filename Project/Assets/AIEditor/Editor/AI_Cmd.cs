@@ -820,16 +820,32 @@ public abstract class AI_CreateStateEvent: AI_BaseNode
 			ret = string.Format ("\t\tlocal state = def:CreateStateEvent({0}.{1})\n\r", triggleType.GetType ().FullName, triggleType.ToString ());
 			ret += string.Format ("\t\tstate.OnTriggerEvent = \n\r");
 			ret += string.Format ("\t\t\t\tfunction (luaPlayer, state)\n\r");
+			string condStr = string.Empty;
 			if (condition != null) {
-				ret += condition.ToCondString ("luaPlayer");
+				condStr = condition.ToCondString ("luaPlayer");
 			}
 
-			ret += "\t\t\t\t" + doStr;
+			bool isCond = false;
+			if (!string.IsNullOrEmpty (condStr)) {
+				ret += "\t\t\t\t\t\tlocal trigger1 = (" + condStr + ")\n\r";
+				ret += "\t\t\t\t\t\tif trigger1 then\n\r";
+				ret += "\t\t";
+				isCond = true;
+			}
+
+			ret += "\t\t\t\t\t\t" + doStr + "\n\r";
 
 			if (setPersistent) {
-				ret += "\t\t\t\ttrigger:Persistent(luaPlayer, state, true)\n\r";
+				if (isCond)
+					ret += "\t\t";
+				ret += "\t\t\t\t\t\ttrigger:Persistent(luaPlayer, state, true)\n\r";
 			}
-			ret += "\t\tend\n\r";
+
+			if (isCond) {
+				ret += "\t\t\t\t\t\tend\n\r";
+			}
+
+			ret += "\t\t\t\tend\n\r";
 		}
 
 		return ret;
@@ -844,7 +860,7 @@ public class AI_StateEvent_PlaySnd: AI_CreateStateEvent
 
 	protected override string GetDoStr()
 	{
-		string ret = string.Format ("trigger:PlaySnd(luaPlayer, {0:D}, {1:D}", group, index);
+		string ret = string.Format ("trigger:PlaySnd(luaPlayer, {0:D}, {1:D})", group, index);
 		return ret;
 	}
 }
