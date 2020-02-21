@@ -790,8 +790,10 @@ public abstract class AI_CreateStateEvent: AI_BaseNode
 				triggleType = CnsStateTriggerType.AnimElem;
 			}
 
-			DoCreateConnect (from, ref parent, "parent");
-			DoCreateConnect (from, ref condition, "condition");
+			if (from.node is AI_CreateStateDef)
+				DoCreateConnect (from, ref parent, "parent");
+			if (from.node is AI_BaseCondition)
+				DoCreateConnect (from, ref condition, "condition");
 		}
 
 
