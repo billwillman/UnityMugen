@@ -715,9 +715,17 @@ public class AI_CreateStateDef: AI_BaseNode
 
 		if (from != null && from.node != this) {
 			if (from != null && from.node.GetType () == typeof(AI_Cmd)) {
-				DoCreateConnect<AI_Cmd> (from, ref input, "input"); 
+				if (DoCreateConnect<AI_Cmd> (from, ref input, "input")) {
+					var pp = GetPort ("prevCns");
+					if (pp != null)
+						pp.ClearConnections ();
+				}
 			} else if (from != null && from.node.GetType () == typeof(AI_StateEvent_PlayCns)) {
-				DoCreateConnect<AI_StateEvent_PlayCns> (from, ref prevCns, "prevCns");
+				if (DoCreateConnect<AI_StateEvent_PlayCns> (from, ref prevCns, "prevCns")) {
+					var pp = GetPort ("input");
+					if (pp != null)
+						pp.ClearConnections ();
+				}
 			} else {
 				from.Disconnect (to);
 			}
