@@ -26,14 +26,14 @@ public abstract class AI_BaseNode: Node
 		return string.Empty;
 	}
 
-	protected void DoCreateConnect<T>(NodePort from, ref T item, string itemName, NodePort.IO dir = NodePort.IO.Input) where T: Node
+	protected bool DoCreateConnect<T>(NodePort from, ref T item, string itemName, NodePort.IO dir = NodePort.IO.Input) where T: Node
 	{
 		if (dir == NodePort.IO.Input) {
 			if (from.node == this)
-				return;
+				return false;
 		} else if (dir == NodePort.IO.Output) {
 			if (from.node != this)
-				return;
+				return false;
 		}
 		//if (from.node.GetType ().IsSubclassOf (typeof(T))) {
 			item =  from.node as T;
@@ -43,17 +43,19 @@ public abstract class AI_BaseNode: Node
 			if (port != null) {
 				port.Disconnect (from);
 			}
+			return false;
 		}
+		return true;
 	}
 
-	protected void DoCreateConnectToList<T>(NodePort from, ref List<T> condList, string condListName, NodePort.IO dir = NodePort.IO.Input) where T: Node
+	protected bool DoCreateConnectToList<T>(NodePort from, ref List<T> condList, string condListName, NodePort.IO dir = NodePort.IO.Input) where T: Node
 	{
 		if (dir == NodePort.IO.Input) {
 			if (from.node == this)
-				return;
+				return false;
 		} else if (dir == NodePort.IO.Output) {
 			if (from.node != this)
-				return;
+				return false;
 		}
 
 		if (from.node is T) {
@@ -63,33 +65,39 @@ public abstract class AI_BaseNode: Node
 			if (!condList.Contains (cc)) {
 				condList.Add (cc);
 			}
+			return true;
 		} else {
 			var port = GetInputPort (condListName);
 			int idx = port.GetConnectionIndex (from);
 			if (idx >= 0)
 				port.Disconnect (idx);
+
+			return false;
 		}
+
+		return false;
 	}
 
-	protected void DoDisConnect<T>(NodePort port, ref T item, NodePort.IO dir = NodePort.IO.Input) where T: Node
+	protected bool DoDisConnect<T>(NodePort port, ref T item, NodePort.IO dir = NodePort.IO.Input) where T: Node
 	{
 		if (port.direction != dir)
-			return;
+			return false;
 		
 		for (int i = 0; i < port.ConnectionCount; ++i) {
 			T cc = port.GetConnection(i).node as T;
 			if (cc != null) {
 				item = cc;
-				return;
+				break;
 			}
 		}
 		item = null;
+		return true;
 	}
 
-	protected void DoDisConnectToList<T>(NodePort port, ref List<T> condList, NodePort.IO dir = NodePort.IO.Input) where T: Node
+	protected bool DoDisConnectToList<T>(NodePort port, ref List<T> condList, NodePort.IO dir = NodePort.IO.Input) where T: Node
 	{
 		if (port.direction != dir)
-			return;
+			return false;
 		
 		if (condList != null)
 			condList.Clear ();
@@ -103,6 +111,7 @@ public abstract class AI_BaseNode: Node
 			}
 		}
 
+		return true;
 	}
 }
 
@@ -716,10 +725,10 @@ public class AI_CreateStateDef: AI_BaseNode
 //[CreateNodeMenu("AI/创建StateEvent")]
 public abstract class AI_CreateStateEvent: AI_BaseNode
 {
-	[Input(ShowBackingValue.Never)]
+	[Input(ShowBackingValue.Never, ConnectionType.Override)]
 	public AI_CreateStateDef parent;
 
-	[Input(ShowBackingValue.Never)]
+	[Input(ShowBackingValue.Never, ConnectionType.Override)]
 	public AI_BaseCondition condition;
 
 	public bool setPersistent = false;
@@ -744,6 +753,30 @@ public abstract class AI_CreateStateEvent: AI_BaseNode
 		else if (port.fieldName == "condition")
 			return condition;
 		return null;
+	}
+
+	protected virtual string GetDoStr()
+	{
+		return string.Empty;
+	}
+
+	public override string ToString ()
+	{
+		string ret = string.Empty;
+
+		string doStr = GetDoStr ();
+		if (!string.IsNullOrEmpty (doStr)) {
+			ret = string.Format ("\t\tlocal state = def:CreateStateEvent({0}.{1})\n\r", triggleType.GetType ().FullName, triggleType.ToString ());
+			ret += string.Format ("\t\tstate.OnTriggerEvent = \n\r");
+			ret += string.Format ("\t\t\t\tfunction (luaPlayer, state)\n\r");
+			if (condition != null) {
+				ret += condition.ToCondString ("luaPlayer");
+			}
+
+			ret += "\t\t" + doStr;
+		}
+
+		return ret;
 	}
 }
 
