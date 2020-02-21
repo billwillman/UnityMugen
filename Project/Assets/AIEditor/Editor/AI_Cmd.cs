@@ -544,7 +544,7 @@ public class AI_Cond_PlayerHitCount: AI_BaseCondition
 	public override string ToCondString(string luaPlayer)
 	{
 		var opStr = GetOpStr (op);
-		string ret = string.Format ("trigger:Power({0}){1}{2:D}", luaPlayer, opStr, value);
+		string ret = string.Format ("trigger:HitCount({0}){1}{2:D}", luaPlayer, opStr, value);
 		return ret;
 	}
 }
