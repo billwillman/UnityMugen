@@ -26,10 +26,15 @@ public abstract class AI_BaseNode: Node
 		return string.Empty;
 	}
 
-	protected void DoCreateConnect<T>(NodePort from, ref T item, string itemName) where T: Node
+	protected void DoCreateConnect<T>(NodePort from, ref T item, string itemName, NodePort.IO dir = NodePort.IO.Input) where T: Node
 	{
-		if (from.node == this)
-			return;
+		if (dir == NodePort.IO.Input) {
+			if (from.node == this)
+				return;
+		} else if (dir == NodePort.IO.Output) {
+			if (from.node != this)
+				return;
+		}
 		//if (from.node.GetType ().IsSubclassOf (typeof(T))) {
 			item =  from.node as T;
 		//}
@@ -41,7 +46,7 @@ public abstract class AI_BaseNode: Node
 		}
 	}
 
-	protected void DoCreateConnect<T>(NodePort from, ref List<T> condList, string condListName, NodePort.IO dir = NodePort.IO.Input) where T: Node
+	protected void DoCreateConnectToList<T>(NodePort from, ref List<T> condList, string condListName, NodePort.IO dir = NodePort.IO.Input) where T: Node
 	{
 		if (dir == NodePort.IO.Input) {
 			if (from.node == this)
@@ -81,9 +86,9 @@ public abstract class AI_BaseNode: Node
 		item = null;
 	}
 
-	protected void DoDisConnect<T>(NodePort port, ref List<T> condList) where T: Node
+	protected void DoDisConnectToList<T>(NodePort port, ref List<T> condList, NodePort.IO dir = NodePort.IO.Input) where T: Node
 	{
-		if (port.direction != NodePort.IO.Input)
+		if (port.direction != dir)
 			return;
 		
 		if (condList != null)
@@ -143,12 +148,12 @@ public class AI_Cmd : AI_BaseNode
 
 	public override void OnRemoveConnection(NodePort port)
 	{
-		DoDisConnect (port, ref condList);
+		DoDisConnectToList<AI_BaseCondition> (port, ref condList);
 	}
 
 	public override void OnCreateConnection(NodePort from, NodePort to)
 	{
-		DoCreateConnect (from, ref condList, "condList");
+		DoCreateConnectToList<AI_BaseCondition> (from, ref condList, "condList");
 	}
 }
 
@@ -179,12 +184,12 @@ public class AI_Cond_And: AI_BaseCondition
 
 	public override void OnRemoveConnection(NodePort port)
 	{
-		DoDisConnect (port, ref inputs);
+		DoDisConnectToList (port, ref inputs);
 	}
 
 	public override void OnCreateConnection(NodePort from, NodePort to)
 	{
-		DoCreateConnect (from, ref inputs, "inputs");
+		DoCreateConnectToList (from, ref inputs, "inputs");
 	}
 
 	public override string ToCondString(string luaPlayer)
@@ -227,12 +232,12 @@ public class AI_Cond_Or: AI_BaseCondition
 
 	public override void OnRemoveConnection(NodePort port)
 	{
-		DoDisConnect (port, ref inputs);
+		DoDisConnectToList (port, ref inputs);
 	}
 
 	public override void OnCreateConnection(NodePort from, NodePort to)
 	{
-		DoCreateConnect (from, ref inputs, "inputs");
+		DoCreateConnectToList (from, ref inputs, "inputs");
 	}
 
 	public override string ToCondString(string luaPlayer)
@@ -605,6 +610,56 @@ public class AI_Cond_PlayerAnimElemTime: AI_BaseCondition
 [CreateNodeMenu("AI/创建StateDef")]
 public class AI_CreateStateDef: AI_BaseNode
 {
+
+	public string Animate
+	{
+		get {
+			string ret = string.Empty;
+
+			if (input != null && input.aiType == AI_Type.ChangeState) {
+				ret = input.value;
+			} else if (prevCns != null) {
+				ret = prevCns.Animate;
+			}
+
+			return ret;
+		}
+	}
+
+	public override string ToString ()
+	{
+		string ret = string.Empty;
+		string animate = this.Animate;
+		if (string.IsNullOrEmpty (animate))
+			return ret;
+
+		ret = string.Format ("\t\tlocal id = luaCfg:CreateStateDef(\"{0}\")\n\r", input.value);
+		ret += "\t\tlocal def = luaCfg:GetStateDef(id)\n\r";
+		if (type != Cns_Type.none)
+			ret += string.Format ("\t\tdef.Type = {0}.{1}\n\r", type.GetType ().FullName, type.ToString ());
+		if (physicsType != Cns_PhysicsType.none)
+			ret += string.Format ("\t\tdef.PhysicsType = {0}.{1}\n\r", physicsType.GetType ().FullName, physicsType.ToString ());
+		if (moveType != Cns_MoveType.none)
+			ret += string.Format ("\t\tdef.MoveType = {0}.{1}\n\r", moveType.GetType ().FullName, moveType.ToString ());
+		ret += string.Format ("\t\tdef.Juggle = {0:D}\n\r", juggle);
+		ret += string.Format ("\t\tdef.PowerAdd = {0:D}\n\r", juggle);
+
+		if (Mathf.Abs (velset_x - CNSStateDef._cNoVaildVelset) > float.Epsilon) {
+			ret += string.Format ("\t\tdef.Velset_x = {0}\n\r", velset_x.ToString ());
+		}
+
+		if (Mathf.Abs (velset_y - CNSStateDef._cNoVaildVelset) > float.Epsilon) {
+			ret += string.Format ("\t\tdef.Velset_y = {0}\n\r", velset_y.ToString ());
+		}
+
+		ret += string.Format ("\t\tdef.Ctrl = {0:D}\n\r", ctrl);
+		ret += string.Format ("\t\tdef.Sprpriority = {0:D}\n\r", sprpriority);
+		if (!string.IsNullOrEmpty(animate))
+			ret += string.Format ("\t\tdef.Animate = {0}\n\r", animate);
+
+		return ret;
+	}
+
 	[Input(ShowBackingValue.Never, ConnectionType.Override)]
 	public AI_Cmd input;
 	[Input(ShowBackingValue.Never, ConnectionType.Override)]

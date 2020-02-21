@@ -47,6 +47,26 @@ public class AINodeGraphEditor: NodeGraphEditor
 		return ret;
 	}
 
+	private void BuildStr(AI_CreateStateDef def, StringBuilder builder)
+	{
+		if (def == null || builder == null)
+			return;
+		builder.AppendFormat ("--------------------------- register StateDef {0} ---------------------------", def.Animate).AppendLine ();
+
+	}
+
+	private void BuildStr(List<AI_CreateStateDef> defs, StringBuilder builder)
+	{
+		if (defs == null || defs.Count <= 0 || builder == null)
+			return;
+		for (int i = 0; i < defs.Count; ++i) {
+			var def = defs [i];
+			if (def == null)
+				continue;
+			BuildStr (def, builder);
+		}
+	}
+
 	private void BuildStr(List<AI_KeyCmd> keyCmds, StringBuilder builder)
 	{
 		if (keyCmds == null || keyCmds.Count <= 0 || builder == null)
@@ -134,6 +154,9 @@ public class AINodeGraphEditor: NodeGraphEditor
 		BuildStr (keyCmdLst, builder);
 		var aiCmdLst = GetKeyCmds<AI_Cmd> (lst);
 		BuildStr (aiCmdLst, builder);
+
+		var stateDefs = GetKeyCmds<AI_CreateStateDef> (lst);
+		BuildStr (stateDefs, builder);
 
 		SaveToLuaFile (builder);
 	}
