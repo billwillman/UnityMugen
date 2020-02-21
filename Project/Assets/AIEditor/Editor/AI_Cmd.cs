@@ -4,6 +4,78 @@ using System.Collections.Generic;
 using Mugen;
 using XNode;
 
+public abstract class AI_BaseNode: Node
+{
+	protected void DoCreateConnect<T>(NodePort from, ref T item, string itemName) where T: Node
+	{
+		if (from.node == this)
+			return;
+		//if (from.node.GetType ().IsSubclassOf (typeof(T))) {
+			item =  from.node as T;
+		//}
+		if (item == null) {
+			var port = GetInputPort (itemName);
+			if (port != null) {
+				port.Disconnect (from);
+			}
+		}
+	}
+
+	protected void DoCreateConnect<T>(NodePort from, ref List<T> condList, string condListName) where T: Node
+	{
+		if (from.node == this)
+			return;
+
+		if (from.node is T) {
+			if (condList == null)
+				condList = new List<T> ();
+			T cc = from.node as T;	
+			if (!condList.Contains (cc)) {
+				condList.Add (cc);
+			}
+		} else {
+			var port = GetInputPort (condListName);
+			int idx = port.GetConnectionIndex (from);
+			if (idx >= 0)
+				port.Disconnect (idx);
+		}
+	}
+
+	protected void DoDisConnect<T>(NodePort port, ref T item) where T: Node
+	{
+		if (port.direction != NodePort.IO.Input)
+			return;
+		
+		for (int i = 0; i < port.ConnectionCount; ++i) {
+			T cc = port.GetConnection(i).node as T;
+			if (cc != null) {
+				item = cc;
+				return;
+			}
+		}
+		item = null;
+	}
+
+	protected void DoDisConnect<T>(NodePort port, ref List<T> condList) where T: Node
+	{
+		if (port.direction != NodePort.IO.Input)
+			return;
+		
+		if (condList != null)
+			condList.Clear ();
+		else
+			condList = new List<T> ();
+
+		for (int i = 0; i < port.ConnectionCount; ++i) {
+			T cc = port.GetConnection(i).node as T;
+			if (cc != null) {
+				condList.Add (cc);
+			}
+		}
+
+	}
+}
+
 [CreateNodeMenu("AI/按键设置")]
 public class AI_KeyCmd : AI_BaseCondition {
 	public string name = "KeyCmd_Unknown";
@@ -21,7 +93,7 @@ public class AI_KeyCmd : AI_BaseCondition {
 
 
 [CreateNodeMenu("AI/AI命令")]
-public class AI_Cmd : Node
+public class AI_Cmd : AI_BaseNode
 {
 	
 	public string cmdName = "AICmd_Unknown";
@@ -44,46 +116,18 @@ public class AI_Cmd : Node
 		return null;
 	}
 
-	private void AssignToList(NodePort port)
-	{
-		if (condList != null)
-			condList.Clear ();
-		else
-			condList = new List<AI_BaseCondition> ();
-
-		for (int i = 0; i < port.ConnectionCount; ++i) {
-			AI_BaseCondition cc = port.GetConnection(i).node as AI_BaseCondition;
-			if (cc != null) {
-				condList.Add (cc);
-			}
-		}
-		
-	}
-
 	public override void OnRemoveConnection(NodePort port)
 	{
-		AssignToList (port);
+		DoDisConnect (port, ref condList);
 	}
 
 	public override void OnCreateConnection(NodePort from, NodePort to)
 	{
-		if (from.node.GetType ().IsSubclassOf (typeof(AI_BaseCondition))) {
-			if (condList == null)
-				condList = new List<AI_BaseCondition> ();
-			AI_BaseCondition cc = from.node as AI_BaseCondition;	
-			if (!condList.Contains (cc)) {
-				condList.Add (cc);
-			}
-		} else {
-			var port = GetInputPort ("condList");
-			int idx = port.GetConnectionIndex (from);
-			if (idx >= 0)
-				port.Disconnect (idx);
-		}
+		DoCreateConnect (from, ref condList, "condList");
 	}
 }
 
-public abstract class AI_BaseCondition : Node
+public abstract class AI_BaseCondition : AI_BaseNode
 {
 
 	internal static string GetOpStr(AI_Cond_Op op)
@@ -126,6 +170,16 @@ public class AI_Cond_And: AI_BaseCondition
 		return inputs;
 	}
 
+	public override void OnRemoveConnection(NodePort port)
+	{
+		DoDisConnect (port, ref inputs);
+	}
+
+	public override void OnCreateConnection(NodePort from, NodePort to)
+	{
+		DoCreateConnect (from, ref inputs, "inputs");
+	}
+
 	public override string ToCondString(string luaPlayer)
 	{
 		if (inputs == null || inputs.Count <= 0)
@@ -152,6 +206,7 @@ public class AI_Cond_And: AI_BaseCondition
 
 		return ret;
 	}
+
 }
 
 [CreateNodeMenu("AI/条件/Or")]
@@ -161,6 +216,16 @@ public class AI_Cond_Or: AI_BaseCondition
 	public List<AI_BaseCondition> inputs;
 	public override object GetValue(NodePort port) {
 		return inputs;
+	}
+
+	public override void OnRemoveConnection(NodePort port)
+	{
+		DoDisConnect (port, ref inputs);
+	}
+
+	public override void OnCreateConnection(NodePort from, NodePort to)
+	{
+		DoCreateConnect (from, ref inputs, "inputs");
 	}
 
 	public override string ToCondString(string luaPlayer)
@@ -194,7 +259,7 @@ public class AI_Cond_Or: AI_BaseCondition
 [CreateNodeMenu("AI/条件/触发按键")]
 public class AI_Cond_TriggleKeyCmd: AI_BaseCondition
 {
-	[Input(ShowBackingValue.Never)]
+	[Input(ShowBackingValue.Never, ConnectionType.Override)]
 	public AI_KeyCmd aiKeyCmd;
 	public override object GetValue(NodePort port) {
 		if (port.fieldName == "aiKeyCmd")
@@ -211,6 +276,17 @@ public class AI_Cond_TriggleKeyCmd: AI_BaseCondition
 			ret = "not " + ret;
 		return ret;
 	}
+
+	public override void OnRemoveConnection(NodePort port)
+	{
+		DoDisConnect<AI_KeyCmd>(port, ref aiKeyCmd);
+	}
+
+	public override void OnCreateConnection(NodePort from, NodePort to)
+	{
+		DoCreateConnect<AI_KeyCmd>(from, ref aiKeyCmd, "aiKeyCmd");
+	}
+
 
 	public bool isNot = false;
 }
@@ -511,7 +587,7 @@ public class AI_Cond_PlayerAnimElemTime: AI_BaseCondition
 
 
 [CreateNodeMenu("AI/创建StateDef")]
-public class AI_CreateStateDef: Node
+public class AI_CreateStateDef: AI_BaseNode
 {
 	[Input(ShowBackingValue.Never)]
 	public AI_Cmd input;
@@ -555,7 +631,7 @@ public class AI_CreateStateDef: Node
 }
 
 //[CreateNodeMenu("AI/创建StateEvent")]
-public abstract class AI_CreateStateEvent: Node
+public abstract class AI_CreateStateEvent: AI_BaseNode
 {
 	[Input(ShowBackingValue.Never)]
 	public AI_CreateStateDef parent;
