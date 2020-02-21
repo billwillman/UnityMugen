@@ -41,10 +41,15 @@ public abstract class AI_BaseNode: Node
 		}
 	}
 
-	protected void DoCreateConnect<T>(NodePort from, ref List<T> condList, string condListName) where T: Node
+	protected void DoCreateConnect<T>(NodePort from, ref List<T> condList, string condListName, NodePort.IO dir = NodePort.IO.Input) where T: Node
 	{
-		if (from.node == this)
-			return;
+		if (dir == NodePort.IO.Input) {
+			if (from.node == this)
+				return;
+		} else if (dir == NodePort.IO.Output) {
+			if (from.node != this)
+				return;
+		}
 
 		if (from.node is T) {
 			if (condList == null)
@@ -61,9 +66,9 @@ public abstract class AI_BaseNode: Node
 		}
 	}
 
-	protected void DoDisConnect<T>(NodePort port, ref T item) where T: Node
+	protected void DoDisConnect<T>(NodePort port, ref T item, NodePort.IO dir = NodePort.IO.Input) where T: Node
 	{
-		if (port.direction != NodePort.IO.Input)
+		if (port.direction != dir)
 			return;
 		
 		for (int i = 0; i < port.ConnectionCount; ++i) {
@@ -635,6 +640,8 @@ public class AI_CreateStateDef: AI_BaseNode
 			DoCreateConnect<AI_Cmd> (from, ref input, "input"); 
 		} else if (from != null && from.node.GetType () == typeof(AI_StateEvent_PlayCns)) {
 			DoCreateConnect<AI_StateEvent_PlayCns> (from, ref prevCns, "prevCns");
+		} else {
+			from.Disconnect (to);
 		}
 	}
 
