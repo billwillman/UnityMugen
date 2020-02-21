@@ -6,6 +6,26 @@ using XNode;
 
 public abstract class AI_BaseNode: Node
 {
+
+	internal static string GetOpStr(AI_Cond_Op op)
+	{
+		switch (op) {
+		case AI_Cond_Op.Equal:
+			return " == ";
+		case AI_Cond_Op.Great:
+			return " > ";
+		case AI_Cond_Op.GreatAndEqual:
+			return " >= ";
+		case AI_Cond_Op.Less:
+			return " < ";
+		case AI_Cond_Op.LessOrEqual:
+			return " <= ";
+		case AI_Cond_Op.NotEqual:
+			return " ~= ";
+		}
+		return string.Empty;
+	}
+
 	protected void DoCreateConnect<T>(NodePort from, ref T item, string itemName) where T: Node
 	{
 		if (from.node == this)
@@ -130,22 +150,8 @@ public class AI_Cmd : AI_BaseNode
 public abstract class AI_BaseCondition : AI_BaseNode
 {
 
-	internal static string GetOpStr(AI_Cond_Op op)
+	public virtual string ToCondString(string luaPlayer)
 	{
-		switch (op) {
-		case AI_Cond_Op.Equal:
-			return " == ";
-		case AI_Cond_Op.Great:
-			return " > ";
-		case AI_Cond_Op.GreatAndEqual:
-			return " >= ";
-		case AI_Cond_Op.Less:
-			return " < ";
-		case AI_Cond_Op.LessOrEqual:
-			return " <= ";
-		case AI_Cond_Op.NotEqual:
-			return " ~= ";
-		}
 		return string.Empty;
 	}
 
@@ -154,11 +160,7 @@ public abstract class AI_BaseCondition : AI_BaseNode
 	public override object GetValue(NodePort port) {
 		return this;
 	}
-
-	public virtual string ToCondString(string luaPlayer)
-	{
-		return string.Empty;
-	}
+		
 }
 
 [CreateNodeMenu("AI/条件/And")]
@@ -598,9 +600,9 @@ public class AI_Cond_PlayerAnimElemTime: AI_BaseCondition
 [CreateNodeMenu("AI/创建StateDef")]
 public class AI_CreateStateDef: AI_BaseNode
 {
-	[Input(ShowBackingValue.Never)]
+	[Input(ShowBackingValue.Never, ConnectionType.Override)]
 	public AI_Cmd input;
-	[Input(ShowBackingValue.Never)]
+	[Input(ShowBackingValue.Never, ConnectionType.Override)]
 	public AI_StateEvent_PlayCns prevCns;
 	[Output(ShowBackingValue.Never)]
 	public AI_CreateStateDef output;
@@ -628,13 +630,23 @@ public class AI_CreateStateDef: AI_BaseNode
 	}
 
 	public override void OnCreateConnection(NodePort from, NodePort to) { 
-		if (from != null && from.node.GetType() == typeof(AI_Cmd)) {
-			AI_Cmd aiCmd = (AI_Cmd)from.node;
-			if (aiCmd.aiType != AI_Type.ChangeState) {
-				var port = GetInputPort("input");
-				if (port != null)
-					port.ClearConnections ();
-			}
+		
+		if (from != null && from.node.GetType () == typeof(AI_Cmd)) {
+			DoCreateConnect<AI_Cmd> (from, ref input, "input"); 
+		} else if (from != null && from.node.GetType () == typeof(AI_StateEvent_PlayCns)) {
+			DoCreateConnect<AI_StateEvent_PlayCns> (from, ref prevCns, "prevCns");
+		}
+	}
+
+	public override void OnRemoveConnection(NodePort port)
+	{
+		if (port.direction != NodePort.IO.Input)
+			return;
+
+		if (port.ValueType == typeof(AI_Cmd)) {
+			DoDisConnect<AI_Cmd> (port, ref input);
+		} else if (port.ValueType == typeof(AI_StateEvent_PlayCns)) {
+			DoDisConnect<AI_StateEvent_PlayCns> (port, ref prevCns);
 		}
 	}
 }
