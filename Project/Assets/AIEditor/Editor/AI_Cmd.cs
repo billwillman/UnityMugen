@@ -342,6 +342,13 @@ public class AI_Cond_PlayerAniElem: AI_BaseCondition
 {
 	public int aniElem;
 	public AI_Cond_Op op = AI_Cond_Op.Equal;
+
+	public override string ToCondString(string luaPlayer)
+	{
+		var opStr = GetOpStr (op);
+		string ret = string.Format ("trigger:AnimElem({0}){1}{2:D}", luaPlayer, opStr, aniElem);
+		return ret;
+	}
 }
 
 [CreateNodeMenu("AI/条件/角色AnimTime")]
