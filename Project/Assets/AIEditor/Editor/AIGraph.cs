@@ -52,7 +52,7 @@ public class AINodeGraphEditor: NodeGraphEditor
 		if (def == null || builder == null)
 			return;
 		builder.AppendFormat ("--------------------------- register StateDef {0} ---------------------------", def.Animate).AppendLine ();
-
+		builder.Append (def.ToString ()).AppendLine ().AppendLine ();
 	}
 
 	private void BuildStr(List<AI_CreateStateDef> defs, StringBuilder builder)
@@ -170,7 +170,7 @@ public class AINodeGraphEditor: NodeGraphEditor
 		if (builder == null)
 			return;
 
-		string fileName = string.Format ("Assets/AIEditor/{0}.txt", target.name);
+		string fileName = string.Format ("Assets/AIEditor/{0}.lua", target.name);
 		System.IO.FileStream stream = new System.IO.FileStream (fileName, System.IO.FileMode.Create, System.IO.FileAccess.Write);
 		try
 		{
