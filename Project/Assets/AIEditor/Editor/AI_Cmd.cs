@@ -302,7 +302,9 @@ public class AI_Cond_PlayerStateType: AI_BaseCondition
 	{
 		string ret = string.Format ("{0}.{1}", stateType.GetType ().FullName, stateType.ToString ());
 		if (isNot)
-			ret = "not " + ret;
+			ret = "trigger:Statetype ~= " + ret;
+		else
+			ret = "trigger:Statetype == " + ret;
 		return ret;
 	}
 }
