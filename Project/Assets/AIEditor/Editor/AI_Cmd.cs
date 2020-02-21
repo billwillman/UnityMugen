@@ -474,7 +474,7 @@ public class AI_Cond_Player_IntVar: AI_BaseCondition
 	public override string ToCondString(string luaPlayer)
 	{
 		var opStr = GetOpStr (op);
-		string ret = string.Format ("trigger:fVar({0}, {1:D}){2}{3:D}", luaPlayer, index, opStr, value);
+		string ret = string.Format ("trigger:Var({0}, {1:D}){2}{3:D}", luaPlayer, index, opStr, value);
 		return ret;
 	}
 }
