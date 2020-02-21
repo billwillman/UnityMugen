@@ -977,6 +977,8 @@ public class AI_StateEvent_PlayAni: AI_CreateStateEvent
 
 	protected override string GetDoStr()
 	{
+		if (anim == CNSStateDef._cNoVaildAnim)
+			return string.Empty;
 		string ret = string.Format ("trigger:PlayAnim(luaPlayer, {0:D}, {1})", anim, isLoop.ToString());
 		return ret;
 	}
