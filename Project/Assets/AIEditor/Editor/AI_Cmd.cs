@@ -45,10 +45,35 @@ public class AI_Cmd : Node
 
 public abstract class AI_BaseCondition : Node
 {
+
+	internal static string GetOpStr(AI_Cond_Op op)
+	{
+		switch (op) {
+		case AI_Cond_Op.Equal:
+			return " == ";
+		case AI_Cond_Op.Great:
+			return " > ";
+		case AI_Cond_Op.GreatAndEqual:
+			return " >= ";
+		case AI_Cond_Op.Less:
+			return " < ";
+		case AI_Cond_Op.LessOrEqual:
+			return " <= ";
+		case AI_Cond_Op.NotEqual:
+			return " ~= ";
+		}
+		return string.Empty;
+	}
+
 	[Output]
 	public AI_BaseCondition output;
 	public override object GetValue(NodePort port) {
 		return this;
+	}
+
+	public virtual string ToCondString(string luaPlayer)
+	{
+		return string.Empty;
 	}
 }
 
@@ -60,6 +85,33 @@ public class AI_Cond_And: AI_BaseCondition
 	public override object GetValue(NodePort port) {
 		return inputs;
 	}
+
+	public override string ToCondString(string luaPlayer)
+	{
+		if (inputs == null || inputs.Count <= 0)
+			return string.Empty;
+		string ret = string.Empty;
+		bool isFirst = true;
+		for (int i = 0; i < inputs.Count; ++i) {
+			var input = inputs [i];
+			if (input == null)
+				continue;
+			if (isFirst) {
+				string str = input.ToCondString (luaPlayer);
+				if (!string.IsNullOrEmpty (str)) {
+					ret = string.Format ("({0})", str);
+					isFirst = false;
+				}
+			} else {
+				string str = input.ToCondString (luaPlayer);
+				if (!string.IsNullOrEmpty (str)) {
+					ret += string.Format (" and ({0})", str);
+				}
+			}
+		}
+
+		return ret;
+	}
 }
 
 [CreateNodeMenu("AI/条件/Or")]
@@ -69,6 +121,33 @@ public class AI_Cond_Or: AI_BaseCondition
 	public List<AI_BaseCondition> inputs;
 	public override object GetValue(NodePort port) {
 		return inputs;
+	}
+
+	public override string ToCondString(string luaPlayer)
+	{
+		if (inputs == null || inputs.Count <= 0)
+			return string.Empty;
+		string ret = string.Empty;
+		bool isFirst = true;
+		for (int i = 0; i < inputs.Count; ++i) {
+			var input = inputs [i];
+			if (input == null)
+				continue;
+			if (isFirst) {
+				string str = input.ToCondString (luaPlayer);
+				if (!string.IsNullOrEmpty (str)) {
+					ret = string.Format ("({0})", str);
+					isFirst = false;
+				}
+			} else {
+				string str = input.ToCondString (luaPlayer);
+				if (!string.IsNullOrEmpty (str)) {
+					ret += string.Format (" or ({0})", str);
+				}
+			}
+		}
+
+		return ret;
 	}
 }
 
@@ -83,6 +162,16 @@ public class AI_Cond_TriggleKeyCmd: AI_BaseCondition
 		return null;
 	}
 
+	public override string ToCondString(string luaPlayer)
+	{
+		if (aiKeyCmd == null)
+			return string.Empty;
+		string ret = string.Format ("trigger:Command({0}, \"{1}\")", luaPlayer, aiKeyCmd.name);
+		if (isNot)
+			ret = "not " + ret;
+		return ret;
+	}
+
 	public bool isNot = false;
 }
 
@@ -92,6 +181,14 @@ public class AI_Cond_PlayerStateType: AI_BaseCondition
 	public Cns_Type stateType = Cns_Type.S;
 
 	public bool isNot = false;	
+
+	public override string ToCondString(string luaPlayer)
+	{
+		string ret = string.Format ("{0}.{1}", stateType.GetType ().FullName, stateType.ToString ());
+		if (isNot)
+			ret = "not " + ret;
+		return ret;
+	}
 }
 
 [CreateNodeMenu("AI/条件/角色Ctrl状态")]
@@ -99,6 +196,17 @@ public class AI_Cond_PlayerCtrl: AI_BaseCondition
 {
 	public int Ctrl = 1;
 	public bool isNot = false;	
+
+	public override string ToCondString(string luaPlayer)
+	{
+		string ret = string.Format ("trigger:Ctrl({0})", luaPlayer);
+		if (isNot)
+			ret += " ~= ";
+		else
+			ret += " == ";
+		ret += Ctrl.ToString ();
+		return ret;
+	}
 }
 
 public enum AI_Cond_Op
@@ -107,7 +215,8 @@ public enum AI_Cond_Op
 	LessOrEqual,
 	Great,
 	GreatAndEqual,
-	Equal
+	Equal,
+	NotEqual
 }
 
 [CreateNodeMenu("AI/条件/角色AnimElem")]
@@ -122,6 +231,13 @@ public class AI_Cond_PlayerAniTime: AI_BaseCondition
 {
 	public int aniTime;
 	public AI_Cond_Op op = AI_Cond_Op.Equal;
+
+	public override string ToCondString(string luaPlayer)
+	{
+		var opStr = GetOpStr (op);
+		string ret = string.Format ("trigger:AnimTime({0}){1}{2:D}", luaPlayer, opStr, aniTime);
+		return ret;
+	}
 }
 
 [CreateNodeMenu("AI/条件/角色Time")]
@@ -129,6 +245,13 @@ public class AI_Cond_PlayerTime: AI_BaseCondition
 {
 	public int time;
 	public AI_Cond_Op op = AI_Cond_Op.Equal;
+
+	public override string ToCondString(string luaPlayer)
+	{
+		var opStr = GetOpStr (op);
+		string ret = string.Format ("trigger:Time({0}){1}{2:D}", luaPlayer, opStr, time);
+		return ret;
+	}
 }
 
 [CreateNodeMenu("AI/条件/角色 VelX")]
@@ -136,6 +259,13 @@ public class AI_Cond_Player_VelX: AI_BaseCondition
 {
 	public float velX;
 	public AI_Cond_Op op = AI_Cond_Op.Equal;
+
+	public override string ToCondString(string luaPlayer)
+	{
+		var opStr = GetOpStr (op);
+		string ret = string.Format ("trigger:VelX({0}){1}{2}", luaPlayer, opStr, velX.ToString());
+		return ret;
+	}
 }
 
 [CreateNodeMenu("AI/条件/角色 VelY")]
@@ -143,6 +273,13 @@ public class AI_Cond_Player_VelY: AI_BaseCondition
 {
 	public float velY;
 	public AI_Cond_Op op = AI_Cond_Op.Equal;
+
+	public override string ToCondString(string luaPlayer)
+	{
+		var opStr = GetOpStr (op);
+		string ret = string.Format ("trigger:VelY({0}){1}{2}", luaPlayer, opStr, velY.ToString());
+		return ret;
+	}
 }
 
 [CreateNodeMenu("AI/条件/角色 PosX")]
@@ -150,6 +287,13 @@ public class AI_Cond_Player_PosX: AI_BaseCondition
 {
 	public float posX;
 	public AI_Cond_Op op = AI_Cond_Op.Equal;
+
+	public override string ToCondString(string luaPlayer)
+	{
+		var opStr = GetOpStr (op);
+		string ret = string.Format ("trigger:PosX({0}){1}{2}", luaPlayer, opStr, posX.ToString());
+		return ret;
+	}
 }
 
 [CreateNodeMenu("AI/条件/角色 PosY")]
@@ -157,6 +301,13 @@ public class AI_Cond_Player_PosY: AI_BaseCondition
 {
 	public float posY;
 	public AI_Cond_Op op = AI_Cond_Op.Equal;
+
+	public override string ToCondString(string luaPlayer)
+	{
+		var opStr = GetOpStr (op);
+		string ret = string.Format ("trigger:PosY({0}){1}{2}", luaPlayer, opStr, posY.ToString());
+		return ret;
+	}
 }
 
 [CreateNodeMenu("AI/条件/角色StateNo")]
@@ -164,20 +315,43 @@ public class AI_Cond_Player_StateNo: AI_BaseCondition
 {
 	public int stateNo;
 	public AI_Cond_Op op = AI_Cond_Op.Equal;
+
+	public override string ToCondString(string luaPlayer)
+	{
+		var opStr = GetOpStr (op);
+		string ret = string.Format ("trigger:Stateno({0}){1}{2:D}", luaPlayer, opStr, stateNo);
+		return ret;
+	}
 }
 
 [CreateNodeMenu("AI/条件/float var")]
 public class AI_Cond_Player_FloatVar: AI_BaseCondition
 {
 	public int index;
+	public float value;
 	public AI_Cond_Op op = AI_Cond_Op.Equal;
+
+	public override string ToCondString(string luaPlayer)
+	{
+		var opStr = GetOpStr (op);
+		string ret = string.Format ("trigger:fVar({0}, {1:D}){2}{3}", luaPlayer, index, opStr, value.ToString());
+		return ret;
+	}
 }
 
 [CreateNodeMenu("AI/条件/int var")]
 public class AI_Cond_Player_IntVar: AI_BaseCondition
 {
 	public int index;
+	public int value;
 	public AI_Cond_Op op = AI_Cond_Op.Equal;
+
+	public override string ToCondString(string luaPlayer)
+	{
+		var opStr = GetOpStr (op);
+		string ret = string.Format ("trigger:fVar({0}, {1:D}){2}{3:D}", luaPlayer, index, opStr, value);
+		return ret;
+	}
 }
 
 [CreateNodeMenu("AI/条件/角色PrevStateNo")]
@@ -185,19 +359,41 @@ public class AI_Cond_Player_PlayerPrevStateNo: AI_BaseCondition
 {
 	public int prevStateNo;
 	public AI_Cond_Op op = AI_Cond_Op.Equal;
+
+	public override string ToCondString(string luaPlayer)
+	{
+		var opStr = GetOpStr (op);
+		string ret = string.Format ("trigger:PrevStateNo({0}){1}{2:D}", luaPlayer, opStr, prevStateNo);
+		return ret;
+	}
 }
 
+/*
 [CreateNodeMenu("AI/条件/角色状态Persistent")]
 public class AI_Cond_PlayerState_Persistent: AI_BaseCondition
 {
 	public bool isNot = false;
-}
+
+	public override string ToCondString(string luaPlayer)
+	{
+		string ret = string.Format ("trigger:IsPersistent({0}, state)", luaPlayer);
+		if (isNot)
+			ret = "not " + ret;
+	}
+}*/
 
 [CreateNodeMenu("AI/条件/角色Power值")]
 public class AI_Cond_PlayerPower: AI_BaseCondition
 {
 	public int value;
 	public AI_Cond_Op op = AI_Cond_Op.Equal;
+
+	public override string ToCondString(string luaPlayer)
+	{
+		var opStr = GetOpStr (op);
+		string ret = string.Format ("trigger:Power({0}){1}{2:D}", luaPlayer, opStr, value);
+		return ret;
+	}
 }
 
 [CreateNodeMenu("AI/条件/角色Life值")]
@@ -205,6 +401,13 @@ public class AI_Cond_PlayerLife: AI_BaseCondition
 {
 	public int value;
 	public AI_Cond_Op op = AI_Cond_Op.Equal;
+
+	public override string ToCondString(string luaPlayer)
+	{
+		var opStr = GetOpStr (op);
+		string ret = string.Format ("trigger:Power({0}){1}{2:D}", luaPlayer, opStr, value);
+		return ret;
+	}
 }
 
 [CreateNodeMenu("AI/条件/角色HitCount值")]
@@ -212,6 +415,13 @@ public class AI_Cond_PlayerHitCount: AI_BaseCondition
 {
 	public int value;
 	public AI_Cond_Op op = AI_Cond_Op.Equal;
+
+	public override string ToCondString(string luaPlayer)
+	{
+		var opStr = GetOpStr (op);
+		string ret = string.Format ("trigger:Power({0}){1}{2:D}", luaPlayer, opStr, value);
+		return ret;
+	}
 }
 
 [CreateNodeMenu("AI/条件/角色动画Ani是否存在")]
@@ -219,19 +429,43 @@ public class AI_Cond_PlayerAniExist: AI_BaseCondition
 {
 	public int value;
 	public bool isNot = false;
+
+	public override string ToCondString(string luaPlayer)
+	{
+		string ret = string.Format ("trigger:AnimExist({0}, {1:D})", luaPlayer, value);
+		if (isNot)
+			ret = "not " + ret;
+		return ret;
+	}
 }
 
 [CreateNodeMenu("AI/条件/角色是否Alive")]
 public class AI_Cond_PlayerIsAlive: AI_BaseCondition
 {
 	public bool isNot = false;
+
+	public override string ToCondString(string luaPlayer)
+	{
+		string ret = string.Format ("trigger:Alive({0})", luaPlayer);
+		if (isNot)
+			ret = "not " + ret;
+		return ret;
+	}
 }
 
 [CreateNodeMenu("AI/条件/角色AnimElemTime")]
 public class AI_Cond_PlayerAnimElemTime: AI_BaseCondition
 {
+	public int frameNo;
 	public int animElem;
 	public AI_Cond_Op op = AI_Cond_Op.Equal;
+
+	public override string ToCondString(string luaPlayer)
+	{
+		var opStr = GetOpStr (op);
+		string ret = string.Format ("trigger:AnimElemTime({0}, {1:D}){2}{3:D}", luaPlayer, frameNo, opStr, animElem);
+		return ret;
+	}
 }
 
 
