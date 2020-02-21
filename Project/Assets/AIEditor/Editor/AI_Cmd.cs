@@ -737,13 +737,15 @@ public abstract class AI_CreateStateEvent: AI_BaseNode
 
 	public override void OnCreateConnection(NodePort from, NodePort to)
 	{
-		if (from != null && (from.node.GetType() == typeof(AI_Cond_PlayerTime) ||
-			from.node.GetType() == typeof(AI_Cond_PlayerAniTime))) {
-			triggleType = CnsStateTriggerType.AnimTime;
-		} else if ((from != null) && (from.node.GetType() == typeof(AI_Cond_PlayerAniElem)) ||
-			(from.node.GetType() == typeof(AI_Cond_PlayerAnimElemTime))) {
-			triggleType = CnsStateTriggerType.AnimElem;
-		}
+		//if (from.node == this) {
+			if (from != null && (from.node.GetType () == typeof(AI_Cond_PlayerTime) ||
+			   from.node.GetType () == typeof(AI_Cond_PlayerAniTime))) {
+				triggleType = CnsStateTriggerType.AnimTime;
+			} else if ((from != null) && (from.node.GetType () == typeof(AI_Cond_PlayerAniElem)) ||
+			          (from.node.GetType () == typeof(AI_Cond_PlayerAnimElemTime))) {
+				triggleType = CnsStateTriggerType.AnimElem;
+			}
+		//}
 	}
 
 	public override object GetValue(NodePort port)
