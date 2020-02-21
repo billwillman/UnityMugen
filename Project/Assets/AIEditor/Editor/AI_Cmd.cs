@@ -1,19 +1,21 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using Mugen;
 using XNode;
 
 [CreateNodeMenu("AI/按键设置")]
-public class AI_KeyCmd : Node {
+public class AI_KeyCmd : AI_BaseCondition {
 	public string name = "KeyCmd_Unknown";
 	public float time = 1;
 	public string keyCommands;
 
-	[Output(ShowBackingValue.Never)]
-	public AI_KeyCmd output;
-	public override object GetValue(NodePort port) {
-		return output;
+	public override string ToCondString(string luaPlayer)
+	{
+		if (string.IsNullOrEmpty(name))
+			return string.Empty;
+		string ret = string.Format ("trigger:Command({0}, \"{1}\")", luaPlayer, name);
+		return ret;
 	}
 }
 
@@ -40,6 +42,44 @@ public class AI_Cmd : Node
 		else if (port.fieldName == "output")
 			return output;
 		return null;
+	}
+
+	private void AssignToList(NodePort port)
+	{
+		if (condList != null)
+			condList.Clear ();
+		else
+			condList = new List<AI_BaseCondition> ();
+
+		for (int i = 0; i < port.ConnectionCount; ++i) {
+			AI_BaseCondition cc = port.GetConnection(i).node as AI_BaseCondition;
+			if (cc != null) {
+				condList.Add (cc);
+			}
+		}
+		
+	}
+
+	public override void OnRemoveConnection(NodePort port)
+	{
+		AssignToList (port);
+	}
+
+	public override void OnCreateConnection(NodePort from, NodePort to)
+	{
+		if (from.node.GetType ().IsSubclassOf (typeof(AI_BaseCondition))) {
+			if (condList == null)
+				condList = new List<AI_BaseCondition> ();
+			AI_BaseCondition cc = from.node as AI_BaseCondition;	
+			if (!condList.Contains (cc)) {
+				condList.Add (cc);
+			}
+		} else {
+			var port = GetInputPort ("condList");
+			int idx = port.GetConnectionIndex (from);
+			if (idx >= 0)
+				port.Disconnect (idx);
+		}
 	}
 }
 
@@ -521,7 +561,7 @@ public abstract class AI_CreateStateEvent: Node
 	public AI_CreateStateDef parent;
 
 	[Input(ShowBackingValue.Never)]
-	public AI_BaseCondition conditions;
+	public AI_BaseCondition condition;
 
 	public bool setPersistent = false;
 
@@ -542,8 +582,8 @@ public abstract class AI_CreateStateEvent: Node
 	{
 		if (port.fieldName == "parent")
 			return parent;
-		else if (port.fieldName == "conditions")
-			return conditions;
+		else if (port.fieldName == "condition")
+			return condition;
 		return null;
 	}
 }

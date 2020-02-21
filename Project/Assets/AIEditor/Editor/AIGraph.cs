@@ -1,4 +1,4 @@
-﻿using UnityEditor;
+using UnityEditor;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -90,7 +90,7 @@ public class AINodeGraphEditor: NodeGraphEditor
 			}
 		}
 		if (isWrited) {
-			builder.Append (preStr).Append ("return triggle1");
+			builder.Append (preStr).Append ("return triggle1").AppendLine ();
 		}
 	}
 
@@ -105,6 +105,7 @@ public class AINodeGraphEditor: NodeGraphEditor
 		builder.Append ("\t\t").Append ("aiCmd.OnTriggerEvent =").AppendLine ();
 		builder.Append ("\t\t").Append ("\t\t").Append ("function (luaPlayer, aiName)").AppendLine ();
 		BuildCondListStr ("\t\t\t\t\t\t", "luaPlayer", cmd.condList, builder);
+		builder.Append ("\t\t").Append ("\t\t").Append("end").AppendLine ().AppendLine ();
 	}
 
 	private void BuildStr(List<AI_Cmd> cmds, StringBuilder builder)
@@ -146,15 +147,22 @@ public class AINodeGraphEditor: NodeGraphEditor
 		if (builder == null)
 			return;
 
-		string fileName = string.Format ("Assets/AIEditor/{0}.lua", target.name);
+		string fileName = string.Format ("Assets/AIEditor/{0}.txt", target.name);
 		System.IO.FileStream stream = new System.IO.FileStream (fileName, System.IO.FileMode.Create, System.IO.FileAccess.Write);
 		try
 		{
-			FilePathMgr.Instance.WriteString(stream, builder.ToString());
+			string ss = builder.ToString();
+			if (!string.IsNullOrEmpty(ss))
+			{
+				byte[] buf = System.Text.Encoding.UTF8.GetBytes(ss);
+				stream.Write(buf, 0, buf.Length);
+			}
 		} finally {
 			stream.Close ();
 			stream.Dispose ();
 		}
+
+		AssetDatabase.Refresh ();
 	}
 
 	private void ExportToJson()
