@@ -633,6 +633,8 @@ public class AI_Cond_Random: AI_BaseCondition
 public class AI_CreateStateDef: AI_BaseNode
 {
 
+	public int realAnimate = CNSStateDef._cNoVaildAnim;
+
 	public string Animate
 	{
 		get {
@@ -676,8 +678,13 @@ public class AI_CreateStateDef: AI_BaseNode
 
 		ret += string.Format ("\t\tdef.Ctrl = {0:D}\n\r", ctrl);
 		ret += string.Format ("\t\tdef.Sprpriority = {0:D}\n\r", sprpriority);
-		if (!string.IsNullOrEmpty(animate))
-			ret += string.Format ("\t\tdef.Animate = {0}\n\r", animate);
+
+		if (realAnimate != CNSStateDef._cNoVaildAnim) {
+			ret += string.Format ("\t\tdef.Animate = {0:D}\n\r", realAnimate);
+		} else {
+			if (!string.IsNullOrEmpty (animate))
+				ret += string.Format ("\t\tdef.Animate = {0}\n\r", animate);
+		}
 
 		// 创建State
 		var pp = this.GetPort("output");
