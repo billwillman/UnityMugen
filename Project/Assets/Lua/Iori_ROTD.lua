@@ -104,6 +104,182 @@ function Iori_ROTD:_initStateDefs()
 	--self:_initStateDef_2000(luaCfg)
 end
 
+function Iori_ROTD:initCmd_QiangZhuang(luaCfg)
+
+--------------------------- register KeyCmd ---------------------------
+		local cmd = luaCfg:CreateCmd("强撞")
+		cmd.time = 10
+		cmd:AttachKeyCommands("")
+
+--------------------------- 强撞 ---------------------------
+		local aiCmd = luaCfg:CreateAICmd("强撞")
+		aiCmd.type = Mugen.AI_Type.ChangeState
+		aiCmd.value = "3000"
+		aiCmd.OnTriggerEvent =
+				function (luaPlayer, aiName)
+						local triggle1 = (trigger:Command(luaPlayer, "强撞"))
+						return triggle1
+				end
+
+--------------------------- register StateDef 3000 ---------------------------
+		local id = luaCfg:CreateStateDef("3000")
+
+		local def = luaCfg:GetStateDef(id)
+
+		def.Type = Mugen.Cns_Type.S
+
+		def.PhysicsType = Mugen.Cns_PhysicsType.N
+
+		def.MoveType = Mugen.Cns_MoveType.A
+
+		def.Juggle = 14
+
+		def.PowerAdd = 0
+
+		def.Velset_x = 0
+
+		def.Velset_y = 0
+
+		def.Ctrl = 0
+
+		def.Sprpriority = 1
+
+		def.Animate = 3000
+
+		local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+
+		state.OnTriggerEvent = 
+
+				function (luaPlayer, state)
+
+						local trigger1 = (trigger:AnimElem(luaPlayer) == 2)
+
+						if trigger1 then
+
+								trigger:PlaySnd(luaPlayer, 50, 2)
+
+						end
+
+				end
+
+		local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+
+		state.OnTriggerEvent = 
+
+				function (luaPlayer, state)
+
+						local trigger1 = (trigger:AnimElem(luaPlayer) == 2)
+
+						if trigger1 then
+
+								trigger:PlaySnd(luaPlayer, 3, 4)
+
+						end
+
+				end
+
+		local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+
+		state.OnTriggerEvent = 
+
+				function (luaPlayer, state)
+
+						local trigger1 = ((trigger:AnimElem(luaPlayer) == 2) or (trigger:AnimElem(luaPlayer) == 3))
+
+						if trigger1 then
+
+								trigger:PosAdd(luaPlayer, 8, nil)
+
+						end
+
+				end
+
+		local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+
+		state.OnTriggerEvent = 
+
+				function (luaPlayer, state)
+
+						local trigger1 = ((trigger:AnimElem(luaPlayer) == 6) or (trigger:AnimElem(luaPlayer) == 7))
+
+						if trigger1 then
+
+								trigger:PosAdd(luaPlayer, -8, nil)
+
+						end
+
+				end
+
+		local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+
+		state.OnTriggerEvent = 
+
+				function (luaPlayer, state)
+
+						local trigger1 = (trigger:AnimElem(luaPlayer) == 2)
+
+						if trigger1 then
+
+								trigger:VelSet(luaPlayer, 3.5 * VelSetPer, nil)
+
+						end
+
+				end
+
+		local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+
+		state.OnTriggerEvent = 
+
+				function (luaPlayer, state)
+
+						local trigger1 = (trigger:AnimElem(luaPlayer) == 4)
+
+						if trigger1 then
+
+								trigger:VelSet(luaPlayer, 0 * VelSetPer, nil)
+
+						end
+
+				end
+
+		local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+
+		state.OnTriggerEvent = 
+
+				function (luaPlayer, state)
+
+						local trigger1 = (trigger:AnimElem(luaPlayer) == 2)
+
+						if trigger1 then
+
+								trigger:VelMul(luaPlayer, 0.9, nil)
+
+						end
+
+				end
+
+		local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+
+		state.OnTriggerEvent = 
+
+				function (luaPlayer, state)
+
+						local trigger1 = (trigger:AnimTime(luaPlayer) == 0)
+
+						if trigger1 then
+
+								trigger:PlayStandCns(luaPlayer)
+
+								trigger:CtrlSet(luaPlayer, 1)
+
+
+						end
+
+				end
+
+
+end
+
 function Iori_ROTD:_initCmds()
 	local luaCfg = trigger:GetLuaCnsCfg("Iori-ROTD")
 	if luaCfg == nil then
@@ -116,6 +292,8 @@ function Iori_ROTD:_initCmds()
 	self:_initCmd_FF(luaCfg)
 	--禁千弐百十壱式・八稚女
 	--self:_initCmd_SuperCode1(luaCfg)
+
+	self:initCmd_QiangZhuang(luaCfg)
 	
 ---------------------Run Back ------------------------------
 	local cmd = luaCfg:CreateCmd("BB")

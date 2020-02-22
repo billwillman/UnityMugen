@@ -201,14 +201,8 @@ function Iori_ROTD:initCmd_升龙(luaCfg)
 						local trigger1 = (trigger:AnimTime(luaPlayer) == 0)
 						if trigger1 then
 								trigger:PlayStandCns(luaPlayer)
-						end
-				end
-		local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
-		state.OnTriggerEvent = 
-				function (luaPlayer, state)
-						local trigger1 = (trigger:AnimTime(luaPlayer) == 0)
-						if trigger1 then
 								trigger:CtrlSet(luaPlayer, 1)
+
 						end
 				end
 
