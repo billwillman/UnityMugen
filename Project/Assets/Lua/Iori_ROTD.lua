@@ -280,7 +280,7 @@ function Iori_ROTD:initCmd_QiangZhuang(luaCfg)
 
 end
 
-unction Iori_ROTD:initCmd_ZhuaRen(luaCfg)
+function Iori_ROTD:initCmd_ZhuaRen(luaCfg)
 
 --------------------------- register KeyCmd ---------------------------
 		local cmd = luaCfg:CreateCmd("抓人")
