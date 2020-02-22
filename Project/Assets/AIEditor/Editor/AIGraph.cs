@@ -149,6 +149,12 @@ public class AINodeGraphEditor: NodeGraphEditor
 		if (lst == null || lst.Count <= 0)
 			return;
 		StringBuilder builder = new StringBuilder ();
+
+		string path = AssetDatabase.GetAssetPath (target);
+		path = System.IO.Path.GetDirectoryName (path).Replace ('\\', '/');
+		string name = System.IO.Path.GetFileNameWithoutExtension (path);
+		builder.AppendFormat ("function {0}:initCmd_{1}(luaCfg)\n\r", name, target.name);
+
 		var keyCmdLst = GetKeyCmds<AI_KeyCmd> (lst);
 		// 按键
 		BuildStr (keyCmdLst, builder);
@@ -157,6 +163,8 @@ public class AINodeGraphEditor: NodeGraphEditor
 
 		var stateDefs = GetKeyCmds<AI_CreateStateDef> (lst);
 		BuildStr (stateDefs, builder);
+
+		builder.Append ("end\n\r");
 
 		SaveToLuaFile (builder);
 	}
@@ -170,7 +178,10 @@ public class AINodeGraphEditor: NodeGraphEditor
 		if (builder == null)
 			return;
 
-		string fileName = string.Format ("Assets/AIEditor/{0}.txt", target.name);
+		string path = AssetDatabase.GetAssetPath (target);
+		path = System.IO.Path.GetDirectoryName (path).Replace ('\\', '/');
+
+		string fileName = string.Format ("{0}/{1}.txt", path, target.name);
 		System.IO.FileStream stream = new System.IO.FileStream (fileName, System.IO.FileMode.Create, System.IO.FileAccess.Write);
 		try
 		{

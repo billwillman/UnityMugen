@@ -642,7 +642,7 @@ public class AI_CreateStateDef: AI_BaseNode
 		if (string.IsNullOrEmpty (animate))
 			return ret;
 
-		ret = string.Format ("\t\tlocal id = luaCfg:CreateStateDef(\"{0}\")\n\r", input.value);
+		ret = string.Format ("\t\tlocal id = luaCfg:CreateStateDef(\"{0}\")\n\r", animate);
 		ret += "\t\tlocal def = luaCfg:GetStateDef(id)\n\r";
 		if (type != Cns_Type.none)
 			ret += string.Format ("\t\tdef.Type = {0}.{1}\n\r", type.GetType ().FullName, type.ToString ());
@@ -651,7 +651,7 @@ public class AI_CreateStateDef: AI_BaseNode
 		if (moveType != Cns_MoveType.none)
 			ret += string.Format ("\t\tdef.MoveType = {0}.{1}\n\r", moveType.GetType ().FullName, moveType.ToString ());
 		ret += string.Format ("\t\tdef.Juggle = {0:D}\n\r", juggle);
-		ret += string.Format ("\t\tdef.PowerAdd = {0:D}\n\r", juggle);
+		ret += string.Format ("\t\tdef.PowerAdd = {0:D}\n\r", powerAdd);
 
 		if (Mathf.Abs (velset_x - CNSStateDef._cNoVaildVelset) > float.Epsilon) {
 			ret += string.Format ("\t\tdef.Velset_x = {0}\n\r", velset_x.ToString ());
@@ -754,12 +754,15 @@ public abstract class AI_CreateStateEvent: AI_BaseNode
 		return anim != CNSStateDef._cNoVaildAnim;
 	}
 
-	public static string VaildStr(float v)
+	public static string VaildStr(float v, bool hasPer)
 	{
 		if (Mathf.Abs (v - CNSStateDef._cNoVaildVelset) <= float.Epsilon)
 			return "nil";
-		else
+		else {
+			if (hasPer)
+				return v.ToString () + " * VelSetPer";
 			return v.ToString ();
+		}
 	}
 
 	public static string VaildStr(int v)
@@ -805,7 +808,7 @@ public abstract class AI_CreateStateEvent: AI_BaseNode
 
 			if (from.node is AI_CreateStateDef)
 				DoCreateConnect (from, ref parent, "parent");
-			if (from.node is AI_BaseCondition)
+			else if (from.node is AI_BaseCondition)
 				DoCreateConnect (from, ref condition, "condition");
 			else {
 				var p1 = GetPort ("parent");
@@ -895,8 +898,8 @@ public class AI_StateEvent_VelSet: AI_CreateStateEvent
 
 	protected override string GetDoStr(bool hasCond)
 	{
-		string velXStr = VaildStr (velx);
-		string velYStr = VaildStr (vely);
+		string velXStr = VaildStr (velx, true);
+		string velYStr = VaildStr (vely, true);
 
 		if (velXStr == "nil" && velYStr == "nil")
 			return string.Empty;
@@ -914,8 +917,8 @@ public class AI_StateEvent_VelAdd: AI_CreateStateEvent
 
 	protected override string GetDoStr(bool hasCond)
 	{
-		string velXStr = VaildStr (velx);
-		string velYStr = VaildStr (vely);
+		string velXStr = VaildStr (velx, false);
+		string velYStr = VaildStr (vely, false);
 
 		if (velXStr == "nil" && velYStr == "nil")
 			return string.Empty;
@@ -975,6 +978,21 @@ public class AI_StateEvent_StateTypeSet: AI_CreateStateEvent
 	}
 }
 
+[CreateNodeMenu("AI/创建StateEvent/PhysicsType设置")]
+public class AI_StateEvent_PhysicsTypeSet: AI_CreateStateEvent
+{
+	public Cns_PhysicsType physicsType = Cns_PhysicsType.none;
+
+	protected override string GetDoStr(bool hasCond)
+	{
+		if (physicsType == Cns_PhysicsType.none)
+			return string.Empty;
+		
+		string ret = string.Format ("trigger:PhysicsTypeSet(luaPlayer, {0}.{1})", physicsType.GetType().FullName, physicsType.ToString());
+		return ret;
+	}
+}
+
 [CreateNodeMenu("AI/创建StateEvent/Ctrl设置")]
 public class AI_StateEvent_CtrlSet: AI_CreateStateEvent
 {
@@ -1028,16 +1046,16 @@ public class AI_StateEvent_CreateExplod: AI_CreateStateEvent
 		if (bindtime > 0)
 			ret += string.Format ("{0}explod.bindtime = {1:D} * bindTimePer\n\r", pre, bindtime);
 
-		if (removetime != -2)
-			ret += string.Format ("{0}explod.removetime = {1:D}\n\r", pre, removetime);
+
+		ret += string.Format ("{0}explod.removetime = {1:D}\n\r", pre, removetime);
 
 		if (sprpriority != 0)
 			ret += string.Format ("{0}explod.sprpriority = {1:D}\n\r", pre, sprpriority);
 
 		ret += string.Format ("{0}explod.removeongethit = {1:D}\n\r", pre, removeongethit);
 		ret += string.Format ("{0}explod.ignorehitpause = {1:D}\n\r", pre, ignorehitpause);
-		ret += string.Format ("{0}explod.isChangeStateRemove = {1}\n\r", pre, isChangeStateRemove.ToString());
-		ret += string.Format ("{0}explod.IsUseParentUpdate = {1}\n\r", pre, IsUseParentUpdate.ToString());
+		ret += string.Format ("{0}explod.isChangeStateRemove = {1}\n\r", pre, isChangeStateRemove.ToString().ToLower());
+		ret += string.Format ("{0}explod.IsUseParentUpdate = {1}\n\r", pre, IsUseParentUpdate.ToString().ToLower());
 
 		ret += pre + "explod:Apply()\n\r";
 
@@ -1056,7 +1074,7 @@ public class AI_StateEvent_PlayAni: AI_CreateStateEvent
 	{
 		if (!VaildAnim(anim))
 			return string.Empty;
-		string ret = string.Format ("trigger:PlayAnim(luaPlayer, {0:D}, {1})", anim, isLoop.ToString());
+		string ret = string.Format ("trigger:PlayAnim(luaPlayer, {0:D}, {1})", anim, isLoop.ToString().ToLower());
 		return ret;
 	}
 }
@@ -1081,7 +1099,7 @@ public class AI_StateEvent_PlayCns: AI_CreateStateEvent
 	{
 		string ret = string.Empty;
 		if (!string.IsNullOrEmpty (Animate)) {
-			ret = string.Format ("trigger:PlayCnsByName(luaPlayer, {0}, {1})", Animate, IsLoop.ToString ());
+			ret = string.Format ("trigger:PlayCnsByName(luaPlayer, {0}, {1})", Animate, IsLoop.ToString ().ToLower());
 		}
 		return ret;
 	}
@@ -1146,10 +1164,10 @@ public class AI_StateEvent_CreateProj: AI_CreateStateEvent
 		if (offset_y != 0)
 			ret += string.Format ("{0}proj.offset_x = {1:D}\n\r", pre, offset_y);
 
-		if (VaildStr(velocity_x) != "nil")
+		if (VaildStr(velocity_x, false) != "nil")
 			ret += string.Format ("{0}proj.velocity_x = {1}\n\r", pre, velocity_x.ToString());
 
-		if (VaildStr(velocity_y) != "nil")
+		if (VaildStr(velocity_y, false) != "nil")
 			ret += string.Format ("{0}proj.velocity_y = {1}\n\r", pre, velocity_y.ToString());
 
 		if (Postype != ExplodPosType.p1)
@@ -1244,8 +1262,8 @@ public class AI_StateEvent_VelMul: AI_CreateStateEvent
 
 	protected override string GetDoStr(bool hasCond)
 	{
-		string velXStr = VaildStr (velX);
-		string velYStr = VaildStr (velY);
+		string velXStr = VaildStr (velX, false);
+		string velYStr = VaildStr (velY, false);
 		if (velXStr == "nil" && velYStr == "nil")
 			return string.Empty;
 		string ret = string.Format ("trigger:VelMul(luaPlayer, {0}, {1})", velXStr, velYStr);
