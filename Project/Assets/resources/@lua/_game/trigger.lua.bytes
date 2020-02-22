@@ -176,6 +176,20 @@ function trigger:Facing(luaPlayer)
 	end
 end
 
+function trigger:Turn(luaPlayer)
+	if luaPlayer == nil then
+		return false
+	end
+	local display = luaPlayer.PlayerDisplay;
+	if display == nil then
+		return false 
+	end
+	local isFlipX = display.IsFlipX
+
+	display.IsFlipX = not isFlipX
+	return true
+end
+
 function trigger:HitCount(luaPlayer)
 	if luaPlayer == nil then
 		return nil

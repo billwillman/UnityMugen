@@ -1,0 +1,67 @@
+function Iori_ROTD:initCmd_前闪(luaCfg)
+--------------------------- register KeyCmd ---------------------------
+		local cmd = luaCfg:CreateCmd("前闪")
+		cmd.time = 1
+		cmd:AttachKeyCommands("")
+
+--------------------------- 前闪 ---------------------------
+		local aiCmd = luaCfg:CreateAICmd("前闪")
+		aiCmd.type = Mugen.AI_Type.ChangeState
+		aiCmd.value = "900"
+		aiCmd.OnTriggerEvent =
+				function (luaPlayer, aiName)
+						local triggle1 = (trigger:Command(luaPlayer, "前闪"))
+						return triggle1
+				end
+
+--------------------------- register StateDef 900 ---------------------------
+		local id = luaCfg:CreateStateDef("900")
+		local def = luaCfg:GetStateDef(id)
+		def.Type = Mugen.Cns_Type.S
+		def.PhysicsType = Mugen.Cns_PhysicsType.N
+		def.MoveType = Mugen.Cns_MoveType.I
+		def.Juggle = 0
+		def.PowerAdd = 0
+		def.Velset_x = 0
+		def.Velset_y = 0
+		def.Ctrl = 0
+		def.Sprpriority = 0
+		def.Animate = 900
+		local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+		state.OnTriggerEvent = 
+				function (luaPlayer, state)
+						local trigger1 = (trigger:AnimElem(luaPlayer) == 2)
+						if trigger1 then
+								trigger:VelSet(luaPlayer, 5 * VelSetPer, nil)
+						end
+				end
+		local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+		state.OnTriggerEvent = 
+				function (luaPlayer, state)
+						local trigger1 = (trigger:AnimElem(luaPlayer) == 8)
+						if trigger1 then
+								trigger:VelSet(luaPlayer, 0 * VelSetPer, nil)
+						end
+				end
+		local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+		state.OnTriggerEvent = 
+				function (luaPlayer, state)
+						local trigger1 = (trigger:AnimTime(luaPlayer) == 0)
+						if trigger1 then
+								trigger:Turn(luaPlayer)
+						end
+				end
+		local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+		state.OnTriggerEvent = 
+				function (luaPlayer, state)
+						local trigger1 = (trigger:AnimTime(luaPlayer) == 0)
+						if trigger1 then
+								trigger:PlayStandCns(luaPlayer)
+								trigger:CtrlSet(luaPlayer, 1)
+
+						end
+				end
+
+
+end
+

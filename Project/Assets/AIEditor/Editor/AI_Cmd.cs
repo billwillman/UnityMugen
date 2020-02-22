@@ -1311,3 +1311,12 @@ public class AI_StateEvent_PlayerDestroySelf: AI_CreateStateEvent
 		return "trigger:DestroySelf(luaPlayer)";
 	}
 }
+
+[CreateNodeMenu("AI/创建StateEvent/角色转向")]
+public class AI_StateEvent_PlayerTurn: AI_CreateStateEvent
+{
+	protected override string GetDoStr(bool hasCond)
+	{
+		return "trigger:Turn(luaPlayer)";
+	}
+}
