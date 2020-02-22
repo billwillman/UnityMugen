@@ -116,6 +116,11 @@ public class Explod : PlayerPart {
 		}
 	}
 
+	void OnImageAnimationEndFrame()
+	{
+		CheckSelfRemoveTime ();
+	}
+
 	void OnImageAnimationFrame()
 	{
 		CheckSelfRemoveTime ();

@@ -384,7 +384,7 @@ public class ImageAnimation : MonoBehaviour {
 
     void DoEndFrame()
     {
-		m_AniUsedTime = m_AniTotalTime;
+		m_AniUsedTime = 100000;
         string evtName = "OnImageAnimationEndFrame";
 #if UNITY_EDITOR
         if (Application.isPlaying)
