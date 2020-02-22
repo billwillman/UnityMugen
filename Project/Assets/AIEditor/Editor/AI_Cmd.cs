@@ -1106,7 +1106,7 @@ public class AI_StateEvent_CreateProj: AI_CreateStateEvent
 	public int projremove = 1;
 	public int projcancelanim = CNSStateDef._cNoVaildAnim;
 	public int projremanim = CNSStateDef._cNoVaildAnim;
-	public float projremovetime = -1;
+	public float projremovetime = 100;
 	public int offset_x = 0;
 	public int offset_y = 0;
 	public float velocity_x = 0;
@@ -1115,6 +1115,63 @@ public class AI_StateEvent_CreateProj: AI_CreateStateEvent
 	public int projshadow = 0;
 	public int projpriority = 0;
 	public int projsprpriority = 0;
+
+	protected override string GetDoStr(bool hasCond)
+	{
+		string pre = string.Empty;
+		if (hasCond)
+			pre = "\t\t\t\t\t\t\t\t";
+		else
+			pre = "\t\t\t\t\t\t";
+		
+		string ret = "local proj = trigger:CreateProj(luaPlayer)\n\r";
+		if (projid >= 0)
+			ret += string.Format ("{0}proj.projid = {1:D}\n\r", pre, projid);
+
+		if (VaildAnim(projanim))
+			ret += string.Format ("{0}proj.projanim = {1:D}\n\r", pre, projanim);
+
+		if (VaildAnim(projhitanim))
+			ret += string.Format ("{0}proj.projhitanim = {1:D}\n\r", pre, projhitanim);
+
+		if (VaildAnim(projremanim))
+			ret += string.Format ("{0}proj.projremanim = {1:D}\n\r", pre, projremanim);
+
+		if (VaildAnim(projcancelanim))
+			ret += string.Format ("{0}proj.projcancelanim = {1:D}\n\r", pre, projcancelanim);
+
+		if (offset_x != 0)
+			ret += string.Format ("{0}proj.offset_x = {1:D}\n\r", pre, offset_x);
+
+		if (offset_y != 0)
+			ret += string.Format ("{0}proj.offset_x = {1:D}\n\r", pre, offset_y);
+
+		if (VaildStr(velocity_x) != "nil")
+			ret += string.Format ("{0}proj.velocity_x = {1}\n\r", pre, velocity_x.ToString());
+
+		if (VaildStr(velocity_y) != "nil")
+			ret += string.Format ("{0}proj.velocity_y = {1}\n\r", pre, velocity_y.ToString());
+
+		if (Postype != ExplodPosType.p1)
+			ret += string.Format ("{0}proj.Postype = {1}.{2}\n\r", pre, Postype.GetType().FullName, Postype.ToString());
+
+		if (projshadow != 0)
+			ret += string.Format ("{0}proj.projshadow = {1:D}\n\r", pre, projshadow);
+
+		if (projpriority != 0)
+			ret += string.Format ("{0}proj.projpriority = {1:D}\n\r", pre, projpriority);
+
+		if (projsprpriority != 0)
+			ret += string.Format ("{0}proj.projsprpriority = {1:D}\n\r", pre, projsprpriority);
+
+		if (projremovetime >= 0)
+			ret += string.Format ("{0}proj.projremovetime = {1}\n\r", pre, projremovetime.ToString());
+
+		ret += string.Format ("{0}proj.projremove = {1:D}\n\r", pre, projremove);
+		ret += pre + "proj:Apply()\n\r";
+
+		return ret;
+	}
 
 }
 
