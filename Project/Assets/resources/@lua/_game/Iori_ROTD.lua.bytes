@@ -280,6 +280,393 @@ function Iori_ROTD:initCmd_QiangZhuang(luaCfg)
 
 end
 
+unction Iori_ROTD:initCmd_ZhuaRen(luaCfg)
+
+--------------------------- register KeyCmd ---------------------------
+		local cmd = luaCfg:CreateCmd("抓人")
+		cmd.time = 10
+		cmd:AttachKeyCommands("")
+
+--------------------------- 抓人 ---------------------------
+		local aiCmd = luaCfg:CreateAICmd("抓人")
+		aiCmd.type = Mugen.AI_Type.ChangeState
+		aiCmd.value = "810"
+		aiCmd.OnTriggerEvent =
+				function (luaPlayer, aiName)
+						local triggle1 = (trigger:Command(luaPlayer, "抓人"))
+						return triggle1
+				end
+
+--------------------------- register StateDef 810 ---------------------------
+		local id = luaCfg:CreateStateDef("810")
+
+		local def = luaCfg:GetStateDef(id)
+
+		def.Type = Mugen.Cns_Type.S
+
+		def.PhysicsType = Mugen.Cns_PhysicsType.N
+
+		def.MoveType = Mugen.Cns_MoveType.A
+
+		def.Juggle = 0
+
+		def.PowerAdd = 0
+
+		def.Ctrl = 0
+
+		def.Sprpriority = 2
+
+		def.Animate = 810
+
+		local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+
+		state.OnTriggerEvent = 
+
+				function (luaPlayer, state)
+
+						local trigger1 = (trigger:AnimElem(luaPlayer) == 1)
+
+						if trigger1 then
+
+								trigger:PlaySnd(luaPlayer, 7, 0)
+
+						end
+
+				end
+
+		local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+
+		state.OnTriggerEvent = 
+
+				function (luaPlayer, state)
+
+						local trigger1 = (trigger:AnimElem(luaPlayer) == 5)
+
+						if trigger1 then
+
+								trigger:PlaySnd(luaPlayer, 56, 0)
+
+						end
+
+				end
+
+		local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+
+		state.OnTriggerEvent = 
+
+				function (luaPlayer, state)
+
+						local trigger1 = (trigger:AnimElem(luaPlayer) == 5)
+
+						if trigger1 then
+
+								trigger:PlaySnd(luaPlayer, 56, 1)
+
+						end
+
+				end
+
+		local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+
+		state.OnTriggerEvent = 
+
+				function (luaPlayer, state)
+
+						local trigger1 = ((trigger:AnimElem(luaPlayer) == 1) or (trigger:AnimElem(luaPlayer) == 2))
+
+						if trigger1 then
+
+								local explod = trigger:CreateExplod(luaPlayer)
+
+								explod.anim = 6020
+
+								explod.ID = 6020
+
+								explod.pos_x = 30
+
+								explod.pos_y = -55
+
+								explod.postype = ExplodPosType.p1
+
+								explod.removetime = -2
+
+								explod.sprpriority = 4
+
+								explod.removeongethit = 1
+
+								explod.ignorehitpause = 1
+
+								explod.isChangeStateRemove = false
+
+								explod.IsUseParentUpdate = false
+
+								explod:Apply()
+
+
+						end
+
+				end
+
+		local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+
+		state.OnTriggerEvent = 
+
+				function (luaPlayer, state)
+
+						local trigger1 = (trigger:AnimElem(luaPlayer) == 5)
+
+						if trigger1 then
+
+								local explod = trigger:CreateExplod(luaPlayer)
+
+								explod.anim = 18100
+
+								explod.ID = 18100
+
+								explod.pos_x = 60
+
+								explod.pos_y = -80
+
+								explod.postype = ExplodPosType.p1
+
+								explod.removetime = -2
+
+								explod.sprpriority = 4
+
+								explod.removeongethit = 1
+
+								explod.ignorehitpause = 1
+
+								explod.isChangeStateRemove = false
+
+								explod.IsUseParentUpdate = false
+
+								explod:Apply()
+
+
+						end
+
+				end
+
+		local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+
+		state.OnTriggerEvent = 
+
+				function (luaPlayer, state)
+
+						local trigger1 = (trigger:AnimElem(luaPlayer) == 5)
+
+						if trigger1 then
+
+								local explod = trigger:CreateExplod(luaPlayer)
+
+								explod.anim = 18101
+
+								explod.ID = 18100
+
+								explod.pos_x = 60
+
+								explod.pos_y = -80
+
+								explod.postype = ExplodPosType.p1
+
+								explod.removetime = -2
+
+								explod.sprpriority = 4
+
+								explod.removeongethit = 1
+
+								explod.ignorehitpause = 1
+
+								explod.isChangeStateRemove = false
+
+								explod.IsUseParentUpdate = false
+
+								explod:Apply()
+
+
+						end
+
+				end
+
+		local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+
+		state.OnTriggerEvent = 
+
+				function (luaPlayer, state)
+
+						local trigger1 = ((trigger:AnimElem(luaPlayer) == 5) or (trigger:AnimElem(luaPlayer) == 2))
+
+						if trigger1 then
+
+								local explod = trigger:CreateExplod(luaPlayer)
+
+								explod.anim = 18102
+
+								explod.ID = 18100
+
+								explod.postype = ExplodPosType.p1
+
+								explod.removetime = -2
+
+								explod.sprpriority = 4
+
+								explod.removeongethit = 1
+
+								explod.ignorehitpause = 1
+
+								explod.isChangeStateRemove = false
+
+								explod.IsUseParentUpdate = false
+
+								explod:Apply()
+
+
+						end
+
+				end
+
+		local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+
+		state.OnTriggerEvent = 
+
+				function (luaPlayer, state)
+
+						local trigger1 = ((trigger:AnimElem(luaPlayer) == 5) or (trigger:AnimElem(luaPlayer) == 2))
+
+						if trigger1 then
+
+								local explod = trigger:CreateExplod(luaPlayer)
+
+								explod.anim = 18102
+
+								explod.ID = 18100
+
+								explod.postype = ExplodPosType.p1
+
+								explod.removetime = -2
+
+								explod.sprpriority = 4
+
+								explod.removeongethit = 1
+
+								explod.ignorehitpause = 1
+
+								explod.isChangeStateRemove = false
+
+								explod.IsUseParentUpdate = false
+
+								explod:Apply()
+
+
+						end
+
+				end
+
+		local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+
+		state.OnTriggerEvent = 
+
+				function (luaPlayer, state)
+
+						local trigger1 = ((trigger:AnimElem(luaPlayer) == 5) or (trigger:AnimElem(luaPlayer) == 4))
+
+						if trigger1 then
+
+								local explod = trigger:CreateExplod(luaPlayer)
+
+								explod.anim = 18102
+
+								explod.ID = 18100
+
+								explod.pos_x = -25
+
+								explod.pos_y = -15
+
+								explod.postype = ExplodPosType.p1
+
+								explod.removetime = -2
+
+								explod.sprpriority = 4
+
+								explod.removeongethit = 1
+
+								explod.ignorehitpause = 1
+
+								explod.isChangeStateRemove = false
+
+								explod.IsUseParentUpdate = false
+
+								explod:Apply()
+
+
+						end
+
+				end
+
+		local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+
+		state.OnTriggerEvent = 
+
+				function (luaPlayer, state)
+
+						local trigger1 = ((trigger:AnimElem(luaPlayer) == 5) or (trigger:AnimElem(luaPlayer) == 8))
+
+						if trigger1 then
+
+								local explod = trigger:CreateExplod(luaPlayer)
+
+								explod.anim = 18102
+
+								explod.ID = 18100
+
+								explod.pos_x = -85
+
+								explod.pos_y = -10
+
+								explod.postype = ExplodPosType.p1
+
+								explod.removetime = -2
+
+								explod.sprpriority = 4
+
+								explod.removeongethit = 1
+
+								explod.ignorehitpause = 1
+
+								explod.isChangeStateRemove = false
+
+								explod.IsUseParentUpdate = false
+
+								explod:Apply()
+
+
+						end
+
+				end
+
+		local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+
+		state.OnTriggerEvent = 
+
+				function (luaPlayer, state)
+
+						local trigger1 = (trigger:AnimTime(luaPlayer) == 0)
+
+						if trigger1 then
+
+								trigger:PlayStandCns(luaPlayer)
+
+								trigger:CtrlSet(luaPlayer, 1)
+
+
+						end
+
+				end
+
+
+end
+
 function Iori_ROTD:_initCmds()
 	local luaCfg = trigger:GetLuaCnsCfg("Iori-ROTD")
 	if luaCfg == nil then
@@ -294,6 +681,7 @@ function Iori_ROTD:_initCmds()
 	--self:_initCmd_SuperCode1(luaCfg)
 
 	self:initCmd_QiangZhuang(luaCfg)
+	self:initCmd_ZhuaRen(luaCfg)
 	
 ---------------------Run Back ------------------------------
 	local cmd = luaCfg:CreateCmd("BB")

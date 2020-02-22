@@ -46,6 +46,11 @@ function trigger:ACos(angle)
   return ret
 end
 
+math.randomseed(os.time())
+function trigger:Random(num)
+	return math.random(num)
+end
+
 function trigger:StateTypeSet(luaPlayer, stateType)
 	if luaPlayer == nil or stateType == nil then
 		return
