@@ -645,6 +645,7 @@ function Iori_ROTD:initCmd_ZhuaRen(luaCfg)
 
 				end
 
+
 		local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
 
 		state.OnTriggerEvent = 
