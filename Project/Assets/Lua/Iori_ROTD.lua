@@ -91,9 +91,6 @@ function Iori_ROTD:_initSize()
   self.Size.yscale = 1
 end
 
-local bindTimePer = 20
-local VelSetPer = 2.5
-
 --=====================================创建StateDef===================================
 debugStartTime = 0
 --创建StateDef

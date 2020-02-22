@@ -5,3 +5,6 @@ PlayerDisplay._cPerUnit = _cPerUnit
 PlayerDisplay._cVelPerUnit = _cPerVelUnit
 PlayerDisplay._cAPerUnit = 100.0
 PlayerDisplay._cScenePerUnit = _cScenePerUnit
+
+bindTimePer = 20
+VelSetPer = 2.5
