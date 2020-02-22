@@ -101,7 +101,12 @@ public class Explod : PlayerPart {
 			return;
 	}
 
-	void OnImageAnimationFrame()
+	void OnImageAnimationEndFrame()
+	{
+		CheckSelfRemoveTime ();
+	}
+
+	private void CheckSelfRemoveTime()
 	{
 		if (!IsUseParentUpdate) {
 			var display = this.Display;
@@ -114,6 +119,11 @@ public class Explod : PlayerPart {
 				}
 			}
 		}
+	}
+
+	void OnImageAnimationFrame()
+	{
+		CheckSelfRemoveTime ();
 	}
 
 	void UpdateBindTime()
