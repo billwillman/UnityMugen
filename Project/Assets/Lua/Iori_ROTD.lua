@@ -682,6 +682,7 @@ function Iori_ROTD:initCmd_QianShan(luaCfg)
 		aiCmd.OnTriggerEvent =
 				function (luaPlayer, aiName)
 						local triggle1 = (trigger:Command(luaPlayer, "前闪"))
+								and (trigger:Ctrl(luaPlayer) == 1)
 						return triggle1
 				end
 
