@@ -14,8 +14,8 @@ public class ImageAnimation : MonoBehaviour {
             m_AnimElemTime += 1;
 			//int prevUsedTime = this.CurAniUsedTime;
             if (m_AniUsedTime >= 0)
-                //m_AniUsedTime += _cImageAnimationScale;
-				m_AniUsedTime += AppConfig.GetInstance().DeltaTime;
+                m_AniUsedTime += _cImageAnimationScale;
+				//m_AniUsedTime += AppConfig.GetInstance().DeltaTime;
             else
                 m_AniUsedTime = 0;
 
