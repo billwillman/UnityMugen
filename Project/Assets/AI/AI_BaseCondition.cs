@@ -20,7 +20,22 @@ namespace XNode.Mugen
 		[Output]
 		[SerializeField] public AI_BaseCondition output;
 		public override object GetValue(NodePort port) {
-			return this;
+			if (port.fieldName == "output") {
+				return this;
+			} else
+				return null;
+		}
+
+		public override void OnCreateConnection(NodePort from, NodePort to)
+		{
+			base.OnCreateConnection (from, to);
+			DoCreateConnect(from, to, ref output, "output", NodePort.IO.Output);
+		}
+
+		public override void OnRemoveConnection(NodePort port) 
+		{
+			base.OnRemoveConnection(port);
+			DoDisConnect(port, ref output, NodePort.IO.Output);
 		}
 
 	}

@@ -56,7 +56,7 @@ namespace XNode.Mugen
 			} else if (dir == NodePort.IO.Output) {
 				if (from.fieldName != itemName)
 					return false;
-				item = to.node as T;
+				item = from.node as T;
 			} else
 				return false;
 
@@ -93,7 +93,7 @@ namespace XNode.Mugen
 			} else if (dir == NodePort.IO.Output) {
 				if (from.fieldName != condListName)
 					return false;
-				item = to.node as T;
+				item = from.node as T;
 			} else
 				return false;
 
@@ -117,11 +117,14 @@ namespace XNode.Mugen
 			if (port.direction != dir)
 				return false;
 
+			if (port.ValueType != typeof(T))
+				return false;
+
 			for (int i = 0; i < port.ConnectionCount; ++i) {
 				T cc = port.GetConnection(i).node as T;
 				if (cc != null) {
 					item = cc;
-					break;
+					return true;
 				}
 			}
 			item = null;
@@ -131,6 +134,9 @@ namespace XNode.Mugen
 		protected bool DoDisConnectToList<T>(NodePort port, ref List<T> condList, NodePort.IO dir = NodePort.IO.Input) where T: Node
 		{
 			if (port.direction != dir)
+				return false;
+
+			if (port.ValueType != typeof(List<T>))
 				return false;
 
 			if (condList != null)

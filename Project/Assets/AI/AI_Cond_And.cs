@@ -20,11 +20,13 @@ namespace XNode.Mugen
 
 		public override void OnRemoveConnection(NodePort port)
 		{
+			base.OnRemoveConnection(port);
 			DoDisConnectToList (port, ref inputs);
 		}
 
 		public override void OnCreateConnection(NodePort from, NodePort to)
 		{
+			base.OnCreateConnection (from, to);
 			DoCreateConnectToList (from, to, ref inputs, "inputs");
 		}
 

@@ -112,6 +112,7 @@ namespace XNode.Mugen
 		}
 
 		public override void OnCreateConnection(NodePort from, NodePort to) { 
+			base.OnCreateConnection (from, to);
 
 			if (from != null && from.node != this) {
 				if (from != null && from.node.GetType () == typeof(AI_Cmd)) {
@@ -134,6 +135,8 @@ namespace XNode.Mugen
 
 		public override void OnRemoveConnection(NodePort port)
 		{
+			base.OnRemoveConnection(port);
+
 			if (port.direction != NodePort.IO.Input) {
 				return;
 			}

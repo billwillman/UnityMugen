@@ -32,11 +32,13 @@ namespace XNode.Mugen
 
 		public override void OnRemoveConnection(NodePort port)
 		{
+			base.OnRemoveConnection(port);
 			DoDisConnect<AI_KeyCmd>(port, ref aiKeyCmd);
 		}
 
 		public override void OnCreateConnection(NodePort from, NodePort to)
 		{
+			base.OnCreateConnection (from, to);
 			DoCreateConnect<AI_KeyCmd>(from, to, ref aiKeyCmd, "aiKeyCmd");
 		}
 

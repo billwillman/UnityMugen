@@ -36,11 +36,13 @@ public class AI_Cmd : AI_BaseNode
 
 	public override void OnRemoveConnection(NodePort port)
 	{
+			base.OnRemoveConnection(port);
 		DoDisConnectToList<AI_BaseCondition> (port, ref condList);
 	}
 
 	public override void OnCreateConnection(NodePort from, NodePort to)
 	{
+			base.OnCreateConnection (from, to);
 		DoCreateConnectToList<AI_BaseCondition> (from, to, ref condList, "condList");
 	}
 }

@@ -48,6 +48,8 @@ namespace XNode.Mugen
 
 		public override void OnRemoveConnection(NodePort port)
 		{
+			base.OnRemoveConnection(port);
+
 			if (port.direction != NodePort.IO.Input)
 				return;
 
@@ -60,6 +62,8 @@ namespace XNode.Mugen
 
 		public override void OnCreateConnection(NodePort from, NodePort to)
 		{
+			base.OnCreateConnection (from, to);
+
 			if (from.node != this) {
 				if (from != null && (from.node.GetType () == typeof(AI_Cond_PlayerTime) ||
 					from.node.GetType () == typeof(AI_Cond_PlayerAniTime))) {
