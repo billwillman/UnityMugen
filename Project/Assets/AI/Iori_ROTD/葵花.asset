@@ -59,6 +59,7 @@ MonoBehaviour:
   - {fileID: 11472690}
   - {fileID: 11412216}
   - {fileID: 11421760}
+  - {fileID: 11488758}
 --- !u!114 &11400532
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -237,7 +238,7 @@ MonoBehaviour:
   m_Name: AI_State Event_Play Cns
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -280, y: 440}
+  position: {x: -1080, y: 632}
   ports:
     keys:
     - nextStateDef
@@ -392,7 +393,7 @@ MonoBehaviour:
       _dynamic: 0
   output: {fileID: 11411350}
   aniElem: 3
-  op: 4
+  op: 3
 --- !u!114 &11412124
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -568,7 +569,7 @@ MonoBehaviour:
   m_Name: AI_Cond_Player Ani Elem
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 344, y: 72}
+  position: {x: 312, y: 104}
   ports:
     keys:
     - output
@@ -579,16 +580,13 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: condition
-        node: {fileID: 11454170}
-        reroutePoints: []
-      - fieldName: condition
         node: {fileID: 11408904}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  output: {fileID: 11417962}
+  output: {fileID: 0}
   aniElem: 6
   op: 4
 --- !u!114 &11419768
@@ -913,7 +911,7 @@ MonoBehaviour:
   m_Name: AI_State Event_Vel Add
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 40, y: 520}
+  position: {x: -8, y: 568}
   ports:
     keys:
     - parent
@@ -946,9 +944,9 @@ MonoBehaviour:
   parent: {fileID: 11419768}
   condition: {fileID: 11411350}
   setPersistent: 0
-  triggleType: 2
-  velx: 0.64
-  vely: -999999
+  triggleType: 3
+  velx: -999999
+  vely: 0.64
 --- !u!114 &11437222
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1009,7 +1007,7 @@ MonoBehaviour:
   m_Name: AI_State Event_Play Cns
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -504, y: 1048}
+  position: {x: -1208, y: 1080}
   ports:
     keys:
     - nextStateDef
@@ -1198,7 +1196,7 @@ MonoBehaviour:
   m_Name: AI_Cond_Or
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -504, y: 776}
+  position: {x: -552, y: 776}
   ports:
     keys:
     - inputs
@@ -1349,16 +1347,16 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: output
-        node: {fileID: 11417962}
+        node: {fileID: 11488758}
         reroutePoints: []
       _direction: 0
       _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
   parent: {fileID: 11496092}
-  condition: {fileID: 11417962}
+  condition: {fileID: 11488758}
   setPersistent: 0
-  triggleType: 2
+  triggleType: 3
   nextStateDef: {fileID: 0}
   Animate: 1210
   IsLoop: 0
@@ -1970,6 +1968,39 @@ MonoBehaviour:
   - {fileID: 11421938}
   - {fileID: 11451240}
   output: {fileID: 0}
+--- !u!114 &11488758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05e3f4f3d9bae479fa20fba68bd49f1d, type: 3}
+  m_Name: AI_Cond_Player Anim Elem Time
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -1305.0718, y: 246.17957}
+  ports:
+    keys:
+    - output
+    values:
+    - _fieldName: output
+      _node: {fileID: 11488758}
+      _typeQualifiedName: XNode.Mugen.AI_BaseCondition, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: condition
+        node: {fileID: 11454170}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  output: {fileID: 11488758}
+  frameNo: 5
+  animElem: 0
+  op: 2
 --- !u!114 &11492366
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -76,10 +76,10 @@ function Iori_ROTD:initCmd_葵花(luaCfg)
 								trigger:VelMul(luaPlayer, nil, 0.95)
 						end
 				end
-		local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+		local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
 		state.OnTriggerEvent = 
 				function (luaPlayer, state)
-						local trigger1 = (trigger:AnimElem(luaPlayer) == 6)
+						local trigger1 = (trigger:AnimElemTime(luaPlayer, 5) > 0)
 						if trigger1 then
 								trigger:PlayCnsByName(luaPlayer, 1210, false)
 						end
@@ -194,12 +194,12 @@ function Iori_ROTD:initCmd_葵花(luaCfg)
 								trigger:VelSet(luaPlayer, 5.5 * VelSetPer, -4.5 * VelSetPer)
 						end
 				end
-		local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+		local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
 		state.OnTriggerEvent = 
 				function (luaPlayer, state)
-						local trigger1 = (trigger:AnimElem(luaPlayer) == 3)
+						local trigger1 = (trigger:AnimElem(luaPlayer) >= 3)
 						if trigger1 then
-								trigger:VelAdd(luaPlayer, 0.64, nil)
+								trigger:VelAdd(luaPlayer, nil, 0.64)
 						end
 				end
 		local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
