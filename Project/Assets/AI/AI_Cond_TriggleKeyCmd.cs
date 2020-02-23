@@ -37,7 +37,7 @@ namespace XNode.Mugen
 
 		public override void OnCreateConnection(NodePort from, NodePort to)
 		{
-			DoCreateConnect<AI_KeyCmd>(from, ref aiKeyCmd, "aiKeyCmd");
+			DoCreateConnect<AI_KeyCmd>(from, to, ref aiKeyCmd, "aiKeyCmd");
 		}
 
 

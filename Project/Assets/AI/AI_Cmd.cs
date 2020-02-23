@@ -41,7 +41,7 @@ public class AI_Cmd : AI_BaseNode
 
 	public override void OnCreateConnection(NodePort from, NodePort to)
 	{
-		DoCreateConnectToList<AI_BaseCondition> (from, ref condList, "condList");
+		DoCreateConnectToList<AI_BaseCondition> (from, to, ref condList, "condList");
 	}
 }
 

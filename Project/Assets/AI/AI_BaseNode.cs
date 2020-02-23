@@ -31,39 +31,73 @@ namespace XNode.Mugen
 			return string.Empty;
 		}
 
-		protected bool DoCreateConnect<T>(NodePort from, ref T item, string itemName, NodePort.IO dir = NodePort.IO.Input) where T: Node
+		protected bool DoCreateConnect<T>(NodePort from, NodePort to, ref T item, string itemName, NodePort.IO dir = NodePort.IO.Input) where T: Node
 		{
+			// 不允许自己连接自己
+			if (from.node == to.node) {
+				from.Disconnect (to);
+				return false;
+			}
+
 			if (dir == NodePort.IO.Input) {
 				if (from.node == this)
 					return false;
+				
 			} else if (dir == NodePort.IO.Output) {
 				if (from.node != this)
 					return false;
-			}
-			//if (from.node.GetType ().IsSubclassOf (typeof(T))) {
-			item =  from.node as T;
-			//}
+			} else
+				return false;
+
+			if (dir == NodePort.IO.Input) {
+				if (to.fieldName != itemName)
+					return false;
+				item =  from.node as T;
+			} else if (dir == NodePort.IO.Output) {
+				if (from.fieldName != itemName)
+					return false;
+				item = to.node as T;
+			} else
+				return false;
+
 			if (item == null) {
-				var port = GetInputPort (itemName);
-				if (port != null) {
-					port.Disconnect (from);
-				}
+				from.Disconnect (to);
 				return false;
 			}
 			return true;
 		}
 
-		protected bool DoCreateConnectToList<T>(NodePort from, ref List<T> condList, string condListName, NodePort.IO dir = NodePort.IO.Input) where T: Node
+		protected bool DoCreateConnectToList<T>(NodePort from, NodePort to, ref List<T> condList, string condListName, NodePort.IO dir = NodePort.IO.Input) where T: Node
 		{
+
+			// 不允许自己连接自己
+			if (from.node == to.node) {
+				from.Disconnect (to);
+				return false;
+			}
+				
 			if (dir == NodePort.IO.Input) {
 				if (from.node == this)
 					return false;
 			} else if (dir == NodePort.IO.Output) {
 				if (from.node != this)
 					return false;
-			}
+			} else
+				return false;
 
-			if (from.node is T) {
+			T item = default(T);
+			if (dir == NodePort.IO.Input) {
+				if (to.fieldName != condListName)
+					return false;
+				item =  from.node as T;
+			} else if (dir == NodePort.IO.Output) {
+				if (from.fieldName != condListName)
+					return false;
+				item = to.node as T;
+			} else
+				return false;
+
+			if (item != null) {
 				if (condList == null)
 					condList = new List<T> ();
 				T cc = from.node as T;	
@@ -72,12 +106,7 @@ namespace XNode.Mugen
 				}
 				return true;
 			} else {
-				var port = GetInputPort (condListName);
-				int idx = port.GetConnectionIndex (from);
-				if (idx >= 0)
-					port.Disconnect (idx);
-
-				return false;
+				from.Disconnect (to);
 			}
 
 			return false;

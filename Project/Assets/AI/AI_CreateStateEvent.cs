@@ -70,9 +70,9 @@ namespace XNode.Mugen
 				}
 
 				if (from.node is AI_CreateStateDef)
-					DoCreateConnect (from, ref parent, "parent");
+					DoCreateConnect (from, to, ref parent, "parent");
 				else if (from.node is AI_BaseCondition)
-					DoCreateConnect (from, ref condition, "condition");
+					DoCreateConnect (from, to, ref condition, "condition");
 				else {
 					var p1 = GetPort ("parent");
 					var p2 = GetPort ("condition");

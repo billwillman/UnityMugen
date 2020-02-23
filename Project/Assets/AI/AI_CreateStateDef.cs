@@ -115,13 +115,13 @@ namespace XNode.Mugen
 
 			if (from != null && from.node != this) {
 				if (from != null && from.node.GetType () == typeof(AI_Cmd)) {
-					if (DoCreateConnect<AI_Cmd> (from, ref input, "input")) {
+					if (DoCreateConnect<AI_Cmd> (from, to, ref input, "input")) {
 						var pp = GetPort ("prevCns");
 						if (pp != null)
 							pp.ClearConnections ();
 					}
 				} else if (from != null && from.node.GetType () == typeof(AI_StateEvent_PlayCns)) {
-					if (DoCreateConnect<AI_StateEvent_PlayCns> (from, ref prevCns, "prevCns")) {
+					if (DoCreateConnect<AI_StateEvent_PlayCns> (from, to, ref prevCns, "prevCns")) {
 						var pp = GetPort ("input");
 						if (pp != null)
 							pp.ClearConnections ();

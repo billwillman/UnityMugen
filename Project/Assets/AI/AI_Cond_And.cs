@@ -25,7 +25,7 @@ namespace XNode.Mugen
 
 		public override void OnCreateConnection(NodePort from, NodePort to)
 		{
-			DoCreateConnectToList (from, ref inputs, "inputs");
+			DoCreateConnectToList (from, to, ref inputs, "inputs");
 		}
 
 		public override string ToCondString(string luaPlayer)
