@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using Mugen;
 using XNode;
+using System;
 
+[Serializable]
 public abstract class AI_BaseNode: Node
 {
 
@@ -116,6 +118,7 @@ public abstract class AI_BaseNode: Node
 }
 
 [CreateNodeMenu("AI/按键设置")]
+[Serializable]
 public class AI_KeyCmd : AI_BaseCondition {
 	public string name = "KeyCmd_Unknown";
 	public float time = 1;
@@ -132,6 +135,7 @@ public class AI_KeyCmd : AI_BaseCondition {
 
 
 [CreateNodeMenu("AI/AI命令")]
+[Serializable]
 public class AI_Cmd : AI_BaseNode
 {
 	
@@ -166,6 +170,7 @@ public class AI_Cmd : AI_BaseNode
 	}
 }
 
+[Serializable]
 public abstract class AI_BaseCondition : AI_BaseNode
 {
 
@@ -183,6 +188,7 @@ public abstract class AI_BaseCondition : AI_BaseNode
 }
 
 [CreateNodeMenu("AI/条件/And")]
+[Serializable]
 public class AI_Cond_And: AI_BaseCondition
 {
 	[Input(ShowBackingValue.Never)]
@@ -231,6 +237,7 @@ public class AI_Cond_And: AI_BaseCondition
 }
 
 [CreateNodeMenu("AI/条件/Or")]
+[Serializable]
 public class AI_Cond_Or: AI_BaseCondition
 {
 	[Input(ShowBackingValue.Never)]
@@ -278,6 +285,7 @@ public class AI_Cond_Or: AI_BaseCondition
 }
 
 [CreateNodeMenu("AI/条件/触发按键")]
+[Serializable]
 public class AI_Cond_TriggleKeyCmd: AI_BaseCondition
 {
 	[Input(ShowBackingValue.Never, ConnectionType.Override)]
@@ -313,6 +321,7 @@ public class AI_Cond_TriggleKeyCmd: AI_BaseCondition
 }
 
 [CreateNodeMenu("AI/条件/角色StateType状态")]
+[Serializable]
 public class AI_Cond_PlayerStateType: AI_BaseCondition
 {
 	public Cns_Type stateType = Cns_Type.S;
@@ -331,6 +340,7 @@ public class AI_Cond_PlayerStateType: AI_BaseCondition
 }
 
 [CreateNodeMenu("AI/条件/角色Ctrl状态")]
+[Serializable]
 public class AI_Cond_PlayerCtrl: AI_BaseCondition
 {
 	public int Ctrl = 1;
@@ -359,6 +369,7 @@ public enum AI_Cond_Op
 }
 
 [CreateNodeMenu("AI/条件/角色AnimElem")]
+[Serializable]
 public class AI_Cond_PlayerAniElem: AI_BaseCondition
 {
 	public int aniElem;
@@ -373,6 +384,7 @@ public class AI_Cond_PlayerAniElem: AI_BaseCondition
 }
 
 [CreateNodeMenu("AI/条件/角色AnimTime")]
+[Serializable]
 public class AI_Cond_PlayerAniTime: AI_BaseCondition
 {
 	public int aniTime;
@@ -387,6 +399,7 @@ public class AI_Cond_PlayerAniTime: AI_BaseCondition
 }
 
 [CreateNodeMenu("AI/条件/角色Time")]
+[Serializable]
 public class AI_Cond_PlayerTime: AI_BaseCondition
 {
 	public int time;
@@ -401,6 +414,7 @@ public class AI_Cond_PlayerTime: AI_BaseCondition
 }
 
 [CreateNodeMenu("AI/条件/角色 VelX")]
+[Serializable]
 public class AI_Cond_Player_VelX: AI_BaseCondition
 {
 	public float velX;
@@ -415,6 +429,7 @@ public class AI_Cond_Player_VelX: AI_BaseCondition
 }
 
 [CreateNodeMenu("AI/条件/角色 VelY")]
+[Serializable]
 public class AI_Cond_Player_VelY: AI_BaseCondition
 {
 	public float velY;
@@ -443,6 +458,7 @@ public class AI_Cond_Player_PosX: AI_BaseCondition
 }
 
 [CreateNodeMenu("AI/条件/角色 PosY")]
+[Serializable]
 public class AI_Cond_Player_PosY: AI_BaseCondition
 {
 	public float posY;
@@ -457,6 +473,7 @@ public class AI_Cond_Player_PosY: AI_BaseCondition
 }
 
 [CreateNodeMenu("AI/条件/角色StateNo")]
+[Serializable]
 public class AI_Cond_Player_StateNo: AI_BaseCondition
 {
 	public int stateNo;
@@ -471,6 +488,7 @@ public class AI_Cond_Player_StateNo: AI_BaseCondition
 }
 
 [CreateNodeMenu("AI/条件/float var")]
+[Serializable]
 public class AI_Cond_Player_FloatVar: AI_BaseCondition
 {
 	public int index;
@@ -486,6 +504,7 @@ public class AI_Cond_Player_FloatVar: AI_BaseCondition
 }
 
 [CreateNodeMenu("AI/条件/int var")]
+[Serializable]
 public class AI_Cond_Player_IntVar: AI_BaseCondition
 {
 	public int index;
@@ -501,6 +520,7 @@ public class AI_Cond_Player_IntVar: AI_BaseCondition
 }
 
 [CreateNodeMenu("AI/条件/角色PrevStateNo")]
+[Serializable]
 public class AI_Cond_Player_PlayerPrevStateNo: AI_BaseCondition
 {
 	public int prevStateNo;
@@ -529,6 +549,7 @@ public class AI_Cond_PlayerState_Persistent: AI_BaseCondition
 }*/
 
 [CreateNodeMenu("AI/条件/角色Power值")]
+[Serializable]
 public class AI_Cond_PlayerPower: AI_BaseCondition
 {
 	public int value;
@@ -543,6 +564,7 @@ public class AI_Cond_PlayerPower: AI_BaseCondition
 }
 
 [CreateNodeMenu("AI/条件/角色Life值")]
+[Serializable]
 public class AI_Cond_PlayerLife: AI_BaseCondition
 {
 	public int value;
@@ -557,6 +579,7 @@ public class AI_Cond_PlayerLife: AI_BaseCondition
 }
 
 [CreateNodeMenu("AI/条件/角色HitCount值")]
+[Serializable]
 public class AI_Cond_PlayerHitCount: AI_BaseCondition
 {
 	public int value;
@@ -571,6 +594,7 @@ public class AI_Cond_PlayerHitCount: AI_BaseCondition
 }
 
 [CreateNodeMenu("AI/条件/角色动画Ani是否存在")]
+[Serializable]
 public class AI_Cond_PlayerAniExist: AI_BaseCondition
 {
 	public int value;
@@ -586,6 +610,7 @@ public class AI_Cond_PlayerAniExist: AI_BaseCondition
 }
 
 [CreateNodeMenu("AI/条件/角色是否Alive")]
+[Serializable]
 public class AI_Cond_PlayerIsAlive: AI_BaseCondition
 {
 	public bool isNot = false;
@@ -600,6 +625,7 @@ public class AI_Cond_PlayerIsAlive: AI_BaseCondition
 }
 
 [CreateNodeMenu("AI/条件/角色AnimElemTime")]
+[Serializable]
 public class AI_Cond_PlayerAnimElemTime: AI_BaseCondition
 {
 	public int frameNo;
@@ -615,6 +641,7 @@ public class AI_Cond_PlayerAnimElemTime: AI_BaseCondition
 }
 
 [CreateNodeMenu("AI/条件/Random")]
+[Serializable]
 public class AI_Cond_Random: AI_BaseCondition
 {
 	public int randomValue = 1000;
@@ -630,6 +657,7 @@ public class AI_Cond_Random: AI_BaseCondition
 }
 
 [CreateNodeMenu("AI/创建StateDef")]
+[Serializable]
 public class AI_CreateStateDef: AI_BaseNode
 {
 
@@ -767,6 +795,7 @@ public class AI_CreateStateDef: AI_BaseNode
 }
 
 //[CreateNodeMenu("AI/创建StateEvent")]
+[Serializable]
 public abstract class AI_CreateStateEvent: AI_BaseNode
 {
 	public static bool VaildAnim(int anim)
@@ -898,6 +927,7 @@ public abstract class AI_CreateStateEvent: AI_BaseNode
 }
 
 [CreateNodeMenu("AI/创建StateEvent/播放声音")]
+[Serializable]
 public class AI_StateEvent_PlaySnd: AI_CreateStateEvent
 {
 	public int group;
@@ -911,6 +941,7 @@ public class AI_StateEvent_PlaySnd: AI_CreateStateEvent
 }
 
 [CreateNodeMenu("AI/创建StateEvent/设置速度")]
+[Serializable]
 public class AI_StateEvent_VelSet: AI_CreateStateEvent
 {
 	public float velx = CNSStateDef._cNoVaildVelset;
@@ -930,6 +961,7 @@ public class AI_StateEvent_VelSet: AI_CreateStateEvent
 }
 
 [CreateNodeMenu("AI/创建StateEvent/速度增加")]
+[Serializable]
 public class AI_StateEvent_VelAdd: AI_CreateStateEvent
 {
 	public float velx = CNSStateDef._cNoVaildVelset;
@@ -949,6 +981,7 @@ public class AI_StateEvent_VelAdd: AI_CreateStateEvent
 }
 
 [CreateNodeMenu("AI/创建StateEvent/位置增加")]
+[Serializable]
 public class AI_StateEvent_PosAdd: AI_CreateStateEvent
 {
 	public int x = CNSStateDef._cNoVaildVelset;
@@ -968,6 +1001,7 @@ public class AI_StateEvent_PosAdd: AI_CreateStateEvent
 }
 
 [CreateNodeMenu("AI/创建StateEvent/设置位置")]
+[Serializable]
 public class AI_StateEvent_PosSet: AI_CreateStateEvent
 {
 	public int x = CNSStateDef._cNoVaildVelset;
@@ -987,6 +1021,7 @@ public class AI_StateEvent_PosSet: AI_CreateStateEvent
 }
 
 [CreateNodeMenu("AI/创建StateEvent/StateType设置")]
+[Serializable]
 public class AI_StateEvent_StateTypeSet: AI_CreateStateEvent
 {
 	public Cns_Type stateType = Cns_Type.S;
@@ -999,6 +1034,7 @@ public class AI_StateEvent_StateTypeSet: AI_CreateStateEvent
 }
 
 [CreateNodeMenu("AI/创建StateEvent/PhysicsType设置")]
+[Serializable]
 public class AI_StateEvent_PhysicsTypeSet: AI_CreateStateEvent
 {
 	public Cns_PhysicsType physicsType = Cns_PhysicsType.none;
@@ -1014,6 +1050,7 @@ public class AI_StateEvent_PhysicsTypeSet: AI_CreateStateEvent
 }
 
 [CreateNodeMenu("AI/创建StateEvent/Ctrl设置")]
+[Serializable]
 public class AI_StateEvent_CtrlSet: AI_CreateStateEvent
 {
 	public int ctrl = 1;
@@ -1026,6 +1063,7 @@ public class AI_StateEvent_CtrlSet: AI_CreateStateEvent
 }
 
 [CreateNodeMenu("AI/创建StateEvent/创建爆炸")]
+[Serializable]
 public class AI_StateEvent_CreateExplod: AI_CreateStateEvent
 {
 	public int anim = CNSStateDef._cNoVaildAnim;
@@ -1084,6 +1122,7 @@ public class AI_StateEvent_CreateExplod: AI_CreateStateEvent
 }
 
 [CreateNodeMenu("AI/创建StateEvent/播放动画")]
+[Serializable]
 public class AI_StateEvent_PlayAni: AI_CreateStateEvent
 {
 	public int anim = CNSStateDef._cNoVaildAnim;
@@ -1100,6 +1139,7 @@ public class AI_StateEvent_PlayAni: AI_CreateStateEvent
 }
 
 [CreateNodeMenu("AI/创建StateEvent/切换Cns状态")]
+[Serializable]
 public class AI_StateEvent_PlayCns: AI_CreateStateEvent
 {
 	[Output(ShowBackingValue.Never, ConnectionType.Override)]
@@ -1126,6 +1166,7 @@ public class AI_StateEvent_PlayCns: AI_CreateStateEvent
 }
 
 [CreateNodeMenu("AI/创建StateEvent/切换Stand状态")]
+[Serializable]
 public class AI_StateEvent_PlayStandCns: AI_CreateStateEvent
 {
 	public bool IsSetCtrl_1 = true;
@@ -1148,6 +1189,7 @@ public class AI_StateEvent_PlayStandCns: AI_CreateStateEvent
 }
 
 [CreateNodeMenu("AI/创建StateEvent/创建飞行物")]
+[Serializable]
 public class AI_StateEvent_CreateProj: AI_CreateStateEvent
 {
 	public int projid = -1;
@@ -1226,6 +1268,7 @@ public class AI_StateEvent_CreateProj: AI_CreateStateEvent
 }
 
 [CreateNodeMenu("AI/创建StateEvent/删除爆炸物")]
+[Serializable]
 public class AI_StateEvent_RemoveExplod: AI_CreateStateEvent
 {
 	public int id = -1;
@@ -1249,6 +1292,7 @@ public class AI_StateEvent_ChangePallet: AI_CreateStateEvent
 */
 
 [CreateNodeMenu("AI/创建StateEvent/设置float var")]
+[Serializable]
 public class AI_StateEvent_floatVarSet: AI_CreateStateEvent
 {
 	public int index;
@@ -1262,6 +1306,7 @@ public class AI_StateEvent_floatVarSet: AI_CreateStateEvent
 }
 
 [CreateNodeMenu("AI/创建StateEvent/设置int var")]
+[Serializable]
 public class AI_StateEvent_intVarSet: AI_CreateStateEvent
 {
 	public int index;
@@ -1275,6 +1320,7 @@ public class AI_StateEvent_intVarSet: AI_CreateStateEvent
 }
 
 [CreateNodeMenu("AI/创建StateEvent/角色暂停")]
+[Serializable]
 public class AI_StateEvent_PlayerPause: AI_CreateStateEvent
 {
 	public float time;
@@ -1287,6 +1333,7 @@ public class AI_StateEvent_PlayerPause: AI_CreateStateEvent
 }
 
 [CreateNodeMenu("AI/创建StateEvent/速度乘法")]
+[Serializable]
 public class AI_StateEvent_VelMul: AI_CreateStateEvent
 {
 	public float velX = CNSStateDef._cNoVaildVelset;
@@ -1304,6 +1351,7 @@ public class AI_StateEvent_VelMul: AI_CreateStateEvent
 }
 
 [CreateNodeMenu("AI/创建StateEvent/删除角色自己")]
+[Serializable]
 public class AI_StateEvent_PlayerDestroySelf: AI_CreateStateEvent
 {
 	protected override string GetDoStr(bool hasCond)
@@ -1313,6 +1361,7 @@ public class AI_StateEvent_PlayerDestroySelf: AI_CreateStateEvent
 }
 
 [CreateNodeMenu("AI/创建StateEvent/角色转向")]
+[Serializable]
 public class AI_StateEvent_PlayerTurn: AI_CreateStateEvent
 {
 	protected override string GetDoStr(bool hasCond)
