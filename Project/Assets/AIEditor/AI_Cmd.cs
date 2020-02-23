@@ -1,9 +1,13 @@
+using System.Linq;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using Mugen;
 using XNode;
 using System;
+
+namespace XNode.Mugen
+{
 
 [Serializable]
 public abstract class AI_BaseNode: Node
@@ -120,9 +124,9 @@ public abstract class AI_BaseNode: Node
 [CreateNodeMenu("AI/按键设置")]
 [Serializable]
 public class AI_KeyCmd : AI_BaseCondition {
-	public string name = "KeyCmd_Unknown";
-	public float time = 1;
-	public string keyCommands;
+	[SerializeField] public string name = "KeyCmd_Unknown";
+	[SerializeField] public float time = 1;
+	[SerializeField] public string keyCommands;
 
 	public override string ToCondString(string luaPlayer)
 	{
@@ -139,17 +143,17 @@ public class AI_KeyCmd : AI_BaseCondition {
 public class AI_Cmd : AI_BaseNode
 {
 	
-	public string cmdName = "AICmd_Unknown";
+	[SerializeField] public string cmdName = "AICmd_Unknown";
 
-	public AI_Type aiType = AI_Type.ChangeState;
+	[SerializeField] public AI_Type aiType = AI_Type.ChangeState;
 
-	public string value;
+	[SerializeField] public string value;
 
 	[Input(ShowBackingValue.Never)]
-	public List<AI_BaseCondition> condList;
+	[SerializeField] public List<AI_BaseCondition> condList;
 
 	[Output(ShowBackingValue.Never)]
-	public AI_Cmd output;
+	[SerializeField] public AI_Cmd output;
 
 	public override object GetValue(NodePort port) {
 		if (port.fieldName == "condList")
@@ -180,7 +184,7 @@ public abstract class AI_BaseCondition : AI_BaseNode
 	}
 
 	[Output]
-	public AI_BaseCondition output;
+	[SerializeField] public AI_BaseCondition output;
 	public override object GetValue(NodePort port) {
 		return this;
 	}
@@ -192,7 +196,7 @@ public abstract class AI_BaseCondition : AI_BaseNode
 public class AI_Cond_And: AI_BaseCondition
 {
 	[Input(ShowBackingValue.Never)]
-	public List<AI_BaseCondition> inputs;
+	[SerializeField] public List<AI_BaseCondition> inputs;
 	public override object GetValue(NodePort port) {
 		return inputs;
 	}
@@ -241,7 +245,7 @@ public class AI_Cond_And: AI_BaseCondition
 public class AI_Cond_Or: AI_BaseCondition
 {
 	[Input(ShowBackingValue.Never)]
-	public List<AI_BaseCondition> inputs;
+	[SerializeField] public List<AI_BaseCondition> inputs;
 	public override object GetValue(NodePort port) {
 		return inputs;
 	}
@@ -289,7 +293,7 @@ public class AI_Cond_Or: AI_BaseCondition
 public class AI_Cond_TriggleKeyCmd: AI_BaseCondition
 {
 	[Input(ShowBackingValue.Never, ConnectionType.Override)]
-	public AI_KeyCmd aiKeyCmd;
+	[SerializeField] public AI_KeyCmd aiKeyCmd;
 	public override object GetValue(NodePort port) {
 		if (port.fieldName == "aiKeyCmd")
 			return aiKeyCmd;
@@ -317,16 +321,16 @@ public class AI_Cond_TriggleKeyCmd: AI_BaseCondition
 	}
 
 
-	public bool isNot = false;
+	[SerializeField] public bool isNot = false;
 }
 
 [CreateNodeMenu("AI/条件/角色StateType状态")]
 [Serializable]
 public class AI_Cond_PlayerStateType: AI_BaseCondition
 {
-	public Cns_Type stateType = Cns_Type.S;
+	[SerializeField] public Cns_Type stateType = Cns_Type.S;
 
-	public bool isNot = false;	
+	[SerializeField] public bool isNot = false;	
 
 	public override string ToCondString(string luaPlayer)
 	{
@@ -343,8 +347,8 @@ public class AI_Cond_PlayerStateType: AI_BaseCondition
 [Serializable]
 public class AI_Cond_PlayerCtrl: AI_BaseCondition
 {
-	public int Ctrl = 1;
-	public bool isNot = false;	
+	[SerializeField] public int Ctrl = 1;
+	[SerializeField] public bool isNot = false;	
 
 	public override string ToCondString(string luaPlayer)
 	{
@@ -372,8 +376,8 @@ public enum AI_Cond_Op
 [Serializable]
 public class AI_Cond_PlayerAniElem: AI_BaseCondition
 {
-	public int aniElem;
-	public AI_Cond_Op op = AI_Cond_Op.Equal;
+	[SerializeField] public int aniElem;
+	[SerializeField] public AI_Cond_Op op = AI_Cond_Op.Equal;
 
 	public override string ToCondString(string luaPlayer)
 	{
@@ -387,8 +391,8 @@ public class AI_Cond_PlayerAniElem: AI_BaseCondition
 [Serializable]
 public class AI_Cond_PlayerAniTime: AI_BaseCondition
 {
-	public int aniTime;
-	public AI_Cond_Op op = AI_Cond_Op.Equal;
+	[SerializeField] public int aniTime;
+	[SerializeField] public AI_Cond_Op op = AI_Cond_Op.Equal;
 
 	public override string ToCondString(string luaPlayer)
 	{
@@ -402,8 +406,8 @@ public class AI_Cond_PlayerAniTime: AI_BaseCondition
 [Serializable]
 public class AI_Cond_PlayerTime: AI_BaseCondition
 {
-	public int time;
-	public AI_Cond_Op op = AI_Cond_Op.Equal;
+	[SerializeField] public int time;
+	[SerializeField] public AI_Cond_Op op = AI_Cond_Op.Equal;
 
 	public override string ToCondString(string luaPlayer)
 	{
@@ -417,8 +421,8 @@ public class AI_Cond_PlayerTime: AI_BaseCondition
 [Serializable]
 public class AI_Cond_Player_VelX: AI_BaseCondition
 {
-	public float velX;
-	public AI_Cond_Op op = AI_Cond_Op.Equal;
+	[SerializeField] public float velX;
+	[SerializeField] public AI_Cond_Op op = AI_Cond_Op.Equal;
 
 	public override string ToCondString(string luaPlayer)
 	{
@@ -432,8 +436,8 @@ public class AI_Cond_Player_VelX: AI_BaseCondition
 [Serializable]
 public class AI_Cond_Player_VelY: AI_BaseCondition
 {
-	public float velY;
-	public AI_Cond_Op op = AI_Cond_Op.Equal;
+	[SerializeField] public float velY;
+	[SerializeField] public AI_Cond_Op op = AI_Cond_Op.Equal;
 
 	public override string ToCondString(string luaPlayer)
 	{
@@ -446,8 +450,8 @@ public class AI_Cond_Player_VelY: AI_BaseCondition
 [CreateNodeMenu("AI/条件/角色 PosX")]
 public class AI_Cond_Player_PosX: AI_BaseCondition
 {
-	public float posX;
-	public AI_Cond_Op op = AI_Cond_Op.Equal;
+	[SerializeField] public float posX;
+	[SerializeField] public AI_Cond_Op op = AI_Cond_Op.Equal;
 
 	public override string ToCondString(string luaPlayer)
 	{
@@ -461,8 +465,8 @@ public class AI_Cond_Player_PosX: AI_BaseCondition
 [Serializable]
 public class AI_Cond_Player_PosY: AI_BaseCondition
 {
-	public float posY;
-	public AI_Cond_Op op = AI_Cond_Op.Equal;
+	[SerializeField] public float posY;
+	[SerializeField] public AI_Cond_Op op = AI_Cond_Op.Equal;
 
 	public override string ToCondString(string luaPlayer)
 	{
@@ -476,8 +480,8 @@ public class AI_Cond_Player_PosY: AI_BaseCondition
 [Serializable]
 public class AI_Cond_Player_StateNo: AI_BaseCondition
 {
-	public int stateNo;
-	public AI_Cond_Op op = AI_Cond_Op.Equal;
+	[SerializeField] public int stateNo;
+	[SerializeField] public AI_Cond_Op op = AI_Cond_Op.Equal;
 
 	public override string ToCondString(string luaPlayer)
 	{
@@ -491,9 +495,9 @@ public class AI_Cond_Player_StateNo: AI_BaseCondition
 [Serializable]
 public class AI_Cond_Player_FloatVar: AI_BaseCondition
 {
-	public int index;
-	public float value;
-	public AI_Cond_Op op = AI_Cond_Op.Equal;
+	[SerializeField] public int index;
+	[SerializeField] public float value;
+	[SerializeField] public AI_Cond_Op op = AI_Cond_Op.Equal;
 
 	public override string ToCondString(string luaPlayer)
 	{
@@ -507,9 +511,9 @@ public class AI_Cond_Player_FloatVar: AI_BaseCondition
 [Serializable]
 public class AI_Cond_Player_IntVar: AI_BaseCondition
 {
-	public int index;
-	public int value;
-	public AI_Cond_Op op = AI_Cond_Op.Equal;
+	[SerializeField] public int index;
+	[SerializeField] public int value;
+	[SerializeField] public AI_Cond_Op op = AI_Cond_Op.Equal;
 
 	public override string ToCondString(string luaPlayer)
 	{
@@ -523,8 +527,8 @@ public class AI_Cond_Player_IntVar: AI_BaseCondition
 [Serializable]
 public class AI_Cond_Player_PlayerPrevStateNo: AI_BaseCondition
 {
-	public int prevStateNo;
-	public AI_Cond_Op op = AI_Cond_Op.Equal;
+	[SerializeField] public int prevStateNo;
+	[SerializeField] public AI_Cond_Op op = AI_Cond_Op.Equal;
 
 	public override string ToCondString(string luaPlayer)
 	{
@@ -552,8 +556,8 @@ public class AI_Cond_PlayerState_Persistent: AI_BaseCondition
 [Serializable]
 public class AI_Cond_PlayerPower: AI_BaseCondition
 {
-	public int value;
-	public AI_Cond_Op op = AI_Cond_Op.Equal;
+	[SerializeField] public int value;
+	[SerializeField] public AI_Cond_Op op = AI_Cond_Op.Equal;
 
 	public override string ToCondString(string luaPlayer)
 	{
@@ -567,8 +571,8 @@ public class AI_Cond_PlayerPower: AI_BaseCondition
 [Serializable]
 public class AI_Cond_PlayerLife: AI_BaseCondition
 {
-	public int value;
-	public AI_Cond_Op op = AI_Cond_Op.Equal;
+	[SerializeField] public int value;
+	[SerializeField] public AI_Cond_Op op = AI_Cond_Op.Equal;
 
 	public override string ToCondString(string luaPlayer)
 	{
@@ -582,8 +586,8 @@ public class AI_Cond_PlayerLife: AI_BaseCondition
 [Serializable]
 public class AI_Cond_PlayerHitCount: AI_BaseCondition
 {
-	public int value;
-	public AI_Cond_Op op = AI_Cond_Op.Equal;
+	[SerializeField] public int value;
+	[SerializeField] public AI_Cond_Op op = AI_Cond_Op.Equal;
 
 	public override string ToCondString(string luaPlayer)
 	{
@@ -597,8 +601,8 @@ public class AI_Cond_PlayerHitCount: AI_BaseCondition
 [Serializable]
 public class AI_Cond_PlayerAniExist: AI_BaseCondition
 {
-	public int value;
-	public bool isNot = false;
+	[SerializeField] public int value;
+	[SerializeField] public bool isNot = false;
 
 	public override string ToCondString(string luaPlayer)
 	{
@@ -613,7 +617,7 @@ public class AI_Cond_PlayerAniExist: AI_BaseCondition
 [Serializable]
 public class AI_Cond_PlayerIsAlive: AI_BaseCondition
 {
-	public bool isNot = false;
+	[SerializeField] public bool isNot = false;
 
 	public override string ToCondString(string luaPlayer)
 	{
@@ -628,9 +632,9 @@ public class AI_Cond_PlayerIsAlive: AI_BaseCondition
 [Serializable]
 public class AI_Cond_PlayerAnimElemTime: AI_BaseCondition
 {
-	public int frameNo;
-	public int animElem;
-	public AI_Cond_Op op = AI_Cond_Op.Equal;
+	[SerializeField] public int frameNo;
+	[SerializeField] public int animElem;
+	[SerializeField] public AI_Cond_Op op = AI_Cond_Op.Equal;
 
 	public override string ToCondString(string luaPlayer)
 	{
@@ -644,9 +648,9 @@ public class AI_Cond_PlayerAnimElemTime: AI_BaseCondition
 [Serializable]
 public class AI_Cond_Random: AI_BaseCondition
 {
-	public int randomValue = 1000;
-	public int value = 500;
-	public AI_Cond_Op op = AI_Cond_Op.Less;
+	[SerializeField] public int randomValue = 1000;
+	[SerializeField] public int value = 500;
+	[SerializeField] public AI_Cond_Op op = AI_Cond_Op.Less;
 
 	public override string ToCondString(string luaPlayer)
 	{
@@ -661,7 +665,7 @@ public class AI_Cond_Random: AI_BaseCondition
 public class AI_CreateStateDef: AI_BaseNode
 {
 
-	public int realAnimate = CNSStateDef._cNoVaildAnim;
+	[SerializeField] public int realAnimate = CNSStateDef._cNoVaildAnim;
 
 	public string Animate
 	{
@@ -731,22 +735,22 @@ public class AI_CreateStateDef: AI_BaseNode
 	}
 
 	[Input(ShowBackingValue.Never, ConnectionType.Override)]
-	public AI_Cmd input;
+	[SerializeField] public AI_Cmd input;
 	[Input(ShowBackingValue.Never, ConnectionType.Override)]
-	public AI_StateEvent_PlayCns prevCns;
+	[SerializeField] public AI_StateEvent_PlayCns prevCns;
 	[Output(ShowBackingValue.Never)]
-	public AI_CreateStateDef output;
+	[SerializeField] public AI_CreateStateDef output;
 
-	public Cns_Type type = Cns_Type.S;
-	public Cns_MoveType moveType = Cns_MoveType.none;
-	public Cns_PhysicsType physicsType = Cns_PhysicsType.S;
-	public int juggle = 0;
-	public int powerAdd = 0;
-	public float velset_x = CNSStateDef._cNoVaildVelset;
-	public float velset_y = CNSStateDef._cNoVaildVelset;
+	[SerializeField] public Cns_Type type = Cns_Type.S;
+	[SerializeField] public Cns_MoveType moveType = Cns_MoveType.none;
+	[SerializeField] public Cns_PhysicsType physicsType = Cns_PhysicsType.S;
+	[SerializeField] public int juggle = 0;
+	[SerializeField] public int powerAdd = 0;
+	[SerializeField] public float velset_x = CNSStateDef._cNoVaildVelset;
+	[SerializeField] public float velset_y = CNSStateDef._cNoVaildVelset;
 	//public int animate = 0;
-	public int ctrl = 0;
-	public int sprpriority = 0;
+	[SerializeField] public int ctrl = 0;
+	[SerializeField] public int sprpriority = 0;
 
 	public override object GetValue(NodePort port)
 	{
@@ -823,14 +827,14 @@ public abstract class AI_CreateStateEvent: AI_BaseNode
 	}
 
 	[Input(ShowBackingValue.Never, ConnectionType.Override)]
-	public AI_CreateStateDef parent;
+	[SerializeField] public AI_CreateStateDef parent;
 
 	[Input(ShowBackingValue.Never, ConnectionType.Override)]
-	public AI_BaseCondition condition;
+	[SerializeField] public AI_BaseCondition condition;
 
-	public bool setPersistent = false;
+	[SerializeField] public bool setPersistent = false;
 
-	public CnsStateTriggerType triggleType = CnsStateTriggerType.AnimElem;
+	[SerializeField] public CnsStateTriggerType triggleType = CnsStateTriggerType.AnimElem;
 
 	public override void OnRemoveConnection(NodePort port)
 	{
@@ -930,8 +934,8 @@ public abstract class AI_CreateStateEvent: AI_BaseNode
 [Serializable]
 public class AI_StateEvent_PlaySnd: AI_CreateStateEvent
 {
-	public int group;
-	public int index;
+	[SerializeField] public int group;
+	[SerializeField] public int index;
 
 	protected override string GetDoStr(bool hasCond)
 	{
@@ -944,8 +948,8 @@ public class AI_StateEvent_PlaySnd: AI_CreateStateEvent
 [Serializable]
 public class AI_StateEvent_VelSet: AI_CreateStateEvent
 {
-	public float velx = CNSStateDef._cNoVaildVelset;
-	public float vely = CNSStateDef._cNoVaildVelset;
+	[SerializeField] public float velx = CNSStateDef._cNoVaildVelset;
+	[SerializeField] public float vely = CNSStateDef._cNoVaildVelset;
 
 	protected override string GetDoStr(bool hasCond)
 	{
@@ -964,8 +968,8 @@ public class AI_StateEvent_VelSet: AI_CreateStateEvent
 [Serializable]
 public class AI_StateEvent_VelAdd: AI_CreateStateEvent
 {
-	public float velx = CNSStateDef._cNoVaildVelset;
-	public float vely = CNSStateDef._cNoVaildVelset;
+	[SerializeField] public float velx = CNSStateDef._cNoVaildVelset;
+	[SerializeField] public float vely = CNSStateDef._cNoVaildVelset;
 
 	protected override string GetDoStr(bool hasCond)
 	{
@@ -984,8 +988,8 @@ public class AI_StateEvent_VelAdd: AI_CreateStateEvent
 [Serializable]
 public class AI_StateEvent_PosAdd: AI_CreateStateEvent
 {
-	public int x = CNSStateDef._cNoVaildVelset;
-	public int y = CNSStateDef._cNoVaildVelset;
+	[SerializeField] public int x = CNSStateDef._cNoVaildVelset;
+	[SerializeField] public int y = CNSStateDef._cNoVaildVelset;
 
 	protected override string GetDoStr(bool hasCond)
 	{
@@ -1004,8 +1008,8 @@ public class AI_StateEvent_PosAdd: AI_CreateStateEvent
 [Serializable]
 public class AI_StateEvent_PosSet: AI_CreateStateEvent
 {
-	public int x = CNSStateDef._cNoVaildVelset;
-	public int y = CNSStateDef._cNoVaildVelset;
+	[SerializeField] public int x = CNSStateDef._cNoVaildVelset;
+	[SerializeField] public int y = CNSStateDef._cNoVaildVelset;
 
 	protected override string GetDoStr(bool hasCond)
 	{
@@ -1024,7 +1028,7 @@ public class AI_StateEvent_PosSet: AI_CreateStateEvent
 [Serializable]
 public class AI_StateEvent_StateTypeSet: AI_CreateStateEvent
 {
-	public Cns_Type stateType = Cns_Type.S;
+	[SerializeField] public Cns_Type stateType = Cns_Type.S;
 
 	protected override string GetDoStr(bool hasCond)
 	{
@@ -1037,7 +1041,7 @@ public class AI_StateEvent_StateTypeSet: AI_CreateStateEvent
 [Serializable]
 public class AI_StateEvent_PhysicsTypeSet: AI_CreateStateEvent
 {
-	public Cns_PhysicsType physicsType = Cns_PhysicsType.none;
+	[SerializeField] public Cns_PhysicsType physicsType = Cns_PhysicsType.none;
 
 	protected override string GetDoStr(bool hasCond)
 	{
@@ -1053,7 +1057,7 @@ public class AI_StateEvent_PhysicsTypeSet: AI_CreateStateEvent
 [Serializable]
 public class AI_StateEvent_CtrlSet: AI_CreateStateEvent
 {
-	public int ctrl = 1;
+	[SerializeField] public int ctrl = 1;
 
 	protected override string GetDoStr(bool hasCond)
 	{
@@ -1066,18 +1070,18 @@ public class AI_StateEvent_CtrlSet: AI_CreateStateEvent
 [Serializable]
 public class AI_StateEvent_CreateExplod: AI_CreateStateEvent
 {
-	public int anim = CNSStateDef._cNoVaildAnim;
-	public int id = -1;
-	public int pos_x = 0;
-	public int pos_y = 0;
-	public ExplodPosType explodPosType = ExplodPosType.p1;
-	public int bindtime = -1;
-	public int removetime = -2;
-	public int sprpriority = 0;
-	public int removeongethit = 0;
-	public int ignorehitpause = 1;
-	public bool isChangeStateRemove = true;
-	public bool IsUseParentUpdate = true;
+	[SerializeField] public int anim = CNSStateDef._cNoVaildAnim;
+	[SerializeField] public int id = -1;
+	[SerializeField] public int pos_x = 0;
+	[SerializeField] public int pos_y = 0;
+	[SerializeField] public ExplodPosType explodPosType = ExplodPosType.p1;
+	[SerializeField] public int bindtime = -1;
+	[SerializeField] public int removetime = -2;
+	[SerializeField] public int sprpriority = 0;
+	[SerializeField] public int removeongethit = 0;
+	[SerializeField] public int ignorehitpause = 1;
+	[SerializeField] public bool isChangeStateRemove = true;
+	[SerializeField] public bool IsUseParentUpdate = true;
 
 	protected override string GetDoStr(bool hasCond)
 	{
@@ -1125,8 +1129,8 @@ public class AI_StateEvent_CreateExplod: AI_CreateStateEvent
 [Serializable]
 public class AI_StateEvent_PlayAni: AI_CreateStateEvent
 {
-	public int anim = CNSStateDef._cNoVaildAnim;
-	public bool isLoop = false;
+	[SerializeField] public int anim = CNSStateDef._cNoVaildAnim;
+	[SerializeField] public bool isLoop = false;
 	//public bool isCleanStateDef = true;
 
 	protected override string GetDoStr(bool hasCond)
@@ -1143,10 +1147,10 @@ public class AI_StateEvent_PlayAni: AI_CreateStateEvent
 public class AI_StateEvent_PlayCns: AI_CreateStateEvent
 {
 	[Output(ShowBackingValue.Never, ConnectionType.Override)]
-	public AI_CreateStateDef nextStateDef;
+	[SerializeField] public AI_CreateStateDef nextStateDef;
 
-	public string Animate;
-	public bool IsLoop = false;
+	[SerializeField] public string Animate;
+	[SerializeField] public bool IsLoop = false;
 
 	public override object GetValue(NodePort port)
 	{
@@ -1169,7 +1173,7 @@ public class AI_StateEvent_PlayCns: AI_CreateStateEvent
 [Serializable]
 public class AI_StateEvent_PlayStandCns: AI_CreateStateEvent
 {
-	public bool IsSetCtrl_1 = true;
+	[SerializeField] public bool IsSetCtrl_1 = true;
 
 	protected override string GetDoStr(bool hasCond)
 	{
@@ -1192,21 +1196,21 @@ public class AI_StateEvent_PlayStandCns: AI_CreateStateEvent
 [Serializable]
 public class AI_StateEvent_CreateProj: AI_CreateStateEvent
 {
-	public int projid = -1;
-	public int projanim = CNSStateDef._cNoVaildAnim;
-	public int projhitanim = CNSStateDef._cNoVaildAnim;
-	public int projremove = 1;
-	public int projcancelanim = CNSStateDef._cNoVaildAnim;
-	public int projremanim = CNSStateDef._cNoVaildAnim;
-	public float projremovetime = 100;
-	public int offset_x = 0;
-	public int offset_y = 0;
-	public float velocity_x = 0;
-	public float velocity_y = 0;
-	public ExplodPosType Postype = ExplodPosType.p1;
-	public int projshadow = 0;
-	public int projpriority = 0;
-	public int projsprpriority = 0;
+	[SerializeField] public int projid = -1;
+	[SerializeField] public int projanim = CNSStateDef._cNoVaildAnim;
+	[SerializeField] public int projhitanim = CNSStateDef._cNoVaildAnim;
+	[SerializeField] public int projremove = 1;
+	[SerializeField] public int projcancelanim = CNSStateDef._cNoVaildAnim;
+	[SerializeField] public int projremanim = CNSStateDef._cNoVaildAnim;
+	[SerializeField] public float projremovetime = 100;
+	[SerializeField] public int offset_x = 0;
+	[SerializeField] public int offset_y = 0;
+	[SerializeField] public float velocity_x = 0;
+	[SerializeField] public float velocity_y = 0;
+	[SerializeField] public ExplodPosType Postype = ExplodPosType.p1;
+	[SerializeField] public int projshadow = 0;
+	[SerializeField] public int projpriority = 0;
+	[SerializeField] public int projsprpriority = 0;
 
 	protected override string GetDoStr(bool hasCond)
 	{
@@ -1271,7 +1275,7 @@ public class AI_StateEvent_CreateProj: AI_CreateStateEvent
 [Serializable]
 public class AI_StateEvent_RemoveExplod: AI_CreateStateEvent
 {
-	public int id = -1;
+	[SerializeField] public int id = -1;
 
 	protected override string GetDoStr(bool hasCond)
 	{
@@ -1295,8 +1299,8 @@ public class AI_StateEvent_ChangePallet: AI_CreateStateEvent
 [Serializable]
 public class AI_StateEvent_floatVarSet: AI_CreateStateEvent
 {
-	public int index;
-	public float value;
+	[SerializeField] public int index;
+	[SerializeField] public float value;
 
 	protected override string GetDoStr(bool hasCond)
 	{
@@ -1309,8 +1313,8 @@ public class AI_StateEvent_floatVarSet: AI_CreateStateEvent
 [Serializable]
 public class AI_StateEvent_intVarSet: AI_CreateStateEvent
 {
-	public int index;
-	public int value;
+	[SerializeField] public int index;
+	[SerializeField] public int value;
 
 	protected override string GetDoStr(bool hasCond)
 	{
@@ -1323,7 +1327,7 @@ public class AI_StateEvent_intVarSet: AI_CreateStateEvent
 [Serializable]
 public class AI_StateEvent_PlayerPause: AI_CreateStateEvent
 {
-	public float time;
+	[SerializeField] public float time;
 
 	protected override string GetDoStr(bool hasCond)
 	{
@@ -1336,8 +1340,8 @@ public class AI_StateEvent_PlayerPause: AI_CreateStateEvent
 [Serializable]
 public class AI_StateEvent_VelMul: AI_CreateStateEvent
 {
-	public float velX = CNSStateDef._cNoVaildVelset;
-	public float velY = CNSStateDef._cNoVaildVelset;
+	[SerializeField] public float velX = CNSStateDef._cNoVaildVelset;
+	[SerializeField] public float velY = CNSStateDef._cNoVaildVelset;
 
 	protected override string GetDoStr(bool hasCond)
 	{
@@ -1368,4 +1372,6 @@ public class AI_StateEvent_PlayerTurn: AI_CreateStateEvent
 	{
 		return "trigger:Turn(luaPlayer)";
 	}
+}
+
 }

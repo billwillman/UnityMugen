@@ -781,6 +781,103 @@ function Iori_ROTD:initCmd_QianShan(luaCfg)
 
 end
 
+function Iori_ROTD:initCmd_HouShan(luaCfg)
+
+--------------------------- register KeyCmd ---------------------------
+		local cmd = luaCfg:CreateCmd("后闪")
+		cmd.time = 1
+		cmd:AttachKeyCommands("")
+
+--------------------------- 后闪 ---------------------------
+		local aiCmd = luaCfg:CreateAICmd("后闪")
+		aiCmd.type = Mugen.AI_Type.ChangeState
+		aiCmd.value = "910"
+		aiCmd.OnTriggerEvent =
+				function (luaPlayer, aiName)
+						local triggle1 = (trigger:Command(luaPlayer, "后闪"))
+								and (trigger:Ctrl(luaPlayer) == 1)
+						return triggle1
+				end
+
+--------------------------- register StateDef 910 ---------------------------
+		local id = luaCfg:CreateStateDef("910")
+
+		local def = luaCfg:GetStateDef(id)
+
+		def.Type = Mugen.Cns_Type.S
+
+		def.PhysicsType = Mugen.Cns_PhysicsType.N
+
+		def.MoveType = Mugen.Cns_MoveType.I
+
+		def.Juggle = 0
+
+		def.PowerAdd = 0
+
+		def.Velset_x = 0
+
+		def.Velset_y = 0
+
+		def.Ctrl = 0
+
+		def.Sprpriority = 0
+
+		def.Animate = 910
+
+		local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+
+		state.OnTriggerEvent = 
+
+				function (luaPlayer, state)
+
+						local trigger1 = (trigger:AnimElem(luaPlayer) == 4)
+
+						if trigger1 then
+
+								trigger:VelSet(luaPlayer, -5.5 * VelSetPer, nil)
+
+						end
+
+				end
+
+		local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+
+		state.OnTriggerEvent = 
+
+				function (luaPlayer, state)
+
+						local trigger1 = (trigger:AnimElem(luaPlayer) == 10)
+
+						if trigger1 then
+
+								trigger:VelSet(luaPlayer, 0 * VelSetPer, nil)
+
+						end
+
+				end
+
+		local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+
+		state.OnTriggerEvent = 
+
+				function (luaPlayer, state)
+
+						local trigger1 = (trigger:AnimTime(luaPlayer) == 0)
+
+						if trigger1 then
+
+								trigger:PlayStandCns(luaPlayer)
+
+								trigger:CtrlSet(luaPlayer, 1)
+
+
+						end
+
+				end
+
+
+end
+
 function Iori_ROTD:_initCmds()
 	local luaCfg = trigger:GetLuaCnsCfg("Iori-ROTD")
 	if luaCfg == nil then
@@ -797,6 +894,7 @@ function Iori_ROTD:_initCmds()
 	self:initCmd_QiangZhuang(luaCfg)
 	self:initCmd_ZhuaRen(luaCfg)
 	self:initCmd_QianShan(luaCfg)
+	self:initCmd_HouShan(luaCfg)
 	
 ---------------------Run Back ------------------------------
 	local cmd = luaCfg:CreateCmd("BB")
