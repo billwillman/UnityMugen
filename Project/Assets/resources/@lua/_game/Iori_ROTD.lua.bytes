@@ -880,7 +880,6 @@ end
 
 function Iori_ROTD:initCmd_TiaoXing(luaCfg)
 
-
 --------------------------- register KeyCmd ---------------------------
 		local cmd = luaCfg:CreateCmd("挑衅")
 		cmd.time = 1
@@ -944,7 +943,105 @@ function Iori_ROTD:initCmd_TiaoXing(luaCfg)
 
 				function (luaPlayer, state)
 
+						local trigger1 = (trigger:AnimTime(luaPlayer) == 0)
+
+						if trigger1 then
+
+								trigger:PlayStandCns(luaPlayer)
+
+								trigger:CtrlSet(luaPlayer, 1)
+
+
+						end
+
+				end
+
+		local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+
+		state.OnTriggerEvent = 
+
+				function (luaPlayer, state)
+
 						trigger:CtrlSet(luaPlayer, 1)
+
+				end
+
+
+
+end
+
+function Iori_ROTD:initCmd_ZhongShou(luaCfg)
+
+--------------------------- register KeyCmd ---------------------------
+		local cmd = luaCfg:CreateCmd("重手")
+		cmd.time = 1
+		cmd:AttachKeyCommands("")
+
+--------------------------- 重手 ---------------------------
+		local aiCmd = luaCfg:CreateAICmd("重手")
+		aiCmd.type = Mugen.AI_Type.ChangeState
+		aiCmd.value = "210"
+		aiCmd.OnTriggerEvent =
+				function (luaPlayer, aiName)
+						local triggle1 = (trigger:Command(luaPlayer, "重手"))
+								and (trigger:Ctrl(luaPlayer) == 1)
+						return triggle1
+				end
+
+--------------------------- register StateDef 210 ---------------------------
+		local id = luaCfg:CreateStateDef("210")
+
+		local def = luaCfg:GetStateDef(id)
+
+		def.Type = Mugen.Cns_Type.S
+
+		def.PhysicsType = Mugen.Cns_PhysicsType.S
+
+		def.MoveType = Mugen.Cns_MoveType.A
+
+		def.Juggle = 4
+
+		def.PowerAdd = 65
+
+		def.Velset_x = 0
+
+		def.Velset_y = 0
+
+		def.Ctrl = 0
+
+		def.Sprpriority = 2
+
+		def.Animate = 210
+
+		local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+
+		state.OnTriggerEvent = 
+
+				function (luaPlayer, state)
+
+						local trigger1 = (trigger:AnimElem(luaPlayer) == 3)
+
+						if trigger1 then
+
+								trigger:PlaySnd(luaPlayer, 50, 1)
+
+						end
+
+				end
+
+		local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+
+		state.OnTriggerEvent = 
+
+				function (luaPlayer, state)
+
+						local trigger1 = (trigger:AnimElem(luaPlayer) == 3)
+
+						if trigger1 then
+
+								trigger:PlaySnd(luaPlayer, 3, 1)
+
+						end
 
 				end
 
@@ -968,6 +1065,101 @@ function Iori_ROTD:initCmd_TiaoXing(luaCfg)
 				end
 
 
+end
+
+function Iori_ROTD:initCmd_QinTui(luaCfg)
+
+--------------------------- register KeyCmd ---------------------------
+		local cmd = luaCfg:CreateCmd("轻腿")
+		cmd.time = 1
+		cmd:AttachKeyCommands("")
+
+--------------------------- 轻腿 ---------------------------
+		local aiCmd = luaCfg:CreateAICmd("轻腿")
+		aiCmd.type = Mugen.AI_Type.ChangeState
+		aiCmd.value = "220"
+		aiCmd.OnTriggerEvent =
+				function (luaPlayer, aiName)
+						local triggle1 = (trigger:Command(luaPlayer, "轻腿"))
+						return triggle1
+				end
+
+--------------------------- register StateDef 220 ---------------------------
+		local id = luaCfg:CreateStateDef("220")
+
+		local def = luaCfg:GetStateDef(id)
+
+		def.Type = Mugen.Cns_Type.S
+
+		def.PhysicsType = Mugen.Cns_PhysicsType.S
+
+		def.MoveType = Mugen.Cns_MoveType.A
+
+		def.Juggle = 4
+
+		def.PowerAdd = 22
+
+		def.Velset_x = 0
+
+		def.Velset_y = 0
+
+		def.Ctrl = 0
+
+		def.Sprpriority = 2
+
+		def.Animate = 220
+
+		local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+
+		state.OnTriggerEvent = 
+
+				function (luaPlayer, state)
+
+						local trigger1 = (trigger:AnimElem(luaPlayer) == 2)
+
+						if trigger1 then
+
+								trigger:PlaySnd(luaPlayer, 50, 0)
+
+						end
+
+				end
+
+		local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+
+		state.OnTriggerEvent = 
+
+				function (luaPlayer, state)
+
+						local trigger1 = (trigger:AnimElem(luaPlayer) == 2)
+
+						if trigger1 then
+
+								trigger:PlaySnd(luaPlayer, 3, 2)
+
+						end
+
+				end
+
+		local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+
+		state.OnTriggerEvent = 
+
+				function (luaPlayer, state)
+
+						local trigger1 = (trigger:AnimTime(luaPlayer) == 0)
+
+						if trigger1 then
+
+								trigger:PlayStandCns(luaPlayer)
+
+								trigger:CtrlSet(luaPlayer, 1)
+
+
+						end
+
+				end
+
 
 end
 
@@ -978,7 +1170,7 @@ function Iori_ROTD:_initCmds()
 	end
 	
 	-- 普攻
-	self:_initCmd_a(luaCfg)
+	--self:_initCmd_a(luaCfg)
 	-- 奔跑
 	self:_initCmd_FF(luaCfg)
 	--禁千弐百十壱式・八稚女
@@ -988,6 +1180,9 @@ function Iori_ROTD:_initCmds()
 	self:initCmd_ZhuaRen(luaCfg)
 	self:initCmd_QianShan(luaCfg)
 	self:initCmd_HouShan(luaCfg)
+	self:initCmd_TiaoXing(luaCfg)
+	self:initCmd_ZhongShou(luaCfg)
+	self:initCmd_QinTui(luaCfg)
 	
 ---------------------Run Back ------------------------------
 	local cmd = luaCfg:CreateCmd("BB")
