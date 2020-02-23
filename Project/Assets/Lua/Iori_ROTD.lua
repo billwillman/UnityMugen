@@ -880,7 +880,6 @@ end
 
 function Iori_ROTD:initCmd_TiaoXing(luaCfg)
 
-
 --------------------------- register KeyCmd ---------------------------
 		local cmd = luaCfg:CreateCmd("挑衅")
 		cmd.time = 1
@@ -944,16 +943,6 @@ function Iori_ROTD:initCmd_TiaoXing(luaCfg)
 
 				function (luaPlayer, state)
 
-						trigger:CtrlSet(luaPlayer, 1)
-
-				end
-
-		local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
-
-		state.OnTriggerEvent = 
-
-				function (luaPlayer, state)
-
 						local trigger1 = (trigger:AnimTime(luaPlayer) == 0)
 
 						if trigger1 then
@@ -964,6 +953,16 @@ function Iori_ROTD:initCmd_TiaoXing(luaCfg)
 
 
 						end
+
+				end
+
+		local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+
+		state.OnTriggerEvent = 
+
+				function (luaPlayer, state)
+
+						trigger:CtrlSet(luaPlayer, 1)
 
 				end
 
@@ -988,6 +987,7 @@ function Iori_ROTD:_initCmds()
 	self:initCmd_ZhuaRen(luaCfg)
 	self:initCmd_QianShan(luaCfg)
 	self:initCmd_HouShan(luaCfg)
+	self:initCmd_TiaoXing(luaCfg)
 	
 ---------------------Run Back ------------------------------
 	local cmd = luaCfg:CreateCmd("BB")

@@ -102,11 +102,11 @@ MonoBehaviour:
       - fieldName: parent
         node: {fileID: 11449684}
         reroutePoints: []
-      - fieldName: condition
-        node: {fileID: 11495000}
-        reroutePoints: []
       - fieldName: parent
         node: {fileID: 11447988}
+        reroutePoints: []
+      - fieldName: condition
+        node: {fileID: 11495000}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
@@ -184,7 +184,7 @@ MonoBehaviour:
   m_Name: AI_Cond_Player Time
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 120, y: -184}
+  position: {x: -40, y: 40}
   ports:
     keys:
     - output
@@ -414,7 +414,7 @@ MonoBehaviour:
   m_Name: AI_State Event_Ctrl Set
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 24, y: 24}
+  position: {x: -40, y: 168}
   ports:
     keys:
     - parent

@@ -39,17 +39,17 @@ function Iori_ROTD:initCmd_挑衅(luaCfg)
 		local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
 		state.OnTriggerEvent = 
 				function (luaPlayer, state)
-						trigger:CtrlSet(luaPlayer, 1)
-				end
-		local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
-		state.OnTriggerEvent = 
-				function (luaPlayer, state)
 						local trigger1 = (trigger:AnimTime(luaPlayer) == 0)
 						if trigger1 then
 								trigger:PlayStandCns(luaPlayer)
 								trigger:CtrlSet(luaPlayer, 1)
 
 						end
+				end
+		local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+		state.OnTriggerEvent = 
+				function (luaPlayer, state)
+						trigger:CtrlSet(luaPlayer, 1)
 				end
 
 
