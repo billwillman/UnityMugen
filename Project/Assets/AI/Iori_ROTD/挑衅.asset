@@ -1,0 +1,451 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d9abc98e67c740d1a595470a655bf7b, type: 3}
+  m_Name: "\u6311\u8845"
+  m_EditorClassIdentifier: 
+  nodes:
+  - {fileID: 11463148}
+  - {fileID: 11443004}
+  - {fileID: 11449684}
+  - {fileID: 11478962}
+  - {fileID: 11448106}
+  - {fileID: 11495000}
+  - {fileID: 11447988}
+  - {fileID: 11441062}
+  - {fileID: 11469450}
+  - {fileID: 11489614}
+--- !u!114 &11441062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91d00f4b4364444a894a8be688e3acf7, type: 3}
+  m_Name: AI_Cond_Player Ani Time
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 232, y: 72}
+  ports:
+    keys:
+    - output
+    values:
+    - _fieldName: output
+      _node: {fileID: 11441062}
+      _typeQualifiedName: XNode.Mugen.AI_BaseCondition, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: condition
+        node: {fileID: 11447988}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  output: {fileID: 11441062}
+  aniTime: 0
+  op: 4
+--- !u!114 &11443004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0e3d0c396b62407e858c28ad9556b21, type: 3}
+  m_Name: AI_Create State Def
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -360, y: -88}
+  ports:
+    keys:
+    - input
+    - prevCns
+    - output
+    values:
+    - _fieldName: input
+      _node: {fileID: 11443004}
+      _typeQualifiedName: XNode.Mugen.AI_Cmd, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: output
+        node: {fileID: 11463148}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: prevCns
+      _node: {fileID: 11443004}
+      _typeQualifiedName: XNode.Mugen.AI_StateEvent_PlayCns, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: output
+      _node: {fileID: 11443004}
+      _typeQualifiedName: XNode.Mugen.AI_CreateStateDef, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: parent
+        node: {fileID: 11449684}
+        reroutePoints: []
+      - fieldName: condition
+        node: {fileID: 11495000}
+        reroutePoints: []
+      - fieldName: parent
+        node: {fileID: 11447988}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  realAnimate: -9999
+  input: {fileID: 11463148}
+  prevCns: {fileID: 0}
+  output: {fileID: 0}
+  type: 1
+  moveType: 2
+  physicsType: 1
+  juggle: 0
+  powerAdd: 0
+  velset_x: 0
+  velset_y: 0
+  ctrl: 0
+  sprpriority: 2
+--- !u!114 &11447988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d837f8af714d9414cbfb1d9b93fa7c5c, type: 3}
+  m_Name: AI_State Event_Play Stand Cns
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 232, y: -88}
+  ports:
+    keys:
+    - parent
+    - condition
+    values:
+    - _fieldName: parent
+      _node: {fileID: 11447988}
+      _typeQualifiedName: XNode.Mugen.AI_CreateStateDef, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: output
+        node: {fileID: 11443004}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: condition
+      _node: {fileID: 11447988}
+      _typeQualifiedName: XNode.Mugen.AI_BaseCondition, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: output
+        node: {fileID: 11441062}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+  parent: {fileID: 11443004}
+  condition: {fileID: 11441062}
+  setPersistent: 0
+  triggleType: 3
+  IsSetCtrl_1: 1
+--- !u!114 &11448106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd7804e007c264352b205d4efcc5f1b1, type: 3}
+  m_Name: AI_Cond_Player Time
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 120, y: -184}
+  ports:
+    keys:
+    - output
+    values:
+    - _fieldName: output
+      _node: {fileID: 11448106}
+      _typeQualifiedName: XNode.Mugen.AI_BaseCondition, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: parent
+        node: {fileID: 11495000}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  output: {fileID: 11448106}
+  time: 40
+  op: 4
+--- !u!114 &11449684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2af9e137d2714b95a54564ae910bf7e, type: 3}
+  m_Name: AI_State Event_Play Snd
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -120, y: -136}
+  ports:
+    keys:
+    - parent
+    - condition
+    values:
+    - _fieldName: parent
+      _node: {fileID: 11449684}
+      _typeQualifiedName: XNode.Mugen.AI_CreateStateDef, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: output
+        node: {fileID: 11443004}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: condition
+      _node: {fileID: 11449684}
+      _typeQualifiedName: XNode.Mugen.AI_BaseCondition, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: output
+        node: {fileID: 11478962}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+  parent: {fileID: 11443004}
+  condition: {fileID: 11478962}
+  setPersistent: 0
+  triggleType: 2
+  group: 20
+  index: 0
+--- !u!114 &11463148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41a59b94a50124f6b851fffc80a8f65b, type: 3}
+  m_Name: AI_Cmd
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -248, y: -296}
+  ports:
+    keys:
+    - condList
+    - output
+    values:
+    - _fieldName: condList
+      _node: {fileID: 11463148}
+      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Mugen.AI_BaseCondition,
+        Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]],
+        mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: output
+        node: {fileID: 11469450}
+        reroutePoints: []
+      - fieldName: output
+        node: {fileID: 11489614}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: output
+      _node: {fileID: 11463148}
+      _typeQualifiedName: XNode.Mugen.AI_Cmd, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: 11443004}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  cmdName: "\u6311\u8845"
+  aiType: 2
+  value: 160
+  condList:
+  - {fileID: 11469450}
+  - {fileID: 11489614}
+  output: {fileID: 0}
+--- !u!114 &11469450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cb98f0726e8c4412ae6b8e091ade250, type: 3}
+  m_Name: AI_Key Cmd
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -504, y: -344}
+  ports:
+    keys:
+    - output
+    values:
+    - _fieldName: output
+      _node: {fileID: 11469450}
+      _typeQualifiedName: XNode.Mugen.AI_BaseCondition, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: condList
+        node: {fileID: 11463148}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  output: {fileID: 11469450}
+  name: "\u6311\u8845"
+  time: 1
+  keyCommands: 
+--- !u!114 &11478962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ec5a8799221b4ea2b313d1a2e3e8f6b, type: 3}
+  m_Name: AI_Cond_Player Ani Elem
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -47.5, y: -255.5}
+  ports:
+    keys:
+    - output
+    values:
+    - _fieldName: output
+      _node: {fileID: 11478962}
+      _typeQualifiedName: XNode.Mugen.AI_BaseCondition, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: condition
+        node: {fileID: 11449684}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  output: {fileID: 11478962}
+  aniElem: 2
+  op: 4
+--- !u!114 &11489614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: beffae1a6575b4a64915f7c4952713cf, type: 3}
+  m_Name: AI_Cond_Player Ctrl
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -534.5, y: -184}
+  ports:
+    keys:
+    - output
+    values:
+    - _fieldName: output
+      _node: {fileID: 11489614}
+      _typeQualifiedName: XNode.Mugen.AI_BaseCondition, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: condList
+        node: {fileID: 11463148}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  output: {fileID: 11489614}
+  Ctrl: 1
+  isNot: 0
+--- !u!114 &11495000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c08b224d102504e98bd1ff5484809b36, type: 3}
+  m_Name: AI_State Event_Ctrl Set
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 24, y: 24}
+  ports:
+    keys:
+    - parent
+    - condition
+    values:
+    - _fieldName: parent
+      _node: {fileID: 11495000}
+      _typeQualifiedName: XNode.Mugen.AI_CreateStateDef, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: output
+        node: {fileID: 11448106}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: condition
+      _node: {fileID: 11495000}
+      _typeQualifiedName: XNode.Mugen.AI_BaseCondition, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: output
+        node: {fileID: 11443004}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+  parent: {fileID: 0}
+  condition: {fileID: 0}
+  setPersistent: 0
+  triggleType: 3
+  ctrl: 1

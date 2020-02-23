@@ -115,6 +115,8 @@ namespace XNode.Mugen
 			}
 			if (isWrited) {
 				builder.Append (preStr).Append ("return triggle1").AppendLine ();
+			} else {
+				builder.Append (preStr).Append ("return true").AppendLine ();
 			}
 		}
 
