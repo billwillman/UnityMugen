@@ -515,6 +515,10 @@ public class PlayerDisplayEditor : Editor {
 			EditorGUILayout.LabelField(string.Format("【当前帧调色板链接】组：{0:D} 帧：{0:D}", palGroup, palIndex));
 			EditorGUILayout.EndHorizontal ();
 
+			int stateno = m_LastDisplay.Stateno;
+
+			EditorGUILayout.LabelField(string.Format("【当前StateNo】{0:D}", stateno));
+
 			EditorGUILayout.Space ();
 			EditorGUILayout.Space ();
 			EditorGUILayout.Space ();
