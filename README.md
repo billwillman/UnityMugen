@@ -8,7 +8,7 @@
 2. 与Mugen不同之处在于cns和cmd，采用LUA来编写。配备了简易的基于xNode节点模式的编辑器（初步版本），用来
 	生成代码段。
 	
-![enter description here](./images/skillTree_1.png)
+![enter description here](https://github.com/billwillman/UnityMugen/blob/master/ShowCase/skillTree.png)
 
 3. 完成了技能基础流程。
 
@@ -22,6 +22,6 @@
 
 ## 【目前运行展示】
 
-![enter description here](./images/kof97_1.png)
+![enter description here](https://github.com/billwillman/UnityMugen/blob/master/ShowCase/kof97.png)
 
-![enter description here](./images/kofRv.png)
+![enter description here](https://github.com/billwillman/UnityMugen/blob/master/ShowCase/kofRv.png)
