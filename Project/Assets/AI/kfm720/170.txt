@@ -1,16 +1,27 @@
 function kfm720:initCmd_170(luaCfg)
---------------------------- register StateDef 170 ---------------------------
+
+--------------------------- register StateDef 170 ---------------------------
 		local id = luaCfg:CreateStateDef("170")
-		local def = luaCfg:GetStateDef(id)
-		def.Type = Mugen.Cns_Type.S
-		def.Juggle = 0
-		def.PowerAdd = 0
-		def.Velset_x = 0
-		def.Velset_y = 0
-		def.Ctrl = 0
-		def.Sprpriority = 0
-		def.Animate = 170
-
+
+		local def = luaCfg:GetStateDef(id)
+
+		def.Type = Mugen.Cns_Type.S
+
+		def.Juggle = 0
+
+		def.PowerAdd = 0
+
+		def.Velset_x = 0
+
+		def.Velset_y = 0
+
+		def.Ctrl = 0
+
+		def.Sprpriority = 0
+
+		def.Animate = 170
+
+
 
 end
-
+

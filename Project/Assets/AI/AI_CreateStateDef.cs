@@ -98,7 +98,7 @@ namespace XNode.Mugen
 		[SerializeField] public float velset_x = CNSStateDef._cNoVaildVelset;
 		[SerializeField] public float velset_y = CNSStateDef._cNoVaildVelset;
 		//public int animate = 0;
-		[SerializeField] public int ctrl = 0;
+		[SerializeField] public int ctrl = CNSStateDef._cNoVaildCtrl;
 		[SerializeField] public int sprpriority = 0;
 
 		public override object GetValue(NodePort port)
