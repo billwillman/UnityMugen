@@ -90,9 +90,9 @@ namespace XNode.Mugen
 		[Output(ShowBackingValue.Never)]
 		[SerializeField] public AI_CreateStateDef output;
 
-		[SerializeField] public Cns_Type type = Cns_Type.S;
+		[SerializeField] public Cns_Type type = Cns_Type.none;
 		[SerializeField] public Cns_MoveType moveType = Cns_MoveType.none;
-		[SerializeField] public Cns_PhysicsType physicsType = Cns_PhysicsType.S;
+		[SerializeField] public Cns_PhysicsType physicsType = Cns_PhysicsType.none;
 		[SerializeField] public int juggle = 0;
 		[SerializeField] public int powerAdd = 0;
 		[SerializeField] public float velset_x = CNSStateDef._cNoVaildVelset;
