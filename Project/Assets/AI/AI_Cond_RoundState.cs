@@ -14,7 +14,7 @@ namespace XNode.Mugen {
 
         public override string ToCondString(string luaPlayer) {
             var opStr = GetOpStr(op);
-            string ret = string.Format("RoundState{0}{1:D}", opStr, value);
+            string ret = string.Format("trigger:RoundState(){0}{1:D}", opStr, value);
             return ret;
         }
     }
