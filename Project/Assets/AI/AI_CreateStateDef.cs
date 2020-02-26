@@ -20,13 +20,14 @@ namespace XNode.Mugen
 			get {
 				string ret = string.Empty;
 
-				if (input != null && input.aiType == AI_Type.ChangeState) {
-					ret = input.value;
-				} else if (prevCns != null) {
-					ret = prevCns.Animate;
-				}
+                if (input != null && input.aiType == AI_Type.ChangeState) {
+                    ret = input.value;
+                } else if (prevCns != null) {
+                    ret = prevCns.Animate;
+                } else if (realAnimate != CNSStateDef._cNoVaildAnim)
+                    return realAnimate.ToString();
 
-				return ret;
+                return ret;
 			}
 		}
 
