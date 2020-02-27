@@ -107,11 +107,6 @@ namespace Mugen
                     if (m_NotHit.CheckPlayer(display))
                         return false;
                 }
-
-                //--------- 調用HitBy
-                
-                //-------------------------
-
                 return true;
             }
 
