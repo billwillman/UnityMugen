@@ -1,0 +1,22 @@
+function kfm720:initCmd_180(luaCfg)
+--------------------------- register StateDef 180 ---------------------------
+		local id = luaCfg:CreateStateDef("180")
+		local def = luaCfg:GetStateDef(id)
+		def.Type = Mugen.Cns_Type.S
+		def.Juggle = 0
+		def.PowerAdd = 0
+		def.Ctrl = 1
+		def.Sprpriority = 0
+		def.Animate = 180
+		local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+		state.OnTriggerEvent = 
+				function (luaPlayer, state)
+						local trigger1 = (trigger:Time(luaPlayer) == 0)
+						if trigger1 then
+								trigger:PlayCnsByName(luaPlayer, 181, false)
+						end
+				end
+
+
+end
+

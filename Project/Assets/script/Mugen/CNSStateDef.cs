@@ -37,6 +37,7 @@ namespace Mugen
 		private Cns_Type m_Type = Cns_Type.none;
 		private Cns_MoveType m_MoveType = Cns_MoveType.none;
 		private Cns_PhysicsType m_PhysicsType = Cns_PhysicsType.none;
+        private CnsNotHit m_NotHit = null;
         // 事件注册
         private Dictionary<int, List<CNSState>> m_StateEventsMap = null;
 
@@ -56,6 +57,10 @@ namespace Mugen
 		[NoToLuaAttribute]
 		public void ResetStatesPersistent(PlayerDisplay display)
 		{
+            if (m_NotHit != null) {
+                m_NotHit.Reset();
+            }
+
 			if (display != null && m_StateEventsMap != null) {
 				var iter = m_StateEventsMap.GetEnumerator ();
 				while (iter.MoveNext ()) {
@@ -72,11 +77,42 @@ namespace Mugen
 			}
 		}
 
+        private void UpdateNotHit(PlayerDisplay display) {
+            if (m_NotHit != null && m_NotHit.m_IsEnabled) {
+                m_NotHit.Update(AppConfig.GetInstance().DeltaTick);
+            }
+        }
+
+        public void CreateNotHit(Cns_Type standType, Cns_MoveType moveType, Cns_PhysicsType physicsType, string luaFuncName = "") {
+            if (m_NotHit == null)
+                m_NotHit = new CnsNotHit();
+
+            m_NotHit.m_IsEnabled = true;
+
+            m_NotHit.m_Type = standType;
+            m_NotHit.m_MoveType = moveType;
+            m_NotHit.m_PhysicsType = physicsType;
+            m_NotHit.m_LuaFuncName = luaFuncName;
+        }
+
         [NoToLuaAttribute]
 		public void OnStateEvent(PlayerDisplay display, CnsStateTriggerType evtType)
         {
 			if (display == null)
 				return;
+
+            if (evtType == CnsStateTriggerType.Hit) {
+                if (m_NotHit != null) {
+                    if (m_NotHit.CheckPlayer(display))
+                        return;
+                }
+
+                //--------- 調用HitBy
+                
+                //-------------------------
+
+                return;
+            }
 			
             // 触发状态事件
 			if (m_StateEventsMap != null) {
@@ -85,11 +121,14 @@ namespace Mugen
 				if (m_StateEventsMap.TryGetValue (key, out list)) {
 					for (int i = 0; i < list.Count; ++i) {
 						CNSState state = list [i];
-						if (state != null && (!display.IsStatePersistent(state)))
-							state.Call_TriggerEvent (display);
+                        if (state != null && (!display.IsStatePersistent(state))) {
+                            state.Call_TriggerEvent(display);
+                        }
 					}
 				}
 			}
+
+            UpdateNotHit(display);
         }
 
 		public CNSState CreateStateEvent(CnsStateTriggerType evtType, CnsStateType type = CnsStateType.none)

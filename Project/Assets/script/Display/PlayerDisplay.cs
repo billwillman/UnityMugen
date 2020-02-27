@@ -127,6 +127,13 @@ public class PlayerDisplay : BaseResLoader {
 		return ret;
 	}
 
+    public void CreateNotHit(Cns_Type standType, Cns_MoveType moveType, Cns_PhysicsType physicsType, string scriptFuncName = "") {
+        var stateMgr = this.StateMgr;
+        if (stateMgr == null || stateMgr.CurrentCnsDef == null)
+            return;
+        stateMgr.CurrentCnsDef.CreateNotHit(standType, moveType, physicsType, scriptFuncName);
+    }
+
 	public static LuaTable GetPlayer(InputPlayerType playerType)
 	{
 		if (playerType == InputPlayerType.none || AppConfig.IsAppQuit)
@@ -251,6 +258,8 @@ public class PlayerDisplay : BaseResLoader {
 				attribe.StandType = def.Type;
 			if (def.PhysicsType != Cns_PhysicsType.none)
 				attribe.PhysicsType = def.PhysicsType;
+            if (def.MoveType != Cns_MoveType.none)
+                attribe.MoveType = def.MoveType;
 			attribe.Power += def.PowerAdd;
 			//if (def.Ctrl != CNSStateDef._cNoVaildCtrl)
 			attribe.Ctrl = def.Ctrl;
@@ -414,6 +423,15 @@ public class PlayerDisplay : BaseResLoader {
 			return m_Movement;
 		}
 	}
+
+    public Cns_MoveType MoveType {
+        get {
+            var attr = this.Attribe;
+            if (attr == null)
+                return Cns_MoveType.none;
+            return attr.MoveType;
+        }
+    }
 
 	public Cns_PhysicsType PhysicsType
 	{

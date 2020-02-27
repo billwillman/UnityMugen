@@ -780,6 +780,23 @@ function trigger:CreateProj(luaPlayer, isCreateHelper)
 	return proj, helper
 end
 
+function trigger:CreateNotHit(luaPlayer, standType, moveType, physicsType, scriptFuncName)
+	if luaPlayer == nil then
+		return
+	end
+	local display = luaPlayer.PlayerDisplay;
+	if display == nil then
+		return
+	end
+	
+	scriptFuncName = scriptFuncName or ""
+	standType = Mugen.Cns_Type.none
+	moveType = Mugen.Cns_MoveType.none
+	physicsType = Mugen.Cns_PhysicsType.none
+	
+	display:CreateNotHit(standType, moveType, physicsType, physicsType)
+end
+
 -- 帮助模块
 function trigger:Help_CreateStateDef(luaCfg, name)
 	if luaCfg == nil or name == nil then
