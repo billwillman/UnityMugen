@@ -39,7 +39,7 @@ namespace Mugen
 		Anim, // 动画切换时
 		AnimElem,// 动画帧切换时
 		AnimTime,// 动画播放过程中（每次循环跑圈都会调用）
-        Hit, // 被攻擊上
+        Hited, // 被攻擊上
     }
 
     public class CNSState

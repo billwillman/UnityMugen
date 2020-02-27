@@ -97,22 +97,22 @@ namespace Mugen
         }
 
         [NoToLuaAttribute]
-		public void OnStateEvent(PlayerDisplay display, CnsStateTriggerType evtType)
+		public bool OnStateEvent(PlayerDisplay display, CnsStateTriggerType evtType)
         {
 			if (display == null)
-				return;
+				return false;
 
-            if (evtType == CnsStateTriggerType.Hit) {
+            if (evtType == CnsStateTriggerType.Hited) {
                 if (m_NotHit != null) {
                     if (m_NotHit.CheckPlayer(display))
-                        return;
+                        return false;
                 }
 
                 //--------- 調用HitBy
                 
                 //-------------------------
 
-                return;
+                return true;
             }
 
             if (evtType == CnsStateTriggerType.AnimTime) {
@@ -132,6 +132,8 @@ namespace Mugen
 					}
 				}
 			}
+
+            return true;
         }
 
 		public CNSState CreateStateEvent(CnsStateTriggerType evtType, CnsStateType type = CnsStateType.none)
