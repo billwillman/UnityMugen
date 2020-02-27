@@ -15,7 +15,7 @@ namespace XNode.Mugen {
         [SerializeField] public Cns_Type standType = Cns_Type.none;
         [SerializeField] public Cns_MoveType moveType = Cns_MoveType.none;
         [SerializeField] public Cns_PhysicsType physicsType = Cns_PhysicsType.none;
-        [NonSerialized] public int durTime = 1f;
+        [NonSerialized] public int durTime = 1;
 
         protected override string GetDoStr(bool hasCond) {
             if (standType == Cns_Type.none && moveType == Cns_MoveType.none && physicsType == Cns_PhysicsType.none && string.IsNullOrEmpty(scriptFuncName))
