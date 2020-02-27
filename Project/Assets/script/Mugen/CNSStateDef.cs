@@ -79,11 +79,11 @@ namespace Mugen
 
         private void UpdateNotHit(PlayerDisplay display) {
             if (m_NotHit != null && m_NotHit.m_IsEnabled) {
-                m_NotHit.Update(AppConfig.GetInstance().DeltaTick);
+                m_NotHit.UpdateTime(AppConfig.GetInstance().DeltaTick);
             }
         }
 
-        public void CreateNotHit(Cns_Type standType, Cns_MoveType moveType, Cns_PhysicsType physicsType, string luaFuncName = "") {
+        public void CreateNotHit(float durTime, Cns_Type standType, Cns_MoveType moveType, Cns_PhysicsType physicsType, string luaFuncName = "") {
             if (m_NotHit == null)
                 m_NotHit = new CnsNotHit();
 
@@ -93,6 +93,7 @@ namespace Mugen
             m_NotHit.m_MoveType = moveType;
             m_NotHit.m_PhysicsType = physicsType;
             m_NotHit.m_LuaFuncName = luaFuncName;
+            m_NotHit.m_Time = durTime;
         }
 
         [NoToLuaAttribute]
@@ -113,9 +114,13 @@ namespace Mugen
 
                 return;
             }
-			
+
+            if (evtType == CnsStateTriggerType.AnimTime) {
+                UpdateNotHit(display);
+            }
+
             // 触发状态事件
-			if (m_StateEventsMap != null) {
+            if (m_StateEventsMap != null) {
 				int key = (int)evtType;
 				List<CNSState> list;
 				if (m_StateEventsMap.TryGetValue (key, out list)) {
@@ -127,8 +132,6 @@ namespace Mugen
 					}
 				}
 			}
-
-            UpdateNotHit(display);
         }
 
 		public CNSState CreateStateEvent(CnsStateTriggerType evtType, CnsStateType type = CnsStateType.none)

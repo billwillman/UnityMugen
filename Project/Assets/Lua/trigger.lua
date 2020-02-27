@@ -780,7 +780,7 @@ function trigger:CreateProj(luaPlayer, isCreateHelper)
 	return proj, helper
 end
 
-function trigger:CreateNotHit(luaPlayer, standType, moveType, physicsType, scriptFuncName)
+function trigger:CreateNotHit(durTime, luaPlayer, standType, moveType, physicsType, scriptFuncName)
 	if luaPlayer == nil then
 		return
 	end
@@ -789,12 +789,13 @@ function trigger:CreateNotHit(luaPlayer, standType, moveType, physicsType, scrip
 		return
 	end
 	
+	durTime = durTime or 1
 	scriptFuncName = scriptFuncName or ""
 	standType = Mugen.Cns_Type.none
 	moveType = Mugen.Cns_MoveType.none
 	physicsType = Mugen.Cns_PhysicsType.none
 	
-	display:CreateNotHit(standType, moveType, physicsType, physicsType)
+	display:CreateNotHit(durTime, standType, moveType, physicsType, physicsType)
 end
 
 -- 帮助模块

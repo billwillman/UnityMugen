@@ -10,11 +10,11 @@ namespace Mugen {
         public Cns_Type m_Type = Cns_Type.none;
         public Cns_MoveType m_MoveType = Cns_MoveType.none;
         public Cns_PhysicsType m_PhysicsType = Cns_PhysicsType.none;
-        public float m_Time = 0f;
+        public float m_Time = 1f;
 
-        public void Update(float deltaTime) {
+        public void UpdateTime(float tick) {
             if (m_IsEnabled) {
-                m_Time -= deltaTime;
+                m_Time -= tick;
                 if (m_Time <= 0) {
                     Reset();
                 }
