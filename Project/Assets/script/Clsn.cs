@@ -10,8 +10,10 @@ public enum ClsnType
 
 
 [RequireComponent(typeof(BoxCollider2D))]
+[RequireComponent(typeof(Rigidbody2D))]
 public class Clsn : MonoBehaviour {
     private BoxCollider2D m_Box;
+    private Rigidbody2D m_Rig = null;
     private ClsnType m_Type = ClsnType.none;
     private float m_CreateTimer = 0f;
     private bool m_IsVisible = false;
@@ -20,6 +22,14 @@ public class Clsn : MonoBehaviour {
     public InputPlayerType PlayerType {
         get {
             return m_PlayerType;
+        }
+    }
+
+    protected Rigidbody2D Rig {
+        get {
+            if (m_Rig == null)
+                m_Rig = GetComponent<Rigidbody2D>();
+            return m_Rig;
         }
     }
 
@@ -124,5 +134,10 @@ public class Clsn : MonoBehaviour {
         trans.localRotation = Quaternion.identity;
 
         m_IsVisible = true;
+
+        var rig = this.Rig;
+        if (rig != null) {
+            rig.isKinematic = true;
+        }
     }
 }
