@@ -274,7 +274,7 @@ public class PlayerDisplay : BaseResLoader {
 		*/
 		if (this.StateMgr.CurrentCnsDef == def)
 			return;
-		m_OffsetPos.z = m_IsFlipX ? def.Sprpriority : -def.Sprpriority;
+		m_OffsetPos.z = m_IsFlipX ? -def.Sprpriority : -def.Sprpriority;
 		//Debug.LogError (def.Sprpriority.ToString ());
 		PlayerAttribe attribe = this.Attribe;
 		if (attribe != null) {
