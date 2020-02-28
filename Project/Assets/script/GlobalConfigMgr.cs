@@ -217,6 +217,7 @@ public class GlobalConfigMgr : MonoSingleton<GlobalConfigMgr> {
         if (box.transform.parent == m_ClsnColliderPoolRoot.transform)
             return;
 
+        box.OnInPool();
         box.transform.SetParent(m_ClsnColliderPoolRoot.transform, false);
     }
 

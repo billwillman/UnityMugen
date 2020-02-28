@@ -218,6 +218,20 @@ public class PlayerDisplay : BaseResLoader {
     }
 
     [NoToLua]
+    public bool OnAttacked() {
+        var stateMgr = this.StateMgr;
+        if (stateMgr != null && stateMgr.CurrentCnsDef != null) {
+            return stateMgr.CurrentCnsDef.OnStateEvent(this, CnsStateTriggerType.Hited);
+        }
+        return true;
+    }
+
+    [NoToLua]
+    public void OnAttack(PlayerDisplay target) {
+
+    }
+
+    [NoToLua]
     public Dictionary<KeyValuePair<int, int>, byte[]>.Enumerator GetSoundIter()
     {
         if (m_LoaderPlayer == null)

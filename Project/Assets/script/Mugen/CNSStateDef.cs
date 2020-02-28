@@ -96,6 +96,12 @@ namespace Mugen
             m_NotHit.m_Time = durTime;
         }
 
+        // 攻击别人（由攻击盒触发）
+        [NoToLuaAttribute]
+        public void OnHitBy(PlayerDisplay owner, PlayerDisplay target) {
+
+        }
+
         [NoToLuaAttribute]
 		public bool OnStateEvent(PlayerDisplay display, CnsStateTriggerType evtType)
         {
