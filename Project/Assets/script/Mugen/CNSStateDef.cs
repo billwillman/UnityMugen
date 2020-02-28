@@ -5,30 +5,33 @@ using LuaInterface;
 
 namespace Mugen
 {
+    // 形态
 	public enum Cns_Type
 	{
-		none = 0,
-		S,  // 站立
+		none = 0, // 不设置
+        S,  // 站立
 		C,  // 蹲
 		A,  // 空中
 		L   // 倒立
 	}
 
+    // 动作形态
 	public enum Cns_MoveType
 	{
-		none = 0,
-		A, //攻击
-		I, // 非攻击
+		none = 0, // 不设置
+        A, //攻击
+		I, // 通常(发呆)
 		H  // 受击
 	}
 
+    // 物理形态
 	public enum Cns_PhysicsType
 	{
-		none = 0,
-		S,
-		C,
-		A,
-        N
+		none = 0, // 不设置
+		S, // 站立
+		C, // 蹲下
+		A, // 空中
+        N  // 没有
 	}
 
 	[Serializable]

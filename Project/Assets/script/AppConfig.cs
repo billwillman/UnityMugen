@@ -18,6 +18,8 @@ public class AppConfig : MonoSingleton<AppConfig> {
 	public bool IsUsePhysixUpdate = true;
 	public Camera m_Camera = null;
 	public float m_PlayerScale = 1.0f;
+    // 动态摩擦力因子
+    public float u = 1.0f;
 	public CameraFollowMode m_CameraFollowTarget = CameraFollowMode._1p;
 
 	public void StartFollow()

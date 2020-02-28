@@ -7,6 +7,8 @@ public class StageMgr : MonoSingleton<StageMgr> {
 
 	public string DefaultSceneRoot= string.Empty;
 	public string DefaultSceneName = string.Empty;
+    // 摩擦因子
+    public float u = 0.005f;
 	private SceneConfig m_Config = null;
     private SceneImageRes m_ImageRes = null;
     private string m_LoadedSceneName = string.Empty;
@@ -15,7 +17,7 @@ public class StageMgr : MonoSingleton<StageMgr> {
     private int m_LastpalletImageLink = -1;
 	private AudioSource m_Audio = null;
 	private BaseResLoader m_Loader = null;
-	private AudioClip m_BgClip = null;
+    private AudioClip m_BgClip = null;
 
 	protected BaseResLoader Loader
 	{

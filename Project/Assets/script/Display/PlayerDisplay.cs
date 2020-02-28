@@ -55,6 +55,10 @@ public class PlayerDisplay : BaseResLoader {
 		}
 	}
 
+    [NoToLua]
+    // 质量
+    public float M = 1.0f;
+
 
 	[NoToLuaAttribute]
     public Vector3 m_OffsetPos = Vector2.zero;
