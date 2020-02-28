@@ -81,6 +81,13 @@ public class Clsn : MonoBehaviour {
         }
     }
 
+    private void OnTriggerStay2D(Collider2D collision) {
+        if (collision != null) {
+            Clsn other = collision.GetComponent<Clsn>();
+            OnClsnCollision(other);
+        }
+    }
+
     public ClsnType clsnType
     {
         get
