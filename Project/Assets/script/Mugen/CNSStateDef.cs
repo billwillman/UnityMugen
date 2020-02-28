@@ -98,7 +98,7 @@ namespace Mugen
 
         // 攻击别人（由攻击盒触发）
         [NoToLuaAttribute]
-        public void OnHitBy(PlayerDisplay owner, PlayerDisplay target) {
+        public void OnHitBy(PlayerDisplay owner, PlayerDisplay target) { 
 
         }
 

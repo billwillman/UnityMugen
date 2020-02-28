@@ -228,7 +228,13 @@ public class PlayerDisplay : BaseResLoader {
 
     [NoToLua]
     public void OnAttack(PlayerDisplay target) {
+        if (target == null)
+            return;
 
+        var stateMgr = this.StateMgr;
+        if (stateMgr != null && stateMgr.CurrentCnsDef != null)) {
+            stateMgr.CurrentCnsDef.OnHitBy(this, target);
+        }
     }
 
     [NoToLua]
