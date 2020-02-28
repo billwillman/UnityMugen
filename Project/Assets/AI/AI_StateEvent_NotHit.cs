@@ -12,19 +12,19 @@ namespace XNode.Mugen {
     [Serializable]
     public class AI_StateEvent_NotHit : AI_CreateStateEvent {
         [SerializeField] public string scriptFuncName = string.Empty;
-        [SerializeField] public bool Cns_Type_A = false;
-        [SerializeField] public bool Cns_Type_C = false;
-        [SerializeField] public bool Cns_Type_L = false;
-        [SerializeField] public bool Cns_Type_S = false;
+        [SerializeField] public bool Type_A = false;
+        [SerializeField] public bool Type_C = false;
+        [SerializeField] public bool Type_L = false;
+        [SerializeField] public bool Type_S = false;
 
-        [SerializeField] public bool Cns_MoveType_A = false;
-        [SerializeField] public bool Cns_MoveType_I = false;
-        [SerializeField] public bool Cns_MoveType_H = false;
+        [SerializeField] public bool MoveType_A = false;
+        [SerializeField] public bool MoveType_I = false;
+        [SerializeField] public bool MoveType_H = false;
 
-        [SerializeField] public bool Cns_PhysicsType_S = false;
-        [SerializeField] public bool Cns_PhysicsType_C = false;
-        [SerializeField] public bool Cns_PhysicsType_A = false;
-        [SerializeField] public bool Cns_PhysicsType_N = false;
+        [SerializeField] public bool PhysicsType_S = false;
+        [SerializeField] public bool PhysicsType_C = false;
+        [SerializeField] public bool PhysicsType_A = false;
+        [SerializeField] public bool PhysicsType_N = false;
 
 		[SerializeField] public bool NoProj = false;
 
@@ -32,21 +32,21 @@ namespace XNode.Mugen {
 
         protected override string GetDoStr(bool hasCond) {
             byte stand = 0;
-            stand = (byte)(Cns_Type_A ? (stand | (1 << ((int)Cns_Type.A - 1))) : stand);
-            stand = (byte)(Cns_Type_C ? (stand | (1 << ((int)Cns_Type.C - 1))) : stand);
-            stand = (byte)(Cns_Type_L ? (stand | (1 << ((int)Cns_Type.L - 1))) : stand);
-            stand = (byte)(Cns_Type_S ? (stand | (1 << ((int)Cns_Type.S - 1))) : stand);
+            stand = (byte)(Type_A ? (stand | (1 << ((int)Cns_Type.A - 1))) : stand);
+            stand = (byte)(Type_C ? (stand | (1 << ((int)Cns_Type.C - 1))) : stand);
+            stand = (byte)(Type_L ? (stand | (1 << ((int)Cns_Type.L - 1))) : stand);
+            stand = (byte)(Type_S ? (stand | (1 << ((int)Cns_Type.S - 1))) : stand);
 
             byte moveTypes = 0;
-            moveTypes = (byte)(Cns_MoveType_A ? (moveTypes | (1 << ((int)Cns_MoveType.A - 1))) : moveTypes);
-            moveTypes = (byte)(Cns_MoveType_I ? (moveTypes | (1 << ((int)Cns_MoveType.I - 1))) : moveTypes);
-            moveTypes = (byte)(Cns_MoveType_H ? (moveTypes | (1 << ((int)Cns_MoveType.H - 1))) : moveTypes);
+            moveTypes = (byte)(MoveType_A ? (moveTypes | (1 << ((int)Cns_MoveType.A - 1))) : moveTypes);
+            moveTypes = (byte)(MoveType_I ? (moveTypes | (1 << ((int)Cns_MoveType.I - 1))) : moveTypes);
+            moveTypes = (byte)(MoveType_H ? (moveTypes | (1 << ((int)Cns_MoveType.H - 1))) : moveTypes);
 
             byte physicTypes = 0;
-            physicTypes = (byte)(Cns_PhysicsType_S ? (physicTypes | (1 << ((int)Cns_PhysicsType.S - 1))) : physicTypes);
-            physicTypes = (byte)(Cns_PhysicsType_C ? (physicTypes | (1 << ((int)Cns_PhysicsType.C - 1))) : physicTypes);
-            physicTypes = (byte)(Cns_PhysicsType_A ? (physicTypes | (1 << ((int)Cns_PhysicsType.A - 1))) : physicTypes);
-            physicTypes = (byte)(Cns_PhysicsType_N ? (physicTypes | (1 << ((int)Cns_PhysicsType.N - 1))) : physicTypes);
+            physicTypes = (byte)(PhysicsType_S ? (physicTypes | (1 << ((int)Cns_PhysicsType.S - 1))) : physicTypes);
+            physicTypes = (byte)(PhysicsType_C ? (physicTypes | (1 << ((int)Cns_PhysicsType.C - 1))) : physicTypes);
+            physicTypes = (byte)(PhysicsType_A ? (physicTypes | (1 << ((int)Cns_PhysicsType.A - 1))) : physicTypes);
+            physicTypes = (byte)(PhysicsType_N ? (physicTypes | (1 << ((int)Cns_PhysicsType.N - 1))) : physicTypes);
 
 			if (stand == 0 && moveTypes == 0 && physicTypes == 0 && !NoProj)
                 return string.Empty;
