@@ -66,7 +66,7 @@ public class Clsn : MonoBehaviour {
     }
 
     private void OnClsnCollision(Clsn other) {
-        if (other == null || m_IsVisible)
+        if (other == null || !m_IsVisible)
             return;
         if ((PlayerType == other.PlayerType) || (type == other.type))
             return;
