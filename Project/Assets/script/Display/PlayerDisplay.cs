@@ -232,7 +232,7 @@ public class PlayerDisplay : BaseResLoader {
             return;
 
         var stateMgr = this.StateMgr;
-        if (stateMgr != null && stateMgr.CurrentCnsDef != null)) {
+        if (stateMgr != null && stateMgr.CurrentCnsDef != null) {
             stateMgr.CurrentCnsDef.OnHitBy(this, target);
         }
     }
