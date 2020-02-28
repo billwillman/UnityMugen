@@ -1355,7 +1355,7 @@ public class PlayerDisplay : BaseResLoader {
 		} else
 			helper = null;
 		var trans = gameObj.transform;
-		trans.SetParent (AppConfig.GetInstance ().PlayerRoot, false);
+		trans.SetParent (this.transform.parent, false);
 		trans.localPosition = Vector3.zero;
 		trans.localScale = Vector3.one;
 		trans.localRotation = Quaternion.identity;
@@ -1374,7 +1374,7 @@ public class PlayerDisplay : BaseResLoader {
 		GameObject gameObj = new GameObject ("Explod", typeof(PlayerDisplay), typeof(Explod));
 		var trans = gameObj.transform;
 		//trans.parent = this.CachedTransform;
-		trans.SetParent(AppConfig.GetInstance().PlayerRoot, false);
+		trans.SetParent(this.transform.parent, false);
 		trans.localPosition = Vector3.zero;
 		trans.localScale = Vector3.one;
 		trans.localRotation = Quaternion.identity;

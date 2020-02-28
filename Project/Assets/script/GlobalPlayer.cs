@@ -273,8 +273,15 @@ public class GlobalPlayer
 			return null;
 		}
 
-		GameObject obj = new GameObject (m_PlayerName, typeof(PlayerDisplay), typeof(PlayerPartMgr));
-		obj.transform.SetParent (AppConfig.GetInstance ().PlayerRoot, false);
+        GameObject parentObj = new GameObject(m_PlayerName);
+        var parentTrans = parentObj.transform;
+        parentTrans.SetParent(AppConfig.GetInstance().PlayerRoot, false);
+        parentTrans.localPosition = Vector3.zero;
+        parentTrans.localRotation = Quaternion.identity;
+        parentTrans.localScale = new Vector3(scale, scale, 1f);
+
+        GameObject obj = new GameObject (m_PlayerName, typeof(PlayerDisplay), typeof(PlayerPartMgr));
+		obj.transform.SetParent (parentTrans, false);
         PlayerDisplay displayer = obj.GetComponent<PlayerDisplay>();
 		displayer.Init(loaderPlayer, playerType, Shader_RGB_Zero_Alpha_One);
 		return obj;
