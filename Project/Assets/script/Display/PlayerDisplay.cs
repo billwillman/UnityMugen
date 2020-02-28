@@ -1363,6 +1363,7 @@ public class PlayerDisplay : BaseResLoader {
 		ret.OwnerCtl = m_PlayerType;
 		var display = ret.Display;
 		if (display != null) {
+            display.m_PlayerType = m_PlayerType;
 			display.ShowClsn (this.IsShowCns);
 		}
 		return ret;
@@ -1382,7 +1383,8 @@ public class PlayerDisplay : BaseResLoader {
 		ret.OwnerCtl = m_PlayerType;
 		var display = ret.Display;
 		if (display != null) {
-			display.ShowClsn (this.IsShowCns);
+            display.m_PlayerType = m_PlayerType;
+            display.ShowClsn (this.IsShowCns);
 		}
 
 		InitPartMgr ();
