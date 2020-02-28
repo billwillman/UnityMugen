@@ -26,6 +26,8 @@ namespace XNode.Mugen {
         [SerializeField] public bool Cns_PhysicsType_A = false;
         [SerializeField] public bool Cns_PhysicsType_N = false;
 
+		[SerializeField] public bool NoProj = false;
+
         [NonSerialized] public int durTime = 1;
 
         protected override string GetDoStr(bool hasCond) {
@@ -46,15 +48,16 @@ namespace XNode.Mugen {
             physicTypes = (byte)(Cns_PhysicsType_A ? (physicTypes | (1 << ((int)Cns_PhysicsType.A - 1))) : physicTypes);
             physicTypes = (byte)(Cns_PhysicsType_N ? (physicTypes | (1 << ((int)Cns_PhysicsType.N - 1))) : physicTypes);
 
-            if (stand == 0 && moveTypes == 0 && physicTypes == 0)
+			if (stand == 0 && moveTypes == 0 && physicTypes == 0 && !NoProj)
                 return string.Empty;
 
 
-            string ret = string.Format("trigger:CreateNotHit(luaPlayer, %d, %d, %d, %d, %s)",
+            string ret = string.Format("trigger:CreateNotHit(luaPlayer, %d, %d, %d, %d, %s, %s)",
                                 durTime,
                                 stand,
                                 moveTypes,
                                 physicTypes,
+								NoProj.ToString().ToLower(),
                                 scriptFuncName
                          );
             return ret;

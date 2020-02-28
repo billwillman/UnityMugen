@@ -10,6 +10,7 @@ namespace Mugen {
         public byte m_StandTypes = 0;
         public byte m_MoveTypes = 0;
         public byte m_PhysicsTypes = 0;
+		public bool m_NoProj = false;
 
         public float m_Time = 1f;
 
@@ -28,6 +29,7 @@ namespace Mugen {
             m_PhysicsTypes = 0;
             m_Time = 0f;
             m_IsEnabled = false;
+			m_NoProj = false;
         }
 
         public string m_LuaFuncName = string.Empty;

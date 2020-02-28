@@ -86,7 +86,7 @@ namespace Mugen
             }
         }
 
-        public void CreateNotHit(float durTime, byte standTypes, byte moveTypes, byte physicsTypes, string luaFuncName = "") {
+		public void CreateNotHit(float durTime, byte standTypes, byte moveTypes, byte physicsTypes, bool isNoProj, string luaFuncName = "") {
             if (m_NotHit == null)
                 m_NotHit = new CnsNotHit();
 
@@ -96,6 +96,7 @@ namespace Mugen
             m_NotHit.m_MoveTypes = moveTypes;
             m_NotHit.m_PhysicsTypes = physicsTypes;
             m_NotHit.m_LuaFuncName = luaFuncName;
+			m_NotHit.m_NoProj = isNoProj;
             m_NotHit.m_Time = durTime;
         }
 

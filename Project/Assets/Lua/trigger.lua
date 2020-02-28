@@ -780,7 +780,7 @@ function trigger:CreateProj(luaPlayer, isCreateHelper)
 	return proj, helper
 end
 
-function trigger:CreateNotHit(durTime, luaPlayer, standTypes, moveTypes, physicsTypes, scriptFuncName)
+function trigger:CreateNotHit(durTime, luaPlayer, standTypes, moveTypes, physicsTypes, isNoProj, scriptFuncName)
 	if luaPlayer == nil then
 		return
 	end
@@ -794,8 +794,9 @@ function trigger:CreateNotHit(durTime, luaPlayer, standTypes, moveTypes, physics
 	standTypes = standType or 0
 	moveTypes = moveTypes or 0
 	physicsTypes = physicsTypes or 0
+	isNoProj = isNoProj or false
 	
-	display:CreateNotHit(durTime, standTypes, moveTypes, physicsTypes, scriptFuncName)
+	display:CreateNotHit(durTime, standTypes, moveTypes, physicsTypes, isNoProj, scriptFuncName)
 end
 
 -- 帮助模块
