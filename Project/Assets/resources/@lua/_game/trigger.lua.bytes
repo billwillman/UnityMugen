@@ -780,7 +780,18 @@ function trigger:CreateProj(luaPlayer, isCreateHelper)
 	return proj, helper
 end
 
-function trigger:CreateNotHit(durTime, luaPlayer, standTypes, moveTypes, physicsTypes, isNoProj, scriptFuncName)
+function trigger:SetSprpriority(luaPlayer, sprpriority)
+	if luaPlayer == nil or sprpriority == nil then
+		return
+	end
+	local display = luaPlayer.PlayerDisplay;
+	if display == nil then
+		return
+	end
+	display:SetSprpriority(sprpriority)
+end
+
+function trigger:CreateNotHit(luaPlayer, durTime, luaPlayer, standTypes, moveTypes, physicsTypes, isNoProj, scriptFuncName)
 	if luaPlayer == nil then
 		return
 	end

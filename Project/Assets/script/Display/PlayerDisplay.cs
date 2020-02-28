@@ -282,6 +282,12 @@ public class PlayerDisplay : BaseResLoader {
 			movement.Vec.y = movement.StartVec.y;
 	}
 
+	public void SetSprpriority(int sprpriority)
+	{
+		m_OffsetPos.z = m_IsFlipX ? -sprpriority : -sprpriority;
+		InternalUpdatePos ();
+	}
+
 	private void AttachAttribeFromStateDef(CNSStateDef def)
 	{
 		if (def == null)
