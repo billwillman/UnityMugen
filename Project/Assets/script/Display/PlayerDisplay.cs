@@ -153,6 +153,23 @@ public class PlayerDisplay : BaseResLoader {
 	public static float _cPerUnit = 1f;
 	public static float _cScenePerUnit = 1f;
 
+	private System.Action m_DoAttackEvt = null;
+
+	[NoToLua]
+	internal void RegDoAttackEvt(System.Action evt)
+	{
+		if (evt == null)
+			return;
+		m_DoAttackEvt += evt;
+	}
+
+	[NoToLua]
+	internal void Call_DoAttackEvt()
+	{
+		if (m_DoAttackEvt != null)
+			m_DoAttackEvt ();
+	}
+
 	[NoToLuaAttribute]
 	public SndSound Sound
 	{

@@ -15,12 +15,18 @@ public class Projectile : MonoBehaviour {
 			return m_Display;
 		}
 	}
+
+	// 攻击到别人
+	private void DoAttack()
+	{
+	}
 		
 	void Awake()
 	{
 		var display = this.Display;
 		if (display != null) {
 			display.ShowType = DisplayType.Projectile;
+			display.RegDoAttackEvt (DoAttack);
 		}
 	}
 
