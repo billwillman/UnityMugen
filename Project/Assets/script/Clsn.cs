@@ -77,7 +77,7 @@ public class Clsn : MonoBehaviour {
             
             if (owner != target && owner != null && target != null) {
                 // 能否被攻击
-                if (target.OnAttacked()) {
+				if (target.OnAttacked(owner)) {
                     owner.OnAttack(target);
                 }
             }

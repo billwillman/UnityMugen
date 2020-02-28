@@ -222,10 +222,10 @@ public class PlayerDisplay : BaseResLoader {
     }
 
     [NoToLua]
-    public bool OnAttacked() {
+	public bool OnAttacked(PlayerDisplay owner) {
         var stateMgr = this.StateMgr;
         if (stateMgr != null && stateMgr.CurrentCnsDef != null) {
-            return stateMgr.CurrentCnsDef.OnStateEvent(this, CnsStateTriggerType.Hited);
+			return stateMgr.CurrentCnsDef.OnStateEvent(this, CnsStateTriggerType.Hited, owner);
         }
         return true;
     }

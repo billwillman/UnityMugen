@@ -107,14 +107,14 @@ namespace Mugen
         }
 
         [NoToLuaAttribute]
-		public bool OnStateEvent(PlayerDisplay display, CnsStateTriggerType evtType)
+		public bool OnStateEvent(PlayerDisplay display, CnsStateTriggerType evtType, System.Object userData = null)
         {
 			if (display == null)
 				return false;
 
             if (evtType == CnsStateTriggerType.Hited) {
                 if (m_NotHit != null) {
-                    if (m_NotHit.CheckPlayer(display))
+					if (m_NotHit.CheckPlayer(display, userData as PlayerDisplay))
                         return false;
                 }
                 return true;

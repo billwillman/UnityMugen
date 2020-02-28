@@ -33,14 +33,17 @@ namespace Mugen {
         }
 
         public string m_LuaFuncName = string.Empty;
-        public bool CheckPlayer(PlayerDisplay display) {
-            if (display == null || !m_IsEnabled)
+		public bool CheckPlayer(PlayerDisplay display, PlayerDisplay owner) {
+			if (display == null || owner == null || !m_IsEnabled)
                 return false;
 
             if ((m_StandTypes != 0 && ((byte)display.StateType & m_StandTypes) != 0) || 
                 (m_PhysicsTypes != 0 && ((byte)display.PhysicsType & m_PhysicsTypes) != 0) ||
                 (m_MoveTypes != 0 && (m_MoveTypes & (byte)display.MoveType) != 0))
                 return false;
+
+			if (owner.ShowType == DisplayType.Projectile && m_NoProj)
+				return false;
 
             if (string.IsNullOrEmpty(m_LuaFuncName))
                 return true;
