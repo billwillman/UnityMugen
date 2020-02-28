@@ -7,9 +7,10 @@ using LuaInterface;
 namespace Mugen {
     public class CnsNotHit {
         public bool m_IsEnabled = false;
-        public Cns_Type m_Type = Cns_Type.none;
-        public Cns_MoveType m_MoveType = Cns_MoveType.none;
-        public Cns_PhysicsType m_PhysicsType = Cns_PhysicsType.none;
+        public byte m_StandTypes = 0;
+        public byte m_MoveTypes = 0;
+        public byte m_PhysicsTypes = 0;
+
         public float m_Time = 1f;
 
         public void UpdateTime(float tick) {
@@ -22,9 +23,9 @@ namespace Mugen {
         }
 
         public void Reset() {
-            m_Type = Cns_Type.none;
-            m_MoveType = Cns_MoveType.none;
-            m_PhysicsType = Cns_PhysicsType.none;
+            m_StandTypes = 0;
+            m_MoveTypes = 0;
+            m_PhysicsTypes = 0;
             m_Time = 0f;
             m_IsEnabled = false;
         }
@@ -34,8 +35,9 @@ namespace Mugen {
             if (display == null || !m_IsEnabled)
                 return false;
 
-            if ((m_Type != Cns_Type.none && display.StateType != m_Type) || (m_PhysicsType != Cns_PhysicsType.none && display.PhysicsType != m_PhysicsType) ||
-                (m_MoveType != Cns_MoveType.none && m_MoveType != display.MoveType))
+            if ((m_StandTypes != 0 && ((byte)display.StateType & m_StandTypes) != 0) || 
+                (m_PhysicsTypes != 0 && ((byte)display.PhysicsType & m_PhysicsTypes) != 0) ||
+                (m_MoveTypes != 0 && (m_MoveTypes & (byte)display.MoveType) != 0))
                 return false;
 
             if (string.IsNullOrEmpty(m_LuaFuncName))

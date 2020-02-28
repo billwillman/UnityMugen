@@ -83,15 +83,15 @@ namespace Mugen
             }
         }
 
-        public void CreateNotHit(float durTime, Cns_Type standType, Cns_MoveType moveType, Cns_PhysicsType physicsType, string luaFuncName = "") {
+        public void CreateNotHit(float durTime, byte standTypes, byte moveTypes, byte physicsTypes, string luaFuncName = "") {
             if (m_NotHit == null)
                 m_NotHit = new CnsNotHit();
 
             m_NotHit.m_IsEnabled = true;
 
-            m_NotHit.m_Type = standType;
-            m_NotHit.m_MoveType = moveType;
-            m_NotHit.m_PhysicsType = physicsType;
+            m_NotHit.m_StandTypes = standTypes;
+            m_NotHit.m_MoveTypes = moveTypes;
+            m_NotHit.m_PhysicsTypes = physicsTypes;
             m_NotHit.m_LuaFuncName = luaFuncName;
             m_NotHit.m_Time = durTime;
         }

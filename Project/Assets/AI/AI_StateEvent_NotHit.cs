@@ -12,20 +12,49 @@ namespace XNode.Mugen {
     [Serializable]
     public class AI_StateEvent_NotHit : AI_CreateStateEvent {
         [SerializeField] public string scriptFuncName = string.Empty;
-        [SerializeField] public Cns_Type standType = Cns_Type.none;
-        [SerializeField] public Cns_MoveType moveType = Cns_MoveType.none;
-        [SerializeField] public Cns_PhysicsType physicsType = Cns_PhysicsType.none;
+        [SerializeField] public bool Cns_Type_A = false;
+        [SerializeField] public bool Cns_Type_C = false;
+        [SerializeField] public bool Cns_Type_L = false;
+        [SerializeField] public bool Cns_Type_S = false;
+
+        [SerializeField] public bool Cns_MoveType_A = false;
+        [SerializeField] public bool Cns_MoveType_I = false;
+        [SerializeField] public bool Cns_MoveType_H = false;
+
+        [SerializeField] public bool Cns_PhysicsType_S = false;
+        [SerializeField] public bool Cns_PhysicsType_C = false;
+        [SerializeField] public bool Cns_PhysicsType_A = false;
+        [SerializeField] public bool Cns_PhysicsType_N = false;
+
         [NonSerialized] public int durTime = 1;
 
         protected override string GetDoStr(bool hasCond) {
-            if (standType == Cns_Type.none && moveType == Cns_MoveType.none && physicsType == Cns_PhysicsType.none && string.IsNullOrEmpty(scriptFuncName))
+            byte stand = 0;
+            stand = (byte)(Cns_Type_A ? (stand | (1 << ((int)Cns_Type.A - 1))) : stand);
+            stand = (byte)(Cns_Type_C ? (stand | (1 << ((int)Cns_Type.C - 1))) : stand);
+            stand = (byte)(Cns_Type_L ? (stand | (1 << ((int)Cns_Type.L - 1))) : stand);
+            stand = (byte)(Cns_Type_S ? (stand | (1 << ((int)Cns_Type.S - 1))) : stand);
+
+            byte moveTypes = 0;
+            moveTypes = (byte)(Cns_MoveType_A ? (moveTypes | (1 << ((int)Cns_MoveType.A - 1))) : moveTypes);
+            moveTypes = (byte)(Cns_MoveType_I ? (moveTypes | (1 << ((int)Cns_MoveType.I - 1))) : moveTypes);
+            moveTypes = (byte)(Cns_MoveType_H ? (moveTypes | (1 << ((int)Cns_MoveType.H - 1))) : moveTypes);
+
+            byte physicTypes = 0;
+            physicTypes = (byte)(Cns_PhysicsType_S ? (physicTypes | (1 << ((int)Cns_PhysicsType.S - 1))) : physicTypes);
+            physicTypes = (byte)(Cns_PhysicsType_C ? (physicTypes | (1 << ((int)Cns_PhysicsType.C - 1))) : physicTypes);
+            physicTypes = (byte)(Cns_PhysicsType_A ? (physicTypes | (1 << ((int)Cns_PhysicsType.A - 1))) : physicTypes);
+            physicTypes = (byte)(Cns_PhysicsType_N ? (physicTypes | (1 << ((int)Cns_PhysicsType.N - 1))) : physicTypes);
+
+            if (stand == 0 && moveTypes == 0 && physicTypes == 0)
                 return string.Empty;
 
-            string ret = string.Format("trigger:CreateNotHit(luaPlayer, %d, %s.%s, %s.%s, %s.%s, %s)",
+
+            string ret = string.Format("trigger:CreateNotHit(luaPlayer, %d, %d, %d, %d, %s)",
                                 durTime,
-                                standType.GetType().FullName, standType.ToString(),
-                                moveType.GetType().FullName, moveType.ToString(),
-                                physicsType.GetType().FullName, physicsType.ToString(),
+                                stand,
+                                moveTypes,
+                                physicTypes,
                                 scriptFuncName
                          );
             return ret;

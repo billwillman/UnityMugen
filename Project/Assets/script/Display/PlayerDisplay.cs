@@ -127,11 +127,11 @@ public class PlayerDisplay : BaseResLoader {
 		return ret;
 	}
 
-    public void CreateNotHit(float durTime, Cns_Type standType, Cns_MoveType moveType, Cns_PhysicsType physicsType, string scriptFuncName = "") {
+    public void CreateNotHit(float durTime, byte standTypes, byte moveTypes, byte physicsTypes, string scriptFuncName = "") {
         var stateMgr = this.StateMgr;
         if (stateMgr == null || stateMgr.CurrentCnsDef == null)
             return;
-        stateMgr.CurrentCnsDef.CreateNotHit(durTime, standType, moveType, physicsType, scriptFuncName);
+        stateMgr.CurrentCnsDef.CreateNotHit(durTime, standTypes, moveTypes, physicsTypes, scriptFuncName);
     }
 
 	public static LuaTable GetPlayer(InputPlayerType playerType)
