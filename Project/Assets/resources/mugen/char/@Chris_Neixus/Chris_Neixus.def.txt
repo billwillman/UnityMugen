@@ -1,0 +1,38 @@
+;***************************************************************************;
+;******************* Created in Fighter Factory Ultimate *******************;
+;*******************      http://www.virtualltek.com     *******************;
+;***************************************************************************;
+
+[Info]
+name = "Chris"
+displayname = "Chris_Neixus"
+versiondate = 2007-2-6
+mugenversion = 12,09,2006
+author = "Neixus/SV/Kyo-0"
+pal.defaults = 1,2,3,4,5,6
+
+[Files]
+sprite = Chris_Neixus.sff
+anim = Chris_Neixus.air
+sound = Chris_Neixus.snd
+cmd = Chris_Neixus.cmd
+cns = Chris_Neixus.cns
+stcommon = Chris_Neixus.cns
+st = Chris_Neixus_N.cns
+st1 = Chris_Neixus_NS.cns
+st2 = Chris_Neixus_SS.cns
+st3 = Chris_Neixus_H.cns
+st4 = Chris_Neixus_O.CNS
+st5 = helper.cns
+st6 = AI_helper.txt
+st7 = AI.txt
+pal1 = 001.act
+pal2 = 002.act
+pal3 = 003.act
+pal4 = 004.act
+pal5 = 005.act
+pal6 = 006.act
+
+[Arcade]
+;intro.storyboard = 
+ending.storyboard = 

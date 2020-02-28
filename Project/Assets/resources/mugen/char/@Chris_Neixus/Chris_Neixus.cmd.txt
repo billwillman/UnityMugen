@@ -1,0 +1,2484 @@
+
+
+;------------------------------------------------------------------------------
+;-| AI Helper |----------------------------------------------------------------
+[command]
+name = "fwd"
+command = F
+time = 1
+
+[command]
+name = "back"
+command = B
+time = 1
+
+[command]
+name = "up"
+command = U
+time = 1
+
+[command]
+name = "down"
+command = D
+time = 1
+
+;-| AI |------------------------------------------------------
+[Command]
+name = "CPU1"
+command = U, D, F, U, D, F
+time = 1
+
+[Command]
+name = "CPU2"
+command = U, B, F, U, D, F
+time = 1
+
+[Command]
+name = "CPU3"
+command = U, D, D, U, D, F
+time = 1
+
+[Command]
+name = "CPU4"
+command = F, B, U, U, D, F, U, B, U, D, F
+time = 1
+
+[Command]
+name = "CPU5"
+command = U, F, U, B, U, D, F
+time = 1
+
+[Command]
+name = "CPU6"
+command = U, D, B, U, B, U, D, F
+time = 1
+
+[Command]
+name = "CPU7"
+command = F, F, B, U, B, U, D, F
+time = 1
+
+[Command]
+name = "CPU8"
+command = U, D, U, U, B, U, D, F
+time = 1
+
+[Command]
+name = "CPU9"
+command = F, B, B, U, B, U, D, F
+time = 1
+
+[Command]
+name = "CPU10"
+command = F, F, B, B, U, B, U, D, F
+time = 1
+
+[Command]
+name = "CPU11"
+command = U, U, F, U, B, U, D, F
+time = 1
+
+[Command]
+name = "CPU12"
+command = U, B, B, U, B, U, D, F
+time = 1
+
+[Command]
+name = "CPU13"
+command = U, B, F, F, U, B, U, D, F
+time = 1
+
+[Command]
+name = "CPU14"
+command = U, F, B, U, U, B, U, D, F
+time = 1
+
+[Command]
+name = "CPU15"
+command = U, B, F, U, U, B, U, D, F
+time = 1
+
+[Command]
+name = "CPU16"
+command = U, B, B, B, U, B, U, D, F
+time = 1
+
+[Command]
+name = "CPU17"
+command = U, D, B, F, U, B, U, D, F
+time = 1
+
+[Command]
+name = "CPU18"
+command = U, D, B, D, U, B, U, D, F
+time = 1
+
+[Command]
+name = "CPU19"
+command = U, D, F, U, U, B, U, D, F
+time = 1
+
+[Command]
+name = "CPU20"
+command = U, D, U, B, U, B, U, D, F
+time = 1
+
+[Command]
+name = "CPU21"
+command = U, D, F, F, U, B, U, D, F
+time = 1
+
+[Command]
+name = "CPU22"
+command = F, F, F, F, U, B, U, D, F
+time = 1
+
+[Command]
+name = "CPU23"
+command = U, U, U, D, U, B, U, D, F
+time = 1
+
+[Command]
+name = "CPU24"
+command = B, B, B, U, B, U, D, F
+time = 1
+
+[Command]
+name = "CPU25"
+command = D, D, D, D, U, B, U, D, F
+time = 1
+
+[Command]
+name = "CPU26"
+command = D, D, D, U, B, U, D, F
+time = 1
+
+[Command]
+name = "CPU27"
+command = F, F, F, U, B, U, D, F
+time = 1
+
+[Command]
+name = "CPU28"
+command = U, U, U, U, B, U, D, F
+time = 1
+
+[Command]
+name = "CPU29"
+command = U, U, B, B, U, B, U, D, F
+time = 1
+
+[Command]
+name = "CPU30"
+command = D, D, F, F, U, B, U, D, F
+time = 1
+
+[Command]
+name = "CPU31"
+command = U, D, F, U, D, U, B, U, D, F
+time = 1
+
+[Command]
+name = "CPU32"
+command = U, B, F, U, D, U, B, U, D, F
+time = 1
+
+[Command]
+name = "CPU33"
+command = U, D, D, U, D, U, B, U, D, F
+time = 1
+
+[Command]
+name = "CPU34"
+command = F, B, U, U, D, U, B, U, D, F
+time = 1
+
+[Command]
+name = "CPU35"
+command = U, F, U, B, U, D, U, B, U, D, F
+time = 1
+
+[Command]
+name = "CPU36"
+command = U, D, B, U, D, U, B, U, D, F
+time = 1
+
+[Command]
+name = "CPU37"
+command = F, F, B, U, D, U, B, U, D, F
+time = 1
+
+[Command]
+name = "CPU38"
+command = U, D, U, U, D, U, B, U, D, F
+time = 1
+
+[Command]
+name = "CPU39"
+command = F, B, B, U, D, U, B, U, D, F
+time = 1
+
+[Command]
+name = "CPU40"
+command = F, F, B, B, U, D, U, B, U, D, F
+time = 1
+
+[Command]
+name = "CPU41"
+command = U, U, F, U, D, U, B, U, D, F
+time = 1
+
+[Command]
+name = "CPU42"
+command = U, B, B, U, D, U, B, U, D, F
+time = 1
+
+[Command]
+name = "CPU43"
+command = U, B, F, F, U, D, U, B, U, D, F
+time = 1
+
+[Command]
+name = "CPU44"
+command = U, F, B, U, U, D, U, B, U, D, F
+time = 1
+
+[Command]
+name = "CPU45"
+command = U, B, F, U, U, D, U, B, U, D, F
+time = 1
+
+[Command]
+name = "CPU46"
+command = U, B, B, B, U, D, U, B, U, D, F
+time = 1
+
+[Command]
+name = "CPU47"
+command = U, D, B, F, U, D, U, B, U, D, F
+time = 1
+
+[Command]
+name = "CPU48"
+command = U, D, B, D, U, D, U, B, U, D, F
+time = 1
+
+[Command]
+name = "CPU49"
+command = U, D, F, U, U, D, U, B, U, D, F
+time = 1
+
+[Command]
+name = "CPU50"
+command = U, D, U, B, U, D, U, B, U, D, F
+time = 1
+
+[Command]
+name = "CPU51"
+command = U, D, F, U, D, F, D, U, B, U, D, U, B, U, D, F
+time = 1
+
+[Command]
+name = "CPU52"
+command = U, B, F, U, D, F, D, U, B, U, D, U, B, U, D, F
+time = 1
+
+[Command]
+name = "CPU53"
+command = U, D, D, U, D, F, D, U, B, U, D, U, B, U, D, F
+time = 1
+
+[Command]
+name = "CPU54"
+command = F, B, U, U, D, F, U, B, U, D, F, D, U, B, U, D, U, B, U, D, F
+time = 1
+
+[Command]
+name = "CPU55"
+command = U, F, U, B, U, D, F, D, U, B, U, D, U, B, U, D, F
+time = 1
+
+[Command]
+name = "CPU56"
+command = U, D, B, U, B, U, D, F, D, U, B, U, D, U, B, U, D, F
+time = 1
+
+[Command]
+name = "CPU57"
+command = F, F, B, U, B, U, D, F, D, U, B, U, D, U, B, U, D, F
+time = 1
+
+[Command]
+name = "CPU58"
+command = U, D, U, U, B, U, D, F, D, U, B, U, D, U, B, U, D, F
+time = 1
+
+[Command]
+name = "CPU59"
+command = F, B, B, U, B, U, D, F, D, U, B, U, D, U, B, U, D, F
+time = 1
+
+[Command]
+name = "CPU60"
+command = F, F, B, B, U, B, U, D, F, D, U, B, U, D, U, B, U, D, F
+time = 1
+
+
+[Command]
+name = "↓↙←↓↘→＋Ａ＋Ｃ"
+command = ~$D, DB, B, D, DF, F, x+y
+time = 35
+buffer.time = 18
+
+
+[Command]
+name = "↓↙←↓↘→＋Ａ＋Ｃ"
+command = ~$D, B, $D, F, $x+y
+time = 35
+buffer.time = 18
+
+[Command]
+name = "236236BD"
+command = D, F , D, F, s
+time = 30
+
+[Command]
+name = "魂归"
+command = ~D,F,D,F,c
+time = 30
+
+[Command]
+name = "↓↘→↓↙←＋Ａ＋Ｃ"
+command = ~$D, DF, F, D, DB, B, x+y
+time = 35
+buffer.time = 18
+
+[Command]
+name = "↓↘→↓↙←＋Ａ＋Ｃ"
+command = ~$D, F, $D, B, $x+y
+time = 35
+buffer.time = 18
+
+[Command]
+name = "↓↙←↓↘→＋ＡorＣ"
+command = ~$D, DB, B, D, DF, F, x
+time = 30
+buffer.time = 18
+
+[Command]
+name = "↓↙←↓↘→＋ＡorＣ"
+command = ~$D, DB, B, D, DF, F, y
+time = 30
+buffer.time = 15
+
+[Command]
+name = "↓↙←↓↘→＋ＡorＣ"
+command = ~$D, B, $D, F, $x
+time = 30
+buffer.time = 15
+
+[Command]
+name = "↓↙←↓↘→＋ＡorＣ"
+command = ~$D, B, $D, F, $y
+time = 30
+buffer.time = 15
+
+[Command]
+name = "↓↘→↓↙←＋ＡorＣ"
+command = ~$D, DF, F, D, DB, B, x
+time = 30
+buffer.time = 15
+
+[Command]
+name = "↓↘→↓↙←＋ＡorＣ"
+command = ~$D, DF, F, D, DB, B, y
+time = 30
+buffer.time = 15
+
+[Command]
+name = "↓↘→↓↙←＋ＡorＣ"
+command = ~$D, F, $D, B, $x
+time = 30
+buffer.time = 15
+
+[Command]
+name = "↓↘→↓↙←＋ＡorＣ"
+command = ~$D, F, $D, B, $y
+time = 30
+buffer.time = 15
+
+[Command]
+name = "↓↘→↓↘→＋Ａ＋Ｃ"
+command = ~$D, DF, F, D, DF, F, x+y
+time = 35
+buffer.time = 18
+[Command]
+name = "↓↙←↓↙←＋Ａ＋Ｃ"
+command = ~$D, DB, B, D, DB, B, x+y
+time = 35
+buffer.time = 18
+
+[Command]
+name = "↓↘→↓↘→＋ＡorＣ"
+command = ~$D, DF, F, D, DF, F, x
+time = 30
+buffer.time = 15
+
+[Command]
+name = "↓↘→↓↘→＋ＡorＣ"
+command = ~$D, DF, F, D, DF, F, y
+time = 30
+buffer.time = 15
+
+[Command]
+name = "↓↙←↓↙←＋Ｂ＋Ｄ"
+command = ~$D, DB, B, D, DB, B, a+b
+time = 35
+buffer.time = 18
+
+[Command]
+name = "↓↘→↓↘→＋Ｂ＋Ｄ"
+command = ~$D, DF, F, D, DF, F, a+b
+time = 35
+buffer.time = 18
+
+[Command]
+name = "↓↙←↓↙←＋ＢorＤ"
+command = ~$D, DB, B, D, DB, B, a
+time = 30
+buffer.time = 15
+
+[Command]
+name = "↓↙←↓↙←＋ＢorＤ"
+command = ~$D, DB, B, D, DB, B, b
+time = 30
+buffer.time = 15
+
+[Command]
+name = "↓↘→↓↘→＋ＢorＤ"
+command = ~$D, DF, F, D, DF, F, a
+time = 30
+buffer.time = 15
+
+[Command]
+name = "↓↘→↓↘→＋ＢorＤ"
+command = ~$D, DF, F, D, DF, F, b
+time = 30
+buffer.time = 15
+
+[Command]
+name = "↓↙←↓↙←＋ＡorＣ"
+command = ~$D, DB, B, D, DB, B, x
+time = 30
+buffer.time = 15
+
+[Command]
+name = "↓↙←↓↙←＋ＡorＣ"
+command = ~$D, DB, B, D, DB, B, y
+time = 30
+buffer.time = 15
+
+[Command]
+name = "→↘↓↙←＋ＡorＢorＣorＤ"
+command = ~F, DF, D, DB, B, x
+time = 18
+buffer.time = 9
+
+[Command]
+name = "→↘↓↙←＋ＡorＢorＣorＤ"
+command = ~F, DF, D, DB, B, y
+time = 18
+buffer.time = 9
+
+[Command]
+name = "→↘↓↙←＋ＡorＢorＣorＤ"
+command = ~F, DF, D, DB, B, a
+time = 18
+buffer.time = 9
+
+[Command]
+name = "→↘↓↙←＋ＡorＢorＣorＤ"
+command = ~F, DF, D, DB, B, b
+time = 18
+buffer.time = 9
+
+[Command]
+name = "←↙↓↘→＋ＡorＢorＣorＤ"
+command = ~B, DB, D, DF, F, x
+time = 18
+buffer.time = 9
+
+[Command]
+name = "←↙↓↘→＋ＡorＢorＣorＤ"
+command = ~B, DB, D, DF, F, y
+time = 18
+buffer.time = 9
+
+[Command]
+name = "←↙↓↘→＋ＡorＢorＣorＤ"
+command = ~B, DB, D, DF, F, a
+time = 18
+buffer.time = 9
+
+[Command]
+name = "←↙↓↘→＋ＡorＢorＣorＤ"
+command = ~B, DB, D, DF, F, b
+time = 18
+buffer.time = 9
+
+[Command]
+name = "←↙↓↘→＋ＢorＤ"
+command = ~B, DB, D, DF, F, a
+time = 18
+buffer.time = 9
+
+[Command]
+name = "←↙↓↘→＋ＢorＤ"
+command = ~B, DB, D, DF, F, b
+time = 18
+buffer.time = 9
+
+[Command]
+name = "→↘↓↙←＋ＢorＤ"
+command = ~F, DF, D, DB, B, a
+time = 18
+buffer.time = 9
+
+[Command]
+name = "→↘↓↙←＋ＢorＤ"
+command = ~F, DF, D, DB, B, b
+time = 18
+buffer.time = 9
+
+[Command]
+name = "↓↙←＋ＡorＣ"
+command = ~D, DB, B, x
+time = 12
+buffer.time = 6
+
+[Command]
+name = "↓↙←＋ＡorＣ"
+command = ~D, DB, B, y
+time = 12
+buffer.time = 6
+
+[Command]
+name = "↓↘→＋ＡorＣ"
+command = ~D, DF, F, x
+time = 12
+buffer.time = 6
+
+[Command]
+name = "↓↘→＋ＡorＣ"
+command = ~D, DF, F, y
+time = 12
+buffer.time = 6
+
+[Command]
+name = "↓↘→＋ＢorＤ"
+command = ~D, DF, F, a
+time = 12
+buffer.time = 6
+
+[Command]
+name = "↓↘→＋ＢorＤ"
+command = ~D, DF, F, b
+time = 12
+buffer.time = 6
+
+[Command]
+name = "↓↙←＋ＢorＤ"
+command = ~D, DB, B, a
+time = 12
+buffer.time = 6
+
+[Command]
+name = "↓↙←＋ＢorＤ"
+command = ~D, DB, B, b
+time = 12
+buffer.time = 6
+
+[Command]
+name = "→↓↘＋ＡorＣ"
+command = ~F, D, DF, x
+time = 15
+buffer.time = 6
+
+[Command]
+name = "→↓↘＋ＡorＣ"
+command = ~F, D, DF, y
+time = 15
+buffer.time = 8
+
+[Command]
+name = "←↓↙＋ＡorＣ"
+command = ~B, D, DB, x
+time = 15
+buffer.time = 8
+
+[Command]
+name = "←↓↙＋ＡorＣ"
+command = ~B, D, DB, y
+time = 15
+buffer.time = 8
+
+[Command]
+name = "→↓↘＋ＢorＤ"
+command = ~F, D, DF, a
+time = 15
+buffer.time = 8
+
+[Command]
+name = "→↓↘＋ＢorＤ"
+command = ~F, D, DF, b
+time = 15
+buffer.time = 8
+
+[Command]
+name = "←↓↙＋ＢorＤ"
+command = ~B, D, DB, a
+time = 15
+buffer.time = 8
+
+[Command]
+name = "←↓↙＋ＢorＤ"
+command = ~B, D, DB, b
+time = 15
+buffer.time = 8
+
+[Command]
+name = "longjump"
+command = ~D, $U
+time = 10
+buffer.time = 5
+
+[Command]
+name = "MAX"
+command = a+y
+
+[Command]
+name = "UM"
+command = ~D, F, z
+time = 30
+
+[Command]
+name = "I am The Omnipresence"
+command = ~D, D, x+y
+time = 25
+buffer.time = 8
+
+[Command]
+name = "解除快速"
+command = ~D,B,y
+[Command]
+name = "解除慢速"
+command = ~D,B,x
+
+[Command]
+name = "鬼撩"
+command = ~D,F,a
+time = 10
+
+;-| Double Tap |-----------------------------------------------------------
+
+[Command]
+name = "FF"
+command = F, F
+time = 10
+buffer.time = 5
+
+[Command]
+name = "BB"
+command = B, B
+time = 10
+buffer.time = 5
+
+;-| 2/3 Button Combination |-----------------------------------------------
+
+[Command]
+name = "recovery"
+command = x+y
+time = 1
+
+[Command]
+name = "dodge"
+command = x+a
+time = 1
+
+[Command]
+name = "knockdown"
+command = y+b
+time = 1
+
+[Command]
+name = "abc"
+command = a+b+c
+time = 1
+
+;-| Dir + Button |---------------------------------------------------------
+
+[Command]
+name = "fwd_x"
+command = /F,x
+
+[Command]
+name = "fwd_a"
+command = /F,a
+time = 1
+
+[Command]
+name = "df_y"
+command = /DF, y
+time = 1
+
+[Command]
+name = "df_a"
+command = /DF, a
+time = 1
+
+;-| Single Button |---------------------------------------------------------
+
+[Command]
+name = "a"
+command = a
+time = 1
+
+[Command]
+name = "hold_a"
+command = /a
+time = 1
+
+[Command]
+name = "holda"
+command = /$a
+time = 1
+
+[Command]
+name = "holdb"
+command = /$b
+time = 1
+
+[Command]
+name = "b"
+command = b
+time = 1
+
+[Command]
+name = "hold_b"
+command = /b
+time = 1
+
+[Command]
+name = "c"
+command = c
+time = 1
+
+[Command]
+name = "x"
+command = x
+time = 1
+
+[Command]
+name = "hold_x"
+command = /x
+time = 1
+
+[Command]
+name = "y"
+command = y
+time = 1
+
+[Command]
+name = "hold_y"
+command = /y
+time = 1
+
+[Command]
+name = "z"
+command = z
+time = 1
+
+[Command]
+name = "hold_z"
+command = /z
+time = 1
+
+[Command]
+name = "s"
+command = s
+time = 1
+
+[Command]
+name = "start"
+command = s
+time = 1
+;-| Hold Dir |--------------------------------------------------------------
+
+[Command]
+name = "holdfwd"
+command = /$F
+time = 1
+
+[Command]
+name = "holdback"
+command = /$B
+time = 1
+
+[Command]
+name = "holdup"
+command = /$U
+time = 1
+
+[Command]
+name = "holddown"
+command = /$D
+time = 1
+
+;-|Commands|------------------------------------------------------------------------------
+
+
+
+[Statedef -1]
+[State -1]
+type = Varset
+trigger1 = 1
+triggerall = var(59)=0
+var(41) = 0
+[State -1]
+type = Varset
+triggerall = var(59)=0
+trigger1 = AnimElem = 4, >= 0 && AnimElem = 6, < 0 && stateno = 200 && var(50) <= 2
+trigger2 = AnimElem = 5, >= 0 && AnimElem = 6, < 0 && stateno = 220 && var(50) <= 2
+trigger3 = AnimElem = 3, >= 0 && AnimElem = 5, < 0 && stateno = 240 && var(50) <= 2
+trigger4 = AnimElem = 4, >= 0 && AnimElem = 5, < 0 && stateno = 250 && var(50) <= 2
+trigger5 = AnimElem = 5, >= 0 && AnimElem = 7, < 0 && stateno = 260 && var(50) <= 2
+trigger6 = AnimElem = 5, >= 0 && AnimElem = 7, < 0 && stateno = 270 && var(50) <= 2
+trigger7 = AnimElem = 4, >= 0 && AnimElem = 6, < 0 && stateno = 400 && var(50) <= 2
+trigger8 = AnimElem = 3, >= 0 && AnimElem = 4, < 0 && stateno = 410 && var(50) <= 2
+trigger9 = AnimElem = 4, >= 0 && AnimElem = 6, < 0 && stateno = 420 && var(50) <= 2
+trigger10 = AnimElem = 6, >= 0 && AnimElem = 7, < 0 && stateno = 300 && MoveContact && var(50) <= 2
+trigger11 = AnimElem = 5, >= 0 && AnimElem = 7, < 0 && stateno = 304 && MoveContact && var(50) <= 2
+trigger12 = AnimElem = 6, >= 0 && AnimElem = 7, < 0 && stateno = 301 && MoveContact && var(50) <= 2
+trigger13 = AnimElem = 8, >= 0 && AnimElem = 10, < 2 && stateno = 301 && MoveContact && var(50) <= 2
+trigger14 = AnimElem = 2, >= 0 && AnimElem = 4, < 0 && (Anim = 6200||Anim = 6205||Anim = 6240||anim=6435)
+trigger15 = AnimElem = 3, >= 0 && AnimElem = 5, < 0 && (Anim = 6215 || Anim = 6425)
+trigger16 = (AnimElem=7,>=0&&AnimElem=9,<0&&(Anim=6225||anim=6430))||(AnimElem=11,>=0&&AnimElem=13,<0&&Anim = 6220)
+trigger17 = AnimElem = 4, >= 0 && AnimElem = 6, < 0 && (Anim = 6230||Anim = 6235)
+trigger18 = AnimElem = 6, >= 0 && AnimElem = 8, < 0 && (Anim = 6260||Anim = 6265||anim=6420)
+trigger19 = AnimElem = 5, >= 0 && AnimElem = 7, < 0 && Anim = 6270
+trigger20 = AnimElem = 2, >= 0 && AnimElem = 3, < 0 && (Anim=6400||Anim=6405||anim=6410||anim=6415)
+trigger21 = MoveContact && AnimElem = 37, >= 0 && AnimElem = 38, <0 && stateno = 1850 && var(50) = [1,2]
+ignorehitpause = 1
+var(41) = 1
+
+[State 0, 1]
+type = ChangeState
+triggerall = var(59)=0
+triggerall = var(40) != 0
+trigger1 = AnimElem = 4, >= 0 && AnimElem = 6, < 0 && stateno = 200 && var(50) <= 2
+trigger2 = AnimElem = 5, >= 0 && AnimElem = 6, < 0 && stateno = 220 && var(50) <= 2
+trigger3 = AnimElem = 3, >= 0 && AnimElem = 5, < 0 && stateno = 240 && var(50) <= 2
+trigger4 = AnimElem = 4, >= 0 && AnimElem = 5, < 0 && stateno = 250 && var(50) <= 2
+trigger5 = AnimElem = 5, >= 0 && AnimElem = 7, < 0 && stateno = 260 && var(50) <= 2
+trigger6 = AnimElem = 5, >= 0 && AnimElem = 7, < 0 && stateno = 270 && var(50) <= 2
+trigger7 = AnimElem = 4, >= 0 && AnimElem = 6, < 0 && stateno = 400 && var(50) <= 2
+trigger8 = AnimElem = 3, >= 0 && AnimElem = 4, < 0 && stateno = 410 && var(50) <= 2
+trigger9 = AnimElem = 4, >= 0 && AnimElem = 6, < 0 && stateno = 420 && var(50) <= 2
+trigger10 = AnimElem = 6, >= 0 && AnimElem = 7, < 0 && stateno = 300 && MoveContact && var(50) <= 2
+trigger11 = AnimElem = 5, >= 0 && AnimElem = 7, < 0 && stateno = 304 && MoveContact && var(50) <= 2
+trigger12 = AnimElem = 6, >= 0 && AnimElem = 7, < 0 && stateno = 301 && MoveContact && var(50) <= 2
+trigger13 = AnimElem = 8, >= 0 && AnimElem = 10, < 2 && stateno = 301 && MoveContact && var(50) <= 2
+trigger14 = AnimElem = 2, >= 0 && AnimElem = 4, < 0 && (Anim = 6200||Anim = 6205||Anim = 6240||anim=6435)
+trigger15 = AnimElem = 3, >= 0 && AnimElem = 5, < 0 && (Anim = 6215 || Anim = 6425)
+trigger16 = (AnimElem=7,>=0&&AnimElem=9,<0&&(Anim=6225||anim=6430))||(AnimElem=11,>=0&&AnimElem=13,<0&&Anim = 6220)
+trigger17 = AnimElem = 4, >= 0 && AnimElem = 6, < 0 && (Anim = 6230||Anim = 6235)
+trigger18 = AnimElem = 6, >= 0 && AnimElem = 8, < 0 && (Anim = 6260||Anim = 6265||anim=6420)
+trigger19 = AnimElem = 5, >= 0 && AnimElem = 7, < 0 && Anim = 6270
+trigger20 = AnimElem = 2, >= 0 && AnimElem = 3, < 0 && (Anim=6400||Anim=6405||anim=6410||anim=6415)
+value = var(40)
+
+[State -1]
+type = Varset
+triggerall = var(59)=0
+trigger1 = 1
+var(42) = 0
+[State -1]
+type = Varset
+triggerall = var(59)=0
+triggerall = MoveContact = 1
+trigger1 = (stateno=1100||stateno=1150||stateno=1300||stateno=1305||stateno=1320||stateno=1340||stateno=1360)&&var(50)=0
+trigger2 = AnimElem = 5, >= 0 && AnimElem = 8, < 0 && stateno = 1700 && var(50) = [1,2]
+trigger3 = AnimElem = 5, >= 0 && AnimElem = 7, < 0 && stateno = 1750 && var(50) = [1,2]
+trigger4 = AnimElem = 7, >= 0 && AnimElem = 10, < 0 && stateno = 1750 && var(50) = [1,2]
+trigger5 = AnimElem = 14, >= 0 && AnimElem = 17, <-1 && stateno = 1750 && var(50) = [1,2]
+trigger6 = AnimElem = 6, >= 0 && AnimElem = 8, <0 && (stateno = [1800,1850]) && var(50) = [1,2]
+trigger7 = AnimElem = 16, >= 0 && AnimElem = 17, <0 && (stateno = [1800,1850]) && var(50) = [1,2]
+trigger8 = AnimElem = 22, >= 0 && AnimElem = 23, <0 && stateno = 1800 && var(50) = [1,2]
+trigger9 = AnimElem = 21, >= 0 && AnimElem = 22, <0 && stateno = 1800 && var(50) = [1,2]
+trigger10 = AnimElem = 26, >= 0 && AnimElem = 27, <0 && (stateno = [1800,1850]) && var(50) = [1,2]
+trigger11 = AnimElem = 32, >= 0 && AnimElem = 33, <0 && (stateno = [1800,1850]) && var(50) = [1,2]
+trigger12 = AnimElem = 37, >= 0 && AnimElem = 38, <0 && stateno = 1850 && var(50) = [1,2]
+ignorehitpause = 1
+var(42) = 1
+[State -1]
+type = Varset
+triggerall = var(59)=0
+triggerall = var(50) > 2
+trigger1 = AnimElem = 9, >= 2 && AnimElem = 14, <2 && stateno = 7000
+trigger2 = stateno = 7100 && MoveContact = 1
+trigger3 = AnimElem = 4, >= 2 && AnimElem = 7, <2 && stateno = 7300
+ignorehitpause = 1
+var(42) = 1
+
+;----------------------------
+[State -1]
+type = ChangeState
+value = 2350
+triggerall = var(59)=0
+triggerall = command = "↓↙←↓↘→＋Ａ＋Ｃ" && var(50) = [1,2]
+triggerall = statetype != A && Power >= 2000
+trigger1 = ctrl || (var(42) = 1 && Power >= 2500) || var(41) = 1 || stateno = 100 || stateno = 101
+trigger2 = AnimElem = 4, >= 0 && AnimElem = 6, < 0 && stateno = 200
+trigger3 = AnimElem = 5, >= 0 && AnimElem = 6, < 0 && stateno = 220
+trigger4 = AnimElem = 3, >= 0 && AnimElem = 5, < 0 && stateno = 240
+trigger5 = AnimElem = 4, >= 0 && AnimElem = 5, < 0 && stateno = 250
+trigger6 = AnimElem = 5, >= 0 && AnimElem = 7, < 0 && stateno = 260
+trigger7 = AnimElem = 5, >= 0 && AnimElem = 7, < 0 && stateno = 270
+trigger8 = AnimElem = 4, >= 0 && AnimElem = 6, < 0 && stateno = 400
+trigger9 = AnimElem = 3, >= 0 && AnimElem = 4, < 0 && stateno = 410
+trigger10 = AnimElem = 4, >= 0 && AnimElem = 6, < 0 && stateno = 420
+trigger11 = AnimElem = 6, >= 0 && AnimElem = 7, < 0 && stateno = 300 && MoveContact
+trigger12 = AnimElem = 5, >= 0 && AnimElem = 7, < 0 && stateno = 304 && MoveContact
+
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = var(43) = 0 && var(50) = [1,2]
+trigger1 = P2Dist X >= 0 && command = "↓↙←↓↘→＋Ａ＋Ｃ" && command != "↓↘→↓↙←＋Ａ＋Ｃ"
+trigger2 = P2Dist X < 0 && command = "↓↘→↓↙←＋Ａ＋Ｃ" && command != "↓↙←↓↘→＋Ａ＋Ｃ"
+var(44) = 2350
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = var(43) = 0 && var(50) = [1,2]
+trigger1 = P2Dist X >= 0 && command = "↓↙←↓↘→＋Ａ＋Ｃ" && command != "↓↘→↓↙←＋Ａ＋Ｃ"
+trigger2 = P2Dist X < 0 && command = "↓↘→↓↙←＋Ａ＋Ｃ" && command != "↓↙←↓↘→＋Ａ＋Ｃ"
+var(46) = 25
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = var(44) = 2350 && var(43) = 0 && var(50) = [1,2]
+triggerall = command = "hold_x" && command = "hold_y" && power >= 2000
+trigger1 = movetype != H && animtime = 0
+trigger2 = stateno = 0 || stateno = 2
+trigger3 = stateno = 20 || stateno = 52
+trigger4 = stateno = 10 || stateno = 11 || stateno = 12
+trigger5 = var(41) = 1 || (var(42) = 1 && Power >= 2500)
+var(40) = 2350
+
+[State -1]
+type = ChangeState
+value = 2300
+triggerall = var(59)=0
+triggerall = command = "↓↙←↓↘→＋ＡorＣ" && command != "↓↙←↓↘→＋Ａ＋Ｃ" && var(50) = [1,2]
+triggerall = statetype != A && power >= 1000
+trigger1 = ctrl || var(41) = 1 || (var(42) = 1 && Power >= 1500) || stateno = 100 || stateno = 101
+
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = var(43) = 0 && var(50) = [1,2]
+trigger1 = P2Dist X >= 0 && command = "↓↙←↓↘→＋ＡorＣ" && command != "↓↘→↓↙←＋ＡorＣ"
+trigger2 = P2Dist X < 0 && command = "↓↘→↓↙←＋ＡorＣ" && command != "↓↙←↓↘→＋ＡorＣ"
+var(44) = 2300
+[State -1]
+type = varset
+triggerall = var(59)=0
+trigger1 = P2Dist X >= 0 && command = "↓↙←↓↘→＋ＡorＣ" && command != "↓↘→↓↙←＋ＡorＣ" && var(50) = [1,2]
+trigger2 = P2Dist X < 0 && command = "↓↘→↓↙←＋ＡorＣ" && command != "↓↙←↓↘→＋ＡorＣ" && var(50) = [1,2]
+var(46) = 25
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = var(44) = 2300 && var(43) = 0 && power >= 1000 && var(50) = [1,2]
+triggerall = (command = "hold_x" && command != "hold_y")||(command != "hold_x" && command = "hold_y")
+trigger1 = movetype != H && animtime = 0
+trigger2 = stateno = 0 || stateno = 2
+trigger3 = stateno = 20 || stateno = 52
+trigger4 = stateno = 10 || stateno = 11 || stateno = 12
+trigger5 = var(41) = 1 || (var(42) = 1 && Power >= 1500)
+var(40) = 2300
+
+;---------------------------------------------------------------------------
+;MAX発動
+[State -1, BC]
+type = ChangeState
+value = 750
+triggerall = var(59)=0
+Triggerall = !var(59)
+triggerall = command = "MAX"
+triggerall = statetype != A
+triggerall = power >= 1000
+trigger1 = var(20) = 0
+trigger1 = ctrl
+
+;---------------------------------------------------------------------------
+;クイックMAX発動
+[State -1, BC]
+type = ChangeState
+value = 751
+triggerall = var(59)=0
+Triggerall = !var(59)
+triggerall = command = "MAX"
+triggerall = statetype != A
+triggerall = power >= 1000
+trigger1 = var(20) = 0
+trigger1 = stateno = [200,499]
+trigger1 = movecontact
+
+[State -1]
+type = ChangeState
+value = 2500
+triggerall = var(59)=0
+Triggerall = !var(59)
+Triggerall = var(50) = 0
+triggerall = command = "UM"
+triggerall = power >= 2000
+trigger1 = statetype != A && ctrl
+trigger2 = stateno = 2002 && movehit
+trigger3 = stateno = 2004 && movehit
+trigger4 = stateno = 2051 && movehit
+trigger5 = stateno = 2052 && movehit
+trigger6 = stateno = 2102 && movehit
+trigger7 = stateno = 2152 && movehit
+trigger8 = stateno = 2155 && movehit
+trigger9 = stateno = [200,1999]
+
+
+;I am The Omnipresence HSDM
+[State -1]
+type = ChangeState
+value = 28000
+triggerall = var(59)=0
+Triggerall = !var(59)
+triggerall = var(50) = 3
+triggerall = command = "I am The Omnipresence"
+triggerall = statetype != A
+triggerall = power >= 2000 && var(20) = 0 || power >= 1000 && var(20) > 0
+trigger1 = ctrl
+trigger2 = stateno = 8110 && movehit
+trigger3 = stateno = [200,1999]
+
+[State -1, 魂归]
+type = ChangeState
+value = 10085
+triggerall = var(59)=0
+Triggerall = !var(59)
+triggerall = var(50) = 4
+triggerall = command = "魂归"
+triggerall = power >= 2000 && var(20) = 0 || power >= 1000 && var(20) > 0
+trigger1 = statetype != A
+trigger1 = ctrl
+trigger2 = stateno = 8110 && movehit
+trigger3 = stateno = [200,1999]
+
+[State -1,鬼撩];
+type = ChangeState
+value = 8900
+triggerall =var(59)=0
+triggerall =var(50)=4
+triggerall = command = "鬼撩" && statetype != A
+trigger1 = ctrl = 1
+trigger2 = stateno = [200,440]
+trigger2 = movecontact
+
+;解除快速
+[State -1, 解除快速]
+type = ChangeState
+value = 70501
+triggerall =var(59)=0
+triggerall =var(50)=4
+triggerall = command = "解除快速"
+triggerall = numhelper(1000) = 0
+triggerall = statetype != A
+trigger1 = ctrl
+trigger2 = stateno = 200
+trigger3 = stateno = 205
+trigger4 = stateno = 235
+trigger5 = stateno = 240
+trigger6 = stateno = 245&& animelem = 10,>=0
+trigger7 = stateno = 400
+trigger8 = stateno = 410
+trigger9 = stateno = 430
+trigger10= stateno = 440
+trigger11 = stateno = 1300
+trigger12 = stateno = 291;&& animelem = 4,>=0
+
+;解除慢速
+[State -1, 解除慢速]
+type = ChangeState
+value = 70500
+triggerall =var(59)=0
+triggerall =var(50)=4
+triggerall = command = "解除慢速"
+triggerall = numhelper(1000) = 0
+triggerall = statetype != A
+trigger1 = ctrl
+trigger2 = stateno = 200
+trigger3 = stateno = 205
+trigger4 = stateno = 235
+trigger5 = stateno = 240
+trigger6 = stateno = 245&& animelem = 10,>=0
+trigger7 = stateno = 400
+trigger8 = stateno = 410
+trigger9 = stateno = 430
+trigger10= stateno = 440
+
+
+
+
+;-----------------------------------------
+[State -1]
+type = ChangeState
+value = 2150
+triggerall = var(59)=0
+triggerall = Var(50) = 0 && command = "↓↙←↓↙←＋Ｂ＋Ｄ" && command != "↓↘→↓↘→＋Ｂ＋Ｄ"
+triggerall = statetype != A && Power >= 2000
+trigger1 = ctrl || var(41) = 1 || (var(42) = 1 && Power >= 2500) || stateno = 100 || stateno = 101
+
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = var(43) = 0 && var(50) = 0
+trigger1 = P2Dist X >= 0 && command = "↓↙←↓↙←＋Ｂ＋Ｄ" && command != "↓↘→↓↘→＋Ｂ＋Ｄ"
+trigger2 = P2Dist X < 0 && command = "↓↘→↓↘→＋Ｂ＋Ｄ" && command != "↓↙←↓↙←＋Ｂ＋Ｄ"
+var(44) = 2150
+[State -1]
+type = varset
+triggerall = var(59)=0
+trigger1 = P2Dist X >= 0 && command = "↓↙←↓↙←＋Ｂ＋Ｄ" && command != "↓↘→↓↘→＋Ｂ＋Ｄ" && var(50) = 0
+trigger2 = P2Dist X < 0 && command = "↓↘→↓↘→＋Ｂ＋Ｄ" && command != "↓↙←↓↙←＋Ｂ＋Ｄ" && var(50) = 0
+var(46) = 25
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = var(44) = 2150 && var(43) = 0 && var(50) = 0
+triggerall = command = "hold_a" && command = "hold_b" && Power >= 2000
+trigger1 = movetype != H && animtime = 0
+trigger2 = stateno = 0 || stateno = 2
+trigger3 = stateno = 20 || stateno = 52
+trigger4 = stateno = 10 || stateno = 11 || stateno = 12
+trigger5 = var(41) = 1 || (var(42) = 1 && Power >= 2500)
+var(40) = 2150
+;----------------
+[State -1]
+type = ChangeState
+value = 2100
+triggerall = var(59)=0
+triggerall = command = "↓↙←↓↙←＋ＢorＤ" && command != "↓↘→↓↘→＋ＢorＤ" && var(50) = 0
+triggerall = statetype != A && Power >= 1000
+trigger1 = ctrl || var(41) = 1 || (var(42) = 1 && Power >= 1500) || stateno = 100 || stateno = 101
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = var(43) = 0 && var(50) = 0
+trigger1 = P2Dist X >= 0 && command = "↓↙←↓↙←＋ＢorＤ" && command != "↓↘→↓↘→＋ＢorＤ"
+trigger2 = P2Dist X < 0 && command = "↓↘→↓↘→＋ＢorＤ" && command != "↓↙←↓↙←＋ＢorＤ"
+var(44) = 2100
+[State -1]
+type = varset
+triggerall = var(59)=0
+trigger1 = P2Dist X >= 0 && command = "↓↙←↓↙←＋ＢorＤ" && command != "↓↘→↓↘→＋ＢorＤ" && var(50) = 0
+trigger2 = P2Dist X < 0 && command = "↓↘→↓↘→＋ＢorＤ" && command != "↓↙←↓↙←＋ＢorＤ" && var(50) = 0
+var(46) = 25
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = var(44) = 2100 && var(43) = 0 && var(50) = 0 && Power >= 1000
+triggerall = (command = "hold_a" && command != "hold_b")||(command != "hold_a" && command = "hold_b")
+trigger1 = movetype != H && animtime = 0
+trigger2 = stateno = 0 || stateno = 2
+trigger3 = stateno = 20 || stateno = 52
+trigger4 = stateno = 10 || stateno = 11 || stateno = 12
+trigger5 = var(41) = 1 || (var(42) = 1 && Power >= 1500)
+var(40) = 2100
+;---------------------------------------
+[State -1]
+type = ChangeState
+triggerall = var(59)=0
+value = IfElse((Var(50) = 1),2250,2050)
+triggerall = Var(50) < 2 && command = "↓↘→↓↘→＋Ａ＋Ｃ" && command != "↓↙←↓↙←＋Ａ＋Ｃ"
+triggerall = statetype != A && Power >= 2000
+trigger1 = ctrl || var(41) = 1 || (var(42) = 1 && Power >= 2500) || stateno = 100 || stateno = 101
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = var(43) = 0 && Var(50) < 2
+trigger1 = P2Dist X >= 0 && command = "↓↘→↓↘→＋Ａ＋Ｃ" && command != "↓↙←↓↙←＋Ａ＋Ｃ"
+trigger2 = P2Dist X < 0 && command = "↓↙←↓↙←＋Ａ＋Ｃ" && command != "↓↘→↓↘→＋Ａ＋Ｃ"
+var(44) = IfElse((Var(50) = 1),2250,2050)
+[State -1]
+type = varset
+triggerall = var(59)=0
+trigger1 = P2Dist X >= 0 && command = "↓↘→↓↘→＋Ａ＋Ｃ" && command != "↓↙←↓↙←＋Ａ＋Ｃ" && Var(50) < 2
+trigger2 = P2Dist X < 0 && command = "↓↙←↓↙←＋Ａ＋Ｃ" && command != "↓↘→↓↘→＋Ａ＋Ｃ" && Var(50) < 2
+var(46) = 25
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = var(44) = IfElse((Var(50) = 1),2250,2050) && var(43) = 0 && Var(50) < 2 && Power >= 2000
+triggerall = command = "hold_x" && command = "hold_y"
+trigger1 = movetype != H && animtime = 0
+trigger2 = stateno = 0 || stateno = 2
+trigger3 = stateno = 20 || stateno = 52
+trigger4 = stateno = 10 || stateno = 11 || stateno = 12
+trigger5 = var(41) = 1 || (var(42) = 1 && Power >= 2500)
+var(40) = IfElse((Var(50) = 1),2250,2050)
+;---------------------------
+[State -1]
+type = ChangeState
+triggerall = var(59)=0
+value = IfElse((Var(50) = 0),2000,2200)
+triggerall = Var(50) < 3 && command = "↓↘→↓↘→＋ＡorＣ" && command != "↓↙←↓↙←＋ＡorＣ"
+triggerall = statetype != A && Power >= 1000
+trigger1 = ctrl || var(41) = 1 || (var(42) = 1 && Power >= 1500) || stateno = 100 || stateno = 101
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = var(43) = 0 && Var(50) < 3
+trigger1 = P2Dist X >= 0 && command = "↓↘→↓↘→＋ＡorＣ" && command != "↓↙←↓↙←＋ＡorＣ"
+trigger2 = P2Dist X < 0 && command = "↓↙←↓↙←＋ＡorＣ" && command != "↓↘→↓↘→＋ＡorＣ"
+var(44) = IfElse((Var(50) = 0),2000,2200)
+[State -1]
+type = varset
+triggerall = var(59)=0
+trigger1 = P2Dist X >= 0 && command = "↓↘→↓↘→＋ＡorＣ" && command != "↓↙←↓↙←＋ＡorＣ" && Var(50) < 3
+trigger2 = P2Dist X < 0 && command = "↓↙←↓↙←＋ＡorＣ" && command != "↓↘→↓↘→＋ＡorＣ" && Var(50) < 3
+var(46) = 25
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = var(44) = IfElse((Var(50) = 0),2000,2200) && var(43) = 0 && Var(50) < 3 && Power >= 1000
+triggerall = (command = "hold_x" && command != "hold_y")||(command != "hold_x" && command = "hold_y")
+trigger1 = movetype != H && animtime = 0
+trigger2 = stateno = 0 || stateno = 2
+trigger3 = stateno = 20 || stateno = 52
+trigger4 = stateno = 10 || stateno = 11 || stateno = 12
+trigger5 = var(41) = 1 || (var(42) = 1 && Power >= 1500)
+var(40) = IfElse((Var(50) = 0),2000,2200)
+;-----------------------------------------
+[State -1]
+type = ChangeState
+triggerall = var(59)=0
+value = IfElse((command = "hold_x"),1950,1951)
+triggerall = Var(50) = 0 && command = "↓↙←↓↙←＋ＡorＣ" && command != "↓↘→↓↘→＋ＡorＣ"
+triggerall = statetype != A && command != "↓↙←↓↘→＋ＡorＣ" && command != "↓↘→↓↙←＋ＡorＣ"
+trigger1 = ctrl || var(41) = 1 || stateno = 100 || stateno = 101
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = var(43) = 0 && Var(50) = 0 && command != "↓↙←↓↘→＋ＡorＣ" && command != "↓↘→↓↙←＋ＡorＣ"
+trigger1 = P2Dist X >= 0 && command = "↓↙←↓↙←＋ＡorＣ" && command != "↓↘→↓↘→＋ＡorＣ"
+trigger2 = P2Dist X < 0 && command = "↓↘→↓↘→＋ＡorＣ" && command != "↓↙←↓↙←＋ＡorＣ"
+var(44) = IfElse((command = "hold_x"),1950,1951)
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = command != "↓↙←↓↘→＋ＡorＣ" && command != "↓↘→↓↙←＋ＡorＣ"
+trigger1 = P2Dist X >= 0 && command = "↓↙←↓↙←＋ＡorＣ" && command != "↓↘→↓↘→＋ＡorＣ" && Var(50) = 0
+trigger2 = P2Dist X < 0 && command = "↓↘→↓↘→＋ＡorＣ" && command != "↓↙←↓↙←＋ＡorＣ" && Var(50) = 0
+var(46) = 20
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = var(44) = IfElse((command = "hold_x"),1950,1951) && var(43) = 0 && Var(50) = 0
+triggerall = (command = "hold_x" && command != "hold_y")||(command != "hold_x" && command = "hold_y")
+trigger1 = movetype != H && animtime = 0
+trigger2 = stateno = 0 || stateno = 2
+trigger3 = stateno = 20 || stateno = 52
+trigger4 = stateno = 10 || stateno = 11 || stateno = 12
+trigger5 = var(41) = 1
+var(40) = IfElse((command = "hold_x"),1950,1951)
+
+[State -1]
+type = ChangeState
+triggerall = var(59)=0
+value = IfElse((Var(50) = 1),1953,1954)
+triggerall = (Var(50) = [1,2]) && command = "↓↙←↓↙←＋ＡorＣ" && command != "↓↘→↓↘→＋ＡorＣ"
+triggerall = statetype != A && command != "↓↙←↓↘→＋ＡorＣ" && command != "↓↘→↓↙←＋ＡorＣ"
+trigger1 = ctrl || var(41) = 1 || stateno = 100 || stateno = 101
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = var(43) = 0 && (Var(50) = [1,2]) && command != "↓↙←↓↘→＋ＡorＣ" && command != "↓↘→↓↙←＋ＡorＣ"
+trigger1 = P2Dist X >= 0 && command = "↓↙←↓↙←＋ＡorＣ" && command != "↓↘→↓↘→＋ＡorＣ"
+trigger2 = P2Dist X < 0 && command = "↓↘→↓↘→＋ＡorＣ" && command != "↓↙←↓↙←＋ＡorＣ"
+var(44) = IfElse((Var(50) = 1),1953,1954)
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = command != "↓↙←↓↘→＋ＡorＣ" && command != "↓↘→↓↙←＋ＡorＣ"
+trigger1 = P2Dist X >= 0 && command = "↓↙←↓↙←＋ＡorＣ" && command != "↓↘→↓↘→＋ＡorＣ" && (Var(50) = [1,2])
+trigger2 = P2Dist X < 0 && command = "↓↘→↓↘→＋ＡorＣ" && command != "↓↙←↓↙←＋ＡorＣ" && (Var(50) = [1,2])
+var(46) = 20
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = var(44) = IfElse((Var(50) = 1),1953,1954) && var(43) = 0 && (Var(50) = [1,2])
+triggerall = command = "hold_x" || command = "hold_y"
+trigger1 = movetype != H && animtime = 0
+trigger2 = stateno = 0 || stateno = 2
+trigger3 = stateno = 20 || stateno = 52
+trigger4 = stateno = 10 || stateno = 11 || stateno = 12
+trigger5 = var(41) = 1
+var(40) = IfElse((Var(50) = 1),1953,1954)
+;----------------------------------------------
+
+[State -1]
+type = ChangeState
+triggerall = var(59)=0
+value = ifelse((command != "hold_x"),ifelse((command != "hold_a"),ifelse((command != "hold_y"),1360,1340),1320),1300)
+triggerall = Var(50) = 0 && command = "→↘↓↙←＋ＡorＢorＣorＤ" && command != "←↙↓↘→＋ＡorＢorＣorＤ"
+triggerall = statetype != A
+trigger1 = ctrl || var(41) = 1 || stateno = 100 || stateno = 101
+trigger2 = (stateno = [200,1999]) && var(20) > 0
+trigger2 = movehit
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = var(43) = 0 && Var(50) = 0
+trigger1 = P2Dist X >= 0 && command = "→↘↓↙←＋ＡorＢorＣorＤ" && command != "←↙↓↘→＋ＡorＢorＣorＤ"
+trigger2 = P2Dist X < 0 && command != "→↘↓↙←＋ＡorＢorＣorＤ" && command = "←↙↓↘→＋ＡorＢorＣorＤ"
+var(44) = ifelse((command != "hold_x"),ifelse((command != "hold_a"),ifelse((command != "hold_y"),1360,1340),1320),1300)
+[State -1]
+type = varset
+triggerall = var(59)=0
+trigger1 = P2Dist X >= 0 && command = "→↘↓↙←＋ＡorＢorＣorＤ" && command != "←↙↓↘→＋ＡorＢorＣorＤ" && Var(50) = 0
+trigger2 = P2Dist X < 0 && command != "→↘↓↙←＋ＡorＢorＣorＤ" && command = "←↙↓↘→＋ＡorＢorＣorＤ" && Var(50) = 0
+var(46) = 15
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = var(44) = ifelse((command != "hold_x"),ifelse((command != "hold_a"),ifelse((command != "hold_y"),1360,1340),1320),1300)
+triggerall = (command="hold_x"||command="hold_y"||command="hold_a"||command="hold_b") && var(43) = 0 && Var(50) = 0
+trigger1 = movetype != H && animtime = 0
+trigger2 = stateno = 0 || stateno = 2
+trigger3 = stateno = 20 || stateno = 52
+trigger4 = stateno = 10 || stateno = 11 || stateno = 12
+trigger5 = var(41) = 1
+var(40) = ifelse((command != "hold_x"),ifelse((command != "hold_a"),ifelse((command != "hold_y"),1360,1340),1320),1300)
+;--------------------------------
+[State -1]
+type = ChangeState
+value = 7300
+triggerall = var(59)=0
+triggerall = Var(50) > 2 && command = "→↘↓↙←＋ＡorＢorＣorＤ" && command != "←↙↓↘→＋ＡorＢorＣorＤ"
+triggerall = statetype != A
+trigger1 = ctrl || var(41) = 1 || stateno = 100 || stateno = 101
+trigger2 = helper(7001),movehit
+trigger2 = var(20) > 0
+trigger3 = helper(7230),movehit
+trigger3 = var(20) > 0
+trigger4 = (stateno = 7100) && var(20) > 0
+trigger4 = movehit
+trigger5 = helper(7350),movehit
+trigger5 = var(20) > 0
+
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = var(43) = 0 && Var(50) > 2
+trigger1 = P2Dist X >= 0 && command = "→↘↓↙←＋ＡorＢorＣorＤ" && command != "←↙↓↘→＋ＡorＢorＣorＤ"
+trigger2 = P2Dist X < 0 && command != "→↘↓↙←＋ＡorＢorＣorＤ" && command = "←↙↓↘→＋ＡorＢorＣorＤ"
+var(44) = 7300
+[State -1]
+type = varset
+triggerall = var(59)=0
+trigger1 = P2Dist X >= 0 && command = "→↘↓↙←＋ＡorＢorＣorＤ" && command != "←↙↓↘→＋ＡorＢorＣorＤ" && Var(50) > 2
+trigger2 = P2Dist X < 0 && command != "→↘↓↙←＋ＡorＢorＣorＤ" && command = "←↙↓↘→＋ＡorＢorＣorＤ" && Var(50) > 2
+var(46) = 20
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = var(44) = 7300 && var(43) = 0 && Var(50) > 2
+triggerall = command="hold_x"||command="hold_y"||command="hold_a"||command="hold_b"
+trigger1 = movetype != H && animtime = 0
+trigger2 = stateno = 0 || stateno = 2
+trigger3 = stateno = 20 || stateno = 52
+trigger4 = stateno = 10 || stateno = 11 || stateno = 12
+trigger5 = var(41) = 1
+var(40) = 7300
+;-----------------------
+[State -1]
+type = ChangeState
+triggerall = var(59)=0
+value = ifelse(command = "hold_b",1850,1800)
+triggerall = (Var(50) = [1,2]) && command = "←↙↓↘→＋ＢorＤ" && command != "→↘↓↙←＋ＢorＤ"
+triggerall = statetype != A
+trigger1 = ctrl || var(41) = 1 || stateno = 100 || stateno = 101
+trigger2 = (stateno = [200,1999]) && var(20) > 0
+trigger2 = movehit
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = var(43) = 0 && Var(50) = [1,2]
+trigger1 = P2Dist X >= 0 && command = "←↙↓↘→＋ＢorＤ" && command != "→↘↓↙←＋ＢorＤ"
+trigger2 = P2Dist X < 0 && command != "←↙↓↘→＋ＢorＤ" && command = "→↘↓↙←＋ＢorＤ"
+var(44) = ifelse(command = "hold_b",1850,1800)
+[State -1]
+type = varset
+triggerall = var(59)=0
+trigger1 = P2Dist X >= 0 && command = "←↙↓↘→＋ＢorＤ" && command != "→↘↓↙←＋ＢorＤ"&&Var(50) = [1,2]
+trigger2 = P2Dist X < 0 && command != "←↙↓↘→＋ＢorＤ" && command = "→↘↓↙←＋ＢorＤ"&&Var(50) = [1,2]
+var(46) = 20
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = var(44) = ifelse(command = "hold_b",1850,1800)
+triggerall = ((command="hold_a"&&command!="hold_b")||(command!="hold_a"&&command="hold_b")) && var(43) = 0&&Var(50) = [1,2]
+trigger1 = movetype != H && animtime = 0
+trigger2 = stateno = 0 || stateno = 2
+trigger3 = stateno = 20 || stateno = 52
+trigger4 = stateno = 10 || stateno = 11 || stateno = 12
+trigger5 = var(41) = 1
+var(40) = ifelse(command = "hold_b",1850,1800)
+
+;-----------------------------
+[State -1]
+type = ChangeState
+triggerall = var(59)=0
+value = ifelse((command = "hold_a"),900,950)
+triggerall = Var(50) = 0 && command = "→↓↘＋ＢorＤ" && command != "←↓↙＋ＢorＤ"
+triggerall = statetype != A
+trigger1 = ctrl || var(41) = 1 || stateno = 100 || stateno = 101
+trigger2 = (stateno = [900,1999]) && var(20) > 0
+trigger2 = movehit
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = var(43) = 0 && Var(50) = 0
+trigger1 = P2Dist X >= 0 && command = "→↓↘＋ＢorＤ" && command != "←↓↙＋ＢorＤ"
+trigger2 = P2Dist X < 0 && command != "→↓↘＋ＢorＤ" && command = "←↓↙＋ＢorＤ"
+var(44) = ifelse((command = "hold_a"),900,950)
+[State -1]
+type = varset
+triggerall = var(59)=0
+trigger1 = P2Dist X >= 0 && command = "→↓↘＋ＢorＤ" && command != "←↓↙＋ＢorＤ" && Var(50) = 0
+trigger2 = P2Dist X < 0 && command != "→↓↘＋ＢorＤ" && command = "←↓↙＋ＢorＤ" && Var(50) = 0
+var(46) = 15
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = var(44) = ifelse((command = "hold_a"),900,950)
+triggerall = ((command="hold_a"&&command!="hold_b")||(command!="hold_a"&&command="hold_b")) && var(43) = 0&&Var(50) = 0
+trigger1 = movetype != H && animtime = 0
+trigger2 = stateno = 0 || stateno = 2
+trigger3 = stateno = 20 || stateno = 52
+trigger4 = stateno = 10 || stateno = 11 || stateno = 12
+trigger5 = var(41) = 1
+var(40) = ifelse((command = "hold_a"),900,950)
+;----------------------------------------
+[State -1]
+type = ChangeState
+value = 8100
+triggerall = var(59)=0
+triggerall = Var(50) >= 3 && command = "→↓↘＋ＡorＣ" && command != "←↓↙＋ＡorＣ"
+triggerall = statetype != A && Power >= 1000
+trigger1 = ctrl || var(41) = 1 || (var(42) = 1 && Power >= 1500) || stateno = 100 || stateno = 101
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = var(43) = 0 && Var(50) >= 3
+trigger1 = P2Dist X >= 0 && command = "→↓↘＋ＡorＣ" && command != "←↓↙＋ＡorＣ"
+trigger2 = P2Dist X < 0 && command != "→↓↘＋ＡorＣ" && command = "←↓↙＋ＡorＣ"
+var(44) = 8100
+[State -1]
+type = varset
+triggerall = var(59)=0
+trigger1 = P2Dist X >= 0 && command = "→↓↘＋ＡorＣ" && command != "←↓↙＋ＡorＣ" && Var(50) >= 3
+trigger2 = P2Dist X < 0 && command != "→↓↘＋ＡorＣ" && command = "←↓↙＋ＡorＣ" && Var(50) >= 3
+var(46) = 15
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = var(44) = 8100
+triggerall = (command = "hold_x" || command = "hold_y") && var(43) = 0 && Var(50) >= 3 && Power >= 1000
+trigger1 = movetype != H && animtime = 0
+trigger2 = stateno = 0 || stateno = 2
+trigger3 = stateno = 20 || stateno = 52
+trigger4 = stateno = 10 || stateno = 11 || stateno = 12
+trigger5 = var(41) = 1 || (var(42) = 1 && Power >= 1500)
+var(40) = 8100
+;--------------------------------
+[State -1]
+type = ChangeState
+triggerall = var(59)=0
+value = ifelse((Var(50) = 0),ifelse((command = "hold_x"),1400,1450),ifelse((command = "hold_x"),1700,1750))
+triggerall = Var(50) <= 2 && command = "→↓↘＋ＡorＣ" && command != "←↓↙＋ＡorＣ"
+triggerall = statetype != A
+trigger1 = ctrl || var(41) = 1 || stateno = 100 || stateno = 101
+trigger2 = (stateno = [200,1999]) && var(20) > 0
+trigger2 = movehit
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = var(43) = 0 && Var(50) <= 2
+trigger1 = P2Dist X >= 0 && command = "→↓↘＋ＡorＣ" && command != "←↓↙＋ＡorＣ"
+trigger2 = P2Dist X < 0 && command != "→↓↘＋ＡorＣ" && command = "←↓↙＋ＡorＣ"
+var(44) = ifelse((Var(50) = 0),ifelse((command = "hold_x"),1400,1450),ifelse((command = "hold_x"),1700,1750))
+[State -1]
+type = varset
+triggerall = var(59)=0
+trigger1 = P2Dist X >= 0 && command = "→↓↘＋ＡorＣ" && command != "←↓↙＋ＡorＣ" && Var(50) <= 2
+trigger2 = P2Dist X < 0 && command != "→↓↘＋ＡorＣ" && command = "←↓↙＋ＡorＣ" && Var(50) <= 2
+var(46) = 15
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = var(44) = ifelse((Var(50) = 0),ifelse((command = "hold_x"),1400,1450),ifelse((command = "hold_x"),1700,1750))
+triggerall = ((command="hold_x"&&command!="hold_y")||(command!="hold_x"&&command="hold_y")) && var(43) = 0&&Var(50) <= 2
+trigger1 = movetype != H && animtime = 0
+trigger2 = stateno = 0 || stateno = 2
+trigger3 = stateno = 20 || stateno = 52
+trigger4 = stateno = 10 || stateno = 11 || stateno = 12
+trigger5 = var(41) = 1
+var(40) = ifelse((Var(50) = 0),ifelse((command = "hold_x"),1400,1450),ifelse((command = "hold_x"),1700,1750))
+
+;--------------------------------
+[State -1]
+type = ChangeState
+triggerall = var(59)=0
+value = ifelse(var(50) = 4,8200,7200)
+triggerall = Var(50) >= 3 && command = "↓↘→＋ＢorＤ" && command != "hold_a" && command != "↓↙←＋ＢorＤ"
+triggerall = statetype != A && power >= ifelse(var(50) = 4,2000,0)
+trigger1 = ctrl || var(41) = 1 || stateno = 100 || stateno = 101
+trigger2 = stateno = 8110 && movehit
+trigger3 = helper(7001),movehit
+trigger3 = var(20) > 0
+trigger4 = helper(7230),movehit
+trigger4 = var(20) > 0
+trigger5 = (stateno = 7100) && var(20) > 0
+trigger5 = movehit
+trigger6 = helper(7350),movehit
+trigger6 = var(20) > 0
+
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = var(43) = 0 && Var(50) >= 3 && power >= ifelse(var(50) = 4,2000,0)
+trigger1 = P2Dist X >= 0 && command = "↓↘→＋ＢorＤ" && command != "↓↙←＋ＢorＤ" && command = "hold_b" && command != "hold_a"
+trigger2 = P2Dist X < 0 && command != "↓↘→＋ＢorＤ" && command = "↓↙←＋ＢorＤ" && command = "hold_b" && command != "hold_a"
+var(44) = ifelse(var(50) = 4,8200,7200)
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = power >= ifelse(var(50) = 4,2000,0)
+trigger1 = P2Dist X >= 0 && command = "↓↘→＋ＢorＤ" && command != "↓↙←＋ＢorＤ" && command = "hold_b" && command != "hold_a" && Var(50) >= 3
+trigger2 = P2Dist X < 0 && command != "↓↘→＋ＢorＤ" && command = "↓↙←＋ＢorＤ" && command = "hold_b" && command != "hold_a" && Var(50) >= 3
+var(46) = 15
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = power >= ifelse(var(50) = 4,2000,0)
+triggerall = var(44) = ifelse(var(50) = 4,8200,7200)
+triggerall = command = "hold_b" && var(43) = 0 && Var(50) >= 3
+trigger1 = movetype != H && animtime = 0
+trigger2 = stateno = 0 || stateno = 2
+trigger3 = stateno = 20 || stateno = 52
+trigger4 = stateno = 10 || stateno = 11 || stateno = 12
+trigger5 = var(41) = 1
+var(40) = ifelse(var(50) = 4,8200,7200)
+
+;-----------------------------
+[State -1]
+type = ChangeState
+triggerall = var(59)=0
+value = ifelse((command = "hold_a"),1200,1250)
+triggerall = Var(50) = 0 && command = "↓↘→＋ＢorＤ" && command != "↓↙←＋ＢorＤ"
+triggerall = statetype != A
+trigger1 = ctrl || var(41) = 1 || stateno = 100 || stateno = 101
+trigger2 = (stateno = [200,1999]) && var(20) > 0
+trigger2 = movehit
+
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = var(43) = 0 && Var(50) = 0
+trigger1 = P2Dist X >= 0 && command = "↓↘→＋ＢorＤ" && command != "↓↙←＋ＢorＤ"
+trigger2 = P2Dist X < 0 && command != "↓↘→＋ＢorＤ" && command = "↓↙←＋ＢorＤ"
+var(44) = ifelse((command = "hold_a"),1200,1250)
+[State -1]
+type = varset
+triggerall = var(59)=0
+trigger1 = P2Dist X >= 0 && command = "↓↘→＋ＢorＤ" && command != "↓↙←＋ＢorＤ" && Var(50) = 0
+trigger2 = P2Dist X < 0 && command != "↓↘→＋ＢorＤ" && command = "↓↙←＋ＢorＤ" && Var(50) = 0
+var(46) = 15
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = var(44) = ifelse((command = "hold_a"),1200,1250)
+triggerall = ((command="hold_a"||command!="hold_b")||(command!="hold_a"||command="hold_b")) && var(43) = 0 && Var(50) = 0
+trigger1 = movetype != H && animtime = 0
+trigger2 = stateno = 0 || stateno = 2
+trigger3 = stateno = 20 || stateno = 52
+trigger4 = stateno = 10 || stateno = 11 || stateno = 12
+trigger5 = var(41) = 1
+var(40) = ifelse((command = "hold_a"),1200,1250)
+;-----------------------------
+[State -1]
+type = ChangeState
+value = 8000
+triggerall = var(59)=0
+triggerall = Var(50) = 3 && command = "↓↙←↓↙←＋ＡorＣ" && command != "↓↘→↓↘→＋ＡorＣ"
+triggerall = statetype != A && Power >= 1000
+trigger1 = ctrl || (var(42) = 1 && Power >= 1500) || var(41) = 1 || stateno = 100 || stateno = 101
+trigger2 = stateno = 8110 && movehit
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = var(43) = 0 && Var(50) = 3
+trigger1 = P2Dist X >= 0 && command != "↓↘→↓↘→＋ＡorＣ" && command = "↓↙←↓↙←＋ＡorＣ"
+trigger2 = P2Dist X < 0 && command = "↓↘→↓↘→＋ＡorＣ" && command != "↓↙←↓↙←＋ＡorＣ"
+var(44) = 8000
+[State -1]
+type = varset
+triggerall = var(59)=0
+trigger1 = P2Dist X >= 0 && command != "↓↘→↓↘→＋ＡorＣ" && command = "↓↙←↓↙←＋ＡorＣ" && Var(50) = 3
+trigger2 = P2Dist X < 0 && command = "↓↘→↓↘→＋ＡorＣ" && command != "↓↙←↓↙←＋ＡorＣ" && Var(50) = 3
+var(46) = 20
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = var(44) = 8000
+triggerall = (command="hold_x"||command="hold_y") && var(43) = 0 && Var(50) = 3 && Power >= 1000
+trigger1 = movetype != H && animtime = 0
+trigger2 = stateno = 0 || stateno = 2
+trigger3 = stateno = 20 || stateno = 52
+trigger4 = stateno = 10 || stateno = 11 || stateno = 12
+trigger5 = var(41) = 1 || (var(42) = 1 && Power >= 1500)
+var(40) = 8000
+
+[State -1]
+type = ChangeState
+triggerall = var(59)=0
+value = ifelse((command = "hold_x"),1600,1650)
+triggerall = (Var(50) = [1,2]) && command != "↓↘→＋ＡorＣ" && command = "↓↙←＋ＡorＣ"
+triggerall = statetype != A && command != "↓↙←↓↙←＋ＡorＣ" && command != "↓↘→↓↘→＋ＡorＣ"
+trigger1 = ctrl || var(41) = 1 || stateno = 100 || stateno = 101
+trigger2 = (stateno = [200,1999]) && var(20) > 0
+trigger2 = movehit
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = var(43) = 0 && Var(50) = [1,2]
+trigger1 = P2Dist X >= 0 && command != "↓↘→＋ＡorＣ" && command = "↓↙←＋ＡorＣ" && command != "↓↙←↓↙←＋ＡorＣ" && command != "↓↘→↓↘→＋ＡorＣ"
+trigger2 = P2Dist X < 0 && command = "↓↘→＋ＡorＣ" && command != "↓↙←＋ＡorＣ" && command != "↓↙←↓↙←＋ＡorＣ" && command != "↓↘→↓↘→＋ＡorＣ"
+var(44) = ifelse((command = "hold_x"),1600,1650)
+[State -1]
+type = varset
+triggerall = var(59)=0
+trigger1 = P2Dist X >= 0 && command != "↓↘→＋ＡorＣ" && command = "↓↙←＋ＡorＣ" && command != "↓↙←↓↙←＋ＡorＣ" && command != "↓↘→↓↘→＋ＡorＣ" && Var(50) = [1,2]
+trigger2 = P2Dist X < 0 && command = "↓↘→＋ＡorＣ" && command! = "↓↙←＋ＡorＣ" && command != "↓↙←↓↙←＋ＡorＣ" && command != "↓↘→↓↘→＋ＡorＣ" && Var(50) = [1,2]
+var(46) = 30
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = var(44) = ifelse((command = "hold_x"),1600,1650)
+triggerall = ((command="hold_x"&&command!="hold_y")||(command!="hold_x"||command="hold_y"))&&var(43) = 0 && Var(50) = [1,2]
+trigger1 = movetype != H && animtime = 0
+trigger2 = stateno = 0 || stateno = 2
+trigger3 = stateno = 20 || stateno = 52
+trigger4 = stateno = 10 || stateno = 11 || stateno = 12
+trigger5 = var(41) = 1
+var(40) = ifelse((command = "hold_x"),1600,1650)
+;-----------------------------------------------------
+[State -1]
+type = ChangeState
+triggerall = var(59)=0
+value = ifelse((command = "hold_a"),1000,1050)
+triggerall = Var(50) = 0 && command = "↓↘→＋ＢorＤ"
+trigger1 = statetype = A && (ctrl|| stateno = 100 || stateno = 101)
+trigger2 = stateno = 1380 || stateno = 1381
+trigger3 = (stateno = [200,1999]) && var(20) > 0
+trigger3 = movehit
+;----------------------------------------------
+[State -1]
+type = ChangeState
+value = 7100
+triggerall = var(59)=0
+triggerall = Var(50) > 2 && ((command = "↓↘→＋ＡorＣ" && command != "hold_x")||(command = "↓↘→＋ＢorＤ" && command != "hold_b"))
+triggerall = statetype != A
+trigger1 = ctrl || var(41) = 1 || stateno = 100 || stateno = 101
+trigger2 = helper(7001),movehit
+trigger2 = var(20) > 0
+trigger3 = helper(7230),movehit
+trigger3 = var(20) > 0
+trigger4 = (stateno = 7100) && var(20) > 0
+trigger4 = movehit
+trigger5 = helper(7350),movehit
+trigger5 = var(20) > 0
+
+
+
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = var(43) = 0 && Var(50) > 2
+trigger1 = P2Dist X >= 0 && command = "↓↘→＋ＡorＣ" && command != "hold_x" && command != "↓↙←＋ＡorＣ"
+trigger2 = P2Dist X >= 0 && command = "↓↘→＋ＢorＤ" && command != "hold_b" && command != "↓↙←＋ＢorＤ"
+trigger3 = P2Dist X < 0 && command != "↓↘→＋ＡorＣ" && command != "hold_x" && command = "↓↙←＋ＡorＣ"
+trigger4 = P2Dist X < 0 && command != "↓↘→＋ＢorＤ" && command != "hold_b" && command = "↓↙←＋ＢorＤ"
+var(44) = 7100
+[State -1]
+type = varset
+triggerall = var(59)=0
+trigger1 = P2Dist X >= 0 && command = "↓↘→＋ＡorＣ" && command != "hold_x" && command != "↓↙←＋ＡorＣ" && Var(50) > 2
+trigger2 = P2Dist X >= 0 && command = "↓↘→＋ＢorＤ" && command != "hold_b" && command != "↓↙←＋ＢorＤ" && Var(50) > 2
+trigger3 = P2Dist X < 0 && command != "↓↘→＋ＡorＣ" && command != "hold_x" && command = "↓↙←＋ＡorＣ" && Var(50) > 2
+trigger4 = P2Dist X < 0 && command != "↓↘→＋ＢorＤ" && command != "hold_b" && command = "↓↙←＋ＢorＤ" && Var(50) > 2
+var(46) = 25
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = var(44) = 7100
+triggerall = (command = "hold_y" || command = "hold_a") && var(43) = 0 && command != "hold_x" && command != "hold_b" && Var(50) > 2
+trigger1 = movetype != H && animtime = 0
+trigger2 = stateno = 0 || stateno = 2
+trigger3 = stateno = 20 || stateno = 52
+trigger4 = stateno = 10 || stateno = 11 || stateno = 12
+trigger5 = var(41) = 1
+var(40) = 7100
+;-----------------------
+[State -1]
+type = ChangeState
+value = 7000
+triggerall = var(59)=0
+triggerall = Var(50) > 2 && command = "↓↘→＋ＡorＣ" && command != "hold_y"
+triggerall = statetype != A
+trigger1 = ctrl || var(41) = 1 || stateno = 100 || stateno = 101;trigger2 = helper(7001),movehit
+trigger2 = var(20) > 0
+trigger3 = helper(7230),movehit
+trigger3 = var(20) > 0
+trigger4 = (stateno = 7100) && var(20) > 0
+trigger4 = movehit
+trigger5 = helper(7350),movehit
+trigger5 = var(20) > 0
+
+
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = var(43) = 0 && Var(50) > 2
+trigger1 = P2Dist X >= 0 && command = "↓↘→＋ＡorＣ" && command != "hold_y" && command != "↓↙←＋ＡorＣ"
+trigger2 = P2Dist X < 0 && command != "↓↘→＋ＡorＣ" && command != "hold_y" && command = "↓↙←＋ＡorＣ"
+var(44) = 7000
+[State -1]
+type = varset
+triggerall = var(59)=0
+trigger1 = P2Dist X >= 0 && command = "↓↘→＋ＡorＣ" && command != "hold_y" && command != "↓↙←＋ＡorＣ" && Var(50) > 2
+trigger2 = P2Dist X < 0 && command != "↓↘→＋ＡorＣ" && command != "hold_y" && command = "↓↙←＋ＡorＣ" && Var(50) > 2
+var(46) = 25
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = var(44) = 7000
+triggerall = command = "hold_x" && var(43) = 0 && command != "hold_y" && Var(50) > 2
+trigger1 = movetype != H && animtime = 0
+trigger2 = stateno = 0 || stateno = 2
+trigger3 = stateno = 20 || stateno = 52
+trigger4 = stateno = 10 || stateno = 11 || stateno = 12
+trigger5 = var(41) = 1
+var(40) = 7000
+;-----------------------------
+[State -1]
+type = ChangeState
+triggerall = var(59)=0
+value = ifelse((Var(50) = 0),ifelse((command = "hold_x"),1100,1150),ifelse((command = "hold_x"),1500,1550))
+triggerall = Var(50) <= 2 && command = "↓↘→＋ＡorＣ"
+triggerall = statetype != A
+trigger1 = ctrl || var(41) = 1 || stateno = 100 || stateno = 101
+trigger2 = (stateno = [200,1999]) && var(20) > 0
+trigger2 = movehit
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = var(43) = 0 && Var(50) <= 2
+trigger1 = P2Dist X >= 0 && command = "↓↘→＋ＡorＣ" && command != "↓↙←＋ＡorＣ"
+trigger2 = P2Dist X < 0 && command != "↓↘→＋ＡorＣ" && command = "↓↙←＋ＡorＣ"
+var(44) = ifelse((Var(50) = 0),ifelse((command = "hold_x"),1100,1150),ifelse((command = "hold_x"),1500,1550))
+[State -1]
+type = varset
+triggerall = var(59)=0
+trigger1 = P2Dist X >= 0 && command = "↓↘→＋ＡorＣ" && command != "↓↙←＋ＡorＣ" && Var(50) <= 2
+trigger2 = P2Dist X < 0 && command != "↓↘→＋ＡorＣ" && command = "↓↙←＋ＡorＣ" && Var(50) <= 2
+var(46) = 25
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = var(44) = ifelse((Var(50) = 0),ifelse((command = "hold_x"),1100,1150),ifelse((command = "hold_x"),1500,1550))
+triggerall = ((command="hold_x"&&command!="hold_y")||(command!="hold_x"&&command="hold_y")) && var(43) = 0 && Var(50) <= 2
+trigger1 = movetype != H && animtime = 0
+trigger2 = stateno = 0 || stateno = 2
+trigger3 = stateno = 20 || stateno = 52
+trigger4 = stateno = 10 || stateno = 11 || stateno = 12
+trigger5 = var(41) = 1
+var(40) = ifelse((Var(50) = 0),ifelse((command = "hold_x"),1100,1150),ifelse((command = "hold_x"),1500,1550))
+
+;[State -1]
+;type = ChangeState
+;value = ifelse((Var(50) = 0),ifelse((command = "hold_x"),1100,1150),ifelse((command = "hold_x"),1500,1550))
+;triggerall = Var(50) <= 2 && command = "↓↘→＋ＡorＣ"
+;trigger1 = statetype != A && ctrl
+
+; ---------[Both]---------
+[State -1]
+type = ChangeState
+value = 360
+triggerall = var(59)=0
+trigger1 = command = "holdfwd" && command = "y" && statetype = S && stateno != 100 && P2bodydist X <= 20 && P2movetype != H && ctrl; && Var(50) != 2
+
+[State -1]
+type = ChangeState
+value = 370
+triggerall = var(59)=0
+trigger1 = command = "holdfwd" && command = "b" && statetype = S && stateno != 100 && P2bodydist X <= 20 && P2movetype != H && ctrl && Var(50) <= 2
+
+[State -1]
+type = ChangeState
+value = 300
+triggerall = var(59)=0
+triggerall = command = "fwd_x" && Var(50) <= 2 && command != "holddown"
+trigger1 = statetype != A && (ctrl || stateno = 100 || stateno = 101)
+trigger2 = AnimElem = 4, >= 1 && AnimElem = 6, < 0 && stateno = 200
+trigger3 = AnimElem = 5, >= 1 && AnimElem = 6, < 0 && stateno = 220
+trigger4 = AnimElem = 3, >= 1 && AnimElem = 5, < 0 && stateno = 240
+trigger5 = AnimElem = 4, >= 1 && AnimElem = 5, < 0 && stateno = 250
+trigger6 = AnimElem = 5, >= 1 && AnimElem = 7, < 0 && stateno = 260
+trigger7 = AnimElem = 4, >= 1 && AnimElem = 6, < 0 && stateno = 400
+trigger8 = AnimElem = 3, >= 1 && AnimElem = 4, < 0 && stateno = 410
+trigger9 = AnimElem = 4, >= 1 && AnimElem = 6, < 0 && stateno = 420
+
+[State -1]
+type = ChangeState
+value = 301
+triggerall = var(59)=0
+triggerall = command = "fwd_a" && Var(50) <= 2 && command != "holddown"
+trigger1 = statetype != A && (ctrl || stateno = 100 || stateno = 101)
+trigger2 = AnimElem = 4, >= 1 && AnimElem = 6, < 0 && stateno = 200
+trigger3 = AnimElem = 5, >= 1 && AnimElem = 6, < 0 && stateno = 220
+trigger4 = AnimElem = 3, >= 1 && AnimElem = 5, < 0 && stateno = 240
+trigger5 = AnimElem = 4, >= 1 && AnimElem = 5, < 0 && stateno = 250
+trigger6 = AnimElem = 5, >= 1 && AnimElem = 7, < 0 && stateno = 260
+trigger7 = AnimElem = 5, >= 1 && AnimElem = 7, < 0 && stateno = 270
+trigger8 = AnimElem = 4, >= 1 && AnimElem = 6, < 0 && stateno = 400
+trigger9 = AnimElem = 3, >= 1 && AnimElem = 4, < 0 && stateno = 410
+trigger10 = AnimElem = 4, >= 1 && AnimElem = 6, < 0 && stateno = 420
+
+[State -1]
+type = ChangeState
+value = 303
+triggerall = var(59)=0
+triggerall = command = "df_a" && Var(50) <= 2
+trigger1 = statetype != A && (ctrl || stateno = 100 || stateno = 101)
+trigger2 = AnimElem = 4, >= 1 && AnimElem = 6, < 0 && stateno = 200
+trigger3 = AnimElem = 5, >= 1 && AnimElem = 6, < 0 && stateno = 220
+trigger4 = AnimElem = 3, >= 1 && AnimElem = 5, < 0 && stateno = 240
+trigger5 = AnimElem = 4, >= 1 && AnimElem = 5, < 0 && stateno = 250
+trigger6 = AnimElem = 5, >= 1 && AnimElem = 7, < 0 && stateno = 260
+trigger7 = AnimElem = 4, >= 1 && AnimElem = 6, < 0 && stateno = 400
+trigger8 = AnimElem = 3, >= 1 && AnimElem = 4, < 0 && stateno = 410
+trigger9 = AnimElem = 4, >= 1 && AnimElem = 6, < 0 && stateno = 420
+
+[State -1]
+type = ChangeState
+value = 304
+triggerall = var(59)=0
+triggerall = command = "df_y" && Var(50) <= 2
+trigger1 = statetype != A && (ctrl || stateno = 100 || stateno = 101)
+trigger2 = AnimElem = 4, >= 1 && AnimElem = 6, < 0 && stateno = 200
+trigger3 = AnimElem = 5, >= 1 && AnimElem = 6, < 0 && stateno = 220
+trigger4 = AnimElem = 3, >= 1 && AnimElem = 5, < 0 && stateno = 240
+trigger5 = AnimElem = 4, >= 1 && AnimElem = 5, < 0 && stateno = 250
+trigger6 = AnimElem = 5, >= 1 && AnimElem = 7, < 0 && stateno = 260
+trigger7 = AnimElem = 4, >= 1 && AnimElem = 6, < 0 && stateno = 400
+trigger8 = AnimElem = 3, >= 1 && AnimElem = 4, < 0 && stateno = 410
+trigger9 = AnimElem = 4, >= 1 && AnimElem = 6, < 0 && stateno = 420
+
+[State -1]
+type = ChangeState
+value = 305
+triggerall = var(59)=0
+trigger1 = command = "y" && command = "holddown" && statetype = A && (ctrl || stateno = 100 || stateno = 101) && Var(50) <= 2
+
+[State -1]
+type = ChangeState
+value = 240
+triggerall = var(59)=0
+triggerall = command = "x" && command != "holddown" && P2bodydist X <= 32 && Var(50) != 3
+trigger1 = statetype = S && (ctrl || stateno = 100 || stateno = 101)
+trigger2 = (stateno = 200 || stateno = 400) && AnimElem = 4, >= 2
+trigger3 = (stateno = 240 || stateno = 410) && AnimElem = 3, >= 1
+trigger4 = stateno = 250 && AnimElem = 4, >= 2
+
+[State -1]
+type = ChangeState
+value = 200
+triggerall = var(59)=0
+triggerall = command = "x" && command != "holddown" && var(50) != 3
+trigger1 = statetype = S && (ctrl || stateno = 100 || stateno = 101)
+trigger2 = (stateno = 200 || stateno = 400) && AnimElem = 4, >= 2
+trigger3 = (stateno = 240 || stateno = 410) && AnimElem = 3, >= 1
+trigger4 = stateno = 250 && AnimElem = 4, >= 2
+
+[State -1]
+type = ChangeState
+value = 200
+triggerall = var(59)=0
+triggerall = command = "x" && var(50) = 3 && statetype != A
+trigger1 = ((stateno = 200 || stateno = 400) && AnimElem = 2, >= 3)||(ctrl || stateno = 100 || stateno = 101 || stateno = 105)
+
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = var(43) = 0 && var(44) = 0 && var(45) = 0
+trigger1 = command = "x" && command != "holddown"
+var(45) = 200
+[State -1]
+type = varset
+triggerall = var(59)=0
+trigger1 = command = "x" && command != "holddown"
+var(47) = 5
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = command != "holdup"
+triggerall = var(45) = 200 && var(43) = 0 && var(44) = 0
+triggerall = (command = "hold_x" && command != "holddown")
+trigger1 = movetype != H && animtime = 0
+trigger2 = stateno = 0 || stateno = 2
+trigger3 = stateno = 20 || stateno = 52
+trigger4 = stateno = 10 || stateno = 11 || stateno = 12
+var(40) = 200
+
+[State -1]
+type = ChangeState
+value = 250
+triggerall = var(59)=0
+triggerall = command = "a" && command != "holddown" && P2bodydist X <= 32 && Var(50) != 3
+trigger1 = statetype = S && (ctrl || stateno = 100 || stateno = 101)
+trigger2 = (stateno = 200 || stateno = 400) && AnimElem = 4, >= 2
+trigger3 = (stateno = 240 || stateno = 410) && AnimElem = 3, >= 1
+trigger4 = stateno = 250 && AnimElem = 4, >= 2 && Var(50) != 4
+
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = var(43) = 0 && var(44) = 0 && var(45) = 0 && Var(50) != 3
+trigger1 = command = "a" && command != "holddown"
+var(45) = 250
+[State -1]
+type = varset
+triggerall = var(59)=0
+trigger1 = command = "a" && command != "holddown" && Var(50) != 3
+var(47) = 5
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = command != "holdup" && Var(50) != 3
+triggerall = var(45) = 250 && var(43) = 0 && var(44) = 0
+triggerall = (command = "hold_a" && command != "holddown")
+trigger1 = movetype != H && animtime = 0
+trigger2 = stateno = 0 || stateno = 2
+trigger3 = stateno = 20 || stateno = 52
+trigger4 = stateno = 10 || stateno = 11 || stateno = 12
+var(40) = 250
+
+[State -1]
+type = ChangeState
+value = 210
+triggerall = var(59)=0
+triggerall = command = "a" && command != "holddown" && var(50) != 3
+trigger1 = statetype = S && (ctrl || stateno = 100 || stateno = 101)
+trigger2 = (stateno = 200 || stateno = 400) && AnimElem = 4, >= 2
+trigger3 = (stateno = 240 || stateno = 410) && AnimElem = 3, >= 1
+trigger4 = stateno = 250 && AnimElem = 4, >= 2
+
+[State -1]
+type = ChangeState
+value = 210
+triggerall = var(59)=0
+triggerall = command = "a" && var(50) = 3
+trigger1 = statetype != A && (ctrl || stateno = 100 || stateno = 101 || stateno = 105)
+
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = var(43) = 0 && var(44) = 0 && var(45) = 0
+trigger1 = command = "a" && command != "holddown"
+var(45) = 210
+[State -1]
+type = varset
+triggerall = var(59)=0
+trigger1 = command = "a" && command != "holddown"
+var(47) = 5
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = command != "holdup"
+triggerall = var(45) = 210 && var(43) = 0 && var(44) = 0
+triggerall = (command = "hold_a" && command != "holddown")
+trigger1 = movetype != H && animtime = 0
+trigger2 = stateno = 0 || stateno = 2
+trigger3 = stateno = 20 || stateno = 52
+trigger4 = stateno = 10 || stateno = 11 || stateno = 12
+var(40) = 210
+
+[State -1]
+type = ChangeState
+value = 260
+triggerall = var(59)=0
+triggerall = command = "y" && command != "holddown" && P2bodydist X <= 28
+trigger1 = statetype = S && (ctrl || stateno = 100 || stateno = 101 || (var(50)=3&&stateno = 105))
+trigger2 = (stateno = 200 || stateno = 400) && AnimElem = 4, >= 2 && MoveContact
+trigger3 = (stateno = 240 || stateno = 410) && AnimElem = 3, >= 1 && MoveContact
+trigger4 = stateno = 250 && AnimElem = 4, >= 2 && MoveContact
+
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = var(43) = 0 && var(44) = 0 && var(45) = 0
+trigger1 = command = "y" && command != "holddown"
+var(45) = 260
+[State -1]
+type = varset
+triggerall = var(59)=0
+trigger1 = command = "y" && command != "holddown"
+var(47) = 5
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = command != "holdup"
+triggerall = var(45) = 260 && var(43) = 0 && var(44) = 0
+triggerall = (command = "hold_y" && command != "holddown")
+trigger1 = movetype != H && animtime = 0
+trigger2 = stateno = 0 || stateno = 2
+trigger3 = stateno = 20 || stateno = 52
+trigger4 = stateno = 10 || stateno = 11 || stateno = 12
+var(40) = 260
+
+[State -1]
+type = ChangeState
+value = 220
+triggerall = var(59)=0
+triggerall = command = "y" && command != "holddown" && var(50) != 3
+trigger1 = statetype = S && (ctrl || stateno = 100 || stateno = 101)
+trigger2 = (stateno = 200 || stateno = 400) && AnimElem = 4, >= 2 && MoveContact
+trigger3 = (stateno = 240 || stateno = 410) && AnimElem = 3, >= 1 && MoveContact
+trigger4 = stateno = 250 && AnimElem = 4, >= 2 && MoveContact
+
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = var(43) = 0 && var(44) = 0 && var(45) = 0
+trigger1 = command = "y" && command != "holddown"
+var(45) = 220
+[State -1]
+type = varset
+triggerall = var(59)=0
+trigger1 = command = "y" && command != "holddown"
+var(47) = 5
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = command != "holdup"
+triggerall = var(45) = 220 && var(43) = 0 && var(44) = 0
+triggerall = (command = "hold_y" && command != "holddown")
+trigger1 = movetype != H && animtime = 0
+trigger2 = stateno = 0 || stateno = 2
+trigger3 = stateno = 20 || stateno = 52
+trigger4 = stateno = 10 || stateno = 11 || stateno = 12
+var(40) = 220
+
+[State -1]
+type = ChangeState
+value = 220
+triggerall = var(59)=0
+triggerall = command = "y" && var(50) = 3
+trigger1 = statetype != A && (ctrl || stateno = 100 || stateno = 101 || stateno = 105)
+
+[State -1]
+type = ChangeState
+value = 270
+triggerall = var(59)=0
+triggerall = command = "b" && command != "holddown" && P2bodydist X <= 30 && Var(50) != 3
+trigger1 = statetype = S && (ctrl || stateno = 100 || stateno = 101)
+trigger2 = (stateno = 200 || stateno = 400) && AnimElem = 4, >= 2 && MoveContact
+trigger3 = (stateno = 240 || stateno = 410) && AnimElem = 3, >= 1 && MoveContact
+trigger4 = stateno = 250 && AnimElem = 4, >= 2 && MoveContact
+
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = var(43) = 0 && var(44) = 0 && var(45) = 0 && Var(50) != 3
+trigger1 = command = "b" && command != "holddown"
+var(45) = 270
+[State -1]
+type = varset
+triggerall = var(59)=0
+trigger1 = command = "b" && command != "holddown" && Var(50) != 3
+var(47) = 5
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = command != "holdup" && Var(50) != 3
+triggerall = var(45) = 270 && var(43) = 0 && var(44) = 0
+triggerall = (command = "hold_b" && command != "holddown")
+trigger1 = movetype != H && animtime = 0
+trigger2 = stateno = 0 || stateno = 2
+trigger3 = stateno = 20 || stateno = 52
+trigger4 = stateno = 10 || stateno = 11 || stateno = 12
+var(40) = 270
+
+[State -1]
+type = ChangeState
+value = 230
+triggerall = var(59)=0
+triggerall = command = "b" && command != "holddown" && var(50) != 3
+trigger1 = statetype = S && (ctrl || stateno = 100 || stateno = 101)
+trigger2 = (stateno = 200 || stateno = 400) && AnimElem = 4, >= 2 && MoveContact
+trigger3 = (stateno = 240 || stateno = 410) && AnimElem = 3, >= 1 && MoveContact
+trigger4 = stateno = 250 && AnimElem = 4, >= 2 && MoveContact
+
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = var(43) = 0 && var(44) = 0 && var(45) = 0
+trigger1 = command = "b" && command != "holddown"
+var(45) = 230
+[State -1]
+type = varset
+triggerall = var(59)=0
+trigger1 = command = "b" && command != "holddown"
+var(47) = 5
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = command != "holdup"
+triggerall = var(45) = 230 && var(43) = 0 && var(44) = 0
+triggerall = (command = "hold_b" && command != "holddown")
+trigger1 = movetype != H && animtime = 0
+trigger2 = stateno = 0 || stateno = 2
+trigger3 = stateno = 20 || stateno = 52
+trigger4 = stateno = 10 || stateno = 11 || stateno = 12
+var(40) = 230
+
+[State -1]
+type = ChangeState
+value = 230
+triggerall = var(59)=0
+triggerall = command = "b" && Var(50) = 3
+trigger1 = statetype != A && (ctrl || stateno = 100 || stateno = 101 || stateno = 105)
+
+[State -1]
+type = ChangeState
+value = 400
+triggerall = var(59)=0
+triggerall = command = "x" && Var(50) != 3
+trigger1 = statetype = C && ctrl
+trigger2 = (stateno = 200 || stateno = 400) && AnimElem = 4, >= 2
+trigger3 = (stateno = 240 || stateno = 410) && AnimElem = 3, >= 1
+trigger4 = stateno = 250 && AnimElem = 4, >= 2
+
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = var(43) = 0 && var(44) = 0 && var(45) = 0 && var(50) != 3
+trigger1 = command = "x" && command = "holddown"
+var(45) = 400
+[State -1]
+type = varset
+triggerall = var(59)=0
+trigger1 = command = "x" && command = "holddown" && var(50) != 3
+var(47) = 5
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = command != "holdup" && var(50) != 3
+triggerall = var(45) = 400 && var(43) = 0 && var(44) = 0
+triggerall = (command = "hold_x" && command = "holddown")
+trigger1 = movetype != H && animtime = 0
+trigger2 = stateno = 0 || stateno = 2
+trigger3 = stateno = 20 || stateno = 52
+trigger4 = stateno = 10 || stateno = 11 || stateno = 12
+var(40) = 400
+
+[State -1]
+type = ChangeState
+value = 410
+triggerall = var(59)=0
+triggerall = command = "a" && Var(50) != 3
+trigger1 = statetype = C && ctrl
+trigger2 = (stateno = 200 || stateno = 400) && AnimElem = 4, >= 2
+trigger3 = (stateno = 240 || stateno = 410) && AnimElem = 3, >= 1
+trigger4 = stateno = 250 && AnimElem = 4, >= 2
+
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = var(43) = 0 && var(44) = 0 && var(45) = 0 && var(50) != 3
+trigger1 = command = "a" && command = "holddown"
+var(45) = 410
+[State -1]
+type = varset
+triggerall = var(59)=0
+trigger1 = command = "a" && command = "holddown" && var(50) != 3
+var(47) = 5
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = command != "holdup" && var(50) != 3
+triggerall = var(45) = 410 && var(43) = 0 && var(44) = 0
+triggerall = (command = "hold_a" && command = "holddown")
+trigger1 = movetype != H && animtime = 0
+trigger2 = stateno = 0 || stateno = 2
+trigger3 = stateno = 20 || stateno = 52
+trigger4 = stateno = 10 || stateno = 11 || stateno = 12
+var(40) = 410
+
+[State -1]
+type = ChangeState
+value = 420
+triggerall = var(59)=0
+triggerall = command = "y" && Var(50) != 3
+trigger1 = statetype = C && ctrl
+trigger2 = (stateno = 200 || stateno = 400) && AnimElem = 4, >= 2 && MoveContact
+trigger3 = (stateno = 240 || stateno = 410) && AnimElem = 3, >= 1 && MoveContact
+trigger4 = stateno = 250 && AnimElem = 4, >= 2 && MoveContact
+
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = var(43) = 0 && var(44) = 0 && var(45) = 0 && var(50) != 3
+trigger1 = command = "y" && command = "holddown"
+var(45) = 420
+[State -1]
+type = varset
+triggerall = var(59)=0
+trigger1 = command = "y" && command = "holddown" && var(50) != 3
+var(47) = 5
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = command != "holdup" && var(50) != 3
+triggerall = var(45) = 420 && var(43) = 0 && var(44) = 0
+triggerall = (command = "hold_y" && command = "holddown")
+trigger1 = movetype != H && animtime = 0
+trigger2 = stateno = 0 || stateno = 2
+trigger3 = stateno = 20 || stateno = 52
+trigger4 = stateno = 10 || stateno = 11 || stateno = 12
+var(40) = 420
+
+[State -1]
+type = ChangeState
+value = 430
+triggerall = var(59)=0
+triggerall = command = "b" && Var(50) != 3
+trigger1 = statetype = C && ctrl
+trigger2 = (stateno = 200 || stateno = 400) && AnimElem = 4, >= 2 && MoveContact
+trigger3 = (stateno = 240 || stateno = 410) && AnimElem = 3, >= 1 && MoveContact
+trigger4 = stateno = 250 && AnimElem = 4, >= 2 && MoveContact
+
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = var(43) = 0 && var(44) = 0 && var(45) = 0 && var(50) != 3
+trigger1 = command = "b" && command = "holddown"
+var(45) = 430
+[State -1]
+type = varset
+triggerall = var(59)=0
+trigger1 = command = "b" && command = "holddown" && var(50) != 3
+var(47) = 5
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = command != "holdup" && var(50) != 3
+triggerall = var(45) = 430 && var(43) = 0 && var(44) = 0
+triggerall = (command = "hold_b" && command = "holddown")
+trigger1 = movetype != H && animtime = 0
+trigger2 = stateno = 0 || stateno = 2
+trigger3 = stateno = 20 || stateno = 52
+trigger4 = stateno = 10 || stateno = 11 || stateno = 12
+var(40) = 430
+
+[State -1]
+type = ChangeState
+triggerall = var(59)=0
+value = IfElse((Var(50) > 2),6600,0)
+trigger1 = command = "x" && statetype = A && Vel X = 0 && ctrl; && Var(50) <= 2
+
+[State -1]
+type = ChangeState
+triggerall = var(59)=0
+value = IfElse((Var(50) > 2),6600,640)
+trigger1 = command = "x" && statetype = A && ctrl; && Var(50) <= 2
+
+[State -1]
+type = ChangeState
+triggerall = var(59)=0
+value = IfElse((Var(50) > 2),6610,610)
+trigger1 = command = "a" && statetype = A && Vel X = 0 && ctrl; && Var(50) <= 2
+
+[State -1]
+type = ChangeState
+triggerall = var(59)=0
+value = IfElse((Var(50) > 2),6610,650)
+trigger1 = command = "a" && statetype = A && ctrl; && Var(50) <= 2
+
+[State -1]
+type = ChangeState
+triggerall = var(59)=0
+value = IfElse((Var(50) > 2),6620,620)
+trigger1 = command = "y" && statetype = A && Vel X = 0 && ctrl; && Var(50) <= 2
+
+[State -1]
+type = ChangeState
+triggerall = var(59)=0
+value = IfElse((Var(50) > 2),6620,660)
+trigger1 = command = "y" && statetype = A && ctrl; && Var(50) <= 2
+
+[State -1]
+type = ChangeState
+triggerall = var(59)=0
+value = IfElse((Var(50) > 2),6630,630)
+trigger1 = command = "b" && statetype = A && Vel X = 0 && ctrl; && Var(50) <= 2
+
+[State -1]
+type = ChangeState
+triggerall = var(59)=0
+value = IfElse((Var(50) > 2),6630,670)
+trigger1 = command = "b" && statetype = A && ctrl; && Var(50) <= 2
+
+[State -1]
+type = ChangeState
+value = 315
+triggerall = var(59)=0
+trigger1 = command = "c" && statetype = A && (ctrl || stateno = 100 || stateno = 101)
+
+[State -1]
+type = ChangeState
+value = 310
+triggerall = var(59)=0
+triggerall = command = "c"
+trigger1 = statetype != A && (ctrl || stateno = 100 || stateno = 101)
+trigger2 = stateno = [150,153]
+
+[State -1]
+type = ChangeState
+triggerall = var(59)=0
+value = ifelse((command = "holdback"),341,340)
+triggerall = command = "z"
+trigger1 = statetype != A && (ctrl || stateno = 100 || stateno = 101)
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = var(43) = 0 && var(44) = 0 && var(45) = 0 && var(50) != 3
+trigger1 = command = "z"
+var(45) = ifelse((command = "holdback"),341,340)
+[State -1]
+type = varset
+triggerall = var(59)=0
+trigger1 = command = "z"
+var(47) = 5
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = var(45) = ifelse((command = "holdback"),341,340) && var(43) = 0 && var(44) = 0
+triggerall = command = "hold_z"
+trigger1 = movetype != H && animtime = 0
+trigger2 = stateno = 0 || stateno = 2
+trigger3 = stateno = 20 || stateno = 52
+trigger4 = stateno = 10 || stateno = 11 || stateno = 12
+var(40) = ifelse((command = "holdback"),341,340)
+
+[State -1]
+type = ChangeState
+value = 100
+triggerall = var(59)=0
+trigger1 = command = "FF" && command != "holddown"
+trigger1 = statetype = S && ctrl
+
+[State -1]
+type = ChangeState
+value = 105
+triggerall = var(59)=0
+trigger1 = command = "BB" && command != "holddown"
+trigger1 = statetype = S && ctrl
+
+[State -1]
+type = ChangeState
+value = 195
+triggerall = var(59)=0
+trigger1 = command = "s"
+trigger1 = statetype != A && ctrl
+;-------------------------------------
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = stateno = [100,5000]
+triggerall = command = "longjump"
+trigger1 = ctrl = 0
+trigger2 = stateno = 5120
+trigger3 = stateno = 50 || stateno = 45
+trigger4 = stateno = [600,640]
+var(48) = 1
+[State -1]
+type = varset
+triggerall = var(59)=0
+trigger1 = stateno = 5120
+var(48) = 1
+
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = sysvar(1) != 0 && command = "longjump"
+trigger1 = ctrl = 0
+trigger2 = stateno = 5120
+trigger3 = stateno = 50 || stateno = 45
+trigger4 = stateno = [600,640]
+var(48) = 1
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = command = "longjump"
+trigger1 = ctrl = 0
+trigger2 = stateno = 5120 || stateno = 50 || stateno = 45
+trigger3 = stateno = [600,640]
+var(46) = 10
+
+[State -1]
+type = varset
+triggerall = var(59)=0
+triggerall = var(48) = 1 && P2Dist X >= 0
+triggerall = command = "holdup"
+trigger1 = movetype != H && animtime = 0
+trigger2 = stateno = 0 || stateno = 2
+trigger3 = stateno = 20 || stateno = 52
+trigger4 = stateno = 10 || stateno = 11 || stateno = 12
+var(40) = 40
+
+[State -1]
+type = ChangeState
+value = 49
+triggerall = var(59)=0
+triggerall = command = "holdup" && (stateno = 50|stateno = 60)
+triggerall = prevstateno != 48 && pos y < -15 && var(50) <3
+trigger1 = backedgebodydist < 5 && command = "holdfwd"
+trigger2 = frontedgebodydist < 5 && command = "holdback"
+
+
+
+
+;AI_SV-----------------------------------------------------------------
+
+

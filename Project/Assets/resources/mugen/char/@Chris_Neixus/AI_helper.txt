@@ -1,0 +1,1588 @@
+
+;━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+;AIヘルパー
+;AI版边真实距离检测用1-------------------------------------------------------------------------------------
+[Statedef 20000]
+type = A
+movetype = I
+physics = N
+anim = 9999
+velset = 10,0
+ctrl = 0
+sprpriority = 1
+
+[State 20000, AssertSpecial]
+type = AssertSpecial
+trigger1 = 1
+flag = NoShadow
+flag2 = invisible
+
+[State 20000, NotHitBy]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+
+[State 20000, 間違いで本体が来たら立ちへ移行]
+type = SelfState
+trigger1 =!ishelper
+value = 0
+
+[State 20000, PlayerPush]
+type = PlayerPush
+trigger1 = 1
+value = 0
+
+[State 20000, Projectile]
+type = Projectile
+trigger1 = time = 0
+velocity = 10,0
+projID = 20000
+projanim = 9999
+offset = 0,100000
+projstagebound = 0
+projedgebound = 100000
+projremovetime = -1
+
+[State 20000, VelSet]
+type = VelSet
+trigger1 = Root,NumProjID(20000) = 0
+trigger1 = time > 0
+x = 0
+y = 0
+
+;AI版边真实距离检测用2-------------------------------------------------------------------------------------
+[Statedef 20001]
+type = A
+movetype = I
+physics = N
+anim = 9999
+velset = -10,0
+ctrl = 0
+sprpriority = 1
+
+[State 20000, AssertSpecial]
+type = AssertSpecial
+trigger1 = 1
+flag = NoShadow
+flag2 = invisible
+
+[State 20000, NotHitBy]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+
+[State 20000, 間違いで本体が来たら立ちへ移行]
+type = SelfState
+trigger1 =!ishelper
+value = 0
+
+[State 20000, PlayerPush]
+type = PlayerPush
+trigger1 = 1
+value = 0
+
+[State 20000, Projectile]
+type = Projectile
+trigger1 = time = 0
+velocity = -10,0
+projID = 20001
+projanim = 9999
+offset = 0,100000
+projstagebound = 0
+projedgebound = 100000
+projremovetime = -1
+
+[State 20000, VelSet]
+type = VelSet
+trigger1 = Root,NumProjID(20001) = 0
+trigger1 = time > 0
+x = 0
+y = 0
+
+
+;AI起动用------------------------------------------------------------------------------
+[Statedef 30000]
+anim = 9999
+ctrl = 0
+
+[State 30000, AssertSpecial]
+type = AssertSpecial ;这里让玩家无法看见helper
+Trigger1 = 1
+flag = NoShadow ;无影子
+flag2 = invisible ;不可视
+
+[State 30000, NotHitBy]
+type = NotHitBy ;为了保证helper在战斗中不受某些类似AOE的影响,给helper写上无敌作为保险项
+Trigger1 = 1
+value = SCA
+
+[State 30000, 間違いで本体が来たら立ちへ移行]
+type = SelfState ;当这个statedef不是helper时转到0
+trigger1 =!ishelper
+value = 0
+
+[State 30000, プレイヤー判定]
+type = VarSet ;当玩家按到如下按键时,helper也检测到则关闭AI
+trigger1 = command = "up" && root,command = "up"
+trigger2 = command = "down" && root,command = "down"
+trigger3 = command = "back" && root,command = "back"
+trigger4 = command = "fwd" && root,command = "fwd"
+trigger5 = command = "a" && root,command = "a"
+trigger6 = command = "b" && root,command = "b"
+trigger7 = command = "c" && root,command = "c"
+trigger8 = command = "x" && root,command = "x"
+trigger9 = command = "y" && root,command = "y"
+trigger10 = command = "z" && root,command = "z"
+trigger11 = command = "start" && root,command = "start"
+var(59) = -1
+
+[State 30000, 立ったら消失]
+Type = DestroySelf ;关闭AI后立即消去HELPER,给玩家手操
+triggerall = isHelper
+trigger1 = root,var(59) || var(59) = -1
+trigger2 = command = "up" && root,command = "up"
+trigger3 = command = "down" && root,command = "down"
+trigger4 = command = "back" && root,command = "back"
+trigger5 = command = "fwd" && root,command = "fwd"
+trigger6 = command = "a" && root,command ="a"
+trigger7 = command = "b" && root,command ="b"
+trigger8 = command = "c" && root,command ="c"
+trigger9 = command = "x" && root,command = "x"
+trigger10 = command = "y" && root,command = "y"
+trigger11 = command = "z" && root,command = "z"
+trigger12 = command = "start" && root,command = "start"
+
+[State 30000, フラグON]
+type = VarSet ;AI未启动时如果检测到下列按钮,则触发AI
+triggerall = var(59) != -1
+trigger1 = root,command = "up"
+trigger2 = root,command = "down"
+trigger3 = root,command = "back"
+trigger4 = root,command = "fwd"
+trigger5 = root,command = "a"
+trigger6 = root,command = "b"
+trigger7 = root,command = "c"
+trigger8 = root,command = "x"
+trigger9 = root,command = "y"
+trigger10 = root,command = "z"
+trigger11 = root,command = "start"
+var(59) = 1
+
+
+;AI破防记录------------------------------------------------------------------------------
+[Statedef 31000]
+type = A
+movetype = I
+physics = N
+anim = 9999
+velset = 0,0
+sprpriority = 1
+ctrl = 0
+
+[State 31000, AssertSpecial]
+type = AssertSpecial
+Trigger1 = 1
+flag = NoShadow
+flag2 = invisible
+
+[State 31000, NotHitBy]
+type = NotHitBy
+trigger1 = 1
+value = SCA
+
+[State 31000, PlayerPush]
+type = PlayerPush
+trigger1 = 1
+value = 0
+
+[State 31000, 間違いで本体が来たら立ちへ移行]
+type = SelfState
+trigger1 =!ishelper
+value = 0
+
+[State -3, 目の前の敵が一番近い相手である]
+type = VarSet
+triggerall = roundstate = 2
+trigger1 = numenemy <= 1
+trigger2 = numenemy >= 2
+trigger2 = enemy(0),life <= 0 || enemy(1),life <= 0
+trigger2 = enemynear(0),life > 0
+trigger3 = numenemy >= 2
+trigger3 = enemy(0),life > 0 && enemy(1),life > 0
+trigger3 = abs(root,pos x - enemynear(0),pos x) <= abs(root,pos x - enemynear(1),pos x)
+var(1) = 0
+IgnoreHitPause = 1
+
+[State -3, 目の前の敵が一番近い相手ではない]
+type = VarSet
+triggerall = roundstate = 2
+triggerall = numenemy >= 2
+trigger1 = enemynear(0),life <= 0
+trigger2 = numenemy >= 2
+trigger2 = enemy(0),life <= 0 || enemy(1),life <= 0
+trigger2 = enemynear(0),life <= 0
+trigger3 = enemy(0),life > 0 && enemy(1),life > 0
+trigger3 = abs(root,pos x - enemynear(0),pos x) > abs(root,pos x - enemynear(1),pos x)
+var(1) = 1
+IgnoreHitPause = 1
+
+;自分の後ろに設置　――――――――――――――――――――――――――――――――――――――――
+[State 31000, Turn]
+type = Turn
+trigger1 = facing*ifelse((enemynear(var(1)),pos x-pos x)>=0,1,-1) < 0
+IgnoreHitPause = 1
+supermovetime = 9999
+pausemovetime = 9999
+
+[State 31000, VarSet]
+type = VarSet
+trigger1 = enemynear(var(1)),facing*ifelse((enemynear(var(1)),pos x-root,pos x)>=0,1,-1)<=0
+trigger2 = !enemynear(var(1)),hitdefattr = A,NA,SA,HA
+var(2) = 0
+IgnoreHitPause = 1
+supermovetime = 9999
+pausemovetime = 9999
+
+[State 31000, VarSet]
+type = VarSet
+trigger1 = enemynear(var(1)),facing*ifelse((EnemyNear(var(1)),pos x-root,pos x)>=0,1,-1)>0
+trigger1 = enemynear(var(1)),hitdefattr = A,NA,SA,HA
+var(2) = 1
+IgnoreHitPause = 1
+supermovetime = 9999
+pausemovetime = 9999
+
+[State 31000, PosSet]
+type = PosSet
+trigger1 = 1
+x = root,pos x+ifelse((enemynear(var(1)),pos y<0&&var(2)=1),(enemynear(var(1)),const(size.attack.dist)),(enemynear(var(1)),const(size.proj.attack.dist)))*(enemynear(var(1)),facing)
+IgnoreHitPause = 1
+supermovetime = 9999
+pausemovetime = 9999
+
+;---------------------------------------------------------------------------
+[State 31000, リセット]
+Type = VarSet
+TriggerAll = Root,var(59) = 1
+TriggerAll = Root,StateNo != [120,155]
+Trigger1 = Root,MoveType!= H
+Trigger1 = Root,Ctrl = 1 && var(50) > 0
+Trigger2 = Root,MoveType = H
+Trigger2 = Root,Time > 1 && var(50) > 0
+var(50) = 0
+IgnoreHitPause = 1
+
+;分别记下来防御中站立，蹲下，空中（可有可无）情况
+
+[State 31000, 立ちガード時学習用]
+Type = VarSet
+TriggerAll = Root,var(59) = 1
+TriggerAll = Root,StateNo = [120,155]
+Trigger1 = Root,StateType = S
+var(50) = 1
+IgnoreHitPause = 1
+
+[State 31000, 下段ガード時学習用]
+Type = VarSet
+TriggerAll = Root,var(59) = 1
+TriggerAll = Root,StateNo = [120,155]
+Trigger1 = Root,StateType = C
+var(50) = 2
+IgnoreHitPause = 1
+
+[State 31000, 空中ガード時学習用]
+Type = VarSet
+TriggerAll = Root,var(59) = 1
+TriggerAll = Root,StateNo = [120,155]
+Trigger1 = Root,StateType = A
+var(50) = 3
+IgnoreHitPause = 1
+
+;---------------------------------------------------------------------------
+[State 31000, リセット]
+Type = VarSet
+Trigger1 = 1
+var(51) = 0
+IgnoreHitPause = 1
+
+[State 31000, 特殊状態記憶] ;重点在这里，记录下本体被打并且不是站立也不是蹲下的情况
+Type = VarSet
+TriggerAll = Root,var(59) = 1
+Trigger1 = Root,MoveType = H && Root,StateType != S && Root,StateType != C && (Root,StateNo != [120,155])
+var(51) = 1
+IgnoreHitPause = 1
+
+;---------------------------------------------------------------------------
+;ガード学習
+;---------------------------------------------------------------------------
+[State 31000, 中段記憶]
+Type = VarSet
+TriggerAll = Root,var(59) = 1
+TriggerAll = Root,MoveType = H && Root,Time <= 1
+TriggerAll =(Root,StateNo != [120,155]) && (Root,PrevStateNo = [120,155]) || Root,StateNo >= 200 && var(51) = 1 ;这里记录下特殊情况，下面也是一样
+TriggerAll = EnemyNear(Root,Alive),StateType != A && (Root,StateType = C || var(50) = 2)
+Trigger1 = var(10) = 0
+V = 10
+Value = (EnemyNear(Root,Alive),StateNo)
+IgnoreHitPause = 1
+
+[State 31000, 中段記憶]
+Type = VarSet
+TriggerAll = Root,var(59) = 1
+TriggerAll = Root,MoveType = H && Root,Time <= 1
+TriggerAll =(Root,StateNo != [120,155]) && (Root,PrevStateNo = [120,155]) || Root,StateNo >= 200 && var(51) = 1
+TriggerAll = EnemyNear(Root,Alive),StateType != A && (Root,StateType = C || var(50) = 2)
+TriggerAll = EnemyNear(Root,Alive),StateNo != var(10)
+Trigger1 = var(10) > 0
+Trigger1 = var(11) = 0
+V = 11
+Value = (EnemyNear(Root,Alive),StateNo)
+IgnoreHitPause = 1
+
+[State 31000, 中段記憶]
+Type = VarSet
+TriggerAll = Root,var(59) = 1
+TriggerAll = Root,MoveType = H && Root,Time <= 1
+TriggerAll =(Root,StateNo != [120,155]) && (Root,PrevStateNo = [120,155]) || Root,StateNo >= 200 && var(51) = 1
+TriggerAll = EnemyNear(Root,Alive),StateType != A && (Root,StateType = C || var(50) = 2)
+TriggerAll = EnemyNear(Root,Alive),StateNo != var(10)
+TriggerAll = EnemyNear(Root,Alive),StateNo != var(11)
+Trigger1 = var(11) > 0
+Trigger1 = var(12) = 0
+V = 12
+Value = (EnemyNear(Root,Alive),StateNo)
+IgnoreHitPause = 1
+
+[State 31000, 中段記憶]
+Type = VarSet
+TriggerAll = Root,var(59) = 1
+TriggerAll = Root,MoveType = H && Root,Time <= 1
+TriggerAll =(Root,StateNo != [120,155]) && (Root,PrevStateNo = [120,155]) || Root,StateNo >= 200 && var(51) = 1
+TriggerAll = EnemyNear(Root,Alive),StateType != A && (Root,StateType = C || var(50) = 2)
+TriggerAll = EnemyNear(Root,Alive),StateNo != var(10)
+TriggerAll = EnemyNear(Root,Alive),StateNo != var(11)
+TriggerAll = EnemyNear(Root,Alive),StateNo != var(12)
+Trigger1 = var(12) > 0
+Trigger1 = var(13) = 0
+V = 13
+Value = (EnemyNear(Root,Alive),StateNo)
+IgnoreHitPause = 1
+
+[State 31000, 中段記憶]
+Type = VarSet
+TriggerAll = Root,var(59) = 1
+TriggerAll = Root,MoveType = H && Root,Time <= 1
+TriggerAll =(Root,StateNo != [120,155]) && (Root,PrevStateNo = [120,155]) || Root,StateNo >= 200 && var(51) = 1
+TriggerAll = EnemyNear(Root,Alive),StateType != A && (Root,StateType = C || var(50) = 2)
+TriggerAll = EnemyNear(Root,Alive),StateNo != var(10)
+TriggerAll = EnemyNear(Root,Alive),StateNo != var(11)
+TriggerAll = EnemyNear(Root,Alive),StateNo != var(12)
+TriggerAll = EnemyNear(Root,Alive),StateNo != var(13)
+Trigger1 = var(13) > 0
+Trigger1 = var(14) = 0
+V = 14
+Value = (EnemyNear(Root,Alive),StateNo)
+IgnoreHitPause = 1
+
+;---------------------------------------------------------------------------
+[State 31000, 下段記憶]
+Type = VarSet
+TriggerAll = Root,var(59) = 1
+TriggerAll = Root,MoveType = H && Root,Time <= 1
+TriggerAll =(Root,StateNo != [120,155]) && (Root,PrevStateNo = [120,155]) || Root,StateNo >= 200 && var(51) = 1
+TriggerAll = EnemyNear(Root,Alive),StateType != C && (Root,StateType = S || var(50) = 1)
+Trigger1 = var(20) = 0
+V = 20
+Value = (EnemyNear(Root,Alive),StateNo)
+IgnoreHitPause = 1
+
+[State 31000, 下段記憶]
+Type = VarSet
+TriggerAll = Root,var(59) = 1
+TriggerAll = Root,MoveType = H && Root,Time <= 1
+TriggerAll =(Root,StateNo != [120,155]) && (Root,PrevStateNo = [120,155]) || Root,StateNo >= 200 && var(51) = 1
+TriggerAll = EnemyNear(Root,Alive),StateType != C && (Root,StateType = S || var(50) = 1)
+TriggerAll = EnemyNear(Root,Alive),StateNo != var(20)
+Trigger1 = var(20) > 0
+Trigger1 = var(21) = 0
+V = 21
+Value = (EnemyNear(Root,Alive),StateNo)
+IgnoreHitPause = 1
+
+[State 31000, 下段記憶]
+Type = VarSet
+TriggerAll = Root,var(59) = 1
+TriggerAll = Root,MoveType = H && Root,Time <= 1
+TriggerAll =(Root,StateNo != [120,155]) && (Root,PrevStateNo = [120,155]) || Root,StateNo >= 200 && var(51) = 1
+TriggerAll = EnemyNear(Root,Alive),StateType != C && (Root,StateType = S || var(50) = 1)
+TriggerAll = EnemyNear(Root,Alive),StateNo != var(20)
+TriggerAll = EnemyNear(Root,Alive),StateNo != var(21)
+Trigger1 = var(21) > 0
+Trigger1 = var(22) = 0
+V = 22
+Value = (EnemyNear(Root,Alive),StateNo)
+IgnoreHitPause = 1
+
+[State 31000, 下段記憶]
+Type = VarSet
+TriggerAll = Root,var(59) = 1
+TriggerAll = Root,MoveType = H && Root,Time <= 1
+TriggerAll =(Root,StateNo != [120,155]) && (Root,PrevStateNo = [120,155]) || Root,StateNo >= 200 && var(51) = 1
+TriggerAll = EnemyNear(Root,Alive),StateType != C && (Root,StateType = S || var(50) = 1)
+TriggerAll = EnemyNear(Root,Alive),StateNo != var(20)
+TriggerAll = EnemyNear(Root,Alive),StateNo != var(21)
+TriggerAll = EnemyNear(Root,Alive),StateNo != var(22)
+Trigger1 = var(22) > 0
+Trigger1 = var(23) = 0
+V = 23
+Value = (EnemyNear(Root,Alive),StateNo)
+IgnoreHitPause = 1
+
+[State 31000, 下段記憶]
+Type = VarSet
+TriggerAll = Root,var(59) = 1
+TriggerAll = Root,MoveType = H && Root,Time <= 1
+TriggerAll =(Root,StateNo != [120,155]) && (Root,PrevStateNo = [120,155]) || Root,StateNo >= 200 && var(51) = 1
+TriggerAll = EnemyNear(Root,Alive),StateType != C && (Root,StateType = S || var(50) = 1)
+TriggerAll = EnemyNear(Root,Alive),StateNo != var(20)
+TriggerAll = EnemyNear(Root,Alive),StateNo != var(21)
+TriggerAll = EnemyNear(Root,Alive),StateNo != var(22)
+TriggerAll = EnemyNear(Root,Alive),StateNo != var(23)
+Trigger1 = var(23) > 0
+Trigger1 = var(24) = 0
+V = 24
+Value = (EnemyNear(Root,Alive),StateNo)
+IgnoreHitPause = 1
+
+;---------------------------------------------------------------------------
+[State 31000, 中段記憶削除]
+Type = VarSet
+TriggerAll = Root,var(59) = 1
+TriggerAll = Root,MoveType = H && Root,Time <= 1
+TriggerAll =(Root,StateNo != [120,155]) && (Root,PrevStateNo = [120,155]) || Root,StateNo >= 200 && var(51) = 1
+TriggerAll = EnemyNear(Root,Alive),StateType != A && (Root,StateType = S || var(50) = 1)
+TriggerAll = EnemyNear(Root,Alive),StateNo = var(10)
+Trigger1 = var(10) > 0
+V = 10
+Value = 0
+IgnoreHitPause = 1
+
+[State 31000, 中段記憶削除]
+Type = VarSet
+TriggerAll = Root,var(59) = 1
+TriggerAll = Root,MoveType = H && Root,Time <= 1
+TriggerAll =(Root,StateNo != [120,155]) && (Root,PrevStateNo = [120,155]) || Root,StateNo >= 200 && var(51) = 1
+TriggerAll = EnemyNear(Root,Alive),StateType != A && (Root,StateType = S || var(50) = 1)
+TriggerAll = EnemyNear(Root,Alive),StateNo = var(11)
+Trigger1 = var(11) > 0
+V = 11
+Value = 0
+IgnoreHitPause = 1
+
+[State 31000, 中段記憶削除]
+Type = VarSet
+TriggerAll = Root,var(59) = 1
+TriggerAll = Root,MoveType = H && Root,Time <= 1
+TriggerAll =(Root,StateNo != [120,155]) && (Root,PrevStateNo = [120,155]) || Root,StateNo >= 200 && var(51) = 1
+TriggerAll = EnemyNear(Root,Alive),StateType != A && (Root,StateType = S || var(50) = 1)
+TriggerAll = EnemyNear(Root,Alive),StateNo = var(12)
+Trigger1 = var(12) > 0
+V = 12
+Value = 0
+IgnoreHitPause = 1
+
+[State 31000, 中段記憶削除]
+Type = VarSet
+TriggerAll = Root,var(59) = 1
+TriggerAll = Root,MoveType = H && Root,Time <= 1
+TriggerAll =(Root,StateNo != [120,155]) && (Root,PrevStateNo = [120,155]) || Root,StateNo >= 200 && var(51) = 1
+TriggerAll = EnemyNear(Root,Alive),StateType != A && (Root,StateType = S || var(50) = 1)
+TriggerAll = EnemyNear(Root,Alive),StateNo = var(13)
+Trigger1 = var(13) > 0
+V = 13
+Value = 0
+IgnoreHitPause = 1
+
+[State 31000, 中段記憶削除]
+Type = VarSet
+TriggerAll = Root,var(59) = 1
+TriggerAll = Root,MoveType = H && Root,Time <= 1
+TriggerAll =(Root,StateNo != [120,155]) && (Root,PrevStateNo = [120,155]) || Root,StateNo >= 200 && var(51) = 1
+TriggerAll = EnemyNear(Root,Alive),StateType != A && (Root,StateType = S || var(50) = 1)
+TriggerAll = EnemyNear(Root,Alive),StateNo = var(14)
+Trigger1 = var(14) > 0
+V = 14
+Value = 0
+IgnoreHitPause = 1
+
+;---------------------------------------------------------------------------
+[State 31000, 下段記憶削除]
+Type = VarSet
+TriggerAll = Root,var(59) = 1
+TriggerAll = Root,MoveType = H && Root,Time <= 1
+TriggerAll =(Root,StateNo != [120,155]) && (Root,PrevStateNo = [120,155]) || Root,StateNo >= 200 && var(51) = 1
+TriggerAll = EnemyNear(Root,Alive),StateType != C && (Root,StateType = C || var(50) = 2)
+TriggerAll = EnemyNear(Root,Alive),StateNo = var(20)
+Trigger1 = var(20) > 0
+V = 20
+Value = 0
+IgnoreHitPause = 1
+
+[State 31000, 下段記憶削除]
+Type = VarSet
+TriggerAll = Root,var(59) = 1
+TriggerAll = Root,MoveType = H && Root,Time <= 1
+TriggerAll =(Root,StateNo != [120,155]) && (Root,PrevStateNo = [120,155]) || Root,StateNo >= 200 && var(51) = 1
+TriggerAll = EnemyNear(Root,Alive),StateType != C && (Root,StateType = C || var(50) = 2)
+TriggerAll = EnemyNear(Root,Alive),StateNo = var(21)
+Trigger1 = var(21) > 0
+V = 21
+Value = 0
+IgnoreHitPause = 1
+
+[State 31000, 下段記憶削除]
+Type = VarSet
+TriggerAll = Root,var(59) = 1
+TriggerAll = Root,MoveType = H && Root,Time <= 1
+TriggerAll =(Root,StateNo != [120,155]) && (Root,PrevStateNo = [120,155]) || Root,StateNo >= 200 && var(51) = 1
+TriggerAll = EnemyNear(Root,Alive),StateType != C && (Root,StateType = C || var(50) = 2)
+TriggerAll = EnemyNear(Root,Alive),StateNo = var(22)
+Trigger1 = var(22) > 0
+V = 22
+Value = 0
+IgnoreHitPause = 1
+
+[State 31000, 下段記憶削除]
+Type = VarSet
+TriggerAll = Root,var(59) = 1
+TriggerAll = Root,MoveType = H && Root,Time <= 1
+TriggerAll =(Root,StateNo != [120,155]) && (Root,PrevStateNo = [120,155]) || Root,StateNo >= 200 && var(51) = 1
+TriggerAll = EnemyNear(Root,Alive),StateType != C && (Root,StateType = C || var(50) = 2)
+TriggerAll = EnemyNear(Root,Alive),StateNo = var(23)
+Trigger1 = var(23) > 0
+V = 23
+Value = 0
+IgnoreHitPause = 1
+
+[State 31000, 下段記憶削除]
+Type = VarSet
+TriggerAll = Root,var(59) = 1
+TriggerAll = Root,MoveType = H && Root,Time <= 1
+TriggerAll =(Root,StateNo != [120,155]) && (Root,PrevStateNo = [120,155]) || Root,StateNo >= 200 && var(51) = 1
+TriggerAll = EnemyNear(Root,Alive),StateType != C && (Root,StateType = C || var(50) = 2)
+TriggerAll = EnemyNear(Root,Alive),StateNo = var(24)
+Trigger1 = var(24) > 0
+V = 24
+Value = 0
+IgnoreHitPause = 1
+
+;---------------------------------------------------------------------------
+[State 31000, DisplayToClipBoard]
+Type = DisplayToClipBoard
+trigger1 = IsHelper
+Text = "var(10)=%d,var(11)=%d,var(12)=%d,var(13)=%d,var(14)=%d"
+Params = var(10),var(11),var(12),var(13),var(14)
+IgnoreHitPause = 1
+
+[State 31000, AppendToClipboard]
+type = AppendToClipboard
+trigger1 = IsHelper
+text = "\nvar(20)=%d,var(21)=%d,var(22)=%d,var(23)=%d,var(24)=%d"
+params = var(20),var(21),var(22),var(23),var(24)
+IgnoreHitPause = 1
+
+;---------------------------------------------------------------------------
+[State 31000, DestroySelf]
+type = DestroySelf
+triggerall = ishelper
+triggerall = roundstate >= 3
+trigger1 = root,stateno != [120,159]
+trigger2 = roundstate >= 4
+
+;AI记忆用-打康-----------------------------------------------------------------------------
+[Statedef 40000]
+anim = 9999
+ctrl = 0
+
+[STATE 设置初始值]
+TYPE                          = VARRANGESET
+;TRIGGERALL                    = ROOT,VAR(59)
+TRIGGER1                      = TIME = 0
+FIRST                         = 1
+LAST                          = 50
+VALUE                         = -1
+
+[State 30000, AssertSpecial]
+type = AssertSpecial ;这里让玩家无法看见helper
+Trigger1 = 1
+flag = NoShadow ;无影子
+flag2 = invisible ;不可视
+
+[State 30000, NotHitBy]
+type = NotHitBy ;为了保证helper在战斗中不受某些类似AOE的影响,给helper写上无敌作为保险项
+Trigger1 = 1
+value = SCA
+
+[State 30000, 間違いで本体が来たら立ちへ移行]
+type = SelfState ;当这个statedef不是helper时转到0
+trigger1 =!ishelper
+value = 0
+
+[State 0, 普攻号码记录1]
+type = VarSet
+TriggerAll = EnemyNear,StateNo = [200,499]
+TriggerAll = Root,StateNo = 150 || Root,StateNo = 152
+TriggerAll = Root,Time = 1
+TriggerAll = EnemyNear,Ctrl = 0 ;对手不可控
+triggerall = enemynear,movetype = A
+trigger1=enemynear,hitdefattr = SCA,NA ;普通攻击检测
+v = 1
+value =enemynear,stateno
+
+[State 0, 普攻时间记录1]
+type = VarSet
+triggerall=var(2)=-1 ;确保变量未使用
+triggerall = enemynear,movetype = A
+trigger1=enemynear,stateno=var(1)  ;对方的状态已经记忆
+v = 2
+value =enemynear,time
+
+[State 0, 普攻号码记录2]
+type = VarSet
+TriggerAll = EnemyNear,StateNo = [200,499]
+TriggerAll = Root,StateNo = 150 || Root,StateNo = 152
+TriggerAll = Root,Time = 1
+TriggerAll = EnemyNear,Ctrl = 0 ;对手不可控
+triggerall=var(3)=-1 ;确保变量未使用
+triggerall = enemynear,movetype = A
+triggerall=enemynear,stateno!=var(1)  ;确保号码不是之前记忆的号码
+trigger1=enemynear,hitdefattr = SCA,NA ;普通攻击检测
+v = 3
+value =enemynear,stateno
+
+[State 0, 普攻时间记录2]
+type = VarSet
+triggerall=var(4)=-1 ;确保变量未使用
+triggerall = enemynear,movetype = A
+trigger1=enemynear,stateno=var(3)  ;对方的状态已经记忆
+v = 4
+value =enemynear,time
+
+[State 0, 普攻号码记录3]
+type = VarSet
+TriggerAll = EnemyNear,StateNo = [200,499]
+TriggerAll = Root,StateNo = 150 || Root,StateNo = 152
+TriggerAll = Root,Time = 1
+TriggerAll = EnemyNear,Ctrl = 0 ;对手不可控
+triggerall=var(5)=-1 ;确保变量未使用
+triggerall = enemynear,movetype = A
+triggerall=enemynear,stateno!=var(1)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(3)  ;确保号码不是之前记忆的号码
+trigger1=enemynear,hitdefattr = SCA,NA ;普通攻击检测
+v = 5
+value =enemynear,stateno
+
+[State 0, 普攻时间记录3]
+type = VarSet
+triggerall=var(6)=-1 ;确保变量未使用
+triggerall = enemynear,movetype = A
+trigger1=enemynear,stateno=var(5)  ;对方的状态已经记忆
+v = 6
+value =enemynear,time
+
+[State 0, 普攻号码记录4]
+type = VarSet
+TriggerAll = EnemyNear,StateNo = [200,499]
+TriggerAll = Root,StateNo = 150 || Root,StateNo = 152
+TriggerAll = Root,Time = 1
+TriggerAll = EnemyNear,Ctrl = 0 ;对手不可控
+triggerall=var(7)=-1 ;确保变量未使用
+triggerall = enemynear,movetype = A
+triggerall=enemynear,stateno!=var(1)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(3)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(5)  ;确保号码不是之前记忆的号码
+trigger1=enemynear,hitdefattr = SCA,NA ;普通攻击检测
+v = 7
+value =enemynear,stateno
+
+[State 0, 普攻时间记录4]
+type = VarSet
+triggerall=var(8)=-1 ;确保变量未使用
+triggerall = enemynear,movetype = A
+trigger1=enemynear,stateno=var(7)  ;对方的状态已经记忆
+v = 8
+value =enemynear,time
+
+
+[State 0, 普攻号码记录5]
+type = VarSet
+TriggerAll = EnemyNear,StateNo = [200,499]
+TriggerAll = Root,StateNo = 150 || Root,StateNo = 152
+TriggerAll = Root,Time = 1
+TriggerAll = EnemyNear,Ctrl = 0 ;对手不可控
+triggerall=var(9)=-1 ;确保变量未使用
+triggerall = enemynear,movetype = A
+triggerall=enemynear,stateno!=var(1)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(3)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(5)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(7)  ;确保号码不是之前记忆的号码
+trigger1=enemynear,hitdefattr = SCA,NA ;普通攻击检测
+v = 9
+value =enemynear,stateno
+
+[State 0, 普攻时间记录5]
+type = VarSet
+triggerall=var(10)=-1 ;确保变量未使用
+triggerall = enemynear,movetype = A
+trigger1=enemynear,stateno=var(9)  ;对方的状态已经记忆
+v = 10
+value =enemynear,time
+
+[State 0, 普攻号码记录6]
+type = VarSet
+TriggerAll = EnemyNear,StateNo = [200,499]
+TriggerAll = Root,StateNo = 150 || Root,StateNo = 152
+TriggerAll = Root,Time = 1
+TriggerAll = EnemyNear,Ctrl = 0 ;对手不可控
+triggerall=var(11)=-1 ;确保变量未使用
+triggerall = enemynear,movetype = A
+triggerall=enemynear,stateno!=var(1)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(3)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(5)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(7)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(9)  ;确保号码不是之前记忆的号码
+trigger1=enemynear,hitdefattr = SCA,NA ;普通攻击检测
+v = 11
+value =enemynear,stateno
+
+[State 0, 普攻时间记录6]
+type = VarSet
+triggerall=var(12)=-1 ;确保变量未使用
+triggerall = enemynear,movetype = A
+trigger1=enemynear,stateno=var(11)  ;对方的状态已经记忆
+v = 12
+value =enemynear,time
+
+[State 0, 普攻号码记录7]
+type = VarSet
+TriggerAll = EnemyNear,StateNo = [200,499]
+TriggerAll = Root,StateNo = 150 || Root,StateNo = 152
+TriggerAll = Root,Time = 1
+TriggerAll = EnemyNear,Ctrl = 0 ;对手不可控
+triggerall=var(13)=-1 ;确保变量未使用
+triggerall = enemynear,movetype = A
+triggerall=enemynear,stateno!=var(1)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(3)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(5)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(7)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(9)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(11)  ;确保号码不是之前记忆的号码
+trigger1=enemynear,hitdefattr = SCA,NA ;普通攻击检测
+v = 13
+value =enemynear,stateno
+
+[State 0, 普攻时间记录7]
+type = VarSet
+triggerall=var(14)=-1 ;确保变量未使用
+triggerall = enemynear,movetype = A
+trigger1=enemynear,stateno=var(13)  ;对方的状态已经记忆
+v = 14
+value =enemynear,time
+
+[State 0, 普攻号码记录8]
+type = VarSet
+TriggerAll = EnemyNear,StateNo = [200,499]
+TriggerAll = Root,StateNo = 150 || Root,StateNo = 152
+TriggerAll = Root,Time = 1
+TriggerAll = EnemyNear,Ctrl = 0 ;对手不可控
+triggerall=var(15)=-1 ;确保变量未使用
+triggerall = enemynear,movetype = A
+triggerall=enemynear,stateno!=var(1)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(3)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(5)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(7)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(9)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(11)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(13)  ;确保号码不是之前记忆的号码
+trigger1=enemynear,hitdefattr = SCA,NA ;普通攻击检测
+v = 15
+value =enemynear,stateno
+
+[State 0, 普攻时间记录8]
+type = VarSet
+triggerall=var(16)=-1 ;确保变量未使用
+triggerall = enemynear,movetype = A
+trigger1=enemynear,stateno=var(15)  ;对方的状态已经记忆
+v = 16
+value =enemynear,time
+
+[State 0, 普攻号码记录9]
+type = VarSet
+TriggerAll = EnemyNear,StateNo = [200,499]
+TriggerAll = Root,StateNo = 150 || Root,StateNo = 152
+TriggerAll = Root,Time = 1
+TriggerAll = EnemyNear,Ctrl = 0 ;对手不可控
+triggerall=var(17)=-1 ;确保变量未使用
+triggerall = enemynear,movetype = A
+triggerall=enemynear,stateno!=var(1)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(3)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(5)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(7)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(9)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(11)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(13)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(15)  ;确保号码不是之前记忆的号码
+trigger1=enemynear,hitdefattr = SCA,NA ;普通攻击检测
+v = 17
+value =enemynear,stateno
+
+[State 0, 普攻时间记录9]
+type = VarSet
+triggerall=var(18)=-1 ;确保变量未使用
+triggerall = enemynear,movetype = A
+trigger1=enemynear,stateno=var(17)  ;对方的状态已经记忆
+v = 18
+value =enemynear,time
+
+
+[State 0, 普攻号码记录10]
+type = VarSet
+TriggerAll = EnemyNear,StateNo = [200,499]
+TriggerAll = Root,StateNo = 150 || Root,StateNo = 152
+TriggerAll = Root,Time = 1
+TriggerAll = EnemyNear,Ctrl = 0 ;对手不可控
+triggerall=var(19)=-1 ;确保变量未使用
+triggerall = enemynear,movetype = A
+triggerall=enemynear,stateno!=var(1)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(3)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(5)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(7)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(9)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(11)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(13)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(15)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(17)  ;确保号码不是之前记忆的号码
+trigger1=enemynear,hitdefattr = SCA,NA ;普通攻击检测
+v = 19
+value =enemynear,stateno
+
+[State 0, 普攻时间记录10]
+type = VarSet
+triggerall=var(20)=-1 ;确保变量未使用
+triggerall = enemynear,movetype = A
+trigger1=enemynear,stateno=var(19)  ;对方的状态已经记忆
+v = 20
+value =enemynear,time
+
+[State 0, 必杀号码记录1]
+type = VarSet
+TriggerAll = EnemyNear,StateNo = [200,499]
+TriggerAll = Root,StateNo = 150 || Root,StateNo = 152
+TriggerAll = Root,Time = 1
+TriggerAll = EnemyNear,Ctrl = 0 ;对手不可控
+triggerall=var(21)=-1 ;确保变量未使用
+triggerall = enemynear,movetype = A
+trigger1=enemynear,hitdefattr = SCA,SA ;必杀攻击检测
+v = 21
+value =enemynear,stateno
+
+[State 0, 必杀时间记录1]
+type = VarSet
+triggerall=var(22)=-1 ;确保变量未使用
+triggerall = enemynear,movetype = A
+trigger1=enemynear,stateno=var(21)  ;对方的状态已经记忆
+v = 22
+value =enemynear,time
+
+[State 0, 必杀号码记录2]
+type = VarSet
+TriggerAll = EnemyNear,StateNo = [200,499]
+TriggerAll = Root,StateNo = 150 || Root,StateNo = 152
+TriggerAll = Root,Time = 1
+TriggerAll = EnemyNear,Ctrl = 0 ;对手不可控
+triggerall=var(23)=-1 ;确保变量未使用
+triggerall = enemynear,movetype = A
+triggerall=enemynear,stateno!=var(21)  ;确保号码不是之前记忆的号码
+trigger1=enemynear,hitdefattr = SCA,SA ;必杀攻击检测
+v = 23
+value =enemynear,stateno
+
+[State 0, 必杀时间记录2]
+type = VarSet
+triggerall=var(24)=-1 ;确保变量未使用
+triggerall = enemynear,movetype = A
+trigger1=enemynear,stateno=var(23)  ;对方的状态已经记忆
+v = 24
+value =enemynear,time
+
+[State 0, 必杀号码记录3]
+type = VarSet
+TriggerAll = EnemyNear,StateNo = [200,499]
+TriggerAll = Root,StateNo = 150 || Root,StateNo = 152
+TriggerAll = Root,Time = 1
+TriggerAll = EnemyNear,Ctrl = 0 ;对手不可控
+triggerall=var(25)=-1 ;确保变量未使用
+triggerall = enemynear,movetype = A
+triggerall=enemynear,stateno!=var(21)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(23)  ;确保号码不是之前记忆的号码
+trigger1=enemynear,hitdefattr = SCA,SA ;必杀攻击检测
+v = 25
+value =enemynear,stateno
+
+[State 0, 必杀时间记录3]
+type = VarSet
+triggerall=var(26)=-1 ;确保变量未使用
+triggerall = enemynear,movetype = A
+trigger1=enemynear,stateno=var(25)  ;对方的状态已经记忆
+v = 26
+value =enemynear,time
+
+[State 0, 必杀号码记录4]
+type = VarSet
+TriggerAll = EnemyNear,StateNo = [200,499]
+TriggerAll = Root,StateNo = 150 || Root,StateNo = 152
+TriggerAll = Root,Time = 1
+TriggerAll = EnemyNear,Ctrl = 0 ;对手不可控
+triggerall=var(27)=-1 ;确保变量未使用
+triggerall = enemynear,movetype = A
+triggerall=enemynear,stateno!=var(21)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(23)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(25)  ;确保号码不是之前记忆的号码
+trigger1=enemynear,hitdefattr = SCA,SA ;必杀攻击检测
+v = 27
+value =enemynear,stateno
+
+[State 0, 必杀时间记录4]
+type = VarSet
+triggerall=var(28)=-1 ;确保变量未使用
+triggerall = enemynear,movetype = A
+trigger1=enemynear,stateno=var(27)  ;对方的状态已经记忆
+v = 28
+value =enemynear,time
+
+[State 0, 必杀号码记录5]
+type = VarSet
+TriggerAll = EnemyNear,StateNo = [200,499]
+TriggerAll = Root,StateNo = 150 || Root,StateNo = 152
+TriggerAll = Root,Time = 1
+TriggerAll = EnemyNear,Ctrl = 0 ;对手不可控
+triggerall=var(29)=-1 ;确保变量未使用
+triggerall = enemynear,movetype = A
+triggerall=enemynear,stateno!=var(21)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(23)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(25)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(27)  ;确保号码不是之前记忆的号码
+trigger1=enemynear,hitdefattr = SCA,SA ;必杀攻击检测
+v = 29
+value =enemynear,stateno
+
+[State 0, 必杀时间记录5]
+type = VarSet
+triggerall=var(30)=-1 ;确保变量未使用
+triggerall = enemynear,movetype = A
+trigger1=enemynear,stateno=var(29)  ;对方的状态已经记忆
+v = 30
+value =enemynear,time
+
+[State 0, 必杀号码记录6]
+type = VarSet
+TriggerAll = EnemyNear,StateNo = [200,499]
+TriggerAll = Root,StateNo = 150 || Root,StateNo = 152
+TriggerAll = Root,Time = 1
+TriggerAll = EnemyNear,Ctrl = 0 ;对手不可控
+triggerall=var(31)=-1 ;确保变量未使用
+triggerall = enemynear,movetype = A
+triggerall=enemynear,stateno!=var(21)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(23)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(25)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(27)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(29)  ;确保号码不是之前记忆的号码
+trigger1=enemynear,hitdefattr = SCA,SA ;必杀攻击检测
+v = 31
+value =enemynear,stateno
+
+[State 0, 必杀时间记录6]
+type = VarSet
+triggerall=var(32)=-1 ;确保变量未使用
+triggerall = enemynear,movetype = A
+trigger1=enemynear,stateno=var(31)  ;对方的状态已经记忆
+v = 32
+value =enemynear,time
+
+[State 0, 必杀号码记录7]
+type = VarSet
+TriggerAll = EnemyNear,StateNo = [200,499]
+TriggerAll = Root,StateNo = 150 || Root,StateNo = 152
+TriggerAll = Root,Time = 1
+TriggerAll = EnemyNear,Ctrl = 0 ;对手不可控
+triggerall=var(33)=-1 ;确保变量未使用
+triggerall = enemynear,movetype = A
+triggerall=enemynear,stateno!=var(21)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(23)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(25)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(27)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(29)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(31)  ;确保号码不是之前记忆的号码
+trigger1=enemynear,hitdefattr = SCA,SA ;必杀攻击检测
+v = 33
+value =enemynear,stateno
+
+[State 0, 必杀时间记录7]
+type = VarSet
+triggerall=var(34)=-1 ;确保变量未使用
+triggerall = enemynear,movetype = A
+trigger1=enemynear,stateno=var(33)  ;对方的状态已经记忆
+v = 34
+value =enemynear,time
+
+[State 0, 必杀号码记录8]
+type = VarSet
+TriggerAll = EnemyNear,StateNo = [200,499]
+TriggerAll = Root,StateNo = 150 || Root,StateNo = 152
+TriggerAll = Root,Time = 1
+TriggerAll = EnemyNear,Ctrl = 0 ;对手不可控
+triggerall=var(35)=-1 ;确保变量未使用
+triggerall = enemynear,movetype = A
+triggerall=enemynear,stateno!=var(21)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(23)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(25)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(27)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(29)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(31)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(33)  ;确保号码不是之前记忆的号码
+trigger1=enemynear,hitdefattr = SCA,SA ;必杀攻击检测
+v = 35
+value =enemynear,stateno
+
+[State 0, 必杀时间记录8]
+type = VarSet
+triggerall=var(36)=-1 ;确保变量未使用
+triggerall = enemynear,movetype = A
+trigger1=enemynear,stateno=var(35)  ;对方的状态已经记忆
+v = 36
+value =enemynear,time
+
+[State 0, 必杀号码记录9]
+type = VarSet
+TriggerAll = EnemyNear,StateNo = [200,499]
+TriggerAll = Root,StateNo = 150 || Root,StateNo = 152
+TriggerAll = Root,Time = 1
+TriggerAll = EnemyNear,Ctrl = 0 ;对手不可控
+triggerall=var(37)=-1 ;确保变量未使用
+triggerall = enemynear,movetype = A
+triggerall=enemynear,stateno!=var(21)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(23)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(25)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(27)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(29)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(31)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(33)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(35)  ;确保号码不是之前记忆的号码
+trigger1=enemynear,hitdefattr = SCA,SA ;必杀攻击检测
+v = 37
+value =enemynear,stateno
+
+[State 0, 必杀时间记录9]
+type = VarSet
+triggerall=var(38)=-1 ;确保变量未使用
+triggerall = enemynear,movetype = A
+trigger1=enemynear,stateno=var(37)  ;对方的状态已经记忆
+v = 38
+value =enemynear,time
+
+[State 0, 必杀号码记录10]
+type = VarSet
+TriggerAll = EnemyNear,StateNo = [200,499]
+TriggerAll = Root,StateNo = 150 || Root,StateNo = 152
+TriggerAll = Root,Time = 1
+TriggerAll = EnemyNear,Ctrl = 0 ;对手不可控
+triggerall=var(39)=-1 ;确保变量未使用
+triggerall = enemynear,movetype = A
+triggerall=enemynear,stateno!=var(21)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(23)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(25)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(27)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(29)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(31)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(33)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(35)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(37)  ;确保号码不是之前记忆的号码
+trigger1=enemynear,hitdefattr = SCA,SA ;必杀攻击检测
+v = 39
+value =enemynear,stateno
+
+[State 0, 必杀时间记录10]
+type = VarSet
+triggerall=var(40)=-1 ;确保变量未使用
+triggerall = enemynear,movetype = A
+trigger1=enemynear,stateno=var(39)  ;对方的状态已经记忆
+v = 40
+value =enemynear,time
+
+
+[State 0, 超杀号码记录1]
+type = VarSet
+TriggerAll = EnemyNear,StateNo = [2000,4999]
+TriggerAll = Root,StateNo = 150 || Root,StateNo = 152
+TriggerAll = Root,Time = 1
+TriggerAll = EnemyNear,Ctrl = 0 ;对手不可控
+triggerall=var(41)=-1 ;确保变量未使用
+triggerall = enemynear,movetype = A
+trigger1=enemynear,hitdefattr = SCA,HA ;超杀攻击检测
+v = 41
+value =enemynear,stateno
+
+[State 0, 超杀时间记录1]
+type = VarSet
+triggerall=var(42)=-1 ;确保变量未使用
+triggerall = enemynear,movetype = A
+trigger1=enemynear,stateno=var(41)  ;对方的状态已经记忆
+v = 42
+value =enemynear,time
+
+[State 0, 超杀号码记录2]
+type = VarSet
+TriggerAll = EnemyNear,StateNo = [2000,4999]
+TriggerAll = Root,StateNo = 150 || Root,StateNo = 152
+TriggerAll = Root,Time = 1
+TriggerAll = EnemyNear,Ctrl = 0 ;对手不可控
+triggerall=var(43)=-1 ;确保变量未使用
+triggerall = enemynear,movetype = A
+trigger1=enemynear,hitdefattr = SCA,HA ;超杀攻击检测
+v = 43
+value =enemynear,stateno
+
+[State 0, 超杀时间记录2]
+type = VarSet
+triggerall=var(44)=-1 ;确保变量未使用
+triggerall = enemynear,movetype = A
+triggerall=enemynear,stateno!=var(41)  ;确保号码不是之前记忆的号码
+trigger1=enemynear,stateno=var(43)  ;对方的状态已经记忆
+v = 44
+value =enemynear,time
+
+[State 0, 超杀号码记录3]
+type = VarSet
+TriggerAll = EnemyNear,StateNo = [2000,4999]
+TriggerAll = Root,StateNo = 150 || Root,StateNo = 152
+TriggerAll = Root,Time = 1
+TriggerAll = EnemyNear,Ctrl = 0 ;对手不可控
+triggerall=var(45)=-1 ;确保变量未使用
+triggerall = enemynear,movetype = A
+trigger1=enemynear,hitdefattr = SCA,HA ;超杀攻击检测
+v = 45
+value =enemynear,stateno
+
+[State 0, 超杀时间记录3]
+type = VarSet
+triggerall=var(46)=-1 ;确保变量未使用
+triggerall = enemynear,movetype = A
+triggerall=enemynear,stateno!=var(41)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(43)  ;确保号码不是之前记忆的号码
+trigger1=enemynear,stateno=var(45)  ;对方的状态已经记忆
+v = 46
+value =enemynear,time
+
+[State 0, 超杀号码记录4]
+type = VarSet
+TriggerAll = EnemyNear,StateNo = [2000,4999]
+TriggerAll = Root,StateNo = 150 || Root,StateNo = 152
+TriggerAll = Root,Time = 1
+TriggerAll = EnemyNear,Ctrl = 0 ;对手不可控
+triggerall=var(47)=-1 ;确保变量未使用
+triggerall = enemynear,movetype = A
+trigger1=enemynear,hitdefattr = SCA,HA ;超杀攻击检测
+v = 47
+value =enemynear,stateno
+
+[State 0, 超杀时间记录4]
+type = VarSet
+triggerall=var(48)=-1 ;确保变量未使用
+triggerall = enemynear,movetype = A
+triggerall=enemynear,stateno!=var(41)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(43)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(45)  ;确保号码不是之前记忆的号码
+trigger1=enemynear,stateno=var(47)  ;对方的状态已经记忆
+v = 48
+value =enemynear,time
+
+[State 0, 超杀号码记录5]
+type = VarSet
+TriggerAll = EnemyNear,StateNo = [2000,4999]
+TriggerAll = Root,StateNo = 150 || Root,StateNo = 152
+TriggerAll = Root,Time = 1
+TriggerAll = EnemyNear,Ctrl = 0 ;对手不可控
+triggerall=var(49)=-1 ;确保变量未使用
+triggerall = enemynear,movetype = A
+trigger1=enemynear,hitdefattr = SCA,HA ;超杀攻击检测
+v = 49
+value =enemynear,stateno
+
+[State 0, 超杀时间记录5]
+type = VarSet
+triggerall=var(50)=-1 ;确保变量未使用
+triggerall = enemynear,movetype = A
+triggerall=enemynear,stateno!=var(41)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(43)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(45)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(47)  ;确保号码不是之前记忆的号码
+trigger1=enemynear,stateno=var(48)  ;对方的状态已经记忆
+v = 50
+value =enemynear,time
+
+;AI记忆用-对方的当身-----------------------------------------------------------------------------
+[Statedef 50000]
+anim =  9999
+ctrl = 0
+
+
+[STATE 设置初始值]
+TYPE                          = VARRANGESET
+;TRIGGERALL                    = ROOT,VAR(59)
+TRIGGER1                      = TIME = 0
+FIRST                         = 1
+LAST                          = 50
+VALUE                         = -1
+
+
+[State 30000, AssertSpecial]
+type = AssertSpecial ;这里让玩家无法看见helper
+Trigger1 = 1
+flag = NoShadow ;无影子
+flag2 = invisible ;不可视
+
+[State 30000, NotHitBy]
+type = NotHitBy ;为了保证helper在战斗中不受某些类似AOE的影响,给helper写上无敌作为保险项
+Trigger1 = 1
+value = SCA
+
+[State 30000, 間違いで本体が来たら立ちへ移行]
+type = SelfState ;当这个statedef不是helper时转到0
+trigger1 =!ishelper
+value = 0
+
+[State 0, 当身记忆对方当前状态1]
+type = VarSet
+triggerall=var(1)=-1 ;确保变量未使用
+triggerall = enemy,stateno!=[0,11]
+TriggerAll = EnemyNear,statetype!=A
+triggerall = enemynear,movetype!=A
+trigger1 = Root,MoveReversed    ;确认吃了当身
+v = 1
+value = enemynear,stateno
+
+[State 0, 当身记忆对方上一个状态1]
+type = VarSet
+triggerall=var(2)=-1 ;确保变量未使用
+triggerall = enemy,stateno!=[0,11]
+trigger1=var(1)=enemynear,stateno ;确认吃了当身并记忆
+v = 2
+value = enemynear,prevstateno
+
+[State 0, 当身记忆对方当前状态2]
+type = VarSet
+TriggerAll = EnemyNear,statetype!=A
+triggerall=var(3)=-1 ;确保变量未使用
+triggerall = enemy,stateno!=[0,11]
+triggerall = enemynear,movetype!=A
+triggerall=enemynear,stateno!=var(1)  ;确保号码不是之前记忆的号码
+trigger1 = Root,MoveReversed     ;确认吃了当身
+v = 3
+value = enemynear,stateno
+
+[State 0, 当身记忆对方上一个状态2]
+type = VarSet
+triggerall=var(4)=-1 ;确保变量未使用
+triggerall = enemy,stateno!=[0,11]
+triggerall=enemynear,prevstateno!=var(2)  ;确保号码不是之前记忆的号码
+trigger1=var(3)=enemynear,stateno ;确认吃了当身并记忆
+v = 4
+value = enemynear,prevstateno
+
+[State 0, 当身记忆对方当前状态3]
+type = VarSet
+TriggerAll = EnemyNear,statetype!=A
+triggerall=var(5)=-1 ;确保变量未使用
+triggerall = enemy,stateno!=[0,11]
+triggerall = enemynear,movetype!=A
+triggerall=enemynear,stateno!=var(1)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(3)  ;确保号码不是之前记忆的号码
+trigger1 = Root,MoveReversed     ;确认吃了当身
+v = 5
+value = enemynear,stateno
+
+[State 0, 当身记忆对方上一个状态3]
+type = VarSet
+triggerall=var(6)=-1 ;确保变量未使用
+triggerall = enemy,stateno!=[0,11]
+triggerall=enemynear,prevstateno!=var(2)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,prevstateno!=var(4)  ;确保号码不是之前记忆的号码
+trigger1=var(5)=enemynear,stateno ;确认吃了当身并记忆
+v = 6
+value = enemynear,prevstateno
+
+[State 0, 当身记忆对方当前状态4]
+type = VarSet
+TriggerAll = EnemyNear,statetype!=A
+triggerall=var(7)=-1 ;确保变量未使用
+triggerall = enemy,stateno!=[0,11]
+triggerall = enemynear,movetype!=A
+triggerall=enemynear,stateno!=var(1)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(3)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(5)  ;确保号码不是之前记忆的号码
+trigger1 = Root,MoveReversed     ;确认吃了当身
+v = 7
+value = enemynear,stateno
+
+[State 0, 当身记忆对方上一个状态4]
+type = VarSet
+triggerall=var(8)=-1 ;确保变量未使用
+triggerall = enemy,stateno!=[0,11]
+triggerall=enemynear,prevstateno!=var(2)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,prevstateno!=var(4)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,prevstateno!=var(6)  ;确保号码不是之前记忆的号码
+trigger1=var(7)=enemynear,stateno ;确认吃了当身并记忆
+v = 8
+value = enemynear,prevstateno
+
+[State 0, 当身记忆对方当前状态5]
+type = VarSet
+TriggerAll = EnemyNear,statetype!=A
+triggerall=var(9)=-1 ;确保变量未使用
+triggerall = enemy,stateno!=[0,11]
+triggerall = enemynear,movetype!=A
+triggerall=enemynear,stateno!=var(1)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(3)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(5)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,stateno!=var(7)  ;确保号码不是之前记忆的号码
+trigger1 = Root,MoveReversed     ;确认吃了当身
+v = 9
+value = enemynear,stateno
+
+[State 0, 当身记忆对方上一个状态5]
+type = VarSet
+triggerall=var(10)=-1 ;确保变量未使用
+triggerall = enemy,stateno!=[0,11]
+triggerall=enemynear,prevstateno!=var(2)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,prevstateno!=var(4)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,prevstateno!=var(6)  ;确保号码不是之前记忆的号码
+triggerall=enemynear,prevstateno!=var(8)  ;确保号码不是之前记忆的号码
+trigger1=var(9)=enemynear,stateno ;确认吃了当身并记忆
+v = 10
+value = enemynear,prevstateno
+
+
+;AI记忆用-helper proj变动-----------------------------------------------------------------------------
+[Statedef 60000]
+anim = 9999
+ctrl = 0
+
+
+[State 30000, AssertSpecial]
+type = AssertSpecial ;这里让玩家无法看见helper
+Trigger1 = 1
+flag = NoShadow ;无影子
+flag2 = invisible ;不可视
+
+[State 30000, NotHitBy]
+type = NotHitBy ;为了保证helper在战斗中不受某些类似AOE的影响,给helper写上无敌作为保险项
+Trigger1 = 1
+value = SCA
+
+[State 30000, 間違いで本体が来たら立ちへ移行]
+type = SelfState ;当这个statedef不是helper时转到0
+trigger1 =!ishelper
+value = 0
+
+
+[State Null,敌Helper最低数量侦测]
+Type               = Null
+TriggerAll         = Root,Alive && RoundState = 2
+Trigger1           = GameTime = Var(50)
+Trigger1           = Var(16) := enemynear,NumHelper
+Trigger2           = enemynear,MoveType != A
+Trigger2           = enemynear,NumHelper <= Var(16)
+Trigger2           = Var(16) := enemynear,NumHelper
+
+[State Null,敌Helper数量波动侦测]
+Type               = Null
+TriggerAll         = Root,Alive && RoundState = 2
+Trigger1           = enemynear,NumHelper - Var(16) > 0
+Trigger1           = Var(17) := 1
+Trigger2           = enemynear,NumHelper - Var(16) <= 0
+Trigger2           = Var(17) := 0
+
+[State Null,敌Proj最低数量侦测]
+Type               = Null
+TriggerAll         = Root,Alive && RoundState = 2
+Trigger1           = GameTime = Var(50)
+Trigger1           = Var(18) := enemynear,NumProj
+Trigger2           = enemynear,MoveType != A
+Trigger2           = enemynear,NumProj <= Var(18)
+Trigger2           = Var(18) := enemynear,NumProj
+
+[State Null,敌Proj数量波动侦测]
+Type               = Null
+TriggerAll         = Root,Alive && RoundState = 2
+Trigger1           = enemynear,NumProj - Var(18) > 0
+Trigger1           = Var(19) := 1
+Trigger2           = enemynear,NumProj - Var(18) <= 0
+Trigger2           = Var(19) := 0
+
+[State Null,敌Helper数量波动计时]
+Type               = Null
+TriggerAll         = Root,Alive && RoundState = 2
+Trigger1           = Var(17) = 0
+Trigger1           = Var(20) := 0
+Trigger2           = Var(17) > 0
+Trigger2           = Var(20) < 250
+Trigger2           = Var(20) := (Var(20) + 1)
+Trigger3           = Var(17) > 0
+Trigger3           = Var(20) = 250
+Trigger3           = Var(16) := enemynear,NumHelper
+Trigger3           = Var(17) := Var(16) - enemynear,NumHelper
+
+[State Null,敌Proj数量波动计时]
+Type               = Null
+TriggerAll         = Root,Alive && RoundState = 2
+Trigger1           = Var(19) = 0
+Trigger1           = Var(21) := 0
+Trigger2           = Var(19) > 0
+Trigger2           = Var(21) < 250
+Trigger2           = Var(21) := (Var(21) + 1)
+Trigger3           = Var(19) > 0
+Trigger3           = Var(21) = 250
+Trigger3           = Var(18) := enemynear,NumHelper
+Trigger3           = Var(19) := Var(18) - enemynear,NumHelper
+
+
+
+
+;系统设置
+[Statedef 198964]
+type = A
+ctrl = 0
+anim = 9999
+physics = N
+sprpriority = 10
+
+
+
+[State 30000, AssertSpecial]
+type = AssertSpecial ;这里让玩家无法看见helper
+Trigger1 = 1
+flag = NoShadow ;无影子
+flag2 = invisible ;不可视
+
+[State 30000, NotHitBy]
+type = NotHitBy ;为了保证helper在战斗中不受某些类似AOE的影响,给helper写上无敌作为保险项
+Trigger1 = 1
+value = SCA
+
+[State 30000, 間違いで本体が来たら立ちへ移行]
+type = SelfState ;当这个statedef不是helper时转到0
+trigger1 =!ishelper
+value = 0
+
+
+
+[State 0, VarSet]
+type = VarSet
+trigger1 = 1
+v = 20
+value = 0       ;←修改此处改变灵体化开关  0-不启动 1-启动
+ignorehitpause =1
+
+
+[State 0, VarSet]
+type = VarSet
+trigger1 = 1
+v = 21
+value = 1       ;←常时AI  0-不启动 1-启动
+ignorehitpause =1
+
+
+[State 0, VarSet]
+type = VarSet
+trigger1 = 1
+v = 22
+value = 2       ;←变身设置  0-不变身  1-只变身里模式 2-里模式蛇蛟都变
+ignorehitpause =1
+
+[State 0, VarSet]
+type = VarSet
+trigger1 = 1
+v = 23
+value = 1       ;←对A攻击强化 0-无  1-性能强化
+ignorehitpause =1
+
+
+[State 0, VarSet]
+type = VarSet
+trigger1 = 1
+v = 24
+value = 0       ;←特殊底力 0-无  1-有
+ignorehitpause =1
+
+
+[State 0, VarSet]
+type = VarSet
+trigger1 = 1
+v = 25
+value = 1       ;←里模式滑步 0-无  1-有
+ignorehitpause =1
+
+
+[State 0, VarSet]
+type = VarSet
+trigger1 = 1
+v = 26
+value = 3       ;←断言破防几率 0-10
+ignorehitpause =1
+
+[State 0, VarSet]
+type = VarSet
+trigger1 = 1
+v = 27
+value = 1 ;←6P特殊受身(脱离) 0-无 1-有 
+ignorehitpause =1
+
+[State 0, VarSet]
+type = VarSet
+trigger1 = 1
+v = 28
+value = 0 ;←变身蛇蛟时回满生命值 0-无 1-有 
+ignorehitpause =1
+
+
+[State 0, VarSet]
+type = VarSet
+trigger1 = 1
+v = 29
+value = 1 ;←里模式定身技能 0-无 1-有
+ignorehitpause =1
+
+
+
+[State 0, VarSet]
+type = VarSet
+trigger1 = 1
+v = 30
+value = 1 ;AI空震 0-无 1-有
+ignorehitpause =1
+
+
+[State 0, VarSet]
+type = VarSet
+trigger1 = 1
+v = 31
+value = 1 ;←克里斯形态当身 0-无 1-有
+ignorehitpause =1
+
+
+[State 0, VarSet]
+type = VarSet
+trigger1 = 1
+v = 32
+value = 1 ;←蛇蛟形态陷阱  0-无 1-有
+ignorehitpause =1

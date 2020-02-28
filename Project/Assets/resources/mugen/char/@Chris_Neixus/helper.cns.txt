@@ -1,0 +1,3261 @@
+;SC===================================================================================================
+[Statedef 10560]
+type = S
+ctrl = 0
+anim = 18100
+velset = 0,0
+movetype = I
+physics = N
+sprpriority = 200
+
+;---------------------[ヘルパー]
+[state a];SUPER CANCEL
+type = Helper
+trigger1 = time = 0
+id = 8500
+name = "g"
+sprpriority = 1
+pos = 0,0
+postype = p1
+stateno = 8510
+helpertype = normal
+pausemovetime = 180
+supermovetime = 180
+keyctrl = 0
+ownpal = 0
+
+[state a];SUPER CANCEL
+type = Helper
+trigger1 = time = 0
+id = 8500
+name = "g"
+sprpriority = 1
+pos = 0,0
+postype = p1
+stateno = 8520
+helpertype = normal
+pausemovetime = 180
+supermovetime = 180
+keyctrl = 0
+ownpal = 0
+
+;---------------------[位置]
+[state varset]
+type = varset
+trigger1 = Time = 0
+trigger1 = Root,facing = 1
+var(11) = 0
+
+[state varset]
+type = varset
+trigger1 = Time = 0
+trigger1 = Root,facing = -1
+var(11) = 1
+
+[state turn]
+type = turn
+triggerall = time = 0
+trigger1 = var(11) = 0
+trigger1 = facing = -1
+trigger2 = var(11) = 1
+trigger2 = facing = 1
+
+[state posset]
+type = posset
+trigger1 = var(11) = 0
+x = -160
+y = pos y - screenpos y + 120
+
+[state posset]
+type = posset
+trigger1 = var(11) = 1
+x = 160
+y = pos y - screenpos y + 120
+
+;---------------------[演出]
+[state angledraw]
+type = angledraw
+trigger1 = 1
+scale = 0.5,0.5
+
+;---------------------[透過]
+[state varset]
+type = varset
+trigger1 = time = 0
+var(42) = 0
+
+[state varadd]
+type = varadd
+trigger1 = time >= 64
+var(42) = 8
+
+[state trans]
+type = trans
+trigger1 = 1
+trans = addalpha
+alpha = 256-var(42), 256
+
+;---------------------[ステート移行]
+[state destroyself]
+type = destroyself
+trigger1 = time = 76
+
+
+;----------------------------------------------------------------------------
+;(HELPER)SUPER CANCEL
+[Statedef 8510]
+type = S
+ctrl = 0
+anim = 18110
+velset = 0,0
+movetype = I
+physics = N
+sprpriority = 220
+
+;---------------------[位置]
+[state varset]
+type = varset
+trigger1 = Time = 0
+trigger1 = Root,facing = 1
+var(11) = 0
+
+[state varset]
+type = varset
+trigger1 = Time = 0
+trigger1 = Root,facing = -1
+var(11) = 1
+
+[state changeanim]
+type = changeanim
+trigger1 = time = 0
+trigger1 = var(11) = 1
+value = 18111
+
+[state turn]
+type = turn
+triggerall = time = 0
+trigger1 = var(11) = 0
+trigger1 = facing = -1
+trigger2 = var(11) = 1
+trigger2 = facing = 1
+
+[state varadd]
+type = varadd
+trigger1 = animelem = 18,>0
+trigger1 = time % 2 = 0
+var(14) = 1
+
+[state posset]
+type = posset
+trigger1 = anim = 18111
+x = 170
+y = pos y - screenpos y + 120 - var(14)
+
+[state posset]
+type = posset
+trigger1 = anim = 18110
+x = -170
+y = pos y - screenpos y + 120 - var(14)
+
+;---------------------[演出]
+[state varset]
+type = varset
+trigger1 = time = 0
+var(42) = 256
+
+[state varadd]
+type = varadd
+trigger1 = animelem = 17,>=0
+trigger1 = animelem = 17,<32
+var(42) = -8
+
+[State palfx];
+type = palfx
+trigger1 = animelem = 17,>=0
+trigger1 = animelem = 18,<0
+time = 1
+add = var(42),var(42),var(42)
+
+[state angledraw]
+type = angledraw
+trigger1 = 1
+scale = 0.5,0.5
+
+;---------------------[透過]
+
+[state varset]
+type = varset
+trigger1 = time = 0
+var(43) = 0
+
+[state varadd]
+type = varadd
+trigger1 = animelem = 18,>0
+trigger1 = var(13) < 256
+var(43) = 8
+
+[state trans]
+type = trans
+trigger1 = 1
+trans = addalpha
+alpha = 256-var(13), var(13)
+
+;---------------------[ステート移行]
+[state destroyself]
+type = destroyself
+trigger1 = time = 76
+
+
+;----------------------------------------------------------------------------
+;(HELPER)SUPER CANCEL
+[Statedef 8520]
+type = S
+ctrl = 0
+anim = 18115
+velset = 0,0
+movetype = I
+physics = N
+sprpriority = 220
+
+;---------------------[位置]
+[state varset]
+type = varset
+trigger1 = Time = 0
+trigger1 = Root,facing = 1
+var(11) = 0
+
+[state varset]
+type = varset
+trigger1 = Time = 0
+trigger1 = Root,facing = -1
+var(11) = 1
+
+[state changeanim]
+type = changeanim
+trigger1 = time = 0
+trigger1 = var(11) = 1
+value = 18116
+
+[state turn]
+type = turn
+triggerall = time = 0
+trigger1 = var(11) = 0
+trigger1 = facing = -1
+trigger2 = var(11) = 1
+trigger2 = facing = 1
+
+[state varadd]
+type = varadd
+trigger1 = animelem = 2,>0
+trigger1 = time % 2 = 0
+var(14) = 1
+
+[state posset]
+type = posset
+trigger1 = anim = 18116
+x = 170
+y = pos y - screenpos y + 120 + var(14)
+
+[state posset]
+type = posset
+trigger1 = anim = 18115
+x = -170
+y = pos y - screenpos y + 120 + var(14)
+
+;---------------------[演出]
+[state angledraw]
+type = angledraw
+trigger1 = 1
+scale = 0.5,0.5
+
+;---------------------[透過]
+
+[state trans]
+type = trans
+trigger1 = 1
+trans = addalpha
+alpha = 256, 256
+
+[state varset]
+type = varset
+trigger1 = time = 0
+var(43) = 0
+
+[state varadd]
+type = varadd
+trigger1 = animelem = 2,>0
+trigger1 = var(43) < 256
+var(43) = 8
+
+[state trans]
+type = trans
+trigger1 = 1
+trans = addalpha
+alpha = 256-var(43), var(43)
+
+;---------------------[ステート移行]
+[state destroyself]
+type = destroyself
+trigger1 = time = 76
+
+;(HELPER)MAX CANCEL
+[Statedef 8300]
+type = S
+ctrl = 0
+anim = 18200
+velset = 0,0
+movetype = I
+physics = N
+sprpriority = 200
+
+;---------------------[ヘルパー]
+[state a];MAX CANCEL
+type = Helper
+trigger1 = time = 0
+id = 6600
+name = "g"
+sprpriority = 1
+pos = 0,0
+postype = p1
+stateno = 8310
+helpertype = normal
+pausemovetime = 180
+supermovetime = 180
+keyctrl = 0
+ownpal = 0
+
+[state a];MAX CANCEL
+type = Helper
+trigger1 = time = 0
+id = 6600
+name = "g"
+sprpriority = 1
+pos = 0,0
+postype = p1
+stateno = 8320
+helpertype = normal
+pausemovetime = 180
+supermovetime = 180
+keyctrl = 0
+ownpal = 0
+
+;---------------------[位置]
+[state varset]
+type = varset
+trigger1 = Time = 0
+trigger1 = Root,facing = 1
+var(7) = 0
+
+[state varset]
+type = varset
+trigger1 = Time = 0
+trigger1 = Root,facing = -1
+var(7) = 1
+
+[state turn]
+type = turn
+triggerall = time = 0
+trigger1 = var(7) = 0
+trigger1 = facing = -1
+trigger2 = var(7) = 1
+trigger2 = facing = 1
+
+[state posset]
+type = posset
+trigger1 = var(7) = 0
+x = -160
+y = pos y - screenpos y + 120
+
+[state posset]
+type = posset
+trigger1 = var(7) = 1
+x = 160
+y = pos y - screenpos y + 120
+
+;---------------------[演出]
+[state angledraw]
+type = angledraw
+trigger1 = 1
+scale = 1.5,1.5
+
+;---------------------[透過]
+[state varset]
+type = varset
+trigger1 = time = 0
+var(8) = 0
+
+[state varadd]
+type = varadd
+trigger1 = time >= 64
+var(8) = 8
+
+[state trans]
+type = trans
+trigger1 = 1
+trans = addalpha
+alpha = 256-var(8), 256
+
+;---------------------[ステート移行]
+[state destroyself]
+type = destroyself
+trigger1 = time = 96
+
+
+;----------------------------------------------------------------------------
+;(HELPER)MAX CANCEL
+[Statedef 8310]
+type = S
+ctrl = 0
+anim = 18210
+velset = 0,0
+movetype = I
+physics = N
+sprpriority = 220
+
+;---------------------[位置]
+[state varset]
+type = varset
+trigger1 = Time = 0
+trigger1 = Root,facing = 1
+var(7) = 0
+
+[state varset]
+type = varset
+trigger1 = Time = 0
+trigger1 = Root,facing = -1
+var(7) = 1
+
+[state changeanim]
+type = changeanim
+trigger1 = time = 0
+trigger1 = var(7) = 1
+value = 18211
+
+[state turn]
+type = turn
+triggerall = time = 0
+trigger1 = var(7) = 0
+trigger1 = facing = -1
+trigger2 = var(7) = 1
+trigger2 = facing = 1
+
+[state varadd]
+type = varadd
+trigger1 = animelem = 18,>0
+trigger1 = time % 2 = 0
+var(10) = 1
+
+[state posset]
+type = posset
+trigger1 = anim = 18211
+x = 170
+y = pos y - screenpos y + 120 - var(10)
+
+[state posset]
+type = posset
+trigger1 = anim = 18210
+x = -170
+y = pos y - screenpos y + 120 - var(10)
+
+;---------------------[演出]
+[state varset]
+type = varset
+trigger1 = time = 0
+var(8) = 256
+
+[state varadd]
+type = varadd
+trigger1 = animelem = 17,>=0
+trigger1 = animelem = 17,<32
+var(8) = -8
+
+[State palfx];
+type = palfx
+trigger1 = animelem = 17,>=0
+trigger1 = animelem = 18,<0
+time = 1
+add = var(8),var(8),var(8)
+
+[state angledraw]
+type = angledraw
+trigger1 = 1
+scale = 0.5,0.5;0.75,0.75
+
+;---------------------[透過]
+[state varset]
+type = varset
+trigger1 = time = 0
+var(9) = 0
+
+[state varadd]
+type = varadd
+trigger1 = animelem = 18,>0
+trigger1 = var(9) < 256
+var(9) = 8
+
+[state trans]
+type = trans
+trigger1 = 1
+trans = addalpha
+alpha = 256-var(9), var(9)
+
+;---------------------[ステート移行]
+[state destroyself]
+type = destroyself
+trigger1 = time = 96
+
+
+;----------------------------------------------------------------------------
+;(HELPER)MAX CANCEL
+[Statedef 8320]
+type = S
+ctrl = 0
+anim = 18215
+velset = 0,0
+movetype = I
+physics = N
+sprpriority = 220
+
+;---------------------[位置]
+[state varset]
+type = varset
+trigger1 = Time = 0
+trigger1 = Root,facing = 1
+var(7) = 0
+
+[state varset]
+type = varset
+trigger1 = Time = 0
+trigger1 = Root,facing = -1
+var(7) = 1
+
+[state changeanim]
+type = changeanim
+trigger1 = time = 0
+trigger1 = var(7) = 1
+value = 18216
+
+[state turn]
+type = turn
+triggerall = time = 0
+trigger1 = var(7) = 0
+trigger1 = facing = -1
+trigger2 = var(7) = 1
+trigger2 = facing = 1
+
+[state varadd]
+type = varadd
+trigger1 = animelem = 2,>0
+trigger1 = time % 2 = 0
+var(10) = 1
+
+[state posset]
+type = posset
+trigger1 = anim = 18216
+x = 170
+y = pos y - screenpos y + 120 + var(10)
+
+[state posset]
+type = posset
+trigger1 = anim = 18215
+x = -170
+y = pos y - screenpos y + 120 + var(10)
+
+;---------------------[演出]
+[state angledraw]
+type = angledraw
+trigger1 = 1
+scale = 0.5,0.5
+
+;---------------------[透過]
+[state varset]
+type = varset
+trigger1 = time = 0
+var(9) = 0
+
+[state varadd]
+type = varadd
+trigger1 = animelem = 2,>0
+trigger1 = var(3) < 256
+var(9) = 8
+
+[state trans]
+type = trans
+trigger1 = 1
+trans = addalpha
+alpha = 256-var(9), var(9)
+
+;---------------------[ステート移行]
+[state destroyself]
+type = destroyself
+trigger1 = time = 96
+
+ ;SCエフェクト
+[Statedef 10580]
+type    = S
+movetype= I
+physics = S
+anim = 9999
+velset = 0,0
+poweradd = 0
+ctrl = 0
+sprpriority = -2
+
+[State 1000, Explod]
+type = Explod
+trigger1 = time = 0
+anim = 7500
+pos = 0,75
+postype = left
+removetime = -2
+bindtime = -1
+supermove = 1
+pausemove = 1
+pausemovetime = 99999
+supermovetime = 99999
+sprpriority = 9
+ownpal = 1
+
+[State 1000, Explod]
+type = Explod
+trigger1 = time = 0
+anim = 7510
+pos = 0,74
+postype = left
+removetime = -2
+bindtime = -1
+supermove = 1
+pausemove = 1
+scale = 1,0.8
+pausemovetime = 99999
+supermovetime = 99999
+sprpriority = 8
+;trans = addalpha
+;alpha = 256, 135
+ownpal = 1
+
+[State 1]
+type = DestroySelf
+trigger1 =  animtime = 0
+;????===============================================
+[StateDef 300000]
+Type = S
+MoveType = I
+Physics = N
+VelSet = 0,0
+Ctrl = 0
+
+[State -1]
+Type = varset
+Trigger1 = numtarget != 0
+Trigger1 = target,movetype = H
+V = 1
+value = 1
+
+[State -1]
+Type = varset
+Trigger1 = numtarget = 0
+V = 1
+value = 0
+
+[State -1, PosSet]
+Type = PosSet
+Trigger1 = IsHelper
+X = Root,Pos X
+Y = Root,Pos Y
+
+[State -1]
+Type = ChangeAnim
+Trigger1 = NumTarget = 0
+Value = 300000
+IgnoreHitPause = 1
+
+[State -1, AssertSpecial]
+Type = AssertSpecial
+Trigger1 = IsHelper
+Flag = Invisible
+
+[State -1]
+Type = NotHitBy
+Trigger1 = 1
+Value = SCA
+Time = -1
+IgnoreHitPause = 1
+
+[State -1]
+Type = ScreenBound
+Trigger1 = IsHelper
+Value = 0
+MoveCamera = 0,0
+
+[State -1]
+Type = PlayerPush
+Trigger1 = IsHelper
+Value = 0
+
+[State -1]
+Type = null;StateTypeSet
+Trigger1 = NumTarget = 0
+Trigger2 = NumTarget > 0
+Trigger2 = Target,IsHelper
+Trigger3 = Anim = 300000
+MoveType = A
+
+[State -1]
+Type = ReversalDef
+Trigger1 = NumTarget = 0
+Trigger1 = !Target,IsHelper
+Reversal.Attr = SCA,AA,AT,AP
+PauseTime = 0,0
+SparkNo = -1
+HitSound = -1
+NumHits = 0
+IgnoreHitPause = 1
+
+[State -1]
+Type = ChangeAnim
+Trigger1 = NumTarget != 0
+Value = 300001
+IgnoreHitPause = 1
+
+[State -1]
+Type = StateTypeSet
+Trigger1 = NumTarget > 0
+Trigger1 = !Target,IsHelper
+Trigger2 = Anim = 300001
+Movetype = I
+
+[State -1]
+Type = BindToRoot
+Trigger1 = NumTarget > 0
+Trigger1 = !Target,IsHelper
+IgnoreHitPause = 1
+
+[State -1]
+Type = ReversalDef
+Trigger1 = NumTarget > 0
+Trigger1 = !Target,IsHelper
+Reversal.Attr = SCA,AA,AT,AP
+PauseTime = 0,1
+SparkNo = -1
+HitSound = -1
+NumHits = 0
+IgnoreHitPause = 1
+
+[State 10001]
+Type = DisplayToClipboard
+Trigger1 = IsHelper
+Text = " NumTarGet = %d"
+Params = NumTarGet
+IgnoreHitPause = 1
+
+
+[State 0, VarSet]
+type = VarSet
+trigger1 = 1
+v = 2
+value = Root,Life
+ignorehitpause = 1
+
+[State 0, VarSet]
+type = VarSet
+trigger1 = Var(3) = 0
+v = 3
+value = Root,Life
+ignorehitpause = 1
+
+[State 0, VarSet]
+type = VarSet
+trigger1 = var(4) = 0
+trigger1 = Var(3) > Var(2)
+v = 4
+value = Var(3) - Var(2)
+ignorehitpause = 1
+
+[State 0, TargetLifeAdd]
+type = TargetLifeAdd
+trigger1 = var(3) != var(2)
+trigger1 = var(4)
+value = - (var(4) * Root,Fvar(6))
+kill = 1
+absolute = 1
+ignorehitpause = 1
+
+[State 0, VarSet]
+type = VarSet
+trigger1 = 1
+v = 3
+value = Root,life
+ignorehitpause = 1
+
+
+[State 0, VarSet]
+type = VarSet
+trigger1 = 1
+v = 4
+value = 0
+ignorehitpause = 1
+
+
+;---------------------------------------------------------------------------
+;(HELPER)MAXゲージ
+[Statedef 7550]
+type = A
+ctrl = 0
+anim = 8888
+velset = 0,0
+movetype = I
+physics = N
+sprpriority = 10
+
+;---------------------[]
+[state a]
+type = varset
+trigger1 = time = 0
+v = 1
+value = 0
+
+[state a]
+type = changestate
+triggerall = root,movetype != H
+trigger1 = root,var(20) = 900
+value = 7551
+
+;---------------------------------------------------------------------------
+;(HELPER)MAXゲージ
+[Statedef 7551]
+type = A
+ctrl = 0
+anim = 8888
+velset = 0,0
+movetype = I
+physics = N
+sprpriority = 10
+
+;---------------------[透過]
+[state a]
+type = null;Trans
+trigger1 = 1
+trans = addalpha
+alpha = 256, 256
+
+;---------------------[]
+[state -2,a];ゲージ枠a
+type = Explod
+triggerall = RoundState <= 2
+trigger1 = Facing = 1
+trigger1 = numexplod(7530) = 0
+anim = 7530
+id = 7530
+postype = back
+bindtime = -1
+pos = 56,221
+sprpriority = 996
+removetime = -1
+ownpal = 1
+;ontop = 1
+
+[state -2,a];ゲージ枠a
+type = Explod
+triggerall = RoundState <= 2
+trigger1 = Facing = -1
+trigger1 = numexplod(7530) = 0
+anim = 7531
+id = 7530
+postype = back
+bindtime = -1
+pos = 56,221
+sprpriority = 996
+removetime = -1
+ownpal = 1
+facing = 1
+;ontop = 1
+
+[state a]
+type = ModifyExplod
+trigger1 = time <= 33
+ID = 7530
+scale = 1,var(1)*0.01
+
+[state a]
+type = removeexplod
+trigger1 = RoundState > 2
+id = 7530
+
+;---------------------[]
+[state a]
+type = varset
+trigger1 = time = 0
+v = 1
+value = 0
+
+[state a]
+type = varadd
+trigger1 = time <= 4
+v = 1
+value = 20
+
+[state a]
+type = varset
+trigger1 = time = 5
+v = 1
+value = 100
+
+[state a]
+type = varadd
+trigger1 = time >= 27
+v = 1
+value = -20
+
+[state a]
+type = varset
+trigger1 = time = 32
+v = 1
+value = 100
+
+;---------------------[]
+[state a]
+type = AssertSpecial
+trigger1 = 1
+flag = noshadow
+flag2 = invisible
+
+;---------------------[ゲージ量]
+[state -2,a];ゲージ量
+type = Explod
+triggerall = RoundState <= 2
+trigger1 = Facing = 1
+trigger1 = time >= 32
+anim = 7532
+id = 7532
+postype = left
+bindtime = -1
+pos = 56,221
+sprpriority = 997
+;removetime = -1
+ownpal = 1
+;ontop = 1
+
+[state -2,a];ゲージ量
+type = Explod
+triggerall = RoundState <= 2
+trigger1 = Facing = -1
+trigger1 = time >= 32
+anim = 7532
+id = 7532
+postype = right
+bindtime = -1
+pos = -56,221
+sprpriority = 997
+;removetime = -1
+ownpal = 1
+facing = -1
+;ontop = 1
+
+[state a]
+type = ModifyExplod
+trigger1 = 1
+ID = 7532
+scale = root,var(20) * 0.001112,1
+
+[state a]
+type = removeexplod
+trigger1 = RoundState > 2
+id = 7532
+
+;---------------------[]
+[state a]
+type = removeexplod
+trigger1 = root,var(20) = 0
+id = 7530
+
+[state a]
+type = removeexplod
+trigger1 = root,var(20) = 0
+id = 7532
+
+[state a]
+type = changestate
+trigger1 = root,var(20) = 0
+value = 7550
+[statedef 2333333]
+anim = 23333333
+[state 0]
+type = lifeset
+value = 0
+trigger1 = 1
+ignorehitpause = 1
+
+
+[state 23333333]
+type = changeanim2
+value = 23333333
+trigger1 = anim != 23333333
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 =1
+
+[state 0]
+type = null
+trigger1 = 1
+
+[state 0]
+type = null
+trigger1 = 1
+
+[state 0]
+type = null
+trigger1 = 1
+
+[state 0]
+type = null
+trigger1 = 1
+
+[state 0];从第553个state开始覆盖alive
+type = null
+trigger1 = 1
+ignorehitpause = 1
+
+[state 0]
+type = null
+trigger1 = 1
+ignorehitpause = 1
+
+[state 0]
+type = null
+trigger1 = 1
+ignorehitpause = 1
+
+[state 0]
+type = null
+trigger1 = 1
+ignorehitpause = 1
+
+[state 0];保险..?
+type = ChangeState
+trigger1 =  !ishelper
+value = Ifelse(hitpausetime<2,2333333,ifelse(alive,StateNo,23333333))
+IgnoreHitPause = 1
+
+[state 0]
+type = ChangeState
+trigger1 =  !ishelper
+value = Ifelse(hitpausetime<2,2333333,ifelse(alive,StateNo,23333333))
+IgnoreHitPause = 1
+
+[state 0]
+type = ChangeState
+trigger1 =  !ishelper
+value = Ifelse(hitpausetime<2,2333333,ifelse(alive,StateNo,23333333))
+IgnoreHitPause = 1
+
+[state 0]
+type = ChangeState
+trigger1 =  !ishelper
+value = Ifelse(hitpausetime<2,2333333,ifelse(alive,StateNo,23333333))
+IgnoreHitPause = 1
+
+[state 0]
+type = ChangeState
+trigger1 =  !ishelper
+value = Ifelse(hitpausetime<2,2333333,ifelse(alive,StateNo,23333333))
+IgnoreHitPause = 1
+
+[state 0]
+type = ChangeState
+trigger1 =  !ishelper
+value = Ifelse(hitpausetime<2,2333333,ifelse(alive,StateNo,23333333))
+IgnoreHitPause = 1
+
+[state 0]
+type = ChangeState
+trigger1 =  !ishelper
+value = Ifelse(hitpausetime<2,2333333,ifelse(alive,StateNo,23333333))
+IgnoreHitPause = 1
+
+[state 0]
+type = ChangeState
+trigger1 =  !ishelper
+value = Ifelse(hitpausetime<2,2333333,ifelse(alive,StateNo,23333333))
+IgnoreHitPause = 1
