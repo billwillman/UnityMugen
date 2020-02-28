@@ -28,7 +28,7 @@ namespace XNode.Mugen {
 
 		[SerializeField] public bool NoProj = false;
 
-        [NonSerialized] public int durTime = 1;
+		[SerializeField] public int durTime = 1;
 
         protected override string GetDoStr(bool hasCond) {
             byte stand = 0;
@@ -51,14 +51,17 @@ namespace XNode.Mugen {
 			if (stand == 0 && moveTypes == 0 && physicTypes == 0 && !NoProj)
                 return string.Empty;
 
-
-            string ret = string.Format("trigger:CreateNotHit(luaPlayer, %d, %d, %d, %d, %s, %s)",
+			string script = scriptFuncName;
+			if (string.IsNullOrEmpty(scriptFuncName))
+				script = "\"\"";
+			
+			string ret = string.Format("trigger:CreateNotHit(luaPlayer, {0:D}, {1:D}, {2:D}, {3:D}, {4}, {5})",
                                 durTime,
                                 stand,
                                 moveTypes,
                                 physicTypes,
 								NoProj.ToString().ToLower(),
-                                scriptFuncName
+								script
                          );
             return ret;
         }
