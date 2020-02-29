@@ -97,6 +97,9 @@ local function _InitStatedef_100(luaPlayer, luaCfg)
 		function (luaPlayer, state)
 			if trigger:AnimTime(luaPlayer) == 0 then
 				trigger:CtrlSet(luaPlayer, 1)
+				if not trigger:Command(luaPlayer, "FF") then
+					trigger:PlayStandCns(luaPlayer)
+				end
 			end
 		end
 	return id

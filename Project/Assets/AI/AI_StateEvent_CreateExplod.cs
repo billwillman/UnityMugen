@@ -63,7 +63,7 @@ namespace XNode.Mugen
 			ret += string.Format ("{0}explod.IsUseParentUpdate = {1}\n\r", pre, IsUseParentUpdate.ToString().ToLower());
 
 			if (Mathf.Abs ((Vector2.one - scale).magnitude) > float.Epsilon) {
-				ret += string.Format ("{0}explod.scale = Vector2.New({1}f, {2}f)", pre, scale.x.ToString (), scale.y.ToString ());
+				ret += string.Format ("{0}explod.scale = Vector2.New({1}, {2})\n\r", pre, scale.x.ToString (), scale.y.ToString ());
 			}
 
 			ret += pre + "explod:Apply()\n\r";

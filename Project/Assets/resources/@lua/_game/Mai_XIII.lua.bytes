@@ -555,22 +555,6 @@ function Mai_XIII:initCmd_1100(luaCfg)
 
         function (luaPlayer, state)
 
-            local trigger1 = ((trigger:Numexplod(luaPlayer, 7910)) and (trigger:Time(luaPlayer) == 0))
-
-            if trigger1 then
-
-                trigger:RemoveExplod(luaPlayer, 7910)
-
-            end
-
-        end
-
-    local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
-
-    state.OnTriggerEvent = 
-
-        function (luaPlayer, state)
-
             local trigger1 = (trigger:Time(luaPlayer) == 0)
 
             if trigger1 then
@@ -712,8 +696,179 @@ function Mai_XIII:initCmd_1100(luaCfg)
 
         end
 
+    local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+
+    state.OnTriggerEvent = 
+
+        function (luaPlayer, state)
+
+            local trigger1 = ((trigger:AnimElem(luaPlayer) == 5) and (trigger:Anim(luaPlayer) == 1101))
+
+            if trigger1 then
+
+                local explod = trigger:CreateExplod(luaPlayer)
+
+                explod.anim = 1111
+
+                explod.ID = 1110
+
+                explod.postype = ExplodPosType.p1
+
+                explod.bindtime = 1 * bindTimePer
+
+                explod.removetime = -2
+
+                explod.sprpriority = 5
+
+                explod.removeongethit = 1
+
+                explod.ignorehitpause = 0
+
+                explod.isChangeStateRemove = false
+
+                explod.IsUseParentUpdate = false
+
+                explod.scale = Vector2.New(0.475, 0.475)
+
+                explod:Apply()
+
+
+            end
+
+        end
+
+    local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+
+    state.OnTriggerEvent = 
+
+        function (luaPlayer, state)
+
+            local trigger1 = ((trigger:AnimElem(luaPlayer) == 5) and (trigger:Anim(luaPlayer) ~= 1101))
+
+            if trigger1 then
+
+                local explod = trigger:CreateExplod(luaPlayer)
+
+                explod.anim = 1110
+
+                explod.ID = 1110
+
+                explod.postype = ExplodPosType.p1
+
+                explod.bindtime = 1 * bindTimePer
+
+                explod.removetime = -2
+
+                explod.sprpriority = 5
+
+                explod.removeongethit = 1
+
+                explod.ignorehitpause = 0
+
+                explod.isChangeStateRemove = false
+
+                explod.IsUseParentUpdate = false
+
+                explod.scale = Vector2.New(0.475, 0.475)
+
+                explod:Apply()
+
+
+            end
+
+        end
+
+    local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+
+    state.OnTriggerEvent = 
+
+        function (luaPlayer, state)
+
+            local trigger1 = ((trigger:AnimElem(luaPlayer) == 10) and (trigger:Anim(luaPlayer) == 1101))
+
+            if trigger1 then
+
+                local explod = trigger:CreateExplod(luaPlayer)
+
+                explod.anim = 1116
+
+                explod.ID = 1115
+
+                explod.pos_x = 80
+
+                explod.postype = ExplodPosType.p1
+
+                explod.bindtime = 1 * bindTimePer
+
+                explod.removetime = -2
+
+                explod.sprpriority = 5
+
+                explod.removeongethit = 0
+
+                explod.ignorehitpause = 1
+
+                explod.isChangeStateRemove = true
+
+                explod.IsUseParentUpdate = true
+
+                explod.scale = Vector2.New(0.8, 0.8)
+
+                explod:Apply()
+
+
+            end
+
+        end
+
+    local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+
+    state.OnTriggerEvent = 
+
+        function (luaPlayer, state)
+
+            local trigger1 = ((trigger:AnimElem(luaPlayer) == 10) and (trigger:Anim(luaPlayer) ~= 1101))
+
+            if trigger1 then
+
+                local explod = trigger:CreateExplod(luaPlayer)
+
+                explod.anim = 1115
+
+                explod.ID = 1115
+
+                explod.pos_x = 80
+
+                explod.postype = ExplodPosType.p1
+
+                explod.bindtime = 1 * bindTimePer
+
+                explod.removetime = -2
+
+                explod.sprpriority = 5
+
+                explod.removeongethit = 0
+
+                explod.ignorehitpause = 1
+
+                explod.isChangeStateRemove = true
+
+                explod.IsUseParentUpdate = true
+
+                explod.scale = Vector2.New(0.8, 0.8)
+
+                explod:Apply()
+
+
+            end
+
+        end
+
 
 end
+
+
+
 
 function Mai_XIII:initCmd_HuoShaoBtn(luaCfg)
 
