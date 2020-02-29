@@ -308,8 +308,8 @@ public class PlayerDisplay : BaseResLoader {
             if (def.MoveType != Cns_MoveType.none)
                 attribe.MoveType = def.MoveType;
 			attribe.Power += def.PowerAdd;
-			//if (def.Ctrl != CNSStateDef._cNoVaildCtrl)
-			attribe.Ctrl = def.Ctrl;
+			if (def.Ctrl != CNSStateDef._cNoVaildCtrl)
+				attribe.Ctrl = def.Ctrl;
 			// 状态开始的速度
 			bool isVaildX = def.Velset_x != CNSStateDef._cNoVaildVelset;
 			bool isVaildY = def.Velset_y != CNSStateDef._cNoVaildVelset;

@@ -55,7 +55,7 @@ namespace Mugen
 		private int m_FaceP2 = 0;
 
 		public static readonly int _cNoVaildVelset = -999999;
-		public static readonly int _cNoVaildCtrl = 1;
+		public static readonly int _cNoVaildCtrl = -1;
 		public static readonly int _cNoVaildAnim = (int)PlayerState.psNone;
 
 		[NoToLuaAttribute]

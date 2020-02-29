@@ -1,0 +1,19 @@
+function Mai_XIII:initCmd_ChongFeng(luaCfg)
+--------------------------- register KeyCmd ---------------------------
+		local cmd = luaCfg:CreateCmd("冲锋")
+		cmd.time = 1
+		cmd:AttachKeyCommands("")
+
+--------------------------- 冲锋 ---------------------------
+		local aiCmd = luaCfg:CreateAICmd("冲锋")
+		aiCmd.type = Mugen.AI_Type.ChangeState
+		aiCmd.value = "3000"
+		aiCmd.OnTriggerEvent =
+				function (luaPlayer, aiName)
+						local triggle1 = (trigger:Command(luaPlayer, "冲锋"))
+								and (trigger:Ctrl(luaPlayer) == 1)
+						return triggle1
+				end
+
+end
+

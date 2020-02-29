@@ -46,6 +46,8 @@ public class Explod : PlayerPart {
 			{
 				Vector2 offset =  parentDisplay.m_OffsetPos;
 				Vector2 v = new Vector2((float)pos_x, (float)pos_y);
+				if (parentDisplay.IsFlipX)
+					v.x = -v.x;
 				Vector2 vv = v / 100f + offset;
 				display.m_OffsetPos = vv;
 				display.m_OffsetPos.z = -sprpriority;

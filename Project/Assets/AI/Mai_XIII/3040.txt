@@ -1,0 +1,69 @@
+function Mai_XIII:initCmd_3040(luaCfg)
+--------------------------- register StateDef 1210 ---------------------------
+		local id = luaCfg:CreateStateDef("3040")
+		local def = luaCfg:GetStateDef(id)
+		def.Type = Mugen.Cns_Type.S
+		def.PhysicsType = Mugen.Cns_PhysicsType.S
+		def.MoveType = Mugen.Cns_MoveType.I
+		def.Juggle = 0
+		def.PowerAdd = 0
+		def.Velset_x = 0
+		def.Velset_y = 0
+		def.Sprpriority = 0
+		def.Animate = 1210
+		local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+		state.OnTriggerEvent = 
+				function (luaPlayer, state)
+						local trigger1 = (trigger:Time(luaPlayer) == 0)
+						if trigger1 then
+								trigger:RemoveExplod(luaPlayer, 3101)
+						end
+				end
+		local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+		state.OnTriggerEvent = 
+				function (luaPlayer, state)
+						local trigger1 = (trigger:Time(luaPlayer) == 0)
+						if trigger1 then
+								trigger:PosSet(luaPlayer, nil, 0)
+						end
+				end
+		local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+		state.OnTriggerEvent = 
+				function (luaPlayer, state)
+						local trigger1 = (trigger:Time(luaPlayer) == 0)
+						if trigger1 then
+								trigger:RemoveExplod(luaPlayer, 3001)
+						end
+				end
+		local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+		state.OnTriggerEvent = 
+				function (luaPlayer, state)
+						local explod = trigger:CreateExplod(luaPlayer)
+						explod.anim = 3041
+						explod.ID = 3041
+						explod.postype = ExplodPosType.p1
+						explod.removetime = -2
+						explod.sprpriority = 3
+						explod.removeongethit = 0
+						explod.ignorehitpause = 0
+						explod.isChangeStateRemove = false
+						explod.IsUseParentUpdate = false
+						explod.scale = Vector2.New(0.475, 0.475)
+						explod:Apply()
+
+						trigger:Persistent(luaPlayer, state, true)
+				end
+		local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+		state.OnTriggerEvent = 
+				function (luaPlayer, state)
+						local trigger1 = (trigger:AnimTime(luaPlayer) == 0)
+						if trigger1 then
+								trigger:PlayStandCns(luaPlayer)
+								trigger:CtrlSet(luaPlayer, 1)
+
+						end
+				end
+
+
+end
+

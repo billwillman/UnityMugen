@@ -12,7 +12,7 @@ namespace XNode.Mugen
 	[Serializable]
 	public class AI_CreateStateDef: AI_BaseNode
 	{
-
+		[SerializeField] public string realName = string.Empty;
 		[SerializeField] public int realAnimate = CNSStateDef._cNoVaildAnim;
 		[SerializeField] public bool isAnimLoop = false;
 
@@ -39,7 +39,14 @@ namespace XNode.Mugen
 			if (string.IsNullOrEmpty (animate))
 				return ret;
 
-			ret = string.Format ("\t\tlocal id = luaCfg:CreateStateDef(\"{0}\")\n\r", animate);
+			string name = realName;
+			if (string.IsNullOrEmpty (name))
+				name = animate;
+
+			if (string.IsNullOrEmpty (name))
+				return ret;
+
+			ret = string.Format ("\t\tlocal id = luaCfg:CreateStateDef(\"{0}\")\n\r", name);
 			ret += "\t\tlocal def = luaCfg:GetStateDef(id)\n\r";
 			if (type != Cns_Type.none)
 				ret += string.Format ("\t\tdef.Type = {0}.{1}\n\r", type.GetType ().FullName, type.ToString ());
@@ -58,7 +65,8 @@ namespace XNode.Mugen
 				ret += string.Format ("\t\tdef.Velset_y = {0}\n\r", velset_y.ToString ());
 			}
 
-			ret += string.Format ("\t\tdef.Ctrl = {0:D}\n\r", ctrl);
+			if (ctrl != CNSStateDef._cNoVaildCtrl)
+				ret += string.Format ("\t\tdef.Ctrl = {0:D}\n\r", ctrl);
 			ret += string.Format ("\t\tdef.Sprpriority = {0:D}\n\r", sprpriority);
 
 			if (realAnimate != CNSStateDef._cNoVaildAnim) {
