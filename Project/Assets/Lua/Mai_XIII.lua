@@ -436,7 +436,7 @@ function Mai_XIII:initCmd_100(luaCfg)
 
     def.Animate = 100
 
-    def.AnimLoop = true
+    def.AniLoop = true
 
     local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
 
@@ -715,6 +715,27 @@ function Mai_XIII:initCmd_1100(luaCfg)
 
 end
 
+function Mai_XIII:initCmd_HuoShaoBtn(luaCfg)
+
+--------------------------- register KeyCmd ---------------------------
+    local cmd = luaCfg:CreateCmd("火烧")
+    cmd.time = 1
+    cmd:AttachKeyCommands("")
+
+--------------------------- 火烧 ---------------------------
+    local aiCmd = luaCfg:CreateAICmd("火烧")
+    aiCmd.type = Mugen.AI_Type.ChangeState
+    aiCmd.value = "1100"
+    aiCmd.OnTriggerEvent =
+        function (luaPlayer, aiName)
+            local triggle1 = (trigger:Command(luaPlayer, "火烧"))
+                and (trigger:Ctrl(luaPlayer) == 1)
+                and (trigger:Statetype(luaPlayer) ~= Mugen.Cns_Type.A)
+            return triggle1
+        end
+
+end
+
 
 function Mai_XIII:_initCmds()
 	local luaCfg = trigger:GetLuaCnsCfg("Mai_XIII")
@@ -731,6 +752,7 @@ function Mai_XIII:_initCmds()
   self:initCmd_170(luaCfg)
   self:initCmd_100(luaCfg)
   self:initCmd_1100(luaCfg)
+  self:initCmd_HuoShaoBtn(luaCfg)
 end
 
 setmetatable(Mai_XIII, {__call = Mai_XIII.new})

@@ -1,0 +1,20 @@
+function Mai_XIII:initCmd_HuoShaoBtn(luaCfg)
+--------------------------- register KeyCmd ---------------------------
+		local cmd = luaCfg:CreateCmd("火烧")
+		cmd.time = 1
+		cmd:AttachKeyCommands("")
+
+--------------------------- 火烧 ---------------------------
+		local aiCmd = luaCfg:CreateAICmd("火烧")
+		aiCmd.type = Mugen.AI_Type.ChangeState
+		aiCmd.value = "1100"
+		aiCmd.OnTriggerEvent =
+				function (luaPlayer, aiName)
+						local triggle1 = (trigger:Command(luaPlayer, "火烧"))
+								and (trigger:Ctrl(luaPlayer) == 1)
+								and (trigger:Statetype(luaPlayer) ~= Mugen.Cns_Type.A)
+						return triggle1
+				end
+
+end
+

@@ -20,9 +20,9 @@ namespace XNode.Mugen
 		{
 			string ret = string.Format ("{0}.{1}", stateType.GetType ().FullName, stateType.ToString ());
 			if (isNot)
-				ret = "trigger:Statetype ~= " + ret;
+				ret = string.Format("trigger:Statetype({0}) ~= ", luaPlayer) + ret;
 			else
-				ret = "trigger:Statetype == " + ret;
+				ret = string.Format("trigger:Statetype({0}) == ", luaPlayer) + ret;
 			return ret;
 		}
 	}
