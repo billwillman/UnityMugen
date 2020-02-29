@@ -24,6 +24,23 @@ public class PlayerPartMgr : MonoBehaviour {
 		m_PartList.Remove (part);
 	}
 
+	public bool ContainsExplod(int explodId)
+	{
+		if (explodId < 0 || m_PartList == null)
+			return false;
+
+		for (int i = m_PartList.Count - 1; i >= 0; --i) {
+			var part = m_PartList [i];
+			if (part != null) {
+				Explod explod = part as Explod;
+				if (explod != null && explod.ID == explodId) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	public void RemoveExplod(int explodId)
 	{
 		if (explodId < 0 || m_PartList == null)

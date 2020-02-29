@@ -1591,6 +1591,13 @@ public class PlayerDisplay : BaseResLoader {
 	private PlayerPartMgr m_PartMgr = null;
 	private bool m_IsInitedPartMgr = false;
 
+	public bool ContainsExplod(int explodId)
+	{
+		if (explodId < 0 || AppConfig.IsAppQuit || IsDestroying || m_PartMgr == null)
+			return false;
+		return m_PartMgr.ContainsExplod (explodId);
+	}
+
 	public void RemoveExplod(int explodId)
 	{
 		if (explodId < 0 || AppConfig.IsAppQuit || IsDestroying || m_PartMgr == null)
