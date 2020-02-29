@@ -439,94 +439,90 @@ public class PlayerDisplayEditor : Editor {
 		EditorGUILayout.LabelField("角色控制", playerType.ToString());
 
         // 显示命令
-        if (m_CommandList != null && m_CommandList.Length > 0 /*&& m_CommandNameList != null && m_CommandNameList.Length > 0*/)
-        {
-            EditorGUILayout.Space();
-            EditorGUILayout.LabelField("【操作命令】");
-            //GUILayout.BeginArea(new Rect(0, Screen, Screen.width, 400));
-            int newCmdIdx = m_CommandSel;
+		if (m_CommandList != null && m_CommandList.Length > 0 /*&& m_CommandNameList != null && m_CommandNameList.Length > 0*/) {
+			EditorGUILayout.Space ();
+			EditorGUILayout.LabelField ("【操作命令】");
+			//GUILayout.BeginArea(new Rect(0, Screen, Screen.width, 400));
+			int newCmdIdx = m_CommandSel;
 
-            int idx = 0;
-            bool isVV = false;
-            for (int i = 0; i < m_CommandList.Length; ++i)
-            {
-                var cmd = m_CommandList[i];
-                if (cmd == null)
-                    continue;
+			int idx = 0;
+			bool isVV = false;
+			for (int i = 0; i < m_CommandList.Length; ++i) {
+				var cmd = m_CommandList [i];
+				if (cmd == null)
+					continue;
                 
-                if (idx % 2 == 0)
-                {
-                    EditorGUILayout.BeginHorizontal();
-                    isVV = true;
-                }
+				if (idx % 2 == 0) {
+					EditorGUILayout.BeginHorizontal ();
+					isVV = true;
+				}
                 
                 
 
-                if (GUILayout.Toggle(m_LastDisplay.IsCmdEditorActive(cmd.name), cmd.name))
-                {
-                    // 设置命令状态
-                    m_LastDisplay.SetCmdEditorActive(true, cmd.name);
+				if (GUILayout.Toggle (m_LastDisplay.IsCmdEditorActive (cmd.name), cmd.name)) {
+					// 设置命令状态
+					m_LastDisplay.SetCmdEditorActive (true, cmd.name);
 
-                    newCmdIdx = i;
+					newCmdIdx = i;
 					m_CommandSel = -1;
-                } else
-                {
-                    m_LastDisplay.SetCmdEditorActive(false, cmd.name);
-                }
+				} else {
+					m_LastDisplay.SetCmdEditorActive (false, cmd.name);
+				}
 
-                if (idx % 2 == 1 && isVV)
-                {
-                    EditorGUILayout.EndHorizontal();
-                    isVV = false;
-                }
+				if (idx % 2 == 1 && isVV) {
+					EditorGUILayout.EndHorizontal ();
+					isVV = false;
+				}
 
-                ++idx;
-            }
+				++idx;
+			}
 
-            if (isVV)
-                EditorGUILayout.EndHorizontal();
+			if (isVV)
+				EditorGUILayout.EndHorizontal ();
 
-            // GUILayout.EndArea();
-            if (m_CommandSel != newCmdIdx)
-            {
-                m_CommandSel = newCmdIdx;
+			// GUILayout.EndArea();
+			if (m_CommandSel != newCmdIdx) {
+				m_CommandSel = newCmdIdx;
 
-                SelctedItem item;
-                if (!m_SelectedMap.TryGetValue(m_LastDisplay.GetInstanceID(), out item))
-                    item = new SelctedItem();
-                item.commandIndex = newCmdIdx;
-                m_SelectedMap[m_LastDisplay.GetInstanceID()] = item;
+				SelctedItem item;
+				if (!m_SelectedMap.TryGetValue (m_LastDisplay.GetInstanceID (), out item))
+					item = new SelctedItem ();
+				item.commandIndex = newCmdIdx;
+				m_SelectedMap [m_LastDisplay.GetInstanceID ()] = item;
 
-                // 执行命令
-                string cmdName = m_CommandList[m_CommandSel].name;
-                //m_LastDisplay.RunCmd(cmdName);
+				// 执行命令
+				string cmdName = m_CommandList [m_CommandSel].name;
+				//m_LastDisplay.RunCmd(cmdName);
                 
-            }
-			if (!m_IsAutoRunCmd)
-				m_LastDisplay.IsAutoRunCmd = m_IsAutoRunCmd;
-			m_LastDisplay.IsAutoRunCmd = GUILayout.Toggle(m_LastDisplay.IsAutoRunCmd, "开启命令执行");
-           // m_LastDisplay.RunAutoCmd();
+			}
 
-			short palGroup, palIndex;
-			m_LastDisplay.GetCurFramePalletLink (out palGroup, out palIndex);
-			EditorGUILayout.Space ();
-			EditorGUILayout.Space ();
-			EditorGUILayout.BeginHorizontal ();
-			EditorGUILayout.LabelField(string.Format("【当前帧调色板链接】组：{0:D} 帧：{0:D}", palGroup, palIndex));
-			EditorGUILayout.EndHorizontal ();
 
-			int stateno = m_LastDisplay.Stateno;
+		}
 
-			EditorGUILayout.LabelField(string.Format("【当前StateNo】{0:D}", stateno));
+		if (!m_IsAutoRunCmd)
+			m_LastDisplay.IsAutoRunCmd = m_IsAutoRunCmd;
+		m_LastDisplay.IsAutoRunCmd = GUILayout.Toggle (m_LastDisplay.IsAutoRunCmd, "开启命令执行");
+		// m_LastDisplay.RunAutoCmd();
 
-			EditorGUILayout.Space ();
-			EditorGUILayout.Space ();
-			EditorGUILayout.Space ();
-			EditorGUILayout.Space ();
+		short palGroup, palIndex;
+		m_LastDisplay.GetCurFramePalletLink (out palGroup, out palIndex);
+		EditorGUILayout.Space ();
+		EditorGUILayout.Space ();
+		EditorGUILayout.BeginHorizontal ();
+		EditorGUILayout.LabelField (string.Format ("【当前帧调色板链接】组：{0:D} 帧：{0:D}", palGroup, palIndex));
+		EditorGUILayout.EndHorizontal ();
 
-			ShowReloadLua ();
+		int stateno = m_LastDisplay.Stateno;
 
-        }
+		EditorGUILayout.LabelField (string.Format ("【当前StateNo】{0:D}", stateno));
+
+		EditorGUILayout.Space ();
+		EditorGUILayout.Space ();
+		EditorGUILayout.Space ();
+		EditorGUILayout.Space ();
+
+		ShowReloadLua ();
+
     }
 
 	void ShowReloadLua()

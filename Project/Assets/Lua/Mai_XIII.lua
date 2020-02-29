@@ -89,11 +89,60 @@ function Mai_XIII:_initSize()
   self.Size.yscale = 1
 end
 
+function Mai_XIII:initCmd_101(luaCfg)
+
+--------------------------- register StateDef 101 ---------------------------
+    local id = luaCfg:CreateStateDef("101")
+
+    local def = luaCfg:GetStateDef(id)
+
+    def.Type = Mugen.Cns_Type.S
+
+    def.PhysicsType = Mugen.Cns_PhysicsType.S
+
+    def.Juggle = 0
+
+    def.PowerAdd = 0
+
+    def.Velset_x = 0
+
+    def.Velset_y = 0
+
+    def.Ctrl = 1
+
+    def.Sprpriority = 1
+
+    def.Animate = 101
+
+    local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+
+    state.OnTriggerEvent = 
+
+        function (luaPlayer, state)
+
+            local trigger1 = (trigger:AnimTime(luaPlayer) == 0)
+
+            if trigger1 then
+
+                trigger:PlayStandCns(luaPlayer)
+
+                trigger:CtrlSet(luaPlayer, 1)
+
+
+            end
+
+        end
+
+
+end
+
 function Mai_XIII:_initCmds()
 	local luaCfg = trigger:GetLuaCnsCfg("Mai_XIII")
 	if luaCfg == nil then
 		return
 	end
+
+  self:initCmd_101(luaCfg)
 end
 
 setmetatable(Mai_XIII, {__call = Mai_XIII.new})
