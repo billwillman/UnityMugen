@@ -417,7 +417,6 @@ function Mai_XIII:initCmd_170(luaCfg)
 end
 
 function Mai_XIII:initCmd_100(luaCfg)
-
 --------------------------- register StateDef 100 ---------------------------
     local id = luaCfg:CreateStateDef("100")
 
@@ -436,6 +435,8 @@ function Mai_XIII:initCmd_100(luaCfg)
     def.Sprpriority = 1
 
     def.Animate = 100
+
+    def.AnimLoop = true
 
     local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
 
@@ -493,11 +494,11 @@ function Mai_XIII:initCmd_100(luaCfg)
 
             local trigger1 = ((trigger:Time(luaPlayer) == 0) and (trigger:Var(luaPlayer, 59) < 1))
 
-            --if trigger1 then
-             -- print("CtrlSet")
+            if trigger1 then
+
                 trigger:CtrlSet(luaPlayer, 1)
 
-            --end
+            end
 
         end
 end

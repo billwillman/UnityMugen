@@ -368,20 +368,20 @@ public class PlayerDisplay : BaseResLoader {
 		var def = player.CnsCfg.GetStateDef (stateDefId);
 		if (def == null)
 			return false;
-		if (StateMgr.CurrentCnsDef == def)
+		if (StateMgr.CurrentCnsDef == def) {
 			return true;
+		}
 
 		AttachAttribeFromStateDef (def);
 
-		if (StateMgr.CurrentCnsDef != def) {
-			// 重置动画属性
-			ImageAni.ResetCns();
-			def.ResetStatesPersistent (this);
-		}
+		// 重置动画属性
+		ImageAni.ResetCns();
+		def.ResetStatesPersistent (this);
 
 		bool ret;
 		if ((int)def.Anim != CNSStateDef._cNoVaildAnim) {
-			ret = PlayAni (def.Anim, isLoop, false);
+			isLoop = isLoop || def.AniLoop;
+			ret = PlayAni (def.Anim, isLoop, isLoop);
 			if (ret) {
 				this.StateMgr.CurrentCnsDef = def;
 			}

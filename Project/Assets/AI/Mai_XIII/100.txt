@@ -9,6 +9,7 @@ function Mai_XIII:initCmd_100(luaCfg)
 		def.Ctrl = 0
 		def.Sprpriority = 1
 		def.Animate = 100
+		def.AnimLoop = true
 		local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
 		state.OnTriggerEvent = 
 				function (luaPlayer, state)

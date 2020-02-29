@@ -14,6 +14,7 @@ namespace XNode.Mugen
 	{
 
 		[SerializeField] public int realAnimate = CNSStateDef._cNoVaildAnim;
+		[SerializeField] public bool isAnimLoop = false;
 
 		public string Animate
 		{
@@ -62,6 +63,8 @@ namespace XNode.Mugen
 
 			if (realAnimate != CNSStateDef._cNoVaildAnim) {
 				ret += string.Format ("\t\tdef.Animate = {0:D}\n\r", realAnimate);
+				if (isAnimLoop)
+					ret += string.Format ("\t\tdef.AnimLoop = {0}\n\r", isAnimLoop.ToString ().ToLower ());
 			} else {
 				if (!string.IsNullOrEmpty (animate))
 					ret += string.Format ("\t\tdef.Animate = {0}\n\r", animate);

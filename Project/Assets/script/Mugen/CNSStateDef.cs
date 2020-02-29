@@ -49,6 +49,7 @@ namespace Mugen
 		private float m_Velset_y = _cNoVaildVelset;		// 开始速度
 		private int m_Ctrl = _cNoVaildCtrl; 		// 设定可控与否,没有则，不改变
 		private int m_Anim = _cNoVaildAnim; 			// 改变动作，不写则不改变
+		private bool m_AnimLoop = false;
 		private int m_PowerAdd;
 		private int m_Sprpriority;
 		private int m_FaceP2 = 0;
@@ -226,6 +227,18 @@ namespace Mugen
 			set
 			{
 				m_PowerAdd = value;
+			}
+		}
+
+		public bool AniLoop
+		{
+			get
+			{
+				return m_AnimLoop;
+			}
+
+			set {
+				m_AnimLoop = value;
 			}
 		}
 
