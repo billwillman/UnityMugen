@@ -288,6 +288,19 @@ function trigger:PlayAnim(luaPlayer, stateId, isLoop)
 	return ret
 end
 
+function  trigger:Numexplod(luaPlayer, explodId)
+	if luaPlayer == nil or explodId == nil then
+		return false
+	end
+
+	local display = luaPlayer.PlayerDisplay;
+	if display == nil then
+		return false 
+	end
+	local ret = display:ContainsExplod(explodId)
+	return ret
+end
+
 function trigger:PlayStandCns(luaPlayer)
 	return self:PlayCnsByName(luaPlayer, "0", true)
 end

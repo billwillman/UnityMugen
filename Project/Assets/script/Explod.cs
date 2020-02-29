@@ -28,6 +28,7 @@ public class Explod : PlayerPart {
 	public int removeongethit = 0;
 	public int ignorehitpause = 1;
 	public bool IsUseParentUpdate = true;
+	public Vector2 scale = Vector2.one;
 
 	void Awake()
 	{
@@ -64,6 +65,10 @@ public class Explod : PlayerPart {
 			var parentDisplay = GetParentDisplay ();
 			InitOffsetPos (parentDisplay);
 			display.SetVelSet (x_vel, y_vel);
+			var localScale = display.CachedTransform.localScale;
+			localScale.x = scale.x;
+			localScale.y = scale.y;
+			display.CachedTransform.localScale = localScale;
 			if (!IsUseParentUpdate) {
 				bool isLoop = removetime == -1;
 				ApplyParentDisplayLoaderPlayer (parentDisplay);

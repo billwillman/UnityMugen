@@ -1396,6 +1396,23 @@ public class PlayerDisplay : BaseResLoader {
 		return ret;
 	}
 
+	/*
+	public void SetScale(float scaleX, float scaleY)
+	{
+		var loaderPlayer = this.LoaderPlayer;
+		if (loaderPlayer == null)
+			return;
+		var parent = this.CachedTransform.parent;
+		if (parent != null) {
+			float scale = loaderPlayer.Scale;
+			var localScale = parent.localScale;
+			localScale.x = scale * scaleX;
+			localScale.y = scale * scaleY;
+			parent.localScale = localScale;
+		}
+	}
+	*/
+
 	// 创建爆炸
 	public Explod CreateExplod()
 	{

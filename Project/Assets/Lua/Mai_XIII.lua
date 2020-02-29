@@ -522,6 +522,198 @@ function Mai_XIII:initCmd_FF(luaCfg)
 
 end
 
+function Mai_XIII:initCmd_1100(luaCfg)
+
+--------------------------- register StateDef 1100 ---------------------------
+    local id = luaCfg:CreateStateDef("1100")
+
+    local def = luaCfg:GetStateDef(id)
+
+    def.Type = Mugen.Cns_Type.S
+
+    def.PhysicsType = Mugen.Cns_PhysicsType.N
+
+    def.MoveType = Mugen.Cns_MoveType.A
+
+    def.Juggle = 0
+
+    def.PowerAdd = 100
+
+    def.Velset_x = 0
+
+    def.Velset_y = 0
+
+    def.Ctrl = 0
+
+    def.Sprpriority = 1
+
+    def.Animate = 1100
+
+    local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+
+    state.OnTriggerEvent = 
+
+        function (luaPlayer, state)
+
+            local trigger1 = ((trigger:Numexplod(luaPlayer, 7910)) and (trigger:Time(luaPlayer) == 0))
+
+            if trigger1 then
+
+                trigger:RemoveExplod(luaPlayer, 7910)
+
+            end
+
+        end
+
+    local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+
+    state.OnTriggerEvent = 
+
+        function (luaPlayer, state)
+
+            local trigger1 = (trigger:Time(luaPlayer) == 0)
+
+            if trigger1 then
+
+                trigger:VarSet(luaPlayer, 5, 0)
+
+            end
+
+        end
+
+    local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+
+    state.OnTriggerEvent = 
+
+        function (luaPlayer, state)
+
+            local trigger1 = (trigger:AnimElem(luaPlayer) == 3)
+
+            if trigger1 then
+
+                trigger:PlaySnd(luaPlayer, 1100, 0, false)
+
+            end
+
+        end
+
+    local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+
+    state.OnTriggerEvent = 
+
+        function (luaPlayer, state)
+
+            local trigger1 = ((trigger:Time(luaPlayer) == 0) and (trigger:Var(luaPlayer, 5) == 1))
+
+            if trigger1 then
+
+                trigger:PlayCnsByName(luaPlayer, "1101", false)
+
+            end
+
+        end
+
+    local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+
+    state.OnTriggerEvent = 
+
+        function (luaPlayer, state)
+
+            local trigger1 = (trigger:AnimElem(luaPlayer) == 4)
+
+            if trigger1 then
+
+                trigger:PlaySnd(luaPlayer, 1100, 1, false)
+
+            end
+
+        end
+
+    local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+
+    state.OnTriggerEvent = 
+
+        function (luaPlayer, state)
+
+            local trigger1 = (trigger:AnimTime(luaPlayer) == 0)
+
+            if trigger1 then
+
+                trigger:PlayStandCns(luaPlayer)
+
+                trigger:CtrlSet(luaPlayer, 1)
+
+
+            end
+
+        end
+
+    local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+
+    state.OnTriggerEvent = 
+
+        function (luaPlayer, state)
+
+            local trigger1 = ((trigger:AnimElem(luaPlayer) == 3) and (trigger:Var(luaPlayer, 5) >= 1))
+
+            if trigger1 then
+
+                trigger:PosAdd(luaPlayer, 32, nil)
+
+            end
+
+        end
+
+    local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+
+    state.OnTriggerEvent = 
+
+        function (luaPlayer, state)
+
+            local trigger1 = ((trigger:AnimElem(luaPlayer) == 3) and (trigger:Var(luaPlayer, 5) < 1))
+
+            if trigger1 then
+
+                trigger:PosAdd(luaPlayer, 22, nil)
+
+            end
+
+        end
+
+    local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+
+    state.OnTriggerEvent = 
+
+        function (luaPlayer, state)
+
+            local trigger1 = (trigger:AnimElem(luaPlayer) == 4)
+
+            if trigger1 then
+
+                trigger:PosAdd(luaPlayer, 15, nil)
+
+            end
+
+        end
+
+    local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+
+    state.OnTriggerEvent = 
+
+        function (luaPlayer, state)
+
+            local trigger1 = (trigger:AnimElem(luaPlayer) == 17)
+
+            if trigger1 then
+
+                trigger:PosAdd(luaPlayer, 4, nil)
+
+            end
+
+        end
+
+
+end
 
 
 function Mai_XIII:_initCmds()
@@ -538,6 +730,7 @@ function Mai_XIII:_initCmds()
   self:initCmd_106(luaCfg)
   self:initCmd_170(luaCfg)
   self:initCmd_100(luaCfg)
+  self:initCmd_1100(luaCfg)
 end
 
 setmetatable(Mai_XIII, {__call = Mai_XIII.new})

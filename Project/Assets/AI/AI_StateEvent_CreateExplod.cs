@@ -24,6 +24,7 @@ namespace XNode.Mugen
 		[SerializeField] public int ignorehitpause = 1;
 		[SerializeField] public bool isChangeStateRemove = true;
 		[SerializeField] public bool IsUseParentUpdate = true;
+		[SerializeField] public Vector2 scale = Vector2.one;
 
 		protected override string GetDoStr(bool hasCond)
 		{
@@ -60,6 +61,10 @@ namespace XNode.Mugen
 			ret += string.Format ("{0}explod.ignorehitpause = {1:D}\n\r", pre, ignorehitpause);
 			ret += string.Format ("{0}explod.isChangeStateRemove = {1}\n\r", pre, isChangeStateRemove.ToString().ToLower());
 			ret += string.Format ("{0}explod.IsUseParentUpdate = {1}\n\r", pre, IsUseParentUpdate.ToString().ToLower());
+
+			if (Mathf.Abs ((Vector2.one - scale).magnitude) > float.Epsilon) {
+				ret += string.Format ("{0}explod.scale = Vector2.New({1}f, {2}f)", pre, scale.x.ToString (), scale.y.ToString ());
+			}
 
 			ret += pre + "explod:Apply()\n\r";
 
