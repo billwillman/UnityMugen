@@ -303,6 +303,10 @@ function trigger:PlayCnsByName(luaPlayer, stateDefName, isLoop)
 	end
 	
 	isLoop = isLoop or false
+	if type(stateDefName) == "number" then
+		stateDefName = tostring(stateDefName)
+	end
+
 	local ret = display:PlayCnsAnimateByName(stateDefName, isLoop)
 	return ret
 end
@@ -744,11 +748,11 @@ end
 
 -- 处理模块
 
-function trigger:PlaySnd(luaPlayer, group, index)
-	self:Do_PlaySnd(luaPlayer, group, index)
+function trigger:PlaySnd(luaPlayer, group, index, isLoop)
+	self:Do_PlaySnd(luaPlayer, group, index, isLoop)
 end
 
-function trigger:Do_PlaySnd(luaPlayer, group, index)
+function trigger:Do_PlaySnd(luaPlayer, group, index, isLoop)
 	if luaPlayer == nil or group == nil or index == nil then
 		return
 	end
@@ -756,7 +760,8 @@ function trigger:Do_PlaySnd(luaPlayer, group, index)
 	if display == nil then
 		return 
 	end
-	display:PlaySound(group, index)
+	isLoop = isLoop or false
+	display:PlaySound(group, index, isLoop)
 end
 
 function trigger:Do_StatePlaySnd(luaPlayer, state)

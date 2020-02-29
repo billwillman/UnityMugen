@@ -181,7 +181,7 @@ public class PlayerDisplay : BaseResLoader {
 		}
 	}
 
-	public bool PlaySound(int group, int index)
+	public bool PlaySound(int group, int index, bool isLoop = false)
 	{
 		var snd = this.Sound;
 		if (snd == null)
@@ -196,7 +196,7 @@ public class PlayerDisplay : BaseResLoader {
 		try
 		{
         	var clip = sndLoader.GetSoundClip(group, index);
-        	return snd.PlaySound(clip);
+			return snd.PlaySound(clip, isLoop);
 		} catch {
 			return true;
 		}
@@ -954,7 +954,7 @@ public class PlayerDisplay : BaseResLoader {
 		if (attr.Ctrl == 0)
 			return string.Empty;
 
-		if (attr.StandType == Cns_Type.S)
+		if (attr.StandType == Cns_Type.S && (this.StateMgr == null || this.StateMgr.CurrentCnsDef == null))
 			return "0";
 		return string.Empty;
 	}

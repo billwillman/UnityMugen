@@ -12,7 +12,6 @@ function Mai_XIII:new()
 		self._isInit = true
 		self:_initData()
 		self:_initSize()
-		self:_initCmds()
     end
    -- 动态数据
    local t = {PlayerDisplay = nil}
@@ -30,6 +29,8 @@ function Mai_XIII:OnInit(playerDisplay)
 	trigger:Help_InitLuaPlayer(self, self)
 	-- 初始化默认Cns状态
 	_InitCommonCns(self)
+
+  self:_initCmds()
 end
 
 function Mai_XIII:OnDestroy()
@@ -132,9 +133,395 @@ function Mai_XIII:initCmd_101(luaCfg)
             end
 
         end
+end
+
+function Mai_XIII:initCmd_105(luaCfg)
+
+--------------------------- register StateDef 105 ---------------------------
+    local id = luaCfg:CreateStateDef("105")
+
+    local def = luaCfg:GetStateDef(id)
+
+    def.Type = Mugen.Cns_Type.S
+
+    def.PhysicsType = Mugen.Cns_PhysicsType.N
+
+    def.Juggle = 0
+
+    def.PowerAdd = 0
+
+    def.Velset_x = 0
+
+    def.Velset_y = 0
+
+    def.Ctrl = 0
+
+    def.Sprpriority = 1
+
+    def.Animate = 105
+
+    local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+
+    state.OnTriggerEvent = 
+
+        function (luaPlayer, state)
+
+            local trigger1 = (trigger:AnimElem(luaPlayer) == 2)
+
+            if trigger1 then
+
+                trigger:PlaySnd(luaPlayer, 105, 0)
+
+            end
+
+        end
+
+    local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+
+    state.OnTriggerEvent = 
+
+        function (luaPlayer, state)
+
+            local trigger1 = ((trigger:Var(luaPlayer, 29) >= 1) and (trigger:Time(luaPlayer) == 1))
+
+            if trigger1 then
+
+                trigger:StateTypeSet(luaPlayer, Mugen.Cns_Type.A)
+
+            end
+
+        end
+
+    local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+
+    state.OnTriggerEvent = 
+
+        function (luaPlayer, state)
+
+            local trigger1 = ((trigger:AnimElem(luaPlayer) == 2) and (trigger:Var(luaPlayer, 29) <= 0))
+
+            if trigger1 then
+
+                trigger:StateTypeSet(luaPlayer, Mugen.Cns_Type.A)
+
+            end
+
+        end
+
+    local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+
+    state.OnTriggerEvent = 
+
+        function (luaPlayer, state)
+
+            local trigger1 = (trigger:AnimElem(luaPlayer) == 2)
+
+            if trigger1 then
+
+                trigger:VelSet(luaPlayer, -10 * VelSetPer, -5.5 * VelSetPer)
+
+            end
+
+        end
+
+    local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+
+    state.OnTriggerEvent = 
+
+        function (luaPlayer, state)
+
+            local trigger1 = (trigger:AnimElem(luaPlayer) == 2)
+
+            if trigger1 then
+
+                trigger:VelAdd(luaPlayer, nil, 0.9)
+
+            end
+
+        end
+
+    local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+
+    state.OnTriggerEvent = 
+
+        function (luaPlayer, state)
+
+            trigger:VelMul(luaPlayer, 0.95, nil)
+
+        end
+
+    local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+
+    state.OnTriggerEvent = 
+
+        function (luaPlayer, state)
+
+            local trigger1 = ((trigger:VelY(luaPlayer) > 0) and (trigger:PosY(luaPlayer) >= 0))
+
+            if trigger1 then
+
+                trigger:PlayCnsByName(luaPlayer, "106", false)
+
+            end
+
+        end
 
 
 end
+
+function Mai_XIII:initCmd_106(luaCfg)
+
+--------------------------- register StateDef 106 ---------------------------
+    local id = luaCfg:CreateStateDef("106")
+
+    local def = luaCfg:GetStateDef(id)
+
+    def.Type = Mugen.Cns_Type.S
+
+    def.PhysicsType = Mugen.Cns_PhysicsType.N
+
+    def.Juggle = 0
+
+    def.PowerAdd = 0
+
+    def.Velset_x = 0
+
+    def.Velset_y = 0
+
+    def.Ctrl = 0
+
+    def.Sprpriority = 0
+
+    def.Animate = 106
+
+    local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+
+    state.OnTriggerEvent = 
+
+        function (luaPlayer, state)
+
+            local trigger1 = (trigger:Time(luaPlayer) == 0)
+
+            if trigger1 then
+
+                trigger:RemoveExplod(luaPlayer, 3000)
+
+            end
+
+        end
+
+    local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+
+    state.OnTriggerEvent = 
+
+        function (luaPlayer, state)
+
+            local trigger1 = (trigger:Time(luaPlayer) == 0)
+
+            if trigger1 then
+
+                trigger:PlaySnd(luaPlayer, 41, 0)
+
+            end
+
+        end
+
+    local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+
+    state.OnTriggerEvent = 
+
+        function (luaPlayer, state)
+
+            local trigger1 = (trigger:Time(luaPlayer) == 0)
+
+            if trigger1 then
+
+                trigger:VelSet(luaPlayer, 0 * VelSetPer, 0 * VelSetPer)
+
+            end
+
+        end
+
+    local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+
+    state.OnTriggerEvent = 
+
+        function (luaPlayer, state)
+
+            local trigger1 = (trigger:Time(luaPlayer) == 0)
+
+            if trigger1 then
+
+                trigger:PosSet(luaPlayer, nil, 0)
+
+            end
+
+        end
+
+    local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+
+    state.OnTriggerEvent = 
+
+        function (luaPlayer, state)
+
+            local trigger1 = (trigger:AnimTime(luaPlayer) == 0)
+
+            if trigger1 then
+
+                trigger:PlayStandCns(luaPlayer)
+
+                trigger:CtrlSet(luaPlayer, 1)
+
+
+            end
+
+        end
+
+
+end
+
+function Mai_XIII:initCmd_170(luaCfg)
+
+--------------------------- register StateDef 170 ---------------------------
+    local id = luaCfg:CreateStateDef("170")
+
+    local def = luaCfg:GetStateDef(id)
+
+    def.Type = Mugen.Cns_Type.S
+
+    def.Juggle = 0
+
+    def.PowerAdd = 0
+
+    def.Velset_x = 0
+
+    def.Velset_y = 0
+
+    def.Ctrl = 0
+
+    def.Sprpriority = 0
+
+    def.Animate = 170
+
+    local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+
+    state.OnTriggerEvent = 
+
+        function (luaPlayer, state)
+
+            trigger:CreateNotHit(luaPlayer, 1, 15, 0, 0, false, "")
+
+        end
+
+
+end
+
+function Mai_XIII:initCmd_100(luaCfg)
+
+--------------------------- register StateDef 100 ---------------------------
+    local id = luaCfg:CreateStateDef("100")
+
+    local def = luaCfg:GetStateDef(id)
+
+    def.Type = Mugen.Cns_Type.S
+
+    def.PhysicsType = Mugen.Cns_PhysicsType.S
+
+    def.Juggle = 0
+
+    def.PowerAdd = 0
+
+    def.Ctrl = 0
+
+    def.Sprpriority = 1
+
+    def.Animate = 100
+
+    local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+
+    state.OnTriggerEvent = 
+
+        function (luaPlayer, state)
+
+            local trigger1 = (trigger:Time(luaPlayer) == 0)
+
+            if trigger1 then
+
+                trigger:PlaySnd(luaPlayer, 100, 0, true)
+
+            end
+
+        end
+
+    local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+
+    state.OnTriggerEvent = 
+
+        function (luaPlayer, state)
+
+            local trigger1 = (trigger:AnimElem(luaPlayer) == 2)
+
+            if trigger1 then
+
+                trigger:VelSet(luaPlayer, 7 * VelSetPer, nil)
+
+            end
+
+        end
+
+    local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+
+    state.OnTriggerEvent = 
+
+        function (luaPlayer, state)
+
+            local trigger1 = ((not trigger:Command(luaPlayer, "holdfwd")) and (trigger:Time(luaPlayer) >= 100) and (trigger:Var(luaPlayer, 59) <= 0))
+
+            if trigger1 then
+
+                trigger:PlayCnsByName(luaPlayer, "101", false)
+
+            end
+
+        end
+
+    local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+
+    state.OnTriggerEvent = 
+
+        function (luaPlayer, state)
+
+            local trigger1 = ((trigger:Time(luaPlayer) == 0) and (trigger:Var(luaPlayer, 59) < 1))
+
+            --if trigger1 then
+             -- print("CtrlSet")
+                trigger:CtrlSet(luaPlayer, 1)
+
+            --end
+
+        end
+end
+
+function Mai_XIII:initCmd_FF(luaCfg)
+
+--------------------------- register KeyCmd ---------------------------
+    local cmd = luaCfg:CreateCmd("FF")
+    cmd.time = 1
+    cmd:AttachKeyCommands("")
+
+--------------------------- FF ---------------------------
+    local aiCmd = luaCfg:CreateAICmd("FF")
+    aiCmd.type = Mugen.AI_Type.ChangeState
+    aiCmd.value = "100"
+    aiCmd.OnTriggerEvent =
+        function (luaPlayer, aiName)
+            local triggle1 = (trigger:Command(luaPlayer, "FF"))
+            return triggle1
+        end
+
+end
+
+
 
 function Mai_XIII:_initCmds()
 	local luaCfg = trigger:GetLuaCnsCfg("Mai_XIII")
@@ -142,7 +529,14 @@ function Mai_XIII:_initCmds()
 		return
 	end
 
+  self:initCmd_FF(luaCfg)
+
+
   self:initCmd_101(luaCfg)
+  self:initCmd_105(luaCfg)
+  self:initCmd_106(luaCfg)
+  self:initCmd_170(luaCfg)
+  self:initCmd_100(luaCfg)
 end
 
 setmetatable(Mai_XIII, {__call = Mai_XIII.new})

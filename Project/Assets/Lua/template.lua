@@ -12,7 +12,6 @@ function [替换]:new()
 		self._isInit = true
 		self:_initData()
 		self:_initSize()
-		self:_initCmds()
     end
    -- 动态数据
    local t = {PlayerDisplay = nil}
@@ -30,6 +29,7 @@ function [替换]:OnInit(playerDisplay)
 	trigger:Help_InitLuaPlayer(self, self)
 	-- 初始化默认Cns状态
 	_InitCommonCns(self)
+  self:_initCmds()
 end
 
 function [替换]:OnDestroy()

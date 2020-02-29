@@ -16,14 +16,24 @@ public class SndSound: MonoBehaviour
         }
     }
 
-	public bool PlaySound(AudioClip clip)
+	public bool PlaySound(AudioClip clip, bool isLoop = false)
 	{
         if (clip == null || clip.length <= 0)
             return false;
         var source = this.Source;
         if (source == null)
             return false;
-        source.PlayOneShot(clip);
+       // source.PlayOneShot(clip);
+		if (isLoop && source.isPlaying && source.clip == clip) {
+			return true;
+		} else if (isLoop && source.isPlaying)
+			source.Stop ();
+		if (isLoop) {
+			source.clip = clip;
+			source.Play ();
+		} else {
+			source.PlayOneShot (clip);
+		}
 		return true;
 	}
 }

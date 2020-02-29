@@ -1,0 +1,18 @@
+function Mai_XIII:initCmd_FF(luaCfg)
+--------------------------- register KeyCmd ---------------------------
+		local cmd = luaCfg:CreateCmd("FF")
+		cmd.time = 1
+		cmd:AttachKeyCommands("")
+
+--------------------------- FF ---------------------------
+		local aiCmd = luaCfg:CreateAICmd("FF")
+		aiCmd.type = Mugen.AI_Type.ChangeState
+		aiCmd.value = "100"
+		aiCmd.OnTriggerEvent =
+				function (luaPlayer, aiName)
+						local triggle1 = (trigger:Command(luaPlayer, "FF"))
+						return triggle1
+				end
+
+end
+
