@@ -26,6 +26,7 @@ st2=MaiEX.cns
 st3=helper.cns
 st4=helper.cns
 pal1=Mai_00.act
+lua=Mai_XIII
 ;pal1    = Mai_01.act
 ;pal2    = Mai_03.act
 ;pal3    = Mai_05.act
