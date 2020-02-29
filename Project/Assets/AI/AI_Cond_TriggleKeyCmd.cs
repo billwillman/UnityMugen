@@ -14,6 +14,7 @@ namespace XNode.Mugen
 	{
 		[Input(ShowBackingValue.Never, ConnectionType.Override)]
 		[SerializeField] public AI_KeyCmd aiKeyCmd;
+		[SerializeField] public string CustomKeyName = string.Empty;
 		public override object GetValue(NodePort port) {
 			if (port.fieldName == "aiKeyCmd")
 				return aiKeyCmd;
@@ -22,9 +23,14 @@ namespace XNode.Mugen
 
 		public override string ToCondString(string luaPlayer)
 		{
+			string cmd = string.Empty;
 			if (aiKeyCmd == null)
+				cmd = CustomKeyName;
+			else
+				cmd = aiKeyCmd.name;
+			if (string.IsNullOrEmpty (cmd))
 				return string.Empty;
-			string ret = string.Format ("trigger:Command({0}, \"{1}\")", luaPlayer, aiKeyCmd.name);
+			string ret = string.Format ("trigger:Command({0}, \"{1}\")", luaPlayer, cmd);
 			if (isNot)
 				ret = "not " + ret;
 			return ret;

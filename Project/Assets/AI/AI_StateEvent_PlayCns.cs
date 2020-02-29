@@ -29,7 +29,7 @@ namespace XNode.Mugen
 		{
 			string ret = string.Empty;
 			if (!string.IsNullOrEmpty (Animate)) {
-				ret = string.Format ("trigger:PlayCnsByName(luaPlayer, {0}, {1})", Animate, IsLoop.ToString ().ToLower());
+				ret = string.Format ("trigger:PlayCnsByName(luaPlayer, \"{0}\", {1})", Animate, IsLoop.ToString ().ToLower());
 			}
 			return ret;
 		}

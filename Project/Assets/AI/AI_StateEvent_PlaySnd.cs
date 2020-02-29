@@ -14,10 +14,11 @@ namespace XNode.Mugen
 	{
 		[SerializeField] public int group;
 		[SerializeField] public int index;
+		[SerializeField] public bool isLoop = false;
 
 		protected override string GetDoStr(bool hasCond)
 		{
-			string ret = string.Format ("trigger:PlaySnd(luaPlayer, {0:D}, {1:D})", group, index);
+			string ret = string.Format ("trigger:PlaySnd(luaPlayer, {0:D}, {1:D}, {2:D})", group, index, isLoop.ToString().ToLower());
 			return ret;
 		}
 	}
