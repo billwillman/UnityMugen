@@ -110,6 +110,7 @@ public class Projectile : MonoBehaviour {
 			//Debug.LogError (offz.ToString ());
 			display.SetVelSet (velx, vely);
 			display.PlayAni ((PlayerState)projanim, true);
+			//display.ShowClsn(owner.IsShowCns);
 		}
 	}
 }
