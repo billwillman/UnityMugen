@@ -103,7 +103,7 @@ function Mai_XIII:initCmd_1000(luaCfg)
 								local proj = trigger:CreateProj(luaPlayer)
 								proj.projanim = 1010
 								proj.offset_x = 35
-								proj.offset_y = -60
+								proj.offset_y = -120
 								proj.velocity_x = 3.5
 								proj.velocity_y = 0
 								proj.projsprpriority = 3
