@@ -8,19 +8,17 @@ using System;
 
 namespace XNode.Mugen
 {
-	[CreateNodeMenu("AI/创建StateEvent/删除爆炸物")]
+	[CreateNodeMenu("AI/创建StateEvent/设置float var")]
 	[Serializable]
-	public class AI_StateEvent_RemoveExplod: AI_CreateStateEvent
+	public class AI_StateEvent_floatVarSet: AI_CreateStateEvent
 	{
-		[SerializeField] public int id = -1;
+		[SerializeField] public int index;
+		[SerializeField] public float value;
 
 		protected override string GetDoStr(bool hasCond)
 		{
-			if (id >= 0) {
-				string ret = string.Format ("trigger:RemoveExplod(luaPlayer, {0:D})", id);
-				return ret;
-			}
-			return string.Empty;
+			string ret = string.Format ("trigger:fVarSet(luaPlayer, {0:D}, {1})", index, value.ToString());
+			return ret;
 		}
 	}
 }
