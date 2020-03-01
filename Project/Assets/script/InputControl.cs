@@ -15,7 +15,15 @@ public enum InputPlayerType
     _1p = 1,
     _2p,
     _3p,
-    _4p
+    _4p,
+	_5p,
+	_6p,
+	_7p,
+	_8p,
+	_9p,
+	_10p,
+	_11p,
+	_12p
 }
 
 public enum InputControlType
