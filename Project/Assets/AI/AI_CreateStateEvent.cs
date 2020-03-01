@@ -46,6 +46,8 @@ namespace XNode.Mugen
 
 		[SerializeField] public CnsStateTriggerType triggleType = CnsStateTriggerType.AnimElem;
 
+		[SerializeField] public bool isVisible = true;
+
 		public override void OnRemoveConnection(NodePort port)
 		{
 			base.OnRemoveConnection(port);
@@ -105,6 +107,9 @@ namespace XNode.Mugen
 		public override string ToString ()
 		{
 			string ret = string.Empty;
+
+			if (!isVisible)
+				return ret;
 
 			string condStr = string.Empty;
 			if (condition != null) {

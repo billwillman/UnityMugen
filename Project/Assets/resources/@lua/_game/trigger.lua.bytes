@@ -809,7 +809,7 @@ function trigger:SetSprpriority(luaPlayer, sprpriority)
 	display:SetSprpriority(sprpriority)
 end
 
-function trigger:CreateNotHit(luaPlayer, durTime, luaPlayer, standTypes, moveTypes, physicsTypes, isNoProj, scriptFuncName)
+function trigger:CreateNotHit(luaPlayer, durTime, standTypes, moveTypes, physicsTypes, isNoProj, scriptFuncName)
 	if luaPlayer == nil then
 		return
 	end

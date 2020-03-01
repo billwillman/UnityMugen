@@ -102,15 +102,15 @@ public class SpriteMovement : MonoBehaviour {
 			return;
 		// 按照毫秒算速度
 		float d = deltaTime * 1000f;
-      //  if (m_Display != null && m_Display.Attribe.PhysicsType == Cns_PhysicsType.A) {
+		if (m_Display != null && m_Display.Attribe.StandType == Cns_Type.A) {
             float gg = -g / (PlayerDisplay._cVelPerUnit * PlayerDisplay._cAPerUnit);
             //float gg = -g/1000000f * 6.5f;
             Vec.y += gg * d;
-        //  }
+          }
 
         Vector2 vv = new Vector2(Vec.x * (IsFlipX? -1:1), Vec.y);
 
-        if (Mathf.Abs(vv.x) > float.Epsilon) {
+		if (m_Display != null && m_Display.Attribe.StandType != Cns_Type.A && Mathf.Abs(vv.x) > float.Epsilon) {
             float oldVx = vv.x;
             // 动态摩擦因子
             float u = AppConfig.GetInstance().u * StageMgr.GetInstance().u;

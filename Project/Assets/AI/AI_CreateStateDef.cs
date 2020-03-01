@@ -15,6 +15,7 @@ namespace XNode.Mugen
 		[SerializeField] public string realName = string.Empty;
 		[SerializeField] public int realAnimate = CNSStateDef._cNoVaildAnim;
 		[SerializeField] public bool isAnimLoop = false;
+		[SerializeField] public bool isVisible = true;
 
 		public string Animate
 		{
@@ -35,6 +36,10 @@ namespace XNode.Mugen
 		public override string ToString ()
 		{
 			string ret = string.Empty;
+
+			if (!isVisible)
+				return ret;
+
 			string animate = this.Animate;
 			if (string.IsNullOrEmpty (animate))
 				return ret;
