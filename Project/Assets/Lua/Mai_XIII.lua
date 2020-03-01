@@ -1672,22 +1672,6 @@ function Mai_XIII:initCmd_1000(luaCfg)
 
         function (luaPlayer, state)
 
-            local trigger1 = ((trigger:Time(luaPlayer) == 0) and (trigger:Numexplod(luaPlayer, 7910)))
-
-            if trigger1 then
-
-                trigger:RemoveExplod(luaPlayer, 7910)
-
-            end
-
-        end
-
-    local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
-
-    state.OnTriggerEvent = 
-
-        function (luaPlayer, state)
-
             local trigger1 = (trigger:AnimElem(luaPlayer) == 8)
 
             if trigger1 then
@@ -1698,7 +1682,7 @@ function Mai_XIII:initCmd_1000(luaCfg)
 
                 proj.offset_x = 35
 
-                proj.offset_x = -60
+                proj.offset_y = -60
 
                 proj.velocity_x = 3.5
 
@@ -1719,6 +1703,7 @@ function Mai_XIII:initCmd_1000(luaCfg)
 
 
 end
+
 
 function Mai_XIII:initCmd_QiGongBo(luaCfg)
 

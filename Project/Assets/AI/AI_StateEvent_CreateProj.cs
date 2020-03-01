@@ -56,7 +56,7 @@ namespace XNode.Mugen
 				ret += string.Format ("{0}proj.offset_x = {1:D}\n\r", pre, offset_x);
 
 			if (offset_y != 0)
-				ret += string.Format ("{0}proj.offset_x = {1:D}\n\r", pre, offset_y);
+				ret += string.Format ("{0}proj.offset_y = {1:D}\n\r", pre, offset_y);
 
 			if (VaildStr(velocity_x, false) != "nil")
 				ret += string.Format ("{0}proj.velocity_x = {1}\n\r", pre, velocity_x.ToString());
