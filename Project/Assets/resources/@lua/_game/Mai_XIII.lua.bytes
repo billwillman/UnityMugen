@@ -1684,7 +1684,7 @@ function Mai_XIII:initCmd_1000(luaCfg)
 
                 proj.offset_y = -120
 
-                proj.velocity_x = 3.5
+                proj.velocity_x = 14
 
                 proj.velocity_y = 0
 
