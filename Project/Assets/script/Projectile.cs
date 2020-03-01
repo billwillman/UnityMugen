@@ -37,8 +37,8 @@ public class Projectile : MonoBehaviour {
 	public int projcancelanim = (int)PlayerState.psNone;
 	public int projremanim = (int)PlayerState.psNone;
 	public float projremovetime = -1;
-	public int offset_x = 0;
-	public int offset_y = 0;
+	public float offset_x = 0;
+	public float offset_y = 0;
 	public float velocity_x = 0;
 	public float velocity_y = 0;
 	public ExplodPosType Postype = ExplodPosType.p1;
