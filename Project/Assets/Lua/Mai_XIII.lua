@@ -1278,38 +1278,6 @@ function Mai_XIII:initCmd_3000(luaCfg)
 
         end
 
-    local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
-
-    state.OnTriggerEvent = 
-
-        function (luaPlayer, state)
-
-            local trigger1 = (trigger:Time(luaPlayer) == 0)
-
-            if trigger1 then
-
-                trigger:RemoveExplod(luaPlayer, 3000)
-
-            end
-
-        end
-
-    local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
-
-    state.OnTriggerEvent = 
-
-        function (luaPlayer, state)
-
-            local trigger1 = (trigger:Time(luaPlayer) == 0)
-
-            if trigger1 then
-
-                trigger:RemoveExplod(luaPlayer, 3001)
-
-            end
-
-        end
-
     local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
 
     state.OnTriggerEvent = 
@@ -1351,8 +1319,41 @@ function Mai_XIII:initCmd_3000(luaCfg)
 
         end
 
+    local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+
+    state.OnTriggerEvent = 
+
+        function (luaPlayer, state)
+
+            local trigger1 = (trigger:Time(luaPlayer) == 0)
+
+            if trigger1 then
+
+                trigger:RemoveExplod(luaPlayer, 3000)
+
+            end
+
+        end
+
+    local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+
+    state.OnTriggerEvent = 
+
+        function (luaPlayer, state)
+
+            local trigger1 = (trigger:Time(luaPlayer) == 0)
+
+            if trigger1 then
+
+                trigger:RemoveExplod(luaPlayer, 3001)
+
+            end
+
+        end
+
 
 end
+
 
 function Mai_XIII:initCmd_3040(luaCfg)
 
