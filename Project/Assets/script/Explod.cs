@@ -56,7 +56,11 @@ public class Explod : PlayerPart {
 		}
 	}
 
-
+	private void FollowParent()
+	{
+		var parentDisplay = GetParentDisplay ();
+		InitOffsetPos (parentDisplay);
+	}
 
 	public void Apply()
 	{
@@ -140,9 +144,14 @@ public class Explod : PlayerPart {
 			bindtime -= AppConfig.GetInstance ().DeltaTick;
 			if (bindtime <= 0) {
 				bindtime = -1;
-				InteralDoDestroy ();
+				//	InteralDoDestroy ();
+			} else {
+				// 跟随角色
+				FollowParent();
 			}
 		}
+
+		//FollowParent ();
 	}
 
 	void UpdateRemoveTime()
