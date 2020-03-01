@@ -1389,39 +1389,7 @@ function Mai_XIII:initCmd_3040(luaCfg)
 
             if trigger1 then
 
-                trigger:RemoveExplod(luaPlayer, 3101)
-
-            end
-
-        end
-
-    local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
-
-    state.OnTriggerEvent = 
-
-        function (luaPlayer, state)
-
-            local trigger1 = (trigger:Time(luaPlayer) == 0)
-
-            if trigger1 then
-
                 trigger:PosSet(luaPlayer, nil, 0)
-
-            end
-
-        end
-
-    local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
-
-    state.OnTriggerEvent = 
-
-        function (luaPlayer, state)
-
-            local trigger1 = (trigger:Time(luaPlayer) == 0)
-
-            if trigger1 then
-
-                trigger:RemoveExplod(luaPlayer, 3001)
 
             end
 
@@ -1453,7 +1421,7 @@ function Mai_XIII:initCmd_3040(luaCfg)
 
             explod.IsUseParentUpdate = false
 
-            explod.scale = Vector2.New(0.475, 0.475)
+            explod.scale = Vector2.New(0.8, 0.8)
 
             explod:Apply()
 
@@ -1483,6 +1451,8 @@ function Mai_XIII:initCmd_3040(luaCfg)
 
 
 end
+
+
 
 function Mai_XIII:initCmd_ChongFeng(luaCfg)
 
