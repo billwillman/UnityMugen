@@ -138,6 +138,7 @@ public class Explod : PlayerPart {
 		CheckSelfRemoveTime ();
 	}
 
+	/*
 	void OnImageAniTimeUpdate()
 	{
 		var display = this.Display;
@@ -147,7 +148,7 @@ public class Explod : PlayerPart {
 				CheckSelfRemoveTime ();
 			}
 		}
-	}
+	}*/
 
 	void UpdateBindTime()
 	{

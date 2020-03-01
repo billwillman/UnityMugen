@@ -22,6 +22,8 @@ public class ImageAnimation : MonoBehaviour {
 			//int curTUsedTime = this.CurAniUsedTime;
 			if (m_AniUsedTime >= 0) {
 				CacheAnimation.SendMessage ("OnImageAniTimeUpdate", this, SendMessageOptions.DontRequireReceiver);
+				if (ChekAnimCntOne())
+					DoEndFrame();
 			}
         }
     }
