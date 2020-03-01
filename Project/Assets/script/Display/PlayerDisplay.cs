@@ -1153,6 +1153,7 @@ public class PlayerDisplay : BaseResLoader {
 		var imgAni = this.ImageAni;
 		if (imgAni == null)
 			return -9999;
+		
 		return imgAni.CurAniRetainTime;
 	}
 

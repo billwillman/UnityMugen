@@ -518,6 +518,8 @@ public class ImageAnimation : MonoBehaviour {
 				ctl.enabled = false;
 
             m_AniTotalTime = Time.fixedDeltaTime;
+			//m_AniTotalTime = 0;
+			m_AniUsedTime = 100000;
         }
 #if UNITY_EDITOR
         if (Application.isPlaying)
@@ -886,6 +888,15 @@ public class ImageAnimation : MonoBehaviour {
 			return ret;
         }
     }
+
+	public bool ChekAnimCntOne()
+	{
+		var aniCnt = this.AniNodeCount;
+		if (aniCnt > 0 && aniCnt < 2) {
+			return true;
+		}
+		return false;
+	}
 
     public int CurAniRetainTime
     {

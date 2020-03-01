@@ -138,6 +138,17 @@ public class Explod : PlayerPart {
 		CheckSelfRemoveTime ();
 	}
 
+	void OnImageAniTimeUpdate()
+	{
+		var display = this.Display;
+		if (display != null) {
+			var ani = display.ImageAni;
+			if (ani != null && ani.ChekAnimCntOne()) {
+				CheckSelfRemoveTime ();
+			}
+		}
+	}
+
 	void UpdateBindTime()
 	{
 		if (bindtime > 0) {
