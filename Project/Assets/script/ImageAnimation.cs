@@ -22,8 +22,10 @@ public class ImageAnimation : MonoBehaviour {
 			//int curTUsedTime = this.CurAniUsedTime;
 			if (m_AniUsedTime >= 0) {
 				CacheAnimation.SendMessage ("OnImageAniTimeUpdate", this, SendMessageOptions.DontRequireReceiver);
-				if (ChekAnimCntOne())
-					DoEndFrame();
+				if (ChekAnimCntOne () && m_AniUsedTime >= m_AniTotalTime) {
+					DoEndFrame ();
+					m_AniTotalTime = -1;
+				}
 			}
         }
     }
@@ -519,9 +521,9 @@ public class ImageAnimation : MonoBehaviour {
 			if (ctl.enabled)
 				ctl.enabled = false;
 
-            m_AniTotalTime = Time.fixedDeltaTime;
+            m_AniTotalTime = Time.fixedDeltaTime * 3;
 			//m_AniTotalTime = 0;
-			m_AniUsedTime = 100000;
+			//m_AniUsedTime = 100000;
         }
 #if UNITY_EDITOR
         if (Application.isPlaying)
