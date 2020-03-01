@@ -15,14 +15,6 @@ function Mai_XIII:initCmd_1000(luaCfg)
 		local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
 		state.OnTriggerEvent = 
 				function (luaPlayer, state)
-						local trigger1 = ((trigger:Time(luaPlayer) == 0) and (trigger:Numexplod(luaPlayer, 7910)))
-						if trigger1 then
-								trigger:RemoveExplod(luaPlayer, 7910)
-						end
-				end
-		local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
-		state.OnTriggerEvent = 
-				function (luaPlayer, state)
 						local trigger1 = (trigger:Time(luaPlayer) == 0)
 						if trigger1 then
 								trigger:VarSet(luaPlayer, 5, 0)
@@ -100,6 +92,32 @@ function Mai_XIII:initCmd_1000(luaCfg)
 						if trigger1 then
 								trigger:PlayStandCns(luaPlayer)
 								trigger:CtrlSet(luaPlayer, 1)
+
+						end
+				end
+		local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+		state.OnTriggerEvent = 
+				function (luaPlayer, state)
+						local trigger1 = ((trigger:Time(luaPlayer) == 0) and (trigger:Numexplod(luaPlayer, 7910)))
+						if trigger1 then
+								trigger:RemoveExplod(luaPlayer, 7910)
+						end
+				end
+		local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+		state.OnTriggerEvent = 
+				function (luaPlayer, state)
+						local trigger1 = (trigger:AnimElem(luaPlayer) == 8)
+						if trigger1 then
+								local proj = trigger:CreateProj(luaPlayer)
+								proj.projanim = 1010
+								proj.offset_x = 35
+								proj.offset_x = -60
+								proj.velocity_x = 3.5
+								proj.velocity_y = 0
+								proj.projsprpriority = 3
+								proj.projremovetime = 100
+								proj.projremove = 1
+								proj:Apply()
 
 						end
 				end

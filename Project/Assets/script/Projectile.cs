@@ -91,8 +91,8 @@ public class Projectile : MonoBehaviour {
 			display._SetLoaderPlayer (owner.LoaderPlayer);
 			float offz = -projsprpriority;
 
-			float offx = offset_x / PlayerDisplay._cPerUnit;
-			float offy = -offset_y / PlayerDisplay._cPerUnit;
+			float offx = offset_x / 100f;
+			float offy = -offset_y / 100f;
 			float velx = velocity_x / PlayerDisplay._cVelPerUnit;
 			float vely = -velocity_y / PlayerDisplay._cVelPerUnit;
 
