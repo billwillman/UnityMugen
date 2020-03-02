@@ -68,7 +68,7 @@ namespace XNode.Mugen
 			}
 
 			if (Mathf.Abs (velset_y - CNSStateDef._cNoVaildVelset) > float.Epsilon) {
-				ret += string.Format ("\t\tdef.Velset_y = {0}/_cPerVelUnit\n\r", velset_y.ToString ());
+				ret += string.Format ("\t\tdef.Velset_y = {0}/_cPerVelUnit\n\r", (-velset_y).ToString ());
 			}
 
 			if (ctrl != CNSStateDef._cNoVaildCtrl)

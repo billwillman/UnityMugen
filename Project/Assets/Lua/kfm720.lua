@@ -380,13 +380,23 @@ function kfm720:initCmd_1051(luaCfg)
 
 		def.Velset_x = 8/_cPerVelUnit
 
-		def.Velset_y = -240/_cPerVelUnit
+		def.Velset_y = 24/_cPerVelUnit
 
 		def.Sprpriority = 0
 
 		def.IsHitdefPersist = true
 
 		def.Animate = 1051
+
+		local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+
+		state.OnTriggerEvent = 
+
+				function (luaPlayer, state)
+
+						trigger:VelAdd(luaPlayer, nil, 1.8)
+
+				end
 
 		local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
 
@@ -406,6 +416,8 @@ function kfm720:initCmd_1051(luaCfg)
 
 
 end
+
+
 
 function kfm720:initCmd_1052(luaCfg)
 
