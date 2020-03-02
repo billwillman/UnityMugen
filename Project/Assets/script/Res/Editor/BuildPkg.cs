@@ -97,7 +97,7 @@ public class BuildPkg
 	{
         if (string.IsNullOrEmpty(str) || string.IsNullOrEmpty(section))
             return null;
-        section = string.Format("[{0}]", section);
+        section = StringHelper.Format("[{0}]", section);
         int idx = str.IndexOf(section, StringComparison.CurrentCultureIgnoreCase);
         if (idx < 0)
             return null;
@@ -184,7 +184,7 @@ public class BuildPkg
             case PkgPlatformType.pkgPC:
                 if (buildTarget != BuildTarget.StandaloneLinux && buildTarget != BuildTarget.StandaloneLinux64 &&
                     buildTarget != BuildTarget.StandaloneLinuxUniversal && buildTarget != BuildTarget.StandaloneOSXIntel &&
-#if UNITY_2018
+#if UNITY_2018 || UNITY_2019
                     buildTarget != BuildTarget.StandaloneOSXIntel64 && buildTarget != BuildTarget.StandaloneOSX &&
 #else
 					buildTarget != BuildTarget.StandaloneOSXIntel64 && buildTarget != BuildTarget.StandaloneOSXUniversal &&

@@ -30,14 +30,14 @@ public class ResourceMgr: Singleton<ResourceMgr>
 			return false;*/
 
 		if (mAssetLoader.OnSceneLoad (sceneName)) {
-			LogMgr.Instance.Log (string.Format ("Loading AssetBundle Scene: {0}", sceneName));
+			LogMgr.Instance.Log (StringHelper.Format ("Loading AssetBundle Scene: {0}", sceneName));
 		} else {
 #if UNITY_EDITOR
 			if (!Application.CanStreamedLevelBeLoaded (sceneName))
 				return false;
 #endif
 			if (mResLoader.OnSceneLoad(sceneName))
-				LogMgr.Instance.Log(string.Format("Loading Resources Scene: {0}", sceneName));
+				LogMgr.Instance.Log(StringHelper.Format("Loading Resources Scene: {0}", sceneName));
 			else
 				return false;
 		}
@@ -89,6 +89,8 @@ public class ResourceMgr: Singleton<ResourceMgr>
 		if (isLoadedActive)
 			return AsyncOperationMgr.Instance.AddAsyncOperation<AsyncOperation, System.Object>(opt, onProcess) != null;
 		else {
+			//return AsyncOperationMgr.Instance.AddAsyncOperation<AsyncOperation, System.Object>(opt, onProcess) != null;
+
 			return AsyncOperationMgr.Instance.AddAsyncOperation<AsyncOperation, System.Object>(opt,
 				delegate(AsyncOperation obj, bool isDone) {
 					if (onProcess != null)
@@ -108,7 +110,7 @@ public class ResourceMgr: Singleton<ResourceMgr>
 		                                   delegate {
 												DoLoadSceneAsync(sceneName, isAdd, onProcess, isLoadedActive, priority);
 										}, priority)) {
-			LogMgr.Instance.Log (string.Format ("Loading AssetBundle Scene: {0}", sceneName));
+			LogMgr.Instance.Log (StringHelper.Format ("Loading AssetBundle Scene: {0}", sceneName));
 		} else {
 #if UNITY_EDITOR
 			if (!Application.CanStreamedLevelBeLoaded (sceneName))
@@ -118,7 +120,7 @@ public class ResourceMgr: Singleton<ResourceMgr>
 			                                delegate {
 												DoLoadSceneAsync(sceneName, isAdd, onProcess, isLoadedActive, priority);
 											}, priority))
-				LogMgr.Instance.Log(string.Format("Loading Resources Scene: {0}", sceneName));
+				LogMgr.Instance.Log(StringHelper.Format("Loading Resources Scene: {0}", sceneName));
 			else
 				return false;
 		}
@@ -316,6 +318,8 @@ public class ResourceMgr: Singleton<ResourceMgr>
 			if (clip.loadState == AudioDataLoadState.Loading || clip.loadState == AudioDataLoadState.Unloaded)
 				yield return null;
 			else {
+				if (!clip.UnloadAudioData ())
+					yield return null;
 				ABUnloadFalse (clip, true);
 				break;
 			}
