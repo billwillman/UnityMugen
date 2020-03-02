@@ -53,6 +53,8 @@ namespace Mugen
 		private int m_PowerAdd;
 		private int m_Sprpriority;
 		private int m_FaceP2 = 0;
+		// 保持HitDef设置，保持上一个StateDef的，为TRUE时
+		private bool m_IsHitdefPersist = false;
 
 		public static readonly int _cNoVaildVelset = -999999;
 		public static readonly int _cNoVaildCtrl = -1;
@@ -191,6 +193,16 @@ namespace Mugen
 			set
 			{
 				m_PhysicsType = value;
+			}
+		}
+
+		public bool IsHitdefPersist
+		{
+			get {
+				return m_IsHitdefPersist;
+			}
+			set {
+				m_IsHitdefPersist = value;
 			}
 		}
 

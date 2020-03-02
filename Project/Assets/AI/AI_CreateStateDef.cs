@@ -16,6 +16,7 @@ namespace XNode.Mugen
 		[SerializeField] public int realAnimate = CNSStateDef._cNoVaildAnim;
 		[SerializeField] public bool isAnimLoop = false;
 		[SerializeField] public bool isVisible = true;
+		[SerializeField] public bool isHitdefPersist = false;
 
 		public string Animate
 		{
@@ -63,16 +64,19 @@ namespace XNode.Mugen
 			ret += string.Format ("\t\tdef.PowerAdd = {0:D}\n\r", powerAdd);
 
 			if (Mathf.Abs (velset_x - CNSStateDef._cNoVaildVelset) > float.Epsilon) {
-				ret += string.Format ("\t\tdef.Velset_x = {0}\n\r", velset_x.ToString ());
+				ret += string.Format ("\t\tdef.Velset_x = {0}/_cPerVelUnit\n\r", velset_x.ToString ());
 			}
 
 			if (Mathf.Abs (velset_y - CNSStateDef._cNoVaildVelset) > float.Epsilon) {
-				ret += string.Format ("\t\tdef.Velset_y = {0}\n\r", velset_y.ToString ());
+				ret += string.Format ("\t\tdef.Velset_y = {0}/_cPerVelUnit\n\r", velset_y.ToString ());
 			}
 
 			if (ctrl != CNSStateDef._cNoVaildCtrl)
 				ret += string.Format ("\t\tdef.Ctrl = {0:D}\n\r", ctrl);
 			ret += string.Format ("\t\tdef.Sprpriority = {0:D}\n\r", sprpriority);
+
+			if (isHitdefPersist)
+				ret += string.Format("\t\tdef.IsHitdefPersist = {0}\n\r", isHitdefPersist.ToString().ToLower());
 
 			if (realAnimate != CNSStateDef._cNoVaildAnim) {
 				ret += string.Format ("\t\tdef.Animate = {0:D}\n\r", realAnimate);

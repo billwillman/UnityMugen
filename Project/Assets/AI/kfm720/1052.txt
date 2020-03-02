@@ -1,0 +1,59 @@
+function kfm720:initCmd_1052(luaCfg)
+--------------------------- register StateDef 1052 ---------------------------
+		local id = luaCfg:CreateStateDef("1052")
+		local def = luaCfg:GetStateDef(id)
+		def.Type = Mugen.Cns_Type.S
+		def.PhysicsType = Mugen.Cns_PhysicsType.S
+		def.MoveType = Mugen.Cns_MoveType.I
+		def.Juggle = 0
+		def.PowerAdd = 0
+		def.Velset_x = 0
+		def.Velset_y = 0
+		def.Sprpriority = 1
+		def.Animate = 1052
+		local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+		state.OnTriggerEvent = 
+				function (luaPlayer, state)
+						local trigger1 = (trigger:Time(luaPlayer) == 0)
+						if trigger1 then
+								trigger:PosSet(luaPlayer, nil, 0)
+						end
+				end
+		local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+		state.OnTriggerEvent = 
+				function (luaPlayer, state)
+						local trigger1 = (trigger:Time(luaPlayer) == 0)
+						if trigger1 then
+								trigger:PlaySnd(luaPlayer, 40, 0, false)
+						end
+				end
+		local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+		state.OnTriggerEvent = 
+				function (luaPlayer, state)
+						local trigger1 = (trigger:AnimElem(luaPlayer) == 3)
+						if trigger1 then
+								trigger:CtrlSet(luaPlayer, 1)
+						end
+				end
+		local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimElem)
+		state.OnTriggerEvent = 
+				function (luaPlayer, state)
+						local trigger1 = (trigger:AnimElem(luaPlayer) == 4)
+						if trigger1 then
+								trigger:PosAdd(luaPlayer, -60, nil)
+						end
+				end
+		local state = def:CreateStateEvent(Mugen.CnsStateTriggerType.AnimTime)
+		state.OnTriggerEvent = 
+				function (luaPlayer, state)
+						local trigger1 = (trigger:AnimTime(luaPlayer) == 0)
+						if trigger1 then
+								trigger:PlayStandCns(luaPlayer)
+								trigger:CtrlSet(luaPlayer, 1)
+
+						end
+				end
+
+
+end
+
