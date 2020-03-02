@@ -30,7 +30,7 @@ public static class CustomSettings  {
 		typeof(UnityEngine.Resources),
 		typeof(UnityEngine.Physics),
 		typeof(UnityEngine.RenderSettings),
-#if !UNITY_2018
+#if !UNITY_2018 && !UNITY_2019
         typeof(UnityEngine.QualitySettings),
 #endif
 		typeof(UnityEngine.GL),
@@ -167,11 +167,15 @@ public static class CustomSettings  {
 		_GT(typeof(QueueMode)),  
 		_GT(typeof(PlayMode)),
 		_GT(typeof(WrapMode)),
-#if !UNITY_2018
+#if !UNITY_2018 && !UNITY_2019
         _GT(typeof(QualitySettings)),
 #endif
-		_GT(typeof(RenderSettings)),                                                   
-		_GT(typeof(BlendWeights)),           
+		_GT(typeof(RenderSettings)),
+#if UNITY_2019                                                   
+		_GT(typeof(SkinWeights)),  
+#else 
+		_GT(typeof(BlendWeights)), 
+#endif         
 		_GT(typeof(RenderTexture)), 
 		_GT(typeof(Resources)),      
 		_GT(typeof(LuaProfiler)),
@@ -242,8 +246,11 @@ public static class CustomSettings  {
 		typeof(Animation),
 		typeof(AnimationClip),
 		typeof(AnimationState),
-
+#if UNITY_2019
+		typeof(SkinWeights),
+#else
 		typeof(BlendWeights),
+#endif
 		typeof(RenderTexture),
 		typeof(Rigidbody),
 	};
