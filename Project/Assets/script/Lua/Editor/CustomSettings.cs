@@ -225,6 +225,7 @@ public static class CustomSettings  {
 		_GT(typeof(InputPlayerType)),
 		_GT(typeof(Helper)),
 		_GT(typeof(List<int>)),
+        _GT(typeof(CnsHitDef)),
 		//_GT(typeof(TestClass)),
 	};
 
