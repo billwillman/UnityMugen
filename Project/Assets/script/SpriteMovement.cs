@@ -8,7 +8,12 @@ public class SpriteMovement : MonoBehaviour {
 
 	// 开始速度
 	public Vector2 StartVec  = Vector2.zero;
+
+    // 速度
 	public Vector2 Vec = Vector2.zero;
+    // 加速度
+    public Vector3 A = Vector2.zero;
+
 	public float g = 9.8f;
 
 	public float AniCtlPauseTime = -1;
@@ -103,21 +108,24 @@ public class SpriteMovement : MonoBehaviour {
 		// 按照毫秒算速度
 		float d = deltaTime * 1000f;
 		if (m_Display != null && m_Display.Attribe.StandType == Cns_Type.A) {
-            float gg = -g / (PlayerDisplay._cVelPerUnit * PlayerDisplay._cAPerUnit);
+            float gg = (-g + A.y) / (PlayerDisplay._cVelPerUnit * PlayerDisplay._cAPerUnit);
             //float gg = -g/1000000f * 6.5f;
             Vec.y += gg * d;
           }
 
+        float Ax = IsFlipX ? -A.x: A.x;
         Vector2 vv = new Vector2(Vec.x * (IsFlipX? -1:1), Vec.y);
 
-		if (m_Display != null && m_Display.Attribe.StandType != Cns_Type.A && Mathf.Abs(vv.x) > float.Epsilon) {
+		if (m_Display != null && m_Display.Attribe.StandType != Cns_Type.A && 
+            (Mathf.Abs(vv.x) > float.Epsilon || Mathf.Abs(Ax) > float.Epsilon)) {
             float oldVx = vv.x;
             // 动态摩擦因子
             float u = AppConfig.GetInstance().u * StageMgr.GetInstance().u;
             // 摩擦力的向下地面fn
-            float aX = u * g;
+            float aX = u/100f * g;
             if (vv.x > 0)
                 aX = -aX;
+            aX += Ax;
             vv.x = aX * deltaTime + vv.x;
             if (oldVx * vv.x < 0)
                 vv.x = 0;

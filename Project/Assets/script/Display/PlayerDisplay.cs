@@ -276,7 +276,7 @@ public class PlayerDisplay : BaseResLoader {
 			return;
 		movement.StartVec = attribe.StateStartVec;
 
-		if (isVaildX)
+        if (isVaildX)
 			movement.Vec.x = movement.StartVec.x;
 		if (isVaildY)
 			movement.Vec.y = movement.StartVec.y;
