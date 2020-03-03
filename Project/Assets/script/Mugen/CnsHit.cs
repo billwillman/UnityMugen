@@ -148,5 +148,53 @@ namespace Mugen {
 
         //  攻击给对手造成的竖直方向的加速度。
         public float yaccel = 0;
+
+        public void Reset() {
+            hit_damage = 0;
+            guard_damage = 0;
+            targetStandType = 0;
+            attr2_1 = Cns_Hit1.none;
+            attr2_2 = Cns_Hit2.none;
+            hitflags = (1 << (int)Cns_HitFlag.M) | (1 << (int)Cns_HitFlag.A) | (1 << (int)Cns_HitFlag.F);
+            hitflagEx = Cns_HitFlagEx.none;
+            hitGuardFlags = 0;
+            targetTeam = Cns_Affectteam.E;
+            hit_prior = 4;
+            hit_type = Cns_HitType.Hit;
+            hit_p1_pausetime = 0;
+            hit_p2_pausetime = 0;
+            guard_p1_pausetime = 0;
+            guard_p2_pausetime = 0;
+
+            isCommSparkNo = true;
+            sparkno = (int)PlayerState.psNone;
+
+            isCommGuardSparkNo = true;
+            guard_sparkno = (int)PlayerState.psNone;
+
+            spark_x = 0;
+            spark_y = 0;
+
+
+            isCommonHitSound = true;
+            hitsound_Group = -1;
+            hitSound_Image = -1;
+
+
+            isCommonGuardHitSound = true;
+            guardsound_Group = -1;
+            guardsound_Image = -1;
+
+            numhits = 1;
+
+            kill = true;
+            guard_kill = true;
+            fall_kill = true;
+
+            hitonce = false;
+            nochain_1 = -1;
+            nochain_2 = -1;
+            yaccel = 0;
+        }
     }
 }
