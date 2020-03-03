@@ -145,5 +145,8 @@ namespace Mugen {
         // 如果对手被当前攻击和前一个攻击之间的另一部分击中这个参数没有影响。
         public int nochain_1 = -1;
         public int nochain_2 = -1;
+
+        //  攻击给对手造成的竖直方向的加速度。
+        public float yaccel = 0;
     }
 }
