@@ -467,8 +467,6 @@ public class ImageAnimation : MonoBehaviour {
 #endif
         }
 
-        ctl.clip = clip;
-
         List<AnimationEvent> evtList = new List<AnimationEvent>();
 
         m_AniUsedTime = -1;
@@ -533,6 +531,8 @@ public class ImageAnimation : MonoBehaviour {
 #else
 		clip.events = evtList.ToArray();
 #endif
+
+        ctl.clip = clip;
 
     }
 
