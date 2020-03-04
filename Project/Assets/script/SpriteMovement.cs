@@ -103,8 +103,10 @@ public class SpriteMovement : MonoBehaviour {
 
 	void UpdateMove(float deltaTime)
 	{
-		if (Mathf.Abs (Vec.x) <= float.Epsilon && Mathf.Abs (Vec.y) <= float.Epsilon)
-			return;
+        if (Mathf.Abs(Vec.x) <= float.Epsilon && Mathf.Abs(Vec.y) <= float.Epsilon) {
+            if (m_Display == null || m_Display.Attribe.StandType != Cns_Type.A)
+                return;
+        }
 		// 按照毫秒算速度
 		float d = deltaTime * 1000f;
 		if (m_Display != null && m_Display.Attribe.StandType == Cns_Type.A) {
