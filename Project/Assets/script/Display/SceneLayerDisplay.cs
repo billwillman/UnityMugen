@@ -55,7 +55,7 @@ public class SceneLayerDisplay : BaseResLoader {
 		var sp = this.SpriteRender;
 		if (sp != null && sp.sprite != null) {
 			var trans = this.CachedTransform;
-			/*
+            /*
 			var cam = AppConfig.GetInstance ().m_Camera;
 			Vector3 offset = new Vector3 (sp.sprite.pivot.x, sp.sprite.pivot.y, 0);
 			var orgPt = trans.position;
@@ -63,10 +63,17 @@ public class SceneLayerDisplay : BaseResLoader {
 			var dst = orgPt + offset;
 			trans.position = cam.ScreenToWorldPoint(dst);
 			*/
+
+            /*
+            var orgPt = trans.localPosition;
+            var dst = orgPt + new Vector3(sp.sprite.pivot.x / 100f, sp.sprite.pivot.y / 100f, 0);
+            trans.localPosition = dst;
+            */
+            
 			var orgPt = trans.localPosition;
 			var dst = orgPt + new Vector3 (sp.sprite.bounds.size.x/2.0f, sp.sprite.bounds.size.y/2.0f, 0);
 			trans.localPosition = dst;
-		}
+        }
 	}
 
     public SpriteRenderer SpriteRender
